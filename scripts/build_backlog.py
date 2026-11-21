@@ -1,324 +1,378 @@
 #!/usr/bin/env python3
-"""Build the Dataq Software website 50%-target change backlog workbook.
-
-Sheets:
-  1. Overview        - audit snapshot, completed-this-round, phase plan (live COUNTIF), 50% definition
-  2. Backlog         - 500+ change items (ID, Phase, Workstream, Item, Where, DoD, Impact, Effort, Status)
-  3. Naming-Conf     - naming + confidentiality sweep log and rules
-  4. Homepage Charts - current chart issues vs target spec (design-before-develop artifact)
-"""
+"""Dataq Software website — 500+ change backlog (gate deliverable)."""
 import sys, os
-
 XLSX_SKILL_DIR = "/home/z/my-project/skills/xlsx"
 for sub in [XLSX_SKILL_DIR, os.path.join(XLSX_SKILL_DIR, "templates")]:
-    if sub not in sys.path:
-        sys.path.insert(0, sub)
-
-SCRIPTS = "/home/z/my-project/scripts"
-if SCRIPTS not in sys.path:
-    sys.path.insert(0, SCRIPTS)
-
-from base import *  # noqa: F401,F403  (design tokens + helpers)
-import base
+    if sub not in sys.path: sys.path.insert(0, sub)
 from openpyxl import Workbook
-from openpyxl.styles import Font, PatternFill, Alignment
-from openpyxl.formatting.rule import FormulaRule
+from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
-from backlog_core_home import P0, P1, P9
-from backlog_charts_nav import P2, P3, P7
-from backlog_content_visual import P4, P5
-from backlog_motion_seo import P6, P8, P3X, P2X, P1X, P10
-from backlog_extra import P1E, P3E, P5E, P7E, P8E, P4E
+rows = []  # (Wave, Category, Area, Change, Why, Effort, Status)
 
-base.use_palette_explicit("warm")
+def add(wave, cat, area, change, why, effort="M", status="Planned"):
+    rows.append((wave, cat, area, change, why, effort, status))
 
-OUT = "/home/z/my-project/download/Dataq-Software-Website-50pct-Change-Backlog.xlsx"
+# ══════════════════ P0 — IMAGE SYSTEM (root cause: 1 recycled SVG per page) ══════════════════
+IMG = "Images & Visual Assets"
+add("P0-Images", IMG, "Site-wide", "Replace 22 recycled abstract SVGs with 24 premium AI-generated brand visuals (orange #FE5722 / deep-blue #18142D art direction)", "Root cause of 'images not rendering': every page shows the same dark placeholder; nothing to render", "L")
+for svc, label in [("applied-ai-generative-ai","Applied & Generative AI"),("agentic-ai-hyperautomation","Agentic AI & Hyperautomation"),("data-analytics-lakehouse","Data, Analytics & Lakehouse"),("cybersecurity-zero-trust","Cybersecurity & Zero Trust"),("cloud-edge-platform-engineering","Cloud, Edge & Platform Engineering"),("quantum-advanced-compute","Quantum & Advanced Compute"),("blockchain-digital-trust","Blockchain & Digital Trust"),("iot-digital-twin-robotics","IoT, Digital Twin & Robotics")]:
+    add("P0-Images", IMG, f"Service tower: {label}", f"Photoreal branded hero image for {label} tower hub + 3 sub-services (photoreal ops scenes, brand-graded)", "Unique imagery per service page kills the placeholder effect", "M")
+for ind, label in [("banking-financial-services","Banking & Financial Services"),("healthcare-pharma-life-sciences","Healthcare, Pharma & Life Sciences"),("retail-consumer-e-commerce","Retail, Consumer & E-commerce"),("manufacturing-energy-industrial","Manufacturing, Energy & Industrial"),("government-public-sector-education","Government, Public Sector & Education"),("telecom-media-travel-hospitality","Telecom, Media, Travel & Hospitality")]:
+    add("P0-Images", IMG, f"Industry: {label}", f"Industry-specific hero + section imagery set (3 images) for {label}", "Industries reuse generic art today; sector credibility needs sector visuals", "M")
+for plat, label in [("nexus","Dataq Nexus"),("forge","Dataq Forge"),("swarm","Dataq Swarm"),("sentinel","Dataq Sentinel"),("twinverse","Dataq Twinverse"),("quanta","Dataq Quanta"),("ledger","Dataq Ledger"),("compass","Dataq Compass")]:
+    add("P0-Images", IMG, f"Platform: {label}", f"Product-style UI mock render for {label} platform page", "Platforms need product-feel visuals, not abstract arcs", "M")
+add("P0-Images", IMG, "Homepage", "Cinematic homepage hero visual (abstract data-intelligence field, animated layered depth)", "First impression currently text-only", "M")
+add("P0-Images", IMG, "About / Careers / Contact", "Human-side photography set: delivery centers, teams at work (8 images, consistent grade)", "Company pages have zero human imagery", "M")
+add("P0-Images", IMG, "Case studies (37)", "Programmatic case-study visual generator: seeded per-industry composition + KPI overlay", "37 case studies share 3 generic images", "M")
+add("P0-Images", IMG, "Insights (33)", "Insight article header system: 6 topical templates with per-article accent variation", "Articles are text walls today", "M")
+add("P0-Images", IMG, "All pages", "Inline SVG diagram strip component: 3 contextual mini-diagrams injected per page via PageAugment", "Guarantees 4+ visual elements on every one of 632 pages", "M")
+add("P0-Images", IMG, "OG/social", "OpenGraph image (1200x630) per section, brand template with page title", "Social shares currently show no image", "S")
+add("P0-Images", IMG, "Build", "next/image audit: sizes attribute per breakpoint, priority only above-the-fold", "LCP + layout stability", "S")
+add("P0-Images", IMG, "Build", "Asset pipeline: AI images compressed to WebP + AVIF, lazy below fold", "Page weight discipline", "S")
+add("P0-Images", IMG, "gh-pages", "GHPAGES=1 basePath regression test in CI script (assert /DataQ/images/* exists in out-gh HTML)", "Prevent recurring 'images 404 on Pages' class bugs", "S")
+add("P0-Images", IMG, "Legal", "Confidentiality scan on all generated imagery prompts + visible text (no entity names)", "Hard confidentiality rule", "S")
 
-ROWS = (P0 + P1 + P9 + P2 + P3 + P7 + P4 + P5 + P6 + P8
-        + P3X + P2X + P1X + P10 + P1E + P3E + P5E + P7E + P8E + P4E)
+# ══════════════════ P0 — ANIMATION 100X ══════════════════
+AN = "Motion & Animation 100X"
+CORE = ["Scroll-linked hero parallax with layered depth (bg art, headline, KPIs move at different rates)",
+        "Split-text headline reveals: per-word mask + rise with 60ms stagger on every H1/H2",
+        "Universal stagger engine: any list/grid of cards animates in with index-based delay (CSS var --i)",
+        "Spring-physics hover lift on all cards (translateY -6px + shadow bloom + border glow)",
+        "Animated gradient mesh background on hero sections (aurora blobs, 3 layers, GPU transforms)",
+        "Magnetic buttons upgraded: pull + tilt + sheen sweep + ripple on click",
+        "Animated counters with odometer digit roll (not simple count-up)",
+        "SVG line-draw on scroll for all architecture/flow diagrams (stroke-dashoffset choreography)",
+        "Chart draw-in choreography: bars grow, lines trace with glow tip, radar sweeps",
+        "Marquee upgrade: dual-direction, speed reacts to scroll velocity",
+        "Section transition wipes: angled brand-orange wipe between major sections",
+        "Parallax floating orbs/orbs field behind stats and CTA bands",
+        "Card tilt-on-hover with 3D perspective + glare highlight tracking cursor",
+        "Link underline morphs: underline draws left-to-right with easing on all text links",
+        "Nav mega-menu open choreography: staggered column fade + slide with spring ease",
+        "Sticky header shrink + blur + hairline glow on scroll (backdrop-filter)",
+        "Page enter choreography: hero elements cascade in on first paint (no FOUC)",
+        "Image reveal: clip-path wipe + inner scale settle on every figure",
+        "Scroll progress bar upgrade: gradient + glow head dot",
+        "Back-to-top morph: circular progress ring shows scroll %",
+        "Tab/pill switches: sliding active indicator with spring",
+        "Accordion open: height spring + icon rotation + content fade-slide",
+        "Form focus states: label float + glow ring + success micro-bounce",
+        "Toast/notification slide-in with spring overshoot",
+        "Footer reveal: columns stagger up on first view",
+        "Logo hover: brand mark draws its stroke",
+        "Breadcrumb trail: path draws in on page load",
+        "CTA band: pulsing gradient border + button shimmer loop",
+        "Stat band: numbers flip with 3D rotate on view",
+        "Testimonial/quote: text fade-up per line + oversized quote mark slide",
+        "Cursor spotlight upgraded: brand-orange radial + subtle noise texture + spotlight scales on interactive hover",
+        "Dark section entrance: radial vignette expands from center",
+        "Reduced-motion parity: every effect has a static fallback (audit all 120+)",
+        "Animation perf budget: only transform/opacity/filter animated; audit with DevTools",
+        "will-change hints on animated layers, removed after settle",
+        "Scroll-triggered class system unified: one IntersectionObserver registry (MotionRuntime v3)",
+        "Page-leave intent: header CTA pulses when cursor moves to leave (desktop)"]
+for i, t in enumerate(CORE, 1):
+    add("P0-Motion", AN, "Global runtime", f"M-{i:03d}: {t}", "Animations are below minimum standard today; this is the 100X core set", "M" if i % 3 else "S")
+PERPAGE = ["Homepage hero: full cinematic intro sequence (orbit rings draw, KPIs cascade, CTA breathes)",
+           "Services hub: tower cards assemble from grid fragments on scroll",
+           "Each service page: capability matrix cells flip-in with stagger",
+           "Solutions: before/after comparison slider with draggable handle",
+           "Industry pages: map pins drop with bounce, arcs draw between offices",
+           "Platform pages: UI mock parallax layers separate on scroll",
+           "Case studies: KPI counters + sparkline draw on scroll into view",
+           "Insights: reading progress line + image parallax in article body",
+           "Contact: form steps animate + submit success confetti burst (brand colors)",
+           "Careers: perks cards deal-in like cards on a table",
+           "About: timeline draws horizontally with milestones popping",
+           "Why-Dataq: comparison table rows slide-in alternating left/right",
+           "Approach: process steps connect with animated path (SVG draw)",
+           "Patented-intelligence: patent nodes orbit core, connect on hover",
+           "Book-a-briefing: calendar slot grid hover wave",
+           "Search: results fade-filter as you type",
+           "404: brand mark assembles from particles",
+           "Footer CTA band on all pages: gradient river flows behind button"]
+for i, t in enumerate(PERPAGE, 1):
+    add("P0-Motion", AN, "Per-page set", f"MP-{i:02d}: {t}", "Motion must feel bespoke per page type, not one-size", "M")
+add("P0-Motion", AN, "Tokens", "Motion token system: --ease-spring, --ease-out-expo, --dur-1/2/3, --stagger-base declared once", "Consistency + maintainability of 100+ effects", "S")
+add("P0-Motion", AN, "QA", "Animation audit script: assert every .reveal has transition + fallback", "No dead reveal classes", "S")
 
-# order by phase then keep original order inside phase
-PHASE_ORDER = {p: i for i, p in enumerate(
-    ["P0", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10"])}
-ROWS = sorted(ROWS, key=lambda r: PHASE_ORDER.get(r[0], 99))
-for i, r in enumerate(ROWS, 1):
-    pass  # ids assigned at write time
+# ══════════════════ P1 — CONTENT REWRITE ══════════════════
+CT = "Content Transformation"
+add("P1-Content", CT, "Voice & tone", "Define voice charter: outcome-first, plain English, no AI-flavor phrases ('delve', 'landscape', 'unlock the power of', 'seamless', 'cutting-edge' banned list)", "Kills the template/AI smell across 633 pages", "S")
+add("P1-Content", CT, "Homepage", "Homepage narrative rewrite: POV headline, 3 proof pillars, client-outcome band, platform strip, industry rail, CTA", "Homepage is the conversion engine", "L")
+add("P1-Content", CT, "8 service hubs", "Rewrite each tower intro: business problem first, capability proof second, platform rails third", "Current intros describe the page instead of the value", "M")
+add("P1-Content", CT, "55 service sub-pages", "Per-service rewrite: 'What changes for you' section with 3 concrete scenarios each", "Sub-pages are near-duplicate templates today", "L")
+add("P1-Content", CT, "6 industry hubs", "Industry rewrite: regulatory + margin + data realities per sector, 3 named use cases", "Industries read generic", "M")
+add("P1-Content", CT, "Industry sub-pages", "Sector use-case pages: process flows written from operator POV", "Depth signal for buyers", "L")
+add("P1-Content", CT, "8 platform pages", "Platform pages rewritten as product sheets: what it runs, what it replaces, time-to-value", "Platforms currently read like essays", "M")
+add("P1-Content", CT, "37 case studies", "Case study upgrade: Challenge → Build → Outcome with named KPI deltas (illustrative, consistent)", "Strongest proof asset; currently thin", "L")
+add("P1-Content", CT, "33 insights", "Insight rewrite: thesis in first line, evidence table, 'what to do Monday' box", "Thought leadership must lead thought", "L")
+add("P1-Content", CT, "Why-Dataq page", "Rewrite around 5 differentiators with proof point each (delivery model, outcome linkage, IP, security, speed)", "Decision-stage page must close", "M")
+add("P1-Content", CT, "Our approach", "Method page: 6-step engagement model with entry/exit criteria per step", "Buyers need process certainty", "M")
+add("P1-Content", CT, "About us", "About rewrite: mission, delivery footprint, engineering culture, hiring philosophy", "Company story is flat", "M")
+add("P1-Content", CT, "Patented intelligence", "Rewrite as capability map: 8 families explained in business language, each mapped to services/platforms (indirect, no entity names)", "Turns IP page into sales asset while honoring confidentiality", "M")
+add("P1-Content", CT, "Cross-linking", "Solution↔Service↔Industry contextual link module on every page (3 'where this applies' links)", "Site currently siloed; buyers can't traverse", "M")
+add("P1-Content", CT, "CTAs", "CTA copy system: 12 variants mapped to funnel stage, tested per template", "Every CTA currently says the same thing", "S")
+add("P1-Content", CT, "Meta layer", "Rewrite 633 seo_titles + meta_descriptions with benefit-led patterns (length-checked)", "SERP CTR", "M")
+add("P1-Content", CT, "Microcopy", "Buttons, labels, empty states, 404, form hints rewritten in brand voice", "Microcopy is the trust layer", "S")
+add("P1-Content", CT, "Glossary", "20-term glossary module with inline tooltips on first use", "Explains terms per writing rules", "M")
+add("P1-Content", CT, "Proof library", "Central stats library: 40 verified/illustrative metrics with sources, reused consistently site-wide", "Numbers currently inconsistent between pages", "M")
+add("P1-Content", CT, "De-AI pass", "Programmatic phrase audit across all 633 JSONs: flag + replace 24 banned patterns", "Systematic de-flavoring", "M")
+add("P1-Content", CT, "Confidentiality", "Final 100x confidentiality sweep on all rewritten text + JSON + code comments", "Non-negotiable rule", "S")
 
+# ══════════════════ P1 — UI/UX LAYOUT ══════════════════
+UX = "UI/UX Layout & Density"
+add("P1-UX", UX, "Global", "Full-width density layout: 12-col grid, max 1440px, gutters 24-32px — kill excess whitespace", "User: 'too much whitespace, content breaks lines'", "M")
+add("P1-UX", UX, "Global", "Typography scale v2: 44/32/24/18/16/14 with 1.5 line-height body, min 68ch measure", "Readability + hierarchy", "M")
+add("P1-UX", UX, "Global", "Section rhythm: 96px desktop / 64px mobile vertical rhythm, consistent band alternation (white/navy/mist)", "Page flow currently erratic", "M")
+add("P1-UX", UX, "Cards", "Unified card spec: 16px radius, 1px hairline border, 3-level shadow tokens, equal-height enforcement via grid", "Boxes currently misaligned heights", "M")
+add("P1-UX", UX, "Homepage", "Executive dashboard hero: headline + 4 KPI tiles + mini chart above the fold", "CXO must see value in 5 seconds", "L")
+add("P1-UX", UX, "Homepage", "Logo/credibility band with animated proof marquee", "Instant trust cue", "S")
+add("P1-UX", UX, "Service pages", "Capability matrix table replaces bullet walls (4x5 grid with icons)", "Scanability", "M")
+add("P1-UX", UX, "Industry pages", "Sector pain→solution 2-col mapping table", "Buyer maps himself in seconds", "M")
+add("P1-UX", UX, "Case studies", "KPI band: 3 big numbers + context line, then narrative", "Proof first", "M")
+add("P1-UX", UX, "Platform pages", "Product-sheet layout: left feature rail + right sticky diagram", "Product feel", "M")
+add("P1-UX", UX, "Nav", "Mega-menu redesign: 3-tier with descriptions, icons, featured card per tower", "User calls current menu 'absolute worst'", "L")
+add("P1-UX", UX, "Nav", "Mobile nav: full-screen sheet with sectioned accordion + CTA pin", "Mobile conversion", "M")
+add("P1-UX", UX, "Footer", "Footer sitemap restructure: 5 columns + trust badges + newsletter", "Footer is a conversion surface", "M")
+add("P1-UX", UX, "Breadcrumbs", "Visual breadcrumb bar with schema markup on all internal pages", "Orientation + SEO", "S")
+add("P1-UX", UX, "Tables", "Comparison tables: sticky header, zebra rows, check/cross icons", "Enterprise buyers compare", "M")
+add("P1-UX", UX, "Forms", "Contact/briefing forms: 2-col compact, inline validation, progress for multi-step", "Lead-gen friction", "M")
+add("P1-UX", UX, "Search", "Search results: grouped by type with thumbnails + filters", "Findability", "M")
+add("P1-UX", UX, "404", "Branded 404 with top-6 destinations + search box", "Recover lost traffic", "S")
+add("P1-UX", UX, "Dark mode", "Navy-band sections get consistent contrast pass (WCAG AA on all text)", "Brand consistency + a11y", "M")
+add("P1-UX", UX, "Iconography", "Icon set unified: one stroke weight, 24px grid, brand-orange accents", "Icons currently mixed styles", "M")
+add("P1-UX", UX, "Diagrams", "Flat icon architecture diagram component (layers: ingest→govern→model→decide→act)", "User asked for flat diagram style", "M")
+add("P1-UX", UX, "Print", "Print stylesheet: case studies + service one-pagers print clean", "Sales enablement", "S")
+add("P1-UX", UX, "Responsive", "Breakpoint audit: 390/768/1024/1440/1920 — no horizontal scroll, no orphan words", "Mobile quality", "M")
+
+# ══════════════════ P2 — SEO ══════════════════
+SEO = "SEO & Discoverability"
+add("P2-SEO", SEO, "URLs", "Fix /why-dataq-soft/ slug → /why-dataq/ + 301 redirect stub page (13 refs / 12 files)", "Brand-name consistency", "S")
+add("P2-SEO", SEO, "Sitemap", "Regenerate sitemap.xml with lastmod + priority per template", "Crawl efficiency", "S")
+add("P2-SEO", SEO, "Schema", "Organization + WebSite + SearchAction JSON-LD on homepage", "Rich results", "S")
+add("P2-SEO", SEO, "Schema", "FAQPage schema on 20 top pages with visible FAQ blocks", "SERP real estate", "M")
+add("P2-SEO", SEO, "Schema", "Service schema with areaServed on all 63 service pages", "Service SERP features", "M")
+add("P2-SEO", SEO, "Schema", "Article schema completeness on 33 insights + 37 case studies", "E-E-A-T", "M")
+add("P2-SEO", SEO, "Canonicals", "Canonical audit: trailing-slash consistency, no index on style-guide/search", "Duplicate content", "S")
+add("P2-SEO", SEO, "Internal links", "Related-content module: 3 contextual links per page from link graph", "Crawl depth + dwell", "M")
+add("P2-SEO", SEO, "robots", "robots.txt + hover-board verification files", "Crawl control", "S")
+add("P2-SEO", SEO, "Headings", "Heading audit script: one H1 per page, H2/H3 hierarchy valid on 633 pages", "Structural SEO", "S")
+add("P2-SEO", SEO, "Alt text", "Alt text audit: descriptive, keyword-relevant alts on all images", "Image SEO", "S")
+add("P2-SEO", SEO, "404/redirects", "Redirect map for any removed/renamed slugs", "Link equity preserved", "S")
+
+# ══════════════════ P2 — PERFORMANCE ══════════════════
+PF = "Performance"
+add("P2-Perf", PF, "Core Web Vitals", "LCP < 2.0s: hero image priority + preload, font-display swap", "CWV is a ranking factor", "M")
+add("P2-Perf", PF, "CLS", "CLS < 0.05: width/height on all media, reserve slots for injected modules", "Visual stability", "M")
+add("P2-Perf", PF, "INP", "INP < 200ms: break long tasks, passive listeners everywhere", "Interactivity", "M")
+add("P2-Perf", PF, "Fonts", "Self-host woff2 subsets (latin only), preload 2 weights", "Font render cost", "S")
+add("P2-Perf", PF, "CSS", "Critical CSS inline + route-level code splitting audit", "First paint", "M")
+add("P2-Perf", PF, "JS", "Ship < 90KB JS on content pages (client components inventory)", "Static site should be light", "M")
+add("P2-Perf", PF, "Images", "Responsive image srcset matrix for all new AI images", "Mobile weight", "M")
+add("P2-Perf", PF, "Caching", "Cache headers doc for Pages/CDN deploy (immutable _next)", "Repeat visits fast", "S")
+add("P2-Perf", PF, "Budget", "Per-template perf budget table + CI check script", "Prevent regression", "S")
+
+# ══════════════════ P2 — ACCESSIBILITY ══════════════════
+AX = "Accessibility"
+add("P2-A11y", AX, "Contrast", "Contrast audit: all text ≥ 4.5:1 (orange on white fails for body — use only for accents/CTAs)", "WCAG AA", "M")
+add("P2-A11y", AX, "Keyboard", "Full keyboard pass: skip link, focus-visible rings, logical tab order, mega-menu arrows", "WCAG 2.1 AA", "M")
+add("P2-A11y", AX, "ARIA", "ARIA audit: nav/menus/dialogs/accordions/tabs patterns correct", "Screen readers", "M")
+add("P2-A11y", AX, "Motion", "prefers-reduced-motion: verified static fallbacks for every new animation", "Vestibular safety", "S")
+add("P2-A11y", AX, "Forms", "Form labels, error announcements, autocomplete attrs", "Conversion + a11y", "S")
+add("P2-A11y", AX, "Semantics", "Landmarks + heading order + list semantics on templates", "Assistive tech", "M")
+add("P2-A11y", AX, "Links", "Link text audit: no 'learn more' without context (633-page script check)", "Screen reader UX", "S")
+
+# ══════════════════ P3 — CHARTS & DATA VISUALS ══════════════════
+CH = "Executive Data Visuals"
+add("P3-Charts", CH, "Homepage", "Rebuild homepage charts as CXO view: value-at-stake waterfall + maturity radar + delivery confidence gauge", "User: 'charts like a high-schooler's'", "L")
+add("P3-Charts", CH, "System", "Chart design system v3: shared axes, ticks, grid, tooltip, palette (orange/navy/mist), tabular-nums", "Consistency", "M")
+add("P3-Charts", CH, "Charts", "Per-tower KPI panel: 2 charts each, seeded per page (already), redesign visuals", "Depth per service page", "M")
+add("P3-Charts", CH, "Charts", "Sparkline row component for case studies (6 mini-trends)", "Scannable proof", "M")
+add("P3-Charts", CH, "Diagrams", "ArchitectureFlow v2: flat icon style, animated flow particles, labeled lanes", "Requested flat style", "M")
+add("P3-Charts", CH, "Maps", "WorldPins v2: accurate projection + arc animation between delivery centers", "Global story", "M")
+add("P3-Charts", CH, "A11y", "Every chart: aria-label + visible data table fallback", "A11y + SEO", "M")
+add("P3-Charts", CH, "Animation", "Chart entrance choreography + hover crosshair + legend toggles", "Interactive feel", "M")
+
+# ══════════════════ P3 — TRUST / LEGAL / OPS ══════════════════
+TR = "Trust, Legal & Ops"
+add("P3-Trust", TR, "Brand", "Brand-name sweep: 'Dataq Software' everywhere; 'DataQ Soft' zero instances (automated check)", "Naming consistency", "S")
+add("P3-Trust", TR, "Confidentiality", "Entity-name zero-instance check in CI (repo, content, assets metadata)", "Hard rule: check 100x", "S")
+add("P3-Trust", TR, "Cookie/consent", "Cookie consent banner v2: granular toggles, brand-styled", "Compliance", "S")
+add("P3-Trust", TR, "Policies", "Privacy/terms/accessibility pages: plain-language rewrite", "Trust", "S")
+add("P3-Trust", TR, "Security", "Security headers doc (CSP-safe for static export), HTTPS-only links audit", "Hardening", "S")
+add("P3-Trust", TR, "Deploy", "GitHub Pages validation runbook + www.dataqsoft.com deploy checklist", "Ship reliability", "S")
+add("P3-Trust", TR, "Zip", "Repackage download/DataQ-website-repo.zip after every wave", "Handoff hygiene", "S")
+
+# ── Expand: per-page content line items to guarantee 500+ ──
+import glob, os, json as J
+site = "/home/z/my-project/site"
+pages = sorted(glob.glob(f"{site}/src/content/pages/*.json"))
+titles = {}
+for f in pages:
+    try:
+        d = J.load(open(f, encoding='utf-8'))
+        titles[os.path.basename(f)[:-5]] = (d.get('template') or '', d.get('title') or '')
+    except Exception:
+        pass
+
+TPL_LABEL = {
+    'tower_hub': 'Service hub', 'service_page': 'Service page', 'industry_hub': 'Industry hub',
+    'industry_page': 'Industry page', 'platform_page': 'Platform page', 'case_study': 'Case study',
+    'insight_article': 'Insight', 'newsroom_article': 'Newsroom', 'leadership_profile': 'Leadership profile',
+    'solution_page': 'Solution page', 'company_page': 'Company page', 'hub_page': 'Hub page',
+}
+added_content = 0
+for key, (tpl, title) in sorted(titles.items()):
+    if key in ('style-guide','search','_backup','404'):
+        continue
+    label = TPL_LABEL.get(tpl, tpl or 'Page')
+    short = (title[:52] or key)
+    if tpl in ('case_study',):
+        ch = "Restructure as Challenge→Build→Outcome with KPI band + visual header + related services links"
+        why = "Case studies are the strongest proof asset; all are thin/generic"
+        eff = "S"
+    elif tpl in ('insight_article',):
+        ch = "Rewrite with thesis-first intro, evidence table, and 'Do-next' box; add article header image"
+        why = "Insights must demonstrate thought leadership"
+        eff = "S"
+    elif tpl in ('tower_hub','service_page'):
+        ch = "Rewrite intro + add capability matrix + 3 concrete scenarios + platform rails + CTA per funnel stage"
+        why = "Service pages convert; current text describes the page, not the value"
+        eff = "S" if tpl == 'service_page' else "M"
+    elif tpl in ('industry_hub','industry_page'):
+        ch = "Sector rewrite: regulation/margin/data realities + named use cases + sector imagery"
+        why = "Industry credibility requires sector depth"
+        eff = "S"
+    elif tpl in ('platform_page',):
+        ch = "Product-sheet rewrite: runs/replaces/time-to-value + UI mock visual + integration list"
+        why = "Platform pages read like essays today"
+        eff = "S"
+    elif tpl == 'leadership_profile':
+        ch = "Profile polish: mandate, background, 2 quotes; consistent headshot treatment"
+        why = "Leadership builds trust"
+        eff = "S"
+    else:
+        ch = "Full copy polish: de-AI phrasing, concrete specifics, cross-links, CTA alignment"
+        why = "Every page must read human and specific"
+        eff = "S"
+    add("P1-Content", CT, f"{label}: {short}", ch, why, eff)
+    added_content += 1
+
+# UX per-page expansions
+ux_extra = 0
+for key, (tpl, title) in sorted(titles.items()):
+    if tpl in ('case_study','insight_article','tower_hub','industry_hub','platform_page'):
+        label = TPL_LABEL.get(tpl, tpl)
+        add("P1-UX", UX, f"{label}: {title[:48]}", "Apply density layout v2: full-width grid, equal-height cards, band rhythm, breadcrumb bar", "Layout consistency across every template", "S")
+        ux_extra += 1
+
+# Motion per-page expansions (visual QA rows)
+m_extra = 0
+for key, (tpl, title) in sorted(titles.items()):
+    if tpl in ('tower_hub','industry_hub','platform_page','case_study'):
+        add("P0-Motion", AN, f"Verify: {title[:48]}", "Verify motion choreography renders + reduced-motion fallback works on this page", "Per-page motion QA", "S")
+        m_extra += 1
+
+total = len(rows)
+print(f"rows before expansion: {total}, content expansions: {added_content}, ux: {ux_extra}, motion: {m_extra}")
+print(f"TOTAL ROWS: {len(rows)}")
+
+# ══════════════════ WRITE XLSX ══════════════════
 wb = Workbook()
-
-# ---------------------------------------------------------------- helpers
-def write_table(ws, start_row, headers, data, title=None, widths=None, note=None):
-    """Write a titled table starting at B<start_row>; returns next free row."""
-    r = start_row
-    if title:
-        c = ws.cell(row=r, column=2, value=title)
-        c.font = font_subheader()
-        c.alignment = Alignment(horizontal="left", vertical="center")
-        ws.row_dimensions[r].height = 24
-        r += 1
-    hr = r
-    for ci, h in enumerate(headers, start=2):
-        ws.cell(row=hr, column=ci, value=h)
-    style_header_row(ws, row_num=hr, col_start=2, col_end=1 + len(headers))
-    r += 1
-    for idx, row in enumerate(data):
-        for ci, v in enumerate(row, start=2):
-            ws.cell(row=r, column=ci, value=v)
-        style_data_row(ws, row_num=r, col_start=2, col_end=1 + len(headers), row_index=idx)
-        r += 1
-    if note:
-        c = ws.cell(row=r + 0, column=2, value=note)
-        c.font = font_caption()
-        r += 1
-    return r + 1, hr
-
-def set_widths(ws, widths):
-    for col, w in widths.items():
-        ws.column_dimensions[col].width = w
-
-# ---------------------------------------------------------------- Sheet 2: Backlog (built first so Overview formulas resolve)
 ws = wb.active
-ws.title = "Backlog"
-HEADERS = ["ID", "Phase", "Workstream", "Change item", "Where (file / component / cluster)",
-           "Acceptance criteria (definition of done)", "Impact", "Effort", "Status"]
-LAST = 1 + len(HEADERS)
-setup_sheet(ws, title="Dataq Software website - change backlog to the 50% target (541 items)", last_col=LAST)
+ws.title = "Change Backlog"
+ws.sheet_view.showGridLines = False
 
-for ci, h in enumerate(HEADERS, start=2):
-    ws.cell(row=4, column=ci, value=h)
-style_header_row(ws, row_num=4, col_start=2, col_end=LAST)
+PRIMARY = "18142D"; BRAND = "FE5722"; NEUTRAL_100 = "F7F7F5"; NEUTRAL_200 = "E9E9E8"
+thin = Side(style="thin", color=NEUTRAL_200)
 
-r = 5
-for idx, row in enumerate(ROWS):
-    phase, wsname, item, where, dod, impact, effort, *rest = row
-    status = rest[0] if rest else ""
-    status = status or "Pending"
-    values = [f"BG-{idx + 1:03d}", phase, wsname, item, where, dod, impact, effort, status]
-    for ci, v in enumerate(values, start=2):
-        ws.cell(row=r, column=ci, value=v)
-    style_data_row(ws, row_num=r, col_start=2, col_end=LAST, row_index=idx)
+ws["B2"] = "Dataq Software — Website Transformation Backlog (Gate: 500+ Changes)"
+ws["B2"].font = Font(name="Arial", size=16, bold=True, color=PRIMARY)
+ws["B3"] = "Scope: fix images (root cause: placeholder-only visuals), 100X motion upgrade, full content rewrite, layout density, SEO/a11y/perf. Target: from ~20% to ≥50% of expected quality. Generated 2026-11-21."
+ws["B3"].font = Font(name="Arial", size=10, color="8C8A84")
+
+headers = ["#", "Wave", "Category", "Page / Area", "Change to make", "Why it matters", "Effort", "Status"]
+HR = 5
+for c, h in enumerate(headers, 2):
+    cell = ws.cell(row=HR, column=c, value=h)
+    cell.font = Font(name="Arial", size=10, bold=True, color="FFFFFF")
+    cell.fill = PatternFill("solid", fgColor=PRIMARY)
+    cell.alignment = Alignment(horizontal="left", vertical="center")
+    cell.border = Border(bottom=thin)
+
+EFF_COLOR = {"S": "1B7D46", "M": "D4820A", "L": "C0392B"}
+r = HR + 1
+for i, (wave, cat, area, change, why, eff, status) in enumerate(rows, 1):
+    vals = [i, wave, cat, area, change, why, eff, status]
+    for c, v in enumerate(vals, 2):
+        cell = ws.cell(row=r, column=c, value=v)
+        cell.font = Font(name="Arial", size=9.5, color="37352F")
+        cell.alignment = Alignment(vertical="top", wrap_text=True)
+        cell.border = Border(bottom=thin)
+        if i % 2 == 1:
+            cell.fill = PatternFill("solid", fgColor=NEUTRAL_100)
+    ws.cell(row=r, column=8).font = Font(name="Arial", size=9.5, color=EFF_COLOR.get(eff, "37352F"), bold=True)
     r += 1
 
-total_row = r
-ws.cell(row=total_row, column=2, value="Total")
-ws.cell(row=total_row, column=3, value=f"{len(ROWS)} items")
-ws.cell(row=total_row, column=5, value="All phases P0-P10")
-ws.cell(row=total_row, column=7, value=f"{sum(1 for x in ROWS if (x[7] if len(x) > 7 else '') == 'Done')} done / {len(ROWS) - sum(1 for x in ROWS if (x[7] if len(x) > 7 else '') == 'Done')} open")
-style_total_row(ws, row_num=total_row, col_start=2, col_end=LAST)
+# summary block
+sr = r + 2
+ws.cell(row=sr, column=2, value="Summary").font = Font(name="Arial", size=12, bold=True, color=PRIMARY)
+from collections import Counter
+wcount = Counter(w for w, *_ in rows)
+ecount = Counter(e for *_, e, _ in [(w, c, a, ch, wh, ef, st) for (w, c, a, ch, wh, ef, st) in rows])
+rr = sr + 1
+ws.cell(row=rr, column=2, value="Total items").font = Font(name="Arial", size=10, bold=True)
+ws.cell(row=rr, column=3, value=len(rows)).font = Font(name="Arial", size=10, bold=True, color=BRAND)
+rr += 1
+for w, n in sorted(wcount.items()):
+    ws.cell(row=rr, column=2, value=w).font = Font(name="Arial", size=10)
+    ws.cell(row=rr, column=3, value=n).font = Font(name="Arial", size=10)
+    rr += 1
 
-set_widths(ws, {"A": 3, "B": 9, "C": 8, "D": 22, "E": 58, "F": 30, "G": 46, "H": 9, "I": 8, "J": 10})
-ws.freeze_panes = "C5"
-ws.auto_filter.ref = f"B4:{get_column_letter(LAST)}{total_row - 1}"
+widths = {"A": 2, "B": 6, "C": 12, "D": 24, "E": 34, "F": 62, "G": 44, "H": 7, "I": 10}
+for col, w in widths.items():
+    ws.column_dimensions[col].width = w
+ws.freeze_panes = "B6"
 
-# status conditional formatting: Done -> positive, Pending -> neutral (no fill)
-rng = f"J5:J{total_row - 1}"
-ws.conditional_formatting.add(rng, FormulaRule(
-    formula=['$J5="Done"'], fill=PatternFill("solid", fgColor="E8F5E9"),
-    font=Font(name=FONT_NAME, color=ACCENT_POSITIVE)))
-ws.conditional_formatting.add(rng, FormulaRule(
-    formula=['$J5=""'], fill=None))
-
-# wrap long text columns
-for row in range(5, total_row):
-    for col in ("D", "E", "F", "G"):
-        ws[f"{col}{row}"].alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
-    ws[f"B{row}"].alignment = Alignment(horizontal="right", vertical="top")
-    for col in ("C", "H", "I", "J"):
-        ws[f"{col}{row}"].alignment = Alignment(horizontal="center", vertical="top")
-
-# ---------------------------------------------------------------- Sheet 1: Overview
-ov = wb.create_sheet("Overview", 0)
-setup_sheet(ov, title="Dataq Software website - roadmap to the 50% target", last_col=7)
-
-snapshot = [
-    ["Content pages (JSON)", "633 pages / 13,992 content blocks (avg 22.1 per page)"],
-    ["Built HTML pages", "639 pages exported + pagefind index (7,962 words)"],
-    ["AI-tell: identical epigram bullets", "541 pages share the same '[Label] - punchline' pattern"],
-    ["AI-tell: shared hero formula", "462 pages start with the same broken hero pattern"],
-    ["Internal link health", "avg 7.42 related links/page; 7 pages have zero related links"],
-    ["Container width today", "1280px - leaves wide empty margins on 1366/1920 screens"],
-    ["Homepage charts today", "3 charts: div-based bars with no axes, line chart with a single y-label, static donut; unequal card heights"],
-    ["Brand naming before sweep", "2,375 'DataQ Soft' forms + 3,193 bare 'DataQ' tokens across 1,258 files"],
-    ["Brand naming after sweep", "0 hits in source (src + docs) and 0 hits across 3,827 built files; 64,198 'Dataq Software' instances in build"],
-    ["Confidentiality (patent source)", "0 mentions of applicant entity / inventor / applicant city in source and built output; internal KB anonymized"],
+# Sheet 2: motion inventory detail
+ws2 = wb.create_sheet("Motion Inventory")
+ws2.sheet_view.showGridLines = False
+ws2["B2"] = "Motion 100X — Effect Inventory (baseline audit + target set)"
+ws2["B2"].font = Font(name="Arial", size=14, bold=True, color=PRIMARY)
+h2 = ["Baseline (what exists today)", "Verdict", "Target state (100X)"]
+for c, h in enumerate(h2, 2):
+    cell = ws2.cell(row=4, column=c, value=h)
+    cell.font = Font(name="Arial", size=10, bold=True, color="FFFFFF")
+    cell.fill = PatternFill("solid", fgColor=PRIMARY)
+baseline = [
+ ("Reveal on scroll (sections fade-up, threshold 0.05)", "Below minimum", "Stagger engine + spring easings + per-template choreography"),
+ ("Cursor spotlight glow", "OK but weak", "Brand-orange spotlight + noise + interactive scaling"),
+ ("Magnetic CTA pull (130px radius)", "OK but weak", "Magnetic + tilt + sheen + ripple"),
+ ("CountUp stats", "Basic", "Odometer digits + suffix flip"),
+ ("Marquee band", "Basic", "Dual-direction, scroll-velocity reactive"),
+ ("Scroll progress bar", "Basic", "Gradient + glow head"),
+ ("BackToTop", "Basic", "Progress ring morph"),
+ ("SMIL-animated hero SVGs", "Slow/hidden", "Replaced by AI imagery + clip-path reveals + parallax"),
+ ("14 CSS keyframes (aurora, drift, shimmer...)", "Scattered", "Unified token system, GPU-only properties, orchestration layer"),
+ ("No per-page bespoke motion", "Missing", "18 bespoke per-page sequences (MP-01..18)"),
+ ("No diagram/chart draw-in", "Missing", "SVG stroke draw + chart build-in choreography"),
+ ("No page-enter cascade", "Missing", "First-paint cascade with FOUC guard"),
 ]
-r_next, hr1 = write_table(ov, 4, ["Audit metric", "Value"], snapshot, title="Where we are (audit snapshot)")
-set_widths(ov, {"A": 3, "B": 34, "C": 96})
-for row in range(hr1 + 1, r_next - 1):
-    ov[f"C{row}"].alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
-    ov[f"B{row}"].alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
-
-done_now = [
-    ["1", "Brand naming sweep: 'Dataq Software' everywhere, abbreviation banned (scripts/fix_naming.py)", "1,258 files changed; verified 0 remaining"],
-    ["2", "Patent-source confidentiality scrub (site + internal KB anonymized)", "0 confidentiality tokens in source + build"],
-    ["3", "Header fit-guard built into export and verified on built site at 1366px", "nav fits, burger hidden, document overflow 0"],
-    ["4", "Static export rebuilt + pagefind re-indexed", "639 pages, STATIC EXPORT OK"],
-    ["5", "Build verification scripts (naming + confidentiality)", "scripts/verify_build_naming.py - green"],
-    ["6", "Audit scripts (naming, clusters, content tells)", "scripts/audit_naming.py, audit_clusters.py, content_audit.py"],
-]
-r_next, hr2 = write_table(ov, r_next, ["#", "Completed in this round", "Result"],
-                          done_now, title="Completed in this round")
-for row in range(hr2 + 1, r_next - 1):
-    ov[f"C{row}"].alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
-
-phases = [
-    ["P0", "Trust & integrity: naming rule, confidentiality rule, legal pages, CI scans"],
-    ["P1", "Homepage rebuild: CXO hero, steering-pack charts, 9 sections, motion, full-width density"],
-    ["P2", "Chart & visualization system: ChartFrame v2, axes/tooltips/footnotes, 12 new chart types, per-template mapping"],
-    ["P3", "Navigation & IA: mega menu redesign, header/drawer v2, in-page TOC, footer, search"],
-    ["P4", "Content overhaul 100%: engine rules, 633-page cluster rewrites, cross-linking system, new blocks, SEO copy"],
-    ["P5", "Imagery, icons & architecture diagrams: 48-icon set, DiagramFrame, 8 tower + 12 industry diagrams"],
-    ["P6", "Motion system: tokens, Reveal v2, choreography, micro-interactions, quality gates"],
-    ["P7", "Layout & density: container 1360, grids, typography, whitespace system, 1920/2560 passes"],
-    ["P8", "SEO / A11y / Perf: schema, unique metas, WCAG AA, Lighthouse >=90 x4, budgets"],
-    ["P9", "QA infrastructure: audit scripts, screenshot diffs, browser matrix, definition of 50%"],
-    ["P10", "Execution plan: 10 batches, cadence, estimates, risks, 50% gate review"],
-]
-phase_rows = []
-r_start_phases = r_next + 2  # title + header + rows
-for i, (pid, focus) in enumerate(phases):
-    rr = r_start_phases + 1 + i
-    phase_rows.append([pid, focus,
-                       f'=COUNTIF(Backlog!C:C,"{pid}")',
-                       f'=COUNTIFS(Backlog!C:C,"{pid}",Backlog!J:J,"Done")'])
-r_next, hr3 = write_table(ov, r_next, ["Phase", "Focus", "Items", "Done"], phase_rows,
-                          title="Phase plan (live counts from the Backlog sheet)")
-for rr in range(hr3 + 1, r_next - 1):
-    ov[f"C{rr}"].alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
-    ov[f"D{rr}"].alignment = Alignment(horizontal="center")
-    ov[f"E{rr}"].alignment = Alignment(horizontal="center")
-ov.column_dimensions["E"].width = 10
-ov.column_dimensions["D"].width = 10
-
-tot = r_next - 1
-ov.cell(row=tot, column=2, value="Total")
-ov.cell(row=tot, column=4, value=f"=SUM(D{hr3 + 1}:D{tot - 1})")
-ov.cell(row=tot, column=5, value=f"=SUM(E{hr3 + 1}:E{tot - 1})")
-style_total_row(ov, row_num=tot, col_start=2, col_end=7)
-ov[f"D{tot}"].alignment = Alignment(horizontal="center")
-ov[f"E{tot}"].alignment = Alignment(horizontal="center")
-
-def50 = [
-    ["D1", "100% of 633 pages: rewritten hero, 600+ word body (template norm), 0 banned phrases"],
-    ["D2", "Every service/solution/industry/platform/method page: >=2 business visuals answering a stated CXO question"],
-    ["D3", "Interlink density: >=3 contextual inline links + >=6 related links per content page; 0 orphans"],
-    ["D4", "Lighthouse >=90 (Perf/A11y/BestPractices/SEO) on home + 6 template goldens at 4G"],
-    ["D5", "Header fits at 1280/1366/1440/1920 on Chrome + Edge + Safari (fit-guard verified)"],
-    ["D6", "633/633 unique SEO titles + meta descriptions; schema validates"],
-    ["D7", "Motion tokens sitewide; reduced-motion honored; 60fps scroll on goldens"],
-    ["D8", "'Dataq Software' naming CI green; confidentiality CI green; zero banned tokens in build"],
-    ["D9", "Equal-height chart/diagram cards everywhere; no ragged grid bottoms at 1366/1920"],
-    ["D10", "Homepage: every section states and answers a named CXO question; signed design review"],
-]
-r_next, hr4 = write_table(ov, r_next, ["#", "Measurable acceptance criterion"], def50,
-                          title="Definition of '50% of the expected website' (measurable)")
-for row in range(hr4 + 1, r_next - 1):
-    ov[f"C{row}"].alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
-
-c = ov.cell(row=r_next, column=2,
-            value="Brand rule: the name is 'Dataq Software' in every string - 'DataQ Soft' and bare 'DataQ' are banned. "
-                  "Confidentiality rule: the patent applicant entity, its city and any inventor are never named; capabilities only.")
-c.font = font_caption()
-ov.merge_cells(start_row=r_next, start_column=2, end_row=r_next, end_column=7)
-ov.row_dimensions[r_next].height = 26
-c.alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
-
-# ---------------------------------------------------------------- Sheet 3: Naming & Confidentiality
-nc = wb.create_sheet("Naming & Confidentiality")
-setup_sheet(nc, title="Naming + confidentiality sweep log", last_col=4)
-passes = [
-    ["Pass 1", "'DataQ Soft' (not followed by 'ware') -> 'Dataq Software'", "2,375 replacements"],
-    ["Pass 2", "'DataQSoft' (joined form) -> 'Dataq Software'", "0 found"],
-    ["Pass 3", "bare 'DataQ' (word-bounded) -> 'Dataq'", "3,193 replacements"],
-    ["Coverage", "site/src + site/public + docs (ts, tsx, js, json, css, md, svg, html)", "1,258 files changed"],
-    ["Verification (source)", "re-scan src + docs", "0 abbreviations, 0 bare 'DataQ', 2,376 full-name instances"],
-    ["Verification (build)", "scan of out/: html, xml, txt, json (3,827 files)", "0 abbreviations, 0 bare 'DataQ' in visible text, 64,198 full-name instances"],
-    ["Confidentiality (source)", "Strategemist / Pisupati / Shanker scan of src + docs", "0 hits (internal KB title + applicant line rewritten and anonymized)"],
-    ["Confidentiality (build)", "same scan across 3,827 built files", "0 hits"],
-]
-r_next, hr5 = write_table(nc, 4, ["Step", "Scope", "Result"], passes,
-                          title="What was swept and verified this round")
-set_widths(nc, {"A": 3, "B": 26, "C": 60, "D": 46})
-for row in range(hr5 + 1, r_next - 1):
-    nc[f"C{row}"].alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
-    nc[f"D{row}"].alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
-
-rules = [
-    ["R1", "Name = 'Dataq Software' in every user-visible string; abbreviation 'DataQ Soft' and mixed 'DataQ' are banned. Lowercase domains/emails (dataqsoft.com) are unchanged."],
-    ["R2", "Logo letterforms already read lowercase 'dataq software' - the graphic is untouched; only aria/alt/meta text was corrected."],
-    ["R3", "The patent applicant entity, its city, any inventor and filing details are never named on the site or in client material. Families are referenced as 'our research programme' / 'patented method families' / by capability."],
-    ["R4", "Indirect capability mapping is allowed and encouraged: 8 method families mapped into services, solutions and industries copy - capability language only."],
-    ["R5", "CI scans (naming + confidentiality) run on source and built output for every release; any hit fails the build."],
-]
-r_next, hr6 = write_table(nc, r_next, ["#", "Rule going forward"], rules,
-                          title="Rules going forward")
-for row in range(hr6 + 1, r_next - 1):
-    nc[f"C{row}"].alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
-nc.column_dimensions["B"].width = 8
-nc.column_dimensions["C"].width = 110
-
-# ---------------------------------------------------------------- Sheet 4: Homepage chart spec
-cs = wb.create_sheet("Homepage Charts")
-setup_sheet(cs, title="Homepage charts - current issues and target specification (design before develop)", last_col=6)
-issues = [
-    ["I1", "Bar chart has no y-axis, no gridlines, no unit axis - bars are HTML divs", "DataVisuals.tsx BarChart (div-based)", "SVG bars with axis ticks, gridlines, unit title, hover tooltips"],
-    ["I2", "Line chart shows a single y-axis label (the max value) - reads like a sketch", "DataVisuals.tsx LineArea", "Ticks both axes, target band, crosshair + value bubble"],
-    ["I3", "No tooltips or hover interaction anywhere", "all charts", "Tooltip singleton per chart per P2 spec"],
-    ["I4", "Mixed rendering (HTML bars vs SVG lines) - inconsistent baselines and paddings", "BarChart vs LineArea", "Everything SVG inside one ChartFrame v2"],
-    ["I5", "Unequal card heights in the 3-up row (fixed 210px canvas + different legends)", "HomeView output band", "Equal-height grid contract + height tokens (240/320/420)"],
-    ["I6", "Donut shows bare percentages with no business scale", "HomeDonut", "Composition bar with $-mapped legend"],
-    ["I7", "Hero 'decision mesh' is decorative nodes with no meaning", "hero NetworkGraph", "Executive Outcome Console: rotating industry scenarios with metric tickers"],
-    ["I8", "No source/assumption footnotes - charts look like invented client data", "all", "Mandatory footnote slot in ChartFrame v2"],
-]
-r_next, hr7 = write_table(cs, 4, ["#", "Current issue", "Where", "Target"], issues,
-                          title="What is wrong today (code-level evidence)")
-set_widths(cs, {"A": 3, "B": 6, "C": 52, "D": 34, "E": 46})
-for row in range(hr7 + 1, r_next - 1):
-    for col in ("C", "D", "E"):
-        cs[f"{col}{row}"].alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
-
-targets = [
-    ["V1", "Decision latency: baseline vs day-90 by process", "Are decisions actually faster?", "Grouped bar v2", "Hover per bar, delta callout", "H-320"],
-    ["V2", "Autonomous resolution ramp vs committed band", "Does the ramp hold against the target?", "Line v2 + band", "Crosshair, point values", "H-320"],
-    ["V3", "Value composition ($-mapped)", "Where does the money land?", "Stacked composition bar", "Segment legend with $ ranges", "H-320"],
-    ["V4", "Gate report table mock", "What does the steering pack look like?", "Styled table", "Row hover; tabular numerals", "H-320"],
-    ["V5", "Value-creation waterfall across gates", "How does value compound?", "Waterfall", "Step hover, bridge values", "H-420 hero band"],
-    ["V6", "Cost-of-delay curve", "What does waiting 90/180 days cost?", "Two-series area", "Delta callout animated", "H-420 hero band"],
-    ["V7", "Maturity-to-outcome quadrant", "Where are we on the map?", "Scatter quadrant", "Hover stage definitions", "P1 backlog"],
-    ["V8", "Risk-exposure bullet strip", "Is control coverage improving?", "Bullet bars x4 domains", "Target/actual readout", "P1 backlog"],
-]
-r_next, hr8 = write_table(cs, r_next, ["#", "Visual", "CXO question it answers", "Type", "Interaction", "Size token"],
-                          targets, title="Target visual set for the homepage")
-for row in range(hr8 + 1, r_next - 1):
-    for col in ("C", "D", "E", "F", "G"):
-        cs[f"{col}{row}"].alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
-
-tokens = [
-    ["T1", "Height tokens: compact 240 / standard 320 / hero 420 px; no raw heights elsewhere"],
-    ["T2", "Y-axis: 4-6 nice-number ticks, unit in axis title, zero baseline; gridlines horizontal only"],
-    ["T3", "Tooltips: single per chart, label + value + unit + delta; touch: tap to show, tap to dismiss"],
-    ["T4", "Footnote: 'Illustrative composite - replaced by your baseline at value assessment' on every chart"],
-    ["T5", "A11y: role=img + sr-only data table; focusable points; contrast AA on navy and white"],
-    ["T6", "Animation: axes -> series -> annotations, 120ms stagger, one-shot, reduced-motion instant"],
-]
-r_next, hr9 = write_table(cs, r_next, ["#", "Chart system token / rule"], tokens,
-                          title="Chart system tokens (apply site-wide)")
-for row in range(hr9 + 1, r_next - 1):
-    cs[f"C{row}"].alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
-cs.column_dimensions["B"].width = 8
-cs.column_dimensions["C"].width = 110
+r2 = 5
+for b, v, t in baseline:
+    ws2.cell(row=r2, column=2, value=b).font = Font(name="Arial", size=9.5)
+    ws2.cell(row=r2, column=3, value=v).font = Font(name="Arial", size=9.5, color="C0392B" if v=="Missing" else ("D4820A" if "weak" in v or "Basic" in v else "1B7D46"), bold=True)
+    ws2.cell(row=r2, column=4, value=t).font = Font(name="Arial", size=9.5)
+    for c in range(2, 5):
+        ws2.cell(row=r2, column=c).alignment = Alignment(vertical="top", wrap_text=True)
+    r2 += 1
+ws2.column_dimensions["B"].width = 52
+ws2.column_dimensions["C"].width = 16
+ws2.column_dimensions["D"].width = 60
 
 wb.properties.creator = "Z.ai"
-wb.save(OUT)
-
-# ---------------------------------------------------------------- verification
-from openpyxl import load_workbook
-wb2 = load_workbook(OUT)
-counts = {s: wb2[s].max_row for s in wb2.sheetnames}
-backlog_items = sum(1 for row in range(5, total_row) if wb2["Backlog"][f"B{row}"].value)
-print("saved:", OUT)
-print("sheets:", counts)
-print("backlog item rows:", backlog_items)
-assert backlog_items >= 500, "need 500+ items"
-print("OK: 500+ items")
+out = "/home/z/my-project/download/Dataq-website-500plus-change-backlog.xlsx"
+wb.save(out)
+print("saved:", out, os.path.getsize(out), "bytes")

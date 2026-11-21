@@ -942,3 +942,353 @@ html {
     radial-gradient(46% 38% at 8% 108%, rgba(254, 87, 34, 0.08), transparent 60%),
     linear-gradient(165deg, #1a1533 0%, #120e26 55%, #0c0918 100%);
 }
+
+/* ═════════════════════════════════════════════════════════════════════════
+   Wave 4 — MOTION 100X (946-item backlog, P0-Motion)
+   Tokens, stagger engine, split headlines, tilt cards, image wipes,
+   parallax layers, section vignettes, odometer beat, header choreography.
+   Everything here is disabled by the reduced-motion kill switch at the end.
+   ═════════════════════════════════════════════════════════════════════════ */
+:root {
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-swift: cubic-bezier(0.55, 0, 0.1, 1);
+  --dur-1: 0.28s;
+  --dur-2: 0.55s;
+  --dur-3: 0.8s;
+  --stagger-step: 70ms;
+}
+
+/* ── hero cascade: pure-CSS first-paint choreography (JS-independent; the
+   animation always completes, so content can never stay hidden) ───────── */
+@keyframes dq-hero-item {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: none; }
+}
+.dq-hero > * {
+  animation: dq-hero-item 0.9s var(--ease-out-expo) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 80ms);
+}
+.dq-hero > *:nth-child(1) { --i: 0; }
+.dq-hero > *:nth-child(2) { --i: 1; }
+.dq-hero > *:nth-child(3) { --i: 2; }
+.dq-hero > *:nth-child(4) { --i: 3; }
+
+/* ── split-word headline masks ─────────────────────────────────────────── */
+.js-motion-v3 main [data-split] .split-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.js-motion-v3 main [data-split] .split-word-inner {
+  display: inline-block;
+  transform: translateY(110%) rotate(4deg);
+  opacity: 0;
+  transition:
+    transform 0.85s var(--ease-out-expo),
+    opacity 0.6s ease-out;
+  transition-delay: calc(var(--i, 0) * 55ms + 120ms);
+  will-change: transform, opacity;
+}
+.js-motion-v3 main [data-split].is-inview .split-word-inner {
+  transform: none;
+  opacity: 1;
+}
+
+/* ── universal stagger engine: [data-stagger] children rise by index ───── */
+.js-motion-v3 main [data-stagger] > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s var(--ease-out-expo),
+    transform 0.7s var(--ease-spring);
+  transition-delay: calc(var(--i, 0) * var(--stagger-step));
+}
+.js-motion-v3 main [data-stagger].is-inview > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── card lift + tilt + glare (pointer tracked by runtime) ─────────────── */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.45s var(--ease-out-expo), box-shadow 0.45s var(--ease-out-expo);
+  will-change: transform;
+  position: relative;
+}
+.tilt-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    420px circle at var(--gx, 50%) var(--gy, 50%),
+    rgba(254, 87, 34, 0.1),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.tilt-card:hover::before {
+  opacity: 1;
+}
+.tilt-card:hover {
+  box-shadow: 0 30px 60px -22px rgba(24, 20, 45, 0.4);
+}
+
+/* ── image wipe reveal: clip-path unmask + inner settle ────────────────── */
+.js-motion-v3 main .pi-figure {
+  opacity: 0;
+  clip-path: inset(6% 4% 6% 4% round 16px);
+  transform: scale(0.985);
+  transition:
+    opacity 0.9s var(--ease-out-expo),
+    clip-path 1.1s var(--ease-swift),
+    transform 0.9s var(--ease-out-expo);
+}
+.js-motion-v3 main .pi-figure.is-inview {
+  opacity: 1;
+  clip-path: inset(0 0 0 0 round 16px);
+  transform: none;
+}
+.pi-figure .pi-img {
+  will-change: transform;
+}
+
+/* ── parallax layers (transform set by runtime; base state safe) ───────── */
+[data-parallax] {
+  will-change: transform;
+}
+
+/* ── dark-section vignette entrance ────────────────────────────────────── */
+.js-motion-v3 main .vignette-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(90% 90% at 50% 50%, transparent 40%, rgba(12, 9, 24, 0.55) 100%);
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.js-motion-v3 main .vignette-section.is-inview::before {
+  opacity: 1;
+}
+
+/* ── section wipe: brand underline sweeps across on entry ──────────────── */
+.js-motion-v3 main .wipe-section {
+  position: relative;
+}
+.js-motion-v3 main .wipe-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, #fe5722, #ff9a62);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.1s var(--ease-swift) 0.1s;
+  pointer-events: none;
+}
+.js-motion-v3 main .wipe-section.is-inview::after {
+  transform: scaleX(1);
+}
+
+/* ── odometer beat: CountUp pop when done (class flipped by runtime) ───── */
+.count-live {
+  animation: count-pop 0.5s var(--ease-spring) 0.9s both;
+}
+@keyframes count-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.045); }
+  100% { transform: scale(1); }
+}
+
+/* ── ripple on CTA click ───────────────────────────────────────────────── */
+.btn-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.dq-ripple {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: dq-ripple 0.6s ease-out forwards;
+  z-index: 2;
+}
+@keyframes dq-ripple {
+  from { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+  to { opacity: 0; transform: translate(-50%, -50%) scale(26); }
+}
+
+/* ── spotlight v2: expands over interactive elements ───────────────────── */
+#dq-cursor-glow.glow-hot {
+  background: radial-gradient(circle, rgba(254, 87, 34, 0.16), rgba(254, 87, 34, 0.06) 45%, transparent 70%);
+}
+
+/* ── marquee: only runs when visible (.mq-live from runtime) ───────────── */
+.js-motion-v3 .marquee:not(.mq-live) .marquee-inner {
+  animation-play-state: paused;
+}
+
+/* ── link underline morph (site-wide inline links upgrade) ─────────────── */
+.dq-link {
+  background-image: linear-gradient(90deg, #fe5722, #ff9a62);
+  background-size: 0% 1.5px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size 0.35s var(--ease-swift);
+  padding-bottom: 2px;
+}
+.dq-link:hover,
+a:hover > .dq-link,
+.dq-link-parent:hover .dq-link {
+  background-size: 100% 1.5px;
+}
+
+/* ── stat band flip beat ───────────────────────────────────────────────── */
+.js-motion-v3 main .stat-flip .tabular-nums {
+  transition: transform 0.5s var(--ease-spring), opacity 0.4s ease;
+}
+.js-motion-v3 main .stat-flip.is-inview .tabular-nums {
+  animation: stat-flip 0.7s var(--ease-spring) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 150ms);
+}
+@keyframes stat-flip {
+  0% { transform: rotateX(70deg) translateY(8px); opacity: 0; }
+  100% { transform: none; opacity: 1; }
+}
+
+/* ── quote line fade-up + oversized mark slide ─────────────────────────── */
+.js-motion-v3 main .quote-fade p,
+.js-motion-v3 main .quote-fade blockquote {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+.js-motion-v3 main .quote-fade.is-inview p,
+.js-motion-v3 main .quote-fade.is-inview blockquote {
+  opacity: 1;
+  transform: none;
+}
+.js-motion-v3 main .quote-fade .quote-mark {
+  opacity: 0;
+  transform: translateX(-26px) rotate(-8deg);
+  transition: transform 0.9s var(--ease-spring), opacity 0.5s ease;
+}
+.js-motion-v3 main .quote-fade.is-inview .quote-mark {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── CTA band: breathing gradient border ───────────────────────────────── */
+.cta-glow-band {
+  position: relative;
+  isolation: isolate;
+}
+.cta-glow-band::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(120deg, rgba(254, 87, 34, 0.75), rgba(255, 154, 98, 0.25), rgba(254, 87, 34, 0.75));
+  background-size: 220% 220%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: cta-border-drift 7s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes cta-border-drift {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
+
+/* ── floating orbs behind stats / CTA bands ────────────────────────────── */
+.orb-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.orb-field .orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(46px);
+  opacity: 0.5;
+  animation: orb-float 14s ease-in-out infinite alternate;
+  will-change: transform;
+}
+.orb-field .orb:nth-child(1) { width: 300px; height: 300px; left: 6%; top: 12%; background: rgba(254, 87, 34, 0.2); animation-duration: 13s; }
+.orb-field .orb:nth-child(2) { width: 220px; height: 220px; right: 10%; top: 55%; background: rgba(255, 154, 98, 0.16); animation-duration: 17s; animation-delay: -6s; }
+.orb-field .orb:nth-child(3) { width: 160px; height: 160px; left: 44%; bottom: 4%; background: rgba(254, 87, 34, 0.14); animation-duration: 15s; animation-delay: -10s; }
+@keyframes orb-float {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(4%, -7%, 0) scale(1.12); }
+}
+
+/* ── logo draw beat ────────────────────────────────────────────────────── */
+.logo-mark path,
+.logo-mark circle {
+  transition: stroke-dashoffset 1s var(--ease-out-expo);
+}
+
+/* ── 404 / misc: particle assembly (used by not-found) ─────────────────── */
+@keyframes particle-in {
+  from { opacity: 0; transform: translate3d(var(--px, 0), var(--py, -40px), 0) scale(0.6); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ═══════════ REDUCED-MOTION KILL SWITCH (covers every effect above) ═════ */
+@media (prefers-reduced-motion: reduce) {
+  .dq-hero > *,
+  .js-motion-v3 main [data-stagger] > *,
+  .js-motion-v3 main [data-split] .split-word,
+  .js-motion-v3 main [data-split] .split-word-inner,
+  .js-motion-v3 main .pi-figure,
+  .js-motion-v3 main .quote-fade p,
+  .js-motion-v3 main .quote-fade blockquote,
+  .js-motion-v3 main .quote-fade .quote-mark,
+  .js-motion-v3 main .stat-flip .tabular-nums {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+    clip-path: none !important;
+  }
+  .js-motion-v3 main .vignette-section::before,
+  .js-motion-v3 main .wipe-section::after {
+    opacity: 0 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .tilt-card,
+  .tilt-card::before {
+    transform: none !important;
+    opacity: 0 !important;
+  }
+  .cta-glow-band::before,
+  .orb-field .orb,
+  .count-live,
+  .dq-ripple {
+    animation: none !important;
+  }
+  .count-live { transform: none; }
+  [data-parallax] { transform: none !important; }
+  #dq-cursor-glow { display: none !important; }
+  .js-motion-v3 .marquee:not(.mq-live) .marquee-inner {
+    animation-play-state: running;
+  }
+}

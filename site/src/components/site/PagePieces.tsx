@@ -131,7 +131,7 @@ export function PageHero({
                 {kicker}
               </p>
             )}
-            <h1 className="text-display-2 mt-2 max-w-3xl text-white">{page.title}</h1>
+            <h1 data-split className="text-display-2 mt-2 max-w-3xl text-white">{page.title}</h1>
             {intro && <p className="mt-4 text-[15px] leading-relaxed text-white/70">{intro}</p>}
           </div>
         {/* context chips replace the generic pill (CHG-289) */}
@@ -214,11 +214,11 @@ export function Blocks({ blocks, skip = [] }: { blocks: Block[]; skip?: string[]
     } else if (b.t === "bullets") {
       out.push(
         <Reveal key={`b-${out.length}`}>
-          <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+          <ul data-stagger className="mt-5 grid gap-3 sm:grid-cols-2">
             {b.items.map(([title, desc], i) => (
               <li
                 key={i}
-                className="card-sheen group rounded-xl border border-line bg-white p-4 transition hover:-translate-y-0.5 hover:border-brand/50 shadow-1 hover:shadow-2"
+                className="card-sheen tilt-card group rounded-xl border border-line bg-white p-4 transition hover:-translate-y-0.5 hover:border-brand/50 shadow-1 hover:shadow-2"
               >
                 <p className="text-[13.5px] font-semibold text-navy-800">{title}</p>
                 <p className="mt-1 text-[12.5px] leading-relaxed text-slate-body/80">{desc}</p>
@@ -293,7 +293,12 @@ export function Blocks({ blocks, skip = [] }: { blocks: Block[]; skip?: string[]
 export function CtaBand({ message }: { message: string }) {
   return (
     <Reveal className="mt-12">
-      <div className="relative overflow-hidden rounded-2xl grad-navy-field px-6 py-10 text-white shadow-3 sm:px-10">
+      <div className="cta-glow-band relative overflow-hidden rounded-2xl grad-navy-field px-6 py-10 text-white shadow-3 sm:px-10">
+        <div className="orb-field" aria-hidden="true">
+          <span className="orb" />
+          <span className="orb" />
+          <span className="orb" />
+        </div>
         <div className="absolute inset-0 dot-grid" aria-hidden="true" />
         <div className="absolute inset-0 grad-orange-glow" aria-hidden="true" />
         <div className="absolute inset-0 pattern-noise" aria-hidden="true" />
@@ -330,12 +335,12 @@ export function CardGrid({ cards, heading, sub }: { cards: Card[]; heading?: str
           {sub && <p className="mt-1 text-[13.5px] text-slate-body/70">{sub}</p>}
         </div>
       </div>
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div data-stagger className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {cards.map((c) => (
           <Link
             key={c.url + c.title}
             href={c.url}
-            className="group flex flex-col rounded-2xl border border-line bg-white p-5 transition hover:-translate-y-0.5 hover:border-brand/60 shadow-1 hover:shadow-2"
+            className="tilt-card group flex flex-col rounded-2xl border border-line bg-white p-5 transition hover:-translate-y-0.5 hover:border-brand/60 shadow-1 hover:shadow-2"
           >
             <span className="inline-flex w-fit rounded-full bg-brand-tint px-2.5 py-0.5 text-[10.5px] font-semibold uppercase tracking-wider text-brand-deep">
               {c.tag}
@@ -366,7 +371,7 @@ export function Quote({
 }) {
   return (
     <Reveal>
-      <figure className="relative overflow-hidden rounded-2xl grad-navy-field px-6 py-10 text-white shadow-3 sm:px-12 sm:py-12">
+      <figure className="quote-fade relative overflow-hidden rounded-2xl grad-navy-field px-6 py-10 text-white shadow-3 sm:px-12 sm:py-12">
         <div className="absolute inset-0 dot-grid" aria-hidden="true" />
         <div className="absolute inset-0 grad-orange-glow-soft" aria-hidden="true" />
         <span
@@ -420,7 +425,7 @@ export function RelatedRail({ links }: { links: Card[] }) {
 /* ── Stats strip (CHG-069: tabular numerals, brand values) ────────────── */
 export function StatsStrip({ stats }: { stats: { value: string; label: string }[] }) {
   return (
-    <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-4">
+    <div data-stagger className="stat-flip grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-4">
       {stats.map((s) => (
         <div key={s.label} className="bg-navy-800/70 px-4 py-5 text-center backdrop-blur">
           <p className="font-display text-[22px] font-bold tabular-nums text-brand sm:text-[26px]">

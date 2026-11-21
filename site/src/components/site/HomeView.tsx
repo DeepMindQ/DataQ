@@ -152,7 +152,11 @@ export default function HomeView() {
       </div>
 
       {/* steering pack — dark executive band: the delivery output, board-grade (Batch 2) */}
-      <section id="output" className="relative scroll-mt-24 overflow-hidden grad-navy-field text-white">
+      <section id="output" className="vignette-section relative scroll-mt-24 overflow-hidden grad-navy-field text-white">
+        <div className="orb-field" aria-hidden="true">
+          <span className="orb" />
+          <span className="orb" />
+        </div>
         <div className="bg-field-drift absolute inset-0 dot-grid" aria-hidden="true" />
         <div className="absolute inset-0 pattern-noise" aria-hidden="true" />
         <div className="relative container-dq section-y-sm">
@@ -205,7 +209,7 @@ export default function HomeView() {
                 <Reveal key={t.url} delay={i * 40}>
                   <Link
                     href={t.url}
-                    className="group flex h-full flex-col rounded-2xl border border-line bg-white p-5 transition hover:-translate-y-0.5 hover:border-brand/60 shadow-1 hover:shadow-2"
+                    className="tilt-card group flex h-full flex-col rounded-2xl border border-line bg-white p-5 transition hover:-translate-y-0.5 hover:border-brand/60 shadow-1 hover:shadow-2"
                   >
                     <span className="flex items-center justify-between">
                       <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-navy-800 text-brand-300 transition group-hover:bg-brand group-hover:text-white">
@@ -260,7 +264,7 @@ export default function HomeView() {
             <Reveal key={p.ref} delay={i * 50}>
               <Link
                 href="/patented-intelligence/"
-                className="group flex h-full flex-col rounded-2xl border border-line bg-white p-5 transition hover:-translate-y-0.5 hover:border-brand/60 shadow-1 hover:shadow-2"
+                className="tilt-card group flex h-full flex-col rounded-2xl border border-line bg-white p-5 transition hover:-translate-y-0.5 hover:border-brand/60 shadow-1 hover:shadow-2"
               >
                 <span className="w-fit rounded-full bg-brand-tint px-2.5 py-0.5 text-[10.5px] font-bold uppercase tracking-wider text-brand-deep">
                   {p.ref}
