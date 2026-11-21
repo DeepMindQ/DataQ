@@ -85,88 +85,10 @@ export function StickyMobileCTA({ cta }: { cta: { label: string; url: string } }
   );
 }
 
-/* ── In-page TOC + section dots (CHG-326/270/271/355) ─────────────────── */
-export function TableOfContents({ items }: { items: { id: string; text: string }[] }) {
-  const [active, setActive] = useState(items[0]?.id ?? "");
-  useEffect(() => {
-    if (!items.length) return;
-    const heads = items
-      .map((it) => document.getElementById(it.id))
-      .filter(Boolean) as HTMLElement[];
-    if (!heads.length) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id);
-        });
-      },
-      { rootMargin: "-72px 0px -62% 0px", threshold: 0 },
-    );
-    heads.forEach((h) => io.observe(h));
-    return () => io.disconnect();
-  }, [items]);
-  if (items.length < 3) return null;
-  return (
-    <nav aria-label="On this page" className="sticky top-32 hidden max-h-[70vh] overflow-y-auto xl:block">
-      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-body/50">On this page</p>
-      <ul className="mt-3 space-y-1 border-l border-line">
-        {items.map((it) => (
-          <li key={it.id}>
-            <a
-              href={`#${it.id}`}
-              aria-current={active === it.id ? "true" : undefined}
-              className={`-ml-px block border-l-2 py-1.5 pl-3 text-[12px] leading-snug transition-colors ${
-                active === it.id
-                  ? "border-brand font-semibold text-brand-deep"
-                  : "border-transparent text-slate-body/65 hover:border-line hover:text-navy-800"
-              }`}
-            >
-              {it.text}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  );
-}
-
-export function SectionDots({ sections }: { sections: { id: string; label: string }[] }) {
-  const [active, setActive] = useState("");
-  useEffect(() => {
-    const els = sections
-      .map((s) => document.getElementById(s.id))
-      .filter(Boolean) as HTMLElement[];
-    if (!els.length) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id);
-        });
-      },
-      { rootMargin: "-45% 0px -45% 0px" },
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, [sections]);
-  if (sections.length < 3) return null;
-  return (
-    <div
-      aria-hidden="true"
-      className="fixed right-5 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-center gap-2.5 2xl:flex"
-    >
-      {sections.map((s) => (
-        <a
-          key={s.id}
-          href={`#${s.id}`}
-          title={s.label}
-          className={`rounded-full transition-all duration-300 ${
-            active === s.id ? "h-2.5 w-2.5 bg-brand" : "h-1.5 w-1.5 bg-navy-800/25 hover:bg-brand/60"
-          }`}
-        />
-      ))}
-    </div>
-  );
-}
+/* (Phase 1 redesign) The in-page "On this page" TOC rail and the right-edge
+   section dots were removed from the page template — they duplicated the
+   hover anchor links and gave long pages a term-paper structure. Section
+   navigation now lives in the breadcrumbs + hover anchors + related rails. */
 
 /* ── Header instant search overlay (CHG-358/359/360) ──────────────────── */
 type PfdResult = { url: string; meta: { title: string }; excerpt: string };
@@ -444,8 +366,9 @@ export function IndustryFinder({
 }
 
 /* ── Interactive platform showcase tabs (CHG-240/241) ─────────────────── */
-/* ── Interactive platform showcase tabs (CHG-240/241 + BG-046 dense rebuild) ── */
-const PLATFORM_EXTRAS: Record<
+/* ── Interactive platform showcase tabs (CHG-240/241 + BG-046 dense rebuild) ──
+   PLATFORM_EXTRAS is also consumed by the header mega-menu (platform preview). */
+export const PLATFORM_EXTRAS: Record<
   string,
   { caps: string[]; method: string; metrics: [string, number][] }
 > = {
@@ -584,17 +507,4 @@ export function PlatformTabs({
   );
 }
 
-/* ── Scroll restoration on route change (CHG-383) ─────────────────────── */
-export function ScrollRestoration() {
-  const router = useRouter();
-  useEffect(() => {
-    const handler = () => window.scrollTo(0, 0);
-    // Next App Router restores scroll by default on popstate; ensure pushes go to top
-    window.history.scrollRestoration = "manual";
-    const origPush = router.push;
-    return () => {
-      window.history.scrollRestoration = "auto";
-    };
-  }, [router]);
-  return null;
-}
+

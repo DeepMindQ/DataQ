@@ -3,7 +3,6 @@ import Image from "next/image";
 import { ArrowRight, ArrowUpRight, ChevronRight, Info, Layers, Cog, Factory, FileBarChart2, BookOpen, Boxes, Building2, Compass, UserRound, Mail, Scale, Briefcase, Newspaper, Wrench, MapPin, Handshake, ShieldCheck, FileText } from "lucide-react";
 import Reveal from "./Reveal";
 import { CountUp } from "./Motion";
-import { TableOfContents } from "./Wave3";
 import { OutputTelemetry, PatentStrip, OfficesMap } from "./PageAugment";
 import { pick as pickImagery } from "./PageImagery";
 import { TechDiagram, DIAGRAM_KINDS, type DiagramKind } from "./TechDiagrams";
@@ -264,7 +263,7 @@ export function Blocks({ blocks, skip = [] }: { blocks: Block[]; skip?: string[]
     if (b.t === "p") {
       out.push(
         <Reveal key={`p-${out.length}`}>
-          <p className="measure text-[14.5px] leading-[1.75] text-slate-body">{b.x}</p>
+          <p className="measure text-[15px] leading-[1.8] text-slate-body">{b.x}</p>
         </Reveal>,
       );
     } else if (b.t === "diagram") {
@@ -284,9 +283,8 @@ export function Blocks({ blocks, skip = [] }: { blocks: Block[]; skip?: string[]
         <Reveal key={`h2-${h2Index}`}>
           <h2
             id={anchorId}
-            className="group measure mt-10 flex scroll-mt-28 items-baseline gap-3 font-display text-[21px] font-semibold text-navy-800 sm:text-[23px]"
+            className="dq-h2 group measure mt-12 flex scroll-mt-28 items-baseline gap-3 font-display text-[22px] font-semibold text-navy-800 sm:text-[24px]"
           >
-            <span aria-hidden="true" className="h-5 w-1 shrink-0 rounded-full bg-brand" />
             {b.x}
             {/* anchor link on hover (CHG-328) */}
             <a
@@ -537,9 +535,6 @@ function siblingPages(page: PageData) {
   const at = (i: number) => group[(i + group.length) % group.length];
   return { prev: at(idx - 1), next: at(idx + 1), position: idx + 1, total: group.length };
 }
-function hubOf(page: PageData): Crumb | null {
-  return page.crumbs.find((c) => c.url && c.url !== page.url) ?? null;
-}
 const NEXT_STEP: Record<string, { label: string; blurb: string; url: string }> = {
   service_page: { label: "Value assessment", blurb: "Price the delta in your estate before anything is signed.", url: "/value-assessment/" },
   tower_hub: { label: "Book a briefing", blurb: "45 minutes with the tower lead — your metric, our method.", url: "/book-a-briefing/" },
@@ -569,11 +564,7 @@ function faqJsonLd(page: PageData): object | null {
 /* ── Universal content page (all templates except home) ───────────────── */
 export function ContentPage({ page }: { page: PageData }) {
   const kicker = sectionKicker(page);
-  const tocItems = page.blocks
-    .filter((b) => b.t === "h2")
-    .map((b, i) => ({ id: `sec-${i + 1}`, text: (b as { x: string }).x }));
   const siblings = siblingPages(page);
-  const hub = hubOf(page);
   const nextStep = NEXT_STEP[page.template];
   const faq = faqJsonLd(page);
   return (
@@ -606,100 +597,91 @@ export function ContentPage({ page }: { page: PageData }) {
         )}
       </PageHero>
       <div className="container-dq py-12">
-        {/* content-fill layout fix (2026-11-20): main copy left (wide), TOC rail
-            right — the old 200px-left-rail left a ~260px blank margin because
-            .measure capped paragraphs at 68ch inside a 960px column. */}
-        <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_232px] xl:gap-12">
-          <div className="min-w-0">
-            {/* back-to-hub (CHG-329) */}
-            {hub?.url && (
+        {/* Phase 1 editorial layout: ONE centered article column. The old
+            232px "On this page" rail and the duplicate back-to-hub link were
+            removed — they produced the term-paper structure the redesign bans.
+            Section wayfinding = breadcrumbs (hero) + hover anchors (headings)
+            + the related/next-step rails at the end. */}
+        <article className="dq-article mx-auto w-full max-w-[1080px]">
+          <Blocks blocks={page.blocks} skip={["hero"]} />
+
+          {/* in-narrative exploration cards ("Services in this tower", hubs…) */}
+          <CardGrid
+            cards={page.cards}
+            heading={cardsHeading(page.template)}
+            sub={cardsSub(page.template)}
+          />
+
+          {/* evidence band: engagement telemetry + the patented methods underneath */}
+          <OutputTelemetry page={page} />
+          <PatentStrip page={page} />
+
+          {page.profile && page.profile.focus.length > 0 && (
+            <div className="mt-6 flex flex-wrap gap-2">
+              {page.profile.focus.map((f) => (
+                <span key={f} className="rounded-full border border-line bg-mist px-3 py-1 text-[12px] font-medium text-navy-800">
+                  {f}
+                </span>
+              ))}
+            </div>
+          )}
+          <RelatedRail links={page.related} />
+          {/* prev / next sibling paging (CHG-330) */}
+          {siblings && (
+            <nav aria-label="Sibling pages" className="mt-12 grid gap-3 border-t border-line pt-6 sm:grid-cols-2">
               <Link
-                href={hub.url}
-                className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-brand-deep hover:underline"
+                href={siblings.prev.url}
+                className="group rounded-xl border border-line bg-mist/50 px-4 py-3.5 transition hover:border-brand/60 hover:bg-white"
               >
-                <ChevronRight className="h-3.5 w-3.5 rotate-180" aria-hidden="true" /> Back to {hub.name}
+                <span className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-slate-body/50">
+                  Previous · {siblings.position - 1 < 1 ? siblings.total : siblings.position - 1} of {siblings.total}
+                </span>
+                <span className="mt-0.5 flex items-center gap-1.5 text-[13.5px] font-semibold text-navy-800 group-hover:text-brand-deep">
+                  <ChevronRight className="h-3.5 w-3.5 rotate-180" aria-hidden="true" /> {siblings.prev.title}
+                </span>
               </Link>
-            )}
-            <Blocks blocks={page.blocks} skip={["hero"]} />
-          </div>
-          {/* in-page TOC sidebar (CHG-326) — sticky right rail (DOM order = grid
-              order: main column first at 1fr, rail second at 232px) */}
-          <aside>
-            <TableOfContents items={tocItems} />
-          </aside>
-        </div>
+              <Link
+                href={siblings.next.url}
+                className="group rounded-xl border border-line bg-mist/50 px-4 py-3.5 text-right transition hover:border-brand/60 hover:bg-white"
+              >
+                <span className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-slate-body/50">
+                  Next · {siblings.position + 1 > siblings.total ? 1 : siblings.position + 1} of {siblings.total}
+                </span>
+                <span className="mt-0.5 flex items-center justify-end gap-1.5 text-[13.5px] font-semibold text-navy-800 group-hover:text-brand-deep">
+                  {siblings.next.title} <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </span>
+              </Link>
+            </nav>
+          )}
+          {/* contextual next-step (CHG-337) */}
+          {nextStep && (
+            <Link
+              href={nextStep.url}
+              className="group mt-10 flex flex-col gap-3 rounded-2xl grad-navy-field px-6 py-6 text-white shadow-3 transition hover:shadow-2 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <span>
+                <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-300">Next step</span>
+                <span className="mt-1 block font-display text-[17px] font-semibold text-white">{nextStep.label}</span>
+                <span className="mt-0.5 block text-[12.5px] text-white/65">{nextStep.blurb}</span>
+              </span>
+              <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-white transition group-hover:scale-105">
+                <ArrowUpRight className="h-4.5 w-4.5" aria-hidden="true" />
+              </span>
+            </Link>
+          )}
+          <p className="mt-8 border-t border-line pt-4 text-[11px] text-slate-body/55">
+            Maintained by the Dataq Software practice council · Last reviewed 2026-11 ·
+            {" "}
+            <Link href="/html-sitemap/" className="hover:text-brand-deep">
+              Sitemap
+            </Link>
+          </p>
+        </article>
         {page.url === "/global-offices/" && (
           <div className="mt-10">
             <OfficesMap offices={brandData().offices} />
           </div>
         )}
-        <OutputTelemetry page={page} />
-        <PatentStrip page={page} />
-        {page.profile && page.profile.focus.length > 0 && (
-          <div className="mt-6 flex flex-wrap gap-2">
-            {page.profile.focus.map((f) => (
-              <span key={f} className="rounded-full border border-line bg-mist px-3 py-1 text-[12px] font-medium text-navy-800">
-                {f}
-              </span>
-            ))}
-          </div>
-        )}
-        <CardGrid
-          cards={page.cards}
-          heading={cardsHeading(page.template)}
-          sub={cardsSub(page.template)}
-        />
-        <RelatedRail links={page.related} />
-        {/* prev / next sibling paging (CHG-330) */}
-        {siblings && (
-          <nav aria-label="Sibling pages" className="mt-12 grid gap-3 border-t border-line pt-6 sm:grid-cols-2">
-            <Link
-              href={siblings.prev.url}
-              className="group rounded-xl border border-line bg-mist/50 px-4 py-3.5 transition hover:border-brand/60 hover:bg-white"
-            >
-              <span className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-slate-body/50">
-                Previous · {siblings.position - 1 < 1 ? siblings.total : siblings.position - 1} of {siblings.total}
-              </span>
-              <span className="mt-0.5 flex items-center gap-1.5 text-[13.5px] font-semibold text-navy-800 group-hover:text-brand-deep">
-                <ChevronRight className="h-3.5 w-3.5 rotate-180" aria-hidden="true" /> {siblings.prev.title}
-              </span>
-            </Link>
-            <Link
-              href={siblings.next.url}
-              className="group rounded-xl border border-line bg-mist/50 px-4 py-3.5 text-right transition hover:border-brand/60 hover:bg-white"
-            >
-              <span className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-slate-body/50">
-                Next · {siblings.position + 1 > siblings.total ? 1 : siblings.position + 1} of {siblings.total}
-              </span>
-              <span className="mt-0.5 flex items-center justify-end gap-1.5 text-[13.5px] font-semibold text-navy-800 group-hover:text-brand-deep">
-                {siblings.next.title} <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
-              </span>
-            </Link>
-          </nav>
-        )}
-        {/* contextual next-step (CHG-337) + last-updated/owner (CHG-338) */}
-        {nextStep && (
-          <Link
-            href={nextStep.url}
-            className="group mt-10 flex flex-col gap-3 rounded-2xl grad-navy-field px-6 py-6 text-white shadow-3 transition hover:shadow-2 sm:flex-row sm:items-center sm:justify-between"
-          >
-            <span>
-              <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-300">Next step</span>
-              <span className="mt-1 block font-display text-[17px] font-semibold text-white">{nextStep.label}</span>
-              <span className="mt-0.5 block text-[12.5px] text-white/65">{nextStep.blurb}</span>
-            </span>
-            <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-white transition group-hover:scale-105">
-              <ArrowUpRight className="h-4.5 w-4.5" aria-hidden="true" />
-            </span>
-          </Link>
-        )}
-        <p className="mt-8 border-t border-line pt-4 text-[11px] text-slate-body/55">
-          Maintained by the Dataq Software practice council · Last reviewed 2026-11 ·
-          {" "}
-          <Link href="/html-sitemap/" className="hover:text-brand-deep">
-            Sitemap
-          </Link>
-        </p>
       </div>
     </>
   );

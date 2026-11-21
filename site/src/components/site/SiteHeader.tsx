@@ -1,63 +1,93 @@
 "use client";
 
+/* ── SiteHeader — Phase 1 navigation redesign ──────────────────────────────
+   Mega-menu rebuilt as an "index rail + live preview" system:
+   • LEFT: a compact index rail (one row per group, icon + label + depth hint).
+     Hovering/focusing a row switches the preview — no more uniform link-dump
+     columns, no truncated labels, a clear scan path top-to-bottom.
+   • RIGHT: the selected group's destination links in a wide 2-column grid,
+     with the group blurb, an "Explore …" hub link and (for platforms) the
+     capability list so the menu itself teaches the product.
+   • Interaction: 60ms hover-intent open, 220ms close grace, Esc closes,
+     focus opens, first click opens (second navigates), full keyboard path.
+   The fit-guard from round-2 is kept: the drawer takes over whenever the
+   desktop row cannot physically fit the viewport.                            */
+
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  ChevronDown, Menu, X, ArrowRight, Search, Sparkles, Bot, Database, ShieldCheck,
+  ChevronDown, ChevronRight, Menu, X, ArrowRight, Search, Sparkles, Bot, Database, ShieldCheck,
   Cloud, Atom, Link2, Factory, Landmark, HeartPulse, Building2, TrendingUp,
   ShieldAlert, Gauge, Users, Boxes, Compass as CompassIcon, BookOpen, Newspaper,
-  Handshake, Phone, Layers, BrainCircuit, CircleDot,
+  Handshake, Layers, BrainCircuit, CircleDot,
 } from "lucide-react";
 import Logo from "./Logo";
-import { SearchOverlay, SkipLink, AnnouncementBar, StickyMobileCTA } from "./Wave3";
+import { SearchOverlay, SkipLink, AnnouncementBar, StickyMobileCTA, PLATFORM_EXTRAS } from "./Wave3";
 import type { Brand, Nav } from "@/lib/content";
 
-/* ── icon + blurb per mega column (professional megamenu) ─────────────── */
+/* ── icon + blurb per mega group ─────────────────────────────────────────── */
 const COL_META: Record<string, { icon: React.ComponentType<{ className?: string }>; blurb: string }> = {
   // services
-  "Applied AI & Generative AI": { icon: BrainCircuit, blurb: "Production AI measured on the P&L" },
-  "Agentic AI & Hyperautomation": { icon: Bot, blurb: "Governed digital workers at scale" },
-  "Data, Analytics & Lakehouse": { icon: Database, blurb: "Pipelines, models and governance" },
-  "Cybersecurity & Zero-Trust": { icon: ShieldCheck, blurb: "Identity-first security architecture" },
-  "Cloud, Edge & Platform Engineering": { icon: Cloud, blurb: "Reliable estates, lower unit cost" },
-  "Quantum & Advanced Compute": { icon: Atom, blurb: "Optimization and PQC migration" },
-  "Blockchain & Digital Trust": { icon: Link2, blurb: "Permissioned networks and credentials" },
-  "IoT, Digital Twin & Robotics": { icon: Factory, blurb: "From sensor data to actuation" },
+  "Applied AI & Generative AI": { icon: BrainCircuit, blurb: "Production AI measured on the P&L — strategy, platform build-out, retrieval and multimodal systems under one governance fabric." },
+  "Agentic AI & Hyperautomation": { icon: Bot, blurb: "Governed digital workers at scale — process mining, decision intelligence and orchestration with human checkpoints by design." },
+  "Data, Analytics & Lakehouse": { icon: Database, blurb: "Pipelines, models and governance — from ingestion engineering to monetizable data products on a lakehouse contract." },
+  "Cybersecurity & Zero-Trust": { icon: ShieldCheck, blurb: "Identity-first security architecture — zero-trust estates, managed detection and AI-model protection that survives audit." },
+  "Cloud, Edge & Platform Engineering": { icon: Cloud, blurb: "Reliable estates at lower unit cost — hybrid multicloud, edge fleets, SRE discipline and FinOps baked into the platform." },
+  "Quantum & Advanced Compute": { icon: Atom, blurb: "Optimization and PQC migration — every quantum-inspired run benchmarked against the best classical solver." },
+  "Blockchain & Digital Trust": { icon: Link2, blurb: "Permissioned networks and credentials — DLT engineering, tokenization and provenance regulators can inspect." },
+  "IoT, Digital Twin & Robotics": { icon: Factory, blurb: "From sensor data to actuation — industrial IoT fabrics, twin platforms and vision systems that close the loop." },
   // industries
-  "Financial Services & Insurance": { icon: Landmark, blurb: "Banking, payments and insurance" },
-  "Health, Public Sector & Education": { icon: HeartPulse, blurb: "Care, government and research" },
-  "Industry, Retail & Commerce": { icon: Factory, blurb: "Plants, stores and supply chains" },
-  "Energy, Infrastructure & Technology": { icon: Gauge, blurb: "Grids, networks and platforms" },
+  "Financial Services & Insurance": { icon: Landmark, blurb: "Banking, payments and insurance — real-time decisioning under the strictest regulatory lens." },
+  "Health, Public Sector & Education": { icon: HeartPulse, blurb: "Care, government and research — outcomes with privacy, equity and auditability engineered in." },
+  "Industry, Retail & Commerce": { icon: Factory, blurb: "Plants, stores and supply chains — decision latency compressed from days to seconds." },
+  "Energy, Infrastructure & Technology": { icon: Gauge, blurb: "Grids, networks and platforms — forecasting, reliability and optimization at infrastructure scale." },
   // solutions
-  "Growth & Revenue": { icon: TrendingUp, blurb: "Pricing, commerce and CX" },
-  "Risk & Resilience": { icon: ShieldAlert, blurb: "Fraud, cyber and scenario risk" },
-  "Operational Excellence": { icon: Gauge, blurb: "Automation, assets and IT ops" },
-  "Workforce & Experience": { icon: Users, blurb: "Copilots and service orchestration" },
+  "Growth & Revenue": { icon: TrendingUp, blurb: "Pricing, commerce and CX — revenue mechanics recomposed around live decisions." },
+  "Risk & Resilience": { icon: ShieldAlert, blurb: "Fraud, cyber and scenario risk — decisions explained well enough to defend in audit." },
+  "Operational Excellence": { icon: Gauge, blurb: "Automation, assets and IT ops — throughput economics with autonomous runbooks." },
+  "Workforce & Experience": { icon: Users, blurb: "Copilots and service orchestration — the frontline gets leverage, not another dashboard." },
   // platforms
-  "Dataq Nexus — Decision Intelligence": { icon: CircleDot, blurb: "Millisecond decisions with full replay" },
-  "Dataq Forge — Data & Lakehouse": { icon: Database, blurb: "The estate every program builds on" },
-  "Dataq Swarm — Agent Orchestration": { icon: Bot, blurb: "Agent fleets with queues and budgets" },
-  "Dataq Sentinel — Security Fabric": { icon: ShieldCheck, blurb: "Controls for people, machines, models" },
-  "Dataq Twinverse — Digital Twin Ops": { icon: Boxes, blurb: "Simulate, then act on physical assets" },
-  "Dataq Quanta — Advanced Compute": { icon: Atom, blurb: "Quantum-inspired optimization, benchmarked" },
-  "Dataq Ledger — Digital Trust": { icon: Link2, blurb: "Shared records regulators can inspect" },
-  "Dataq Compass — AI Governance": { icon: CompassIcon, blurb: "Model risk, validation and monitoring" },
+  "Dataq Nexus — Decision Intelligence": { icon: CircleDot, blurb: "Millisecond decisions with full replay — the decision hub for streaming estates." },
+  "Dataq Forge — Data & Lakehouse": { icon: Database, blurb: "The estate every program builds on — contracts, pipelines and cost control." },
+  "Dataq Swarm — Agent Orchestration": { icon: Bot, blurb: "Agent fleets with queues and budgets — validated decentralized execution." },
+  "Dataq Sentinel — Security Fabric": { icon: ShieldCheck, blurb: "Controls for people, machines and models — encrypted collaborative intelligence." },
+  "Dataq Twinverse — Digital Twin Ops": { icon: Boxes, blurb: "Simulate, then act on physical assets — multimodal perception to actuation." },
+  "Dataq Quanta — Advanced Compute": { icon: Atom, blurb: "Quantum-inspired optimization, benchmarked — schedule, route and allocate better." },
+  "Dataq Ledger — Digital Trust": { icon: Link2, blurb: "Shared records regulators can inspect — consensus-gated releases." },
+  "Dataq Compass — AI Governance": { icon: CompassIcon, blurb: "Model risk, validation and monitoring — self-evolving decision loops with evidence." },
   // insights / about
-  "AI & Data viewpoints": { icon: BrainCircuit, blurb: "Field notes on production AI" },
-  "Automation & operations viewpoints": { icon: Bot, blurb: "What actually scales" },
-  "Security, cloud & trust viewpoints": { icon: ShieldCheck, blurb: "Controls that survive audit" },
-  "Emerging compute viewpoints": { icon: Atom, blurb: "Where the math pays back" },
-  "Company": { icon: Building2, blurb: "Who we are and how we operate" },
-  "Our Approach": { icon: Layers, blurb: "The method behind every program" },
-  "Join & Contact": { icon: Handshake, blurb: "Careers, news and offices" },
+  "AI & Data viewpoints": { icon: BrainCircuit, blurb: "Field notes on production AI — what ships, what scales, what stalls." },
+  "Automation & operations viewpoints": { icon: Bot, blurb: "What actually scales — automation economics from the delivery floor." },
+  "Security, cloud & trust viewpoints": { icon: ShieldCheck, blurb: "Controls that survive audit — security and platform theses with vendor questions." },
+  "Emerging compute viewpoints": { icon: Atom, blurb: "Where the math pays back — quantum and advanced compute, benchmarked." },
+  "Company": { icon: Building2, blurb: "Who we are and how we operate — offices, credentials and the delivery standard." },
+  "Our Approach": { icon: Layers, blurb: "The method behind every program — gates that bind, evidence that travels." },
+  "Join & Contact": { icon: Handshake, blurb: "Careers, news and offices — a human process on both sides." },
 };
 function colMeta(label: string) {
   return COL_META[label] ?? { icon: Sparkles, blurb: "" };
 }
+function platformKey(label: string): string {
+  return label.replace(/^Dataq /, "").split(" ")[0];
+}
+/* depth hint under the rail label */
+function railHint(item: string, count: number): string {
+  if (item === "Platforms") return "3 views";
+  if (count === 0) return "Overview";
+  return count === 1 ? "1 page" : `${count} pages`;
+}
+/* singular kicker word above the preview title */
+const PREVIEW_KICKER: Record<string, string> = {
+  Services: "Service tower",
+  Industries: "Industry group",
+  Solutions: "Solution group",
+  Platforms: "Platform",
+  Insights: "Viewpoints",
+  "About Us": "Company",
+};
 
-/* group meta for insights columns rendered as link lists */
-
+/* ── MegaPanel — index rail + live preview ───────────────────────────────── */
 function MegaPanel({
   item,
   open,
@@ -71,13 +101,21 @@ function MegaPanel({
   onCancelClose: () => void;
   onScheduleClose: () => void;
 }) {
+  const [active, setActive] = useState(0);
+  useEffect(() => {
+    setActive(0);
+  }, [item.label]);
   if (!item.mega) return null;
-  const cols = item.mega.length;
-  const gridCls =
-    cols >= 8 ? "lg:grid-cols-4" : cols >= 4 ? "lg:grid-cols-4" : "md:grid-cols-3";
+  const safeIdx = Math.min(active, item.mega.length - 1);
+  const col = item.mega[safeIdx];
+  const meta = colMeta(col.label);
+  const Icon = meta.icon;
+  const isPlatform = item.label === "Platforms";
+  const extra = isPlatform ? PLATFORM_EXTRAS[platformKey(col.label)] : undefined;
+  const shortName = col.label.replace(/^Dataq /, "").split(" — ")[0];
+
   return (
     /* Anchored to the full-width header bar (inset-x-0), NOT the nav item.
-       The panel spans the viewport; content stays inside container-dq.
        When the fit-guard forces drawer mode, panels never render. */
     <div
       className={`absolute inset-x-0 top-full hidden xl:block ${forceDrawer ? "!hidden" : ""} ${open ? "" : "pointer-events-none"}`}
@@ -90,59 +128,148 @@ function MegaPanel({
         role="region"
         aria-label={`${item.label} menu`}
       >
-        <div className="container-dq py-7">
-          <div className={`grid gap-x-7 gap-y-6 ${gridCls}`}>
-            {item.mega.map((col) => {
-              const meta = colMeta(col.label);
-              const Icon = meta.icon;
-              return (
-                <div key={col.label + col.url} className="min-w-0">
+        <div className="container-dq py-6">
+          <div className="grid gap-7 lg:grid-cols-[272px_minmax(0,1fr)]">
+            {/* ── index rail ─────────────────────────────────────────── */}
+            <div
+              className="flex flex-col gap-1 lg:border-r lg:border-line lg:pr-6"
+              role="tablist"
+              aria-label={`${item.label} groups`}
+            >
+              {item.mega.map((c, i) => {
+                const rm = colMeta(c.label);
+                const RIcon = rm.icon;
+                const isActive = i === safeIdx;
+                const rowLabel = isPlatform ? platformKey(c.label) : c.label;
+                return (
                   <Link
-                    href={col.url}
-                    className="group flex items-start gap-3 rounded-lg p-2 -mx-2 transition-colors hover:bg-brand-tint/70"
+                    key={c.label + c.url}
+                    href={c.url}
+                    role="tab"
+                    aria-selected={isActive}
                     tabIndex={open ? 0 : -1}
+                    onMouseEnter={() => setActive(i)}
+                    onFocus={() => setActive(i)}
+                    onKeyDown={(e) => {
+                      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+                        e.preventDefault();
+                        const next = (i + (e.key === "ArrowDown" ? 1 : item.mega!.length - 1)) % item.mega!.length;
+                        setActive(next);
+                        document.getElementById(`mega-rail-${item.label}-${next}`)?.focus();
+                      }
+                    }}
+                    id={`mega-rail-${item.label}-${i}`}
+                    className={`mega-rail-item group flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-200 ${
+                      isActive ? "bg-brand-tint" : "hover:bg-mist"
+                    }`}
                   >
-                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-navy-800 text-white shadow-1 transition-colors group-hover:bg-brand">
-                      <Icon className="h-4 w-4" aria-hidden="true" />
+                    <span
+                      className={`relative flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] transition-colors duration-200 ${
+                        isActive ? "bg-brand text-white" : "bg-navy-800 text-white"
+                      }`}
+                    >
+                      <RIcon className="h-4 w-4" aria-hidden="true" />
+                      {isActive && (
+                        <span aria-hidden="true" className="absolute -left-3 top-1/2 h-6 w-[3px] -translate-y-1/2 rounded-full bg-brand" />
+                      )}
                     </span>
                     <span className="min-w-0">
-                      <span className="flex items-center gap-1 text-[13.5px] font-semibold leading-snug text-navy-800 group-hover:text-brand-deep">
-                        {col.label}
-                        <ArrowRight className="h-3 w-3 shrink-0 text-brand transition group-hover:translate-x-0.5" aria-hidden="true" />
+                      <span
+                        className={`block truncate text-[13.5px] font-semibold leading-snug transition-colors ${
+                          isActive ? "text-brand-deep" : "text-navy-800"
+                        }`}
+                      >
+                        {rowLabel}
                       </span>
-                      {meta.blurb && (
-                        <span className="mt-0.5 block text-[11.5px] leading-snug text-slate-body/70">
-                          {meta.blurb}
-                        </span>
-                      )}
+                      <span className="block text-[11px] leading-snug text-slate-body/55">
+                        {railHint(item.label, c.children.length)}
+                      </span>
                     </span>
+                    <ChevronRight
+                      aria-hidden="true"
+                      className={`ml-auto h-4 w-4 shrink-0 transition-all duration-200 ${
+                        isActive ? "translate-x-0 text-brand opacity-100" : "-translate-x-1 opacity-0"
+                      }`}
+                    />
                   </Link>
-                  {col.children.length > 0 && (
-                    <ul className="mt-1.5 space-y-0.5 border-l border-line pl-3 ml-[14px]">
-                      {col.children.slice(0, 8).map((ch) => (
-                        <li key={ch.label + ch.url}>
-                          <Link
-                            href={ch.url}
-                            className="block truncate rounded px-1 py-1 text-[12.5px] leading-snug text-slate-body/80 transition-colors hover:bg-mist hover:text-navy-800"
-                            tabIndex={open ? 0 : -1}
-                          >
-                            {ch.label}
-                          </Link>
-                        </li>
-                      ))}
-                      {col.children.length > 8 && (
-                        <li className="px-1 pt-0.5 text-[11.5px] font-medium text-brand-deep">
-                          +{col.children.length - 8} more
-                        </li>
-                      )}
-                    </ul>
+                );
+              })}
+            </div>
+
+            {/* ── live preview (remounts on switch for the fade-up) ──── */}
+            <div key={col.label} className="mega-preview-in min-w-0">
+              <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
+                <div className="min-w-0">
+                  <p className="text-[10.5px] font-bold uppercase tracking-[0.18em] text-slate-body/50">
+                    {isPlatform ? "Platform" : PREVIEW_KICKER[item.label] ?? item.label}
+                  </p>
+                  <h3 className="mt-0.5 font-display text-[20px] font-semibold leading-snug text-navy-800">
+                    {col.label}
+                  </h3>
+                  {meta.blurb && (
+                    <p className="mt-1.5 max-w-xl text-[13px] leading-relaxed text-slate-body/75">{meta.blurb}</p>
                   )}
                 </div>
-              );
-            })}
+                <Link
+                  href={col.url}
+                  tabIndex={open ? 0 : -1}
+                  className="link-animated inline-flex shrink-0 items-center gap-1.5 py-1 text-[13px] font-semibold text-brand-deep"
+                >
+                  Explore {shortName} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+              </div>
+
+              {isPlatform && extra ? (
+                <div className="mt-4 grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+                  <div className="rounded-xl border border-line bg-mist/50 p-4">
+                    <p className="text-[10.5px] font-bold uppercase tracking-[0.16em] text-brand-deep">
+                      {extra.method}
+                    </p>
+                    <ul className="mt-2.5 space-y-1.5">
+                      {extra.caps.slice(0, 5).map((c) => (
+                        <li key={c} className="flex items-start gap-2 text-[12.5px] leading-snug text-navy-800/90">
+                          <span aria-hidden="true" className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+                          {c}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <ul className="space-y-1 self-center">
+                    {col.children.map((ch) => (
+                      <li key={ch.label + ch.url}>
+                        <Link
+                          href={ch.url}
+                          tabIndex={open ? 0 : -1}
+                          className="group flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-[13.5px] font-medium text-navy-800 transition-colors hover:bg-brand-tint hover:text-brand-deep"
+                        >
+                          {ch.label}
+                          <ArrowRight className="h-3.5 w-3.5 shrink-0 text-brand-deep opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100" aria-hidden="true" />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <ul className="mt-4 grid gap-x-6 sm:grid-cols-2">
+                  {col.children.map((ch) => (
+                    <li key={ch.label + ch.url}>
+                      <Link
+                        href={ch.url}
+                        tabIndex={open ? 0 : -1}
+                        className="group flex items-center justify-between gap-3 rounded-lg border-b border-line/70 px-3 py-2.5 text-[13.5px] font-medium text-navy-800 transition-colors last:border-0 hover:bg-brand-tint hover:text-brand-deep"
+                      >
+                        <span className="min-w-0">{ch.label}</span>
+                        <ArrowRight className="h-3.5 w-3.5 shrink-0 text-brand-deep opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100" aria-hidden="true" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
-          {/* featured strip (CHG-352) — a next step on every wide panel */}
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-brand/25 bg-brand-tint px-4 py-3">
+
+          {/* featured strip — a next step on every panel */}
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-brand/25 bg-brand-tint px-4 py-3">
             <p className="text-[12.5px] leading-snug text-slate-body/85">
               <span className="font-semibold text-navy-800">Not sure where to start?</span>{" "}
               A 45-minute briefing maps your metric to the right entry point.
@@ -182,6 +309,7 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
      overflow off-screen. Measured, not assumed: works on every device. */
   const [forceDrawer, setForceDrawer] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const openTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rowRef = useRef<HTMLDivElement | null>(null);
   const navRef = useRef<HTMLElement | null>(null);
   const forceDrawerRef = useRef(false);
@@ -254,12 +382,24 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
     return () => clearTimeout(t);
   }, [pathname]);
 
-  const scheduleClose = useCallback(() => {
-    closeTimer.current = setTimeout(() => setOpenItem(null), 140);
-  }, []);
-  const cancelClose = useCallback(() => {
+  /* hover intent: short open delay kills fly-over flicker; generous close
+     grace lets the pointer travel from the trigger to the panel. */
+  const clearTimers = useCallback(() => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
+    if (openTimer.current) clearTimeout(openTimer.current);
   }, []);
+  const scheduleOpen = useCallback(
+    (label: string) => {
+      clearTimers();
+      openTimer.current = setTimeout(() => setOpenItem(label), 60);
+    },
+    [clearTimers],
+  );
+  const scheduleClose = useCallback(() => {
+    clearTimers();
+    closeTimer.current = setTimeout(() => setOpenItem(null), 220);
+  }, [clearTimers]);
+  const cancelClose = clearTimers;
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -307,10 +447,9 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
             <Logo height={40} />
           </Link>
 
-          {/* desktop nav — icon-free, compact items with chevrons; the fit-guard
-              force-collapses it to the drawer whenever the row overflows, so on
-              Windows/Mac laptops, browser zoom or unusual font metrics the menu
-              can never leave the viewport — the drawer takes over instead. */}
+          {/* desktop nav — the fit-guard force-collapses it to the drawer whenever
+              the row overflows, so on laptops, zoom or unusual font metrics the
+              menu can never leave the viewport — the drawer takes over instead. */}
           <nav
             ref={navRef}
             aria-label="Primary"
@@ -323,8 +462,11 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
                   key={item.label}
                   className="relative"
                   onMouseEnter={() => {
-                    cancelClose();
-                    setOpenItem(item.mega ? item.label : null);
+                    if (item.mega) scheduleOpen(item.label);
+                    else {
+                      clearTimers();
+                      setOpenItem(null);
+                    }
                   }}
                   onMouseLeave={item.mega ? scheduleClose : undefined}
                 >
@@ -336,6 +478,7 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
                       // first tap/click opens the panel; second click navigates.
                       if (item.mega && openItem !== item.label) {
                         e.preventDefault();
+                        clearTimers();
                         setOpenItem(item.label);
                       }
                     }}
@@ -388,7 +531,7 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
           </div>
         </div>
 
-        {/* megamenu — one full-width panel per mega item, exactly viewport-wide */}
+        {/* megamenu — one full-width rail+preview panel per mega item */}
         {nav.primary
           .filter((item) => item.mega)
           .map((item) => (
@@ -405,7 +548,7 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
 
       {/* mobile drawer — drawer-scroll caps height at the dynamic viewport
           (see .drawer-scroll in globals.css) so the CTA never slides under
-          mobile browser toolbars */}
+          mobile browser toolbars. Accordion groups with 2-col child grids. */}
       {mobileOpen && (
         <div
           className={`drawer-scroll xl:hidden border-b border-line bg-white shadow-3 overflow-y-auto ${forceDrawer ? "!block" : ""}`}
@@ -431,7 +574,7 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
                   )}
                 </div>
                 {item.mega && mobileSection === item.label && (
-                  <div className="pb-4 space-y-3">
+                  <div className="pb-4 space-y-4">
                     {item.mega.map((col) => {
                       const meta = colMeta(col.label);
                       const Icon = meta.icon;
@@ -441,10 +584,10 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
                             <Icon className="h-3.5 w-3.5" aria-hidden="true" /> {col.label}
                           </Link>
                           {col.children.length > 0 && (
-                            <ul className="mt-1 space-y-1 pl-3">
+                            <ul className="mt-1.5 grid grid-cols-2 gap-x-3 gap-y-1 pl-3">
                               {col.children.map((ch) => (
                                 <li key={ch.label + ch.url}>
-                                  <Link href={ch.url} className="text-[12.5px] text-slate-body/80">
+                                  <Link href={ch.url} className="text-[12.5px] leading-snug text-slate-body/80">
                                     {ch.label}
                                   </Link>
                                 </li>

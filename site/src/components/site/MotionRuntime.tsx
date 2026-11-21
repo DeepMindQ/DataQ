@@ -2,32 +2,29 @@
 
 import { useEffect } from "react";
 
-/* ── MotionRuntime v3 — "Motion 100X" ───────────────────────────────────────
+/* ── MotionRuntime v4 — Phase 1 "calibrated motion" ──────────────────────────
    ONE client component, mounted once in the root layout. Everything is
-   decorative, pointer/reduced-motion aware, and CSS-driven: the JS here only
-   toggles classes/variables, it never animates styles per frame except the
-   two rAF loops that must stay smooth (spotlight, parallax).
+   decorative, pointer/reduced-motion aware, and CSS-driven.
 
-   Capabilities:
-   1.  Scroll choreography registry — sections, [data-reveal], cards, figures
-       get .is-inview once; children get index variables (--i) for staggers.
+   Phase 1 policy (audit A-11/A-12): motion supports comprehension or it is
+   removed. The cursor spotlight, magnetic CTA pull and 3D card tilt were
+   deleted — they competed with content for attention and read as gimmicks on
+   an enterprise site. What stays is fast, small-distance and once-only:
+   1.  Scroll choreography — sections, [data-reveal], cards, figures get
+       .is-inview once; stagger children get capped --i variables (max 8) so
+       long lists never wait a second to be readable.
    2.  Word-split headline masks — [data-split] headlines animate per word.
-   3.  Scroll-linked parallax — [data-parallax] layers track scroll (rAF).
-   4.  3D tilt cards — .tilt-card tracks the pointer (rotateX/Y + glare).
-   5.  Magnetic CTAs v2 — pull + tilt + click ripple.
-   6.  Cursor spotlight v2 — brand glow that expands over interactive elements.
-   7.  Header state — .is-scrolled after 24px (CSS drives shrink/blur).
-   8.  Marquee auto-pause — marquees stop when off-screen (perf).
-   9.  CountUp assist — flips .count-done when a count finishes (pop beat).
-   10. Hero cascade — .dq-hero gets .hero-live on first paint (FOUC guard). */
+   3.  Header state — .is-scrolled after 24px (CSS drives shrink/blur).
+   4.  Marquee auto-pause — marquees stop when off-screen (perf).
+   5.  CountUp assist — flips .count-live when a count finishes (pop beat).
+   6.  CTA click ripple — small, purposeful press feedback.
+   7.  Hero cascade — .dq-hero gets .hero-live on first paint (FOUC guard).  */
 
 export default function MotionRuntime() {
   useEffect(() => {
     try {
       const reduced =
         window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-      const finePointer =
-        window.matchMedia?.("(hover: hover) and (pointer: fine)").matches ?? false;
       const root = document.documentElement;
       root.classList.add("js-motion-v3");
       if (reduced) root.classList.add("js-motion-off");
@@ -45,7 +42,9 @@ export default function MotionRuntime() {
               io?.unobserve(el);
             }
           },
-          { threshold: 0.08, rootMargin: "0px 0px -7% 0px" },
+          // fire early: 0.04 threshold + small bottom margin, so content is
+          // already readable when it enters the viewport (no mid-fade scans)
+          { threshold: 0.04, rootMargin: "0px 0px -4% 0px" },
         );
 
         const indexChildren = (el: HTMLElement) => {
@@ -53,7 +52,9 @@ export default function MotionRuntime() {
           staggers.add(el);
           const kids = el.children;
           for (let i = 0; i < kids.length; i++) {
-            (kids[i] as HTMLElement).style.setProperty("--i", String(i));
+            // cap the stagger index: beyond 8 children the delay would push
+            // late items past a second of waiting — they render together
+            (kids[i] as HTMLElement).style.setProperty("--i", String(Math.min(i, 8)));
           }
         };
 
@@ -110,10 +111,10 @@ export default function MotionRuntime() {
             });
         };
         observeAll();
-        const t1 = window.setTimeout(observeAll, 350);
-        const t2 = window.setTimeout(observeAll, 1200);
+        const t1 = window.setTimeout(observeAll, 300);
+        const t2 = window.setTimeout(observeAll, 900);
 
-        /* ── 8. marquee auto-pause ──────────────────────────────────────── */
+        /* ── 4. marquee auto-pause ──────────────────────────────────────── */
         const mio = new IntersectionObserver(
           (entries) => {
             for (const e of entries) {
@@ -124,7 +125,7 @@ export default function MotionRuntime() {
         );
         document.querySelectorAll<HTMLElement>(".marquee").forEach((m) => mio.observe(m));
 
-        /* ── 7. header state + scroll progress var ─────────────────────── */
+        /* ── 3. header state + scroll progress var ─────────────────────── */
         let scrollRaf = 0;
         const header = document.querySelector("header");
         const onScroll = () => {
@@ -136,144 +137,33 @@ export default function MotionRuntime() {
             const max = document.documentElement.scrollHeight - window.innerHeight;
             const p = max > 0 ? Math.min(1, y / max) : 0;
             root.style.setProperty("--scroll-p", p.toFixed(4));
-            /* parallax layers */
-            if (!reduced) {
-              document
-                .querySelectorAll<HTMLElement>("[data-parallax]")
-                .forEach((el) => {
-                  const speed = parseFloat(el.getAttribute("data-parallax") || "0.12");
-                  const r = el.getBoundingClientRect();
-                  const mid = r.top + r.height / 2 - window.innerHeight / 2;
-                  el.style.transform = `translate3d(0, ${(-mid * speed).toFixed(1)}px, 0)`;
-                });
-            }
           });
         };
         window.addEventListener("scroll", onScroll, { passive: true });
         onScroll();
 
-        /* ── 4 + 5 + 6. pointer effects (fine pointers only) ───────────── */
-        let cleanupPointer: (() => void) | null = null;
-        if (finePointer) {
-          /* 6 — spotlight v2 */
-          const glow = document.createElement("div");
-          glow.id = "dq-cursor-glow";
-          glow.setAttribute("aria-hidden", "true");
-          document.body.appendChild(glow);
-          let mx = -600, my = -600, gx = mx, gy = my;
-          let active = false;
-          let raf = 0;
-          const tick = () => {
-            gx += (mx - gx) * 0.14;
-            gy += (my - gy) * 0.14;
-            glow.style.transform = `translate3d(${gx}px, ${gy}px, 0)`;
-            if (active || Math.abs(mx - gx) > 1) {
-              raf = requestAnimationFrame(tick);
-            } else {
-              raf = 0;
-            }
-          };
-          const onMove = (ev: MouseEvent) => {
-            mx = ev.clientX;
-            my = ev.clientY;
-            if (!active) {
-              active = true;
-              if (!raf) raf = requestAnimationFrame(tick);
-            }
-            const hot = (ev.target as Element | null)?.closest?.("a, button, [role='button']");
-            glow.classList.toggle("glow-hot", !!hot);
-
-            /* 5 — magnetic CTAs */
-            document.querySelectorAll<HTMLElement>("a.btn-sheen, button.btn-sheen").forEach((el) => {
-              const r = el.getBoundingClientRect();
-              const cx = r.left + r.width / 2;
-              const cy = r.top + r.height / 2;
-              const dx = ev.clientX - cx;
-              const dy = ev.clientY - cy;
-              const dist = Math.hypot(dx, dy);
-              const reach = Math.max(130, r.width);
-              if (dist < reach) {
-                el.style.transform = `translate(${(dx * 0.14).toFixed(1)}px, ${(dy * 0.2).toFixed(1)}px)`;
-                el.style.setProperty("--mx", `${(ev.clientX - r.left).toFixed(0)}px`);
-                el.style.setProperty("--my", `${(ev.clientY - r.top).toFixed(0)}px`);
-              } else if (el.style.transform) {
-                el.style.transform = "";
-              }
-            });
-
-            /* 4 — tilt cards */
-            document.querySelectorAll<HTMLElement>(".tilt-card").forEach((el) => {
-              const r = el.getBoundingClientRect();
-              if (
-                ev.clientX < r.left - 80 || ev.clientX > r.right + 80 ||
-                ev.clientY < r.top - 80 || ev.clientY > r.bottom + 80
-              ) {
-                if (el.style.transform) {
-                  el.style.transform = "";
-                  el.style.setProperty("--gx", "50%");
-                  el.style.setProperty("--gy", "50%");
-                }
-                return;
-              }
-              const px = (ev.clientX - r.left) / r.width;
-              const py = (ev.clientY - r.top) / r.height;
-              const rx = (0.5 - py) * 7;
-              const ry = (px - 0.5) * 9;
-              el.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-3px)`;
-              el.style.setProperty("--gx", `${(px * 100).toFixed(0)}%`);
-              el.style.setProperty("--gy", `${(py * 100).toFixed(0)}%`);
-            });
-          };
-          window.addEventListener("mousemove", onMove, { passive: true });
-          raf = requestAnimationFrame(tick);
-
-          /* ripple on CTA click */
-          const onClick = (ev: MouseEvent) => {
-            const el = (ev.target as Element | null)?.closest?.("a.btn-sheen, button.btn-sheen") as HTMLElement | null;
-            if (!el) return;
-            const r = el.getBoundingClientRect();
-            const rip = document.createElement("span");
-            rip.className = "dq-ripple";
-            rip.style.left = `${ev.clientX - r.left}px`;
-            rip.style.top = `${ev.clientY - r.top}px`;
-            el.appendChild(rip);
-            window.setTimeout(() => rip.remove(), 650);
-          };
-          window.addEventListener("click", onClick, { passive: true });
-
-          cleanupPointer = () => {
-            window.removeEventListener("mousemove", onMove);
-            window.removeEventListener("click", onClick);
-            if (raf) cancelAnimationFrame(raf);
-            glow.remove();
-          };
-        }
-
-        /* ── 9. CountUp done-beat ───────────────────────────────────────── */
-        const cio = new IntersectionObserver(
-          (entries) => {
-            for (const e of entries) {
-              if (e.isIntersecting) {
-                (e.target as HTMLElement).classList.add("count-live");
-                cio.unobserve(e.target);
-              }
-            }
-          },
-          { threshold: 0.4 },
-        );
-        document.querySelectorAll<HTMLElement>("[data-countup], .tabular-nums").forEach((el) => {
-          if (el.textContent && /\d/.test(el.textContent)) cio.observe(el);
-        });
+        /* ── 6. ripple on CTA click (press feedback only, no pull) ─────── */
+        const onClick = (ev: MouseEvent) => {
+          const el = (ev.target as Element | null)?.closest?.("a.btn-sheen, button.btn-sheen") as HTMLElement | null;
+          if (!el) return;
+          const r = el.getBoundingClientRect();
+          const rip = document.createElement("span");
+          rip.className = "dq-ripple";
+          rip.style.left = `${ev.clientX - r.left}px`;
+          rip.style.top = `${ev.clientY - r.top}px`;
+          el.appendChild(rip);
+          window.setTimeout(() => rip.remove(), 650);
+        };
+        window.addEventListener("click", onClick, { passive: true });
 
         return () => {
           window.clearTimeout(t1);
           window.clearTimeout(t2);
           io?.disconnect();
           mio.disconnect();
-          cio.disconnect();
           window.removeEventListener("scroll", onScroll);
           if (scrollRaf) cancelAnimationFrame(scrollRaf);
-          cleanupPointer?.();
+          window.removeEventListener("click", onClick);
         };
       }
 

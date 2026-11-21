@@ -5,21 +5,10 @@ import { Marquee } from "@/components/site/Motion";
 import { mulberry32, hashStr } from "@/lib/seeded";
 import { PATENTS } from "@/lib/patents";
 import { SteeringPack, OutcomeConsole } from "./HomeExecutive";
-import { SpotlightSlider, TestimonialBand, IndustryFinder, PlatformTabs, SectionDots } from "@/components/site/Wave3";
+import { SpotlightSlider, TestimonialBand, IndustryFinder, PlatformTabs } from "@/components/site/Wave3";
 import NewsletterForm from "./NewsletterForm";
 import { CtaBand, Quote, StatsStrip } from "@/components/site/PagePieces";
 import { readPage, fileForUrl, type PageData } from "@/lib/content";
-
-const HOME_SECTIONS = [
-  { id: "top", label: "Hero" },
-  { id: "output", label: "See the output" },
-  { id: "value", label: "Operating discipline" },
-  { id: "services", label: "Eight towers" },
-  { id: "patents", label: "Patented intelligence" },
-  { id: "industries", label: "Industries" },
-  { id: "platforms", label: "Platforms" },
-  { id: "evidence", label: "Evidence" },
-];
 
 const PILLARS = [
   {
@@ -67,7 +56,6 @@ export default function HomeView() {
   }
   return (
     <>
-      <SectionDots sections={HOME_SECTIONS} />
       {/* split hero — choreographed text + live intelligence-mesh visual (CHG-234/235) */}
       <section id="top" className="relative overflow-hidden grad-navy-field text-white">
         <div className="bg-field-drift absolute inset-0 dot-grid" aria-hidden="true" />
