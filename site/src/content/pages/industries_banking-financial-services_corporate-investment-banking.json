@@ -17,7 +17,7 @@
   },
   {
    "t": "p",
-   "x": "The operating surface here spans Credit memo production, Trade document handling, Intraday risk aggregation, Client onboarding (institutional), Collateral management. The part that survives audit is the boring part: identity is short-lived and authorization is deny-by-default across Banking & Financial Services, which is what makes the reported delta defensible in audit."
+   "x": "Before proposing anything, we map the context Corporate & Investment Banking will run in — regulators, decision cadence, existing contracts — because the design that ignores context fails at the gate."
   },
   {
    "t": "h2",
@@ -35,11 +35,11 @@
     "Serving & BI",
     "Decision feedback"
    ],
-   "note": "Under the hood this pattern runs on one rule: signals cross boundaries only through typed contracts for Banking & Financial Services at scale, so your control owners can interrogate any number we publish."
+   "note": "What the diagram shows: ingestion, transformation and serving as separate responsibilities with named owners — no stage silently trusts the one before it."
   },
   {
    "t": "p",
-   "x": "The engineering bet is explicit: signals cross boundaries only through typed contracts in Data, Analytics & Lakehouse delivery, which keeps the blast radius of any change inside one lane."
+   "x": "What holds Corporate & Investment Banking together is discipline at the boundaries — typed contracts between stages, versioned releases, and a replay trail for every decision. The diagram above shows how the pieces compose; the gate reviews are what keep them honest."
   },
   {
    "t": "h2",
@@ -50,15 +50,15 @@
    "items": [
     [
      "Analyst hours on document assembly",
-     "The engineering bet is explicit: each stage owns its latency budget and its failure policy in Corporate & Investment Banking, so a regression is a cohort, never an estate."
+     "Analyst hours on document assembly shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
     ],
     [
      "Trade documentation exceptions",
-     "The part that survives audit is the boring part: identity is short-lived and authorization is deny-by-default across the Corporate & Investment Banking estate, so your control owners can interrogate any number we publish."
+     "Trade documentation exceptions costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
     ],
     [
      "Risk aggregation lag",
-     "The engineering bet is explicit: models, agents and rules move through versioned, evaluated releases across the Corporate & Investment Banking estate, and rollback is rehearsed before go-live rather than after the incident."
+     "Risk aggregation lag is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
     ],
     [
      "Confidential-estate exposure",
@@ -66,11 +66,11 @@
     ],
     [
      "Risk-grid latency",
-     "At operating tempo, the properties that carry the load are structural: identity is short-lived and authorization is deny-by-default across the Corporate & Investment Banking estate, so your control owners can interrogate any number we publish."
+     "Risk-grid latency costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
     ],
     [
      "Legacy front-office platforms",
-     "The part that survives audit is the boring part: the decision path and the audit path share one timeline in Data, Analytics & Lakehouse delivery, which is what makes the reported delta defensible in audit."
+     "Legacy front-office platforms is one of the pressures we hear first in estates like yours — the diagnostic puts a measured number on it before anything is promised."
     ]
    ]
   },
@@ -113,19 +113,19 @@
    "items": [
     [
      " freshness SLOs",
-     " freshness SLOs carries the ingest path — per-table freshness and completeness SLAs wired to paging"
+     "Data age treated like uptime — a budget, an owner and an alert when it slips."
     ],
     [
      "Unity Catalog governance",
-     "Unity Catalog governance carries the decision path — tag-based access control inherited end to end"
+     "A single governance plane over tables, models and notebooks — access your auditors can replay."
     ],
     [
      "cost-aware clustering",
-     "cost-aware clustering carries the evidence path — partition and Z-order plans reviewed per load"
+     "Workloads land on the cheapest compute that still meets the latency budget."
     ],
     [
      "Delta / Iceberg tables",
-     "Delta / Iceberg tables carries the control path — ACID guarantees with time travel and schema enforcement"
+     "Open table formats underneath everything we build, so your data never belongs to a vendor."
     ]
    ]
   },
@@ -138,19 +138,19 @@
    "items": [
     [
      "trade & treasury systems",
-     "The build earns trust the same way every gate does: the decision path and the audit path share one timeline across Banking & Financial Services, so the question of how we know gets a pointer, not a paragraph."
+     "Treasury flows integrated with decisioning — liquidity positions current by the minute."
     ],
     [
      "core banking rails",
-     "The design principle here is simple: each stage owns its latency budget and its failure policy across Banking & Financial Services, so your control owners can interrogate any number we publish."
+     "Ledger and payment rails integrated read-first — decisions layer on top, never bypass the truth."
     ],
     [
      "CRM & onboarding",
-     "Under the hood this pattern runs on one rule: the decision path and the audit path share one timeline in Data, Analytics & Lakehouse delivery, which is what makes the reported delta defensible in audit."
+     "Onboarding steps instrumented end to end — drop-off measured where it happens."
     ],
     [
      "regulatory reporting hub",
-     "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later in Corporate & Investment Banking, which is what makes the reported delta defensible in audit."
+     "One reporting engine, one lineage, many regimes — submissions reconciled before they are filed."
     ]
    ]
   },
@@ -167,11 +167,11 @@
     ],
     [
      "pipeline breakage MTTR",
-     "Down 55–69.3% with contracts and lineage paging, with the method note attached so your analysts can reproduce it"
+     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
     ],
     [
      "batch window",
-     "Down 50–66.1% after re-architecture in current programs; measured, not modeled"
+     "Batch windows measured against the plan every run — the number reported is the observed one."
     ]
    ]
   },
@@ -184,15 +184,15 @@
    "items": [
     [
      "Silent schema drift",
-     "At operating tempo, the properties that carry the load are structural: signals cross boundaries only through typed contracts for Banking & Financial Services at scale, so the question of how we know gets a pointer, not a paragraph."
+     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
     ],
     [
      "Cost creep",
-     "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases in Data, Analytics & Lakehouse delivery, so drift shows up as a ticket with an owner, not as a mystery."
+     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
     ],
     [
      "Metric anarchy",
-     "Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read in Data, Analytics & Lakehouse delivery, so the question of how we know gets a pointer, not a paragraph."
+     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
     ]
    ]
   },
@@ -209,7 +209,7 @@
     ],
     [
      "Agentic AI & Hyperautomation",
-     "The engineering bet is explicit: each stage owns its latency budget and its failure policy for Banking & Financial Services at scale, which keeps the blast radius of any change inside one lane."
+     "Digital workers with roles, budgets and human checkpoints — every action logged and reversible."
     ],
     [
      "Data & Lakehouse",
@@ -217,11 +217,11 @@
     ],
     [
      "Quantum & Advanced Compute",
-     "The design principle here is simple: signals cross boundaries only through typed contracts for Banking & Financial Services at scale, so a regression is a cohort, never an estate."
+     "Optimization and PQC migration — every quantum-inspired run benchmarked against the best classical solver."
     ],
     [
      "Cloud, Edge & Platform",
-     "Nothing in this topology is accidental: evidence is captured where the work happens, not reconstructed later on Data, Analytics & Lakehouse programs, so drift shows up as a ticket with an owner, not as a mystery."
+     "Reliable estates at lower unit cost — hybrid multicloud, edge fleets and SRE discipline."
     ]
    ]
   },
@@ -231,7 +231,7 @@
   },
   {
    "t": "p",
-   "x": "The cadence, without the ceremony: the first 2 weeks are pure verification — we measure Credit memo cycle time with your analysts, reconcile disagreements, and freeze the number both sides defend. At operating tempo, the properties that carry the load are structural: signals cross boundaries only through typed contracts for Banking & Financial Services at scale, so a regression is a cohort, never an estate.. What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default for Banking & Financial Services at scale, and rollback is rehearsed before go-live rather than after the incident.. At operating tempo, the properties that carry the load are structural: each stage owns its latency budget and its failure policy in Data, Analytics & Lakehouse delivery, so your control owners can interrogate any number we publish."
+   "x": "The engagement pattern for Corporate & Investment Banking: diagnose, prove, industrialize, compound. Each gate reviews evidence with your named owners, and each gate can stop the program."
   },
   {
    "t": "h2",
@@ -242,7 +242,7 @@
    "items": [
     [
      "Credit memo cycle time",
-     "Down 50-60%"
+     "Credit memo cycle time has a named owner and a fortnightly reading; the gate review compares it to the signed baseline, not to a promise."
     ],
     [
      "Trade-doc STP",
@@ -271,7 +271,7 @@
     ],
     [
      "A multinational corporate bank",
-     "Target range 70% on the first working slice, with the method note attached"
+     "The measured delta and the method note are written up on the case page — anonymized by agreement, baseline audited."
     ]
    ]
   },
@@ -285,10 +285,10 @@
   },
   {
    "t": "cta",
-   "x": "Start with a value assessment: two weeks, your Credit memo cycle time measured and signed, a delivery plan priced from evidence."
+   "x": "Start with a value assessment calibrated to your sub-sector — the regulatory mapping is part of the two weeks."
   }
  ],
- "words": 1272,
+ "words": 862,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Banking & Financial Services",

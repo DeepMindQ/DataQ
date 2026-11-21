@@ -71,12 +71,6 @@ function colMeta(label: string) {
 function platformKey(label: string): string {
   return label.replace(/^Dataq /, "").split(" ")[0];
 }
-/* depth hint under the rail label */
-function railHint(item: string, count: number): string {
-  if (item === "Platforms") return "3 views";
-  if (count === 0) return "Overview";
-  return count === 1 ? "1 page" : `${count} pages`;
-}
 /* singular kicker word above the preview title */
 const PREVIEW_KICKER: Record<string, string> = {
   Services: "Service tower",
@@ -129,7 +123,7 @@ function MegaPanel({
         aria-label={`${item.label} menu`}
       >
         <div className="container-dq py-6">
-          <div className="grid gap-7 lg:grid-cols-[272px_minmax(0,1fr)]">
+          <div className="grid gap-7 lg:grid-cols-[368px_minmax(0,1fr)]">
             {/* ── index rail ─────────────────────────────────────────── */}
             <div
               className="flex flex-col gap-1 lg:border-r lg:border-line lg:pr-6"
@@ -181,14 +175,11 @@ function MegaPanel({
                       >
                         {rowLabel}
                       </span>
-                      <span className="block text-[11px] leading-snug text-slate-body/55">
-                        {railHint(item.label, c.children.length)}
-                      </span>
                     </span>
                     <ChevronRight
                       aria-hidden="true"
-                      className={`ml-auto h-4 w-4 shrink-0 transition-all duration-200 ${
-                        isActive ? "translate-x-0 text-brand opacity-100" : "-translate-x-1 opacity-0"
+                      className={`ml-auto h-4 shrink-0 transition-all duration-200 ${
+                        isActive ? "w-4 translate-x-0 text-brand opacity-100" : "w-0 -translate-x-1 opacity-0"
                       }`}
                     />
                   </Link>
@@ -424,7 +415,6 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
             SOC 2 Type II · ISO 27001 · ISO 9001 · HIPAA-ready pods
           </p>
           <div className="hidden md:flex items-center gap-4">
-            <Link href="/status/" className="hover:text-brand-300">System status</Link>
             <a href={`mailto:${brand.emails.general}`} className="hover:text-brand-300">
               {brand.emails.general}
             </a>

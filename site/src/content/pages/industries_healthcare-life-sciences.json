@@ -35,7 +35,7 @@
     "Serving & BI",
     "Decision feedback"
    ],
-   "note": "The design principle here is simple: every state change is replayable from the signed baseline in Healthcare & Life Sciences, so your control owners can interrogate any number we publish."
+   "note": "Signals, context and policy converge at the decision layer; every scored decision is logged with its inputs so it can be replayed at audit."
   },
   {
    "t": "h2",
@@ -54,27 +54,27 @@
    "items": [
     [
      "Clinician burden and documentation debt",
-     "Nothing in this topology is accidental: evidence is captured where the work happens, not reconstructed later across the Healthcare & Life Sciences estate, and rollback is rehearsed before go-live rather than after the incident."
+     "Clinician burden and documentation debt is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
     ],
     [
      "Prior authorization and RCM friction",
-     "The engineering bet is explicit: every state change is replayable from the signed baseline for Healthcare & Life Sciences at scale, so the question of how we know gets a pointer, not a paragraph."
+     "We treat Prior authorization and RCM friction as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
     ],
     [
      "Interoperability gaps despite FHIR mandates",
-     "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later in Healthcare & Life Sciences, and rollback is rehearsed before go-live rather than after the incident."
+     "We treat Interoperability gaps despite FHIR mandates as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
     ],
     [
      "PHI concentration and ransomware exposure",
-     "At operating tempo, the properties that carry the load are structural: identity is short-lived and authorization is deny-by-default across Healthcare & Life Sciences, and every exception path degrades to human review, never to silence."
+     "PHI concentration and ransomware exposure is one of the pressures we hear first in estates like yours — the diagnostic puts a measured number on it before anything is promised."
     ],
     [
      "Imaging and diagnostic backlogs",
-     "What holds the build together is discipline at the boundaries: cost and quality telemetry land in the same view your owners read across the Healthcare & Life Sciences estate, and every exception path degrades to human review, never to silence."
+     "Imaging and diagnostic backlogs shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
     ],
     [
      "Trial recruitment and RWE pipelines manual",
-     "The design principle here is simple: each stage owns its latency budget and its failure policy across Healthcare & Life Sciences, and rollback is rehearsed before go-live rather than after the incident."
+     "We treat Trial recruitment and RWE pipelines manual as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
     ]
    ]
   },
@@ -95,19 +95,19 @@
    "items": [
     [
      "Unity Catalog governance",
-     "The build earns trust the same way every gate does: every state change is replayable from the signed baseline for Healthcare & Life Sciences at scale, and every exception path degrades to human review, never to silence."
+     "A single governance plane over tables, models and notebooks — access your auditors can replay."
     ],
     [
      "data contracts",
-     "The engineering bet is explicit: models, agents and rules move through versioned, evaluated releases for Healthcare & Life Sciences at scale, which keeps the blast radius of any change inside one lane."
+     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
     ],
     [
-     " freshness SLOs",
-     "The engineering bet is explicit: identity is short-lived and authorization is deny-by-default in Healthcare & Life Sciences, and every exception path degrades to human review, never to silence."
+     "freshness SLOs",
+     "Data age treated like uptime — a budget, an owner and an alert when it slips."
     ],
     [
      "dbt transformation graph",
-     "dbt transformation graph carries the control path — tested, documented models with lineage exposure"
+     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
     ]
    ]
   },
@@ -120,19 +120,19 @@
    "items": [
     [
      "LIMS & trial systems",
-     "LIMS & trial systems — assay and visit data under GxP validation; changes there raise events here, so the pattern never silently diverges"
+     "Lab and trial data governed from instrument to submission — sample lineage intact."
     ],
     [
      "supply & pharmacy chains",
-     "supply & pharmacy chains — lot-level traceability end to end; we integrate read-first, write only through policy-checked commands"
+     "Drug supply integrity monitored end to end — shortages predicted, not suffered."
     ],
     [
      "pharmacovigilance intake",
-     "pharmacovigilance intake — adverse-event cases with duplicate detection; changes there raise events here, so the pattern never silently diverges"
+     "Adverse events structured at intake, with case timelines the regulator can replay."
     ],
     [
      "EHR integration",
-     "EHR integration — FHIR-backed reads with consent-aware scopes; changes there raise events here, so the pattern never silently diverges"
+     "Clinical context fetched under consent, in FHIR terms — decision support inside the clinician's flow."
     ]
    ]
   },
@@ -145,15 +145,15 @@
    "items": [
     [
      "batch window",
-     "Down 50–62.1% after re-architecture in current programs; measured, not modeled"
+     "Batch windows measured against the plan every run — the number reported is the observed one."
     ],
     [
      "pipeline breakage MTTR",
-     "Down 55–70.6% with contracts and lineage paging on the first working slice; deeper scope moves it further"
+     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
     ],
     [
      "query p95",
-     "Down 40–55.1% on the certified gold layer — the gate compares the live value to baseline every quarter"
+     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
     ]
    ]
   },
@@ -166,15 +166,15 @@
    "items": [
     [
      "Metric anarchy",
-     "What holds the build together is discipline at the boundaries: the decision path and the audit path share one timeline in Healthcare & Life Sciences, so a regression is a cohort, never an estate."
+     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
     ],
     [
      "Cost creep",
-     "Nothing in this topology is accidental: identity is short-lived and authorization is deny-by-default for Healthcare & Life Sciences at scale, so a regression is a cohort, never an estate."
+     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
     ],
     [
      "Silent schema drift",
-     "The part that survives audit is the boring part: each stage owns its latency budget and its failure policy across Healthcare & Life Sciences, so drift shows up as a ticket with an owner, not as a mystery."
+     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
     ]
    ]
   },
@@ -243,7 +243,7 @@
   },
   {
    "t": "p",
-   "x": "What the delivery actually looks like week to week: before any build work, we spend 2 weeks proving the measurement: if two analysts cannot reproduce Clinician documentation time the same way, nothing else starts. the middle block runs the pilot against live claims & clearinghouse feeds data at deliberately small scope: one path, one team, one region, expanded only after its eval gate holds. Nothing in this topology is accidental: signals cross boundaries only through typed contracts in Data, Analytics & Lakehouse delivery, which is what makes the reported delta defensible in audit.. The part that survives audit is the boring part: each stage owns its latency budget and its failure policy across Healthcare & Life Sciences, so your control owners can interrogate any number we publish."
+   "x": "A delivery for Healthcare & Life Sciences runs on rhythm, not ritual: the baseline is signed in the first weeks, evidence is generated as the work happens, and the gate at each stage has real stop authority. Programs that miss their evidence stop."
   },
   {
    "t": "h2",
@@ -254,15 +254,15 @@
    "items": [
     [
      "Clinician documentation time",
-     "Down 20-35% with ambient documentation inside the EHR"
+     "Clinician documentation time is reported against the signed baseline with the evidence attached; if the number stops moving, the program says so."
     ],
     [
      "Radiology reporting turnaround",
-     "Down 30-50% with workflow-integrated triage"
+     "Radiology reporting turnaround has a named owner and a fortnightly reading; the gate review compares it to the signed baseline, not to a promise."
     ],
     [
      "Prior-authorization cycle time",
-     "Down 50-70% with agentic assembly and submission"
+     "Prior-authorization cycle time moves at gates, not in slideware: the value claimed at each gate is reconciled with your team before it enters the ledger."
     ],
     [
      "Claim denial overturn rate",
@@ -283,7 +283,7 @@
    "items": [
     [
      "A 12-hospital US health system",
-     "What holds the build together is discipline at the boundaries: signals cross boundaries only through typed contracts across the Healthcare & Life Sciences estate, so your control owners can interrogate any number we publish."
+     "Written up as a case study: the baseline, the measured outcome and the method, with client identity withheld by agreement."
     ],
     [
      "A national health insurer",
@@ -305,10 +305,10 @@
   },
   {
    "t": "cta",
-   "x": "Start with a value assessment: two weeks, your Clinician documentation time measured and signed, a delivery plan priced from evidence."
+   "x": "The first step is a signed baseline, not a proposal — the value assessment exists to price the delta before anything is committed."
   }
  ],
- "words": 1286,
+ "words": 1013,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Healthcare & Life Sciences",

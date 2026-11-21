@@ -35,11 +35,11 @@
     "Serving & BI",
     "Decision feedback"
    ],
-   "note": "Under the hood this pattern runs on one rule: signals cross boundaries only through typed contracts in Dataq Twinverse, which is what makes the reported delta defensible in audit."
+   "note": "Signals, context and policy converge at the decision layer; every scored decision is logged with its inputs so it can be replayed at audit."
   },
   {
    "t": "p",
-   "x": "The design principle here is simple: identity is short-lived and authorization is deny-by-default across the Dataq Twinverse estate, and every exception path degrades to human review, never to silence."
+   "x": "The reference pattern behind Dataq Twinverse — Overview is boring on purpose: contracts at every boundary, an owner per component, and evidence captured where the work happens. Boring architecture is what survives contact with an audit."
   },
   {
    "t": "h2",
@@ -90,20 +90,20 @@
    "t": "bullets",
    "items": [
     [
-     " freshness SLOs",
-     "The part that survives audit is the boring part: each stage owns its latency budget and its failure policy across the enterprise, and rollback is rehearsed before go-live rather than after the incident."
+     "freshness SLOs",
+     "Data age treated like uptime — a budget, an owner and an alert when it slips."
     ],
     [
      "streaming ingest",
-     "streaming ingest carries the decision path — Kafka-backed CDC with exactly-once sinks"
+     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
     ],
     [
      "Unity Catalog governance",
-     "At operating tempo, the properties that carry the load are structural: models, agents and rules move through versioned, evaluated releases across the enterprise, and rollback is rehearsed before go-live rather than after the incident."
+     "A single governance plane over tables, models and notebooks — access your auditors can replay."
     ],
     [
      "Delta / Iceberg tables",
-     "Under the hood this pattern runs on one rule: every state change is replayable from the signed baseline across the Dataq Twinverse estate, so a regression is a cohort, never an estate."
+     "Open table formats underneath everything we build, so your data never belongs to a vendor."
     ]
    ]
   },
@@ -116,15 +116,15 @@
    "items": [
     [
      "query p95",
-     "Down 40–52.3% on the certified gold layer in current programs; measured, not modeled"
+     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
     ],
     [
      "warehouse spend per query",
-     "Down 20–32.9% after clustering and pruning — the gate compares the live value to baseline every quarter"
+     "Spend per query attributed to the team that wrote it — the meter everyone can see."
     ],
     [
      "batch window",
-     "Down 50–66.4% after re-architecture per workflow, reported weekly against the signed baseline"
+     "Batch windows measured against the plan every run — the number reported is the observed one."
     ]
    ]
   },
@@ -137,15 +137,15 @@
    "items": [
     [
      "Silent schema drift",
-     "Nothing in this topology is accidental: every state change is replayable from the signed baseline in Dataq Twinverse, which keeps the blast radius of any change inside one lane."
+     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
     ],
     [
      "Metric anarchy",
-     "The design principle here is simple: cost and quality telemetry land in the same view your owners read for the enterprise at scale, so your control owners can interrogate any number we publish."
+     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
     ],
     [
      "Cost creep",
-     "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later in Dataq Twinverse, so your control owners can interrogate any number we publish."
+     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
     ]
    ]
   },
@@ -158,15 +158,15 @@
    "items": [
     [
      "Evidence by default",
-     "The build earns trust the same way every gate does: the decision path and the audit path share one timeline in Dataq Twinverse, which keeps the blast radius of any change inside one lane."
+     "Evidence generated as a by-product of doing the work — audit readiness stops being a season."
     ],
     [
      "Pattern draw on",
-     "Target range 20% on the first working slice, with the method note attached"
+     "The program draws on the pattern library where it fits and departs from it where your estate says otherwise."
     ],
     [
      "Accountability",
-     "Under the hood this pattern runs on one rule: the decision path and the audit path share one timeline across the enterprise, which is what makes the reported delta defensible in audit."
+     "Decision ownership named per metric — the org chart and the system agree on who answers."
     ]
    ]
   },
@@ -182,20 +182,20 @@
    "t": "bullets",
    "items": [
     [
-     " freshness SLOs",
-     "The build earns trust the same way every gate does: models, agents and rules move through versioned, evaluated releases in Dataq Twinverse, and every exception path degrades to human review, never to silence."
+     "freshness SLOs",
+     "Data age treated like uptime — a budget, an owner and an alert when it slips."
     ],
     [
      "streaming ingest",
-     "streaming ingest carries the decision path — Kafka-backed CDC with exactly-once sinks"
+     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
     ],
     [
      "Unity Catalog governance",
-     "The engineering bet is explicit: models, agents and rules move through versioned, evaluated releases in Dataq Twinverse, so a regression is a cohort, never an estate."
+     "A single governance plane over tables, models and notebooks — access your auditors can replay."
     ],
     [
      "Delta / Iceberg tables",
-     "The build earns trust the same way every gate does: each stage owns its latency budget and its failure policy across the Dataq Twinverse estate, so a regression is a cohort, never an estate."
+     "Open table formats underneath everything we build, so your data never belongs to a vendor."
     ]
    ]
   },
@@ -205,14 +205,14 @@
   },
   {
    "t": "p",
-   "x": "The cadence, without the ceremony: The build earns trust the same way every gate does: cost and quality telemetry land in the same view your owners read for the enterprise at scale, and every exception path degrades to human review, never to silence.. Nothing in this topology is accidental: the decision path and the audit path share one timeline for the enterprise at scale, so your control owners can interrogate any number we publish.. What holds the build together is discipline at the boundaries: every state change is replayable from the signed baseline for the enterprise at scale, which keeps the blast radius of any change inside one lane.. The part that survives audit is the boring part: each stage owns its latency budget and its failure policy across the enterprise, and every exception path degrades to human review, never to silence."
+   "x": "Programs use Dataq Twinverse — Overview where a decision needs to be current and defensible at once — scored in-flight, logged end to end, and reviewed at the same gates as every other program."
   },
   {
    "t": "cta",
-   "x": "The build earns trust the same way every gate does: identity is short-lived and authorization is deny-by-default for the enterprise at scale, so drift shows up as a ticket with an owner, not as a mystery."
+   "x": "Book a platform session: we bring the architecture, you bring the use case, and the evaluation criteria are yours."
   }
  ],
- "words": 930,
+ "words": 573,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Twinverse",

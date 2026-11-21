@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ArrowRight, ArrowUpRight, ChevronRight, Info, Layers, Cog, Factory, FileBarChart2, BookOpen, Boxes, Building2, Compass, UserRound, Mail, Scale, Briefcase, Newspaper, Wrench, MapPin, Handshake, ShieldCheck, FileText } from "lucide-react";
 import Reveal from "./Reveal";
 import { CountUp } from "./Motion";
-import { OutputTelemetry, PatentStrip, OfficesMap } from "./PageAugment";
+import { PatentStrip, OfficesMap } from "./PageAugment";
 import { pick as pickImagery } from "./PageImagery";
 import { TechDiagram, DIAGRAM_KINDS, type DiagramKind } from "./TechDiagrams";
 import { brandData, pageIndex } from "@/lib/content";
@@ -612,8 +612,7 @@ export function ContentPage({ page }: { page: PageData }) {
             sub={cardsSub(page.template)}
           />
 
-          {/* evidence band: engagement telemetry + the patented methods underneath */}
-          <OutputTelemetry page={page} />
+          {/* the patented methods underneath — factual, patent-mapped */}
           <PatentStrip page={page} />
 
           {page.profile && page.profile.focus.length > 0 && (

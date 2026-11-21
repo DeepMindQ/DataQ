@@ -43,11 +43,11 @@
     "Serving & BI",
     "Decision feedback"
    ],
-   "note": "Nothing in this topology is accidental: the decision path and the audit path share one timeline across the Subscription & Monetization Platforms estate, so a regression is a cohort, never an estate."
+   "note": "The flow is linear on purpose: every hop owns its latency budget and failure policy, and a regression in one stage is a cohort, never an estate-wide surprise."
   },
   {
    "t": "p",
-   "x": "What holds the build together is discipline at the boundaries: each stage owns its latency budget and its failure policy in Subscription & Monetization Platforms, and rollback is rehearsed before go-live rather than after the incident."
+   "x": "We engineer Subscription & Monetization Platforms so that regressions are cohorts, not surprises: each stage owns its latency budget and failure policy, and rollback is rehearsed before go-live rather than after the incident."
   },
   {
    "t": "h2",
@@ -84,7 +84,7 @@
   },
   {
    "t": "p",
-   "x": "The engineering bet is explicit: models, agents and rules move through versioned, evaluated releases in Subscription & Monetization Platforms, so drift shows up as a ticket with an owner, not as a mystery."
+   "x": "The stack for Subscription & Monetization Platforms is assembled per estate, but the pattern is stable: one event spine, one governance plane, one decision layer — and no component without a named owner."
   },
   {
    "t": "h2",
@@ -95,19 +95,19 @@
    "items": [
     [
      "Diagnose",
-     "Under the hood this pattern runs on one rule: the decision path and the audit path share one timeline in Subscription & Monetization Platforms, which is what makes the reported delta defensible in audit."
+     "We measure the starting position and lock the baseline with your team — no build work begins before the number is agreed."
     ],
     [
      "Prove",
-     "The design principle here is simple: cost and quality telemetry land in the same view your owners read in Subscription & Monetization Platforms, so your control owners can interrogate any number we publish."
+     "A bounded pilot on your real data, with the gate review scheduled before the first commit is written."
     ],
     [
      "Industrialize",
-     "The part that survives audit is the boring part: each stage owns its latency budget and its failure policy across the Subscription & Monetization Platforms estate, so a regression is a cohort, never an estate."
+     "Runbooks, enablement and the control trail that let your teams operate it without us in the room."
     ],
     [
      "Compound",
-     "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later in Subscription & Monetization Platforms, so the question of how we know gets a pointer, not a paragraph."
+     "Quarterly re-audits and a ranked backlog of the next decisions worth automating — value that accumulates on purpose."
     ]
    ]
   },
@@ -119,20 +119,20 @@
    "t": "bullets",
    "items": [
     [
-     " freshness SLOs",
-     "The build earns trust the same way every gate does: identity is short-lived and authorization is deny-by-default in Subscription & Monetization Platforms, so the question of how we know gets a pointer, not a paragraph."
+     "freshness SLOs",
+     "Data age treated like uptime — a budget, an owner and an alert when it slips."
     ],
     [
      "cost-aware clustering",
-     "Nothing in this topology is accidental: the decision path and the audit path share one timeline in Data, Analytics & Lakehouse delivery, which keeps the blast radius of any change inside one lane."
+     "Workloads land on the cheapest compute that still meets the latency budget."
     ],
     [
      "data contracts",
-     "Under the hood this pattern runs on one rule: cost and quality telemetry land in the same view your owners read across the Subscription & Monetization Platforms estate, so a regression is a cohort, never an estate."
+     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
     ],
     [
      "dbt transformation graph",
-     "dbt transformation graph carries the control path — tested, documented models with lineage exposure"
+     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
     ]
    ]
   },
@@ -144,20 +144,20 @@
    "t": "bullets",
    "items": [
     [
-     " freshness SLOs",
-     "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases across the Subscription & Monetization Platforms estate, so a regression is a cohort, never an estate."
+     "freshness SLOs",
+     "Data age treated like uptime — a budget, an owner and an alert when it slips."
     ],
     [
      "cost-aware clustering",
-     "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later in Subscription & Monetization Platforms, so drift shows up as a ticket with an owner, not as a mystery."
+     "Workloads land on the cheapest compute that still meets the latency budget."
     ],
     [
      "data contracts",
-     "Nothing in this topology is accidental: the decision path and the audit path share one timeline across the Subscription & Monetization Platforms estate, which is what makes the reported delta defensible in audit."
+     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
     ],
     [
      "dbt transformation graph",
-     "dbt transformation graph carries the control path — tested, documented models with lineage exposure"
+     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
     ]
    ]
   },
@@ -170,15 +170,15 @@
    "items": [
     [
      "query p95",
-     "Down 40–57.5% on the certified gold layer per workflow, reported weekly against the signed baseline"
+     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
     ],
     [
      "batch window",
-     "Down 50–63.9% after re-architecture — the gate compares the live value to baseline every quarter"
+     "Batch windows measured against the plan every run — the number reported is the observed one."
     ],
     [
      "freshness SLO attainment",
-     "The part that survives audit is the boring part: identity is short-lived and authorization is deny-by-default across the Subscription & Monetization Platforms estate, so drift shows up as a ticket with an owner, not as a mystery."
+     "Freshness attainment published per dataset — data age is uptime, treated the same way."
     ]
    ]
   },
@@ -191,15 +191,15 @@
    "items": [
     [
      "Silent schema drift",
-     "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later in Subscription & Monetization Platforms, which is what makes the reported delta defensible in audit."
+     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
     ],
     [
      "Metric anarchy",
-     "The part that survives audit is the boring part: the decision path and the audit path share one timeline in Data, Analytics & Lakehouse delivery, and rollback is rehearsed before go-live rather than after the incident."
+     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
     ],
     [
      "Cost creep",
-     "What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default across the Subscription & Monetization Platforms estate, and rollback is rehearsed before go-live rather than after the incident."
+     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
     ]
    ]
   },
@@ -212,19 +212,19 @@
    "items": [
     [
      "Architecture pack",
-     "The design principle here is simple: identity is short-lived and authorization is deny-by-default in Subscription & Monetization Platforms, which keeps the blast radius of any change inside one lane."
+     "The design drawn against your estate — components, owners and the interfaces between them."
     ],
     [
      "Working system",
-     "Nothing in this topology is accidental: models, agents and rules move through versioned, evaluated releases in Subscription & Monetization Platforms, so the question of how we know gets a pointer, not a paragraph."
+     "The thing itself, running in your environment — not a demo, not a prototype on someone's laptop."
     ],
     [
      "Run model",
-     "What holds the build together is discipline at the boundaries: cost and quality telemetry land in the same view your owners read in Subscription & Monetization Platforms, which is what makes the reported delta defensible in audit."
+     "How it is operated after handover — runbooks, on-call shape and the training your teams receive."
     ],
     [
      "Value audit kit",
-     "What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default for the enterprise at scale, so drift shows up as a ticket with an owner, not as a mystery."
+     "The method and worksheets that let your own analysts reproduce every delta we claim."
     ]
    ]
   },
@@ -234,7 +234,7 @@
   },
   {
    "t": "p",
-   "x": "The design principle here is simple: evidence is captured where the work happens, not reconstructed later across the Subscription & Monetization Platforms estate, so drift shows up as a ticket with an owner, not as a mystery."
+   "x": "Subscription & Monetization Platforms has honest prerequisites: named owners for the source systems, contracts for the data that crosses boundaries, and access your security team has approved in writing."
   },
   {
    "t": "h2",
@@ -242,7 +242,7 @@
   },
   {
    "t": "p",
-   "x": "The cadence, without the ceremony: the first 2 weeks are pure verification — we measure churn in targeted cohorts with your analysts, reconcile disagreements, and freeze the number both sides defend. Nothing in this topology is accidental: evidence is captured where the work happens, not reconstructed later across the Subscription & Monetization Platforms estate, and every exception path degrades to human review, never to silence.. The design principle here is simple: identity is short-lived and authorization is deny-by-default across the Subscription & Monetization Platforms estate, which is what makes the reported delta defensible in audit.. Under the hood this pattern runs on one rule: signals cross boundaries only through typed contracts across the enterprise, and rollback is rehearsed before go-live rather than after the incident."
+   "x": "The rhythm for Subscription & Monetization Platforms: measure first, prove on real data, industrialize what survived the gate, and review the delta every fortnight with the people accountable for the number."
   },
   {
    "t": "h2",
@@ -253,7 +253,7 @@
    "items": [
     [
      "churn in targeted cohorts",
-     "Down 15-25%"
+     "churn in targeted cohorts moves at gates, not in slideware: the value claimed at each gate is reconciled with your team before it enters the ledger."
     ],
     [
      "expansion revenue",
@@ -274,11 +274,11 @@
    "items": [
     [
      "A top-10 European retail bank",
-     "Target range 38% on the first working slice, with the method note attached"
+     "Written up as a case study: the baseline, the measured outcome and the method, with client identity withheld by agreement."
     ],
     [
      "A multinational corporate bank",
-     "Target range 70% on the first working slice, with the method note attached"
+     "The measured delta and the method note are written up on the case page — anonymized by agreement, baseline audited."
     ]
    ]
   },
@@ -288,26 +288,26 @@
   },
   {
    "t": "p",
-   "x": "Nothing in this topology is accidental: every state change is replayable from the signed baseline in Subscription & Monetization Platforms, so drift shows up as a ticket with an owner, not as a mystery."
+   "x": "This page is part of a portfolio engineered to compose: Subscription & Monetization Platforms shares the decision layer, the audit trail and the platform rails with the entries around it."
   },
   {
    "t": "bullets",
    "items": [
     [
      "Public Sector & Government",
-     "Under the hood this pattern runs on one rule: every state change is replayable from the signed baseline in Data, Analytics & Lakehouse delivery, so your control owners can interrogate any number we publish."
+     "The contract behind Public Sector & Government: signed baseline in week two, working slice by week eight, industrialized controls by week twelve, and."
     ],
     [
      "Retail & Consumer Goods",
-     "The engineering bet is explicit: every state change is replayable from the signed baseline across the Subscription & Monetization Platforms estate, so a regression is a cohort, never an estate."
+     "Retail & Consumer Goods in production terms — the runtime that holds it, the policies that bound it, the dashboards that prove it, and the quarterly."
     ],
     [
      "Lakehouse Architecture & Migration",
-     "Under the hood this pattern runs on one rule: evidence is captured where the work happens, not reconstructed later across the Subscription & Monetization Platforms estate, and rollback is rehearsed before go-live rather than after the incident."
+     "A no-theater description of Lakehouse Architecture & Migration: what ships first, what it touches at operational stores, how it is verified, and the."
     ],
     [
      "A global automotive OEM",
-     "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later in Subscription & Monetization Platforms, which keeps the blast radius of any change inside one lane."
+     "Written up as a case study: the baseline, the measured outcome and the method, with client identity withheld by agreement."
     ]
    ]
   },
@@ -324,19 +324,19 @@
    "items": [
     [
      "Baseline diagnostic",
-     "Nothing in this topology is accidental: evidence is captured where the work happens, not reconstructed later for the enterprise at scale, so a regression is a cohort, never an estate."
+     "The starting position for every metric in scope, measured with your team and signed before build work begins."
     ],
     [
      "Decision and control map",
-     "Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read in Data, Analytics & Lakehouse delivery, and rollback is rehearsed before go-live rather than after the incident."
+     "Every decision the system makes, who owns it, and where the human checkpoint sits."
     ],
     [
      "Evidence pack",
-     "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later on Data, Analytics & Lakehouse programs, so the question of how we know gets a pointer, not a paragraph."
+     "The artifacts your auditors ask for — control tests, decision trails and gate reviews in one place."
     ],
     [
      "Value ledger",
-     "The design principle here is simple: cost and quality telemetry land in the same view your owners read across the Subscription & Monetization Platforms estate, and every exception path degrades to human review, never to silence."
+     "The running record of measured deltas against the signed baseline, reconciled with your finance team."
     ]
    ]
   },
@@ -345,7 +345,7 @@
    "x": "Put your churn in targeted cohorts in front of the practice lead — bring the baseline, leave with a scoped plan."
   }
  ],
- "words": 1632,
+ "words": 1030,
  "section": "Solutions",
  "l1": "Solutions",
  "l2": "Growth & Revenue",

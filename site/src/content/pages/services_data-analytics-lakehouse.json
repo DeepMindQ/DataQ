@@ -35,15 +35,15 @@
     "Serving & BI",
     "Decision feedback"
    ],
-   "note": "The part that survives audit is the boring part: the decision path and the audit path share one timeline in Data, Analytics & Lakehouse, so the question of how we know gets a pointer, not a paragraph."
+   "note": "The pipeline is measured end to end; each stage reports its own freshness and cost, which is what makes the unit economics arguable."
   },
   {
    "t": "p",
-   "x": "Under the hood this pattern runs on one rule: cost and quality telemetry land in the same view your owners read across the Data, Analytics & Lakehouse estate, so the question of how we know gets a pointer, not a paragraph."
+   "x": "What holds Data, Analytics & Lakehouse together is discipline at the boundaries — typed contracts between stages, versioned releases, and a replay trail for every decision. The diagram above shows how the pieces compose; the gate reviews are what keep them honest."
   },
   {
    "t": "p",
-   "x": "The engineering bet is explicit: the decision path and the audit path share one timeline across the enterprise, and rollback is rehearsed before go-live rather than after the incident."
+   "x": "What holds Data, Analytics & Lakehouse together is discipline at the boundaries — typed contracts between stages, versioned releases, and a replay trail for every decision. The diagram above shows how the pieces compose; the gate reviews are what keep them honest."
   },
   {
    "t": "h2",
@@ -62,31 +62,31 @@
    "items": [
     [
      "Data Engineering & Pipeline Modernization",
-     "The part that survives audit is the boring part: models, agents and rules move through versioned, evaluated releases in Data, Analytics & Lakehouse, so drift shows up as a ticket with an owner, not as a mystery."
+     "How Data Engineering & Pipeline Modernization runs when it is engineered for the enterprise: bounded scope per gate, platform evidence generated."
     ],
     [
      "Lakehouse Architecture & Migration",
-     "Nothing in this topology is accidental: models, agents and rules move through versioned, evaluated releases across the Data, Analytics & Lakehouse estate, and rollback is rehearsed before go-live rather than after the incident."
+     "A no-theater description of Lakehouse Architecture & Migration: what ships first, what it touches at operational stores, how it is verified, and the."
     ],
     [
      "Real-Time Streaming & Event-Driven Decisioning",
-     "Nothing in this topology is accidental: identity is short-lived and authorization is deny-by-default across the enterprise, which is what makes the reported delta defensible in audit."
+     "The Dataq Software build of Real-Time Streaming & Event-Driven Decisioning: concrete interfaces at core systems, measured movement on event-to-action."
     ],
     [
      "Enterprise BI & Executive Analytics",
-     "The design principle here is simple: every state change is replayable from the signed baseline in Data, Analytics & Lakehouse, which keeps the blast radius of any change inside one lane."
+     "A no-theater description of Enterprise BI & Executive Analytics: what ships first, what it touches at operational stores, how it is verified, and the."
     ],
     [
      "Master Data, Governance & Cataloging",
-     "Under the hood this pattern runs on one rule: the decision path and the audit path share one timeline in Data, Analytics & Lakehouse, and rollback is rehearsed before go-live rather than after the incident."
+     "The Dataq Software build of Master Data, Governance & Cataloging: concrete interfaces at core systems, measured movement on duplicate record rates."
     ],
     [
      "Advanced Risk & Predictive Analytics",
-     "The engineering bet is explicit: every state change is replayable from the signed baseline on Data, Analytics & Lakehouse programs, and rollback is rehearsed before go-live rather than after the incident."
+     "How Advanced Risk & Predictive Analytics runs when it is engineered for the enterprise: bounded scope per gate, platform evidence generated."
     ],
     [
      "Data Monetization & Analytics Products",
-     "The engineering bet is explicit: cost and quality telemetry land in the same view your owners read in Data, Analytics & Lakehouse, so a regression is a cohort, never an estate."
+     "The Dataq Software build of Data Monetization & Analytics Products: concrete interfaces at core systems, measured movement on new revenue line, and a."
     ]
    ]
   },
@@ -99,19 +99,19 @@
    "items": [
     [
      "dbt transformation graph",
-     "dbt transformation graph carries the ingest path — tested, documented models with lineage exposure"
+     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
     ],
     [
      "Delta / Iceberg tables",
-     "The engineering bet is explicit: identity is short-lived and authorization is deny-by-default across the Data, Analytics & Lakehouse estate, so your control owners can interrogate any number we publish."
+     "Open table formats underneath everything we build, so your data never belongs to a vendor."
     ],
     [
      "Unity Catalog governance",
-     "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later in Data, Analytics & Lakehouse, so your control owners can interrogate any number we publish."
+     "A single governance plane over tables, models and notebooks — access your auditors can replay."
     ],
     [
-     " freshness SLOs",
-     "What holds the build together is discipline at the boundaries: cost and quality telemetry land in the same view your owners read across the Data, Analytics & Lakehouse estate, so a regression is a cohort, never an estate."
+     "freshness SLOs",
+     "Data age treated like uptime — a budget, an owner and an alert when it slips."
     ]
    ]
   },
@@ -124,15 +124,15 @@
    "items": [
     [
      "pipeline breakage MTTR",
-     "Down 55–70.5% with contracts and lineage paging, with the method note attached so your analysts can reproduce it"
+     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
     ],
     [
      "query p95",
-     "Down 40–53% on the certified gold layer in current programs; measured, not modeled"
+     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
     ],
     [
      "freshness SLO attainment",
-     "The part that survives audit is the boring part: every state change is replayable from the signed baseline in Data, Analytics & Lakehouse, which keeps the blast radius of any change inside one lane."
+     "Freshness attainment published per dataset — data age is uptime, treated the same way."
     ]
    ]
   },
@@ -145,15 +145,15 @@
    "items": [
     [
      "Metric anarchy",
-     "Under the hood this pattern runs on one rule: the decision path and the audit path share one timeline in Data, Analytics & Lakehouse, so your control owners can interrogate any number we publish."
+     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
     ],
     [
      "Silent schema drift",
-     "What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default in Data, Analytics & Lakehouse, and every exception path degrades to human review, never to silence."
+     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
     ],
     [
      "Cost creep",
-     "Under the hood this pattern runs on one rule: identity is short-lived and authorization is deny-by-default in Data, Analytics & Lakehouse, so your control owners can interrogate any number we publish."
+     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
     ]
    ]
   },
@@ -188,7 +188,7 @@
   },
   {
    "t": "p",
-   "x": "The build earns trust the same way every gate does: cost and quality telemetry land in the same view your owners read across the Data, Analytics & Lakehouse estate, and rollback is rehearsed before go-live rather than after the incident."
+   "x": "This tower applies where the constraint is decision quality under regulation — the services below are the ones we deploy first in estates like that."
   },
   {
    "t": "h2",
@@ -196,7 +196,7 @@
   },
   {
    "t": "p",
-   "x": "The cadence, without the ceremony: The design principle here is simple: identity is short-lived and authorization is deny-by-default on Data, Analytics & Lakehouse programs, so the question of how we know gets a pointer, not a paragraph.. The part that survives audit is the boring part: identity is short-lived and authorization is deny-by-default for the enterprise at scale, and rollback is rehearsed before go-live rather than after the incident.. The build earns trust the same way every gate does: every state change is replayable from the signed baseline in Data, Analytics & Lakehouse, and every exception path degrades to human review, never to silence.. The build earns trust the same way every gate does: every state change is replayable from the signed baseline in Data, Analytics & Lakehouse, and rollback is rehearsed before go-live rather than after the incident."
+   "x": "Delivery on Data, Analytics & Lakehouse is sequenced so the measurement always precedes the build: two weeks of baseline before the pilot, a scheduled gate before any scale-out, and a fortnightly reading against the signed number."
   },
   {
    "t": "h2",
@@ -211,28 +211,28 @@
    "items": [
     [
      "Baseline diagnostic",
-     "What holds the build together is discipline at the boundaries: signals cross boundaries only through typed contracts across the Data, Analytics & Lakehouse estate, which keeps the blast radius of any change inside one lane."
+     "The starting position for every metric in scope, measured with your team and signed before build work begins."
     ],
     [
      "Decision and control map",
-     "The build earns trust the same way every gate does: signals cross boundaries only through typed contracts in Data, Analytics & Lakehouse, and every exception path degrades to human review, never to silence."
+     "Every decision the system makes, who owns it, and where the human checkpoint sits."
     ],
     [
      "Evidence pack",
-     "The build earns trust the same way every gate does: every state change is replayable from the signed baseline across the Data, Analytics & Lakehouse estate, so a regression is a cohort, never an estate."
+     "The artifacts your auditors ask for — control tests, decision trails and gate reviews in one place."
     ],
     [
      "Value ledger",
-     "The design principle here is simple: every state change is replayable from the signed baseline across the Data, Analytics & Lakehouse estate, and rollback is rehearsed before go-live rather than after the incident."
+     "The running record of measured deltas against the signed baseline, reconciled with your finance team."
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "The build earns trust the same way every gate does: every state change is replayable from the signed baseline in Data, Analytics & Lakehouse delivery, so a regression is a cohort, never an estate."
+   "x": "Book a briefing with the tower lead — 45 minutes: your metric, the tower's method, and the first measurable move."
   }
  ],
- "words": 1323,
+ "words": 855,
  "section": "Services",
  "l1": "Services",
  "l2": "Data, Analytics & Lakehouse",

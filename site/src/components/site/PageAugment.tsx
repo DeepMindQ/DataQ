@@ -1,437 +1,66 @@
 import { PageData } from "@/lib/content";
 import { PATENTS, patentsForPage, Patent } from "@/lib/patents";
-import { mulberry32, hashStr } from "@/lib/seeded";
 import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
-/* Charts: ChartsV2 executive system (y-axes, ticks, tooltips, draw-in).
-   ArchitectureFlow + WorldPins remain in DataVisuals (diagram + map). */
-import { BarChart2, LineArea2, Radar2, Gauge2, Funnel2, Heatmap2, StackBar } from "./ChartsV2";
+/* Diagrams only: ArchitectureFlow + WorldPins live in DataVisuals. */
 import { ArchitectureFlow, WorldPins } from "./DataVisuals";
 
-/* ── PageAugment (Wave 2 + output-graphs directive) ─────────────────────
-   Server-side, template-aware augmentation: every internal page receives a
-   deterministic, page-seeded "output telemetry" panel (illustrative sample
-   engagement data) plus the patents that power it. No per-page JSON edits. */
+/* ── PageAugment — factual augmentation only ────────────────────────────
+   The old "output telemetry / program economics" panels were removed on
+   purpose: they published invented planning figures with disclaimers, and
+   invented numbers are not evidence. What stays is factual and useful —
+   the reference-architecture diagrams (patent-aligned) and the patent
+   strip. Baselines and outcomes belong to client estates, not brochures. */
 
-type Rng = () => number;
-
-const TOWER_KPI: Record<string, { names: string[]; unit: string; trend: string; trendUnit: string }> = {
-  "applied-ai-generative-ai": {
-    names: ["Decision accuracy", "Time-to-answer", "Content ops cost", "Manual review hrs"],
-    unit: "%",
-    trend: "Assisted decisions per day",
-    trendUnit: "",
-  },
-  "agentic-ai-hyperautomation": {
-    names: ["Straight-through rate", "Cycle time", "Touches per case", "Backlog age"],
-    unit: "%",
-    trend: "Cases resolved autonomously / week",
-    trendUnit: "",
-  },
-  "data-analytics-lakehouse": {
-    names: ["Query latency p95", "Pipeline failures", "Freshness lag", "Cost per TB"],
-    unit: "%",
-    trend: "Governed queries served / day",
-    trendUnit: "",
-  },
-  "cybersecurity-zero-trust": {
-    names: ["MTTD", "MTTR", "Policy violations", "Open audit findings"],
-    unit: "%",
-    trend: "Threat signals correlated / hour",
-    trendUnit: "",
-  },
-  "cloud-edge-platform-engineering": {
-    names: ["Deploy frequency", "Change failure rate", "Cost per workload", "Incidents / mo"],
-    unit: "%",
-    trend: "Workloads orchestrated / day",
-    trendUnit: "",
-  },
-  "quantum-advanced-compute": {
-    names: ["Optimality gap", "Solve time", "Scenario coverage", "Energy per solve"],
-    unit: "%",
-    trend: "Scenarios explored / run",
-    trendUnit: "",
-  },
-  "blockchain-digital-trust": {
-    names: ["Reconciliation time", "Verification cost", "Dispute rate", "Provenance coverage"],
-    unit: "%",
-    trend: "Assets verified on-ledger / day",
-    trendUnit: "",
-  },
-  "iot-digital-twin-robotics": {
-    names: ["Unplanned downtime", "OEE uplift", "Defect escape rate", "Sensor coverage"],
-    unit: "%",
-    trend: "Twin sync events / minute",
-    trendUnit: "",
-  },
-};
-
-function towerOf(page: PageData): string {
-  const seg = page.url.split("/").filter(Boolean);
-  const towers = Object.keys(TOWER_KPI);
-  for (const s of seg) if (towers.includes(s)) return s;
-  return "applied-ai-generative-ai";
-}
-
-function baselineVsAfter(rng: Rng, names: string[]): { base: number[]; after: number[] } {
-  // Improvement magnitudes per KPI: 22–58% better than baseline
-  const base = names.map(() => Math.round(38 + rng() * 50));
-  const after = base.map((b) => Math.max(6, Math.round(b * (1 - (0.22 + rng() * 0.36)))));
-  return { base, after };
-}
-
-/* ── Output telemetry panel — per-template deterministic charts ───────── */
-/* ── Output telemetry — curated, CXO-meaningful program views ────────────
-   Every figure below is an explicitly authored composite: the typical
-   starting position and the 90-day/12-month target shape our pattern
-   library plans against. Not client data, not RNG — a planning baseline
-   the reader can interrogate. Captions state exactly what each chart is. */
 export function OutputTelemetry({ page }: { page: PageData }) {
   const t = page.template;
-  const tower = towerOf(page);
-  const kpi = TOWER_KPI[tower];
-  const dark = t === "case_study";
-  const wrap = (children: React.ReactNode, note?: string) => (
-    <section className="container-dq pt-2">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className={`text-[12px] font-semibold uppercase tracking-[0.2em] ${dark ? "text-brand-300" : "text-brand-deep"}`}>
-            Program economics
-          </p>
-          <h2 className={`mt-1 font-display text-[21px] font-semibold sm:text-[23px] ${dark ? "text-white" : "text-navy-800"}`}>
-            What a program of this type targets
-          </h2>
-          <p className={`mt-1.5 max-w-2xl text-[13px] ${dark ? "text-white/60" : "text-slate-body/70"}`}>
-            Composite planning figures from our delivery pattern library — the starting position
-            is measured and signed in weeks 1–2; the target shape is agreed at the design gate.
-            Your numbers replace these at the value assessment.
-          </p>
-        </div>
-      </div>
-      {children}
-      {note && (
-        <p className={`mt-3 flex items-start gap-2 text-[12px] leading-relaxed ${dark ? "text-white/55" : "text-slate-body/70"}`}>
-          <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
-          {note}
-        </p>
-      )}
-    </section>
-  );
-
-  /* curated per-tower KPI figures: [typical starting point, 90-day target] */
-  const TOWER_FIGS: Record<string, { names: string[]; base: number[]; target: number[]; unit: string; read: string }> = {
-    "applied-ai-generative-ai": {
-      names: ["Decision accuracy", "Time-to-answer (min)", "Content ops cost (idx)", "Manual review (hrs/wk)"],
-      base: [72, 45, 100, 60], target: [88, 12, 62, 18],
-      unit: "",
-      read: "Read: accuracy gains come from retrieval and evaluation discipline, not model swaps. Cost index is rebased to 100 at baseline.",
-    },
-    "agentic-ai-hyperautomation": {
-      names: ["Straight-through rate", "Cycle time (hrs)", "Touches per case", "Backlog age (days)"],
-      base: [42, 9, 5, 12], target: [78, 3, 2, 2],
-      unit: "",
-      read: "Read: straight-through rate is the compounding metric — every point moves cost and cycle time together. Exceptions keep human checkpoints.",
-    },
-    "data-analytics-lakehouse": {
-      names: ["Query p95 (sec)", "Pipeline failures/mo", "Freshness lag (hrs)", "Cost per TB (idx)"],
-      base: [180, 9, 24, 100], target: [8, 1, 1, 58],
-      unit: "",
-      read: "Read: freshness lag is the metric that decides whether decisions use this data. Cost index falls with storage tiering and query pruning, not headcount.",
-    },
-    "cybersecurity-zero-trust": {
-      names: ["MTTD (min)", "MTTR (hrs)", "Policy violations/mo", "Open audit findings"],
-      base: [240, 26, 31, 14], target: [15, 4, 6, 2],
-      unit: "",
-      read: "Read: MTTD/MTTR only move when detection, identity and response are engineered as one pipeline — tool counts are not the goal.",
-    },
-    "cloud-edge-platform-engineering": {
-      names: ["Deploy freq (/wk)", "Change failure rate", "Cost per workload (idx)", "Sev-2 incidents/mo"],
-      base: [1, 18, 100, 7], target: [9, 6, 64, 2],
-      unit: "",
-      read: "Read: deploy frequency and change failure rate move inversely by design — the platform absorbs the risk manual releases used to carry.",
-    },
-    "quantum-advanced-compute": {
-      names: ["Optimality gap", "Solve time (min)", "Scenario coverage", "Energy per solve (idx)"],
-      base: [14, 90, 40, 100], target: [3, 11, 92, 47],
-      unit: "",
-      read: "Read: every quantum-inspired run is benchmarked against the best classical solver; we only ship where the gap is real and measured.",
-    },
-    "blockchain-digital-trust": {
-      names: ["Reconciliation (days)", "Verification cost (idx)", "Dispute rate", "Provenance coverage"],
-      base: [5, 100, 8, 35], target: [0.2, 31, 1, 96],
-      unit: "",
-      read: "Read: provenance coverage is the adoption metric — the ledger only pays back when counterparties actually write to it.",
-    },
-    "iot-digital-twin-robotics": {
-      names: ["Unplanned downtime (%)", "OEE (pts)", "Defect escape (kPPM)", "Sensor coverage"],
-      base: [7, 61, 4200, 42], target: [2.4, 74, 1500, 92],
-      unit: "",
-      read: "Read: OEE points are worth 5-12x their weight in margin at plant scale; downtime cuts land first, yield follows.",
-    },
-  };
-  const figs = TOWER_FIGS[tower] ?? TOWER_FIGS["applied-ai-generative-ai"];
-
-  /* program economics: cumulative value vs cumulative cost, 12 months */
-  const months = Array.from({ length: 12 }, (_, i) => `M${i + 1}`);
-  const cumValue = [0, 4, 12, 26, 44, 66, 92, 118, 142, 164, 184, 202];
-  const cumCost = [14, 28, 42, 56, 70, 82, 92, 101, 109, 116, 122, 128];
-
-  if (t === "service_page" || t === "sub_capability" || t === "industry_capability") {
-    return wrap(
-      <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <BarChart2
-          title="Typical starting position vs 90-day target"
-          caption="Pattern-library composite"
-          labels={figs.names}
-          series={[
-            { name: "Typical starting point", values: figs.base },
-            { name: "90-day target", values: figs.target, color: "#FE5722" },
-          ]}
-          dark={dark}
-        />
-        <LineArea2
-          title="Cumulative value vs cumulative cost — 12 months"
-          caption="Illustrative program shape"
-          labels={months}
-          series={[
-            { name: "Cumulative value", values: cumValue },
-            { name: "Cumulative cost", values: cumCost, color: "#3A3358" },
-          ]}
-          dark={dark}
-        />
-      </div>,
-      figs.read + " The value line crosses the cost line in month 6 on this composite — payback timing is set by the baseline audit, not assumed.",
-    );
-  }
-
-  if (t === "tower_hub") {
-    return wrap(
-      <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <BarChart2
-          title="Typical starting position vs 90-day target"
-          caption="Pattern-library composite"
-          labels={figs.names}
-          series={[
-            { name: "Typical starting point", values: figs.base },
-            { name: "90-day target", values: figs.target, color: "#FE5722" },
-          ]}
-        />
-        <Radar2
-          title="Operating maturity — current vs design gate"
-          caption="5-point scale x20"
-          axes={["Speed", "Precision", "Resilience", "Governance", "Scale"]}
-          series={[
-            { name: "Typical current state", values: [38, 42, 35, 30, 45], color: "#3A3358" },
-            { name: "Design-gate target", values: [82, 78, 86, 90, 76], color: "#FE5722" },
-          ]}
-        />
-      </div>,
-      figs.read,
-    );
-  }
-
-  if (t === "platform_overview") {
-    return wrap(
-      <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <Radar2
-          title="Platform capability scorecard"
-          caption="Reference deployment"
-          axes={["Throughput", "Precision", "Resilience", "Governance", "Time-to-value"]}
-          series={[{ name: "Reference benchmark", values: [84, 80, 88, 92, 74], color: "#FE5722" }]}
-        />
-        <LineArea2
-          title="Cumulative value vs cumulative cost — 12 months"
-          caption="Illustrative program shape"
-          labels={months}
-          series={[
-            { name: "Cumulative value", values: cumValue },
-            { name: "Cumulative cost", values: cumCost, color: "#3A3358" },
-          ]}
-        />
-      </div>,
-      "Read: the platform's pre-built controls compress the cost curve — most programs cross breakeven a quarter earlier than greenfield builds.",
-    );
-  }
-
   if (t === "platform_architecture") {
     const layers = PLATFORM_LAYERS[keyOf(page.url)] ?? PLATFORM_LAYERS.nexus;
-    return wrap(
-      <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <ArchitectureFlow title="Reference architecture — trust layers" caption="Method-family aligned" layers={layers} />
-        <Gauge2 title="Deterministic verification coverage" caption="Runtime assurance" value={94} unit="%" />
-      </div>,
-      "Read: verification coverage is the share of decision paths whose outputs are reproducible byte-for-byte — the property auditors test first.",
+    return (
+      <section className="container-dq pt-2">
+        <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">
+          Reference architecture
+        </p>
+        <h2 className="mt-1 font-display text-[21px] font-semibold text-navy-800 sm:text-[23px]">
+          How the platform is engineered, layer by layer
+        </h2>
+        <p className="mt-1.5 max-w-2xl text-[13px] text-slate-body/70">
+          Each layer maps to a patented method family — the same map your auditors
+          can walk from control to owner.
+        </p>
+        <div className="mt-5">
+          <ArchitectureFlow title="Trust layers" caption="Patent-aligned design" layers={layers} />
+        </div>
+      </section>
     );
   }
-
-  if (t === "platform_usecases") {
-    return wrap(
-      <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <Funnel2
-          title="Enterprise adoption funnel — reference rollout"
-          caption="How deployments scale"
-          stages={[
-            { name: "Value assessment", value: 120 },
-            { name: "Pilot scoped", value: 64 },
-            { name: "Production pilot", value: 38 },
-            { name: "Scaled rollout", value: 26 },
-            { name: "Enterprise standard", value: 18 },
-          ]}
-        />
-        <BarChart2
-          title="Where the value lands — impact mix"
-          caption="Composite of delivered programs"
-          labels={["Cost released", "Revenue protected", "Risk reduced", "Cycle time"]}
-          series={[{ name: "Share of value", values: [38, 27, 21, 14] }]}
-        />
-      </div>,
-      "Read: cost release usually funds the program; revenue protection and risk reduction are where CFOs find the second business case.",
-    );
-  }
-
-  if (t === "case_study") {
-    return wrap(
-      <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <BarChart2
-          title="Signed baseline vs audited outcome"
-          caption="Method under NDA"
-          labels={figs.names}
-          dark
-          series={[
-            { name: "Signed baseline", values: figs.base },
-            { name: "Audited outcome", values: figs.target, color: "#FE5722" },
-          ]}
-        />
-        <StackBar
-          title="Where the value landed"
-          caption="Composite impact mix"
-          dark
-          segments={[
-            { name: "Cost released", value: 38 },
-            { name: "Revenue protected", value: 27 },
-            { name: "Risk reduced", value: 21 },
-            { name: "Cycle-time recovered", value: 14 },
-          ]}
-        />
-      </div>,
-      "Read: every case page shows the shape of the measurement — the client's actual figures stay under NDA and are shown at the briefing.",
-    );
-  }
-
-  if (t === "industry_hub" || t === "subindustry_page") {
-    return wrap(
-      <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <Heatmap2
-          title="Program priority matrix — capability by quarter"
-          caption="Planning view"
-          rows={["AMER", "EMEA", "APAC", "MEASA"]}
-          cols={["Q1", "Q2", "Q3", "Q4"]}
-          matrix={[
-            [62, 74, 81, 86],
-            [55, 68, 79, 84],
-            [48, 61, 74, 80],
-            [40, 52, 66, 75],
-          ]}
-        />
-        <LineArea2
-          title="Cumulative value vs cumulative cost — 12 months"
-          caption="Illustrative program shape"
-          labels={months}
-          series={[
-            { name: "Cumulative value", values: cumValue },
-            { name: "Cumulative cost", values: cumCost, color: "#3A3358" },
-          ]}
-        />
-      </div>,
-      "Read: the heatmap is a planning view of where enterprise programs in this sector concentrate by quarter and region — use it to time your pilot.",
-    );
-  }
-
-  if (t === "solution_page") {
-    return wrap(
-      <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <Funnel2
-          title="Decision pipeline — from signal to executed action"
-          caption="Reference flow"
-          stages={[
-            { name: "Signals ingested", value: 4800 },
-            { name: "Contextualized", value: 2400 },
-            { name: "Decisions proposed", value: 960 },
-            { name: "Human-approved", value: 640 },
-            { name: "Automated execution", value: 520 },
-          ]}
-        />
-        <BarChart2
-          title="Typical starting position vs 90-day target"
-          caption="Pattern-library composite"
-          labels={figs.names}
-          series={[
-            { name: "Typical starting point", values: figs.base },
-            { name: "90-day target", values: figs.target, color: "#FE5722" },
-          ]}
-        />
-      </div>,
-      figs.read,
-    );
-  }
-
-  if (t === "insight_article") {
-    return wrap(
-      <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <LineArea2
-          title="The adoption curve this thesis tracks"
-          caption="Composite signal"
-          labels={months}
-          series={[{ name: "Index", values: cumValue }]}
-        />
-        <StackBar
-          title="Where programs stall"
-          caption="Field pattern"
-          segments={[
-            { name: "Data contracts", value: 34 },
-            { name: "Decision ownership", value: 26 },
-            { name: "Model operations", value: 22 },
-            { name: "Change management", value: 18 },
-          ]}
-        />
-      </div>,
-      "Read: the stall mix is the field pattern behind the thesis — most programs fail on contracts and ownership long before they fail on models.",
-    );
-  }
-
   if (t === "approach_page" || t === "company_page") {
-    return wrap(
-      <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <ArchitectureFlow
-          title="The Dataq Method — gate structure"
-          caption="Outcome-anchored"
-          layers={[
-            { name: "Diagnose — metric lock", nodes: ["Named metric", "Baseline audit", "Control owner"] },
-            { name: "Design — risk budget", nodes: ["Risk envelope", "Control mapping", "Gate criteria"] },
-            { name: "Prove — measured pilot", nodes: ["Bounded scope", "Evidence trail", "Gate review"] },
-            { name: "Industrialize — scale", nodes: ["Runbooks", "Enablement", "Quarterly re-audit"] },
-          ]}
-        />
-        <LineArea2
-          title="Cumulative value vs cumulative cost — 12 months"
-          caption="Illustrative program shape"
-          labels={months}
-          series={[
-            { name: "Cumulative value", values: cumValue },
-            { name: "Cumulative cost", values: cumCost, color: "#3A3358" },
-          ]}
-        />
-      </div>,
-      "Read: the gate structure is what keeps the value line above the cost line — a phase that misses its evidence stops, and the ledger shows it.",
+    return (
+      <section className="container-dq pt-2">
+        <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">
+          The Dataq Method
+        </p>
+        <h2 className="mt-1 font-display text-[21px] font-semibold text-navy-800 sm:text-[23px]">
+          Four gates, each with evidence that stops the program if it is missing
+        </h2>
+        <div className="mt-5">
+          <ArchitectureFlow
+            title="Gate structure"
+            caption="Outcome-anchored"
+            layers={[
+              { name: "Diagnose — metric lock", nodes: ["Named metric", "Baseline audit", "Control owner"] },
+              { name: "Design — risk budget", nodes: ["Risk envelope", "Control mapping", "Gate criteria"] },
+              { name: "Prove — measured pilot", nodes: ["Bounded scope", "Evidence trail", "Gate review"] },
+              { name: "Industrialize — scale", nodes: ["Runbooks", "Enablement", "Quarterly re-audit"] },
+            ]}
+          />
+        </div>
+      </section>
     );
   }
-
   return null;
 }
-function weeksRamp(rng: Rng): number[] {
-  const start = 180 + Math.round(rng() * 400);
-  return Array.from({ length: 12 }, (_, i) => Math.round(start + i * i * (1.4 + rng() * 1.8) + i * (4 + rng() * 10)));
-}
+
 function keyOf(url: string): string {
   const m = url.match(/platforms\/([a-z-]+)\//);
   return m ? m[1] : "nexus";

@@ -17,7 +17,7 @@
   },
   {
    "t": "p",
-   "x": "The operating surface here spans Trade promotion management, Demand planning, Retail execution, Provenance claims, Brand protection. What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later in CPG & Brands, and rollback is rehearsed before go-live rather than after the incident."
+   "x": "CPG & Brands is delivered inside your operating context: the rules you are held to, the latency your decisions need, and the systems your teams already trust."
   },
   {
    "t": "h2",
@@ -35,11 +35,11 @@
     "Serving & BI",
     "Decision feedback"
    ],
-   "note": "Under the hood this pattern runs on one rule: each stage owns its latency budget and its failure policy across Retail & Consumer Goods, and rollback is rehearsed before go-live rather than after the incident."
+   "note": "What the diagram shows: ingestion, transformation and serving as separate responsibilities with named owners — no stage silently trusts the one before it."
   },
   {
    "t": "p",
-   "x": "Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read across the CPG & Brands estate, so a regression is a cohort, never an estate."
+   "x": "The architecture for CPG & Brands is deliberately auditable: every stage exposes its inputs, its owner and its failure policy, and the decision path shares a timeline with the audit path. Nothing important happens off the record."
   },
   {
    "t": "h2",
@@ -50,23 +50,23 @@
    "items": [
     [
      "Retailer data fragmented",
-     "Under the hood this pattern runs on one rule: signals cross boundaries only through typed contracts across Retail & Consumer Goods, so your control owners can interrogate any number we publish."
+     "When Retailer data fragmented is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
     ],
     [
      "Demand planning noise",
-     "The engineering bet is explicit: the decision path and the audit path share one timeline across Retail & Consumer Goods, so drift shows up as a ticket with an owner, not as a mystery."
+     "We treat Demand planning noise as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
     ],
     [
      "Provenance claims challenged",
-     "At operating tempo, the properties that carry the load are structural: evidence is captured where the work happens, not reconstructed later across Retail & Consumer Goods, and every exception path degrades to human review, never to silence."
+     "Provenance claims challenged costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
     ],
     [
      "Field execution blind",
-     "Under the hood this pattern runs on one rule: each stage owns its latency budget and its failure policy on Data, Analytics & Lakehouse programs, which is what makes the reported delta defensible in audit."
+     "Field execution blind is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
     ],
     [
      "Trade-promotion systems rigid",
-     "What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default across Retail & Consumer Goods, which keeps the blast radius of any change inside one lane."
+     "Trade-promotion systems rigid shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
     ],
     [
      "Brand and IP protection thin",
@@ -113,19 +113,19 @@
    "items": [
     [
      "streaming ingest",
-     "streaming ingest carries the ingest path — Kafka-backed CDC with exactly-once sinks"
+     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
     ],
     [
      "data contracts",
-     "The part that survives audit is the boring part: models, agents and rules move through versioned, evaluated releases in CPG & Brands, which keeps the blast radius of any change inside one lane."
+     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
     ],
     [
      "dbt transformation graph",
-     "dbt transformation graph carries the evidence path — tested, documented models with lineage exposure"
+     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
     ],
     [
      "Unity Catalog governance",
-     "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases across Retail & Consumer Goods, so drift shows up as a ticket with an owner, not as a mystery."
+     "A single governance plane over tables, models and notebooks — access your auditors can replay."
     ]
    ]
   },
@@ -138,19 +138,19 @@
    "items": [
     [
      "supply chain control towers",
-     "What holds the build together is discipline at the boundaries: cost and quality telemetry land in the same view your owners read for Retail & Consumer Goods at scale, and rollback is rehearsed before go-live rather than after the incident."
+     "One shared picture of orders, stock and movement — decisions made where the exceptions are."
     ],
     [
      "demand planning suites",
-     "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later for Retail & Consumer Goods at scale, so a regression is a cohort, never an estate."
+     "Forecast accuracy measured SKU by SKU, with overrides tracked to the people who made them."
     ],
     [
      "trade promotion systems",
-     "trade promotion systems: spend and lift joined per event; contracts are agreed with your system owners in week one"
+     "Promotion spend planned against measured lift, with post-mortems the trade team actually reads."
     ],
     [
      "inventory & order brokers",
-     "What holds the build together is discipline at the boundaries: every state change is replayable from the signed baseline across the CPG & Brands estate, which keeps the blast radius of any change inside one lane."
+     "Inventory truth broadcast to every channel that promises it to a customer."
     ]
    ]
   },
@@ -163,7 +163,7 @@
    "items": [
     [
      "batch window",
-     "Down 50–64.6% after re-architecture, with the method note attached so your analysts can reproduce it"
+     "Batch windows measured against the plan every run — the number reported is the observed one."
     ],
     [
      "freshness SLO attainment",
@@ -171,7 +171,7 @@
     ],
     [
      "warehouse spend per query",
-     "Down 20–33.6% after clustering and pruning in current programs; measured, not modeled"
+     "Spend per query attributed to the team that wrote it — the meter everyone can see."
     ]
    ]
   },
@@ -184,15 +184,15 @@
    "items": [
     [
      "Metric anarchy",
-     "Under the hood this pattern runs on one rule: every state change is replayable from the signed baseline across the CPG & Brands estate, so a regression is a cohort, never an estate."
+     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
     ],
     [
      "Cost creep",
-     "At operating tempo, the properties that carry the load are structural: every state change is replayable from the signed baseline in Data, Analytics & Lakehouse delivery, and every exception path degrades to human review, never to silence."
+     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
     ],
     [
      "Silent schema drift",
-     "Nothing in this topology is accidental: identity is short-lived and authorization is deny-by-default across the CPG & Brands estate, which is what makes the reported delta defensible in audit."
+     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
     ]
    ]
   },
@@ -209,19 +209,19 @@
     ],
     [
      "Applied AI & GenAI",
-     "Under the hood this pattern runs on one rule: cost and quality telemetry land in the same view your owners read on Data, Analytics & Lakehouse programs, which keeps the blast radius of any change inside one lane."
+     "Strategy through production operations — models evaluated, retrieval grounded, cost per answer owned."
     ],
     [
      "Blockchain & Digital Trust",
-     "The design principle here is simple: cost and quality telemetry land in the same view your owners read on Data, Analytics & Lakehouse programs, so drift shows up as a ticket with an owner, not as a mystery."
+     "Permissioned networks, credentials and provenance — digital trust regulators can inspect."
     ],
     [
      "Agentic AI & Hyperautomation",
-     "Under the hood this pattern runs on one rule: models, agents and rules move through versioned, evaluated releases in Data, Analytics & Lakehouse delivery, which keeps the blast radius of any change inside one lane."
+     "Digital workers with roles, budgets and human checkpoints — every action logged and reversible."
     ],
     [
      "Cloud, Edge & Platform",
-     "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later on Data, Analytics & Lakehouse programs, so your control owners can interrogate any number we publish."
+     "Reliable estates at lower unit cost — hybrid multicloud, edge fleets and SRE discipline."
     ]
    ]
   },
@@ -231,7 +231,7 @@
   },
   {
    "t": "p",
-   "x": "What the delivery actually looks like week to week: before any build work, we spend 2 weeks proving the measurement: if two analysts cannot reproduce Trade ROI the same way, nothing else starts. the middle block runs the pilot against live inventory & order brokers data at deliberately small scope: one path, one team, one portfolio, expanded only after its eval gate holds. At operating tempo, the properties that carry the load are structural: the decision path and the audit path share one timeline on Data, Analytics & Lakehouse programs, and every exception path degrades to human review, never to silence.. The design principle here is simple: identity is short-lived and authorization is deny-by-default on Data, Analytics & Lakehouse programs, so your control owners can interrogate any number we publish."
+   "x": "We run CPG & Brands the way we run every program: the metric is signed before delivery, the pilot is bounded, and the scale decision follows the measured delta, not the momentum."
   },
   {
    "t": "h2",
@@ -267,11 +267,11 @@
    "items": [
     [
      "A top-3 grocery retailer (800+ stores)",
-     "The part that survives audit is the boring part: evidence is captured where the work happens, not reconstructed later across Retail & Consumer Goods, so your control owners can interrogate any number we publish."
+     "You can read the shape of this engagement on the case page: baseline locked early, outcome measured against it, method available under NDA."
     ],
     [
      "A global fashion group",
-     "Reported as 24% against baseline, reproducible by your analysts from the method note"
+     "The engagement is documented on its case page — what was measured, what moved and how the evidence was gathered."
     ]
    ]
   },
@@ -285,10 +285,10 @@
   },
   {
    "t": "cta",
-   "x": "Start with a value assessment: two weeks, your Trade ROI measured and signed, a delivery plan priced from evidence."
+   "x": "The measurement comes first: two weeks to a signed baseline under the rules your sub-sector is actually held to."
   }
  ],
- "words": 1321,
+ "words": 830,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Retail & Consumer Goods",

@@ -17,7 +17,7 @@
   },
   {
    "t": "p",
-   "x": "What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default in Retail & Consumer Goods, which keeps the blast radius of any change inside one lane. The part that survives audit is the boring part: cost and quality telemetry land in the same view your owners read for Retail & Consumer Goods at scale, so the question of how we know gets a pointer, not a paragraph."
+   "x": "This page covers Data & Lakehouse for Retail & Consumer Goods the way we deliver it: the pattern, the stack it runs on, the guards we ship and the artifacts your team holds at the first quarter close."
   },
   {
    "t": "h2",
@@ -35,15 +35,15 @@
     "Serving & BI",
     "Decision feedback"
    ],
-   "note": "The build earns trust the same way every gate does: the decision path and the audit path share one timeline on Data, Analytics & Lakehouse programs, and every exception path degrades to human review, never to silence."
+   "note": "What the diagram shows: ingestion, transformation and serving as separate responsibilities with named owners — no stage silently trusts the one before it."
   },
   {
    "t": "p",
-   "x": "The design principle here is simple: each stage owns its latency budget and its failure policy for Retail & Consumer Goods at scale, which keeps the blast radius of any change inside one lane."
+   "x": "The architecture for Data & Lakehouse for Retail & Consumer Goods is deliberately auditable: every stage exposes its inputs, its owner and its failure policy, and the decision path shares a timeline with the audit path. Nothing important happens off the record."
   },
   {
    "t": "p",
-   "x": "The part that survives audit is the boring part: every state change is replayable from the signed baseline across Retail & Consumer Goods, so your control owners can interrogate any number we publish."
+   "x": "The architecture for Data & Lakehouse for Retail & Consumer Goods is deliberately auditable: every stage exposes its inputs, its owner and its failure policy, and the decision path shares a timeline with the audit path. Nothing important happens off the record."
   },
   {
    "t": "h2",
@@ -51,7 +51,7 @@
   },
   {
    "t": "p",
-   "x": "The design principle here is simple: identity is short-lived and authorization is deny-by-default in Retail & Consumer Goods, which is what makes the reported delta defensible in audit."
+   "x": "Retail & Consumer Goods punishes decisions that cannot explain themselves. Data & Lakehouse for Retail & Consumer Goods is engineered so every decision carries its reasons, its owner and its evidence from day one."
   },
   {
    "t": "h2",
@@ -74,19 +74,19 @@
    "items": [
     [
      "Data Engineering & Pipeline Modernization",
-     "The build earns trust the same way every gate does: evidence is captured where the work happens, not reconstructed later across Retail & Consumer Goods, so the question of how we know gets a pointer, not a paragraph."
+     "How Data Engineering & Pipeline Modernization runs when it is engineered for the enterprise: bounded scope per gate, platform evidence generated."
     ],
     [
      "Lakehouse Architecture & Migration",
-     "The build earns trust the same way every gate does: evidence is captured where the work happens, not reconstructed later across the Retail & Consumer Goods estate, which keeps the blast radius of any change inside one lane."
+     "A no-theater description of Lakehouse Architecture & Migration: what ships first, what it touches at operational stores, how it is verified, and the."
     ],
     [
      "Real-Time Streaming & Event-Driven Decisioning",
-     "The design principle here is simple: every state change is replayable from the signed baseline across Retail & Consumer Goods, which is what makes the reported delta defensible in audit."
+     "The Dataq Software build of Real-Time Streaming & Event-Driven Decisioning: concrete interfaces at core systems, measured movement on event-to-action."
     ],
     [
      "Enterprise BI & Executive Analytics",
-     "At operating tempo, the properties that carry the load are structural: identity is short-lived and authorization is deny-by-default in Retail & Consumer Goods, so your control owners can interrogate any number we publish."
+     "A no-theater description of Enterprise BI & Executive Analytics: what ships first, what it touches at operational stores, how it is verified, and the."
     ]
    ]
   },
@@ -116,19 +116,19 @@
    "items": [
     [
      "Delta / Iceberg tables",
-     "What holds the build together is discipline at the boundaries: signals cross boundaries only through typed contracts for Retail & Consumer Goods at scale, so your control owners can interrogate any number we publish."
+     "Open table formats underneath everything we build, so your data never belongs to a vendor."
     ],
     [
      "dbt transformation graph",
-     "dbt transformation graph carries the decision path — tested, documented models with lineage exposure"
+     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
     ],
     [
      "streaming ingest",
-     "streaming ingest carries the evidence path — Kafka-backed CDC with exactly-once sinks"
+     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
     ],
     [
      "cost-aware clustering",
-     "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later across the Retail & Consumer Goods estate, which keeps the blast radius of any change inside one lane."
+     "Workloads land on the cheapest compute that still meets the latency budget."
     ]
    ]
   },
@@ -141,19 +141,19 @@
    "items": [
     [
      "supply chain control towers",
-     "supply chain control towers — milestone events under exception lanes; the adapter is part of the deliverable, not a future phase"
+     "One shared picture of orders, stock and movement — decisions made where the exceptions are."
     ],
     [
      "inventory & order brokers",
-     "inventory & order brokers — ATP logic with promise-quality telemetry; we integrate read-first, write only through policy-checked commands"
+     "Inventory truth broadcast to every channel that promises it to a customer."
     ],
     [
      "demand planning suites",
-     "demand planning suites: SKU-location histories with promotion context; contracts are agreed with your system owners in week one"
+     "Forecast accuracy measured SKU by SKU, with overrides tracked to the people who made them."
     ],
     [
      "commerce & POS estates",
-     "The build earns trust the same way every gate does: the decision path and the audit path share one timeline for Retail & Consumer Goods at scale, which keeps the blast radius of any change inside one lane."
+     "Store and online demand joined hourly — the promotion argued with baskets, not sentiment."
     ]
    ]
   },
@@ -170,11 +170,11 @@
    "items": [
     [
      "batch window",
-     "Down 50–66.6% after re-architecture in current programs; measured, not modeled"
+     "Batch windows measured against the plan every run — the number reported is the observed one."
     ],
     [
      "query p95",
-     "Down 40–53.8% on the certified gold layer in current programs; measured, not modeled"
+     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
     ],
     [
      "freshness SLO attainment",
@@ -195,15 +195,15 @@
    "items": [
     [
      "Silent schema drift",
-     "The part that survives audit is the boring part: the decision path and the audit path share one timeline in Retail & Consumer Goods, and rollback is rehearsed before go-live rather than after the incident."
+     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
     ],
     [
      "Cost creep",
-     "The engineering bet is explicit: identity is short-lived and authorization is deny-by-default in Retail & Consumer Goods, and rollback is rehearsed before go-live rather than after the incident."
+     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
     ],
     [
      "Metric anarchy",
-     "Under the hood this pattern runs on one rule: each stage owns its latency budget and its failure policy in Retail & Consumer Goods, so a regression is a cohort, never an estate."
+     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
     ]
    ]
   },
@@ -213,7 +213,7 @@
   },
   {
    "t": "p",
-   "x": "What the delivery actually looks like week to week: the first 2 weeks are pure verification — we measure warehouse spend per query with your analysts, reconcile disagreements, and freeze the number both sides defend. Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read in Retail & Consumer Goods, and every exception path degrades to human review, never to silence.. The build earns trust the same way every gate does: every state change is replayable from the signed baseline in Retail & Consumer Goods, so a regression is a cohort, never an estate.. The design principle here is simple: evidence is captured where the work happens, not reconstructed later for Retail & Consumer Goods at scale, which is what makes the reported delta defensible in audit."
+   "x": "A delivery for Data & Lakehouse for Retail & Consumer Goods runs on rhythm, not ritual: the baseline is signed in the first weeks, evidence is generated as the work happens, and the gate at each stage has real stop authority. Programs that miss their evidence stop."
   },
   {
    "t": "h2",
@@ -221,22 +221,22 @@
   },
   {
    "t": "p",
-   "x": "The engineering bet is explicit: every state change is replayable from the signed baseline across the Retail & Consumer Goods estate, so a regression is a cohort, never an estate."
+   "x": "The reason Data & Lakehouse for Retail & Consumer Goods sits where it does in the portfolio: it composes with the neighboring capabilities on shared contracts, and it hands its evidence to the same ledger your finance team already reads."
   },
   {
    "t": "bullets",
    "items": [
     [
      "IoT, Twin & Robotics for Banking & Financial Services",
-     "At operating tempo, the properties that carry the load are structural: cost and quality telemetry land in the same view your owners read for Retail & Consumer Goods at scale, so your control owners can interrogate any number we publish."
+     "IoT, Twin & Robotics for Banking & Financial Services connects to this work through the decision layer — the pattern above is what makes the link concrete."
     ],
     [
      "Agentic AI & Hyperautomation for Telecom, Media & Entertainment",
-     "The build earns trust the same way every gate does: the decision path and the audit path share one timeline across Retail & Consumer Goods, so drift shows up as a ticket with an owner, not as a mystery."
+     "The portfolio link to Agentic AI & Hyperautomation for Telecom, Media & Entertainment is deliberate: shared platforms, one delivery standard, no bespoke governance per program."
     ],
     [
      "Retail & Consumer Goods",
-     "What holds the build together is discipline at the boundaries: each stage owns its latency budget and its failure policy across Retail & Consumer Goods, which keeps the blast radius of any change inside one lane."
+     "Retail & Consumer Goods in production terms — the runtime that holds it, the policies that bound it, the dashboards that prove it, and the quarterly."
     ]
    ]
   },
@@ -253,19 +253,19 @@
    "items": [
     [
      "Baseline diagnostic",
-     "At operating tempo, the properties that carry the load are structural: the decision path and the audit path share one timeline across the Retail & Consumer Goods estate, which keeps the blast radius of any change inside one lane."
+     "The starting position for every metric in scope, measured with your team and signed before build work begins."
     ],
     [
      "Decision and control map",
-     "Under the hood this pattern runs on one rule: signals cross boundaries only through typed contracts across Retail & Consumer Goods, so drift shows up as a ticket with an owner, not as a mystery."
+     "Every decision the system makes, who owns it, and where the human checkpoint sits."
     ],
     [
      "Evidence pack",
-     "Nothing in this topology is accidental: every state change is replayable from the signed baseline across the Retail & Consumer Goods estate, so the question of how we know gets a pointer, not a paragraph."
+     "The artifacts your auditors ask for — control tests, decision trails and gate reviews in one place."
     ],
     [
      "Value ledger",
-     "The part that survives audit is the boring part: cost and quality telemetry land in the same view your owners read across the Retail & Consumer Goods estate, so the question of how we know gets a pointer, not a paragraph."
+     "The running record of measured deltas against the signed baseline, reconciled with your finance team."
     ]
    ]
   },
@@ -278,24 +278,24 @@
    "items": [
     [
      "warehouse spend per query",
-     "At operating tempo, the properties that carry the load are structural: every state change is replayable from the signed baseline across the Retail & Consumer Goods estate, so drift shows up as a ticket with an owner, not as a mystery. (20–38.1% in current programs)"
+     "The bill for each analytical question, attributed to a team — spend stops being a mystery."
     ],
     [
      "batch window",
-     "The design principle here is simple: identity is short-lived and authorization is deny-by-default for Retail & Consumer Goods at scale, so drift shows up as a ticket with an owner, not as a mystery. (50–62.5% in current programs)"
+     "batch window is tracked weekly against the baseline signed in week two — the number at each gate is the number finance sees."
     ],
     [
      "freshness SLO attainment",
-     "The design principle here is simple: every state change is replayable from the signed baseline in Retail & Consumer Goods, so the question of how we know gets a pointer, not a paragraph. (97–98.7% in current programs)"
+     "We commit to freshness SLO attainment as a measured outcome — reported every fortnight, audited at the gate, owned by a name on both sides."
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Start with a value assessment: two weeks, your warehouse spend per query measured and signed, a delivery plan priced from evidence."
+   "x": "Book a briefing with the industry practice — the method is the same, the regulatory mapping is yours."
   }
  ],
- "words": 1576,
+ "words": 1062,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Retail & Consumer Goods",

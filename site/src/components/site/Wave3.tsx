@@ -261,56 +261,6 @@ export function SpotlightSlider({
   );
 }
 
-/* ── Testimonial band (CHG-248) — rotating pull-quotes ────────────────── */
-export function TestimonialBand({
-  quotes,
-}: {
-  quotes: { text: string; who: string; role: string }[];
-}) {
-  const [i, setI] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setI((v) => (v + 1) % quotes.length), 6500);
-    return () => clearInterval(t);
-  }, [quotes.length]);
-  const q = quotes[i];
-  return (
-    <div className="relative overflow-hidden rounded-2xl border border-line bg-white px-6 py-9 shadow-2 sm:px-12">
-      <QuoteIcon className="h-8 w-8 text-brand/40" aria-hidden="true" />
-      <div className="relative mt-3 min-h-[96px]">
-        {quotes.map((qq, k) => (
-          <blockquote
-            key={k}
-            className={`absolute inset-0 font-display text-[17.5px] font-medium leading-relaxed text-navy-800 transition-all duration-700 sm:text-[19.5px] ${
-              k === i ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
-            }`}
-          >
-            “{qq.text}”
-          </blockquote>
-        ))}
-      </div>
-      <figcaption className="mt-4 flex items-center justify-between gap-4">
-        <span className="flex items-center gap-2.5">
-          <span aria-hidden="true" className="h-7 w-[3px] rounded-full bg-brand" />
-          <span className="text-[12.5px]">
-            <span className="block font-semibold text-navy-800">{q.who}</span>
-            <span className="block text-slate-body/65">{q.role}</span>
-          </span>
-        </span>
-        <span className="flex gap-1.5" aria-label={`Testimonial ${i + 1} of ${quotes.length}`}>
-          {quotes.map((_, k) => (
-            <button
-              key={k}
-              aria-label={`Show testimonial ${k + 1}`}
-              onClick={() => setI(k)}
-              className={`h-1.5 rounded-full transition-all ${k === i ? "w-6 bg-brand" : "w-1.5 bg-line hover:bg-brand/50"}`}
-            />
-          ))}
-        </span>
-      </figcaption>
-    </div>
-  );
-}
-
 /* ── Industry finder typeahead (CHG-243) ──────────────────────────────── */
 export function IndustryFinder({
   industries,
@@ -370,47 +320,39 @@ export function IndustryFinder({
    PLATFORM_EXTRAS is also consumed by the header mega-menu (platform preview). */
 export const PLATFORM_EXTRAS: Record<
   string,
-  { caps: string[]; method: string; metrics: [string, number][] }
+  { caps: string[]; method: string }
 > = {
   Nexus: {
     caps: ["Streaming graph ingestion", "Replayable decision trail", "Contextual scoring at read time", "Policy-gated actions", "Board-ready evidence packs"],
     method: "Graph-native contextual core",
-    metrics: [["Throughput", 94], ["Precision", 91], ["Resilience", 87], ["Governance", 93]],
   },
   Forge: {
     caps: ["Tensor-manifold scheduling", "Log-complexity workload routing", "Energy-aware orchestration", "Fault-tolerant checkpointing", "Cost-per-decision economics"],
     method: "Quantum-inspired optimization core",
-    metrics: [["Throughput", 92], ["Precision", 86], ["Resilience", 90], ["Governance", 84]],
   },
   Swarm: {
     caps: ["Multi-agent fleet control", "Shared-reward credit assignment", "Policy envelopes per agent", "Human handoff rails", "Validated decentralized execution"],
     method: "Generative knowledge-workflow blueprints",
-    metrics: [["Throughput", 89], ["Precision", 88], ["Resilience", 85], ["Governance", 94]],
   },
   Sentinel: {
     caps: ["Encrypted collaborative intelligence", "Byzantine-consensus trust fabric", "Zero-exposure defaults", "Continuous control validation", "Cross-party workflows"],
     method: "Privacy-preserving federated learning",
-    metrics: [["Throughput", 84], ["Precision", 93], ["Resilience", 95], ["Governance", 96]],
   },
   Twinverse: {
     caps: ["Multimodal sensor fusion", "Recalibration without retraining", "Edge-cloud latency routing", "Scenario replay", "Anomaly recognition at scale"],
     method: "Multimodal perception layer",
-    metrics: [["Throughput", 90], ["Precision", 89], ["Resilience", 86], ["Governance", 82]],
   },
   Quanta: {
     caps: ["Quantum-walk state-space exploration", "Tensor processing units", "Riemannian clustering", "Temporal-logic verification", "Hybrid quantum-classical routing"],
     method: "Quantum-inspired optimization core",
-    metrics: [["Throughput", 93], ["Precision", 84], ["Resilience", 83], ["Governance", 80]],
   },
   Ledger: {
     caps: ["Immutable audit chains", "Blockchain-integrated recovery", "Self-healing clusters", "zk-validated execution", "Consensus-gated releases"],
     method: "Byzantine-consensus trust fabric",
-    metrics: [["Throughput", 86], ["Precision", 94], ["Resilience", 93], ["Governance", 97]],
   },
   Compass: {
     caps: ["Self-evolving decision loops", "Reinforcement-optimized orchestration", "Knowledge-graph decision support", "Explainable stakeholder outputs", "Coherent distributed state"],
     method: "Multi-layer decision validation",
-    metrics: [["Throughput", 85], ["Precision", 92], ["Resilience", 88], ["Governance", 95]],
   },
 };
 
@@ -442,7 +384,7 @@ export function PlatformTabs({
           </button>
         ))}
       </div>
-      <div className="grid gap-6 p-6 sm:p-7 lg:grid-cols-[minmax(0,5fr)_minmax(0,4fr)_minmax(0,3fr)] lg:gap-7">
+      <div className="grid gap-6 p-6 sm:p-7 lg:grid-cols-[minmax(0,5fr)_minmax(0,4fr)] lg:gap-7">
         {/* identity + promise + CTAs */}
         <div className="min-w-0">
           <p className="font-display text-[19px] font-semibold text-navy-800">{p.name}</p>
@@ -478,29 +420,6 @@ export function PlatformTabs({
               </li>
             ))}
           </ul>
-        </div>
-        {/* illustrative operating profile */}
-        <div className="min-w-0 border-line lg:border-l lg:pl-6">
-          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-body/60">Operating profile</p>
-          <div className="mt-3 space-y-3" aria-hidden="true">
-            {(extra?.metrics ?? []).map(([label, v], n) => (
-              <div key={label}>
-                <div className="flex justify-between text-[10.5px] font-semibold text-slate-body/60">
-                  <span>{label}</span>
-                  <span className="tabular-nums">{v}<span className="text-slate-body/40"> / 100</span></span>
-                </div>
-                <div className="relative mt-1 h-2 overflow-hidden rounded-full bg-mist">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-navy-800 to-brand transition-all duration-700"
-                    style={{ width: `${v}%`, transitionDelay: `${n * 90}ms` }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="mt-3 text-[10px] leading-snug text-slate-body/55">
-            Illustrative operating envelope — your baseline replaces it at the value assessment.
-          </p>
         </div>
       </div>
     </div>

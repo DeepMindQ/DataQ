@@ -17,7 +17,7 @@
   },
   {
    "t": "p",
-   "x": "The operating surface here spans Authorization decisioning, Chargeback/dispute handling, Scheme settlement reconciliation, Token lifecycle management, Merchant onboarding. The design principle here is simple: identity is short-lived and authorization is deny-by-default for Banking & Financial Services at scale, which keeps the blast radius of any change inside one lane."
+   "x": "The operating context for Payments & Cards is set by your regulatory reality, your decision pressure and the estate you actually run — the design starts from those three, not from a reference model."
   },
   {
    "t": "h2",
@@ -35,11 +35,11 @@
     "Serving & BI",
     "Decision feedback"
    ],
-   "note": "Nothing in this topology is accidental: signals cross boundaries only through typed contracts in Payments & Cards, which is what makes the reported delta defensible in audit."
+   "note": "Each stage passes its output forward under a typed contract — schema, owner and freshness agreed in advance; the audit path shares the timeline with the data path."
   },
   {
    "t": "p",
-   "x": "The engineering bet is explicit: the decision path and the audit path share one timeline for Banking & Financial Services at scale, so a regression is a cohort, never an estate."
+   "x": "The architecture for Payments & Cards is deliberately auditable: every stage exposes its inputs, its owner and its failure policy, and the decision path shares a timeline with the audit path. Nothing important happens off the record."
   },
   {
    "t": "h2",
@@ -50,19 +50,19 @@
    "items": [
     [
      "Authorization latency ceiling",
-     "At operating tempo, the properties that carry the load are structural: evidence is captured where the work happens, not reconstructed later on Data, Analytics & Lakehouse programs, so the question of how we know gets a pointer, not a paragraph."
+     "When Authorization latency ceiling is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
     ],
     [
      "PCI DSS 4.0 evidence load",
-     "What holds the build together is discipline at the boundaries: signals cross boundaries only through typed contracts across Banking & Financial Services, which keeps the blast radius of any change inside one lane."
+     "We treat PCI DSS 4.0 evidence load as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
     ],
     [
      "Scheme and wallet data fragmented",
-     "The part that survives audit is the boring part: each stage owns its latency budget and its failure policy on Data, Analytics & Lakehouse programs, so the question of how we know gets a pointer, not a paragraph."
+     "We treat Scheme and wallet data fragmented as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
     ],
     [
      "False declines burn revenue",
-     "The design principle here is simple: every state change is replayable from the signed baseline across Banking & Financial Services, which is what makes the reported delta defensible in audit."
+     "False declines burn revenue costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
     ],
     [
      "Cross-border settlement friction",
@@ -70,7 +70,7 @@
     ],
     [
      "Peak-load economics unmanaged",
-     "What holds the build together is discipline at the boundaries: cost and quality telemetry land in the same view your owners read in Data, Analytics & Lakehouse delivery, so your control owners can interrogate any number we publish."
+     "We treat Peak-load economics unmanaged as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
     ]
    ]
   },
@@ -113,19 +113,19 @@
    "items": [
     [
      "data contracts",
-     "data contracts in this pattern: producer-side schemas with breakage alerts, not silent nulls, reviewed with your platform team before cutover"
+     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
     ],
     [
      "dbt transformation graph",
-     "dbt transformation graph carries the decision path — tested, documented models with lineage exposure"
+     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
     ],
     [
      "Delta / Iceberg tables",
-     "What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default on Data, Analytics & Lakehouse programs, and rollback is rehearsed before go-live rather than after the incident."
+     "Open table formats underneath everything we build, so your data never belongs to a vendor."
     ],
     [
      "cost-aware clustering",
-     "cost-aware clustering carries the control path — partition and Z-order plans reviewed per load"
+     "Workloads land on the cheapest compute that still meets the latency budget."
     ]
    ]
   },
@@ -138,19 +138,19 @@
    "items": [
     [
      "core banking rails",
-     "The build earns trust the same way every gate does: identity is short-lived and authorization is deny-by-default on Data, Analytics & Lakehouse programs, so a regression is a cohort, never an estate."
+     "Ledger and payment rails integrated read-first — decisions layer on top, never bypass the truth."
     ],
     [
      "CRM & onboarding",
-     "The build earns trust the same way every gate does: cost and quality telemetry land in the same view your owners read in Data, Analytics & Lakehouse delivery, and every exception path degrades to human review, never to silence."
+     "Onboarding steps instrumented end to end — drop-off measured where it happens."
     ],
     [
      "trade & treasury systems",
-     "The design principle here is simple: the decision path and the audit path share one timeline for Banking & Financial Services at scale, so drift shows up as a ticket with an owner, not as a mystery."
+     "Treasury flows integrated with decisioning — liquidity positions current by the minute."
     ],
     [
      "KYC/AML case managers",
-     "Under the hood this pattern runs on one rule: each stage owns its latency budget and its failure policy across the Payments & Cards estate, so the question of how we know gets a pointer, not a paragraph."
+     "Case flow with the evidence attached — investigators close, auditors verify, both use the same file."
     ]
    ]
   },
@@ -163,11 +163,11 @@
    "items": [
     [
      "warehouse spend per query",
-     "Down 20–34.3% after clustering and pruning on the first working slice; deeper scope moves it further"
+     "Spend per query attributed to the team that wrote it — the meter everyone can see."
     ],
     [
      "query p95",
-     "Down 40–57.7% on the certified gold layer per 1,000 transactions, reported weekly against the signed baseline"
+     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
     ],
     [
      "freshness SLO attainment",
@@ -184,15 +184,15 @@
    "items": [
     [
      "Cost creep",
-     "At operating tempo, the properties that carry the load are structural: signals cross boundaries only through typed contracts for Banking & Financial Services at scale, which is what makes the reported delta defensible in audit."
+     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
     ],
     [
      "Silent schema drift",
-     "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases across Banking & Financial Services, which keeps the blast radius of any change inside one lane."
+     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
     ],
     [
      "Metric anarchy",
-     "The engineering bet is explicit: identity is short-lived and authorization is deny-by-default across the Payments & Cards estate, which is what makes the reported delta defensible in audit."
+     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
     ]
    ]
   },
@@ -205,19 +205,19 @@
    "items": [
     [
      "Agentic AI & Hyperautomation",
-     "Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read in Payments & Cards, which is what makes the reported delta defensible in audit."
+     "Digital workers with roles, budgets and human checkpoints — every action logged and reversible."
     ],
     [
      "Data & Lakehouse",
-     "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases in Payments & Cards, so the question of how we know gets a pointer, not a paragraph."
+     "Pipelines, governance and products on a lakehouse contract — reports that reconcile, lineage you can trace."
     ],
     [
      "Cyber & Zero-Trust",
-     "Nothing in this topology is accidental: every state change is replayable from the signed baseline for Banking & Financial Services at scale, so the question of how we know gets a pointer, not a paragraph."
+     "Identity-first security for people, machines and models — detection, response and audit in one program."
     ],
     [
      "Applied AI & GenAI",
-     "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later across the Payments & Cards estate, which keeps the blast radius of any change inside one lane."
+     "Strategy through production operations — models evaluated, retrieval grounded, cost per answer owned."
     ],
     [
      "Cloud, Edge & Platform",
@@ -231,7 +231,7 @@
   },
   {
    "t": "p",
-   "x": "The operating cadence, concretely: the first 2 weeks are pure verification — we measure Approval rate with your analysts, reconcile disagreements, and freeze the number both sides defend. What holds the build together is discipline at the boundaries: the decision path and the audit path share one timeline for Banking & Financial Services at scale, so drift shows up as a ticket with an owner, not as a mystery.. The part that survives audit is the boring part: the decision path and the audit path share one timeline across the Payments & Cards estate, and every exception path degrades to human review, never to silence.. At operating tempo, the properties that carry the load are structural: the decision path and the audit path share one timeline in Payments & Cards, so your control owners can interrogate any number we publish."
+   "x": "An engagement on Payments & Cards starts with a two-week baseline audit, runs a bounded pilot against a control group, and reaches its first gate with measured deltas — before any scale decision is made."
   },
   {
    "t": "h2",
@@ -246,7 +246,7 @@
     ],
     [
      "Fraud basis points",
-     "Down 25-40%"
+     "Fraud basis points is tracked weekly against the baseline signed in week two — the number at each gate is the number finance sees."
     ],
     [
      "Dispute cycle time",
@@ -271,7 +271,7 @@
     ],
     [
      "A multinational corporate bank",
-     "Target range 70% on the first working slice, with the method note attached"
+     "The engagement is documented on its case page — what was measured, what moved and how the evidence was gathered."
     ]
    ]
   },
@@ -285,10 +285,10 @@
   },
   {
    "t": "cta",
-   "x": "Start with a value assessment: two weeks, your Approval rate measured and signed, a delivery plan priced from evidence."
+   "x": "The measurement comes first: two weeks to a signed baseline under the rules your sub-sector is actually held to."
   }
  ],
- "words": 1300,
+ "words": 859,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Banking & Financial Services",

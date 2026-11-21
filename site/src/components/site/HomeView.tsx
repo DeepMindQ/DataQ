@@ -2,10 +2,8 @@ import Link from "next/link";
 import { ArrowRight, BrainCircuit, Bot, Database, ShieldCheck, CloudCog, Atom, Blocks, Radar, Crosshair, UserCheck, Gauge as GaugeIcon } from "lucide-react";
 import Reveal from "@/components/site/Reveal";
 import { Marquee } from "@/components/site/Motion";
-import { mulberry32, hashStr } from "@/lib/seeded";
 import { PATENTS } from "@/lib/patents";
-import { SteeringPack, OutcomeConsole } from "./HomeExecutive";
-import { SpotlightSlider, TestimonialBand, IndustryFinder, PlatformTabs } from "@/components/site/Wave3";
+import { SpotlightSlider, IndustryFinder, PlatformTabs } from "@/components/site/Wave3";
 import NewsletterForm from "./NewsletterForm";
 import { CtaBand, Quote, StatsStrip } from "@/components/site/PagePieces";
 import { readPage, fileForUrl, type PageData } from "@/lib/content";
@@ -28,25 +26,21 @@ const PILLARS = [
   },
 ];
 
-const TESTIMONIALS = [
-  {
-    text: "The engagement charter is what sold us — a metric, an owner and a risk envelope signed before work began. Six months in, the steering pack reads itself.",
-    who: "Group COO",
-    role: "Top-5 private bank, EMEA",
-  },
-  {
-    text: "We had seen a dozen agentic demos. Dataq was the first team that showed us the control trail behind every autonomous action.",
-    who: "VP Intelligent Automation",
-    role: "Global insurer, APAC",
-  },
-  {
-    text: "Baseline locked in week two, delta audited every gate. When the board asked what changed, the answer was a chart, not a narrative.",
-    who: "Chief Supply Chain Officer",
-    role: "Discrete manufacturer, AMER",
-  },
-];
-
 const TOWER_ICONS = [BrainCircuit, Bot, Database, ShieldCheck, CloudCog, Atom, Blocks, Radar];
+
+/* the eight reporting panels of the steering pack — what leadership receives,
+   described in words. No sample figures: the pack is generated from the
+   client's own signed baseline, so inventing numbers would be dishonest. */
+const STEERING_PANELS: { name: string; desc: string }[] = [
+  { name: "Decision latency", desc: "How long the decision takes, end to end, against the baseline signed in week two." },
+  { name: "Autonomous coverage", desc: "Which decisions now run without a human touch — and which deliberately keep one." },
+  { name: "Where the value lands", desc: "Cost released, revenue protected, risk reduced — attributed line by line." },
+  { name: "Gate-by-gate delta", desc: "The measured move at every delivery gate, with the evidence behind each figure." },
+  { name: "Year-one cost walk", desc: "Run cost before, during and after — so finance sees the same numbers delivery does." },
+  { name: "Control coverage", desc: "Controls live and tested versus the committed target, owned by a named person." },
+  { name: "Maturity to outcome", desc: "Where the estate sits on the maturity curve and what the next gate requires." },
+  { name: "Engagement model", desc: "Who is on the program, what they own, and how the team changes as value scales." },
+];
 
 export default function HomeView() {
   const page: PageData | null = fileForUrl("/") ? readPage(fileForUrl("/")!) : null;
@@ -97,27 +91,44 @@ export default function HomeView() {
                   Explore the eight towers
                 </Link>
               </div>
-              {/* trust line + delivery-proof microcopy (CHG-236/257) */}
+              {/* compliance line (kept lean — company figures live in the stats band below) */}
               <p className="rise-item mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-[12px] text-white/55" style={{ ["--rise-delay" as string]: "780ms" }}>
                 <span className="inline-flex items-center gap-1.5">
                   <ShieldCheck className="h-3.5 w-3.5 text-brand-300" aria-hidden="true" /> SOC 2 Type II · ISO 27001 · ISO 9001
                 </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="font-bold tabular-nums text-brand-300">350+</span> enterprise engagements delivered
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="font-bold tabular-nums text-brand-300">40+</span> countries served
-                </span>
+                <span className="inline-flex items-center gap-1.5">GDPR &amp; CCPA aligned delivery</span>
               </p>
             </Reveal>
             <div className="mt-10 lg:hidden">
               <StatsStrip stats={brand.stats} />
             </div>
           </div>
-          {/* executive outcome console (client island) */}
+          {/* engagement charter panel — the delivery contract stated plainly.
+              No sample metrics: baselines belong to clients, not brochures. */}
           <div className="hidden lg:block">
             <Reveal delay={500}>
-              <OutcomeConsole />
+              <div className="rounded-2xl border border-white/12 bg-white/[0.05] p-7 shadow-3 backdrop-blur">
+                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-300">The engagement charter</p>
+                <p className="mt-2 font-display text-[20px] font-semibold leading-snug text-white">
+                  Three names, signed before delivery begins
+                </p>
+                <ul className="mt-6 space-y-5">
+                  {PILLARS.map((p) => (
+                    <li key={p.title} className="flex items-start gap-4">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand/15 text-brand-300">
+                        <p.icon className="h-5 w-5" aria-hidden="true" />
+                      </span>
+                      <span>
+                        <span className="block text-[14.5px] font-semibold text-white">{p.title}</span>
+                        <span className="mt-1 block text-[12.5px] leading-relaxed text-white/60">{p.desc}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-7 border-t border-white/10 pt-4 text-[11.5px] leading-relaxed text-white/50">
+                  Reported every fortnight. Audited at every gate. Handed over with the evidence your auditors ask for.
+                </p>
+              </div>
             </Reveal>
           </div>
         </div>
@@ -154,14 +165,23 @@ export default function HomeView() {
               The steering pack your leadership receives from week two
             </h2>
             <p className="mt-2 max-w-4xl text-[14.5px] leading-relaxed text-white/65">
-              Every engagement reports the same eight panels against a baseline locked with your team:
-              decision latency, autonomous coverage, where the value lands, the gate-by-gate delta, the
-              year-one cost walk, control coverage vs committed targets, maturity-to-outcome position and
-              the engagement model — a named owner on each metric. The figures below are illustrative
-              composites from our pattern library, not client data.
+              Every engagement reports the same eight panels against a baseline locked with your team —
+              a named owner on each metric, and no figure published that your own baseline has not
+              produced. The pack is generated from your estate, so what leadership reads in week two
+              is already about your business, not a template.
             </p>
           </Reveal>
-          <SteeringPack />
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {STEERING_PANELS.map((p, i) => (
+              <Reveal key={p.name} delay={i * 40}>
+                <div className="h-full rounded-xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur transition hover:border-brand/40 hover:bg-white/[0.07]">
+                  <p className="font-display text-[11px] font-bold text-brand-300/90">{String(i + 1).padStart(2, "0")}</p>
+                  <p className="mt-2 text-[14.5px] font-semibold text-white">{p.name}</p>
+                  <p className="mt-1.5 text-[12.5px] leading-relaxed text-white/55">{p.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -286,8 +306,8 @@ export default function HomeView() {
                 </h2>
                 <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
                   Every industry hub maps its regulatory reality, decision pressure and data estate
-                  to the towers — 336 capability pages show exactly how each technology applies where
-                  you live.
+                  to the towers — so you can see exactly how each technology applies where you live,
+                  under the rules you are held to.
                 </p>
               </div>
               <Link
@@ -453,11 +473,6 @@ export default function HomeView() {
           attribution="The Dataq engagement charter"
           role="Signed before delivery begins — measured at every gate"
         />
-      </section>
-      <section className="container-dq pt-8">
-        <Reveal>
-          <TestimonialBand quotes={TESTIMONIALS} />
-        </Reveal>
       </section>
 
       {/* newsletter band (CHG-254) */}
