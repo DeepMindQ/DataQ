@@ -82,9 +82,40 @@ def drift(g, dur="9s", dy="14", dx="0", begin="0s"):
     return g + (f'<animateTransform attributeName="transform" type="translate" '
                 f'values="0 0; {dx} {dy}; 0 0" dur="{dur}" begin="{begin}" repeatCount="indefinite"/>')
 
+def scene_layers(name: str) -> str:
+    """Shared depth layer for every artwork: particle field, horizon glow,
+    soft orbs, scan sweep. Deterministic per filename."""
+    seed = sum(ord(c) * (i + 7) for i, c in enumerate(name))
+    def rnd(n):
+        x = (seed * 9301 + n * 49297) % 233280
+        return x / 233280.0
+    b = ""
+    # soft depth orbs
+    for i, (cx, cy, r, op) in enumerate([(210, 90, 150, 0.05), (1050, 380, 190, 0.055), (760, 60, 110, 0.045)]):
+        b += f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{ORANGE}" fill-opacity="{op}"/>'
+    # particle field — 34 twinkling dots
+    b += '<g>'
+    for i in range(34):
+        px = round(30 + rnd(i) * 1200, 1)
+        py = round(24 + rnd(i + 50) * 432, 1)
+        pr = 1 + round(rnd(i + 99) * 1.6, 2)
+        dur = round(2.2 + rnd(i + 150) * 3.4, 1)
+        begin = round(rnd(i + 200) * 3.2, 1)
+        b += (f'<circle cx="{px}" cy="{py}" r="{pr}" fill="{WHITE}" fill-opacity="0.5">'
+              f'<animate attributeName="opacity" values="0.5;0.08;0.5" dur="{dur}s" begin="{begin}s" repeatCount="indefinite"/></circle>')
+    b += '</g>'
+    # horizon glow line
+    b += (f'<rect x="40" y="{H-64}" width="{W-80}" height="1.4" fill="url(#acc)" opacity="0.35"/>'
+          f'<rect x="40" y="{H-64}" width="{W-80}" height="1.4" fill="{ORANGE}" opacity="0.5">'
+          f'<animate attributeName="width" values="0;{W-80};0" dur="9s" repeatCount="indefinite"/></rect>')
+    # slow scan sweep
+    b += (f'<rect x="-140" y="0" width="140" height="{H}" fill="url(#acc)" opacity="0.05">'
+          f'<animate attributeName="x" values="-140;{W+20}" dur="11s" repeatCount="indefinite"/></rect>')
+    return b
+
 def save(name, body, extra_header=""):
     os.makedirs(OUT, exist_ok=True)
-    svg = header(extra_header) + body + footer()
+    svg = header(extra_header) + scene_layers(name) + body + footer()
     path = os.path.join(OUT, name)
     open(path, "w").write(svg)
     return os.path.getsize(path)
