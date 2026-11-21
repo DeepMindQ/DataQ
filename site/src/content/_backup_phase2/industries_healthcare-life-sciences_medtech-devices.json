@@ -1,0 +1,380 @@
+{
+ "id": "SUB-medtech-devices",
+ "title": "Medical Devices & MedTech",
+ "url": "/industries/healthcare-life-sciences/medtech-devices/",
+ "template": "subindustry_page",
+ "breadcrumb": "Industries > Healthcare & Life Sciences > Medical Devices & MedTech",
+ "seo_title": "Medical Devices & MedTech | Dataq Software",
+ "meta_description": "MedTech sells outcomes and must prove them: connected devices generate telemetry that feeds service revenue, clinical evidence and regulatory post-marke.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "How Medical Devices & MedTech runs when it is engineered for Healthcare & Life Sciences: bounded scope per gate, platform evidence generated in-flight, and outcomes stated as deltas against the number we signed together."
+  },
+  {
+   "t": "h2",
+   "x": "Operating context"
+  },
+  {
+   "t": "p",
+   "x": "Medical Devices & MedTech is delivered inside your operating context: the rules you are held to, the latency your decisions need, and the systems your teams already trust."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Governed lakehouse pipeline — Medical Devices & MedTech",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "The flow is linear on purpose: every hop owns its latency budget and failure policy, and a regression in one stage is a cohort, never an estate-wide surprise."
+  },
+  {
+   "t": "p",
+   "x": "Every component in Medical Devices & MedTech has a contract, a version and a named owner. When something drifts, the ticket goes to a person, not to a committee — that is what the reference architecture is for."
+  },
+  {
+   "t": "h2",
+   "x": "Pressure points"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Device fleets unconnected",
+     "Device fleets unconnected costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+    ],
+    [
+     "Post-market surveillance manual",
+     "When Post-market surveillance manual is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+    ],
+    [
+     "Device security rising bar",
+     "We treat Device security rising bar as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+    ],
+    [
+     "Clinical evidence generation slow",
+     "When Clinical evidence generation slow is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+    ],
+    [
+     "Service economics opaque",
+     "Service economics opaque is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+    ],
+    [
+     "UDI/provenance trails weak",
+     "Device UDI/provenance evidence manual across the chain."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Compliance frame"
+  },
+  {
+   "t": "table",
+   "caption": "Regimes in scope",
+   "headers": [
+    "Regime",
+    "Implication"
+   ],
+   "rows": [
+    [
+     "EU MDR",
+     "vigilance, post-market surveillance duties"
+    ],
+    [
+     "EU Cyber Resilience Act",
+     "product security duties"
+    ],
+    [
+     "FDA cybersecurity guidance",
+     "premarket/postmarket cyber duties"
+    ],
+    [
+     "GDPR",
+     "patient telemetry duties"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "dbt transformation graph",
+     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
+    ],
+    [
+     "cost-aware clustering",
+     "Workloads land on the cheapest compute that still meets the latency budget."
+    ],
+    [
+     "Delta / Iceberg tables",
+     "Open table formats underneath everything we build, so your data never belongs to a vendor."
+    ],
+    [
+     "data contracts",
+     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "pharmacovigilance intake",
+     "Adverse events structured at intake, with case timelines the regulator can replay."
+    ],
+    [
+     "EHR integration",
+     "Clinical context fetched under consent, in FHIR terms — decision support inside the clinician's flow."
+    ],
+    [
+     "LIMS & trial systems",
+     "Lab and trial data governed from instrument to submission — sample lineage intact."
+    ],
+    [
+     "supply & pharmacy chains",
+     "Drug supply integrity monitored end to end — shortages predicted, not suffered."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "query p95",
+     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
+    ],
+    [
+     "warehouse spend per query",
+     "Spend per query attributed to the team that wrote it — the meter everyone can see."
+    ],
+    [
+     "pipeline breakage MTTR",
+     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Cost creep",
+     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
+    ],
+    [
+     "Metric anarchy",
+     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
+    ],
+    [
+     "Silent schema drift",
+     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How we help — five priority capabilities"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "IoT, Twin & Robotics",
+     "From sensor data to actuation — industrial IoT fabrics, twins and vision that close the loop."
+    ],
+    [
+     "Cyber & Zero-Trust",
+     "Identity-first security for people, machines and models — detection, response and audit in one program."
+    ],
+    [
+     "Data & Lakehouse",
+     "Pipelines, governance and products on a lakehouse contract — reports that reconcile, lineage you can trace."
+    ],
+    [
+     "Applied AI & GenAI",
+     "Strategy through production operations — models evaluated, retrieval grounded, cost per answer owned."
+    ],
+    [
+     "Cloud, Edge & Platform",
+     "Reliable estates at lower unit cost — hybrid multicloud, edge fleets and SRE discipline."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How the engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "We run Medical Devices & MedTech the way we run every program: the metric is signed before delivery, the pilot is bounded, and the scale decision follows the measured delta, not the momentum."
+  },
+  {
+   "t": "h2",
+   "x": "Outcomes we commit to"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Connected fleet coverage",
+     "Connected fleet coverage moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
+    ],
+    [
+     "Service first-time-fix",
+     "Service first-time-fix moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
+    ],
+    [
+     "Vigilance assembly",
+     "Vigilance assembly defines success for this pattern and is audited against the week-two baseline at every gate"
+    ],
+    [
+     "Service margin",
+     "Service margin is tracked weekly to your control owner; the number at gate three is the number finance sees"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Proof from this industry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "A 12-hospital US health system",
+     "Written up as a case study: the baseline, the measured outcome and the method, with client identity withheld by agreement."
+    ],
+    [
+     "A national health insurer",
+     "You can read the shape of this engagement on the case page: baseline locked early, outcome measured against it, method available under NDA."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Adjacent units"
+  },
+  {
+   "t": "p",
+   "x": "Related sub-industry pages: Hospitals & Provider Networks, Pharmaceuticals & Biotech, Care Management & Population Health — each with its own capability alignments under /industries/healthcare-life-sciences/. Where two lanes share a metric, one program can carry both — each one shares the regulatory frame above while carrying its own workflow mix — each one shares the regulatory frame above while carrying its own workflow mix."
+  },
+  {
+   "t": "cta",
+   "x": "The measurement comes first: two weeks to a signed baseline under the rules your sub-sector is actually held to."
+  }
+ ],
+ "words": 871,
+ "section": "Industries",
+ "l1": "Industries",
+ "l2": "Healthcare & Life Sciences",
+ "l3": "Medical Devices & MedTech",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Industries",
+   "url": "/industries/"
+  },
+  {
+   "name": "Healthcare & Life Sciences",
+   "url": "/industries/healthcare-life-sciences/"
+  },
+  {
+   "name": "Medical Devices & MedTech",
+   "url": "/industries/healthcare-life-sciences/medtech-devices/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Healthcare & Life Sciences — industry hub",
+   "url": "/industries/healthcare-life-sciences/",
+   "desc": "Clinical-grade AI, interoperable data and secure estates — outcomes with governance attached."
+  },
+  {
+   "title": "Hospitals & Provider Networks",
+   "url": "/industries/healthcare-life-sciences/hospitals-providers/",
+   "desc": "Providers run 24/7 operations on clinical goodwill: clinician burden, throughput, revenue-cycle leakage and pa…"
+  },
+  {
+   "title": "Pharmaceuticals & Biotech",
+   "url": "/industries/healthcare-life-sciences/pharma-biotech/",
+   "desc": "Pharma's frontier is acceleration under validation: discovery simulation, trial design, recruitment and pharma…"
+  },
+  {
+   "title": "Care Management & Population Health",
+   "url": "/industries/healthcare-life-sciences/payers-care-management/",
+   "desc": "Care management succeeds on precision targeting and timely intervention: identifying rising-risk members, coor…"
+  },
+  {
+   "title": "A 12-hospital US health system",
+   "url": "/case-studies/hc-01/",
+   "desc": "Clinicians get 90 minutes a day back — ambient documentation inside the EHR"
+  },
+  {
+   "title": "A national health insurer",
+   "url": "/case-studies/hc-02/",
+   "desc": "Prior authorization turnaround down 62% — clinical evidence assembled automatically"
+  },
+  {
+   "title": "A European biopharma group",
+   "url": "/case-studies/hc-03/",
+   "desc": "Trial eligibility matching at 10x — enrollment windows met"
+  }
+ ],
+ "cards": [
+  {
+   "title": "Applied AI & GenAI for Medical Devices & MedTech",
+   "url": "/industries/healthcare-life-sciences/medtech-devices/capabilities/applied-ai-generative-ai/",
+   "tag": "Capability",
+   "desc": "From enterprise strategy to production models — AI measured on the P&L."
+  },
+  {
+   "title": "Data & Lakehouse for Medical Devices & MedTech",
+   "url": "/industries/healthcare-life-sciences/medtech-devices/capabilities/data-analytics-lakehouse/",
+   "tag": "Capability",
+   "desc": "Trusted data, delivered in near real time — pipelines, lakehouse and governance that holds up under audit."
+  },
+  {
+   "title": "Cyber & Zero-Trust for Medical Devices & MedTech",
+   "url": "/industries/healthcare-life-sciences/medtech-devices/capabilities/cybersecurity-zero-trust/",
+   "tag": "Capability",
+   "desc": "Identity, detection, resilience and AI security in one program."
+  },
+  {
+   "title": "Cloud, Edge & Platform for Medical Devices & MedTech",
+   "url": "/industries/healthcare-life-sciences/medtech-devices/capabilities/cloud-edge-platform-engineering/",
+   "tag": "Capability",
+   "desc": "Hybrid estates, edge estate and internal platforms — engineered for reliability and unit cost."
+  },
+  {
+   "title": "IoT, Twin & Robotics for Medical Devices & MedTech",
+   "url": "/industries/healthcare-life-sciences/medtech-devices/capabilities/iot-digital-twin-robotics/",
+   "tag": "Capability",
+   "desc": "Sensing, simulating, acting — the operations stack that turns physical assets into self-monitoring systems."
+  }
+ ]
+}

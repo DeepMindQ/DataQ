@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The Dataq Software build of Dataq Swarm — Overview: concrete interfaces at core systems, measured movement on primary metric, and a delivery rhythm your control owners can plan around from week one."
+   "x": "Hundreds of agents as one governed, measurable workforce. Dataq Swarm is the platform layer behind it — deployed under NDA, documented for the audit."
   },
   {
    "t": "h2",
@@ -17,202 +17,108 @@
   },
   {
    "t": "p",
-   "x": "Dataq Swarm is the orchestration layer for agentic operations: role definitions, task queues and bidding, durable execution with saga compensation, policy envelopes (solo/approval/forbidden), per-team budgets, kill switches, and a control tower for fleet health, throughput and cost per completed task."
+   "x": "Dataq Swarm is the orchestration layer for agentic operations: role definitions, task queues and bidding, durable execution with saga compensation, policy envelopes (solo/approval/forbidden), per-team budgets, kill switches, and a control tower for fleet health, throughput and cost per completed task. Swarm treats agents as workforce, not scripts: onboarding with role specs, SLAs and budget; release management with shadow and canary cohorts; incident response with rollback. It runs our agentic process automation, digital workforce and workflow orchestration services under one accountable control plane."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "decision-fabric",
-   "title": "Dataq Swarm — control and evidence planes",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "The decision layer is shared infrastructure: one contract per consumer, one ledger per decision, one owner per metric."
+   "x": "Inside the engagement"
   },
   {
    "t": "p",
-   "x": "What holds Dataq Swarm — Overview together is discipline at the boundaries — typed contracts between stages, versioned releases, and a replay trail for every decision. The diagram above shows how the pieces compose; the gate reviews are what keep them honest."
-  },
-  {
-   "t": "h2",
-   "x": "How it operates"
-  },
-  {
-   "t": "p",
-   "x": "Swarm treats agents as workforce, not scripts: onboarding with role specs, SLAs and budget; release management with shadow and canary cohorts; incident response with rollback. It runs our agentic process automation, digital workforce and workflow orchestration services under one accountable control plane."
-  },
-  {
-   "t": "h2",
-   "x": "Modules"
+   "x": "What ships, in the order it ships — Dataq Swarm edition:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Fleet control tower",
-     "Health, throughput, cost and policy telemetry"
+     "health, throughput, cost and policy telemetry"
     ],
     [
      "Role & queue engine",
-     "Roles, bidding, priority lanes, SLA routing"
+     "roles, bidding, priority lanes, SLA routing"
     ],
     [
      "Policy engine",
-     "Autonomy tiers routed to approvals"
+     "autonomy tiers routed to approvals"
     ],
     [
      "Durable execution",
-     "Saga patterns, compensation, idempotency"
+     "saga patterns, compensation, idempotency"
     ],
     [
      "Budget metering",
-     "Per-team/role token and action chargeback"
+     "per-team/role token and action chargeback"
     ],
     [
      "Release machinery",
-     "Shadow/canary cohorts with auto-rollback"
+     "shadow/canary cohorts with auto-rollback"
     ]
    ]
   },
   {
-   "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ],
-    [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
-    ],
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ]
-   ]
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "From signal to decision to evidence — Dataq Swarm",
+   "labels": [
+    "Fleet control tower",
+    "Role & queue engine",
+    "Policy engine",
+    "Durable execution"
+   ],
+   "note": "Named stages, not generic boxes — this is the Dataq Swarm path as built."
   },
   {
    "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLO attainment",
-     "Up 97–98.9% of tables inside their declared window per workflow, reported weekly against the signed baseline"
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ],
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What changes for the business"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Evidence by default",
-     "Evidence generated as a by-product of doing the work — audit readiness stops being a season."
-    ],
-    [
-     "Pattern draw on",
-     "The program draws on the pattern library where it fits and departs from it where your estate says otherwise."
-    ],
-    [
-     "Accountability",
-     "Decision ownership named per metric — the org chart and the system agree on who answers."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integrations"
+   "x": "Trust and controls"
   },
   {
    "t": "p",
-   "x": "Certified integration surface: Temporal, LangGraph, Kafka, OPA, Kubernetes, core/SaaS connectors."
+   "x": "Every agent action is policy-checked and logged under immutable audit trails. Tool access is scoped per role with short-lived credentials; high-risk actions require approval workflows. Swarm's evidence pack maps to ISO 42001 and NIST AI RMF expectations for agentic systems."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
+     "Scoped tool access",
+     "short-lived credentials per role"
     ],
     [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
+     "Immutable audit",
+     "every action replayable"
     ],
     [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
+     "Kill switches",
+     "per-agent and per-fleet"
     ],
     [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
+     "EU AI Act evidence",
+     "agentic-system documentation generated"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "How programs use it"
+   "x": "Where you would find it working"
   },
   {
    "t": "p",
-   "x": "Teams adopt Dataq Swarm — Overview one decision at a time — first the one with budget attached, then the neighbors that share its data. The pattern spreads on measured deltas."
+   "x": "Dataq Swarm runs under NDA in Banking & Financial Services, Insurance & Risk, Telecom, Media & Entertainment, Logistics & Supply Chain, Public Sector & Government. Deployments stay private; the architecture and control packs are the part we can show."
+  },
+  {
+   "t": "h2",
+   "x": "Under the hood"
+  },
+  {
+   "t": "p",
+   "x": "Connects to: Temporal, LangGraph, Kafka, OPA, Kubernetes, core/SaaS connectors. Adapters are versioned and contract-tested, so upgrades stop being incidents."
   },
   {
    "t": "cta",
-   "x": "The next step is a working session on your use case — the platform's evidence trail included."
+   "x": "Bring Dataq Swarm to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
   }
  ],
- "words": 575,
+ "words": 333,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Swarm",

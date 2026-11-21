@@ -9,56 +9,38 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "A no-theater description of ESG Reporting & Sustainable Operations: what ships first, what it touches at operational stores, how it is verified, and the per workflow metric we commit to moving against baseline."
+   "x": "ESG Reporting & Sustainable Operations exists because a specific failure keeps repeating: eSG reporting assembles spreadsheets with no lineage; energy/carbon telemetry is estimated; assurance questions go unanswered; operations improvements are unmeasured."
   },
   {
    "t": "h2",
-   "x": "The problem this solution exists for"
+   "x": "The position"
   },
   {
    "t": "p",
    "x": "ESG reporting assembles spreadsheets with no lineage; energy/carbon telemetry is estimated; assurance questions go unanswered; operations improvements are unmeasured."
   },
   {
+   "t": "p",
+   "x": "Beneath the symptom in ESG Reporting & Sustainable Operations sits the same defect everywhere: judgment work trapped inside manual assembly. The composition below is the way out."
+  },
+  {
    "t": "h2",
-   "x": "Our approach"
+   "x": "The working system, described"
   },
   {
    "t": "p",
    "x": "We build the ESG data spine — metered energy/emissions with lineage to disclosures — plus the operational layer (energy optimization, carbon-aware scheduling, scope-3 transport analytics) that moves the numbers, not just reports them."
   },
   {
-   "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — ESG Reporting & Sustainable Operations",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "The flow is linear on purpose: every hop owns its latency budget and failure policy, and a regression in one stage is a cohort, never an estate-wide surprise."
-  },
-  {
    "t": "p",
-   "x": "The architecture for ESG Reporting & Sustainable Operations is deliberately auditable: every stage exposes its inputs, its owner and its failure policy, and the decision path shares a timeline with the audit path. Nothing important happens off the record."
-  },
-  {
-   "t": "h2",
-   "x": "Components"
+   "x": "For ESG Reporting & Sustainable Operations, the components, as they land:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Metering & telemetry",
-     "Energy/emissions instrumentation per site/workload"
+     "energy/emissions instrumentation per site/workload"
     ],
     [
      "Lineage to disclosure",
@@ -66,286 +48,77 @@
     ],
     [
      "Scope-3 analytics",
-     "Transport and supply-chain emissions with methodology"
+     "transport and supply-chain emissions with methodology"
     ],
     [
      "Carbon-aware operations",
-     "Scheduling and right-sizing programs"
+     "scheduling and right-sizing programs"
     ],
     [
      "Assurance readiness",
-     "Auditor-facing evidence packs"
+     "auditor-facing evidence packs"
     ]
    ]
   },
   {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "How the work flows once built — ESG Reporting & Sustainable Operations",
+   "labels": [
+    "Metering & telemetry",
+    "Lineage to disclosure",
+    "Scope-3 analytics",
+    "Carbon-aware operations"
+   ],
+   "note": "Named stages, not generic boxes — this is the ESG Reporting & Sustainable Operations path as built."
+  },
+  {
    "t": "h2",
-   "x": "Platform stack"
+   "x": "The technology choices, justified"
   },
   {
    "t": "p",
-   "x": "The solution runs on Dataq Forge and Dataq Twinverse: The governed data estate every AI program needs. Sensor data feeds a living model of your plant, fleet or field estate, and the model drives action."
+   "x": "ESG Reporting & Sustainable Operations composes Dataq Forge, Dataq Twinverse — platforms with documented controls and evidence packs, so governance is part of the runtime. The pattern is in delivery now in Energy & Utilities, Manufacturing & Industrial, Retail & Consumer Goods, Public Sector & Government."
   },
   {
    "t": "h2",
-   "x": "How it runs in an engagement"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Diagnose",
-     "We measure the starting position and lock the baseline with your team — no build work begins before the number is agreed."
-    ],
-    [
-     "Prove",
-     "A bounded pilot on your real data, with the gate review scheduled before the first commit is written."
-    ],
-    [
-     "Industrialize",
-     "Runbooks, enablement and the control trail that let your teams operate it without us in the room."
-    ],
-    [
-     "Compound",
-     "Quarterly re-audits and a ranked backlog of the next decisions worth automating — value that accumulates on purpose."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ],
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ],
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLO attainment",
-     "Freshness attainment published per dataset — data age is uptime, treated the same way."
-    ],
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ],
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you get"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Architecture pack",
-     "The design drawn against your estate — components, owners and the interfaces between them."
-    ],
-    [
-     "Working system",
-     "The thing itself, running in your environment — not a demo, not a prototype on someone's laptop."
-    ],
-    [
-     "Run model",
-     "How it is operated after handover — runbooks, on-call shape and the training your teams receive."
-    ],
-    [
-     "Value audit kit",
-     "The method and worksheets that let your own analysts reproduce every delta we claim."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Prerequisites and data readiness"
+   "x": "Sequencing, honestly"
   },
   {
    "t": "p",
-   "x": "The readiness work for ESG Reporting & Sustainable Operations is unglamorous and decisive — data contracts, access paths and owner names. Programs that skip it discover the gaps at the first gate, which is the most expensive place to find them."
+   "x": "Method over magic in ESG Reporting & Sustainable Operations: the problem gets a CFO-unit statement and a signed baseline; the design gets a written risk envelope; the pilot gets falsifiable criteria; the rollout gets whatever the evidence supports. In ESG Reporting & Sustainable Operations programs the same rule applies: every artifact ships with its evidence — who signed the baseline, what the gate measured, where the number lives."
   },
   {
    "t": "h2",
-   "x": "How a delivery runs"
+   "x": "The numbers that move"
   },
   {
    "t": "p",
-   "x": "We run ESG Reporting & Sustainable Operations in gates: each one reviews measured deltas against the signed baseline with your named owners in the room, and each one can stop the program. That is the discipline most enterprise programs are missing."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
+   "x": "The ESG Reporting & Sustainable Operations value case names what should move and by what mechanism. The numbers get filled in from your baseline, not from a brochure."
   },
   {
    "t": "bullets",
    "items": [
     [
      "reporting effort",
-     "reporting effort is tracked weekly to your control owner; the number at gate three is the number finance sees"
+     "down 60% with lineage"
     ],
     [
      "energy cost",
-     "energy cost is reported against the signed baseline with the evidence attached; if the number stops moving, the program says so."
+     "down 10-25% where optimized"
     ],
     [
      "assurance questions",
-     "assurance questions defines success for this pattern and is audited against the week-two baseline at every gate"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A top-10 European retail bank",
-     "You can read the shape of this engagement on the case page: baseline locked early, outcome measured against it, method available under NDA."
-    ],
-    [
-     "A multinational corporate bank",
-     "Written up as a case study: the baseline, the measured outcome and the method, with client identity withheld by agreement."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Where this fits in the portfolio"
-  },
-  {
-   "t": "p",
-   "x": "This page is part of a portfolio engineered to compose: ESG Reporting & Sustainable Operations shares the decision layer, the audit trail and the platform rails with the entries around it."
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Healthcare & Life Sciences",
-     "How Healthcare & Life Sciences runs when it is engineered for Healthcare & Life Sciences: bounded scope per gate, platform evidence generated."
-    ],
-    [
-     "Energy & Utilities",
-     "The Dataq Software build of Energy & Utilities: concrete interfaces at SCADA / EMS cores, measured movement on Forecast error (wind/solar/demand)."
-    ],
-    [
-     "Lakehouse Architecture & Migration",
-     "A no-theater description of Lakehouse Architecture & Migration: what ships first, what it touches at operational stores, how it is verified, and the."
-    ],
-    [
-     "A metropolitan city government",
-     "The engagement is documented on its case page — what was measured, what moved and how the evidence was gathered."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you receive"
-  },
-  {
-   "t": "p",
-   "x": "Artifacts, not anecdotes — at the first-quarter close your team holds:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Baseline diagnostic",
-     "The starting position for every metric in scope, measured with your team and signed before build work begins."
-    ],
-    [
-     "Decision and control map",
-     "Every decision the system makes, who owns it, and where the human checkpoint sits."
-    ],
-    [
-     "Evidence pack",
-     "The artifacts your auditors ask for — control tests, decision trails and gate reviews in one place."
-    ],
-    [
-     "Value ledger",
-     "The running record of measured deltas against the signed baseline, reconciled with your finance team."
+     "answered from lineage"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Put your reporting effort in front of the practice lead — bring the baseline, leave with a scoped plan."
+   "x": "A value assessment prices the delta in your estate before anything is signed: ESG Reporting & Sustainable Operations, measured against your baseline, in two weeks."
   }
  ],
- "words": 1062,
+ "words": 365,
  "section": "Solutions",
  "l1": "Solutions",
  "l2": "Risk & Resilience",

@@ -9,49 +9,31 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The contract behind Autonomous Supply Chain Control Tower: signed baseline in week two, working slice by week eight, industrialized controls by week twelve, and evidence flowing to your control owner throughout."
+   "x": "Autonomous Supply Chain Control Tower exists because a specific failure keeps repeating: planning runs on batch snapshots; exceptions consume planners; network re-optimization takes weeks; visibility is stitched from portals."
   },
   {
    "t": "h2",
-   "x": "The problem this solution exists for"
+   "x": "The argument, stated once"
   },
   {
    "t": "p",
    "x": "Planning runs on batch snapshots; exceptions consume planners; network re-optimization takes weeks; visibility is stitched from portals."
   },
   {
+   "t": "p",
+   "x": "The failure Autonomous Supply Chain Control Tower answers is structural, not personal: processes that grew by accretion now decide things faster than they can be checked. Engineering the path is cheaper than hiring around it."
+  },
+  {
    "t": "h2",
-   "x": "Our approach"
+   "x": "What gets built first"
   },
   {
    "t": "p",
    "x": "We deliver the control tower: event-driven visibility, demand/inventory/transport decision hubs, agentic exception remediation within policy, scenario engines for disruption, and outcome SLOs that operations leadership steers by."
   },
   {
-   "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Autonomous Supply Chain Control Tower",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Contracts between stages are enforced at the boundary, so schema drift fails loudly in minutes instead of quietly in a quarter."
-  },
-  {
    "t": "p",
-   "x": "We engineer Autonomous Supply Chain Control Tower so that regressions are cohorts, not surprises: each stage owns its latency budget and failure policy, and rollback is rehearsed before go-live rather than after the incident."
-  },
-  {
-   "t": "h2",
-   "x": "Components"
+   "x": "For Autonomous Supply Chain Control Tower, the components, as they land:"
   },
   {
    "t": "bullets",
@@ -62,15 +44,15 @@
     ],
     [
      "Planning decision hubs",
-     "Demand, inventory, transport with challenger testing"
+     "demand, inventory, transport with challenger testing"
     ],
     [
      "Exception remediation",
-     "Agents resolving recoverable disruptions"
+     "agents resolving recoverable disruptions"
     ],
     [
      "Scenario engine",
-     "Disruption simulation and re-optimization"
+     "disruption simulation and re-optimization"
     ],
     [
      "Outcome SLOs",
@@ -79,181 +61,47 @@
    ]
   },
   {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "How the work flows once built — Autonomous Supply Chain Control Tower",
+   "labels": [
+    "Event spine",
+    "Planning decision hubs",
+    "Exception remediation",
+    "Scenario engine"
+   ],
+   "note": "The path your operators would actually recognize."
+  },
+  {
    "t": "h2",
-   "x": "Platform stack"
+   "x": "The technology choices, justified"
   },
   {
    "t": "p",
-   "x": "The solution runs on Dataq Swarm and Dataq Nexus: Many agents operating as one governed, measurable workforce. Enterprise decisions in milliseconds — with a full evidence trail for each decision."
+   "x": "Autonomous Supply Chain Control Tower composes Dataq Swarm, Dataq Nexus — platforms with documented controls and evidence packs, so governance is part of the runtime. The pattern is in delivery now in Logistics & Supply Chain, Manufacturing & Industrial, Retail & Consumer Goods, Energy & Utilities."
   },
   {
    "t": "h2",
-   "x": "How it runs in an engagement"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Diagnose",
-     "We measure the starting position and lock the baseline with your team — no build work begins before the number is agreed."
-    ],
-    [
-     "Prove",
-     "A bounded pilot on your real data, with the gate review scheduled before the first commit is written."
-    ],
-    [
-     "Industrialize",
-     "Runbooks, enablement and the control trail that let your teams operate it without us in the room."
-    ],
-    [
-     "Compound",
-     "Quarterly re-audits and a ranked backlog of the next decisions worth automating — value that accumulates on purpose."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLO attainment",
-     "Freshness attainment published per dataset — data age is uptime, treated the same way."
-    ],
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ],
-    [
-     "warehouse spend per query",
-     "Spend per query attributed to the team that wrote it — the meter everyone can see."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you get"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Architecture pack",
-     "The design drawn against your estate — components, owners and the interfaces between them."
-    ],
-    [
-     "Working system",
-     "The thing itself, running in your environment — not a demo, not a prototype on someone's laptop."
-    ],
-    [
-     "Run model",
-     "How it is operated after handover — runbooks, on-call shape and the training your teams receive."
-    ],
-    [
-     "Value audit kit",
-     "The method and worksheets that let your own analysts reproduce every delta we claim."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Prerequisites and data readiness"
+   "x": "From baseline to working slice"
   },
   {
    "t": "p",
-   "x": "Autonomous Supply Chain Control Tower has honest prerequisites: named owners for the source systems, contracts for the data that crosses boundaries, and access your security team has approved in writing."
+   "x": "Autonomous Supply Chain Control Tower runs on phases: phase one prices the problem in your own units and signs the baseline; phase two designs with the risk envelope written down; phase three proves a bounded slice on your data; phase four scales what survived the gate. What we promise is modest and checkable: a signed baseline, a bounded slice in production, and evidence your auditors can read without a guide. For Autonomous Supply Chain Control Tower, that discipline is not optional — it is the engagement model."
   },
   {
    "t": "h2",
-   "x": "How a delivery runs"
+   "x": "What your control owner sees weekly"
   },
   {
    "t": "p",
-   "x": "Autonomous Supply Chain Control Tower follows the same delivery pattern as every Dataq program — baseline, bounded pilot, gate review, then scale. The difference from a traditional program is that each step produces evidence your auditors can walk."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
+   "x": "Every Autonomous Supply Chain Control Tower value case is written against named movements; the list below is the shape of that case, priced against your baseline during the diagnostic — never a promise from a brochure."
   },
   {
    "t": "bullets",
    "items": [
     [
      "OTIF",
-     "Up 5-10 points"
+     "up 5-10 points"
     ],
     [
      "exception automation",
@@ -261,91 +109,16 @@
     ],
     [
      "re-plan",
-     "re-plan defines success for this pattern and is audited against the week-two baseline at every gate"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A top-10 European retail bank",
-     "The measured delta and the method note are written up on the case page — anonymized by agreement, baseline audited."
-    ],
-    [
-     "A multinational corporate bank",
-     "You can read the shape of this engagement on the case page: baseline locked early, outcome measured against it, method available under NDA."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Where this fits in the portfolio"
-  },
-  {
-   "t": "p",
-   "x": "The strongest results come from composition: the solutions below share data contracts, identity fabric or control lanes with this one, which is why they co-occur in our delivery plans."
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Technology & SaaS",
-     "The contract behind Technology & SaaS: signed baseline in week two, working slice by week eight, industrialized controls by week twelve, and evidence."
-    ],
-    [
-     "Insurance & Risk",
-     "A working definition of Insurance & Risk for Insurance & Risk: engineered controls, named owners, weekly evidence, and a signed baseline so every."
-    ],
-    [
-     "Post-Quantum Cryptography Migration",
-     "The Dataq Software build of Post-Quantum Cryptography Migration: concrete interfaces at core systems, measured movement on crypto inventory coverage."
-    ],
-    [
-     "A container-terminal operator",
-     "The measured delta and the method note are written up on the case page — anonymized by agreement, baseline audited."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you receive"
-  },
-  {
-   "t": "p",
-   "x": "Artifacts, not anecdotes — at the first-quarter close your team holds:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Baseline diagnostic",
-     "The starting position for every metric in scope, measured with your team and signed before build work begins."
-    ],
-    [
-     "Decision and control map",
-     "Every decision the system makes, who owns it, and where the human checkpoint sits."
-    ],
-    [
-     "Evidence pack",
-     "The artifacts your auditors ask for — control tests, decision trails and gate reviews in one place."
-    ],
-    [
-     "Value ledger",
-     "The running record of measured deltas against the signed baseline, reconciled with your finance team."
+     "minutes at network scale"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Start with a value assessment — the pattern priced against your estate in two weeks, baseline signed or the answer is no."
+   "x": "The next step is small and real: one working session on Autonomous Supply Chain Control Tower, your data, and a written feasibility read you can circulate."
   }
  ],
- "words": 979,
+ "words": 398,
  "section": "Solutions",
  "l1": "Solutions",
  "l2": "Operational Excellence",

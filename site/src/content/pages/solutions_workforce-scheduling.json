@@ -9,343 +9,116 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "What Workforce Scheduling & Field Orchestration means at Dataq Software: the scope we sign, the architecture we ship, the evidence generated in-flight, and the per workflow outcomes measured against your audited baseline."
+   "x": "Workforce Scheduling & Field Orchestration exists because a specific failure keeps repeating: field and shift operations run on static rosters; demand waves miss capacity; first-time-fix suffers; compliance (hours, certifications) is manual."
   },
   {
    "t": "h2",
-   "x": "The problem this solution exists for"
+   "x": "What we will defend"
   },
   {
    "t": "p",
    "x": "Field and shift operations run on static rosters; demand waves miss capacity; first-time-fix suffers; compliance (hours, certifications) is manual."
   },
   {
+   "t": "p",
+   "x": "Beneath the symptom in Workforce Scheduling & Field Orchestration sits the same defect everywhere: judgment work trapped inside manual assembly. The composition below is the way out."
+  },
+  {
    "t": "h2",
-   "x": "Our approach"
+   "x": "What we build, concretely"
   },
   {
    "t": "p",
    "x": "We build demand-aware orchestration: forecasting into shift and route planning, skills/certs-aware assignment, agentic exception handling (absences, overruns), and compliance evidence produced automatically."
   },
   {
-   "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Workforce Scheduling & Field Orchestration",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Contracts between stages are enforced at the boundary, so schema drift fails loudly in minutes instead of quietly in a quarter."
-  },
-  {
    "t": "p",
-   "x": "Workforce Scheduling & Field Orchestration runs on a structure your control owners can interrogate — the decision plane, the evidence plane and the governance plane stay separate in design and reconciled in operation."
-  },
-  {
-   "t": "h2",
-   "x": "Components"
+   "x": "named modules with a gate at each boundary, Workforce Scheduling & Field Orchestration edition:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Demand forecasting",
-     "Volume prediction by region/hour/skill"
+     "volume prediction by region/hour/skill"
     ],
     [
      "Roster optimization",
-     "Skills/certs/constraints-aware scheduling"
+     "skills/certs/constraints-aware scheduling"
     ],
     [
      "Field orchestration",
-     "Route and dispatch with parts/SLA routing"
+     "route and dispatch with parts/SLA routing"
     ],
     [
      "Exception handling",
-     "Agentic rescheduling within policy"
+     "agentic rescheduling within policy"
     ],
     [
      "Compliance evidence",
-     "Hours/certs automatically evidenced"
+     "hours/certs automatically evidenced"
     ]
    ]
   },
   {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "The governed path, end to end — Workforce Scheduling & Field Orchestration",
+   "labels": [
+    "Demand forecasting",
+    "Roster optimization",
+    "Field orchestration",
+    "Exception handling"
+   ],
+   "note": "Workforce Scheduling & Field Orchestration, drawn as it runs after the build."
+  },
+  {
    "t": "h2",
-   "x": "Platform stack"
+   "x": "Standards and components"
   },
   {
    "t": "p",
-   "x": "Workforce Scheduling & Field Orchestration runs on platforms you likely already own, composed on contracts rather than replaced by magic — the stack below names each piece and the job it is actually doing."
+   "x": "Workforce Scheduling & Field Orchestration composes Dataq Swarm, Dataq Nexus — platforms with documented controls and evidence packs, so governance is part of the runtime. The pattern is in delivery now in Telecom, Media & Entertainment, Logistics & Supply Chain, Energy & Utilities, Retail & Consumer Goods."
   },
   {
    "t": "h2",
-   "x": "How it runs in an engagement"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Diagnose",
-     "We measure the starting position and lock the baseline with your team — no build work begins before the number is agreed."
-    ],
-    [
-     "Prove",
-     "A bounded pilot on your real data, with the gate review scheduled before the first commit is written."
-    ],
-    [
-     "Industrialize",
-     "Runbooks, enablement and the control trail that let your teams operate it without us in the room."
-    ],
-    [
-     "Compound",
-     "Quarterly re-audits and a ranked backlog of the next decisions worth automating — value that accumulates on purpose."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLO attainment",
-     "Freshness attainment published per dataset — data age is uptime, treated the same way."
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ],
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ],
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you get"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Architecture pack",
-     "The design drawn against your estate — components, owners and the interfaces between them."
-    ],
-    [
-     "Working system",
-     "The thing itself, running in your environment — not a demo, not a prototype on someone's laptop."
-    ],
-    [
-     "Run model",
-     "How it is operated after handover — runbooks, on-call shape and the training your teams receive."
-    ],
-    [
-     "Value audit kit",
-     "The method and worksheets that let your own analysts reproduce every delta we claim."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Prerequisites and data readiness"
+   "x": "Sequencing, honestly"
   },
   {
    "t": "p",
-   "x": "Workforce Scheduling & Field Orchestration has honest prerequisites: named owners for the source systems, contracts for the data that crosses boundaries, and access your security team has approved in writing."
+   "x": "The Workforce Scheduling & Field Orchestration engagement opens with the problem stated in the CFO's units and a baseline signed by whoever owns the number. Design follows with the risk envelope explicit; the proof phase runs a bounded slice on your data with falsifiable gate criteria; industrialization scales only what the evidence supports. What we promise is modest and checkable: a signed baseline, a bounded slice in production, and evidence your auditors can read without a guide. For Workforce Scheduling & Field Orchestration, that discipline is not optional — it is the engagement model."
   },
   {
    "t": "h2",
-   "x": "How a delivery runs"
+   "x": "What your control owner sees weekly"
   },
   {
    "t": "p",
-   "x": "Workforce Scheduling & Field Orchestration follows the same delivery pattern as every Dataq program — baseline, bounded pilot, gate review, then scale. The difference from a traditional program is that each step produces evidence your auditors can walk."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
+   "x": "Every Workforce Scheduling & Field Orchestration value case is written against named movements; the list below is the shape of that case, priced against your baseline during the diagnostic — never a promise from a brochure."
   },
   {
    "t": "bullets",
    "items": [
     [
      "first-time-fix",
-     "Progress on first-time-fix is measured in your environment, on your data — the method note ships with the number so your analysts can reproduce it."
+     "up 20+ points"
     ],
     [
      "overtime cost",
-     "overtime cost moves at gates, not in slideware: the value claimed at each gate is reconciled with your team before it enters the ledger."
+     "down 20-30%"
     ],
     [
      "SLA compliance",
-     "SLA compliance carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A top-10 European retail bank",
-     "You can read the shape of this engagement on the case page: baseline locked early, outcome measured against it, method available under NDA."
-    ],
-    [
-     "A multinational corporate bank",
-     "Written up as a case study: the baseline, the measured outcome and the method, with client identity withheld by agreement."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Where this fits in the portfolio"
-  },
-  {
-   "t": "p",
-   "x": "Workforce Scheduling & Field Orchestration is one entry in a wider portfolio that shares platforms, contracts and a delivery standard. The fit matters: programs compose on the same rails, so what one program builds, the next inherits."
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Education & Research",
-     "A no-theater description of Education & Research: what ships first, what it touches at LMS & learning stores, how it is verified, and the per cohort."
-    ],
-    [
-     "Energy & Utilities",
-     "The Dataq Software build of Energy & Utilities: concrete interfaces at SCADA / EMS cores, measured movement on Forecast error (wind/solar/demand)."
-    ],
-    [
-     "Advanced Risk & Predictive Analytics",
-     "How Advanced Risk & Predictive Analytics runs when it is engineered for the enterprise: bounded scope per gate, platform evidence generated."
-    ],
-    [
-     "A tier-1 US bank",
-     "The measured delta and the method note are written up on the case page — anonymized by agreement, baseline audited."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you receive"
-  },
-  {
-   "t": "p",
-   "x": "Artifacts, not anecdotes — at the first-quarter close your team holds:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Baseline diagnostic",
-     "The starting position for every metric in scope, measured with your team and signed before build work begins."
-    ],
-    [
-     "Decision and control map",
-     "Every decision the system makes, who owns it, and where the human checkpoint sits."
-    ],
-    [
-     "Evidence pack",
-     "The artifacts your auditors ask for — control tests, decision trails and gate reviews in one place."
-    ],
-    [
-     "Value ledger",
-     "The running record of measured deltas against the signed baseline, reconciled with your finance team."
+     "up with evidence"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Start with a value assessment — the pattern priced against your estate in two weeks, baseline signed or the answer is no."
+   "x": "Start with the diagnostic, not the contract: Workforce Scheduling & Field Orchestration baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 1049,
+ "words": 389,
  "section": "Solutions",
  "l1": "Solutions",
  "l2": "Operational Excellence",

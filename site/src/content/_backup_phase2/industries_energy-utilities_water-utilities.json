@@ -1,0 +1,380 @@
+{
+ "id": "SUB-water-utilities",
+ "title": "Water, Waste & City Utilities",
+ "url": "/industries/energy-utilities/water-utilities/",
+ "template": "subindustry_page",
+ "breadcrumb": "Industries > Energy & Utilities > Water, Waste & City Utilities",
+ "seo_title": "Water, Waste & City Utilities | Dataq Software",
+ "meta_description": "Water and waste utilities run essential services on aging assets and thin margins: leak detection, network telemetry, customer analytics and regulatory.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "The Dataq Software build of Water, Waste & City Utilities: concrete interfaces at SCADA / EMS cores, measured movement on NRW, and a delivery rhythm your control owners can plan around from week one."
+  },
+  {
+   "t": "h2",
+   "x": "Operating context"
+  },
+  {
+   "t": "p",
+   "x": "Before proposing anything, we map the context Water, Waste & City Utilities will run in — regulators, decision cadence, existing contracts — because the design that ignores context fails at the gate."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Governed lakehouse pipeline — Water, Waste & City Utilities",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "The flow is linear on purpose: every hop owns its latency budget and failure policy, and a regression in one stage is a cohort, never an estate-wide surprise."
+  },
+  {
+   "t": "p",
+   "x": "The architecture for Water, Waste & City Utilities is deliberately auditable: every stage exposes its inputs, its owner and its failure policy, and the decision path shares a timeline with the audit path. Nothing important happens off the record."
+  },
+  {
+   "t": "h2",
+   "x": "Pressure points"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Non-revenue water invisible",
+     "Non-revenue water invisible shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
+    ],
+    [
+     "Network telemetry patchy",
+     "We treat Network telemetry patchy as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+    ],
+    [
+     "OT estates exposed",
+     "OT estates exposed is one of the pressures we hear first in estates like yours — the diagnostic puts a measured number on it before anything is promised."
+    ],
+    [
+     "Field operations reactive",
+     "Field operations reactive shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
+    ],
+    [
+     "Customer analytics basic",
+     "We treat Customer analytics basic as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+    ],
+    [
+     "Billing accuracy",
+     "When Billing accuracy is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Compliance frame"
+  },
+  {
+   "t": "table",
+   "caption": "Regimes in scope",
+   "headers": [
+    "Regime",
+    "Implication"
+   ],
+   "rows": [
+    [
+     "Drinking-water directives",
+     "quality duties"
+    ],
+    [
+     "NIS2",
+     "essential-entity duties"
+    ],
+    [
+     "Environmental permits",
+     "discharge evidence"
+    ],
+    [
+     "Privacy",
+     "meter data duties"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "data contracts",
+     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
+    ],
+    [
+     "Delta / Iceberg tables",
+     "Open table formats underneath everything we build, so your data never belongs to a vendor."
+    ],
+    [
+     "dbt transformation graph",
+     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
+    ],
+    [
+     "Unity Catalog governance",
+     "A single governance plane over tables, models and notebooks — access your auditors can replay."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "meter data platforms",
+     "Interval readings cleaned, validated and staged for settlement-grade accuracy."
+    ],
+    [
+     "SCADA / EMS cores",
+     "Grid operations integrated read-only — control stays deterministic, decisions get smarter."
+    ],
+    [
+     "work & asset management",
+     "Work orders and asset history in one loop — maintenance planned from evidence."
+    ],
+    [
+     "asset health registries",
+     "Every critical asset with a health score, an owner and a maintenance decision attached."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "pipeline breakage MTTR",
+     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
+    ],
+    [
+     "warehouse spend per query",
+     "Spend per query attributed to the team that wrote it — the meter everyone can see."
+    ],
+    [
+     "query p95",
+     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Silent schema drift",
+     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
+    ],
+    [
+     "Metric anarchy",
+     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
+    ],
+    [
+     "Cost creep",
+     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How we help — five priority capabilities"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "IoT, Twin & Robotics",
+     "From sensor data to actuation — industrial IoT fabrics, twins and vision that close the loop."
+    ],
+    [
+     "Data & Lakehouse",
+     "Pipelines, governance and products on a lakehouse contract — reports that reconcile, lineage you can trace."
+    ],
+    [
+     "Cyber & Zero-Trust",
+     "Identity-first security for people, machines and models — detection, response and audit in one program."
+    ],
+    [
+     "Agentic AI & Hyperautomation",
+     "Digital workers with roles, budgets and human checkpoints — every action logged and reversible."
+    ],
+    [
+     "Cloud, Edge & Platform",
+     "Reliable estates at lower unit cost — hybrid multicloud, edge fleets and SRE discipline."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How the engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "We run Water, Waste & City Utilities the way we run every program: the metric is signed before delivery, the pilot is bounded, and the scale decision follows the measured delta, not the momentum."
+  },
+  {
+   "t": "h2",
+   "x": "Outcomes we commit to"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "NRW",
+     "NRW moves at gates, not in slideware: the value claimed at each gate is reconciled with your team before it enters the ledger."
+    ],
+    [
+     "Main breaks",
+     "The commitment on Main breaks is written into the engagement charter — scope, owner and the measurement method agreed before delivery begins."
+    ],
+    [
+     "Field productivity",
+     "Field productivity carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
+    ],
+    [
+     "Billing disputes",
+     "Billing disputes moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Proof from this industry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "A European TSO-DSO group",
+     "The engagement is documented on its case page — what was measured, what moved and how the evidence was gathered."
+    ],
+    [
+     "A global integrated energy major",
+     "You can read the shape of this engagement on the case page: baseline locked early, outcome measured against it, method available under NDA."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Adjacent units"
+  },
+  {
+   "t": "p",
+   "x": "Adjacent delivery lanes: the decision path and the audit path share one timeline on Data, Analytics & Lakehouse programs, so the question of how we know gets a pointer, not a paragraph. Where two lanes share a metric, one program can carry both."
+  },
+  {
+   "t": "cta",
+   "x": "The measurement comes first: two weeks to a signed baseline under the rules your sub-sector is actually held to."
+  }
+ ],
+ "words": 885,
+ "section": "Industries",
+ "l1": "Industries",
+ "l2": "Energy & Utilities",
+ "l3": "Water, Waste & City Utilities",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Industries",
+   "url": "/industries/"
+  },
+  {
+   "name": "Energy & Utilities",
+   "url": "/industries/energy-utilities/"
+  },
+  {
+   "name": "Water, Waste & City Utilities",
+   "url": "/industries/energy-utilities/water-utilities/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Energy & Utilities — industry hub",
+   "url": "/industries/energy-utilities/",
+   "desc": "Grid intelligence, trading optimization and safe operations for the energy transition."
+  },
+  {
+   "title": "Oil & Gas",
+   "url": "/industries/energy-utilities/oil-gas/",
+   "desc": "Upstream and downstream operators run hazardous physics under volatile markets: predictive integrity, energy e…"
+  },
+  {
+   "title": "Power Generation & Grid",
+   "url": "/industries/energy-utilities/power-grid/",
+   "desc": "Grid operators balance physics, markets and regulation in real time: forecasting under intermittency, substati…"
+  },
+  {
+   "title": "Renewable Energy",
+   "url": "/industries/energy-utilities/renewables/",
+   "desc": "Renewable operators industrialize asset performance: turbine and inverter health, generation forecasting, PPA …"
+  },
+  {
+   "title": "A European TSO-DSO group",
+   "url": "/case-studies/en-01/",
+   "desc": "Forecast error down 31% — imbalance cost recovered across three control zones"
+  },
+  {
+   "title": "A global integrated energy major",
+   "url": "/case-studies/en-02/",
+   "desc": "Turnaround duration down 14% — scheduling optimization at refinery scale"
+  },
+  {
+   "title": "A national water utility",
+   "url": "/case-studies/en-03/",
+   "desc": "Non-revenue water down 21% — district metering to decision loop"
+  }
+ ],
+ "cards": [
+  {
+   "title": "Agentic AI & Hyperautomation for Water, Waste & City Utilities",
+   "url": "/industries/energy-utilities/water-utilities/capabilities/agentic-ai-hyperautomation/",
+   "tag": "Capability",
+   "desc": "Digital workers, decision hubs and workflows that recover from failure on their own — automation with human checkpoints, budgets and audit."
+  },
+  {
+   "title": "Data & Lakehouse for Water, Waste & City Utilities",
+   "url": "/industries/energy-utilities/water-utilities/capabilities/data-analytics-lakehouse/",
+   "tag": "Capability",
+   "desc": "Trusted data, delivered in near real time — pipelines, lakehouse and governance that holds up under audit."
+  },
+  {
+   "title": "Cyber & Zero-Trust for Water, Waste & City Utilities",
+   "url": "/industries/energy-utilities/water-utilities/capabilities/cybersecurity-zero-trust/",
+   "tag": "Capability",
+   "desc": "Identity, detection, resilience and AI security in one program."
+  },
+  {
+   "title": "Cloud, Edge & Platform for Water, Waste & City Utilities",
+   "url": "/industries/energy-utilities/water-utilities/capabilities/cloud-edge-platform-engineering/",
+   "tag": "Capability",
+   "desc": "Hybrid estates, edge estate and internal platforms — engineered for reliability and unit cost."
+  },
+  {
+   "title": "IoT, Twin & Robotics for Water, Waste & City Utilities",
+   "url": "/industries/energy-utilities/water-utilities/capabilities/iot-digital-twin-robotics/",
+   "tag": "Capability",
+   "desc": "Sensing, simulating, acting — the operations stack that turns physical assets into self-monitoring systems."
+  }
+ ]
+}

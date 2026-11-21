@@ -9,60 +9,42 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Payments & Cards in production terms — the runtime that holds it, the policies that bound it, the dashboards that prove it, and the quarterly delta your finance team can bank."
+   "x": "Payments is a real-time decision business wearing a compliance uniform: instant rails compress fraud windows to seconds, authorization economics reward millisecond latency, and every innovation (click-to-pay, tokenized wallets) inherits the same decision spine. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
   },
   {
    "t": "h2",
-   "x": "Operating context"
+   "x": "The setting, described honestly"
   },
   {
    "t": "p",
-   "x": "The operating context for Payments & Cards is set by your regulatory reality, your decision pressure and the estate you actually run — the design starts from those three, not from a reference model."
+   "x": "The work concentrates in authorization decisioning, chargeback/dispute handling, scheme settlement reconciliation, with token lifecycle management close behind. Each of these paths produces data faster than decisions, and the gap between the two is where cost and risk accumulate."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Payments & Cards",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Each stage passes its output forward under a typed contract — schema, owner and freshness agreed in advance; the audit path shares the timeline with the data path."
+   "x": "Where this bites first"
   },
   {
    "t": "p",
-   "x": "The architecture for Payments & Cards is deliberately auditable: every stage exposes its inputs, its owner and its failure policy, and the decision path shares a timeline with the audit path. Nothing important happens off the record."
-  },
-  {
-   "t": "h2",
-   "x": "Pressure points"
+   "x": "The queues and waits that come up first — Payments & Cards edition:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Authorization latency ceiling",
-     "When Authorization latency ceiling is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+     "Fraud and risk enrichment adds milliseconds that cost approval rates; batch components cannot sit on the instant path."
     ],
     [
      "PCI DSS 4.0 evidence load",
-     "We treat PCI DSS 4.0 evidence load as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Continuous-compliance expectations replace annual snapshots; tokenization and segmentation evidence is assembled manually."
     ],
     [
      "Scheme and wallet data fragmented",
-     "We treat Scheme and wallet data fragmented as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Issuer, acquirer, wallet and scheme data reconcile in nightly files; dispute and fraud analytics lag events."
     ],
     [
      "False declines burn revenue",
-     "False declines burn revenue costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+     "Decline models tuned for fraud miss consumer context; good customers fail at checkout silently."
     ],
     [
      "Cross-border settlement friction",
@@ -70,20 +52,57 @@
     ],
     [
      "Peak-load economics unmanaged",
-     "We treat Peak-load economics unmanaged as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Seasonal and flash-sale spikes break cost models; P95 cost per transaction unknown."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Compliance frame"
+   "x": "What we build, concretely"
+  },
+  {
+   "t": "p",
+   "x": "The proof in Payments & Cards is a working system on a real workflow. These are the builds that go live:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Real-time decision hub",
+     "streaming features + policy + models on the authorization path with replay"
+    ],
+    [
+     "Payments telemetry backbone",
+     "event-streamed transactions into fraud/dispute analytics"
+    ],
+    [
+     "PCI 4.0 program",
+     "tokenization, segmentation and continuous evidence"
+    ],
+    [
+     "Context-aware decline recovery",
+     "good-customer signals rescoring borderline declines with policy"
+    ],
+    [
+     "Peak-readiness engineering",
+     "load modeling and chaos drills for seasonal peaks"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Controls the auditor will ask about"
+  },
+  {
+   "t": "p",
+   "x": "Pci dss 4.0 sets the floor for Payments & Cards: cardholder-data estate compliance with continuous expectations. The build adds the evidence layer so compliance is a query, not a project."
   },
   {
    "t": "table",
-   "caption": "Regimes in scope",
+   "caption": "Regimes in scope for Payments & Cards",
    "headers": [
     "Regime",
-    "Implication"
+    "What it expects"
    ],
    "rows": [
     [
@@ -106,189 +125,18 @@
   },
   {
    "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "core banking rails",
-     "Ledger and payment rails integrated read-first — decisions layer on top, never bypass the truth."
-    ],
-    [
-     "CRM & onboarding",
-     "Onboarding steps instrumented end to end — drop-off measured where it happens."
-    ],
-    [
-     "trade & treasury systems",
-     "Treasury flows integrated with decisioning — liquidity positions current by the minute."
-    ],
-    [
-     "KYC/AML case managers",
-     "Case flow with the evidence attached — investigators close, auditors verify, both use the same file."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "warehouse spend per query",
-     "Spend per query attributed to the team that wrote it — the meter everyone can see."
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ],
-    [
-     "freshness SLO attainment",
-     "Up 97–98.6% of tables inside their declared window on the first working slice; deeper scope moves it further"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How we help — five priority capabilities"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Agentic AI & Hyperautomation",
-     "Digital workers with roles, budgets and human checkpoints — every action logged and reversible."
-    ],
-    [
-     "Data & Lakehouse",
-     "Pipelines, governance and products on a lakehouse contract — reports that reconcile, lineage you can trace."
-    ],
-    [
-     "Cyber & Zero-Trust",
-     "Identity-first security for people, machines and models — detection, response and audit in one program."
-    ],
-    [
-     "Applied AI & GenAI",
-     "Strategy through production operations — models evaluated, retrieval grounded, cost per answer owned."
-    ],
-    [
-     "Cloud, Edge & Platform",
-     "Load modeling and chaos drills for seasonal peaks — spikes absorbed at controlled cost"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
+   "x": "The opening move"
   },
   {
    "t": "p",
-   "x": "An engagement on Payments & Cards starts with a two-week baseline audit, runs a bounded pilot against a control group, and reaches its first gate with measured deltas — before any scale decision is made."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Approval rate",
-     "Up 1-3 points at equal fraud"
-    ],
-    [
-     "Fraud basis points",
-     "Fraud basis points is tracked weekly against the baseline signed in week two — the number at each gate is the number finance sees."
-    ],
-    [
-     "Dispute cycle time",
-     "Dispute cycle time moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
-    ],
-    [
-     "P95 cost per transaction",
-     "P95 cost per transaction is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A top-10 European retail bank",
-     "The delta we sign up to is 38% — verified against live data at every gate"
-    ],
-    [
-     "A multinational corporate bank",
-     "The engagement is documented on its case page — what was measured, what moved and how the evidence was gathered."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Adjacent units"
-  },
-  {
-   "t": "p",
-   "x": "This sub-industry pattern is one move in a larger program — the adjacent pages below are where clients typically go next, ordered by how often they appear in the same delivery plan."
+   "x": "Start with the diagnostic, not the contract: authorization latency ceiling gets baselined in two weeks; if the delta is real, the build gets scoped; if it is not, you keep the measurement design either way."
   },
   {
    "t": "cta",
-   "x": "The measurement comes first: two weeks to a signed baseline under the rules your sub-sector is actually held to."
+   "x": "A value assessment prices the delta in your estate before anything is signed: operations in Payments & Cards, measured against your baseline, in two weeks."
   }
  ],
- "words": 859,
+ "words": 425,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Banking & Financial Services",

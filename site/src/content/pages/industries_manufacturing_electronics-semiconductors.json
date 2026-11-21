@@ -9,60 +9,42 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "A no-theater description of Electronics & Semiconductors: what ships first, what it touches at SCADA & historians, how it is verified, and the per production line metric we commit to moving against baseline."
+   "x": "Semis and electronics fabrication run the tightest quality-latency loops in industry: yield analytics, tool matching and cleanroom reliability decided by telemetry at nanometer stakes. The fabs that win industrialize root-cause analytics and predictive tool health end to end. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
   },
   {
    "t": "h2",
-   "x": "Operating context"
+   "x": "What this environment runs on"
   },
   {
    "t": "p",
-   "x": "Before proposing anything, we map the context Electronics & Semiconductors will run in — regulators, decision cadence, existing contracts — because the design that ignores context fails at the gate."
+   "x": "The work concentrates in yield analytics/excursion rca, defect classification, predictive tool maintenance, with fab dispatch scheduling close behind. Each of these paths produces data faster than decisions, and the gap between the two is where cost and risk accumulate."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Electronics & Semiconductors",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Each stage passes its output forward under a typed contract — schema, owner and freshness agreed in advance; the audit path shares the timeline with the data path."
+   "x": "The workflows that feel it"
   },
   {
    "t": "p",
-   "x": "The architecture for Electronics & Semiconductors is deliberately auditable: every stage exposes its inputs, its owner and its failure policy, and the decision path shares a timeline with the audit path. Nothing important happens off the record."
-  },
-  {
-   "t": "h2",
-   "x": "Pressure points"
+   "x": "the places value leaks, Electronics & Semiconductors edition:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Yield excursions traced slowly",
-     "We treat Yield excursions traced slowly as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Process telemetry, metrology and defect data siloed; excursion root-cause takes days of fab time."
     ],
     [
      "Defect classification manual",
-     "When Defect classification manual is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+     "Wafer-defect review by experts; rare classes unlearned."
     ],
     [
      "Tool health reactive",
-     "Tool health reactive costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+     "Vacuums, robots and CMP tools fail unscheduled; tool-down hours compound."
     ],
     [
      "Fab IP targeted",
-     "We treat Fab IP targeted as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Process recipes are state-grade targets; OT security maturity uneven."
     ],
     [
      "Supply-chain planning brittle",
@@ -70,20 +52,57 @@
     ],
     [
      "Dispatch optimization ceilings",
-     "Dispatch optimization ceilings is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+     "Tool dispatch and lot scheduling combinatorial; incumbent heuristics plateau."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Compliance frame"
+   "x": "Inside the engagement"
+  },
+  {
+   "t": "p",
+   "x": "The proof in Electronics & Semiconductors is a working system on a real workflow. These are the builds that go live:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Yield analytics platform",
+     "process/metrology/defect unified with lineage"
+    ],
+    [
+     "Defect intelligence",
+     "multi-class defect models with active learning"
+    ],
+    [
+     "Tool health sensing",
+     "tool telemetry into predictive maintenance"
+    ],
+    [
+     "Fab IP security",
+     "zoning, monitoring and exfiltration controls"
+    ],
+    [
+     "Dispatch tournaments",
+     "fab dispatch formulations across solvers"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Staying inside the lines"
+  },
+  {
+   "t": "p",
+   "x": "Export controls sets the floor for Electronics & Semiconductors: technology transfer duties. The build adds the evidence layer so compliance is a query, not a project."
   },
   {
    "t": "table",
-   "caption": "Regimes in scope",
+   "caption": "Regimes in scope for Electronics & Semiconductors",
    "headers": [
     "Regime",
-    "Implication"
+    "What it expects"
    ],
    "rows": [
     [
@@ -106,189 +125,18 @@
   },
   {
    "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "supplier portals",
-     "Suppliers on the same data you plan with — promises and performance in one place."
-    ],
-    [
-     "CMMS maintenance",
-     "Maintenance history structured for prediction — the technician's notes become training data."
-    ],
-    [
-     "MES layers",
-     "Manufacturing execution integrated bidirectionally where it is safe — schedules down, actuals up."
-    ],
-    [
-     "SCADA & historians",
-     "Plant history served for analytics without touching the control path."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLO attainment",
-     "Up 97–99.2% of tables inside their declared window in current programs; measured, not modeled"
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ],
-    [
-     "warehouse spend per query",
-     "Spend per query attributed to the team that wrote it — the meter everyone can see."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How we help — five priority capabilities"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Data & Lakehouse",
-     "Pipelines, governance and products on a lakehouse contract — reports that reconcile, lineage you can trace."
-    ],
-    [
-     "Applied AI & GenAI",
-     "Strategy through production operations — models evaluated, retrieval grounded, cost per answer owned."
-    ],
-    [
-     "IoT, Twin & Robotics",
-     "The delta we sign up to is down 25 — verified against live data at every gate"
-    ],
-    [
-     "Cyber & Zero-Trust",
-     "Identity-first security for people, machines and models — detection, response and audit in one program."
-    ],
-    [
-     "Quantum & Advanced Compute",
-     "Optimization and PQC migration — every quantum-inspired run benchmarked against the best classical solver."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
+   "x": "The opening move"
   },
   {
    "t": "p",
-   "x": "The engagement pattern for Electronics & Semiconductors: diagnose, prove, industrialize, compound. Each gate reviews evidence with your named owners, and each gate can stop the program."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Excursion RCA time",
-     "Excursion RCA time moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
-    ],
-    [
-     "Rare-defect capture",
-     "Rare-defect capture carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
-    ],
-    [
-     "Tool-down hours",
-     "Tool-down hours is tracked weekly against the baseline signed in week two — the number at each gate is the number finance sees."
-    ],
-    [
-     "Dispatch throughput",
-     "Dispatch throughput is tracked weekly to your control owner; the number at gate three is the number finance sees"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A global automotive OEM",
-     "You can read the shape of this engagement on the case page: baseline locked early, outcome measured against it, method available under NDA."
-    ],
-    [
-     "A specialty chemicals producer",
-     "Target range down 17 on the first working slice, with the method note attached"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Adjacent units"
-  },
-  {
-   "t": "p",
-   "x": "The neighbouring operating units are evidence is captured where the work happens, not reconstructed later across the Electronics & Semiconductors estate, so your control owners can interrogate any number we publish; programs that span two of them usually share one baseline."
+   "x": "For Electronics & Semiconductors, the first move costs little: a two-week diagnostic on yield excursions traced slowly, your data, one honest baseline. The scoped proposal only follows if the measured delta justifies it."
   },
   {
    "t": "cta",
-   "x": "Start with a value assessment calibrated to your sub-sector — the regulatory mapping is part of the two weeks."
+   "x": "If operations in Electronics & Semiconductors is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
   }
  ],
- "words": 833,
+ "words": 374,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Manufacturing & Industrial",

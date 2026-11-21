@@ -9,64 +9,46 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "A no-theater description of Hospitals & Provider Networks: what ships first, what it touches at claims & clearinghouse feeds, how it is verified, and the per 1,000 patients metric we commit to moving against baseline."
+   "x": "Providers run 24/7 operations on clinical goodwill: clinician burden, throughput, revenue-cycle leakage and patient experience all compete for the same attention. Systems that industrialize documentation, coding and workflow intelligence give clinicians their time back — the only resource that matters. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
   },
   {
    "t": "h2",
-   "x": "Operating context"
+   "x": "How the operation actually works"
   },
   {
    "t": "p",
-   "x": "Before proposing anything, we map the context Hospitals & Provider Networks will run in — regulators, decision cadence, existing contracts — because the design that ignores context fails at the gate."
+   "x": "The work concentrates in clinical documentation, prior authorization, coding and cdi, with patient throughput close behind. The paths are busy; the decisions are late. Closing that delay is worth more than any single tool purchase."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Hospitals & Provider Networks",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Each stage passes its output forward under a typed contract — schema, owner and freshness agreed in advance; the audit path shares the timeline with the data path."
+   "x": "Where the cost hides"
   },
   {
    "t": "p",
-   "x": "Every component in Hospitals & Provider Networks has a contract, a version and a named owner. When something drifts, the ticket goes to a person, not to a committee — that is what the reference architecture is for."
-  },
-  {
-   "t": "h2",
-   "x": "Pressure points"
+   "x": "The queues and waits that come up first — Hospitals & Provider Networks edition:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Clinician documentation burden",
-     "We treat Clinician documentation burden as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Notes, orders and inbox consume evening hours; ambient tools stall on EHR integration and compliance sign-off."
     ],
     [
      "Prior-auth and revenue-cycle friction",
-     "When Prior-auth and revenue-cycle friction is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+     "Authorization, coding and denials consume revenue-cycle staff; denials cite missing documentation that existed."
     ],
     [
      "Ransomware shutdown risk",
-     "Ransomware shutdown risk is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+     "Legacy devices, flat networks and vendor access make hospital ransomware credible; clinical continuity planning thin."
     ],
     [
      "EHR analytics extraction pain",
-     "EHR analytics extraction pain shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
+     "Outcome and throughput analytics depend on extracts; cohorts take days to define."
     ],
     [
      "Clinical asset chaos",
-     "Clinical asset chaos is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+     "Mobile equipment (pumps, monitors) untracked; utilization and maintenance run on scavenger hunts."
     ],
     [
      "Imaging storage costs balloon",
@@ -76,14 +58,51 @@
   },
   {
    "t": "h2",
-   "x": "Compliance frame"
+   "x": "How the capability takes shape"
+  },
+  {
+   "t": "p",
+   "x": "Capability in Hospitals & Provider Networks is not abstract: each tower lands as a named build on a named workflow. The patterns below are what we deploy there."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Ambient documentation",
+     "visit audio to structured notes in EHR with sign-off"
+    ],
+    [
+     "Prior-auth agent",
+     "criteria mapped to chart evidence; submissions assembled"
+    ],
+    [
+     "Clinical continuity program",
+     "segmentation, recovery drills and manual fallbacks"
+    ],
+    [
+     "Clinical data platform",
+     "FHIR-native cohorts with terminology services"
+    ],
+    [
+     "Asset RTLS intelligence",
+     "pump/monitor tracking with maintenance prediction"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Staying inside the lines"
+  },
+  {
+   "t": "p",
+   "x": "Hipaa sets the floor for Hospitals & Provider Networks: PHI safeguards, BAAs, breach duties. The build adds the evidence layer so compliance is a query, not a project."
   },
   {
    "t": "table",
-   "caption": "Regimes in scope",
+   "caption": "Regimes in scope for Hospitals & Provider Networks",
    "headers": [
     "Regime",
-    "Implication"
+    "What it expects"
    ],
    "rows": [
     [
@@ -106,189 +125,18 @@
   },
   {
    "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "supply & pharmacy chains",
-     "Drug supply integrity monitored end to end — shortages predicted, not suffered."
-    ],
-    [
-     "claims & clearinghouse feeds",
-     "Claim events ingested at source, with status truth shared by every system that promises it."
-    ],
-    [
-     "EHR integration",
-     "Clinical context fetched under consent, in FHIR terms — decision support inside the clinician's flow."
-    ],
-    [
-     "patient engagement stack",
-     "Patient outreach orchestrated with consent and outcome measurement — engagement that respects the person."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "warehouse spend per query",
-     "Spend per query attributed to the team that wrote it — the meter everyone can see."
-    ],
-    [
-     "freshness SLO attainment",
-     "Up 97–99.1% of tables inside their declared window per 1,000 patients, reported weekly against the signed baseline"
-    ],
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ],
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How we help — five priority capabilities"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Applied AI & GenAI",
-     "Visit audio to structured notes in EHR with sign-off — documentation time down 25%+"
-    ],
-    [
-     "Agentic AI & Hyperautomation",
-     "Digital workers with roles, budgets and human checkpoints — every action logged and reversible."
-    ],
-    [
-     "Cyber & Zero-Trust",
-     "Identity-first security for people, machines and models — detection, response and audit in one program."
-    ],
-    [
-     "Data & Lakehouse",
-     "Pipelines, governance and products on a lakehouse contract — reports that reconcile, lineage you can trace."
-    ],
-    [
-     "IoT, Twin & Robotics",
-     "Current programs land up 15 here; the gate reviews the live number, not a projection"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
+   "x": "The opening move"
   },
   {
    "t": "p",
-   "x": "The engagement pattern for Hospitals & Provider Networks: diagnose, prove, industrialize, compound. Each gate reviews evidence with your named owners, and each gate can stop the program."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Documentation time per clinician",
-     "Documentation time per clinician has a named owner and a fortnightly reading; the gate review compares it to the signed baseline, not to a promise."
-    ],
-    [
-     "Denial overturn rate",
-     "Up 20-30%"
-    ],
-    [
-     "Asset utilization",
-     "Up 15-25%"
-    ],
-    [
-     "Imaging storage cost",
-     "Imaging storage cost is reported against the signed baseline with the evidence attached; if the number stops moving, the program says so."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A 12-hospital US health system",
-     "You can read the shape of this engagement on the case page: baseline locked early, outcome measured against it, method available under NDA."
-    ],
-    [
-     "A national health insurer",
-     "The engagement is documented on its case page — what was measured, what moved and how the evidence was gathered."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Adjacent units"
-  },
-  {
-   "t": "p",
-   "x": "The neighbouring operating units are identity is short-lived and authorization is deny-by-default in Hospitals & Provider Networks, which keeps the blast radius of any change inside one lane; programs that span two of them usually share one baseline."
+   "x": "For Hospitals & Provider Networks, the first move costs little: a two-week diagnostic on clinician documentation burden, your data, one honest baseline. The scoped proposal only follows if the measured delta justifies it."
   },
   {
    "t": "cta",
-   "x": "The measurement comes first: two weeks to a signed baseline under the rules your sub-sector is actually held to."
+   "x": "If operations in Hospitals & Provider Networks is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
   }
  ],
- "words": 832,
+ "words": 426,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Healthcare & Life Sciences",

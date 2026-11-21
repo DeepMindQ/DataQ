@@ -9,343 +9,116 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "How Talent, Skills & Workforce Intelligence runs when it is engineered for the enterprise: bounded scope per gate, platform evidence generated in-flight, and outcomes stated as deltas against the number we signed together."
+   "x": "Talent, Skills & Workforce Intelligence exists because a specific failure keeps repeating: skills live in resumes and manager heads; workforce planning is headcount arithmetic; internal mobility blocked by invisible skills; learning spend unmeasured."
   },
   {
    "t": "h2",
-   "x": "The problem this solution exists for"
+   "x": "The claim"
   },
   {
    "t": "p",
    "x": "Skills live in resumes and manager heads; workforce planning is headcount arithmetic; internal mobility blocked by invisible skills; learning spend unmeasured."
   },
   {
+   "t": "p",
+   "x": "The failure Talent, Skills & Workforce Intelligence answers is structural, not personal: processes that grew by accretion now decide things faster than they can be checked. Engineering the path is cheaper than hiring around it."
+  },
+  {
    "t": "h2",
-   "x": "Our approach"
+   "x": "What gets built first"
   },
   {
    "t": "p",
    "x": "We build the skills graph: HRIS/LMS/performance data unified to a taxonomy, role/skill gap analytics feeding hiring and mobility, learning pathways wired to gaps, and evidence of capability transfer."
   },
   {
-   "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Talent, Skills & Workforce Intelligence",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Contracts between stages are enforced at the boundary, so schema drift fails loudly in minutes instead of quietly in a quarter."
-  },
-  {
    "t": "p",
-   "x": "Talent, Skills & Workforce Intelligence runs on a structure your control owners can interrogate — the decision plane, the evidence plane and the governance plane stay separate in design and reconciled in operation."
-  },
-  {
-   "t": "h2",
-   "x": "Components"
+   "x": "Talent, Skills & Workforce Intelligence: the components, as they land,"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Skills graph",
-     "Taxonomy + inference from work evidence"
+     "taxonomy + inference from work evidence"
     ],
     [
      "Gap analytics",
-     "Role/current-state gaps by unit and future need"
+     "role/current-state gaps by unit and future need"
     ],
     [
      "Mobility marketplace",
-     "Internal paths matched to gaps"
+     "internal paths matched to gaps"
     ],
     [
      "Learning integration",
-     "Pathways wired to measured deltas"
+     "pathways wired to measured deltas"
     ],
     [
      "Workforce planning",
-     "Scenario-based capacity modeling"
+     "scenario-based capacity modeling"
     ]
    ]
   },
   {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "The governed path, end to end — Talent, Skills & Workforce Intelligence",
+   "labels": [
+    "Skills graph",
+    "Gap analytics",
+    "Mobility marketplace",
+    "Learning integration"
+   ],
+   "note": "The path your operators would actually recognize."
+  },
+  {
    "t": "h2",
-   "x": "Platform stack"
+   "x": "The technology choices, justified"
   },
   {
    "t": "p",
-   "x": "The stack for Talent, Skills & Workforce Intelligence is assembled per estate, but the pattern is stable: one event spine, one governance plane, one decision layer — and no component without a named owner."
+   "x": "Talent, Skills & Workforce Intelligence composes Dataq Nexus, Dataq Compass — platforms with documented controls and evidence packs, so governance is part of the runtime. The pattern is in delivery now in Technology & SaaS, Banking & Financial Services, Education & Research, Healthcare & Life Sciences."
   },
   {
    "t": "h2",
-   "x": "How it runs in an engagement"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Diagnose",
-     "We measure the starting position and lock the baseline with your team — no build work begins before the number is agreed."
-    ],
-    [
-     "Prove",
-     "A bounded pilot on your real data, with the gate review scheduled before the first commit is written."
-    ],
-    [
-     "Industrialize",
-     "Runbooks, enablement and the control trail that let your teams operate it without us in the room."
-    ],
-    [
-     "Compound",
-     "Quarterly re-audits and a ranked backlog of the next decisions worth automating — value that accumulates on purpose."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ],
-    [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
-    ],
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ],
-    [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
-    ],
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "warehouse spend per query",
-     "Spend per query attributed to the team that wrote it — the meter everyone can see."
-    ],
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you get"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Architecture pack",
-     "The design drawn against your estate — components, owners and the interfaces between them."
-    ],
-    [
-     "Working system",
-     "The thing itself, running in your environment — not a demo, not a prototype on someone's laptop."
-    ],
-    [
-     "Run model",
-     "How it is operated after handover — runbooks, on-call shape and the training your teams receive."
-    ],
-    [
-     "Value audit kit",
-     "The method and worksheets that let your own analysts reproduce every delta we claim."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Prerequisites and data readiness"
+   "x": "What the weeks look like"
   },
   {
    "t": "p",
-   "x": "Before Talent, Skills & Workforce Intelligence starts, three things need to exist: a metric your board recognizes, data access under an approved path, and a named owner on each source system. The readiness check takes two weeks and says no when it should."
+   "x": "Method over magic in Talent, Skills & Workforce Intelligence: the problem gets a CFO-unit statement and a signed baseline; the design gets a written risk envelope; the pilot gets falsifiable criteria; the rollout gets whatever the evidence supports. Every artifact ships with its evidence — who signed the baseline, what the gate measured, where the number lives."
   },
   {
    "t": "h2",
-   "x": "How a delivery runs"
+   "x": "What the program watches"
   },
   {
    "t": "p",
-   "x": "A delivery for Talent, Skills & Workforce Intelligence runs on rhythm, not ritual: the baseline is signed in the first weeks, evidence is generated as the work happens, and the gate at each stage has real stop authority. Programs that miss their evidence stop."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
+   "x": "The Talent, Skills & Workforce Intelligence value case names what should move and by what mechanism. The numbers get filled in from your baseline, not from a brochure."
   },
   {
    "t": "bullets",
    "items": [
     [
      "internal fill rate",
-     "Up 20-30%"
+     "up 20-30%"
     ],
     [
      "time-to-productivity",
-     "time-to-productivity is tracked weekly to your control owner; the number at gate three is the number finance sees"
+     "down on moved roles"
     ],
     [
      "learning ROI",
-     "learning ROI carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A top-10 European retail bank",
-     "The engagement is documented on its case page — what was measured, what moved and how the evidence was gathered."
-    ],
-    [
-     "A multinational corporate bank",
-     "The measured delta and the method note are written up on the case page — anonymized by agreement, baseline audited."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Where this fits in the portfolio"
-  },
-  {
-   "t": "p",
-   "x": "Inside the portfolio, Talent, Skills & Workforce Intelligence draws on the shared platforms — the same governance, the same evidence trail, the same unit-cost discipline. No bespoke stack per program, no orphaned governance."
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Public Sector & Government",
-     "The contract behind Public Sector & Government: signed baseline in week two, working slice by week eight, industrialized controls by week twelve, and."
-    ],
-    [
-     "Agriculture & Food Systems",
-     "The contract behind Agriculture & Food Systems: signed baseline in week two, working slice by week eight, industrialized controls by week twelve, and."
-    ],
-    [
-     "Post-Quantum Cryptography Migration",
-     "The Dataq Software build of Post-Quantum Cryptography Migration: concrete interfaces at core systems, measured movement on crypto inventory coverage."
-    ],
-    [
-     "A food processor (dairy)",
-     "The engagement is documented on its case page — what was measured, what moved and how the evidence was gathered."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you receive"
-  },
-  {
-   "t": "p",
-   "x": "The quarter-close package, built to be handed over rather than demonstrated:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Baseline diagnostic",
-     "The starting position for every metric in scope, measured with your team and signed before build work begins."
-    ],
-    [
-     "Decision and control map",
-     "Every decision the system makes, who owns it, and where the human checkpoint sits."
-    ],
-    [
-     "Evidence pack",
-     "The artifacts your auditors ask for — control tests, decision trails and gate reviews in one place."
-    ],
-    [
-     "Value ledger",
-     "The running record of measured deltas against the signed baseline, reconciled with your finance team."
+     "measured per pathway"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Book a briefing on this solution: the pattern, the prerequisites and the measured delta it targets in estates like yours."
+   "x": "Bring Talent, Skills & Workforce Intelligence to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
   }
  ],
- "words": 1043,
+ "words": 365,
  "section": "Solutions",
  "l1": "Solutions",
  "l2": "Workforce & Experience",

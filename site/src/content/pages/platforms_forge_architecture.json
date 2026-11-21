@@ -9,187 +9,100 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "A no-theater description of Dataq Forge — Architecture & Trust: what ships first, what it touches at operational stores, how it is verified, and the per workflow metric we commit to moving against baseline."
+   "x": "Dataq Forge's architecture: the planes, the controls and the evidence export — documented the way your auditors will read it."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
+   "x": "The working system, described"
   },
   {
    "t": "p",
-   "x": "The platform separates three planes. The data plane carries workload (medallion architecture with data contracts, tag-based access control with lineage, Kafka/Flink with exactly-once semantics); the control plane carries policy and orchestration (feature store, vector search, retrieval services, workload isolation and showback); the evidence plane carries audit, replay and conformity documentation — the plane most vendors skip and every regulator asks about."
-  },
-  {
-   "t": "diagram",
-   "kind": "layered-stack",
-   "title": "Dataq Forge — plane and service layers",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "The layering is what makes the estate auditable: any claim can be traced down through the contracts that carry it."
-  },
-  {
-   "t": "diagram",
-   "kind": "edge-topology",
-   "title": "Dataq Forge — deployment topology and flow",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Data flows uphill under contract: what the center learns from the edge is agreed, versioned and auditable like every other boundary."
-  },
-  {
-   "t": "h2",
-   "x": "Security posture"
+   "x": "Structurally Dataq Forge is planes, not layers — workload, decision and evidence run in parallel behind one governed API, and each crossing is logged with policy version and owner."
   },
   {
    "t": "p",
-   "x": "Forge inherits platform controls from the customer landing zone and adds its own: contract enforcement, lineage capture, quality gates and privacy-tag-driven access. Every dataset carries its owner, SLA and classification — governance is system behavior, not committee minutes."
+   "x": "the build decomposes into named pieces, each with an owner and a gate, Dataq Forge architecture edition:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pipeline framework",
+     "medallion architecture with data contracts"
+    ],
+    [
+     "Governance baseline",
+     "tag-based access control with lineage"
+    ],
+    [
+     "Streaming core",
+     "Kafka/Flink with exactly-once semantics"
+    ],
+    [
+     "AI data layer",
+     "feature store, vector search, retrieval services"
+    ],
+    [
+     "Cost governance",
+     "workload isolation and showback"
+    ],
+    [
+     "Data product registry",
+     "owned, SLA'd products with consumer contracts"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "Trust controls"
+   "x": "Built for the auditors too"
+  },
+  {
+   "t": "p",
+   "x": "In Dataq Forge, instrumented from week one, on your channels:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Privacy tags",
-     "Sensitivity driving access automatically"
+     "sensitivity driving access automatically"
     ],
     [
      "Lineage",
-     "Column-level, exportable for audit"
+     "column-level, exportable for audit"
     ],
     [
      "Freshness SLAs",
-     "Measured per dataset with alerts"
+     "measured per dataset with alerts"
     ],
     [
      "Clean rooms",
-     "Sharing without exposure for data products"
+     "sharing without exposure for data products"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Compliance mapping"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "SOC 2 Type II / ISO 27001",
-     "The control estate mapped to SOC 2 and ISO 27001 criteria, evidence produced continuously."
-    ],
-    [
-     "Sector regimes",
-     "Sector rules translated into controls per jurisdiction — the mapping is data, reviewed when the regime moves."
-    ],
-    [
-     "AI-specific",
-     "AI-specific obligations mapped to controls — model risk, transparency and human oversight, owned by name."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Performance envelope"
+   "x": "The technology choices, justified"
   },
   {
    "t": "p",
-   "x": "The control plane is sized for enterprise scale: decision and orchestration paths carry published latency budgets, and the evidence plane writes append-only logs that never sit on the hot path."
+   "x": "Runtime dependencies: Databricks, Snowflake, Kafka, dbt, Unity Catalog/Purview. Deployment runs inside your security perimeter with customer-managed keys; the evidence export is formatted for the audit formats your team already uses."
   },
   {
    "t": "h2",
-   "x": "Operational telemetry"
+   "x": "Delivery, without the theater"
   },
   {
    "t": "p",
-   "x": "The program dashboard tracks these by default, wired to your channels:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "warehouse spend per query",
-     "Spend per query attributed to the team that wrote it — the meter everyone can see."
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ],
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Deployment models"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Customer tenancy",
-     "Deployed inside your tenancy, your keys, your logs — the default for regulated estates."
-    ],
-    [
-     "Dataq managed",
-     "Operated by us under contract — SLOs published, changes gated, your auditors given a walkthrough path."
-    ],
-    [
-     "Hybrid / edge",
-     "Split by design: what must stay local stays local, what benefits from scale scales."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "p",
-   "x": "Connectivity is read-first by default and writes pass policy checks; every adapter documents its retries, its idempotency window and its audit trail."
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ]
-   ]
+   "x": "Deployment models for Dataq Forge follow the estate: in-perimeter on customer-managed keys, or in a segregated enclave where the estate cannot host the workload. Either way the control pack, the replay log and the audit export keep the same format, so the second deployment never re-argues the first."
   },
   {
    "t": "cta",
-   "x": "Walk the architecture with the platform team — a working session that includes the evidence trail your auditors would test."
+   "x": "Start with the diagnostic, not the contract: Dataq Forge architecture baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 466,
+ "words": 265,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Forge",

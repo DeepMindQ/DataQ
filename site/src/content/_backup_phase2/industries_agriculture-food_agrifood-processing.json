@@ -1,0 +1,380 @@
+{
+ "id": "SUB-agrifood-processing",
+ "title": "Agri-Food Processing",
+ "url": "/industries/agriculture-food/agrifood-processing/",
+ "template": "subindustry_page",
+ "breadcrumb": "Industries > Agriculture & Food Systems > Agri-Food Processing",
+ "seo_title": "Agri-Food Processing | Dataq Software",
+ "meta_description": "Food processors live on quality, yield and traceability: intake grading, process yield, food-safety evidence and provenance claims.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "The contract behind Agri-Food Processing: signed baseline in week two, working slice by week eight, industrialized controls by week twelve, and evidence flowing to your control owner throughout."
+  },
+  {
+   "t": "h2",
+   "x": "Operating context"
+  },
+  {
+   "t": "p",
+   "x": "The operating surface here spans Intake grading, Process yield analytics, Lot traceability, Cold-chain monitoring, Provenance claims. Each one is instrumented before anything changes: baseline numbers first, then the working slice, then the measured delta at the gate."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Governed lakehouse pipeline — Agri-Food Processing",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "Contracts between stages are enforced at the boundary, so schema drift fails loudly in minutes instead of quietly in a quarter."
+  },
+  {
+   "t": "p",
+   "x": "Every component in Agri-Food Processing has a contract, a version and a named owner. When something drifts, the ticket goes to a person, not to a committee — that is what the reference architecture is for."
+  },
+  {
+   "t": "h2",
+   "x": "Pressure points"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Intake grading manual",
+     "We treat Intake grading manual as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+    ],
+    [
+     "Yield opaque",
+     "We treat Yield opaque as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+    ],
+    [
+     "Provenance claims unverifiable",
+     "Provenance claims unverifiable is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+    ],
+    [
+     "Traceability slow",
+     "Traceability slow shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
+    ],
+    [
+     "Cold chain unverified",
+     "When Cold chain unverified is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+    ],
+    [
+     "OT estates exposed",
+     "We treat OT estates exposed as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Compliance frame"
+  },
+  {
+   "t": "table",
+   "caption": "Regimes in scope",
+   "headers": [
+    "Regime",
+    "Implication"
+   ],
+   "rows": [
+    [
+     "Food safety (HACCP/EU 178/FSMA)",
+     "traceability/recall duties"
+    ],
+    [
+     "EUDR",
+     "commodity evidence"
+    ],
+    [
+     "Labeling/claims law",
+     "substantiation duties"
+    ],
+    [
+     "GDPR",
+     "worker data"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "dbt transformation graph",
+     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
+    ],
+    [
+     "Unity Catalog governance",
+     "A single governance plane over tables, models and notebooks — access your auditors can replay."
+    ],
+    [
+     " freshness SLOs",
+     "Data age treated like uptime — a budget, an owner and an alert when it slips."
+    ],
+    [
+     "Delta / Iceberg tables",
+     "Open table formats underneath everything we build, so your data never belongs to a vendor."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "processing line historians",
+     "Line data streamed with the tags that matter, ready for the twin and the OEE math."
+    ],
+    [
+     "food-safety labs",
+     "Safety results joined to lots and suppliers — traceability that works the day you need it."
+    ],
+    [
+     "cold-chain telemetry",
+     "Temperature integrity tracked from dock to shelf, with excursions raised as events, not discovered as losses."
+    ],
+    [
+     "farm management systems",
+     "Field operations data joined to yield and weather — agronomy argued with numbers."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "warehouse spend per query",
+     "Spend per query attributed to the team that wrote it — the meter everyone can see."
+    ],
+    [
+     "pipeline breakage MTTR",
+     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
+    ],
+    [
+     "freshness SLO attainment",
+     "Up 97–98.9% of tables inside their declared window — the gate compares the live value to baseline every quarter"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Metric anarchy",
+     "Metric anarchy — guarded because one certified semantic layer owns definitions — dashboards that shadow it lose endorsement and budget"
+    ],
+    [
+     "Cost creep",
+     "Cost creep — per-team chargeback with query tags; untagged compute is quarantined at the queue level"
+    ],
+    [
+     "Silent schema drift",
+     "Silent schema drift: producer contracts fail loudly at ingest; downstream models refuse to build on drifted sources; the guard is part of the first slice, not a hardening phase"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How we help — five priority capabilities"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Applied AI & GenAI",
+     "Strategy through production operations — models evaluated, retrieval grounded, cost per answer owned."
+    ],
+    [
+     "Data & Lakehouse",
+     "Pipelines, governance and products on a lakehouse contract — reports that reconcile, lineage you can trace."
+    ],
+    [
+     "Blockchain & Digital Trust",
+     "Permissioned networks, credentials and provenance — digital trust regulators can inspect."
+    ],
+    [
+     "IoT, Twin & Robotics",
+     "From sensor data to actuation — industrial IoT fabrics, twins and vision that close the loop."
+    ],
+    [
+     "Cyber & Zero-Trust",
+     "Identity-first security for people, machines and models — detection, response and audit in one program."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How the engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement pattern for Agri-Food Processing: diagnose, prove, industrialize, compound. Each gate reviews evidence with your named owners, and each gate can stop the program."
+  },
+  {
+   "t": "h2",
+   "x": "Outcomes we commit to"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Grading throughput",
+     "Up 2-3x"
+    ],
+    [
+     "Yield",
+     "+2-4 points"
+    ],
+    [
+     "Recall scoping",
+     "Recall scoping carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
+    ],
+    [
+     "Cold-chain excursions",
+     "Cold-chain excursions carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Proof from this industry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "A European agri-cooperative (4,200 farms)",
+     "Target range down 14 on the first working slice, with the method note attached"
+    ],
+    [
+     "A global coffee trader",
+     "Written up as a case study: the baseline, the measured outcome and the method, with client identity withheld by agreement."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Adjacent units"
+  },
+  {
+   "t": "p",
+   "x": "The neighbouring operating units are Precision Agriculture & Agronomy, Food Safety & Food Retail, AgriFinance & Commodity Markets — each with its own capability alignments under /industries/agriculture-food/. Where two lanes share a metric, one program can carry both. Where two lanes share a metric, one program can carry both; programs that span two of them usually share one baseline."
+  },
+  {
+   "t": "cta",
+   "x": "The measurement comes first: two weeks to a signed baseline under the rules your sub-sector is actually held to."
+  }
+ ],
+ "words": 870,
+ "section": "Industries",
+ "l1": "Industries",
+ "l2": "Agriculture & Food Systems",
+ "l3": "Agri-Food Processing",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Industries",
+   "url": "/industries/"
+  },
+  {
+   "name": "Agriculture & Food Systems",
+   "url": "/industries/agriculture-food/"
+  },
+  {
+   "name": "Agri-Food Processing",
+   "url": "/industries/agriculture-food/agrifood-processing/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Agriculture & Food Systems — industry hub",
+   "url": "/industries/agriculture-food/",
+   "desc": "From precision agronomy to verified provenance — technology across the food chain."
+  },
+  {
+   "title": "Precision Agriculture & Agronomy",
+   "url": "/industries/agriculture-food/precision-agriculture/",
+   "desc": "Precision agriculture converts sensing into input savings and yield: soil/weather/crop telemetry, variable-rat…"
+  },
+  {
+   "title": "Food Safety & Food Retail",
+   "url": "/industries/agriculture-food/food-safety-retail/",
+   "desc": "Food retail carries the consumer-facing safety duty: fresh-chain quality, supplier verification, recall readin…"
+  },
+  {
+   "title": "AgriFinance & Commodity Markets",
+   "url": "/industries/agriculture-food/agrifinance-commodities/",
+   "desc": "Agri-finance prices practice, not just history: lenders, insurers and traders need verified agronomic data for…"
+  },
+  {
+   "title": "A European agri-cooperative (4,200 farms)",
+   "url": "/case-studies/agr-01/",
+   "desc": "Input cost per hectare down 14% — precision agronomy at cooperative scale"
+  },
+  {
+   "title": "A global coffee trader",
+   "url": "/case-studies/agr-02/",
+   "desc": "EUDR due-diligence automated — compliance evidence in hours, premium channels opened"
+  },
+  {
+   "title": "A food processor (dairy)",
+   "url": "/case-studies/agr-03/",
+   "desc": "Yield +2.8 points, recalls scoped in minutes — quality and traceability program"
+  }
+ ],
+ "cards": [
+  {
+   "title": "Applied AI & GenAI for Agri-Food Processing",
+   "url": "/industries/agriculture-food/agrifood-processing/capabilities/applied-ai-generative-ai/",
+   "tag": "Capability",
+   "desc": "From enterprise strategy to production models — AI measured on the P&L."
+  },
+  {
+   "title": "Data & Lakehouse for Agri-Food Processing",
+   "url": "/industries/agriculture-food/agrifood-processing/capabilities/data-analytics-lakehouse/",
+   "tag": "Capability",
+   "desc": "Trusted data, delivered in near real time — pipelines, lakehouse and governance that holds up under audit."
+  },
+  {
+   "title": "Cyber & Zero-Trust for Agri-Food Processing",
+   "url": "/industries/agriculture-food/agrifood-processing/capabilities/cybersecurity-zero-trust/",
+   "tag": "Capability",
+   "desc": "Identity, detection, resilience and AI security in one program."
+  },
+  {
+   "title": "Blockchain & Digital Trust for Agri-Food Processing",
+   "url": "/industries/agriculture-food/agrifood-processing/capabilities/blockchain-digital-trust/",
+   "tag": "Capability",
+   "desc": "DLT networks, tokenization and verifiable credentials — a shared, verifiable record with controls regulators accept."
+  },
+  {
+   "title": "IoT, Twin & Robotics for Agri-Food Processing",
+   "url": "/industries/agriculture-food/agrifood-processing/capabilities/iot-digital-twin-robotics/",
+   "tag": "Capability",
+   "desc": "Sensing, simulating, acting — the operations stack that turns physical assets into self-monitoring systems."
+  }
+ ]
+}

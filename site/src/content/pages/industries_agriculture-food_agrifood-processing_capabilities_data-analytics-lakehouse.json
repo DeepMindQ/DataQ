@@ -9,193 +9,87 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "A no-theater description of Data & Lakehouse for Agri-Food Processing: what ships first, what it touches at traceability ledgers, how it is verified, and the per field metric we commit to moving against baseline."
-  },
-  {
-   "t": "h2",
-   "x": "Overview"
+   "x": "Data & Lakehouse in Agri-Food Processing targets a specific gap: systems exist, but no governed path connects them — which is why intake grading manual still costs what it costs. The build closes it: underneath it sits the data spine: contracts, lineage and freshness SLAs that make the number trustworthy before anyone models it."
   },
   {
    "t": "p",
-   "x": "The short version of Data & Lakehouse for Agri-Food Processing: named metrics, named owners, evidence that travels. The sections below walk through the pattern, the components and the commitments."
+   "x": "Setting the Data & Lakehouse scene in Agri-Food Processing: Food processors live on quality, yield and traceability: intake grading, process yield, food-safety evidence and provenance claims. Vision grading, yield analytics and chain-of-custody convert commodity margin into brand margin."
+  },
+  {
+   "t": "p",
+   "x": "Intake grading manual in Agri-Food Processing has an honest description: repeatable work, done slowly, checked by hand, improved never. The build replaces the repetition; the judgment stays with your people."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
+   "x": "The workflows that feel it"
+  },
+  {
+   "t": "p",
+   "x": "named from the floor, not from a framework, Agri-Food Processing edition:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Intake grading manual",
+     "Quality grading by inspectors; variance and throughput loss."
+    ],
+    [
+     "Provenance claims unverifiable",
+     "Origin/organic claims manual; EUDR pressure."
+    ],
+    [
+     "Yield opaque",
+     "Process yield by line/lot unknown; losses accepted."
+    ],
+    [
+     "Traceability slow",
+     "Lot traceability document-based; recalls days."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The build, in plain terms"
+  },
+  {
+   "t": "p",
+   "x": "In Agri-Food Processing, the pattern is yield analytics — line/lot yield with loss decomposition. Recovery targeted sits on top as the measured result, tracked from the signed baseline onward. Around it, underneath it sits the data spine: contracts, lineage and freshness SLAs that make the number trustworthy before anyone models it."
   },
   {
    "t": "diagram",
    "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Data & Lakehouse for Agri-Food Processing",
+   "title": "The operating loop — Agri-Food Processing, Data & Lakehouse",
    "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
+    "Intake grading",
+    "Yield analytics",
+    "Process yield analytics",
+    "gate evidence"
    ],
-   "note": "Contracts between stages are enforced at the boundary, so schema drift fails loudly in minutes instead of quietly in a quarter."
+   "note": "Named stages, not generic boxes — this is the Agri-Food Processing path as built."
+  },
+  {
+   "t": "h2",
+   "x": "How the work actually runs"
   },
   {
    "t": "p",
-   "x": "The reference pattern behind Data & Lakehouse for Agri-Food Processing is boring on purpose: contracts at every boundary, an owner per component, and evidence captured where the work happens. Boring architecture is what survives contact with an audit."
+   "x": "The first two weeks belong to the baseline. intake grading manual gets a number, an owner and a signature; the quarter belongs to a bounded slice — Yield analytics — live on your estate. Baselines are signed in the first two weeks, the working slice lands inside the quarter, and the value ledger stays open to your finance team."
+  },
+  {
+   "t": "h2",
+   "x": "Guardrails that matter here"
   },
   {
    "t": "p",
-   "x": "The reference pattern behind Data & Lakehouse for Agri-Food Processing is boring on purpose: contracts at every boundary, an owner per component, and evidence captured where the work happens. Boring architecture is what survives contact with an audit."
-  },
-  {
-   "t": "h2",
-   "x": "Why this matters in Agriculture & Food Systems"
-  },
-  {
-   "t": "p",
-   "x": "In Agriculture & Food Systems, the regulatory lens decides what a good decision looks like — Data & Lakehouse for Agri-Food Processing exists to make that decision defensible at the speed the sector actually runs at."
-  },
-  {
-   "t": "h2",
-   "x": "Pressure points we attack"
-  },
-  {
-   "t": "h2",
-   "x": "How we deliver it here"
-  },
-  {
-   "t": "p",
-   "x": "The build sequence is deliberate: contracts and identity first, the working decision slice second, the verification harness third — because a Data & Lakehouse for Agri-Food Processing capability without its eval gate is just another unattended automation."
-  },
-  {
-   "t": "h2",
-   "x": "Services behind the pattern"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Data Engineering & Pipeline Modernization",
-     "How Data Engineering & Pipeline Modernization runs when it is engineered for the enterprise: bounded scope per gate, platform evidence generated."
-    ],
-    [
-     "Lakehouse Architecture & Migration",
-     "A no-theater description of Lakehouse Architecture & Migration: what ships first, what it touches at operational stores, how it is verified, and the."
-    ],
-    [
-     "Real-Time Streaming & Event-Driven Decisioning",
-     "The Dataq Software build of Real-Time Streaming & Event-Driven Decisioning: concrete interfaces at core systems, measured movement on event-to-action."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ],
-    [
-     " freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "cold-chain telemetry",
-     "Temperature integrity tracked from dock to shelf, with excursions raised as events, not discovered as losses."
-    ],
-    [
-     "food-safety labs",
-     "Safety results joined to lots and suppliers — traceability that works the day you need it."
-    ],
-    [
-     "traceability ledgers",
-     "Lot-level history from source to shelf, verifiable by the parties who need to verify it."
-    ],
-    [
-     "processing line historians",
-     "Line data streamed with the tags that matter, ready for the twin and the OEE math."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "p",
-   "x": "The measures that decide gate outcomes, generated in-flight:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLO attainment",
-     "Up 97–99.3% of tables inside their declared window in current programs; measured, not modeled"
-    ],
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ],
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "p",
-   "x": "What usually goes wrong, and the specific guard in this build:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Cost creep",
-     "Cost creep — per-team chargeback with query tags; untagged compute is quarantined at the queue level, enforced by the platform rather than by discipline alone"
-    ],
-    [
-     "Metric anarchy",
-     "Metric anarchy — one certified semantic layer owns definitions — dashboards that shadow it lose endorsement and budget"
-    ],
-    [
-     "Silent schema drift",
-     "Silent schema drift, the classic killer; here producer contracts fail loudly at ingest; downstream models refuse to build on drifted sources"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Compliance frame"
+   "x": "Two regimes anchor the Data & Lakehouse frame in Agri-Food Processing: Food safety (HACCP/EU 178/FSMA) — traceability/recall duties; EUDR — commodity evidence. By the time the regulator asks, the evidence already exists — that is the point of designing controls first."
   },
   {
    "t": "table",
-   "caption": "Regimes shaping this capability",
+   "caption": "Regimes in scope for Agri-Food Processing",
    "headers": [
     "Regime",
-    "Implication"
+    "What it expects"
    ],
    "rows": [
     [
@@ -207,96 +101,29 @@
      "commodity evidence"
     ],
     [
-     "EUDR",
-     "deforestation-free due diligence with geolocation evidence for in-scope commodities"
+     "Labeling/claims law",
+     "substantiation duties"
+    ],
+    [
+     "GDPR",
+     "worker data"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "How a delivery runs"
+   "x": "How engagements open"
   },
   {
    "t": "p",
-   "x": "We run Data & Lakehouse for Agri-Food Processing in gates: each one reviews measured deltas against the signed baseline with your named owners in the room, and each one can stop the program. That is the discipline most enterprise programs are missing."
-  },
-  {
-   "t": "h2",
-   "x": "Where this fits in the portfolio"
-  },
-  {
-   "t": "p",
-   "x": "This page is part of a portfolio engineered to compose: Data & Lakehouse for Agri-Food Processing shares the decision layer, the audit trail and the platform rails with the entries around it."
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Applied AI & GenAI for Agri-Food Processing",
-     "Applied AI & GenAI for Agri-Food Processing connects to this work through the decision layer — the pattern above is what makes the link concrete."
-    ],
-    [
-     "IoT, Twin & Robotics for Agri-Food Processing",
-     "Where IoT, Twin & Robotics for Agri-Food Processing fits: the same baseline-and-gate discipline applies, with the surfaces adapted to what that part of the portfolio actually runs."
-    ],
-    [
-     "Agriculture & Food Systems",
-     "The contract behind Agriculture & Food Systems: signed baseline in week two, working slice by week eight, industrialized controls by week twelve, and."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you receive"
-  },
-  {
-   "t": "p",
-   "x": "Artifacts, not anecdotes — at the first-quarter close your team holds:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Baseline diagnostic",
-     "The starting position for every metric in scope, measured with your team and signed before build work begins."
-    ],
-    [
-     "Decision and control map",
-     "Every decision the system makes, who owns it, and where the human checkpoint sits."
-    ],
-    [
-     "Evidence pack",
-     "The artifacts your auditors ask for — control tests, decision trails and gate reviews in one place."
-    ],
-    [
-     "Value ledger",
-     "The running record of measured deltas against the signed baseline, reconciled with your finance team."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Grading throughput",
-     "Up 2-3x"
-    ],
-    [
-     "Yield",
-     "+2-4 points"
-    ]
-   ]
+   "x": "The Data & Lakehouse diagnostic in Agri-Food Processing comes before the contract: intake grading manual gets baselined in two weeks; if the delta is real, the build gets scoped; if it is not, you keep the measurement design either way."
   },
   {
    "t": "cta",
-   "x": "Book a briefing with the practice lead — 45 minutes on your metric, our method and an honest read on feasibility."
+   "x": "Start with the diagnostic, not the contract: Data & Lakehouse for Agri-Food Processing baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 901,
+ "words": 439,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Agriculture & Food Systems",

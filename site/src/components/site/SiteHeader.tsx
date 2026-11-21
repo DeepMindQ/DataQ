@@ -134,7 +134,9 @@ function MegaPanel({
                 const rm = colMeta(c.label);
                 const RIcon = rm.icon;
                 const isActive = i === safeIdx;
-                const rowLabel = isPlatform ? platformKey(c.label) : c.label;
+                /* full menu names: platforms keep their complete
+                   "Dataq X — descriptor" label; nothing gets shortened. */
+                const rowLabel = c.label;
                 return (
                   <Link
                     key={c.label + c.url}
@@ -169,7 +171,7 @@ function MegaPanel({
                     </span>
                     <span className="min-w-0">
                       <span
-                        className={`block truncate text-[13.5px] font-semibold leading-snug transition-colors ${
+                        className={`block text-[13.5px] font-semibold leading-snug text-pretty transition-colors ${
                           isActive ? "text-brand-deep" : "text-navy-800"
                         }`}
                       >

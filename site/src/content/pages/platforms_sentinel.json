@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The Dataq Software build of Dataq Sentinel — Overview: concrete interfaces at core systems, measured movement on primary metric, and a delivery rhythm your control owners can plan around from week one."
+   "x": "Security architecture you can evidence — for humans, machines and models. Dataq Sentinel is the platform layer behind it — deployed under NDA, documented for the audit."
   },
   {
    "t": "h2",
@@ -17,202 +17,108 @@
   },
   {
    "t": "p",
-   "x": "Dataq Sentinel unifies our security delivery: zero-trust enforcement points (identity, posture, segmentation, workload identity), detection-as-code with ATT&CK coverage, cloud posture guardrails, and the AI-specific layer — prompt-injection defense, agent containment, shadow-AI discovery and model security cards."
+   "x": "Dataq Sentinel unifies our security delivery: zero-trust enforcement points (identity, posture, segmentation, workload identity), detection-as-code with ATT&CK coverage, cloud posture guardrails, and the AI-specific layer — prompt-injection defense, agent containment, shadow-AI discovery and model security cards. Sentinel is engineered for the evidence economy: controls mapped across SOC 2, ISO 27001, NIST 800-207, DORA and AI regimes, tested continuously, exported to auditors. Boards get measured trust reduction, not adjectives."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "decision-fabric",
-   "title": "Dataq Sentinel — control and evidence planes",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Signals, context and policy converge at the decision layer; every scored decision is logged with its inputs so it can be replayed at audit."
+   "x": "What goes live, and in what order"
   },
   {
    "t": "p",
-   "x": "The reference pattern behind Dataq Sentinel — Overview is boring on purpose: contracts at every boundary, an owner per component, and evidence captured where the work happens. Boring architecture is what survives contact with an audit."
-  },
-  {
-   "t": "h2",
-   "x": "How it operates"
-  },
-  {
-   "t": "p",
-   "x": "Sentinel is engineered for the evidence economy: controls mapped across SOC 2, ISO 27001, NIST 800-207, DORA and AI regimes, tested continuously, exported to auditors. Boards get measured trust reduction, not adjectives."
-  },
-  {
-   "t": "h2",
-   "x": "Modules"
+   "x": "Dataq Sentinel: the build decomposes into named pieces, each with an owner and a gate,"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Zero-trust enforcement",
-     "Identity, posture, segmentation, workload identity"
+     "identity, posture, segmentation, workload identity"
     ],
     [
      "Detection-as-code",
-     "Versioned rules with CI testing"
+     "versioned rules with CI testing"
     ],
     [
      "Posture guardrails",
-     "Policy-as-code with fix-the-pipeline flows"
+     "policy-as-code with fix-the-pipeline flows"
     ],
     [
      "AI defense layer",
-     "Injection filtering, containment, red-teaming"
+     "injection filtering, containment, red-teaming"
     ],
     [
      "Identity plane",
-     "Workforce/CIAM/machine lifecycle"
+     "workforce/CIAM/machine lifecycle"
     ],
     [
      "Evidence exports",
-     "Multi-framework control mapping"
+     "multi-framework control mapping"
     ]
    ]
   },
   {
-   "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ],
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ],
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ]
-   ]
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "The flow your team would run — Dataq Sentinel",
+   "labels": [
+    "Zero-trust enforcement",
+    "Detection-as-code",
+    "Posture guardrails",
+    "AI defense layer"
+   ],
+   "note": "The path your operators would actually recognize."
   },
   {
    "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "warehouse spend per query",
-     "Spend per query attributed to the team that wrote it — the meter everyone can see."
-    ],
-    [
-     "freshness SLO attainment",
-     "Up 97–99.3% of tables inside their declared window per workflow, reported weekly against the signed baseline"
-    ],
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What changes for the business"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Evidence by default",
-     "Evidence generated as a by-product of doing the work — audit readiness stops being a season."
-    ],
-    [
-     "Pattern use",
-     "The pattern is used where it fits; where your estate differs, the difference is written down and owned."
-    ],
-    [
-     "Accountability",
-     "Decision ownership named per metric — the org chart and the system agree on who answers."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integrations"
+   "x": "The security posture"
   },
   {
    "t": "p",
-   "x": "Certified integration surface: SIEM/XDR, SPIFFE/SPIRE, OPA, IdPs/IGA, CNAPP tooling."
+   "x": "Sentinel assumes breach and designs for audit: purple-team validation of segmentation, restore-tested backups, AI red-team suites with findings-to-fix tracking. The platform's own controls are SOC 2 Type II audited and ISO 27001 certified."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
+     "Purple-team validated",
+     "segmentation proven in exercises"
     ],
     [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
+     "AI red-teaming",
+     "OWASP LLM Top 10 mapped suites"
     ],
     [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
+     "Continuous evidence",
+     "auditor-ready on demand"
     ],
     [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
+     "AI asset registry",
+     "shadow-AI discovery included"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "How programs use it"
+   "x": "In delivery, sector by sector"
   },
   {
    "t": "p",
-   "x": "Teams adopt Dataq Sentinel — Overview one decision at a time — first the one with budget attached, then the neighbors that share its data. The pattern spreads on measured deltas."
+   "x": "Dataq Sentinel runs under NDA in Banking & Financial Services, Healthcare & Life Sciences, Energy & Utilities, Public Sector & Government, Technology & SaaS. Deployments stay private; the architecture and control packs are the part we can show."
+  },
+  {
+   "t": "h2",
+   "x": "The technology choices, justified"
+  },
+  {
+   "t": "p",
+   "x": "Connects to: SIEM/XDR, SPIFFE/SPIRE, OPA, IdPs/IGA, CNAPP tooling. Adapters are versioned and contract-tested, so upgrades stop being incidents."
   },
   {
    "t": "cta",
-   "x": "The next step is a working session on your use case — the platform's evidence trail included."
+   "x": "The next step is small and real: one working session on Dataq Sentinel, your data, and a written feasibility read you can circulate."
   }
  ],
- "words": 553,
+ "words": 313,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Sentinel",

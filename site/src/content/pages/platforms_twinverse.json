@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Dataq Twinverse — Overview delivered as an operating capability for the enterprise, not a slide deck — durable runtime, policy-checked actions, and telemetry your auditors can read without translation."
+   "x": "Sense, simulate, act — the operations stack for physical assets. Dataq Twinverse is the platform layer behind it — deployed under NDA, documented for the audit."
   },
   {
    "t": "h2",
@@ -17,52 +17,26 @@
   },
   {
    "t": "p",
-   "x": "Dataq Twinverse bridges sensor network to decisions: governed telemetry (OPC UA/Sparkplug) from retrofit-friendly devices, physics+data digital twins with validated models, edge inference fleets with OTA, predictive maintenance wired into CMMS work orders, and the scenario engines planners actually use."
+   "x": "Dataq Twinverse bridges sensor fabric to decisions: governed telemetry (OPC UA/Sparkplug) from retrofit-friendly devices, physics+data digital twins with validated models, edge inference fleets with OTA, predictive maintenance wired into CMMS work orders, and the scenario engines planners actually use. Twinverse is built for brownfield reality: non-invasive mounting, protocol translation from fieldbuses, offline-first edge patterns, and calibration discipline. Twins ship with the decisions they must improve and the baseline they must beat — a decision instrument, not a 3D screenshot."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "decision-fabric",
-   "title": "Dataq Twinverse — control and evidence planes",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Signals, context and policy converge at the decision layer; every scored decision is logged with its inputs so it can be replayed at audit."
+   "x": "What goes live, and in what order"
   },
   {
    "t": "p",
-   "x": "The reference pattern behind Dataq Twinverse — Overview is boring on purpose: contracts at every boundary, an owner per component, and evidence captured where the work happens. Boring architecture is what survives contact with an audit."
-  },
-  {
-   "t": "h2",
-   "x": "How it operates"
-  },
-  {
-   "t": "p",
-   "x": "Twinverse is built for brownfield reality: non-invasive mounting, protocol translation from fieldbuses, offline-first edge patterns, and calibration discipline. Twins ship with the decisions they must improve and the baseline they must beat — a decision instrument, not a 3D screenshot."
-  },
-  {
-   "t": "h2",
-   "x": "Modules"
+   "x": "In Dataq Twinverse, named modules with a gate at each boundary:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Sensor fabric",
-     "Retrofit telemetry with data contracts"
+     "retrofit telemetry with data contracts"
     ],
     [
      "Twin core",
-     "Physics+data models with validation regime"
+     "physics+data models with validation regime"
     ],
     [
      "Edge fleet",
@@ -74,145 +48,77 @@
     ],
     [
      "Scenario engine",
-     "What-if and capacity simulation"
+     "what-if and capacity simulation"
     ],
     [
      "Vision integration",
-     "Inspection and safety analytics"
+     "inspection and safety analytics"
     ]
    ]
   },
   {
-   "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ],
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ]
-   ]
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "The governed path, end to end — Dataq Twinverse",
+   "labels": [
+    "Sensor fabric",
+    "Twin core",
+    "Edge fleet",
+    "Maintenance loop"
+   ],
+   "note": "The stages are the workflow names above; nothing on this diagram is decorative."
   },
   {
    "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ],
-    [
-     "warehouse spend per query",
-     "Spend per query attributed to the team that wrote it — the meter everyone can see."
-    ],
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What changes for the business"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Evidence by default",
-     "Evidence generated as a by-product of doing the work — audit readiness stops being a season."
-    ],
-    [
-     "Pattern draw on",
-     "The program draws on the pattern library where it fits and departs from it where your estate says otherwise."
-    ],
-    [
-     "Accountability",
-     "Decision ownership named per metric — the org chart and the system agree on who answers."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integrations"
+   "x": "Built for the auditors too"
   },
   {
    "t": "p",
-   "x": "Certified integration surface: OPC UA, MQTT Sparkplug B, LoRaWAN/NB-IoT, KubeEdge/K3s, CMMS/MES adapters."
+   "x": "Twinverse runs IEC 62443-aligned segmentation for industrial estates, hardware roots of trust and signed boot on edge fleets, and privacy governance (face blurring, retention) for camera systems. Telemetry carries contracts — units, timestamps and lineage are trustworthy by construction."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
+     "IEC 62443 alignment",
+     "zones-and-conduits for OT estates"
     ],
     [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
+     "Signed edge fleet",
+     "measured boot, OTA rollback"
     ],
     [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
+     "Telemetry contracts",
+     "units, timestamps, lineage enforced"
     ],
     [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
+     "Privacy pack",
+     "camera governance with works-council alignment"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "How programs use it"
+   "x": "In delivery, sector by sector"
   },
   {
    "t": "p",
-   "x": "Programs use Dataq Twinverse — Overview where a decision needs to be current and defensible at once — scored in-flight, logged end to end, and reviewed at the same gates as every other program."
+   "x": "Dataq Twinverse runs under NDA in Manufacturing & Industrial, Energy & Utilities, Logistics & Supply Chain, Retail & Consumer Goods, Agriculture & Food Systems. Deployments stay private; the architecture and control packs are the part we can show."
+  },
+  {
+   "t": "h2",
+   "x": "The technology choices, justified"
+  },
+  {
+   "t": "p",
+   "x": "Connects to: OPC UA, MQTT Sparkplug B, LoRaWAN/NB-IoT, KubeEdge/K3s, CMMS/MES adapters. Adapters are versioned and contract-tested, so upgrades stop being incidents."
   },
   {
    "t": "cta",
-   "x": "Book a platform session: we bring the architecture, you bring the use case, and the evaluation criteria are yours."
+   "x": "The next step is small and real: one working session on Dataq Twinverse, your data, and a written feasibility read you can circulate."
   }
  ],
- "words": 573,
+ "words": 336,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Twinverse",

@@ -9,193 +9,101 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "A working definition of Data & Lakehouse for Pharmaceuticals & Biotech for Healthcare & Life Sciences: engineered controls, named owners, weekly evidence, and a signed baseline so every claim of improvement can be replayed line by line."
-  },
-  {
-   "t": "h2",
-   "x": "Overview"
+   "x": "Data & Lakehouse against trial recruitment manual in Pharmaceuticals & Biotech: the same tension every team carries — speed demanded, scrutiny rising. We break the trade-off: the work is pipeline and lakehouse engineering — modeled once, certified once, reused everywhere the decision appears. That is the engineering behind Pharmaceuticals & Biotech."
   },
   {
    "t": "p",
-   "x": "The short version of Data & Lakehouse for Pharmaceuticals & Biotech: named metrics, named owners, evidence that travels. The sections below walk through the pattern, the components and the commitments."
-  },
-  {
-   "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Data & Lakehouse for Pharmaceuticals & Biotech",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "The pipeline is measured end to end; each stage reports its own freshness and cost, which is what makes the unit economics arguable."
+   "x": "The Data & Lakehouse ground truth in Pharmaceuticals & Biotech: Pharma's frontier is acceleration under validation: discovery simulation, trial design, recruitment and pharmacovigilance all carry GxP duty. Companies that industrialize evidence pipelines compress the costly middle of the pipeline without compromising the audit."
   },
   {
    "t": "p",
-   "x": "The architecture for Data & Lakehouse for Pharmaceuticals & Biotech is deliberately auditable: every stage exposes its inputs, its owner and its failure policy, and the decision path shares a timeline with the audit path. Nothing important happens off the record."
+   "x": "Underneath trial recruitment manual sits the same story every time: decisions assembled by hand at a scale that stopped making sense. The first artifact of any engagement here is the measurement that proves it."
+  },
+  {
+   "t": "h2",
+   "x": "The pressure points, named"
   },
   {
    "t": "p",
-   "x": "The architecture for Data & Lakehouse for Pharmaceuticals & Biotech is deliberately auditable: every stage exposes its inputs, its owner and its failure policy, and the decision path shares a timeline with the audit path. Nothing important happens off the record."
-  },
-  {
-   "t": "h2",
-   "x": "Why this matters in Healthcare & Life Sciences"
-  },
-  {
-   "t": "p",
-   "x": "What changes in Healthcare & Life Sciences is the cost of being wrong: Data & Lakehouse for Pharmaceuticals & Biotech is designed around the controls and auditability that keep that cost bounded."
-  },
-  {
-   "t": "h2",
-   "x": "Pressure points we attack"
-  },
-  {
-   "t": "h2",
-   "x": "How we deliver it here"
-  },
-  {
-   "t": "p",
-   "x": "The build sequence is deliberate: contracts and identity first, the working decision slice second, the verification harness third — because a Data & Lakehouse for Pharmaceuticals & Biotech capability without its eval gate is just another unattended automation."
-  },
-  {
-   "t": "h2",
-   "x": "Services behind the pattern"
+   "x": "the queues and waits that come up first, Pharmaceuticals & Biotech edition:"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Master Data, Governance & Cataloging",
-     "The Dataq Software build of Master Data, Governance & Cataloging: concrete interfaces at core systems, measured movement on duplicate record rates."
+     "Trial recruitment manual",
+     "Eligibility matching against EHR remains chart review; trials miss enrollment windows."
     ],
     [
-     "Advanced Risk & Predictive Analytics",
-     "How Advanced Risk & Predictive Analytics runs when it is engineered for the enterprise: bounded scope per gate, platform evidence generated."
+     "RWE assembly slow",
+     "Real-world evidence pipelines rebuilt per study; regulatory-grade provenance thin."
     ],
     [
-     "Data Monetization & Analytics Products",
-     "The Dataq Software build of Data Monetization & Analytics Products: concrete interfaces at core systems, measured movement on new revenue line, and a."
+     "Discovery simulation costs",
+     "Target and molecule screening compute-bound; HPC and emerging compute underused."
+    ],
+    [
+     "PV intake volume",
+     "Adverse-event intake spans channels and languages; case assembly is manual and backlogs breach reporting clocks."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "pharmacovigilance intake",
-     "Adverse events structured at intake, with case timelines the regulator can replay."
-    ],
-    [
-     "LIMS & trial systems",
-     "Lab and trial data governed from instrument to submission — sample lineage intact."
-    ],
-    [
-     "supply & pharmacy chains",
-     "Drug supply integrity monitored end to end — shortages predicted, not suffered."
-    ],
-    [
-     "EHR integration",
-     "Clinical context fetched under consent, in FHIR terms — decision support inside the clinician's flow."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
+   "x": "The system, piece by piece"
   },
   {
    "t": "p",
-   "x": "The measures that decide gate outcomes, generated in-flight:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ],
-    [
-     "warehouse spend per query",
-     "Spend per query attributed to the team that wrote it — the meter everyone can see."
-    ],
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "p",
-   "x": "What usually goes wrong, and the specific guard in this build:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ],
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Compliance frame"
+   "x": "In Pharmaceuticals & Biotech, the pattern is eligibility engine — protocol criteria translated to EHR queries with evidence. Matching at 10x manual rate sits on top as the measured result, tracked from the signed baseline onward. Around it, the work is pipeline and lakehouse engineering — modeled once, certified once, reused everywhere the decision appears. That is the engineering behind Pharmaceuticals & Biotech."
   },
   {
    "t": "table",
-   "caption": "Regimes shaping this capability",
+   "caption": "What changes in the pharmaceuticals & biotech workflow",
+   "headers": [
+    "Workflow",
+    "Before",
+    "After this capability lands"
+   ],
+   "rows": [
+    [
+     "Discovery screening",
+     "manual checks, batch updates, unverifiable timing",
+     "instrumented path with gates and evidence"
+    ],
+    [
+     "Protocol eligibility matching",
+     "queue-driven, exceptions found late",
+     "decision-ready, exceptions surfaced in-flight"
+    ],
+    [
+     "Pharmacovigilance intake",
+     "reconciled by hand",
+     "certified once, reused everywhere"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How the work actually runs"
+  },
+  {
+   "t": "p",
+   "x": "Nothing scales before the baseline is signed. trial recruitment manual is measured with your finance and risk leads in the room, then one working path — Eligibility engine — goes live inside the quarter. Nothing scales on a demo. The gate criteria are written with your team, and the pilot runs on your data before any rollout plan exists. For Pharmaceuticals & Biotech, that discipline is not optional — it is the engagement model."
+  },
+  {
+   "t": "h2",
+   "x": "Controls the auditor will ask about"
+  },
+  {
+   "t": "p",
+   "x": "Two regimes anchor the Data & Lakehouse frame in Pharmaceuticals & Biotech: GxP/GCP validation — system validation duties; FDA/EMA pharmacovigilance — AE reporting clocks and quality. Controls are designed in from the first sprint — not bolted on when the audit letter arrives."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes in scope for Pharmaceuticals & Biotech",
    "headers": [
     "Regime",
-    "Implication"
+    "What it expects"
    ],
    "rows": [
     [
@@ -207,96 +115,29 @@
      "AE reporting clocks and quality"
     ],
     [
-     "HIPAA / HITECH",
-     "PHI safeguards, BAAs, breach notification and audit trails"
+     "EU AI Act (medical AI)",
+     "high-risk duties where applicable"
+    ],
+    [
+     "Clinical-data privacy",
+     "participant data duties"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "How a delivery runs"
+   "x": "What happens before anything scales"
   },
   {
    "t": "p",
-   "x": "Data & Lakehouse for Pharmaceuticals & Biotech follows the same delivery pattern as every Dataq program — baseline, bounded pilot, gate review, then scale. The difference from a traditional program is that each step produces evidence your auditors can walk."
-  },
-  {
-   "t": "h2",
-   "x": "Where this fits in the portfolio"
-  },
-  {
-   "t": "p",
-   "x": "Inside the portfolio, Data & Lakehouse for Pharmaceuticals & Biotech draws on the shared platforms — the same governance, the same evidence trail, the same unit-cost discipline. No bespoke stack per program, no orphaned governance."
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Applied AI & GenAI for Pharmaceuticals & Biotech",
-     "The portfolio link to Applied AI & GenAI for Pharmaceuticals & Biotech is deliberate: shared platforms, one delivery standard, no bespoke governance per program."
-    ],
-    [
-     "Quantum & Advanced Compute for Pharmaceuticals & Biotech",
-     "Where Quantum & Advanced Compute for Pharmaceuticals & Biotech fits: the same baseline-and-gate discipline applies, with the surfaces adapted to what that part of the portfolio actually runs."
-    ],
-    [
-     "Healthcare & Life Sciences",
-     "How Healthcare & Life Sciences runs when it is engineered for Healthcare & Life Sciences: bounded scope per gate, platform evidence generated."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you receive"
-  },
-  {
-   "t": "p",
-   "x": "Artifacts, not anecdotes — at the first-quarter close your team holds:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Baseline diagnostic",
-     "The starting position for every metric in scope, measured with your team and signed before build work begins."
-    ],
-    [
-     "Decision and control map",
-     "Every decision the system makes, who owns it, and where the human checkpoint sits."
-    ],
-    [
-     "Evidence pack",
-     "The artifacts your auditors ask for — control tests, decision trails and gate reviews in one place."
-    ],
-    [
-     "Value ledger",
-     "The running record of measured deltas against the signed baseline, reconciled with your finance team."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Screening throughput",
-     "Up 2-5x"
-    ],
-    [
-     "Eligibility matching",
-     "10x chart-review equivalent"
-    ]
-   ]
+   "x": "For Data & Lakehouse work in Pharmaceuticals & Biotech, the first move costs little: a two-week diagnostic on trial recruitment manual, your data, one honest baseline. The scoped proposal only follows if the measured delta justifies it."
   },
   {
    "t": "cta",
-   "x": "Book a briefing with the practice lead — 45 minutes on your metric, our method and an honest read on feasibility."
+   "x": "Talk to the team that runs Data & Lakehouse for Pharmaceuticals & Biotech in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 887,
+ "words": 545,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Healthcare & Life Sciences",

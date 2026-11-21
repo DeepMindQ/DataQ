@@ -9,81 +9,100 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The contract behind Agri-Food Processing: signed baseline in week two, working slice by week eight, industrialized controls by week twelve, and evidence flowing to your control owner throughout."
+   "x": "Food processors live on quality, yield and traceability: intake grading, process yield, food-safety evidence and provenance claims. Vision grading, yield analytics and chain-of-custody convert commodity margin into brand margin. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
   },
   {
    "t": "h2",
-   "x": "Operating context"
+   "x": "The operating context"
   },
   {
    "t": "p",
-   "x": "The operating surface here spans Intake grading, Process yield analytics, Lot traceability, Cold-chain monitoring, Provenance claims. Each one is instrumented before anything changes: baseline numbers first, then the working slice, then the measured delta at the gate."
+   "x": "The work concentrates in intake grading, process yield analytics, lot traceability, with cold-chain monitoring close behind. Volume grows on every path; the decision layer has not kept up. That gap is measurable, and it is the work."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Agri-Food Processing",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Contracts between stages are enforced at the boundary, so schema drift fails loudly in minutes instead of quietly in a quarter."
+   "x": "What slows the operation down"
   },
   {
    "t": "p",
-   "x": "Every component in Agri-Food Processing has a contract, a version and a named owner. When something drifts, the ticket goes to a person, not to a committee — that is what the reference architecture is for."
-  },
-  {
-   "t": "h2",
-   "x": "Pressure points"
+   "x": "For Agri-Food Processing, as operators describe it:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Intake grading manual",
-     "We treat Intake grading manual as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Quality grading by inspectors; variance and throughput loss."
     ],
     [
      "Yield opaque",
-     "We treat Yield opaque as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Process yield by line/lot unknown; losses accepted."
     ],
     [
      "Provenance claims unverifiable",
-     "Provenance claims unverifiable is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+     "Origin/organic claims manual; EUDR pressure."
     ],
     [
      "Traceability slow",
-     "Traceability slow shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
+     "Lot traceability document-based; recalls days."
     ],
     [
      "Cold chain unverified",
-     "When Cold chain unverified is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+     "Storage/transport telemetry missing; spoilage."
     ],
     [
      "OT estates exposed",
-     "We treat OT estates exposed as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Plant networks flat; food-safety systems targeted."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Compliance frame"
+   "x": "Inside the engagement"
+  },
+  {
+   "t": "p",
+   "x": "The proof in Agri-Food Processing is a working system on a real workflow. These are the builds that go live:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Vision grading",
+     "defect/quality grading at line speed"
+    ],
+    [
+     "Yield analytics",
+     "line/lot yield with loss decomposition"
+    ],
+    [
+     "Provenance network",
+     "EUDR-grade custody with regulator interface"
+    ],
+    [
+     "Cold-chain telemetry",
+     "storage/transport monitoring"
+    ],
+    [
+     "Plant OT security",
+     "segmentation around safety/quality systems"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The control posture"
+  },
+  {
+   "t": "p",
+   "x": "The binding regimes in Agri-Food Processing: Food safety (HACCP/EU 178/FSMA), EUDR. Designing against them early is what keeps later audits short."
   },
   {
    "t": "table",
-   "caption": "Regimes in scope",
+   "caption": "Regimes in scope for Agri-Food Processing",
    "headers": [
     "Regime",
-    "Implication"
+    "What it expects"
    ],
    "rows": [
     [
@@ -106,189 +125,18 @@
   },
   {
    "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ],
-    [
-     " freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "processing line historians",
-     "Line data streamed with the tags that matter, ready for the twin and the OEE math."
-    ],
-    [
-     "food-safety labs",
-     "Safety results joined to lots and suppliers — traceability that works the day you need it."
-    ],
-    [
-     "cold-chain telemetry",
-     "Temperature integrity tracked from dock to shelf, with excursions raised as events, not discovered as losses."
-    ],
-    [
-     "farm management systems",
-     "Field operations data joined to yield and weather — agronomy argued with numbers."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "warehouse spend per query",
-     "Spend per query attributed to the team that wrote it — the meter everyone can see."
-    ],
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ],
-    [
-     "freshness SLO attainment",
-     "Up 97–98.9% of tables inside their declared window — the gate compares the live value to baseline every quarter"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Metric anarchy",
-     "Metric anarchy — guarded because one certified semantic layer owns definitions — dashboards that shadow it lose endorsement and budget"
-    ],
-    [
-     "Cost creep",
-     "Cost creep — per-team chargeback with query tags; untagged compute is quarantined at the queue level"
-    ],
-    [
-     "Silent schema drift",
-     "Silent schema drift: producer contracts fail loudly at ingest; downstream models refuse to build on drifted sources; the guard is part of the first slice, not a hardening phase"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How we help — five priority capabilities"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Applied AI & GenAI",
-     "Strategy through production operations — models evaluated, retrieval grounded, cost per answer owned."
-    ],
-    [
-     "Data & Lakehouse",
-     "Pipelines, governance and products on a lakehouse contract — reports that reconcile, lineage you can trace."
-    ],
-    [
-     "Blockchain & Digital Trust",
-     "Permissioned networks, credentials and provenance — digital trust regulators can inspect."
-    ],
-    [
-     "IoT, Twin & Robotics",
-     "From sensor data to actuation — industrial IoT fabrics, twins and vision that close the loop."
-    ],
-    [
-     "Cyber & Zero-Trust",
-     "Identity-first security for people, machines and models — detection, response and audit in one program."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
+   "x": "The first two weeks"
   },
   {
    "t": "p",
-   "x": "The engagement pattern for Agri-Food Processing: diagnose, prove, industrialize, compound. Each gate reviews evidence with your named owners, and each gate can stop the program."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Grading throughput",
-     "Up 2-3x"
-    ],
-    [
-     "Yield",
-     "+2-4 points"
-    ],
-    [
-     "Recall scoping",
-     "Recall scoping carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
-    ],
-    [
-     "Cold-chain excursions",
-     "Cold-chain excursions carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A European agri-cooperative (4,200 farms)",
-     "Target range down 14 on the first working slice, with the method note attached"
-    ],
-    [
-     "A global coffee trader",
-     "Written up as a case study: the baseline, the measured outcome and the method, with client identity withheld by agreement."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Adjacent units"
-  },
-  {
-   "t": "p",
-   "x": "The neighbouring operating units are Precision Agriculture & Agronomy, Food Safety & Food Retail, AgriFinance & Commodity Markets — each with its own capability alignments under /industries/agriculture-food/. Where two lanes share a metric, one program can carry both. Where two lanes share a metric, one program can carry both; programs that span two of them usually share one baseline."
+   "x": "Start with the diagnostic, not the contract: intake grading manual gets baselined in two weeks; if the delta is real, the build gets scoped; if it is not, you keep the measurement design either way."
   },
   {
    "t": "cta",
-   "x": "The measurement comes first: two weeks to a signed baseline under the rules your sub-sector is actually held to."
+   "x": "The next step is small and real: one working session on operations in Agri-Food Processing, your data, and a written feasibility read you can circulate."
   }
  ],
- "words": 870,
+ "words": 317,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Agriculture & Food Systems",

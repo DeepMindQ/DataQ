@@ -1,0 +1,380 @@
+{
+ "id": "SUB-fashion-luxury",
+ "title": "Fashion & Luxury",
+ "url": "/industries/retail-consumer-goods/fashion-luxury/",
+ "template": "subindustry_page",
+ "breadcrumb": "Industries > Retail & Consumer Goods > Fashion & Luxury",
+ "seo_title": "Fashion & Luxury | Dataq Software",
+ "meta_description": "Fashion and luxury sell scarcity, story and service: assortment risk (the size-curve problem), authenticity, clienteling quality and channel consistency.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "A no-theater description of Fashion & Luxury: what ships first, what it touches at inventory & order brokers, how it is verified, and the per SKU-store metric we commit to moving against baseline."
+  },
+  {
+   "t": "h2",
+   "x": "Operating context"
+  },
+  {
+   "t": "p",
+   "x": "Before proposing anything, we map the context Fashion & Luxury will run in — regulators, decision cadence, existing contracts — because the design that ignores context fails at the gate."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Governed lakehouse pipeline — Fashion & Luxury",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "What the diagram shows: ingestion, transformation and serving as separate responsibilities with named owners — no stage silently trusts the one before it."
+  },
+  {
+   "t": "p",
+   "x": "The architecture for Fashion & Luxury is deliberately auditable: every stage exposes its inputs, its owner and its failure policy, and the decision path shares a timeline with the audit path. Nothing important happens off the record."
+  },
+  {
+   "t": "h2",
+   "x": "Pressure points"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Size-curve risk unmanaged",
+     "Size-curve risk unmanaged is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+    ],
+    [
+     "Authenticity contested",
+     "Authenticity contested is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+    ],
+    [
+     "Clienteling inconsistent",
+     "We treat Clienteling inconsistent as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+    ],
+    [
+     "Allocation across boutiques",
+     "Allocation across boutiques is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+    ],
+    [
+     "Brand abuse digital",
+     "When Brand abuse digital is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+    ],
+    [
+     "Showroom experience static",
+     "Stores lack traffic/trial telemetry; experience investment unmeasured."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Compliance frame"
+  },
+  {
+   "t": "table",
+   "caption": "Regimes in scope",
+   "headers": [
+    "Regime",
+    "Implication"
+   ],
+   "rows": [
+    [
+     "GDPR",
+     "client profiling duties"
+    ],
+    [
+     "Product-regulation (materials)",
+     "claims duties"
+    ],
+    [
+     "Import/customs rules",
+     "authenticity documentation"
+    ],
+    [
+     "Consumer law",
+     "return/warranty duties"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Delta / Iceberg tables",
+     "Open table formats underneath everything we build, so your data never belongs to a vendor."
+    ],
+    [
+     "data contracts",
+     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
+    ],
+    [
+     "freshness SLOs",
+     "Data age treated like uptime — a budget, an owner and an alert when it slips."
+    ],
+    [
+     "dbt transformation graph",
+     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "commerce & POS estates",
+     "Store and online demand joined hourly — the promotion argued with baskets, not sentiment."
+    ],
+    [
+     "supply chain control towers",
+     "One shared picture of orders, stock and movement — decisions made where the exceptions are."
+    ],
+    [
+     "trade promotion systems",
+     "Promotion spend planned against measured lift, with post-mortems the trade team actually reads."
+    ],
+    [
+     "demand planning suites",
+     "Forecast accuracy measured SKU by SKU, with overrides tracked to the people who made them."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "batch window",
+     "Batch windows measured against the plan every run — the number reported is the observed one."
+    ],
+    [
+     "freshness SLO attainment",
+     "Up 97–99.3% of tables inside their declared window — the gate compares the live value to baseline every quarter"
+    ],
+    [
+     "warehouse spend per query",
+     "Spend per query attributed to the team that wrote it — the meter everyone can see."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Cost creep",
+     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
+    ],
+    [
+     "Silent schema drift",
+     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
+    ],
+    [
+     "Metric anarchy",
+     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How we help — five priority capabilities"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Data & Lakehouse",
+     "Curve modeling by door with demand transfer logic — sell-through up"
+    ],
+    [
+     "Applied AI & GenAI",
+     "Strategy through production operations — models evaluated, retrieval grounded, cost per answer owned."
+    ],
+    [
+     "Blockchain & Digital Trust",
+     "Permissioned networks, credentials and provenance — digital trust regulators can inspect."
+    ],
+    [
+     "Agentic AI & Hyperautomation",
+     "Digital workers with roles, budgets and human checkpoints — every action logged and reversible."
+    ],
+    [
+     "Cyber & Zero-Trust",
+     "Identity-first security for people, machines and models — detection, response and audit in one program."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How the engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "We run Fashion & Luxury the way we run every program: the metric is signed before delivery, the pilot is bounded, and the scale decision follows the measured delta, not the momentum."
+  },
+  {
+   "t": "h2",
+   "x": "Outcomes we commit to"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Sell-through",
+     "Up 5-10 points"
+    ],
+    [
+     "Hero-SKU availability",
+     "Hero-SKU availability is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
+    ],
+    [
+     "Client repeat spend",
+     "Client repeat spend is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
+    ],
+    [
+     "Counterfeit takedowns",
+     "Counterfeit takedowns carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Proof from this industry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "A top-3 grocery retailer (800+ stores)",
+     "Written up as a case study: the baseline, the measured outcome and the method, with client identity withheld by agreement."
+    ],
+    [
+     "A global fashion group",
+     "Written up as a case study: the baseline, the measured outcome and the method, with client identity withheld by agreement."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Adjacent units"
+  },
+  {
+   "t": "p",
+   "x": "Adjacent delivery lanes: Omnichannel Retail, CPG & Brands, Grocery & Convenience — each with its own capability alignments under /industries/retail-consumer-goods/. Where two lanes share a metric, one program can carry both. Where two lanes share a metric, one program can carry both. Where two lanes share a metric, one program can carry both."
+  },
+  {
+   "t": "cta",
+   "x": "Put your Sell-through in front of the practice lead — bring the baseline, leave with a scoped plan."
+  }
+ ],
+ "words": 829,
+ "section": "Industries",
+ "l1": "Industries",
+ "l2": "Retail & Consumer Goods",
+ "l3": "Fashion & Luxury",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Industries",
+   "url": "/industries/"
+  },
+  {
+   "name": "Retail & Consumer Goods",
+   "url": "/industries/retail-consumer-goods/"
+  },
+  {
+   "name": "Fashion & Luxury",
+   "url": "/industries/retail-consumer-goods/fashion-luxury/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Retail & Consumer Goods — industry hub",
+   "url": "/industries/retail-consumer-goods/",
+   "desc": "Pricing and availability decisions made in milliseconds — pricing, availability, personalization and accurate shelf data."
+  },
+  {
+   "title": "Omnichannel Retail",
+   "url": "/industries/retail-consumer-goods/omnichannel-retail/",
+   "desc": "Omnichannel retail wins on promise-keeping: availability, delivery promise, price consistency and service reso…"
+  },
+  {
+   "title": "CPG & Brands",
+   "url": "/industries/retail-consumer-goods/cpg-brands/",
+   "desc": "CPG brands compete on shelf, on shelf-image and on data: trade spend efficiency, retail execution truth, deman…"
+  },
+  {
+   "title": "Grocery & Convenience",
+   "url": "/industries/retail-consumer-goods/grocery-convenience/",
+   "desc": "Grocery runs on the thinnest margins and the shortest freshness clocks: ordering precision, waste reduction an…"
+  },
+  {
+   "title": "A top-3 grocery retailer (800+ stores)",
+   "url": "/case-studies/ret-01/",
+   "desc": "Fresh waste down 28%, OOS down 31% — day-part demand and ordering agents"
+  },
+  {
+   "title": "A global fashion group",
+   "url": "/case-studies/ret-02/",
+   "desc": "Sell-through +8 points and hero-SKU availability +24% — assortment intelligence"
+  },
+  {
+   "title": "A national consumer-electronics chain",
+   "url": "/case-studies/ret-03/",
+   "desc": "Retail media incrementality proven — clean-room measurement adopted by every major brand"
+  }
+ ],
+ "cards": [
+  {
+   "title": "Applied AI & GenAI for Fashion & Luxury",
+   "url": "/industries/retail-consumer-goods/fashion-luxury/capabilities/applied-ai-generative-ai/",
+   "tag": "Capability",
+   "desc": "From enterprise strategy to production models — AI measured on the P&L."
+  },
+  {
+   "title": "Agentic AI & Hyperautomation for Fashion & Luxury",
+   "url": "/industries/retail-consumer-goods/fashion-luxury/capabilities/agentic-ai-hyperautomation/",
+   "tag": "Capability",
+   "desc": "Digital workers, decision hubs and workflows that recover from failure on their own — automation with human checkpoints, budgets and audit."
+  },
+  {
+   "title": "Data & Lakehouse for Fashion & Luxury",
+   "url": "/industries/retail-consumer-goods/fashion-luxury/capabilities/data-analytics-lakehouse/",
+   "tag": "Capability",
+   "desc": "Trusted data, delivered in near real time — pipelines, lakehouse and governance that holds up under audit."
+  },
+  {
+   "title": "Cyber & Zero-Trust for Fashion & Luxury",
+   "url": "/industries/retail-consumer-goods/fashion-luxury/capabilities/cybersecurity-zero-trust/",
+   "tag": "Capability",
+   "desc": "Identity, detection, resilience and AI security in one program."
+  },
+  {
+   "title": "Blockchain & Digital Trust for Fashion & Luxury",
+   "url": "/industries/retail-consumer-goods/fashion-luxury/capabilities/blockchain-digital-trust/",
+   "tag": "Capability",
+   "desc": "DLT networks, tokenization and verifiable credentials — a shared, verifiable record with controls regulators accept."
+  }
+ ]
+}

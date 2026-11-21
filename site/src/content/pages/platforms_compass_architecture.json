@@ -9,187 +9,100 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The Dataq Software build of Dataq Compass — Architecture & Trust: concrete interfaces at core systems, measured movement on primary metric, and a delivery rhythm your control owners can plan around from week one."
+   "x": "Dataq Compass's architecture: the planes, the controls and the evidence export — documented the way your auditors will read it."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
+   "x": "The working system, described"
   },
   {
    "t": "p",
-   "x": "The platform separates three planes. The data plane carries workload (regime mapping to controls and owners, cards, lineage, versions, documentation, golden datasets, judge panels, red teams); the control plane carries policy and orchestration (PII, injection, topic fences as code, AI-specific playbooks and disclosure flows); the evidence plane carries audit, replay and conformity documentation — the plane most vendors skip and every regulator asks about."
-  },
-  {
-   "t": "diagram",
-   "kind": "layered-stack",
-   "title": "Dataq Compass — plane and service layers",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "What the diagram shows: separation of concerns as an operational choice — replace a layer without renegotiating the whole estate."
-  },
-  {
-   "t": "diagram",
-   "kind": "edge-topology",
-   "title": "Dataq Compass — deployment topology and flow",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "The fleet updates on staged rollouts with health gates — a bad model version cannot take the whole estate down at once."
-  },
-  {
-   "t": "h2",
-   "x": "Security posture"
+   "x": "Structurally Dataq Compass is planes, not layers — workload, decision and evidence run in parallel behind one governed API, and each crossing is logged with policy version and owner."
   },
   {
    "t": "p",
-   "x": "Compass treats governance as system behavior: policies versioned, evaluations gated in CI, incidents tracked to closure with owners. The output is an AI estate your CISO defends to the board and your regulator inspects without expeditions."
+   "x": "For Dataq Compass architecture, the build decomposes into named pieces, each with an owner and a gate:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Policy layer",
+     "regime mapping to controls and owners"
+    ],
+    [
+     "Model registry",
+     "cards, lineage, versions, documentation"
+    ],
+    [
+     "Evaluation suite",
+     "golden datasets, judge panels, red teams"
+    ],
+    [
+     "Guardrail configuration",
+     "PII, injection, topic fences as code"
+    ],
+    [
+     "Incident response",
+     "AI-specific playbooks and disclosure flows"
+    ],
+    [
+     "Evidence pack",
+     "conformity-grade documentation generated"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "Trust controls"
+   "x": "Trust and controls"
+  },
+  {
+   "t": "p",
+   "x": "For Dataq Compass, instrumented from week one, on your channels:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "EU AI Act evidence",
-     "High-risk documentation generated"
+     "high-risk documentation generated"
     ],
     [
      "Continuous evaluation",
-     "Regression gates in CI/CD"
+     "regression gates in CI/CD"
     ],
     [
      "Control ownership",
-     "Named owner per model"
+     "named owner per model"
     ],
     [
      "Shadow-AI discovery",
-     "Unsanctioned use surfaced and routed"
+     "unsanctioned use surfaced and routed"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Compliance mapping"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "SOC 2 Type II / ISO 27001",
-     "The control estate mapped to SOC 2 and ISO 27001 criteria, evidence produced continuously."
-    ],
-    [
-     "Sector regimes",
-     "Sector rules translated into controls per jurisdiction — the mapping is data, reviewed when the regime moves."
-    ],
-    [
-     "AI-specific",
-     "AI-specific obligations mapped to controls — model risk, transparency and human oversight, owned by name."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Performance envelope"
+   "x": "Under the hood"
   },
   {
    "t": "p",
-   "x": "Scaling is horizontal by design — workload planes shard by tenant and region, while the evidence plane compacts to cold storage on schedule, keeping audit queries fast without taxing production throughput."
+   "x": "Runtime dependencies: MLflow, evaluation frameworks, guardrail libraries, GRC integration. Deployment runs inside your security perimeter with customer-managed keys; the evidence export is formatted for the audit formats your team already uses."
   },
   {
    "t": "h2",
-   "x": "Operational telemetry"
+   "x": "What the weeks look like"
   },
   {
    "t": "p",
-   "x": "The program dashboard tracks these by default, wired to your channels:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ],
-    [
-     "freshness SLO attainment",
-     "Up 97–99% of tables inside their declared window per workflow, reported weekly against the signed baseline"
-    ],
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Deployment models"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Customer tenancy",
-     "Deployed inside your tenancy, your keys, your logs — the default for regulated estates."
-    ],
-    [
-     "Dataq managed",
-     "Operated by us under contract — SLOs published, changes gated, your auditors given a walkthrough path."
-    ],
-    [
-     "Hybrid / edge",
-     "Split by design: what must stay local stays local, what benefits from scale scales."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "p",
-   "x": "MLflow, evaluation frameworks, guardrail libraries, GRC integration. Adapters to core systems (CRM, ERP, core banking, EHR, WMS/MES, SCADA) are versioned contracts — one schema change propagates to every consumer."
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ],
-    [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ],
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ]
-   ]
+   "x": "Deployment models for Dataq Compass follow the estate: in-perimeter on customer-managed keys, or in a segregated enclave where the estate cannot host the workload. Either way the control pack, the replay log and the audit export keep the same format, so the second deployment never re-argues the first."
   },
   {
    "t": "cta",
-   "x": "Walk the architecture with the platform team — a working session that includes the evidence trail your auditors would test."
+   "x": "Talk to the team that runs Dataq Compass architecture in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 481,
+ "words": 265,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Compass",

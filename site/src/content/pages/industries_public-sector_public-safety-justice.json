@@ -9,64 +9,46 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "What Public Safety & Justice means at Dataq Software: the scope we sign, the architecture we ship, the evidence generated in-flight, and the per case file outcomes measured against your audited baseline."
+   "x": "Police, fire, EMS and courts coordinate under minutes-matter constraints and the strictest accountability: evidence integrity, proportionality and privacy. Dataq Software engineers the intelligence layer with auditability as a design primitive, not a feature. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
   },
   {
    "t": "h2",
-   "x": "Operating context"
+   "x": "The setting, described honestly"
   },
   {
    "t": "p",
-   "x": "Before proposing anything, we map the context Public Safety & Justice will run in — regulators, decision cadence, existing contracts — because the design that ignores context fails at the gate."
+   "x": "The work concentrates in dispatch and coordination, evidence management, report generation, with court scheduling close behind. Volume grows on every path; the decision layer has not kept up. That gap is measurable, and it is the work."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Public Safety & Justice",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "The pipeline is measured end to end; each stage reports its own freshness and cost, which is what makes the unit economics arguable."
+   "x": "What actually breaks today"
   },
   {
    "t": "p",
-   "x": "Every component in Public Safety & Justice has a contract, a version and a named owner. When something drifts, the ticket goes to a person, not to a committee — that is what the reference architecture is for."
-  },
-  {
-   "t": "h2",
-   "x": "Pressure points"
+   "x": "The recurring pressure points — Public Safety & Justice edition:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Agency data fragmented",
-     "Agency data fragmented is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+     "Dispatch, records and evidence systems siloed; coordination manual."
     ],
     [
      "Video triage overwhelming",
-     "We treat Video triage overwhelming as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Body-cam/CCTV volumes unreviewable; evidence delayed."
     ],
     [
      "Systems targeted",
-     "Systems targeted shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
+     "Ransomware stops dispatch; continuity untested."
     ],
     [
      "Administrative load",
-     "We treat Administrative load as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Reports, discovery and scheduling consume officer/court time."
     ],
     [
      "Evidence chains procedural",
-     "Evidence chains procedural is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+     "Chain-of-custody documentation contested."
     ],
     [
      "Scheduling complexity",
@@ -76,14 +58,51 @@
   },
   {
    "t": "h2",
-   "x": "Compliance frame"
+   "x": "What goes live, and in what order"
+  },
+  {
+   "t": "p",
+   "x": "Capability in Public Safety & Justice is not abstract: each tower lands as a named build on a named workflow. The patterns below are what we deploy there."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Coordination platform",
+     "dispatch/records unified with access tiers"
+    ],
+    [
+     "Video triage",
+     "event detection with human review gates"
+    ],
+    [
+     "Mission continuity",
+     "segmentation + recovery for dispatch systems"
+    ],
+    [
+     "Report assistants",
+     "narrative drafting with officer review"
+    ],
+    [
+     "Evidence anchoring",
+     "custody events anchored with access logs"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Rules we build against"
+  },
+  {
+   "t": "p",
+   "x": "Criminal-procedure rules sets the floor for Public Safety & Justice: evidence and disclosure duties. The build adds the evidence layer so compliance is a query, not a project."
   },
   {
    "t": "table",
-   "caption": "Regimes in scope",
+   "caption": "Regimes in scope for Public Safety & Justice",
    "headers": [
     "Regime",
-    "Implication"
+    "What it expects"
    ],
    "rows": [
     [
@@ -106,189 +125,18 @@
   },
   {
    "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ],
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ],
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "tax & revenue engines",
-     "Assessment logic versioned and explainable — rulings reproducible by a second officer."
-    ],
-    [
-     "case & benefits platforms",
-     "Citizen cases orchestrated with entitlement rules coded — discretion exercised inside policy."
-    ],
-    [
-     "justice & safety systems",
-     "Justice data integrated with strict access lawfulness — every read attributable to a case."
-    ],
-    [
-     "permitting & licensing",
-     "Permit flow digitized with decision rights explicit — applicants see status, officers see evidence."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ],
-    [
-     "freshness SLO attainment",
-     "Up 97–99.1% of tables inside their declared window per case file, reported weekly against the signed baseline"
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How we help — five priority capabilities"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Data & Lakehouse",
-     "Pipelines, governance and products on a lakehouse contract — reports that reconcile, lineage you can trace."
-    ],
-    [
-     "Applied AI & GenAI",
-     "Strategy through production operations — models evaluated, retrieval grounded, cost per answer owned."
-    ],
-    [
-     "Cyber & Zero-Trust",
-     "Identity-first security for people, machines and models — detection, response and audit in one program."
-    ],
-    [
-     "Agentic AI & Hyperautomation",
-     "Digital workers with roles, budgets and human checkpoints — every action logged and reversible."
-    ],
-    [
-     "Blockchain & Digital Trust",
-     "Permissioned networks, credentials and provenance — digital trust regulators can inspect."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
+   "x": "The opening move"
   },
   {
    "t": "p",
-   "x": "We run Public Safety & Justice the way we run every program: the metric is signed before delivery, the pilot is bounded, and the scale decision follows the measured delta, not the momentum."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Report burden",
-     "Report burden is part of the steering pack from week two: current value, signed baseline and the delta since the last gate, on one line."
-    ],
-    [
-     "Evidence retrieval",
-     "Evidence retrieval moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
-    ],
-    [
-     "Coordination latency",
-     "Coordination latency is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
-    ],
-    [
-     "AI use",
-     "AI use is tracked weekly to your control owner; the number at gate three is the number finance sees"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A national digital-government agency",
-     "The engagement is documented on its case page — what was measured, what moved and how the evidence was gathered."
-    ],
-    [
-     "A national tax administration",
-     "The engagement is documented on its case page — what was measured, what moved and how the evidence was gathered."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Adjacent units"
-  },
-  {
-   "t": "p",
-   "x": "The units adjacent to this one share contracts and evidence trails — a change here is visible there, which is exactly why the portfolio composes instead of colliding."
+   "x": "Start with the diagnostic, not the contract: agency data fragmented gets baselined in two weeks; if the delta is real, the build gets scoped; if it is not, you keep the measurement design either way."
   },
   {
    "t": "cta",
-   "x": "Start with a value assessment calibrated to your sub-sector — the regulatory mapping is part of the two weeks."
+   "x": "If operations in Public Safety & Justice is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
   }
  ],
- "words": 815,
+ "words": 354,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Public Sector & Government",

@@ -9,56 +9,38 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "A working definition of Corporate & Investment Banking for Banking & Financial Services: engineered controls, named owners, weekly evidence, and a signed baseline so every claim of improvement can be replayed line by line."
+   "x": "CIB margins compress while deal complexity grows: origination research, credit memos, trade documentation and risk reporting all consume expensive analyst hours that agentic systems can compress — with the control discipline investment banks cannot compromise. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
   },
   {
    "t": "h2",
-   "x": "Operating context"
+   "x": "How the operation actually works"
   },
   {
    "t": "p",
-   "x": "Before proposing anything, we map the context Corporate & Investment Banking will run in — regulators, decision cadence, existing contracts — because the design that ignores context fails at the gate."
+   "x": "The work concentrates in credit memo production, trade document handling, intraday risk aggregation, with client onboarding (institutional) close behind. Each of these paths produces data faster than decisions, and the gap between the two is where cost and risk accumulate."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Corporate & Investment Banking",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "What the diagram shows: ingestion, transformation and serving as separate responsibilities with named owners — no stage silently trusts the one before it."
+   "x": "Where the cost hides"
   },
   {
    "t": "p",
-   "x": "What holds Corporate & Investment Banking together is discipline at the boundaries — typed contracts between stages, versioned releases, and a replay trail for every decision. The diagram above shows how the pieces compose; the gate reviews are what keep them honest."
-  },
-  {
-   "t": "h2",
-   "x": "Pressure points"
+   "x": "the queues and waits that come up first, Corporate & Investment Banking edition:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Analyst hours on document assembly",
-     "Analyst hours on document assembly shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
+     "Pitch books, credit memos and research notes re-type data from terminals and filings; quality varies by analyst stamina."
     ],
     [
      "Trade documentation exceptions",
-     "Trade documentation exceptions costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+     "LCs, trade documents and settlement instructions fail on reference mismatches; exception queues run through time zones."
     ],
     [
      "Risk aggregation lag",
-     "Risk aggregation lag is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+     "Counterparty, market and collateral views assemble overnight; intraday exposures are estimates."
     ],
     [
      "Confidential-estate exposure",
@@ -66,24 +48,61 @@
     ],
     [
      "Risk-grid latency",
-     "Risk-grid latency costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+     "Monte Carlo and VaR grids hit compute ceilings on stress days; desks fly blind exactly when it matters."
     ],
     [
      "Legacy front-office platforms",
-     "Legacy front-office platforms is one of the pressures we hear first in estates like yours — the diagnostic puts a measured number on it before anything is promised."
+     "Booking and risk platforms resist change; product launch becomes a program."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Compliance frame"
+   "x": "What goes live, and in what order"
+  },
+  {
+   "t": "p",
+   "x": "Capability in Corporate & Investment Banking is not abstract: each tower lands as a named build on a named workflow. The patterns below are what we deploy there."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Credit memo copilot",
+     "financials, covenants and policy assembled with citations into draft memos"
+    ],
+    [
+     "Trade-doc exception agent",
+     "reference mismatches detected and remediated with counterparty comms"
+    ],
+    [
+     "Intraday risk spine",
+     "streaming positions and collateral into one governed exposure view"
+    ],
+    [
+     "Risk-grid acceleration",
+     "HPC/quantum-inspired benchmarking on VaR grids"
+    ],
+    [
+     "Front-office platform modernization",
+     "strangler decomposition with parallel-run equivalence"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Staying inside the lines"
+  },
+  {
+   "t": "p",
+   "x": "Basel capital regimes — counterparty credit and market risk model quality. Programs here are designed against these duties from the first sprint; evidence is a by-product of running the system, not an audit-season project."
   },
   {
    "t": "table",
-   "caption": "Regimes in scope",
+   "caption": "Regimes in scope for Corporate & Investment Banking",
    "headers": [
     "Regime",
-    "Implication"
+    "What it expects"
    ],
    "rows": [
     [
@@ -106,189 +125,18 @@
   },
   {
    "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     " freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "trade & treasury systems",
-     "Treasury flows integrated with decisioning — liquidity positions current by the minute."
-    ],
-    [
-     "core banking rails",
-     "Ledger and payment rails integrated read-first — decisions layer on top, never bypass the truth."
-    ],
-    [
-     "CRM & onboarding",
-     "Onboarding steps instrumented end to end — drop-off measured where it happens."
-    ],
-    [
-     "regulatory reporting hub",
-     "One reporting engine, one lineage, many regimes — submissions reconciled before they are filed."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLO attainment",
-     "Up 97–98.8% of tables inside their declared window per 1,000 transactions, reported weekly against the signed baseline"
-    ],
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ],
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How we help — five priority capabilities"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Applied AI & GenAI",
-     "Financials, covenants and policy assembled with citations into draft memos — memo cycle time down 50-60%"
-    ],
-    [
-     "Agentic AI & Hyperautomation",
-     "Digital workers with roles, budgets and human checkpoints — every action logged and reversible."
-    ],
-    [
-     "Data & Lakehouse",
-     "Streaming positions and collateral into one governed exposure view — risk latency to minutes"
-    ],
-    [
-     "Quantum & Advanced Compute",
-     "Optimization and PQC migration — every quantum-inspired run benchmarked against the best classical solver."
-    ],
-    [
-     "Cloud, Edge & Platform",
-     "Reliable estates at lower unit cost — hybrid multicloud, edge fleets and SRE discipline."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
+   "x": "Starting without a leap of faith"
   },
   {
    "t": "p",
-   "x": "The engagement pattern for Corporate & Investment Banking: diagnose, prove, industrialize, compound. Each gate reviews evidence with your named owners, and each gate can stop the program."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Credit memo cycle time",
-     "Credit memo cycle time has a named owner and a fortnightly reading; the gate review compares it to the signed baseline, not to a promise."
-    ],
-    [
-     "Trade-doc STP",
-     "Up 25-40 points"
-    ],
-    [
-     "Intraday risk latency",
-     "Intraday risk latency is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
-    ],
-    [
-     "Onboarding time for institutions",
-     "Onboarding time for institutions carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A top-10 European retail bank",
-     "Current programs land 38% here; the gate reviews the live number, not a projection"
-    ],
-    [
-     "A multinational corporate bank",
-     "The measured delta and the method note are written up on the case page — anonymized by agreement, baseline audited."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Adjacent units"
-  },
-  {
-   "t": "p",
-   "x": "Adjacent delivery lanes: Retail & Consumer Banking, Payments & Cards, Capital Markets & Wealth Management — each with its own capability alignments under /industries/banking-financial-services/ — each one shares the regulatory frame above while carrying its own workflow mix. Where two lanes share a metric, one program can carry both. Where two lanes share a metric, one program can carry both."
+   "x": "For Corporate & Investment Banking, the first move costs little: a two-week diagnostic on analyst hours on document assembly, your data, one honest baseline. The scoped proposal only follows if the measured delta justifies it."
   },
   {
    "t": "cta",
-   "x": "Start with a value assessment calibrated to your sub-sector — the regulatory mapping is part of the two weeks."
+   "x": "Start with the diagnostic, not the contract: operations in Corporate & Investment Banking baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 862,
+ "words": 455,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Banking & Financial Services",

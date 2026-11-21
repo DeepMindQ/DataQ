@@ -9,37 +9,11 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The Dataq Software build of Energy & Utilities: concrete interfaces at SCADA / EMS cores, measured movement on Forecast error (wind/solar/demand), and a delivery rhythm your control owners can plan around from week one."
-  },
-  {
-   "t": "h2",
-   "x": "Where the industry stands"
-  },
-  {
-   "t": "p",
    "x": "The energy transition rewires the operating model: distributed renewables make supply stochastic, demand flexibility becomes an asset class, and the grid's control philosophy shifts from dispatchable certainty to probabilistic orchestration. Every actor in the value chain — generation, TSO/DSO, retail, trading, oil & gas — now competes on how fast it can turn telemetry into decisions and decisions into money."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "decision-fabric",
-   "title": "Decision fabric — how Dataq Software composes Energy & Utilities capability",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "What the diagram shows: decisions as first-class records — the decision, its evidence and its owner bound together from creation."
-  },
-  {
-   "t": "h2",
-   "x": "The pressure is structural"
+   "x": "Where the sector stands"
   },
   {
    "t": "p",
@@ -47,40 +21,44 @@
   },
   {
    "t": "h2",
-   "x": "Pressure points we hear most"
+   "x": "The structural pressures"
+  },
+  {
+   "t": "p",
+   "x": "Energy & Utilities: the places value leaks,"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Forecasting under intermittency",
-     "Forecasting under intermittency costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+     "Renewable supply and flexible demand make legacy forecasting blind; imbalance costs and curtailment climb while forecasts run on yesterday's methods."
     ],
     [
      "OT estate exposed by convergence",
-     "OT estate exposed by convergence is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+     "IT/OT convergence, remote access growth and legacy SCADA estates create attack paths with physical consequences; CIP/NIS2 duties expand faster than programs mature."
     ],
     [
      "Asset fleets uninstrumented",
-     "Asset fleets uninstrumented is one of the pressures we hear first in estates like yours — the diagnostic puts a measured number on it before anything is promised."
+     "Turbines, transformers and pipelines hold decades of life left — and zero telemetry. Condition-based maintenance is impossible without sensing, and failures cost the most when they are unscheduled."
     ],
     [
      "Trading and scheduling decisions at market speed",
-     "Trading and scheduling decisions at market speed shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
+     "Intraday markets reprice in minutes; scheduling, bidding and imbalance decisions run on spreadsheets and experience, not decision hubs."
     ],
     [
      "Customer and market platforms creak",
-     "Customer and market platforms creak costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+     "Retailer platforms bend under market volatility events (price shocks, supplier failures); switching journeys and billing accuracy suffer at the worst moments."
     ],
     [
      "GO/REC certificate integrity",
-     "GO/REC certificate integrity shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
+     "Guarantees-of-origin and renewable certificates reconcile across registries with fraud exposure; buyers demand verifiable provenance."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "How Dataq Software responds"
+   "x": "What we build for this sector"
   },
   {
    "t": "p",
@@ -88,106 +66,39 @@
   },
   {
    "t": "h2",
-   "x": "Engineering standards & stack"
+   "x": "What we would run first"
+  },
+  {
+   "t": "p",
+   "x": "For Energy & Utilities, the order we recommend, priced by expected delta:"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
+     "Instrument the physics, monetize the forecast",
+     "sensor fabric plus forecasting and trading decision hubs that pay for themselves in imbalance and O&M"
     ],
     [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
+     "Segment and rehearse the OT estate",
+     "IEC 62443 zoning, monitoring and restoration drills treating cyber events as operational events"
     ],
     [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
+     "Build the audit-grade ESG spine",
+     "energy/emissions telemetry with lineage feeding CSRD-grade reporting automatically"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "market & settlement systems",
-     "Market data and settlement joined, so every position reconciles to a known price."
-    ],
-    [
-     "asset health registries",
-     "Every critical asset with a health score, an owner and a maintenance decision attached."
-    ],
-    [
-     "work & asset management",
-     "Work orders and asset history in one loop — maintenance planned from evidence."
-    ],
-    [
-     "SCADA / EMS cores",
-     "Grid operations integrated read-only — control stays deterministic, decisions get smarter."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ],
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Regulatory posture"
+   "x": "What the regime expects of you"
   },
   {
    "t": "table",
-   "caption": "Regimes that shape delivery",
+   "caption": "Regimes that shape delivery here",
    "headers": [
     "Regime",
-    "What it means for programs"
+    "What it expects"
    ],
    "rows": [
     [
@@ -217,98 +128,11 @@
    ]
   },
   {
-   "t": "h2",
-   "x": "Priority programs"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Instrument the physics, monetize the forecast",
-     "Sensor network plus forecasting and trading decision hubs that pay for themselves in imbalance and O&M"
-    ],
-    [
-     "Segment and rehearse the OT estate",
-     "IEC 62443 zoning, monitoring and restoration drills treating cyber events as operational events"
-    ],
-    [
-     "Build the audit-grade ESG spine",
-     "Energy/emissions telemetry with lineage feeding CSRD-grade reporting automatically"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How a delivery runs"
-  },
-  {
-   "t": "p",
-   "x": "We run Energy & Utilities in gates: each one reviews measured deltas against the signed baseline with your named owners in the room, and each one can stop the program. That is the discipline most enterprise programs are missing."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to in this sector"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Forecast error (wind/solar/demand)",
-     "We commit to Forecast error (wind/solar/demand) as a measured outcome — reported every fortnight, audited at the gate, owned by a name on both sides."
-    ],
-    [
-     "Unplanned outage hours on critical assets",
-     "The commitment on Unplanned outage hours on critical assets is written into the engagement charter — scope, owner and the measurement method agreed before delivery begins."
-    ],
-    [
-     "Imbalance and curtailment cost",
-     "Imbalance and curtailment cost defines success for this pattern and is audited against the week-two baseline at every gate"
-    ],
-    [
-     "OT segmentation coverage",
-     "OT segmentation coverage moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
-    ],
-    [
-     "ESG data production",
-     "ESG data production is tracked weekly to your control owner; the number at gate three is the number finance sees"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A European TSO-DSO group",
-     "Current programs land down 31 here; the gate reviews the live number, not a projection"
-    ],
-    [
-     "A global integrated energy major",
-     "The measured delta and the method note are written up on the case page — anonymized by agreement, baseline audited."
-    ],
-    [
-     "A national water utility",
-     "Target range down 21 on the first working slice, with the method note attached"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Capability pages for this industry"
-  },
-  {
-   "t": "p",
-   "x": "All eight towers are aligned at industry level under the capability lanes below — every one calibrated to the regimes named above."
-  },
-  {
    "t": "cta",
-   "x": "The first step is a signed baseline, not a proposal — the value assessment exists to price the delta before anything is committed."
+   "x": "Talk to the team that runs programs in Energy & Utilities in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 1032,
+ "words": 505,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Energy & Utilities",

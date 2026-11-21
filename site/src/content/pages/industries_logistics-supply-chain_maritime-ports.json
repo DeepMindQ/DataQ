@@ -9,56 +9,38 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "How Maritime, Ports & Shipping runs when it is engineered for Logistics & Supply Chain: bounded scope per gate, platform evidence generated in-flight, and outcomes stated as deltas against the number we signed together."
+   "x": "Ports and carriers orchestrate billion-dollar physics: berth planning, crane productivity, vessel scheduling and cargo integrity. Telemetry-to-decision loops (berth windows, yard flows, maintenance) decide throughput on the same infrastructure — pure intelligence arbitrage. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
   },
   {
    "t": "h2",
-   "x": "Operating context"
+   "x": "The operating context"
   },
   {
    "t": "p",
-   "x": "Before proposing anything, we map the context Maritime, Ports & Shipping will run in — regulators, decision cadence, existing contracts — because the design that ignores context fails at the gate."
+   "x": "The work concentrates in berth/vessel planning, yard/gate orchestration, crane/equipment maintenance, with cargo integrity close behind. Volume grows on every path; the decision layer has not kept up. That gap is measurable, and it is the work."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Maritime, Ports & Shipping",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Contracts between stages are enforced at the boundary, so schema drift fails loudly in minutes instead of quietly in a quarter."
+   "x": "The pressure points, named"
   },
   {
    "t": "p",
-   "x": "We engineer Maritime, Ports & Shipping so that regressions are cohorts, not surprises: each stage owns its latency budget and failure policy, and rollback is rehearsed before go-live rather than after the incident."
-  },
-  {
-   "t": "h2",
-   "x": "Pressure points"
+   "x": "the queues and waits that come up first, Maritime, Ports & Shipping edition:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Berth planning static",
-     "When Berth planning static is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+     "Vessel schedules vs. yard reality disconnected; anchorage waits cost."
     ],
     [
      "Asset health reactive",
-     "Asset health reactive shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
+     "Cranes/RTGs fail unscheduled; throughput lost."
     ],
     [
      "Port systems exposed",
-     "We treat Port systems exposed as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Maersk-class ransomware memory; OT/corporate segmentation thin."
     ],
     [
      "Yard and gate orchestration manual",
@@ -66,24 +48,61 @@
     ],
     [
      "Stowage/berth optimization",
-     "Stowage/berth optimization is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+     "Combinatorial stowage/planning exceeds solvers."
     ],
     [
      "eBL adoption stalled",
-     "eBL adoption stalled costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+     "Paper bills of lading persist; fraud and delay."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Compliance frame"
+   "x": "What we build, concretely"
+  },
+  {
+   "t": "p",
+   "x": "The proof in Maritime, Ports & Shipping is a working system on a real workflow. These are the builds that go live:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Berth planning platform",
+     "vessel/yard/tide data unified for planning"
+    ],
+    [
+     "Crane health sensing",
+     "telemetry into predictive maintenance"
+    ],
+    [
+     "Port resilience",
+     "IT/OT segmentation and recovery drills"
+    ],
+    [
+     "Stowage tournaments",
+     "stowage/berth formulations across solvers"
+    ],
+    [
+     "eBL network",
+     "electronic bills with legal-grade evidence"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Guardrails that matter here"
+  },
+  {
+   "t": "p",
+   "x": "Solas/isps sets the floor for Maritime, Ports & Shipping: port security duties. The build adds the evidence layer so compliance is a query, not a project."
   },
   {
    "t": "table",
-   "caption": "Regimes in scope",
+   "caption": "Regimes in scope for Maritime, Ports & Shipping",
    "headers": [
     "Regime",
-    "Implication"
+    "What it expects"
    ],
    "rows": [
     [
@@ -106,189 +125,18 @@
   },
   {
    "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "visibility networks",
-     "Supplier, carrier and port signals joined into one control-tower picture."
-    ],
-    [
-     "TMS execution",
-     "Transport execution data feeding the planning loop — lanes costed on actuals."
-    ],
-    [
-     "yard & gate systems",
-     "Dock and yard flow instrumented so dwell time has a number and an owner."
-    ],
-    [
-     "customs & compliance hubs",
-     "Crossing paperwork as data, with the audit trail regulators ask for."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ],
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ],
-    [
-     "warehouse spend per query",
-     "Spend per query attributed to the team that wrote it — the meter everyone can see."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How we help — five priority capabilities"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Data & Lakehouse",
-     "Pipelines, governance and products on a lakehouse contract — reports that reconcile, lineage you can trace."
-    ],
-    [
-     "IoT, Twin & Robotics",
-     "From sensor data to actuation — industrial IoT fabrics, twins and vision that close the loop."
-    ],
-    [
-     "Cyber & Zero-Trust",
-     "Identity-first security for people, machines and models — detection, response and audit in one program."
-    ],
-    [
-     "Quantum & Advanced Compute",
-     "Optimization and PQC migration — every quantum-inspired run benchmarked against the best classical solver."
-    ],
-    [
-     "Blockchain & Digital Trust",
-     "Permissioned networks, credentials and provenance — digital trust regulators can inspect."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
+   "x": "Where a program starts"
   },
   {
    "t": "p",
-   "x": "We run Maritime, Ports & Shipping the way we run every program: the metric is signed before delivery, the pilot is bounded, and the scale decision follows the measured delta, not the momentum."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Berth productivity",
-     "Up 10-20%"
-    ],
-    [
-     "Crane availability",
-     "Crane availability defines success for this pattern and is audited against the week-two baseline at every gate"
-    ],
-    [
-     "Truck turnaround",
-     "Truck turnaround has a named owner and a fortnightly reading; the gate review compares it to the signed baseline, not to a promise."
-    ],
-    [
-     "eBL adoption",
-     "eBL adoption carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A global 3PL (40+ countries)",
-     "The measured delta and the method note are written up on the case page — anonymized by agreement, baseline audited."
-    ],
-    [
-     "A container-terminal operator",
-     "The engagement is documented on its case page — what was measured, what moved and how the evidence was gathered."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Adjacent units"
-  },
-  {
-   "t": "p",
-   "x": "Adjacent delivery lanes: 3PL & Freight Forwarding, Warehousing & Fulfillment, Last-Mile & Urban Logistics — each with its own capability alignments under /industries/logistics-supply-chain/. Where two lanes share a metric, one program can carry both. Where two lanes share a metric, one program can carry both. Where two lanes share a metric, one program can carry both."
+   "x": "Start with the diagnostic, not the contract: berth planning static gets baselined in two weeks; if the delta is real, the build gets scoped; if it is not, you keep the measurement design either way."
   },
   {
    "t": "cta",
-   "x": "Put your Berth productivity in front of the practice lead — bring the baseline, leave with a scoped plan."
+   "x": "If operations in Maritime, Ports & Shipping is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
   }
  ],
- "words": 829,
+ "words": 347,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Logistics & Supply Chain",

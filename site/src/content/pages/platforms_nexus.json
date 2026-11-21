@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The Dataq Software build of Dataq Nexus — Overview: concrete interfaces at core systems, measured movement on primary metric, and a delivery rhythm your control owners can plan around from week one."
+   "x": "Enterprise decisions in milliseconds — with the evidence to defend every one. Dataq Nexus is the platform layer behind it — deployed under NDA, documented for the audit."
   },
   {
    "t": "h2",
@@ -17,202 +17,108 @@
   },
   {
    "t": "p",
-   "x": "Dataq Nexus is the decision infrastructure for high-volume enterprise choices: credit, claims, pricing, triage, fraud, routing. It combines predictive models, business rules and agentic reasoning behind one governed decision API, with champion-challenger testing and full decision replay — so any decision can be reconstructed months later for an auditor, a customer or a court."
+   "x": "Dataq Nexus is the decision infrastructure for high-volume enterprise choices: credit, claims, pricing, triage, fraud, routing. It combines predictive models, business rules and agentic reasoning behind one governed decision API, with champion-challenger testing and full decision replay — so any decision can be reconstructed months later for an auditor, a customer or a court. Nexus enforces separability by design: models score, policy decides, humans supervise. Risk teams change policy without retraining; data scientists ship models without touching code paths; compliance inspects what actually ran on any given day. It is the platform underneath our decision-intelligence services and the control point for every automated decision we deploy."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "decision-fabric",
-   "title": "Dataq Nexus — control and evidence planes",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "The decision layer is shared infrastructure: one contract per consumer, one ledger per decision, one owner per metric."
+   "x": "The system, piece by piece"
   },
   {
    "t": "p",
-   "x": "The reference pattern behind Dataq Nexus — Overview is boring on purpose: contracts at every boundary, an owner per component, and evidence captured where the work happens. Boring architecture is what survives contact with an audit."
-  },
-  {
-   "t": "h2",
-   "x": "How it operates"
-  },
-  {
-   "t": "p",
-   "x": "Nexus enforces separability by design: models score, policy decides, humans supervise. Risk teams change policy without retraining; data scientists ship models without touching code paths; compliance inspects what actually ran on any given day. It is the platform underneath our decision-intelligence services and the control point for every automated decision we deploy."
-  },
-  {
-   "t": "h2",
-   "x": "Modules"
+   "x": "Dataq Nexus: named modules with a gate at each boundary,"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Decision API",
-     "One governed entry point with SLA guarantees"
+     "one governed entry point with SLA guarantees"
     ],
     [
      "Policy-as-artifact",
-     "The policy document and the enforcement config generated from one source — they cannot disagree."
+     "versioned decision policies with effective-dating and simulation"
     ],
     [
      "Champion-challenger",
-     "Shadow scoring and incremental traffic shifting"
+     "shadow scoring and incremental traffic shifting"
     ],
     [
      "Decision replay",
-     "Full input/model/policy snapshots per decision"
+     "full input/model/policy snapshots per decision"
     ],
     [
      "Feature integration",
-     "The feature store contract: one definition of a feature, served identically in training and inference."
+     "online feature store with point-in-time correctness"
     ],
     [
      "Decision analytics",
-     "Outcome, fairness and drift monitoring"
+     "outcome, fairness and drift monitoring"
     ]
    ]
   },
   {
-   "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ],
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
-    ],
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ]
-   ]
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "The operating loop — Dataq Nexus",
+   "labels": [
+    "Decision API",
+    "Policy-as-artifact",
+    "Champion-challenger",
+    "Decision replay"
+   ],
+   "note": "Named stages, not generic boxes — this is the Dataq Nexus path as built."
   },
   {
    "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ],
-    [
-     "warehouse spend per query",
-     "Spend per query attributed to the team that wrote it — the meter everyone can see."
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What changes for the business"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Evidence by default",
-     "Evidence generated as a by-product of doing the work — audit readiness stops being a season."
-    ],
-    [
-     "Pattern draw on",
-     "The program draws on the pattern library where it fits and departs from it where your estate says otherwise."
-    ],
-    [
-     "Accountability",
-     "Decision ownership named per metric — the org chart and the system agree on who answers."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integrations"
+   "x": "Built for the auditors too"
   },
   {
    "t": "p",
-   "x": "Certified integration surface: Databricks Feature Store, Kafka/Flink, Redis, OPA, core-system adapters."
+   "x": "Nexus runs inside your security perimeter with customer-managed keys, full audit export and evidence packs mapped to SOC 2, ISO 27001 and model-risk expectations. Decision policies, model versions and feature states are immutable artifacts — the replay trail is cryptographic, not testimonial."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
+     "Customer-managed keys",
+     "CMK/BYOK for all decision data"
     ],
     [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
+     "Immutable replay",
+     "tamper-evident decision logs"
     ],
     [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
+     "Fairness monitoring",
+     "protected-attribute testing built in"
     ],
     [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
+     "Model-risk docs",
+     "SR 11-7/TRIM-aligned evidence generated"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "How programs use it"
+   "x": "In delivery, sector by sector"
   },
   {
    "t": "p",
-   "x": "In practice, Dataq Nexus — Overview enters a program at the decision layer: the systems keep their jobs, the decisions get a contract, an owner and a trail."
+   "x": "Dataq Nexus runs under NDA in Banking & Financial Services, Insurance & Risk, Healthcare & Life Sciences, Retail & Consumer Goods, Energy & Utilities. Deployments stay private; the architecture and control packs are the part we can show."
+  },
+  {
+   "t": "h2",
+   "x": "The technology choices, justified"
+  },
+  {
+   "t": "p",
+   "x": "Connects to: Databricks Feature Store, Kafka/Flink, Redis, OPA, core-system adapters. Adapters are versioned and contract-tested, so upgrades stop being incidents."
   },
   {
    "t": "cta",
-   "x": "Book a platform session: we bring the architecture, you bring the use case, and the evaluation criteria are yours."
+   "x": "The next step is small and real: one working session on Dataq Nexus, your data, and a written feasibility read you can circulate."
   }
  ],
- "words": 616,
+ "words": 365,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Nexus",

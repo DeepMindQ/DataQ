@@ -9,68 +9,50 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "A no-theater description of Supply Chain Risk & Continuity: what ships first, what it touches at operational stores, how it is verified, and the per workflow metric we commit to moving against baseline."
+   "x": "Supply Chain Risk & Continuity exists because a specific failure keeps repeating: multi-tier supply is opaque; disruptions surface as missed deliveries; re-planning takes weeks; ESG/provenance obligations add evidence duties."
   },
   {
    "t": "h2",
-   "x": "The problem this solution exists for"
+   "x": "The claim"
   },
   {
    "t": "p",
    "x": "Multi-tier supply is opaque; disruptions surface as missed deliveries; re-planning takes weeks; ESG/provenance obligations add evidence duties."
   },
   {
+   "t": "p",
+   "x": "The pattern behind Supply Chain Risk & Continuity: decisions that should be systematized are still assembled by hand — one document, one queue, one meeting at a time. This solution replaces the assembly with a governed composition."
+  },
+  {
    "t": "h2",
-   "x": "Our approach"
+   "x": "What gets built first"
   },
   {
    "t": "p",
    "x": "We build the risk-sensing control tower: multi-tier supplier telemetry, disruption early warning with scenario playbooks, autonomous re-planning within policy, and the provenance/evidence layer for regulated claims."
   },
   {
-   "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Supply Chain Risk & Continuity",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "The pipeline is measured end to end; each stage reports its own freshness and cost, which is what makes the unit economics arguable."
-  },
-  {
    "t": "p",
-   "x": "The architecture for Supply Chain Risk & Continuity is deliberately auditable: every stage exposes its inputs, its owner and its failure policy, and the decision path shares a timeline with the audit path. Nothing important happens off the record."
-  },
-  {
-   "t": "h2",
-   "x": "Components"
+   "x": "For Supply Chain Risk & Continuity, what ships, in the order it ships:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Multi-tier visibility",
-     "Supplier and logistics telemetry unified"
+     "supplier and logistics telemetry unified"
     ],
     [
      "Disruption sensing",
-     "Weather/geopolitical/supplier signals with impact models"
+     "weather/geopolitical/supplier signals with impact models"
     ],
     [
      "Scenario playbooks",
-     "Pre-agreed responses with trigger conditions"
+     "pre-agreed responses with trigger conditions"
     ],
     [
      "Autonomous re-planning",
-     "Orchestrated re-routing within policy"
+     "orchestrated re-routing within policy"
     ],
     [
      "Provenance evidence",
@@ -79,273 +61,64 @@
    ]
   },
   {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "The governed path, end to end — Supply Chain Risk & Continuity",
+   "labels": [
+    "Multi-tier visibility",
+    "Disruption sensing",
+    "Scenario playbooks",
+    "Autonomous re-planning"
+   ],
+   "note": "Named stages, not generic boxes — this is the Supply Chain Risk & Continuity path as built."
+  },
+  {
    "t": "h2",
-   "x": "Platform stack"
+   "x": "Standards and components"
   },
   {
    "t": "p",
-   "x": "Every item in the Supply Chain Risk & Continuity stack earns its place on measured cost and performance, not on vendor momentum. Where a component is already serving you well, we integrate it instead of replacing it."
+   "x": "Supply Chain Risk & Continuity composes Dataq Nexus, Dataq Ledger — platforms with documented controls and evidence packs, so governance is part of the runtime. The pattern is in delivery now in Logistics & Supply Chain, Manufacturing & Industrial, Retail & Consumer Goods, Agriculture & Food Systems."
   },
   {
    "t": "h2",
-   "x": "How it runs in an engagement"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Diagnose",
-     "We measure the starting position and lock the baseline with your team — no build work begins before the number is agreed."
-    ],
-    [
-     "Prove",
-     "A bounded pilot on your real data, with the gate review scheduled before the first commit is written."
-    ],
-    [
-     "Industrialize",
-     "Runbooks, enablement and the control trail that let your teams operate it without us in the room."
-    ],
-    [
-     "Compound",
-     "Quarterly re-audits and a ranked backlog of the next decisions worth automating — value that accumulates on purpose."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ],
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ],
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "warehouse spend per query",
-     "Spend per query attributed to the team that wrote it — the meter everyone can see."
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ],
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ],
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you get"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Architecture pack",
-     "The design drawn against your estate — components, owners and the interfaces between them."
-    ],
-    [
-     "Working system",
-     "The thing itself, running in your environment — not a demo, not a prototype on someone's laptop."
-    ],
-    [
-     "Run model",
-     "How it is operated after handover — runbooks, on-call shape and the training your teams receive."
-    ],
-    [
-     "Value audit kit",
-     "The method and worksheets that let your own analysts reproduce every delta we claim."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Prerequisites and data readiness"
+   "x": "The delivery rhythm"
   },
   {
    "t": "p",
-   "x": "Before Supply Chain Risk & Continuity starts, three things need to exist: a metric your board recognizes, data access under an approved path, and a named owner on each source system. The readiness check takes two weeks and says no when it should."
+   "x": "Method over magic in Supply Chain Risk & Continuity: the problem gets a CFO-unit statement and a signed baseline; the design gets a written risk envelope; the pilot gets falsifiable criteria; the rollout gets whatever the evidence supports. The engagement is instrumented like production, because it is production: gates, named owners, and a weekly cadence your control owner can forward. For Supply Chain Risk & Continuity, that discipline is not optional — it is the engagement model."
   },
   {
    "t": "h2",
-   "x": "How a delivery runs"
+   "x": "The numbers that move"
   },
   {
    "t": "p",
-   "x": "The rhythm for Supply Chain Risk & Continuity: measure first, prove on real data, industrialize what survived the gate, and review the delta every fortnight with the people accountable for the number."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
+   "x": "Every Supply Chain Risk & Continuity value case is written against named movements; the list below is the shape of that case, priced against your baseline during the diagnostic — never a promise from a brochure."
   },
   {
    "t": "bullets",
    "items": [
     [
      "disruption impact",
-     "disruption impact moves at gates, not in slideware: the value claimed at each gate is reconciled with your team before it enters the ledger."
+     "down 30-50% on instrumented events"
     ],
     [
      "re-plan time",
-     "re-plan time defines success for this pattern and is audited against the week-two baseline at every gate"
+     "days, not weeks"
     ],
     [
      "provenance audits",
-     "provenance audits moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A top-10 European retail bank",
-     "The engagement is documented on its case page — what was measured, what moved and how the evidence was gathered."
-    ],
-    [
-     "A multinational corporate bank",
-     "You can read the shape of this engagement on the case page: baseline locked early, outcome measured against it, method available under NDA."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Where this fits in the portfolio"
-  },
-  {
-   "t": "p",
-   "x": "Inside the portfolio, Supply Chain Risk & Continuity draws on the shared platforms — the same governance, the same evidence trail, the same unit-cost discipline. No bespoke stack per program, no orphaned governance."
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Agriculture & Food Systems",
-     "The contract behind Agriculture & Food Systems: signed baseline in week two, working slice by week eight, industrialized controls by week twelve, and."
-    ],
-    [
-     "Manufacturing & Industrial",
-     "The Dataq Software build of Manufacturing & Industrial: concrete interfaces at MES layers, measured movement on Unplanned downtime on critical."
-    ],
-    [
-     "Decision Intelligence Systems",
-     "The Dataq Software build of Decision Intelligence Systems: concrete interfaces at core systems, measured movement on decision latency, and a delivery."
-    ],
-    [
-     "A national health insurer",
-     "The engagement is documented on its case page — what was measured, what moved and how the evidence was gathered."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you receive"
-  },
-  {
-   "t": "p",
-   "x": "Artifacts, not anecdotes — at the first-quarter close your team holds:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Baseline diagnostic",
-     "The starting position for every metric in scope, measured with your team and signed before build work begins."
-    ],
-    [
-     "Decision and control map",
-     "Every decision the system makes, who owns it, and where the human checkpoint sits."
-    ],
-    [
-     "Evidence pack",
-     "The artifacts your auditors ask for — control tests, decision trails and gate reviews in one place."
-    ],
-    [
-     "Value ledger",
-     "The running record of measured deltas against the signed baseline, reconciled with your finance team."
+     "hours, not expeditions"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Put your disruption impact in front of the practice lead — bring the baseline, leave with a scoped plan."
+   "x": "Start with the diagnostic, not the contract: Supply Chain Risk & Continuity baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 1052,
+ "words": 385,
  "section": "Solutions",
  "l1": "Solutions",
  "l2": "Risk & Resilience",

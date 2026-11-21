@@ -9,64 +9,46 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "A no-theater description of FinTech & Digital Natives: what ships first, what it touches at billing & metering, how it is verified, and the per tenant metric we commit to moving against baseline."
+   "x": "FinTechs scale on decision speed: onboarding, fraud, credit and compliance must run real-time under regulatory scrutiny that grows with their size. The platforms that industrialize decisioning and evidence early avoid the mid-scale stall. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
   },
   {
    "t": "h2",
-   "x": "Operating context"
+   "x": "How the operation actually works"
   },
   {
    "t": "p",
-   "x": "The operating context for FinTech & Digital Natives is set by your regulatory reality, your decision pressure and the estate you actually run — the design starts from those three, not from a reference model."
+   "x": "The work concentrates in onboarding/kyc, fraud decisioning, credit underwriting, with compliance evidence close behind. Volume grows on every path; the decision layer has not kept up. That gap is measurable, and it is the work."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — FinTech & Digital Natives",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "The flow is linear on purpose: every hop owns its latency budget and failure policy, and a regression in one stage is a cohort, never an estate-wide surprise."
+   "x": "Where this capability earns its keep"
   },
   {
    "t": "p",
-   "x": "We engineer FinTech & Digital Natives so that regressions are cohorts, not surprises: each stage owns its latency budget and failure policy, and rollback is rehearsed before go-live rather than after the incident."
-  },
-  {
-   "t": "h2",
-   "x": "Pressure points"
+   "x": "For FinTech & Digital Natives, the places value leaks:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Fraud industrialized",
-     "Fraud industrialized is one of the pressures we hear first in estates like yours — the diagnostic puts a measured number on it before anything is promised."
+     "Ring fraud and account abuse scale faster than rules."
     ],
     [
      "Credit signals thin",
-     "Credit signals thin is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+     "Alternative data underused; underwriting blunt."
     ],
     [
      "Regulator attention rising",
-     "When Regulator attention rising is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+     "Evidence maturity lags size; audits painful."
     ],
     [
      "Compliance/ops costs climbing",
-     "Compliance/ops costs climbing costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+     "Manual ops scale with volume; margin erodes."
     ],
     [
      "KYC/doc friction",
-     "KYC/doc friction is one of the pressures we hear first in estates like yours — the diagnostic puts a measured number on it before anything is promised."
+     "Onboarding drop-off at verification; completion suffers."
     ],
     [
      "Stablecoin/crypto rails emerging",
@@ -76,14 +58,51 @@
   },
   {
    "t": "h2",
-   "x": "Compliance frame"
+   "x": "The system, piece by piece"
+  },
+  {
+   "t": "p",
+   "x": "The proof in FinTech & Digital Natives is a working system on a real workflow. These are the builds that go live:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Fraud decision hub",
+     "streaming features + policy + models with replay"
+    ],
+    [
+     "Alternative credit features",
+     "consented alternative data into underwriting"
+    ],
+    [
+     "Evidence maturity",
+     "compliance-as-code mapped to licensing"
+    ],
+    [
+     "KYC automation",
+     "document/screening assembly with human gates"
+    ],
+    [
+     "Ops automation spine",
+     "back-office workflows orchestrated"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Rules we build against"
+  },
+  {
+   "t": "p",
+   "x": "The binding regimes in FinTech & Digital Natives: AML/CTF, PSD2/PSD3. Designing against them early is what keeps later audits short."
   },
   {
    "t": "table",
-   "caption": "Regimes in scope",
+   "caption": "Regimes in scope for FinTech & Digital Natives",
    "headers": [
     "Regime",
-    "Implication"
+    "What it expects"
    ],
    "rows": [
     [
@@ -106,189 +125,18 @@
   },
   {
    "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ],
-    [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "CI/CD & observability",
-     "One pipeline from commit to production, with the dashboards that show whether it worked."
-    ],
-    [
-     "support & success stacks",
-     "Service signals joined to product telemetry — the customer's week visible to the team accountable for it."
-    ],
-    [
-     "customer data stores",
-     "Customer truth in one governed place, consent attached to every record."
-    ],
-    [
-     "product analytics",
-     "Behavioral funnels measured end to end — the product decisions argued with usage, not opinion."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ],
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How we help — five priority capabilities"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Agentic AI & Hyperautomation",
-     "Digital workers with roles, budgets and human checkpoints — every action logged and reversible."
-    ],
-    [
-     "Data & Lakehouse",
-     "Pipelines, governance and products on a lakehouse contract — reports that reconcile, lineage you can trace."
-    ],
-    [
-     "Cyber & Zero-Trust",
-     "Identity-first security for people, machines and models — detection, response and audit in one program."
-    ],
-    [
-     "Applied AI & GenAI",
-     "Strategy through production operations — models evaluated, retrieval grounded, cost per answer owned."
-    ],
-    [
-     "Cloud, Edge & Platform",
-     "Reliable estates at lower unit cost — hybrid multicloud, edge fleets and SRE discipline."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
+   "x": "Starting without a leap of faith"
   },
   {
    "t": "p",
-   "x": "The engagement pattern for FinTech & Digital Natives: diagnose, prove, industrialize, compound. Each gate reviews evidence with your named owners, and each gate can stop the program."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Onboarding completion",
-     "Up 15-25 points"
-    ],
-    [
-     "Fraud bps",
-     "Fraud bps is tracked weekly against the baseline signed in week two — the number at each gate is the number finance sees."
-    ],
-    [
-     "Compliance evidence",
-     "Compliance evidence carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
-    ],
-    [
-     "Ops cost/account",
-     "Ops cost/account carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A B2B SaaS platform (Series D)",
-     "The delta we sign up to is down 58 — verified against live data at every gate"
-    ],
-    [
-     "A consumer fintech (8M users)",
-     "The engagement is documented on its case page — what was measured, what moved and how the evidence was gathered."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Adjacent units"
-  },
-  {
-   "t": "p",
-   "x": "Adjacent delivery lanes: SaaS & Platform Companies, Semiconductors & Hardware, Gaming & Interactive Media — each with its own capability alignments under /industries/technology-saas/. Where two lanes share a metric, one program can carry both. Where two lanes share a metric, one program can carry both. Where two lanes share a metric, one program can carry both."
+   "x": "Start with the diagnostic, not the contract: fraud industrialized gets baselined in two weeks; if the delta is real, the build gets scoped; if it is not, you keep the measurement design either way."
   },
   {
    "t": "cta",
-   "x": "Start with a value assessment calibrated to your sub-sector — the regulatory mapping is part of the two weeks."
+   "x": "Bring operations in FinTech & Digital Natives to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
   }
  ],
- "words": 831,
+ "words": 338,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Technology & SaaS",

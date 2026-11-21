@@ -9,64 +9,46 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "A no-theater description of Higher Education & Universities: what ships first, what it touches at LMS & learning stores, how it is verified, and the per cohort metric we commit to moving against baseline."
+   "x": "Universities balance teaching quality, research output and financial sustainability: student-success analytics, research computing, administrative automation and campus economics. The constraint is governance — faculty senate, ethics boards and student privacy all bind. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
   },
   {
    "t": "h2",
-   "x": "Operating context"
+   "x": "The ground truth of this sector"
   },
   {
    "t": "p",
-   "x": "Before proposing anything, we map the context Higher Education & Universities will run in — regulators, decision cadence, existing contracts — because the design that ignores context fails at the gate."
+   "x": "The work concentrates in student success/advising, research computing, accreditation evidence, with enrollment management close behind. The paths are busy; the decisions are late. Closing that delay is worth more than any single tool purchase."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Higher Education & Universities",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "The flow is linear on purpose: every hop owns its latency budget and failure policy, and a regression in one stage is a cohort, never an estate-wide surprise."
+   "x": "Where this bites first"
   },
   {
    "t": "p",
-   "x": "Every component in Higher Education & Universities has a contract, a version and a named owner. When something drifts, the ticket goes to a person, not to a committee — that is what the reference architecture is for."
-  },
-  {
-   "t": "h2",
-   "x": "Pressure points"
+   "x": "as operators describe it, Higher Education & Universities edition:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Student signals scattered",
-     "We treat Student signals scattered as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "LMS/SIS/support data siloed; at-risk students found at failure."
     ],
     [
      "Faculty admin burden",
-     "Faculty admin burden costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+     "Advising, accreditation and grant admin consume academic hours."
     ],
     [
      "Research IP targeted",
-     "When Research IP targeted is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+     "Sensitive research attracts state interest; campus controls loose."
     ],
     [
      "Research computing fragmented",
-     "Research computing fragmented shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
+     "HPC/cloud ungoverned; per-department islands."
     ],
     [
      "Integrity policy vacuum",
-     "Integrity policy vacuum costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+     "GenAI floods campuses without governance; detection wars."
     ],
     [
      "Estates unmeasured",
@@ -76,14 +58,51 @@
   },
   {
    "t": "h2",
-   "x": "Compliance frame"
+   "x": "Engineering that moves the number"
+  },
+  {
+   "t": "p",
+   "x": "Capability in Higher Education & Universities is not abstract: each tower lands as a named build on a named workflow. The patterns below are what we deploy there."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Student success platform",
+     "SIS/LMS/support unified with outcome lineage"
+    ],
+    [
+     "Advising orchestration",
+     "signals to interventions with case management"
+    ],
+    [
+     "Research IP controls",
+     "classification-aware access for sensitive programs"
+    ],
+    [
+     "Research platform",
+     "governed HPC/cloud burst with queues"
+    ],
+    [
+     "Integrity infrastructure",
+     "policy rails + logged assistive AI per course"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "What the regime expects of you"
+  },
+  {
+   "t": "p",
+   "x": "The binding regimes in Higher Education & Universities: FERPA/GDPR-class, Research ethics (IRB). Designing against them early is what keeps later audits short."
   },
   {
    "t": "table",
-   "caption": "Regimes in scope",
+   "caption": "Regimes in scope for Higher Education & Universities",
    "headers": [
     "Regime",
-    "Implication"
+    "What it expects"
    ],
    "rows": [
     [
@@ -106,189 +125,18 @@
   },
   {
    "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ],
-    [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
-    ],
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "credentialing services",
-     "Practitioner credentials verified and tracked as data — expiry raised before it becomes risk."
-    ],
-    [
-     "grants & compliance",
-     "Award terms tracked as data, so spending follows the rules attached to the money."
-    ],
-    [
-     "library & knowledge bases",
-     "Curated corpora with rights metadata — retrieval that respects licenses."
-    ],
-    [
-     "LMS & learning stores",
-     "Learning outcomes measured against competency — the platform serves the curriculum, not the reverse."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ],
-    [
-     "freshness SLO attainment",
-     "Up 97–99.3% of tables inside their declared window per cohort, reported weekly against the signed baseline"
-    ],
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How we help — five priority capabilities"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Data & Lakehouse",
-     "Pipelines, governance and products on a lakehouse contract — reports that reconcile, lineage you can trace."
-    ],
-    [
-     "Agentic AI & Hyperautomation",
-     "Digital workers with roles, budgets and human checkpoints — every action logged and reversible."
-    ],
-    [
-     "Cyber & Zero-Trust",
-     "Identity-first security for people, machines and models — detection, response and audit in one program."
-    ],
-    [
-     "Cloud, Edge & Platform",
-     "Reliable estates at lower unit cost — hybrid multicloud, edge fleets and SRE discipline."
-    ],
-    [
-     "Applied AI & GenAI",
-     "Policy rails + logged assistive AI per course — trust preserved"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
+   "x": "Where a program starts"
   },
   {
    "t": "p",
-   "x": "The engagement pattern for Higher Education & Universities: diagnose, prove, industrialize, compound. Each gate reviews evidence with your named owners, and each gate can stop the program."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Retention in targeted cohorts",
-     "Up 3-6 points"
-    ],
-    [
-     "Faculty admin hours",
-     "The commitment on Faculty admin hours is written into the engagement charter — scope, owner and the measurement method agreed before delivery begins."
-    ],
-    [
-     "Research throughput",
-     "Up 2-5x"
-    ],
-    [
-     "Campus energy",
-     "The commitment on Campus energy is written into the engagement charter — scope, owner and the measurement method agreed before delivery begins."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A public research university (38,000 students)",
-     "Written up as a case study: the baseline, the measured outcome and the method, with client identity withheld by agreement."
-    ],
-    [
-     "A national EdTech platform (2M learners)",
-     "You can read the shape of this engagement on the case page: baseline locked early, outcome measured against it, method available under NDA."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Adjacent units"
-  },
-  {
-   "t": "p",
-   "x": "The neighbouring operating units are the links below are the compositions this sub-industry pattern most often travels with, chosen by observed delivery patterns rather than menu logic; programs that span two of them usually share one baseline."
+   "x": "For Higher Education & Universities, the first move costs little: a two-week diagnostic on student signals scattered, your data, one honest baseline. The scoped proposal only follows if the measured delta justifies it."
   },
   {
    "t": "cta",
-   "x": "The measurement comes first: two weeks to a signed baseline under the rules your sub-sector is actually held to."
+   "x": "Talk to the team that runs operations in Higher Education & Universities in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 808,
+ "words": 358,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Education & Research",

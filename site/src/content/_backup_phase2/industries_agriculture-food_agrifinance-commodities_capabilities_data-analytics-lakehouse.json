@@ -1,0 +1,361 @@
+{
+ "id": "SCAP-agrifinance-commodities-data",
+ "title": "Data & Lakehouse for AgriFinance & Commodity Markets",
+ "url": "/industries/agriculture-food/agrifinance-commodities/capabilities/data-analytics-lakehouse/",
+ "template": "sub_capability",
+ "breadcrumb": "Industries > Agriculture & Food Systems > AgriFinance & Commodity Markets > Data, Analytics & Lakehouse",
+ "seo_title": "Data & Lakehouse for AgriFinance & Commodity Markets",
+ "meta_description": "Data & Lakehouse for AgriFinance & Commodity Markets: delivery pattern, compliance frame, platforms and committed outcomes from Dataq Software.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "How Data & Lakehouse for AgriFinance & Commodity Markets runs when it is engineered for Agriculture & Food Systems: bounded scope per gate, platform evidence generated in-flight, and outcomes stated as deltas against the number we signed together."
+  },
+  {
+   "t": "h2",
+   "x": "Overview"
+  },
+  {
+   "t": "p",
+   "x": "Data & Lakehouse for AgriFinance & Commodity Markets earns its budget only when it changes a number on someone's scorecard. So we invert the usual sequence: lock the metric and its baseline first, then work backwards to the smallest architecture that moves it — usually composed from farm management systems and the tower platform rather than built from scratch. What makes Agriculture & Food Systems different is not the math; it is the operating context: EU deforestation rules governs the data, yield per hectare governs the economics, and the people accountable for outcomes answer to regulators as well as customers. Every design choice below is downstream of that context."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Governed lakehouse pipeline — Data & Lakehouse for AgriFinance & Commodity Markets",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "The flow is linear on purpose: every hop owns its latency budget and failure policy, and a regression in one stage is a cohort, never an estate-wide surprise."
+  },
+  {
+   "t": "p",
+   "x": "The architecture for Data & Lakehouse for AgriFinance & Commodity Markets is deliberately auditable: every stage exposes its inputs, its owner and its failure policy, and the decision path shares a timeline with the audit path. Nothing important happens off the record."
+  },
+  {
+   "t": "p",
+   "x": "The architecture for Data & Lakehouse for AgriFinance & Commodity Markets is deliberately auditable: every stage exposes its inputs, its owner and its failure policy, and the decision path shares a timeline with the audit path. Nothing important happens off the record."
+  },
+  {
+   "t": "h2",
+   "x": "Why this matters in Agriculture & Food Systems"
+  },
+  {
+   "t": "p",
+   "x": "Operators in Agriculture & Food Systems do not need convincing that Data & Lakehouse for AgriFinance & Commodity Markets matters; they need proof it will hold under yield per hectare pressure at quarter close. The sections below are organized around exactly that proof: what breaks today, what we deploy, and what number moves."
+  },
+  {
+   "t": "h2",
+   "x": "Pressure points we attack"
+  },
+  {
+   "t": "h2",
+   "x": "How we deliver it here"
+  },
+  {
+   "t": "p",
+   "x": "Delivery composes proven services rather than bespoke heroics: the pattern below draws on 3 services from the Data, Analytics & Lakehouse tower, each with its own runbook, so your team inherits something maintained — not a one-off."
+  },
+  {
+   "t": "h2",
+   "x": "Services behind the pattern"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Lakehouse Architecture & Migration",
+     "A no-theater description of Lakehouse Architecture & Migration: what ships first, what it touches at operational stores, how it is verified, and the."
+    ],
+    [
+     "Real-Time Streaming & Event-Driven Decisioning",
+     "The Dataq Software build of Real-Time Streaming & Event-Driven Decisioning: concrete interfaces at core systems, measured movement on event-to-action."
+    ],
+    [
+     "Enterprise BI & Executive Analytics",
+     "A no-theater description of Enterprise BI & Executive Analytics: what ships first, what it touches at operational stores, how it is verified, and the."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "cost-aware clustering",
+     "Workloads land on the cheapest compute that still meets the latency budget."
+    ],
+    [
+     "Delta / Iceberg tables",
+     "Open table formats underneath everything we build, so your data never belongs to a vendor."
+    ],
+    [
+     "Unity Catalog governance",
+     "A single governance plane over tables, models and notebooks — access your auditors can replay."
+    ],
+    [
+     "streaming ingest",
+     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "commodity & trade desks",
+     "Position, exposure and margin data joined intraday — the desk sees risk while it can still act."
+    ],
+    [
+     "processing line historians",
+     "Line data streamed with the tags that matter, ready for the twin and the OEE math."
+    ],
+    [
+     "food-safety labs",
+     "Safety results joined to lots and suppliers — traceability that works the day you need it."
+    ],
+    [
+     "traceability ledgers",
+     "Lot-level history from source to shelf, verifiable by the parties who need to verify it."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "p",
+   "x": "The program dashboard tracks these by default, wired to your channels:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "warehouse spend per query",
+     "Spend per query attributed to the team that wrote it — the meter everyone can see."
+    ],
+    [
+     "batch window",
+     "Batch windows measured against the plan every run — the number reported is the observed one."
+    ],
+    [
+     "freshness SLO attainment",
+     "Up 97–98.7% of tables inside their declared window in current programs; measured, not modeled"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "p",
+   "x": "What usually goes wrong, and the specific guard in this build:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Metric anarchy",
+     "Metric anarchy — one certified semantic layer owns definitions — dashboards that shadow it lose endorsement and budget, enforced by the platform rather than by discipline alone"
+    ],
+    [
+     "Cost creep",
+     "Cost creep, the classic killer; here per-team chargeback with query tags; untagged compute is quarantined at the queue level"
+    ],
+    [
+     "Silent schema drift",
+     "Silent schema drift — guarded because producer contracts fail loudly at ingest; downstream models refuse to build on drifted sources"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Compliance frame"
+  },
+  {
+   "t": "table",
+   "caption": "Regimes shaping this capability",
+   "headers": [
+    "Regime",
+    "Implication"
+   ],
+   "rows": [
+    [
+     "Financial regulation (lending)",
+     "scoring governance"
+    ],
+    [
+     "Insurance regulation",
+     "parametric duties"
+    ],
+    [
+     "EUDR",
+     "deforestation-free due diligence with geolocation evidence for in-scope commodities"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How a delivery runs"
+  },
+  {
+   "t": "p",
+   "x": "A delivery for Data & Lakehouse for AgriFinance & Commodity Markets runs on rhythm, not ritual: the baseline is signed in the first weeks, evidence is generated as the work happens, and the gate at each stage has real stop authority. Programs that miss their evidence stop."
+  },
+  {
+   "t": "h2",
+   "x": "Where this fits in the portfolio"
+  },
+  {
+   "t": "p",
+   "x": "No capability ships alone: the links below are the compositions this capability pattern most often travels with, chosen by observed delivery patterns rather than menu logic."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Applied AI & GenAI for AgriFinance & Commodity Markets",
+     "Where Applied AI & GenAI for AgriFinance & Commodity Markets fits: the same baseline-and-gate discipline applies, with the surfaces adapted to what that part of the portfolio actually runs."
+    ],
+    [
+     "Quantum & Advanced Compute for AgriFinance & Commodity Markets",
+     "Quantum & Advanced Compute for AgriFinance & Commodity Markets shares the control trail with this capability — evidence captured once, reused everywhere it is audited."
+    ],
+    [
+     "Agriculture & Food Systems",
+     "The contract behind Agriculture & Food Systems: signed baseline in week two, working slice by week eight, industrialized controls by week twelve, and."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "What you receive"
+  },
+  {
+   "t": "p",
+   "x": "Artifacts, not anecdotes — at the first-quarter close your team holds:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Baseline diagnostic",
+     "The starting position for every metric in scope, measured with your team and signed before build work begins."
+    ],
+    [
+     "Decision and control map",
+     "Every decision the system makes, who owns it, and where the human checkpoint sits."
+    ],
+    [
+     "Evidence pack",
+     "The artifacts your auditors ask for — control tests, decision trails and gate reviews in one place."
+    ],
+    [
+     "Value ledger",
+     "The running record of measured deltas against the signed baseline, reconciled with your finance team."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Outcomes we commit to"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Credit losses",
+     "Credit losses moves at gates, not in slideware: the value claimed at each gate is reconciled with your team before it enters the ledger."
+    ],
+    [
+     "Parametric payouts",
+     "Parametric payouts defines success for this pattern and is audited against the week-two baseline at every gate"
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Start with a value assessment: your baseline measured and signed in two weeks, then a delivery plan priced from evidence."
+  }
+ ],
+ "words": 1074,
+ "section": "Industries",
+ "l1": "Industries",
+ "l2": "Agriculture & Food Systems",
+ "l3": "AgriFinance & Commodity Markets",
+ "l4": "Data, Analytics & Lakehouse",
+ "crumbs": [
+  {
+   "name": "Industries",
+   "url": "/industries/"
+  },
+  {
+   "name": "Agriculture & Food Systems",
+   "url": "/industries/agriculture-food/"
+  },
+  {
+   "name": "AgriFinance & Commodity Markets",
+   "url": "/industries/agriculture-food/agrifinance-commodities/"
+  },
+  {
+   "name": "Data, Analytics & Lakehouse",
+   "url": "/services/data-analytics-lakehouse/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Parent capability — Data & Lakehouse for Agriculture & Food Systems",
+   "url": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/",
+   "desc": "From precision agronomy to verified provenance — technology across the food chain."
+  },
+  {
+   "title": "Service page — Data, Analytics & Lakehouse",
+   "url": "/services/data-analytics-lakehouse/",
+   "desc": "Trusted data, delivered in near real time — pipelines, lakehouse and governance that holds up under audit."
+  },
+  {
+   "title": "AgriFinance & Commodity Markets — sub-industry hub",
+   "url": "/industries/agriculture-food/agrifinance-commodities/",
+   "desc": "Agri-finance prices practice, not just history: lenders, insurers and traders need verified agronomic data for…"
+  },
+  {
+   "title": "Applied AI & GenAI for AgriFinance & Commodity Markets",
+   "url": "/industries/agriculture-food/agrifinance-commodities/capabilities/applied-ai-generative-ai/",
+   "desc": "From enterprise strategy to production models — AI measured on the P&L."
+  },
+  {
+   "title": "Cyber & Zero-Trust for AgriFinance & Commodity Markets",
+   "url": "/industries/agriculture-food/agrifinance-commodities/capabilities/cybersecurity-zero-trust/",
+   "desc": "Identity, detection, resilience and AI security in one program."
+  },
+  {
+   "title": "Quantum & Advanced Compute for AgriFinance & Commodity Markets",
+   "url": "/industries/agriculture-food/agrifinance-commodities/capabilities/quantum-advanced-compute/",
+   "desc": "The same capability applied to this sector."
+  },
+  {
+   "title": "Agriculture & Food Systems",
+   "url": "/industries/agriculture-food/",
+   "desc": "Priority programs and regulatory posture."
+  }
+ ],
+ "cards": []
+}

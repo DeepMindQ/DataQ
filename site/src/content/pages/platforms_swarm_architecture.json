@@ -9,187 +9,100 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Dataq Swarm — Architecture & Trust delivered as an operating capability for the enterprise, not a slide deck — durable runtime, policy-checked actions, and telemetry your auditors can read without translation."
+   "x": "Dataq Swarm's architecture: the planes, the controls and the evidence export — documented the way your auditors will read it."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
+   "x": "How the capability takes shape"
   },
   {
    "t": "p",
-   "x": "The platform separates three planes. The data plane carries workload (health, throughput, cost and policy telemetry, roles, bidding, priority lanes, SLA routing, autonomy tiers routed to approvals); the control plane carries policy and orchestration (saga patterns, compensation, idempotency, per-team/role token and action chargeback); the evidence plane carries audit, replay and conformity documentation — the plane most vendors skip and every regulator asks about."
-  },
-  {
-   "t": "diagram",
-   "kind": "layered-stack",
-   "title": "Dataq Swarm — plane and service layers",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Ownership maps to layers: one team per stratum, contracts at the interfaces, no shared blind spots."
-  },
-  {
-   "t": "diagram",
-   "kind": "edge-topology",
-   "title": "Dataq Swarm — deployment topology and flow",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "What runs at the edge is chosen by physics, not fashion: latency, bandwidth and autonomy constraints decide placement — and the fleet is managed as one estate."
-  },
-  {
-   "t": "h2",
-   "x": "Security posture"
+   "x": "Structurally Dataq Swarm is planes, not layers — workload, decision and evidence run in parallel behind one governed API, and each crossing is logged with policy version and owner."
   },
   {
    "t": "p",
-   "x": "Every agent action is policy-checked and logged under immutable audit trails. Tool access is scoped per role with short-lived credentials; high-risk actions require approval workflows. Swarm's evidence pack maps to ISO 42001 and NIST AI RMF expectations for agentic systems."
+   "x": "In Dataq Swarm architecture, the working system, decomposed:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Fleet control tower",
+     "health, throughput, cost and policy telemetry"
+    ],
+    [
+     "Role & queue engine",
+     "roles, bidding, priority lanes, SLA routing"
+    ],
+    [
+     "Policy engine",
+     "autonomy tiers routed to approvals"
+    ],
+    [
+     "Durable execution",
+     "saga patterns, compensation, idempotency"
+    ],
+    [
+     "Budget metering",
+     "per-team/role token and action chargeback"
+    ],
+    [
+     "Release machinery",
+     "shadow/canary cohorts with auto-rollback"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "Trust controls"
+   "x": "Trust and controls"
+  },
+  {
+   "t": "p",
+   "x": "Instrumented from week one, on your channels — Dataq Swarm edition:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Scoped tool access",
-     "Short-lived credentials per role"
+     "short-lived credentials per role"
     ],
     [
      "Immutable audit",
-     "Every action replayable"
+     "every action replayable"
     ],
     [
      "Kill switches",
-     "Per-agent and per-fleet"
+     "per-agent and per-fleet"
     ],
     [
      "EU AI Act evidence",
-     "Agentic-system documentation generated"
+     "agentic-system documentation generated"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Compliance mapping"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "SOC 2 Type II / ISO 27001",
-     "The control estate mapped to SOC 2 and ISO 27001 criteria, evidence produced continuously."
-    ],
-    [
-     "Sector regimes",
-     "Sector rules translated into controls per jurisdiction — the mapping is data, reviewed when the regime moves."
-    ],
-    [
-     "AI-specific",
-     "AI-specific obligations mapped to controls — model risk, transparency and human oversight, owned by name."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Performance envelope"
+   "x": "Standards and components"
   },
   {
    "t": "p",
-   "x": "Every claim about Dataq Swarm — Architecture & Trust lives inside a measured envelope — what it holds at load, where it degrades first, and what the rollback path costs."
+   "x": "Runtime dependencies: Temporal, LangGraph, Kafka, OPA, Kubernetes, core/SaaS connectors. Deployment runs inside your security perimeter with customer-managed keys; the evidence export is formatted for the audit formats your team already uses."
   },
   {
    "t": "h2",
-   "x": "Operational telemetry"
+   "x": "The cadence you would see"
   },
   {
    "t": "p",
-   "x": "The program dashboard tracks these by default, wired to your channels:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLO attainment",
-     "Freshness attainment published per dataset — data age is uptime, treated the same way."
-    ],
-    [
-     "warehouse spend per query",
-     "Spend per query attributed to the team that wrote it — the meter everyone can see."
-    ],
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Deployment models"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Customer tenancy",
-     "Deployed inside your tenancy, your keys, your logs — the default for regulated estates."
-    ],
-    [
-     "Dataq managed",
-     "Operated by us under contract — SLOs published, changes gated, your auditors given a walkthrough path."
-    ],
-    [
-     "Hybrid / edge",
-     "Split by design: what must stay local stays local, what benefits from scale scales."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "p",
-   "x": "Dataq Swarm — Architecture & Trust runs on the same delivery standard as the rest of the portfolio: measure first, gate honestly, and let the evidence decide what scales."
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ],
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ]
-   ]
+   "x": "Deployment models for Dataq Swarm follow the estate: in-perimeter on customer-managed keys, or in a segregated enclave where the estate cannot host the workload. Either way the control pack, the replay log and the audit export keep the same format, so the second deployment never re-argues the first."
   },
   {
    "t": "cta",
-   "x": "Bring your integration questions to the platform team — the session covers the contract surfaces and the audit path."
+   "x": "Bring Dataq Swarm architecture to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
   }
  ],
- "words": 475,
+ "words": 255,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Swarm",

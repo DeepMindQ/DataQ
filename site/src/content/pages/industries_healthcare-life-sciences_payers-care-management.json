@@ -9,81 +9,100 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "What Care Management & Population Health means at Dataq Software: the scope we sign, the architecture we ship, the evidence generated in-flight, and the per 1,000 patients outcomes measured against your audited baseline."
+   "x": "Care management succeeds on precision targeting and timely intervention: identifying rising-risk members, coordinating across providers, and proving quality outcomes. It is a data-discipline business — and the data discipline is usually the missing part. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
   },
   {
    "t": "h2",
-   "x": "Operating context"
+   "x": "The setting, described honestly"
   },
   {
    "t": "p",
-   "x": "Before proposing anything, we map the context Care Management & Population Health will run in — regulators, decision cadence, existing contracts — because the design that ignores context fails at the gate."
+   "x": "The work concentrates in risk stratification, care outreach and scheduling, program matching, with quality measure reporting close behind. Volume grows on every path; the decision layer has not kept up. That gap is measurable, and it is the work."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Care Management & Population Health",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "The pipeline is measured end to end; each stage reports its own freshness and cost, which is what makes the unit economics arguable."
+   "x": "The workflows that feel it"
   },
   {
    "t": "p",
-   "x": "Care Management & Population Health runs on a structure your control owners can interrogate — the decision plane, the evidence plane and the governance plane stay separate in design and reconciled in operation."
-  },
-  {
-   "t": "h2",
-   "x": "Pressure points"
+   "x": "Care Management & Population Health: the recurring pressure points,"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Member risk signals scattered",
-     "When Member risk signals scattered is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+     "Claims, clinical, SDOH and engagement data siloed; risk stratification runs on claims only."
     ],
     [
      "Outreach operations manual",
-     "Outreach operations manual is one of the pressures we hear first in estates like yours — the diagnostic puts a measured number on it before anything is promised."
+     "Care outreach, scheduling and follow-up run on call lists; gaps between contacts lose members."
     ],
     [
      "Program matching crude",
-     "We treat Program matching crude as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Members matched to programs by blunt rules; engagement economics unmeasured."
     ],
     [
      "Sensitive coordination data",
-     "Sensitive coordination data shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
+     "Care teams share sensitive data across vendors; controls lag."
     ],
     [
      "Quality reporting burden",
-     "Quality reporting burden is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+     "HEDIS-class measures assembled manually per cycle; evidence assembled under deadline."
     ],
     [
      "Care-platform integration drag",
-     "Care-platform integration drag costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+     "Care platforms integrate by file export; workflows break at handoffs."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Compliance frame"
+   "x": "What we put in place"
+  },
+  {
+   "t": "p",
+   "x": "The proof in Care Management & Population Health is a working system on a real workflow. These are the builds that go live:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Member risk platform",
+     "claims/clinical/SDOH unified with certified risk features"
+    ],
+    [
+     "Outreach orchestration",
+     "contact plans executed across channels with follow-up policy"
+    ],
+    [
+     "Program matching models",
+     "engagement likelihood + clinical need into assignment"
+    ],
+    [
+     "Care-data protection",
+     "vendor access governed with monitoring"
+    ],
+    [
+     "Integration spine",
+     "event-driven care workflows replacing file exports"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Guardrails that matter here"
+  },
+  {
+   "t": "p",
+   "x": "Hipaa sets the floor for Care Management & Population Health: care data safeguards. The build adds the evidence layer so compliance is a query, not a project."
   },
   {
    "t": "table",
-   "caption": "Regimes in scope",
+   "caption": "Regimes in scope for Care Management & Population Health",
    "headers": [
     "Regime",
-    "Implication"
+    "What it expects"
    ],
    "rows": [
     [
@@ -106,189 +125,18 @@
   },
   {
    "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ],
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "LIMS & trial systems",
-     "Lab and trial data governed from instrument to submission — sample lineage intact."
-    ],
-    [
-     "supply & pharmacy chains",
-     "Drug supply integrity monitored end to end — shortages predicted, not suffered."
-    ],
-    [
-     "EHR integration",
-     "Clinical context fetched under consent, in FHIR terms — decision support inside the clinician's flow."
-    ],
-    [
-     "patient engagement stack",
-     "Patient outreach orchestrated with consent and outcome measurement — engagement that respects the person."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLO attainment",
-     "Up 97–98.8% of tables inside their declared window per 1,000 patients, reported weekly against the signed baseline"
-    ],
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ],
-    [
-     "warehouse spend per query",
-     "Spend per query attributed to the team that wrote it — the meter everyone can see."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ],
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How we help — five priority capabilities"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Data & Lakehouse",
-     "Pipelines, governance and products on a lakehouse contract — reports that reconcile, lineage you can trace."
-    ],
-    [
-     "Agentic AI & Hyperautomation",
-     "Digital workers with roles, budgets and human checkpoints — every action logged and reversible."
-    ],
-    [
-     "Applied AI & GenAI",
-     "Strategy through production operations — models evaluated, retrieval grounded, cost per answer owned."
-    ],
-    [
-     "Cyber & Zero-Trust",
-     "Identity-first security for people, machines and models — detection, response and audit in one program."
-    ],
-    [
-     "Cloud, Edge & Platform",
-     "Reliable estates at lower unit cost — hybrid multicloud, edge fleets and SRE discipline."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
+   "x": "How engagements open"
   },
   {
    "t": "p",
-   "x": "An engagement on Care Management & Population Health starts with a two-week baseline audit, runs a bounded pilot against a control group, and reaches its first gate with measured deltas — before any scale decision is made."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Rising-risk identification",
-     "4-8 weeks earlier"
-    ],
-    [
-     "Outreach completion",
-     "Up 25-40%"
-    ],
-    [
-     "Quality reporting effort",
-     "Quality reporting effort is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
-    ],
-    [
-     "Program engagement",
-     "Program engagement carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A 12-hospital US health system",
-     "The measured delta and the method note are written up on the case page — anonymized by agreement, baseline audited."
-    ],
-    [
-     "A national health insurer",
-     "The measured delta and the method note are written up on the case page — anonymized by agreement, baseline audited."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Adjacent units"
-  },
-  {
-   "t": "p",
-   "x": "Related sub-industry pages: Hospitals & Provider Networks, Pharmaceuticals & Biotech, Medical Devices & MedTech — each with its own capability alignments under /industries/healthcare-life-sciences/. Where two lanes share a metric, one program can carry both. Where two lanes share a metric, one program can carry both — each one shares the regulatory frame above while carrying its own workflow mix."
+   "x": "For Care Management & Population Health, the first move costs little: a two-week diagnostic on member risk signals scattered, your data, one honest baseline. The scoped proposal only follows if the measured delta justifies it."
   },
   {
    "t": "cta",
-   "x": "Put your Rising-risk identification in front of the practice lead — bring the baseline, leave with a scoped plan."
+   "x": "Talk to the team that runs operations in Care Management & Population Health in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 855,
+ "words": 397,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Healthcare & Life Sciences",

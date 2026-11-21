@@ -9,343 +9,116 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The contract behind Enterprise Copilots & Digital Workplace: signed baseline in week two, working slice by week eight, industrialized controls by week twelve, and evidence flowing to your control owner throughout."
+   "x": "Enterprise Copilots & Digital Workplace exists because a specific failure keeps repeating: employees juggle 12 tools and tribal knowledge; generic AI tools leak data; every team builds its own prompts; nothing is measured."
   },
   {
    "t": "h2",
-   "x": "The problem this solution exists for"
+   "x": "The claim"
   },
   {
    "t": "p",
    "x": "Employees juggle 12 tools and tribal knowledge; generic AI tools leak data; every team builds its own prompts; nothing is measured."
   },
   {
+   "t": "p",
+   "x": "The pattern behind Enterprise Copilots & Digital Workplace: decisions that should be systematized are still assembled by hand — one document, one queue, one meeting at a time. This solution replaces the assembly with a governed composition."
+  },
+  {
    "t": "h2",
-   "x": "Our approach"
+   "x": "The system, piece by piece"
   },
   {
    "t": "p",
    "x": "We deploy the workplace assistant layer on shared rails: retrieval over your corpus with permissions, task integrations (mail, docs, CRM, ERP), role-scoped policies, and adoption/impact measurement per function."
   },
   {
-   "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Enterprise Copilots & Digital Workplace",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "The flow is linear on purpose: every hop owns its latency budget and failure policy, and a regression in one stage is a cohort, never an estate-wide surprise."
-  },
-  {
    "t": "p",
-   "x": "We engineer Enterprise Copilots & Digital Workplace so that regressions are cohorts, not surprises: each stage owns its latency budget and failure policy, and rollback is rehearsed before go-live rather than after the incident."
-  },
-  {
-   "t": "h2",
-   "x": "Components"
+   "x": "The working system, decomposed — Enterprise Copilots & Digital Workplace edition:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Workplace assistant platform",
-     "Grounded, permission-aware copilots"
+     "grounded, permission-aware copilots"
     ],
     [
      "Task integrations",
-     "Mail, docs, CRM/ERP actions under policy"
+     "mail, docs, CRM/ERP actions under policy"
     ],
     [
      "Role-scoped governance",
-     "What each role can ask and act"
+     "what each role can ask and act"
     ],
     [
      "Knowledge fabric",
-     "Curated corpora with freshness SLAs"
+     "curated corpora with freshness SLAs"
     ],
     [
      "Impact measurement",
-     "Time saved and quality lift per function"
+     "time saved and quality lift per function"
     ]
    ]
   },
   {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "How the work flows once built — Enterprise Copilots & Digital Workplace",
+   "labels": [
+    "Workplace assistant platform",
+    "Task integrations",
+    "Role-scoped governance",
+    "Knowledge fabric"
+   ],
+   "note": "Named stages, not generic boxes — this is the Enterprise Copilots & Digital Workplace path as built."
+  },
+  {
    "t": "h2",
-   "x": "Platform stack"
+   "x": "Engineering standards we hold"
   },
   {
    "t": "p",
-   "x": "The stack for Enterprise Copilots & Digital Workplace is assembled per estate, but the pattern is stable: one event spine, one governance plane, one decision layer — and no component without a named owner."
+   "x": "Enterprise Copilots & Digital Workplace composes Dataq Swarm, Dataq Forge — platforms with documented controls and evidence packs, so governance is part of the runtime. The pattern is in delivery now in All."
   },
   {
    "t": "h2",
-   "x": "How it runs in an engagement"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Diagnose",
-     "We measure the starting position and lock the baseline with your team — no build work begins before the number is agreed."
-    ],
-    [
-     "Prove",
-     "A bounded pilot on your real data, with the gate review scheduled before the first commit is written."
-    ],
-    [
-     "Industrialize",
-     "Runbooks, enablement and the control trail that let your teams operate it without us in the room."
-    ],
-    [
-     "Compound",
-     "Quarterly re-audits and a ranked backlog of the next decisions worth automating — value that accumulates on purpose."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ],
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ],
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLO attainment",
-     "Up 97–98.7% of tables inside their declared window per workflow, reported weekly against the signed baseline"
-    ],
-    [
-     "warehouse spend per query",
-     "Spend per query attributed to the team that wrote it — the meter everyone can see."
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you get"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Architecture pack",
-     "The design drawn against your estate — components, owners and the interfaces between them."
-    ],
-    [
-     "Working system",
-     "The thing itself, running in your environment — not a demo, not a prototype on someone's laptop."
-    ],
-    [
-     "Run model",
-     "How it is operated after handover — runbooks, on-call shape and the training your teams receive."
-    ],
-    [
-     "Value audit kit",
-     "The method and worksheets that let your own analysts reproduce every delta we claim."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Prerequisites and data readiness"
+   "x": "What the weeks look like"
   },
   {
    "t": "p",
-   "x": "The readiness work for Enterprise Copilots & Digital Workplace is unglamorous and decisive — data contracts, access paths and owner names. Programs that skip it discover the gaps at the first gate, which is the most expensive place to find them."
+   "x": "Enterprise Copilots & Digital Workplace runs on phases: phase one prices the problem in your own units and signs the baseline; phase two designs with the risk envelope written down; phase three proves a bounded slice on your data; phase four scales what survived the gate. Every artifact ships with its evidence — who signed the baseline, what the gate measured, where the number lives."
   },
   {
    "t": "h2",
-   "x": "How a delivery runs"
+   "x": "What the program watches"
   },
   {
    "t": "p",
-   "x": "A delivery for Enterprise Copilots & Digital Workplace runs on rhythm, not ritual: the baseline is signed in the first weeks, evidence is generated as the work happens, and the gate at each stage has real stop authority. Programs that miss their evidence stop."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
+   "x": "Every Enterprise Copilots & Digital Workplace value case is written against named movements; the list below is the shape of that case, priced against your baseline during the diagnostic — never a promise from a brochure."
   },
   {
    "t": "bullets",
    "items": [
     [
      "knowledge-task time",
-     "knowledge-task time is tracked weekly against the baseline signed in week two — the number at each gate is the number finance sees."
+     "down 30-50% on instrumented roles"
     ],
     [
      "data-exposure incidents",
-     "data-exposure incidents defines success for this pattern and is audited against the week-two baseline at every gate"
+     "zero via scoped rails"
     ],
     [
      "adoption",
-     "adoption defines success for this pattern and is audited against the week-two baseline at every gate"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A top-10 European retail bank",
-     "The engagement is documented on its case page — what was measured, what moved and how the evidence was gathered."
-    ],
-    [
-     "A multinational corporate bank",
-     "The measured delta and the method note are written up on the case page — anonymized by agreement, baseline audited."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Where this fits in the portfolio"
-  },
-  {
-   "t": "p",
-   "x": "Enterprise Copilots & Digital Workplace rarely ships alone. The portfolio view shows the services and platforms it draws on — and the ones it feeds — so sequencing decisions are made with the whole estate in view."
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Technology & SaaS",
-     "The contract behind Technology & SaaS: signed baseline in week two, working slice by week eight, industrialized controls by week twelve, and evidence."
-    ],
-    [
-     "Retail & Consumer Goods",
-     "Retail & Consumer Goods in production terms — the runtime that holds it, the policies that bound it, the dashboards that prove it, and the quarterly."
-    ],
-    [
-     "Agentic Process Automation",
-     "A working definition of Agentic Process Automation for the enterprise: engineered controls, named owners, weekly evidence, and a signed baseline so."
-    ],
-    [
-     "A B2B SaaS platform (Series D)",
-     "Written up as a case study: the baseline, the measured outcome and the method, with client identity withheld by agreement."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you receive"
-  },
-  {
-   "t": "p",
-   "x": "What changes hands at quarter close, with a guided walkthrough per item:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Baseline diagnostic",
-     "The starting position for every metric in scope, measured with your team and signed before build work begins."
-    ],
-    [
-     "Decision and control map",
-     "Every decision the system makes, who owns it, and where the human checkpoint sits."
-    ],
-    [
-     "Evidence pack",
-     "The artifacts your auditors ask for — control tests, decision trails and gate reviews in one place."
-    ],
-    [
-     "Value ledger",
-     "The running record of measured deltas against the signed baseline, reconciled with your finance team."
+     "measured by function"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Put your knowledge-task time in front of the practice lead — bring the baseline, leave with a scoped plan."
+   "x": "A value assessment prices the delta in your estate before anything is signed: Enterprise Copilots & Digital Workplace, measured against your baseline, in two weeks."
   }
  ],
- "words": 1064,
+ "words": 377,
  "section": "Solutions",
  "l1": "Solutions",
  "l2": "Workforce & Experience",

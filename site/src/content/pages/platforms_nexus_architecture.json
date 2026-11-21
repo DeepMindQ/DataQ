@@ -9,55 +9,56 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Dataq Nexus — Architecture & Trust in production terms — the runtime that holds it, the policies that bound it, the dashboards that prove it, and the quarterly delta your finance team can bank."
+   "x": "Dataq Nexus's architecture: the planes, the controls and the evidence export — documented the way your auditors will read it."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
+   "x": "The working system, described"
   },
   {
    "t": "p",
-   "x": "The platform separates three planes. The data plane carries workload (one governed entry point with SLA guarantees, versioned decision policies with effective-dating and simulation, shadow scoring and incremental traffic shifting); the control plane carries policy and orchestration (full input/model/policy snapshots per decision, online feature store with point-in-time correctness); the evidence plane carries audit, replay and conformity documentation — the plane most vendors skip and every regulator asks about."
-  },
-  {
-   "t": "diagram",
-   "kind": "layered-stack",
-   "title": "Dataq Nexus — plane and service layers",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Ownership maps to layers: one team per stratum, contracts at the interfaces, no shared blind spots."
-  },
-  {
-   "t": "diagram",
-   "kind": "edge-topology",
-   "title": "Dataq Nexus — deployment topology and flow",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "What runs at the edge is chosen by physics, not fashion: latency, bandwidth and autonomy constraints decide placement — and the fleet is managed as one estate."
-  },
-  {
-   "t": "h2",
-   "x": "Security posture"
+   "x": "The Dataq Nexus architecture is three planes and an evidence spine. Modules compose behind one governed API; every decision crossing a plane boundary is logged with the inputs, the policy version and the accountable owner."
   },
   {
    "t": "p",
-   "x": "Nexus runs inside your security perimeter with customer-managed keys, full audit export and evidence packs mapped to SOC 2, ISO 27001 and model-risk expectations. Decision policies, model versions and feature states are immutable artifacts — the replay trail is cryptographic, not testimonial."
+   "x": "In Dataq Nexus architecture, the build decomposes into named pieces, each with an owner and a gate:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Decision API",
+     "one governed entry point with SLA guarantees"
+    ],
+    [
+     "Policy-as-artifact",
+     "versioned decision policies with effective-dating and simulation"
+    ],
+    [
+     "Champion-challenger",
+     "shadow scoring and incremental traffic shifting"
+    ],
+    [
+     "Decision replay",
+     "full input/model/policy snapshots per decision"
+    ],
+    [
+     "Feature integration",
+     "online feature store with point-in-time correctness"
+    ],
+    [
+     "Decision analytics",
+     "outcome, fairness and drift monitoring"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "Trust controls"
+   "x": "Trust and controls"
+  },
+  {
+   "t": "p",
+   "x": "The program tracks these without being asked — Dataq Nexus edition:"
   },
   {
    "t": "bullets",
@@ -68,11 +69,11 @@
     ],
     [
      "Immutable replay",
-     "Tamper-evident decision logs"
+     "tamper-evident decision logs"
     ],
     [
      "Fairness monitoring",
-     "Protected-attribute testing built in"
+     "protected-attribute testing built in"
     ],
     [
      "Model-risk docs",
@@ -82,114 +83,26 @@
   },
   {
    "t": "h2",
-   "x": "Compliance mapping"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "SOC 2 Type II / ISO 27001",
-     "The control estate mapped to SOC 2 and ISO 27001 criteria, evidence produced continuously."
-    ],
-    [
-     "Sector regimes",
-     "Sector rules translated into controls per jurisdiction — the mapping is data, reviewed when the regime moves."
-    ],
-    [
-     "AI-specific",
-     "AI-specific obligations mapped to controls — model risk, transparency and human oversight, owned by name."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Performance envelope"
+   "x": "Engineering standards we hold"
   },
   {
    "t": "p",
-   "x": "The envelope is explicit: per-tenant quotas, latency budgets on the decision path, and throughput targets reviewed at every load test — sizing is a contract, not a hope."
+   "x": "Runtime dependencies: Databricks Feature Store, Kafka/Flink, Redis, OPA, core-system adapters. Deployment runs inside your security perimeter with customer-managed keys; the evidence export is formatted for the audit formats your team already uses."
   },
   {
    "t": "h2",
-   "x": "Operational telemetry"
+   "x": "The delivery rhythm"
   },
   {
    "t": "p",
-   "x": "Telemetry your control owner sees weekly — the same numbers at every gate:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ],
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ],
-    [
-     "freshness SLO attainment",
-     "Up 97–98.6% of tables inside their declared window per workflow, reported weekly against the signed baseline"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Deployment models"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Customer tenancy",
-     "Deployed inside your tenancy, your keys, your logs — the default for regulated estates."
-    ],
-    [
-     "Dataq managed",
-     "Operated by us under contract — SLOs published, changes gated, your auditors given a walkthrough path."
-    ],
-    [
-     "Hybrid / edge",
-     "Split by design: what must stay local stays local, what benefits from scale scales."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "p",
-   "x": "Dataq Nexus — Architecture & Trust is described here in operational terms: who owns what, where the evidence lives, and what stops the program if the numbers stop moving."
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ],
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ]
-   ]
+   "x": "Deployment models for Dataq Nexus follow the estate: in-perimeter on customer-managed keys, or in a segregated enclave where the estate cannot host the workload. Either way the control pack, the replay log and the audit export keep the same format, so the second deployment never re-argues the first."
   },
   {
    "t": "cta",
-   "x": "Bring your integration questions to the platform team — the session covers the contract surfaces and the audit path."
+   "x": "If Dataq Nexus architecture is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
   }
  ],
- "words": 489,
+ "words": 271,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Nexus",

@@ -1,0 +1,380 @@
+{
+ "id": "SUB-power-grid",
+ "title": "Power Generation & Grid",
+ "url": "/industries/energy-utilities/power-grid/",
+ "template": "subindustry_page",
+ "breadcrumb": "Industries > Energy & Utilities > Power Generation & Grid",
+ "seo_title": "Power Generation & Grid | Dataq Software",
+ "meta_description": "Grid operators balance physics, markets and regulation in real time: forecasting under intermittency, substation reliability, flexibility orchestration.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "A no-theater description of Power Generation & Grid: what ships first, what it touches at meter data platforms, how it is verified, and the per feeder metric we commit to moving against baseline."
+  },
+  {
+   "t": "h2",
+   "x": "Operating context"
+  },
+  {
+   "t": "p",
+   "x": "Power Generation & Grid is delivered inside your operating context: the rules you are held to, the latency your decisions need, and the systems your teams already trust."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Governed lakehouse pipeline — Power Generation & Grid",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "The flow is linear on purpose: every hop owns its latency budget and failure policy, and a regression in one stage is a cohort, never an estate-wide surprise."
+  },
+  {
+   "t": "p",
+   "x": "What holds Power Generation & Grid together is discipline at the boundaries — typed contracts between stages, versioned releases, and a replay trail for every decision. The diagram above shows how the pieces compose; the gate reviews are what keep them honest."
+  },
+  {
+   "t": "h2",
+   "x": "Pressure points"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Forecasting under intermittency",
+     "Forecasting under intermittency costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+    ],
+    [
+     "Substation assets uninstrumented",
+     "Substation assets uninstrumented is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+    ],
+    [
+     "CIP/62443 compliance load",
+     "When CIP/62443 compliance load is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+    ],
+    [
+     "Flexibility orchestration manual",
+     "Flexibility orchestration manual is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+    ],
+    [
+     "Unit-commitment ceilings",
+     "We treat Unit-commitment ceilings as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+    ],
+    [
+     "Grid-edge data blind",
+     "Grid-edge data blind shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Compliance frame"
+  },
+  {
+   "t": "table",
+   "caption": "Regimes in scope",
+   "headers": [
+    "Regime",
+    "Implication"
+   ],
+   "rows": [
+    [
+     "NERC CIP",
+     "bulk-system cyber standards"
+    ],
+    [
+     "Electricity market codes",
+     "balancing/settlement duties"
+    ],
+    [
+     "EU network codes",
+     "operational duties"
+    ],
+    [
+     "CSRD",
+     "emissions reporting"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Delta / Iceberg tables",
+     "Open table formats underneath everything we build, so your data never belongs to a vendor."
+    ],
+    [
+     "dbt transformation graph",
+     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
+    ],
+    [
+     "cost-aware clustering",
+     "Workloads land on the cheapest compute that still meets the latency budget."
+    ],
+    [
+     "Unity Catalog governance",
+     "A single governance plane over tables, models and notebooks — access your auditors can replay."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "SCADA / EMS cores",
+     "Grid operations integrated read-only — control stays deterministic, decisions get smarter."
+    ],
+    [
+     "asset health registries",
+     "Every critical asset with a health score, an owner and a maintenance decision attached."
+    ],
+    [
+     "work & asset management",
+     "Work orders and asset history in one loop — maintenance planned from evidence."
+    ],
+    [
+     "meter data platforms",
+     "Interval readings cleaned, validated and staged for settlement-grade accuracy."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "batch window",
+     "Batch windows measured against the plan every run — the number reported is the observed one."
+    ],
+    [
+     "freshness SLO attainment",
+     "Up 97–98.9% of tables inside their declared window per feeder, reported weekly against the signed baseline"
+    ],
+    [
+     "warehouse spend per query",
+     "Spend per query attributed to the team that wrote it — the meter everyone can see."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Metric anarchy",
+     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
+    ],
+    [
+     "Cost creep",
+     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
+    ],
+    [
+     "Silent schema drift",
+     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How we help — five priority capabilities"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Data & Lakehouse",
+     "Pipelines, governance and products on a lakehouse contract — reports that reconcile, lineage you can trace."
+    ],
+    [
+     "IoT, Twin & Robotics",
+     "From sensor data to actuation — industrial IoT fabrics, twins and vision that close the loop."
+    ],
+    [
+     "Cyber & Zero-Trust",
+     "Identity-first security for people, machines and models — detection, response and audit in one program."
+    ],
+    [
+     "Agentic AI & Hyperautomation",
+     "Digital workers with roles, budgets and human checkpoints — every action logged and reversible."
+    ],
+    [
+     "Quantum & Advanced Compute",
+     "Optimization and PQC migration — every quantum-inspired run benchmarked against the best classical solver."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How the engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement pattern for Power Generation & Grid: diagnose, prove, industrialize, compound. Each gate reviews evidence with your named owners, and each gate can stop the program."
+  },
+  {
+   "t": "h2",
+   "x": "Outcomes we commit to"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Forecast error",
+     "We commit to Forecast error as a measured outcome — reported every fortnight, audited at the gate, owned by a name on both sides."
+    ],
+    [
+     "Substation outages",
+     "Substation outages moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
+    ],
+    [
+     "Flexibility activated",
+     "Flexibility activated is tracked weekly to your control owner; the number at gate three is the number finance sees"
+    ],
+    [
+     "CIP evidence",
+     "CIP evidence moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Proof from this industry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "A European TSO-DSO group",
+     "Target range down 31 on the first working slice, with the method note attached"
+    ],
+    [
+     "A global integrated energy major",
+     "The measured delta and the method note are written up on the case page — anonymized by agreement, baseline audited."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Adjacent units"
+  },
+  {
+   "t": "p",
+   "x": "The neighbouring operating units are every state change is replayable from the signed baseline across the Power Generation & Grid estate, so your control owners can interrogate any number we publish; programs that span two of them usually share one baseline."
+  },
+  {
+   "t": "cta",
+   "x": "Book a briefing with the sector practice: your metric, your regime, and an honest read on the first measurable move."
+  }
+ ],
+ "words": 848,
+ "section": "Industries",
+ "l1": "Industries",
+ "l2": "Energy & Utilities",
+ "l3": "Power Generation & Grid",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Industries",
+   "url": "/industries/"
+  },
+  {
+   "name": "Energy & Utilities",
+   "url": "/industries/energy-utilities/"
+  },
+  {
+   "name": "Power Generation & Grid",
+   "url": "/industries/energy-utilities/power-grid/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Energy & Utilities — industry hub",
+   "url": "/industries/energy-utilities/",
+   "desc": "Grid intelligence, trading optimization and safe operations for the energy transition."
+  },
+  {
+   "title": "Oil & Gas",
+   "url": "/industries/energy-utilities/oil-gas/",
+   "desc": "Upstream and downstream operators run hazardous physics under volatile markets: predictive integrity, energy e…"
+  },
+  {
+   "title": "Renewable Energy",
+   "url": "/industries/energy-utilities/renewables/",
+   "desc": "Renewable operators industrialize asset performance: turbine and inverter health, generation forecasting, PPA …"
+  },
+  {
+   "title": "Water, Waste & City Utilities",
+   "url": "/industries/energy-utilities/water-utilities/",
+   "desc": "Water and waste utilities run essential services on aging assets and thin margins: leak detection, network tel…"
+  },
+  {
+   "title": "A European TSO-DSO group",
+   "url": "/case-studies/en-01/",
+   "desc": "Forecast error down 31% — imbalance cost recovered across three control zones"
+  },
+  {
+   "title": "A global integrated energy major",
+   "url": "/case-studies/en-02/",
+   "desc": "Turnaround duration down 14% — scheduling optimization at refinery scale"
+  },
+  {
+   "title": "A national water utility",
+   "url": "/case-studies/en-03/",
+   "desc": "Non-revenue water down 21% — district metering to decision loop"
+  }
+ ],
+ "cards": [
+  {
+   "title": "Agentic AI & Hyperautomation for Power Generation & Grid",
+   "url": "/industries/energy-utilities/power-grid/capabilities/agentic-ai-hyperautomation/",
+   "tag": "Capability",
+   "desc": "Digital workers, decision hubs and workflows that recover from failure on their own — automation with human checkpoints, budgets and audit."
+  },
+  {
+   "title": "Data & Lakehouse for Power Generation & Grid",
+   "url": "/industries/energy-utilities/power-grid/capabilities/data-analytics-lakehouse/",
+   "tag": "Capability",
+   "desc": "Trusted data, delivered in near real time — pipelines, lakehouse and governance that holds up under audit."
+  },
+  {
+   "title": "Cyber & Zero-Trust for Power Generation & Grid",
+   "url": "/industries/energy-utilities/power-grid/capabilities/cybersecurity-zero-trust/",
+   "tag": "Capability",
+   "desc": "Identity, detection, resilience and AI security in one program."
+  },
+  {
+   "title": "Quantum & Advanced Compute for Power Generation & Grid",
+   "url": "/industries/energy-utilities/power-grid/capabilities/quantum-advanced-compute/",
+   "tag": "Capability",
+   "desc": "Quantum readiness, optimization and PQC migration — pragmatic advantage from emerging compute."
+  },
+  {
+   "title": "IoT, Twin & Robotics for Power Generation & Grid",
+   "url": "/industries/energy-utilities/power-grid/capabilities/iot-digital-twin-robotics/",
+   "tag": "Capability",
+   "desc": "Sensing, simulating, acting — the operations stack that turns physical assets into self-monitoring systems."
+  }
+ ]
+}

@@ -9,81 +9,100 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The contract behind Renewable Energy: signed baseline in week two, working slice by week eight, industrialized controls by week twelve, and evidence flowing to your control owner throughout."
+   "x": "Renewable operators industrialize asset performance: turbine and inverter health, generation forecasting, PPA settlement and hybrid-plant optimization. Margins live in availability percentage points and forecast accuracy — both telemetry problems. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
   },
   {
    "t": "h2",
-   "x": "Operating context"
+   "x": "The setting, described honestly"
   },
   {
    "t": "p",
-   "x": "Before proposing anything, we map the context Renewable Energy will run in — regulators, decision cadence, existing contracts — because the design that ignores context fails at the gate."
+   "x": "The work concentrates in fleet maintenance, generation forecasting, ppa/go settlement, with hybrid optimization close behind. Volume grows on every path; the decision layer has not kept up. That gap is measurable, and it is the work."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Renewable Energy",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Contracts between stages are enforced at the boundary, so schema drift fails loudly in minutes instead of quietly in a quarter."
+   "x": "What slows the operation down"
   },
   {
    "t": "p",
-   "x": "Every component in Renewable Energy has a contract, a version and a named owner. When something drifts, the ticket goes to a person, not to a committee — that is what the reference architecture is for."
-  },
-  {
-   "t": "h2",
-   "x": "Pressure points"
+   "x": "Where the friction concentrates — Renewable Energy edition:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Fleet health reactive",
-     "Fleet health reactive is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+     "Turbines/inverters fail unscheduled; availability points lost."
     ],
     [
      "Forecast precision short",
-     "When Forecast precision short is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+     "Generation forecasts feed trading poorly; imbalance costs."
     ],
     [
      "O&M planning manual",
-     "O&M planning manual costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+     "Technician routing and parts by spreadsheet; weather windows missed."
     ],
     [
      "GO/REC integrity",
-     "GO/REC integrity costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+     "Certificate provenance disputed; double-counting risk."
     ],
     [
      "PPA settlement manual",
-     "PPA settlement manual costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+     "Settlement data assembly per contract; disputes slow."
     ],
     [
      "ESG evidence thin",
-     "We treat ESG evidence thin as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Avoided-emissions claims unverified; buyers demand proof."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Compliance frame"
+   "x": "The working system, described"
+  },
+  {
+   "t": "p",
+   "x": "The proof in Renewable Energy is a working system on a real workflow. These are the builds that go live:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Fleet condition monitoring",
+     "turbine/inverter telemetry with failure modes"
+    ],
+    [
+     "Forecast stack",
+     "asset-level generation forecasts into trading"
+    ],
+    [
+     "O&M orchestration",
+     "weather-window aware maintenance planning"
+    ],
+    [
+     "GO provenance",
+     "certificate issuance/transfer anchored"
+    ],
+    [
+     "Settlement automation",
+     "PPA/GO data pipelines with evidence"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Rules we build against"
+  },
+  {
+   "t": "p",
+   "x": "Grid codes sets the floor for Renewable Energy: connection/performance duties. The build adds the evidence layer so compliance is a query, not a project."
   },
   {
    "t": "table",
-   "caption": "Regimes in scope",
+   "caption": "Regimes in scope for Renewable Energy",
    "headers": [
     "Regime",
-    "Implication"
+    "What it expects"
    ],
    "rows": [
     [
@@ -106,189 +125,18 @@
   },
   {
    "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
-    ],
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "asset health registries",
-     "Every critical asset with a health score, an owner and a maintenance decision attached."
-    ],
-    [
-     "meter data platforms",
-     "Interval readings cleaned, validated and staged for settlement-grade accuracy."
-    ],
-    [
-     "weather & generation feeds",
-     "Forecast inputs joined to actuals so planners see where the forecast lied."
-    ],
-    [
-     "SCADA / EMS cores",
-     "Grid operations integrated read-only — control stays deterministic, decisions get smarter."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLO attainment",
-     "Up 97–98.9% of tables inside their declared window on the first working slice; deeper scope moves it further"
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ],
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How we help — five priority capabilities"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "IoT, Twin & Robotics",
-     "From sensor data to actuation — industrial IoT fabrics, twins and vision that close the loop."
-    ],
-    [
-     "Data & Lakehouse",
-     "Pipelines, governance and products on a lakehouse contract — reports that reconcile, lineage you can trace."
-    ],
-    [
-     "Agentic AI & Hyperautomation",
-     "Digital workers with roles, budgets and human checkpoints — every action logged and reversible."
-    ],
-    [
-     "Blockchain & Digital Trust",
-     "Permissioned networks, credentials and provenance — digital trust regulators can inspect."
-    ],
-    [
-     "Cloud, Edge & Platform",
-     "Reliable estates at lower unit cost — hybrid multicloud, edge fleets and SRE discipline."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
+   "x": "The first two weeks"
   },
   {
    "t": "p",
-   "x": "An engagement on Renewable Energy starts with a two-week baseline audit, runs a bounded pilot against a control group, and reaches its first gate with measured deltas — before any scale decision is made."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Availability",
-     "+2-4 points"
-    ],
-    [
-     "Forecast error",
-     "Forecast error is part of the steering pack from week two: current value, signed baseline and the delta since the last gate, on one line."
-    ],
-    [
-     "O&M cost/MW",
-     "O&M cost/MW has a named owner and a fortnightly reading; the gate review compares it to the signed baseline, not to a promise."
-    ],
-    [
-     "Settlement disputes",
-     "Settlement disputes moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A European TSO-DSO group",
-     "The committed move on this metric: down 31, measured against the baseline signed in week two"
-    ],
-    [
-     "A global integrated energy major",
-     "The measured delta and the method note are written up on the case page — anonymized by agreement, baseline audited."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Adjacent units"
-  },
-  {
-   "t": "p",
-   "x": "Related sub-industry pages: identity is short-lived and authorization is deny-by-default for Energy & Utilities at scale, and every exception path degrades to human review, never to silence — each one shares the regulatory frame above while carrying its own workflow mix."
+   "x": "Engagements in Renewable Energy open smaller than you expect: one workflow, two weeks, a signed baseline on fleet health reactive. Everything after that is scoped against the measured delta, never a wish list."
   },
   {
    "t": "cta",
-   "x": "The measurement comes first: two weeks to a signed baseline under the rules your sub-sector is actually held to."
+   "x": "A value assessment prices the delta in your estate before anything is signed: operations in Renewable Energy, measured against your baseline, in two weeks."
   }
  ],
- "words": 826,
+ "words": 326,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Energy & Utilities",

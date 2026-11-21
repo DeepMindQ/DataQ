@@ -9,37 +9,11 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "How Healthcare & Life Sciences runs when it is engineered for Healthcare & Life Sciences: bounded scope per gate, platform evidence generated in-flight, and outcomes stated as deltas against the number we signed together."
-  },
-  {
-   "t": "h2",
-   "x": "Where the industry stands"
-  },
-  {
-   "t": "p",
    "x": "Healthcare generates the most consequential data in the economy and spends most of it unread. Radiology backlogs, prior-authorization ping-pong, coding leakage, clinical trial recruitment shortfalls — each is an information problem wearing an operational costume. The organizations improving outcomes are the ones treating data interoperability (FHIR, TEFCA-style exchange) and clinical-grade AI governance as infrastructure, not innovation theater."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "decision-fabric",
-   "title": "Decision fabric — how Dataq Software composes Healthcare & Life Sciences capability",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Signals, context and policy converge at the decision layer; every scored decision is logged with its inputs so it can be replayed at audit."
-  },
-  {
-   "t": "h2",
-   "x": "The pressure is structural"
+   "x": "Sector ground truth"
   },
   {
    "t": "p",
@@ -47,40 +21,44 @@
   },
   {
    "t": "h2",
-   "x": "Pressure points we hear most"
+   "x": "Pressures that will not wait"
+  },
+  {
+   "t": "p",
+   "x": "For Healthcare & Life Sciences, as operators describe it:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Clinician burden and documentation debt",
-     "Clinician burden and documentation debt is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+     "Physicians spend hours daily on notes, orders and inbox; burnout drives attrition. Documentation AI exists but stalls on integration with the EHR and on compliance sign-off."
     ],
     [
      "Prior authorization and RCM friction",
-     "We treat Prior authorization and RCM friction as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Prior auth, coding and denial management consume staff across payer-provider boundaries. Denials arrive for documentation that existed but was never surfaced."
     ],
     [
      "Interoperability gaps despite FHIR mandates",
-     "We treat Interoperability gaps despite FHIR mandates as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Imaging, genomics, claims and social determinants live in separate estates; exchange compliance is achieved technically but decision support still reads silos."
     ],
     [
      "PHI concentration and ransomware exposure",
-     "PHI concentration and ransomware exposure is one of the pressures we hear first in estates like yours — the diagnostic puts a measured number on it before anything is promised."
+     "Health records carry the highest breach value; ransomware has shuttered hospitals. Legacy devices and third-party vendors widen the surface beyond the IT team's control."
     ],
     [
      "Imaging and diagnostic backlogs",
-     "Imaging and diagnostic backlogs shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
+     "Radiology and pathology queues grow while reporting stays manual; AI triage exists but sits outside the clinical workflow, so nobody acts on it."
     ],
     [
      "Trial recruitment and RWE pipelines manual",
-     "We treat Trial recruitment and RWE pipelines manual as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Protocol eligibility matching against EHR data remains chart-review work; real-world evidence assemblies take months per study."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "How Dataq Software responds"
+   "x": "How we respond"
   },
   {
    "t": "p",
@@ -88,106 +66,39 @@
   },
   {
    "t": "h2",
-   "x": "Engineering standards & stack"
+   "x": "Where programs pay first"
+  },
+  {
+   "t": "p",
+   "x": "Sequenced for Healthcare & Life Sciences by where the measured delta lands first:"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
+     "Clinical AI inside the workflow, not beside it",
+     "EHR-integrated documentation, triage and coding with clinical governance boards and autonomy ladders"
     ],
     [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
+     "Interoperable data as infrastructure",
+     "FHIR-native pipelines, terminologies (SNOMED, LOINC, ICD) and lineage for every analytic"
     ],
     [
-     "freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
+     "Assume-breach security for PHI",
+     "zero-trust estates, medical-device segmentation and rehearsed clinical-continuity playbooks"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "LIMS & trial systems",
-     "Lab and trial data governed from instrument to submission — sample lineage intact."
-    ],
-    [
-     "supply & pharmacy chains",
-     "Drug supply integrity monitored end to end — shortages predicted, not suffered."
-    ],
-    [
-     "pharmacovigilance intake",
-     "Adverse events structured at intake, with case timelines the regulator can replay."
-    ],
-    [
-     "EHR integration",
-     "Clinical context fetched under consent, in FHIR terms — decision support inside the clinician's flow."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ],
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Regulatory posture"
+   "x": "Regulatory ground truth"
   },
   {
    "t": "table",
-   "caption": "Regimes that shape delivery",
+   "caption": "Regimes that shape delivery here",
    "headers": [
     "Regime",
-    "What it means for programs"
+    "What it expects"
    ],
    "rows": [
     [
@@ -217,98 +128,11 @@
    ]
   },
   {
-   "t": "h2",
-   "x": "Priority programs"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Clinical AI inside the workflow, not beside it",
-     "EHR-integrated documentation, triage and coding with clinical governance boards and autonomy ladders"
-    ],
-    [
-     "Interoperable data as infrastructure",
-     "FHIR-native pipelines, terminologies (SNOMED, LOINC, ICD) and lineage for every analytic"
-    ],
-    [
-     "Assume-breach security for PHI",
-     "Zero-trust estates, medical-device segmentation and rehearsed clinical-continuity playbooks"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How a delivery runs"
-  },
-  {
-   "t": "p",
-   "x": "A delivery for Healthcare & Life Sciences runs on rhythm, not ritual: the baseline is signed in the first weeks, evidence is generated as the work happens, and the gate at each stage has real stop authority. Programs that miss their evidence stop."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to in this sector"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Clinician documentation time",
-     "Clinician documentation time is reported against the signed baseline with the evidence attached; if the number stops moving, the program says so."
-    ],
-    [
-     "Radiology reporting turnaround",
-     "Radiology reporting turnaround has a named owner and a fortnightly reading; the gate review compares it to the signed baseline, not to a promise."
-    ],
-    [
-     "Prior-authorization cycle time",
-     "Prior-authorization cycle time moves at gates, not in slideware: the value claimed at each gate is reconciled with your team before it enters the ledger."
-    ],
-    [
-     "Claim denial overturn rate",
-     "Claim denial overturn rate carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
-    ],
-    [
-     "Trial pre-screening throughput",
-     "10x chart-review equivalent on governed cohorts"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A 12-hospital US health system",
-     "Written up as a case study: the baseline, the measured outcome and the method, with client identity withheld by agreement."
-    ],
-    [
-     "A national health insurer",
-     "Target range down 62 on the first working slice, with the method note attached"
-    ],
-    [
-     "A European biopharma group",
-     "Target range 10x on the first working slice, with the method note attached"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Capability pages for this industry"
-  },
-  {
-   "t": "p",
-   "x": "Every tower publishes an industry-calibrated lane here; the cards below are the entry points, each backed by the proof patterns above."
-  },
-  {
    "t": "cta",
-   "x": "The first step is a signed baseline, not a proposal — the value assessment exists to price the delta before anything is committed."
+   "x": "If programs in Healthcare & Life Sciences is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
   }
  ],
- "words": 1013,
+ "words": 521,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Healthcare & Life Sciences",

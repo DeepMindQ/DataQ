@@ -9,60 +9,42 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "What Food Safety & Food Retail means at Dataq Software: the scope we sign, the architecture we ship, the evidence generated in-flight, and the per field outcomes measured against your audited baseline."
+   "x": "Food retail carries the consumer-facing safety duty: fresh-chain quality, supplier verification, recall readiness and waste economics. Telemetry and traceability turn compliance cost into customer trust and margin. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
   },
   {
    "t": "h2",
-   "x": "Operating context"
+   "x": "The operating context"
   },
   {
    "t": "p",
-   "x": "The operating surface here spans Cold-chain management, Supplier verification, Recall response, Fresh ordering, Waste management. For each workflow the sequence is identical: measure, sign, build a bounded slice, verify, industrialize — no workflow skips its baseline."
+   "x": "The work concentrates in cold-chain management, supplier verification, recall response, with fresh ordering close behind. The paths are busy; the decisions are late. Closing that delay is worth more than any single tool purchase."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Food Safety & Food Retail",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Each stage passes its output forward under a typed contract — schema, owner and freshness agreed in advance; the audit path shares the timeline with the data path."
+   "x": "Where this bites first"
   },
   {
    "t": "p",
-   "x": "What holds Food Safety & Food Retail together is discipline at the boundaries — typed contracts between stages, versioned releases, and a replay trail for every decision. The diagram above shows how the pieces compose; the gate reviews are what keep them honest."
-  },
-  {
-   "t": "h2",
-   "x": "Pressure points"
+   "x": "As operators describe it — Food Safety & Food Retail edition:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Cold chain unverified",
-     "Cold chain unverified is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+     "Store/warehouse temperature evidence manual; spoilage."
     ],
     [
      "Supplier quality opaque",
-     "We treat Supplier quality opaque as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Supplier compliance evidence patchwork; risk reactive."
     ],
     [
      "Recall readiness low",
-     "When Recall readiness low is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+     "Recall scoping slow; response manual."
     ],
     [
      "Fresh demand guessing",
-     "We treat Fresh demand guessing as a symptom with a cause — the diagnosis traces it to the decision or the contract that produces it."
+     "Day-part demand unmodeled; waste high."
     ],
     [
      "Loyalty/payment exposure",
@@ -70,20 +52,57 @@
     ],
     [
      "Sourcing claims challenged",
-     "When Sourcing claims challenged is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+     "Sustainability claims unsubstantiated."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Compliance frame"
+   "x": "The working system, described"
+  },
+  {
+   "t": "p",
+   "x": "Capability in Food Safety & Food Retail is not abstract: each tower lands as a named build on a named workflow. The patterns below are what we deploy there."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Cold-chain fabric",
+     "store/warehouse/transport telemetry"
+    ],
+    [
+     "Supplier risk platform",
+     "certifications/audits/recalls scored"
+    ],
+    [
+     "Recall orchestration",
+     "lot-level scoping and notification workflows"
+    ],
+    [
+     "Fresh demand",
+     "day-part/weather models"
+    ],
+    [
+     "Sourcing evidence",
+     "claim-bearing SKUs anchored"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The compliance map, in plain words"
+  },
+  {
+   "t": "p",
+   "x": "Food-safety regimes sets the floor for Food Safety & Food Retail: temperature/traceability duties. The build adds the evidence layer so compliance is a query, not a project."
   },
   {
    "t": "table",
-   "caption": "Regimes in scope",
+   "caption": "Regimes in scope for Food Safety & Food Retail",
    "headers": [
     "Regime",
-    "Implication"
+    "What it expects"
    ],
    "rows": [
     [
@@ -106,189 +125,18 @@
   },
   {
    "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Delta / Iceberg tables",
-     "Open table formats underneath everything we build, so your data never belongs to a vendor."
-    ],
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ],
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     " freshness SLOs",
-     "Data age treated like uptime — a budget, an owner and an alert when it slips."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "food-safety labs",
-     "Safety results joined to lots and suppliers — traceability that works the day you need it."
-    ],
-    [
-     "cold-chain telemetry",
-     "Temperature integrity tracked from dock to shelf, with excursions raised as events, not discovered as losses."
-    ],
-    [
-     "traceability ledgers",
-     "Lot-level history from source to shelf, verifiable by the parties who need to verify it."
-    ],
-    [
-     "farm management systems",
-     "Field operations data joined to yield and weather — agronomy argued with numbers."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLO attainment",
-     "Up 97–98.9% of tables inside their declared window, with the method note attached so your analysts can reproduce it"
-    ],
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ],
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How we help — five priority capabilities"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "IoT, Twin & Robotics",
-     "From sensor data to actuation — industrial IoT fabrics, twins and vision that close the loop."
-    ],
-    [
-     "Data & Lakehouse",
-     "Pipelines, governance and products on a lakehouse contract — reports that reconcile, lineage you can trace."
-    ],
-    [
-     "Agentic AI & Hyperautomation",
-     "Digital workers with roles, budgets and human checkpoints — every action logged and reversible."
-    ],
-    [
-     "Applied AI & GenAI",
-     "Strategy through production operations — models evaluated, retrieval grounded, cost per answer owned."
-    ],
-    [
-     "Blockchain & Digital Trust",
-     "Permissioned networks, credentials and provenance — digital trust regulators can inspect."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
+   "x": "Where a program starts"
   },
   {
    "t": "p",
-   "x": "An engagement on Food Safety & Food Retail starts with a two-week baseline audit, runs a bounded pilot against a control group, and reaches its first gate with measured deltas — before any scale decision is made."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Cold-chain compliance",
-     "Cold-chain compliance defines success for this pattern and is audited against the week-two baseline at every gate"
-    ],
-    [
-     "Recall scoping",
-     "Recall scoping is tracked weekly to your control owner; the number at gate three is the number finance sees"
-    ],
-    [
-     "Fresh waste",
-     "Fresh waste moves at gates, not in slideware: the value claimed at each gate is reconciled with your team before it enters the ledger."
-    ],
-    [
-     "Supplier risk",
-     "Supplier risk is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A European agri-cooperative (4,200 farms)",
-     "The measured delta and the method note are written up on the case page — anonymized by agreement, baseline audited."
-    ],
-    [
-     "A global coffee trader",
-     "You can read the shape of this engagement on the case page: baseline locked early, outcome measured against it, method available under NDA."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Adjacent units"
-  },
-  {
-   "t": "p",
-   "x": "No capability ships alone: the links below are the compositions this sub-industry pattern most often travels with, chosen by observed delivery patterns rather than menu logic."
+   "x": "Engagements in Food Safety & Food Retail open smaller than you expect: one workflow, two weeks, a signed baseline on cold chain unverified. Everything after that is scoped against the measured delta, never a wish list."
   },
   {
    "t": "cta",
-   "x": "The measurement comes first: two weeks to a signed baseline under the rules your sub-sector is actually held to."
+   "x": "The next step is small and real: one working session on operations in Food Safety & Food Retail, your data, and a written feasibility read you can circulate."
   }
  ],
- "words": 870,
+ "words": 327,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Agriculture & Food Systems",

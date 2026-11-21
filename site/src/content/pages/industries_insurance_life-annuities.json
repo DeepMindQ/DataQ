@@ -9,81 +9,100 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "A working definition of Life & Annuities for Insurance & Risk: engineered controls, named owners, weekly evidence, and a signed baseline so every claim of improvement can be replayed line by line."
+   "x": "Life books run on decades-long promises: underwriting quality at issue, servicing responsiveness across 30-year relationships, and actuarial integrity across regime changes (IFRS 17/LDTI). The machinery deciding those outcomes is data and document heavy — ideal ground for governed automation. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
   },
   {
    "t": "h2",
-   "x": "Operating context"
+   "x": "What this environment runs on"
   },
   {
    "t": "p",
-   "x": "Before proposing anything, we map the context Life & Annuities will run in — regulators, decision cadence, existing contracts — because the design that ignores context fails at the gate."
+   "x": "The work concentrates in underwriting evidence assembly, policy servicing transactions, claims/beneficiary processing, with actuarial valuation data prep close behind. Volume grows on every path; the decision layer has not kept up. That gap is measurable, and it is the work."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
-  },
-  {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Life & Annuities",
-   "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
-   ],
-   "note": "Contracts between stages are enforced at the boundary, so schema drift fails loudly in minutes instead of quietly in a quarter."
+   "x": "What actually breaks today"
   },
   {
    "t": "p",
-   "x": "Every component in Life & Annuities has a contract, a version and a named owner. When something drifts, the ticket goes to a person, not to a committee — that is what the reference architecture is for."
-  },
-  {
-   "t": "h2",
-   "x": "Pressure points"
+   "x": "Named from the floor, not from a framework — Life & Annuities edition:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Underwriting evidence assembly",
-     "Underwriting evidence assembly is where programs like this usually start: unglamorous, measurable and worth more than the technology conversation it replaces."
+     "APS records, paramedical data and financial underwriting arrive as documents; assembly consumes days per case."
     ],
     [
      "Actuarial data wrangling",
-     "Actuarial data wrangling is one of the pressures we hear first in estates like yours — the diagnostic puts a measured number on it before anything is promised."
+     "Valuation and experience studies assemble from extracts with manual reconciliation; regime changes (IFRS 17) expose the debt."
     ],
     [
      "Surrender and service queues",
-     "Surrender and service queues shows up in the first conversations with every team we meet in this space; the design gate assigns it an owner and a countermeasure."
+     "Surrender, loan and beneficiary transactions route through document-heavy queues with abandonment risk."
     ],
     [
      "Health and PII concentration",
-     "Health and PII concentration costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+     "Underwriting health data and beneficiary PII create long-retention sensitive estates; PQ exposure deep."
     ],
     [
      "Admin platform drag",
-     "When Admin platform drag is the pain, the baseline audit usually confirms it is structural, not personal — the fix is designed for the system, not the people."
+     "Policy admin systems resist product change; new products take quarters."
     ],
     [
      "In-force management blind spots",
-     "In-force management blind spots costs real money every quarter it goes unmeasured; the first two weeks of the engagement exist to price it honestly."
+     "Lapse and mortality experience signals arrive late; retention and repricing actions lag."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Compliance frame"
+   "x": "The working system, described"
+  },
+  {
+   "t": "p",
+   "x": "Capability in Life & Annuities is not abstract: each tower lands as a named build on a named workflow. The patterns below are what we deploy there."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Underwriting evidence agent",
+     "APS/paramedical/financial docs classified, extracted and assembled"
+    ],
+    [
+     "Actuarial data workbench",
+     "valuation and experience pipelines with lineage for IFRS 17"
+    ],
+    [
+     "Long-retention data protection",
+     "classification-aware controls for health/PII archives"
+    ],
+    [
+     "Admin modernization",
+     "strangler decomposition of policy admin wrappers"
+    ],
+    [
+     "Lapse-signal models",
+     "payment and engagement signals predicting lapse with action policy"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Regulatory ground truth"
+  },
+  {
+   "t": "p",
+   "x": "Ifrs 17 / ldti — actuarial data and reporting discipline. Programs here are designed against these duties from the first sprint; evidence is a by-product of running the system, not an audit-season project."
   },
   {
    "t": "table",
-   "caption": "Regimes in scope",
+   "caption": "Regimes in scope for Life & Annuities",
    "headers": [
     "Regime",
-    "Implication"
+    "What it expects"
    ],
    "rows": [
     [
@@ -106,189 +125,18 @@
   },
   {
    "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ],
-    [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
-    ],
-    [
-     "Unity Catalog governance",
-     "A single governance plane over tables, models and notebooks — access your auditors can replay."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "claims document intake",
-     "Documents classified and extracted on arrival — the adjuster starts with structure, not a PDF pile."
-    ],
-    [
-     "claims orchestration",
-     "Every claim moving through one orchestrated flow with SLAs visible to the people accountable for them."
-    ],
-    [
-     "policy admin platforms",
-     "Policy truth kept in the system of record; analytics and service read from it, not around it."
-    ],
-    [
-     "actuarial & pricing stores",
-     "Pricing basis and reserving data governed as one truth for underwriting and finance."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "freshness SLO attainment",
-     "Up 97–99% of tables inside their declared window per 1,000 claims, reported weekly against the signed baseline"
-    ],
-    [
-     "pipeline breakage MTTR",
-     "Breakage restored and measured — the repair clock starts at alert, not at someone noticing."
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ],
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How we help — five priority capabilities"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Agentic AI & Hyperautomation",
-     "Digital workers with roles, budgets and human checkpoints — every action logged and reversible."
-    ],
-    [
-     "Data & Lakehouse",
-     "Valuation and experience pipelines with lineage for IFRS 17 — regime-change readiness without panic"
-    ],
-    [
-     "Cyber & Zero-Trust",
-     "Identity-first security for people, machines and models — detection, response and audit in one program."
-    ],
-    [
-     "Cloud, Edge & Platform",
-     "Reliable estates at lower unit cost — hybrid multicloud, edge fleets and SRE discipline."
-    ],
-    [
-     "Applied AI & GenAI",
-     "Payment and engagement signals predicting lapse with action policy — retention actions timely"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
+   "x": "Where a program starts"
   },
   {
    "t": "p",
-   "x": "An engagement on Life & Annuities starts with a two-week baseline audit, runs a bounded pilot against a control group, and reaches its first gate with measured deltas — before any scale decision is made."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Underwriting case cycle time",
-     "Progress on Underwriting case cycle time is measured in your environment, on your data — the method note ships with the number so your analysts can reproduce it."
-    ],
-    [
-     "Servicing transaction STP",
-     "Servicing transaction STP is tracked weekly to your control owner; the number at gate three is the number finance sees"
-    ],
-    [
-     "Valuation prep effort",
-     "Valuation prep effort defines success for this pattern and is audited against the week-two baseline at every gate"
-    ],
-    [
-     "Lapse-save actions",
-     "Lapse-save actions carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A top-5 global P&C insurer",
-     "The engagement is documented on its case page — what was measured, what moved and how the evidence was gathered."
-    ],
-    [
-     "A leading life insurer (North America)",
-     "The measured delta and the method note are written up on the case page — anonymized by agreement, baseline audited."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Adjacent units"
-  },
-  {
-   "t": "p",
-   "x": "Adjacent delivery lanes: Property & Casualty, Health Insurance & Benefits, Reinsurance & Commercial Lines — each with its own capability alignments under /industries/insurance/. Where two lanes share a metric, one program can carry both. Where two lanes share a metric, one program can carry both. Where two lanes share a metric, one program can carry both."
+   "x": "For Life & Annuities, the first move costs little: a two-week diagnostic on underwriting evidence assembly, your data, one honest baseline. The scoped proposal only follows if the measured delta justifies it."
   },
   {
    "t": "cta",
-   "x": "Start with a value assessment calibrated to your sub-sector — the regulatory mapping is part of the two weeks."
+   "x": "A value assessment prices the delta in your estate before anything is signed: operations in Life & Annuities, measured against your baseline, in two weeks."
   }
  ],
- "words": 896,
+ "words": 432,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Insurance & Risk",

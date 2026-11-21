@@ -9,294 +9,95 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "How Data & Lakehouse for Reinsurance & Commercial Lines runs when it is engineered for Insurance & Risk: bounded scope per gate, platform evidence generated in-flight, and outcomes stated as deltas against the number we signed together."
-  },
-  {
-   "t": "h2",
-   "x": "Overview"
+   "x": "Data & Lakehouse in Reinsurance & Commercial Lines is how Bordereaux intake/reconciliation and Treaty settlement stop leaning on manual work — both decide the margin. The build: we make the source systems agree: one governed definition per metric, streaming where the decision is time-critical, batch where it is not."
   },
   {
    "t": "p",
-   "x": "The short version of Data & Lakehouse for Reinsurance & Commercial Lines: named metrics, named owners, evidence that travels. The sections below walk through the pattern, the components and the commitments."
+   "x": "The Data & Lakehouse ground truth in Reinsurance & Commercial Lines: Reinsurance and specialty commercial books trade in complexity: treaty structures, cat exposure, bordereaux reconciliation and capital optimization. The data flows between cedants, reinsurers and brokers are still largely spreadsheets — which is why settlement cycles and model confidence suffer."
+  },
+  {
+   "t": "p",
+   "x": "Underneath settlement evidence bilateral sits the same story every time: decisions assembled by hand at a scale that stopped making sense. The first artifact of any engagement here is the measurement that proves it."
   },
   {
    "t": "h2",
-   "x": "Reference architecture"
+   "x": "Where the work piles up"
+  },
+  {
+   "t": "p",
+   "x": "Reinsurance & Commercial Lines: the queues and waits that come up first,"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Settlement evidence bilateral",
+     "Treaty settlement disputes rest on each party's numbers; evidence chains are procedural."
+    ],
+    [
+     "Underwriting appetite inconsistency",
+     "Specialty risks priced on judgment with variable evidence; appetite drifts by desk."
+    ],
+    [
+     "Bordereaux reconciliation pain",
+     "Ceded premium/loss bordereaux arrive in formats and qualities; reconciliation consumes analysts and hides data quality issues."
+    ],
+    [
+     "Portfolio optimization ceilings",
+     "Retro programs and cat capacity buying are combinatorial; incumbent methods stop early."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Engineering that moves the number"
+  },
+  {
+   "t": "p",
+   "x": "In Reinsurance & Commercial Lines, the pattern is bordereaux engine — format-normalized intake with auto-reconciliation and quality scoring. 70%+ auto-reconciled sits on top as the measured result, tracked from the signed baseline onward. Around it, we make the source systems agree: one governed definition per metric, streaming where the decision is time-critical, batch where it is not."
   },
   {
    "t": "diagram",
    "kind": "pipeline",
-   "title": "Governed lakehouse pipeline — Data & Lakehouse for Reinsurance & Commercial Lines",
+   "title": "How the work flows once built — Reinsurance & Commercial Lines, Data & Lakehouse",
    "labels": [
-    "Source systems",
-    "Ingest & contracts",
-    "Lakehouse storage",
-    "Feature & metric layer",
-    "Serving & BI",
-    "Decision feedback"
+    "Bordereaux intake/reconciliation",
+    "Bordereaux engine",
+    "Treaty settlement",
+    "signed baseline"
    ],
-   "note": "Contracts between stages are enforced at the boundary, so schema drift fails loudly in minutes instead of quietly in a quarter."
+   "note": "Named stages, not generic boxes — this is the Reinsurance & Commercial Lines path as built."
+  },
+  {
+   "t": "h2",
+   "x": "From baseline to working slice"
   },
   {
    "t": "p",
-   "x": "The reference pattern behind Data & Lakehouse for Reinsurance & Commercial Lines is boring on purpose: contracts at every boundary, an owner per component, and evidence captured where the work happens. Boring architecture is what survives contact with an audit."
+   "x": "Nothing scales before the baseline is signed. settlement evidence bilateral is measured with your finance and risk leads in the room, then one working path — Bordereaux engine — goes live inside the quarter. Baselines are signed in the first two weeks, the working slice lands inside the quarter, and the value ledger stays open to your finance team."
+  },
+  {
+   "t": "h2",
+   "x": "The control posture"
   },
   {
    "t": "p",
-   "x": "The reference pattern behind Data & Lakehouse for Reinsurance & Commercial Lines is boring on purpose: contracts at every boundary, an owner per component, and evidence captured where the work happens. Boring architecture is what survives contact with an audit."
+   "x": "The Data & Lakehouse control frame for Reinsurance & Commercial Lines: Solvency II / RBC (capital and reserving discipline); Contract certainty rules (documentation timeliness); AML/reputational screening (counterparty duties). Controls are designed against these duties up front — identity, access, retention and explainability are architectural decisions here, not audit-season retrofits."
   },
   {
    "t": "h2",
-   "x": "Why this matters in Insurance & Risk"
+   "x": "Where a program starts"
   },
   {
    "t": "p",
-   "x": "Data & Lakehouse for Reinsurance & Commercial Lines adapts the standard pattern to Insurance & Risk — the governance is sector-calibrated, the delivery standard is not."
-  },
-  {
-   "t": "h2",
-   "x": "Pressure points we attack"
-  },
-  {
-   "t": "h2",
-   "x": "How we deliver it here"
-  },
-  {
-   "t": "p",
-   "x": "The build sequence is deliberate: contracts and identity first, the working decision slice second, the verification harness third — because a Data & Lakehouse for Reinsurance & Commercial Lines capability without its eval gate is just another unattended automation."
-  },
-  {
-   "t": "h2",
-   "x": "Services behind the pattern"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Lakehouse Architecture & Migration",
-     "A no-theater description of Lakehouse Architecture & Migration: what ships first, what it touches at operational stores, how it is verified, and the."
-    ],
-    [
-     "Real-Time Streaming & Event-Driven Decisioning",
-     "The Dataq Software build of Real-Time Streaming & Event-Driven Decisioning: concrete interfaces at core systems, measured movement on event-to-action."
-    ],
-    [
-     "Enterprise BI & Executive Analytics",
-     "A no-theater description of Enterprise BI & Executive Analytics: what ships first, what it touches at operational stores, how it is verified, and the."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Engineering standards & stack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "dbt transformation graph",
-     "Tested, documented models with lineage exposure — the transform layer your analysts can actually read."
-    ],
-    [
-     "streaming ingest",
-     "Events land in seconds, not overnight batches — the precondition for decisions that happen in the moment."
-    ],
-    [
-     "cost-aware clustering",
-     "Workloads land on the cheapest compute that still meets the latency budget."
-    ],
-    [
-     "data contracts",
-     "Typed schemas with owners and freshness expectations, agreed before a pipeline is allowed to ship."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Integration surface"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "actuarial & pricing stores",
-     "Pricing basis and reserving data governed as one truth for underwriting and finance."
-    ],
-    [
-     "reinsurance reporting",
-     "Cession data reconciled before the treaty report is due, not after the cedent asks."
-    ],
-    [
-     "claims orchestration",
-     "Every claim moving through one orchestrated flow with SLAs visible to the people accountable for them."
-    ],
-    [
-     "claims document intake",
-     "Documents classified and extracted on arrival — the adjuster starts with structure, not a PDF pile."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Operational telemetry"
-  },
-  {
-   "t": "p",
-   "x": "What we watch so you do not have to ask:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "batch window",
-     "Batch windows measured against the plan every run — the number reported is the observed one."
-    ],
-    [
-     "query p95",
-     "Query latency measured at p95 from real workloads — the number users feel is the number reported."
-    ],
-    [
-     "freshness SLO attainment",
-     "Up 97–98.9% of tables inside their declared window per 1,000 claims, reported weekly against the signed baseline"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Failure modes & the guards we ship"
-  },
-  {
-   "t": "p",
-   "x": "What usually goes wrong, and the specific guard in this build:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Cost creep",
-     "Unit costs on a published budget with alerts at the threshold — creep is caught by the meter, not by the invoice."
-    ],
-    [
-     "Metric anarchy",
-     "One definition per metric, owned and versioned — the dashboard and the board pack cannot disagree."
-    ],
-    [
-     "Silent schema drift",
-     "Contracts enforced at the boundary — schema drift fails the pipeline loudly, in minutes."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Compliance frame"
-  },
-  {
-   "t": "table",
-   "caption": "Regimes shaping this capability",
-   "headers": [
-    "Regime",
-    "Implication"
-   ],
-   "rows": [
-    [
-     "Solvency II / RBC",
-     "capital and reserving discipline"
-    ],
-    [
-     "Contract certainty rules",
-     "documentation timeliness"
-    ],
-    [
-     "Solvency II / NAIC RBC regimes",
-     "reserving, capital and model governance under supervisory review"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How a delivery runs"
-  },
-  {
-   "t": "p",
-   "x": "The rhythm for Data & Lakehouse for Reinsurance & Commercial Lines: measure first, prove on real data, industrialize what survived the gate, and review the delta every fortnight with the people accountable for the number."
-  },
-  {
-   "t": "h2",
-   "x": "Where this fits in the portfolio"
-  },
-  {
-   "t": "p",
-   "x": "Data & Lakehouse for Reinsurance & Commercial Lines rarely ships alone. The portfolio view shows the services and platforms it draws on — and the ones it feeds — so sequencing decisions are made with the whole estate in view."
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Quantum & Advanced Compute for Reinsurance & Commercial Lines",
-     "Quantum & Advanced Compute for Reinsurance & Commercial Lines shares the control trail with this capability — evidence captured once, reused everywhere it is audited."
-    ],
-    [
-     "Applied AI & GenAI for Reinsurance & Commercial Lines",
-     "Where Applied AI & GenAI for Reinsurance & Commercial Lines fits: the same baseline-and-gate discipline applies, with the surfaces adapted to what that part of the portfolio actually runs."
-    ],
-    [
-     "Insurance & Risk",
-     "A working definition of Insurance & Risk for Insurance & Risk: engineered controls, named owners, weekly evidence, and a signed baseline so every."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you receive"
-  },
-  {
-   "t": "p",
-   "x": "The quarter-close package, built to be handed over rather than demonstrated:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Baseline diagnostic",
-     "The starting position for every metric in scope, measured with your team and signed before build work begins."
-    ],
-    [
-     "Decision and control map",
-     "Every decision the system makes, who owns it, and where the human checkpoint sits."
-    ],
-    [
-     "Evidence pack",
-     "The artifacts your auditors ask for — control tests, decision trails and gate reviews in one place."
-    ],
-    [
-     "Value ledger",
-     "The running record of measured deltas against the signed baseline, reconciled with your finance team."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Bordereaux automation",
-     "Bordereaux automation carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
-    ],
-    [
-     "Settlement cycle",
-     "Settlement cycle is tracked weekly to your control owner; the number at gate three is the number finance sees"
-    ]
-   ]
+   "x": "Data & Lakehouse engagements in Reinsurance & Commercial Lines open smaller than you expect: one workflow (settlement evidence bilateral), two weeks, a signed baseline. Everything after that is scoped against the measured delta, never a wish list."
   },
   {
    "t": "cta",
-   "x": "Talk to the practice lead about this capability — bring the decision you need to move, leave with a measurement plan."
+   "x": "A value assessment prices the delta in your estate before anything is signed: Data & Lakehouse for Reinsurance & Commercial Lines, measured against your baseline, in two weeks."
   }
  ],
- "words": 918,
+ "words": 475,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Insurance & Risk",
