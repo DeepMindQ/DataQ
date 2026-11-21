@@ -1,0 +1,649 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Single-theme decision (documented 2026-11-20, Wave 1 CHG-093):
+   The site ships light-theme only; the legacy unused .dark token block was removed. */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* ── DataQ Soft brand system (sampled from dataq_logo.png) ─────────────
+     Orange block #FE5722 · navy wordmark #18142D · white.
+     The invented cyan/teal tokens were removed in Wave 1 (CHG-007).     */
+  --color-brand: #fe5722;          /* DataQ Orange — primary accent       */
+  --color-brand-hover: #e04a17;    /* button hover                        */
+  --color-brand-deep: #c2410c;     /* text-safe orange on white (AA)      */
+  --color-brand-300: #fe9c77;      /* text-safe orange on navy (AA)       */
+  --color-brand-tint: #fff3ee;     /* soft backgrounds / washes           */
+
+  --color-navy-950: #0f0c20;       /* deepest fields, gradient ends       */
+  --color-navy-900: #14102a;       /* footer / utility bars               */
+  --color-navy-800: #18142d;       /* primary dark surface (wordmark)     */
+  --color-navy-700: #221d3a;       /* elevated dark panels, glass cards   */
+  --color-navy-600: #2c2648;       /* borders/dividers on dark            */
+  --color-navy-500: #3a3358;       /* muted dark accents                  */
+
+  --color-mist: #f6f7fb;           /* alternating light sections          */
+  --color-line: #e5e7f0;           /* hairlines and card borders          */
+  --color-slate-body: #46425a;     /* navy-tinted body text on white      */
+
+  --font-display: var(--font-sora), "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  /* motion tokens (CHG-095) */
+  --dur-1: 150ms;
+  --dur-2: 300ms;
+  --dur-3: 600ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* z-index scale (CHG-090): header 50 · mega 40 · overlay 100 · toast 200 */
+  --radius: 0.625rem;
+  --background: #ffffff;
+  --foreground: #18142d;
+  --card: #ffffff;
+  --card-foreground: #18142d;
+  --popover: #ffffff;
+  --popover-foreground: #18142d;
+  --primary: #fe5722;
+  --primary-foreground: #ffffff;
+  --secondary: #f6f7fb;
+  --secondary-foreground: #18142d;
+  --muted: #f6f7fb;
+  --muted-foreground: #6e6987;
+  --accent: #fff3ee;
+  --accent-foreground: #c2410c;
+  --destructive: #dc2626;
+  --border: #e5e7f0;
+  --input: #e5e7f0;
+  --ring: #fe5722;
+  /* chart palette: orange, navy, slate, amber, steel (CHG-028) */
+  --chart-1: #fe5722;
+  --chart-2: #221d3a;
+  --chart-3: #94a3b8;
+  --chart-4: #f59e0b;
+  --chart-5: #475569;
+  --sidebar: #f6f7fb;
+  --sidebar-foreground: #18142d;
+  --sidebar-primary: #fe5722;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #fff3ee;
+  --sidebar-accent-foreground: #c2410c;
+  --sidebar-border: #e5e7f0;
+  --sidebar-ring: #fe5722;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+    /* Menu-overflow guard (hotfix 2026-11-20): `clip` never creates a scroll
+       container, so the sticky header keeps working while no stray wide
+       element can ever make the page scroll sideways again. */
+    overflow-x: clip;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    color: var(--color-slate-body);
+    background: #ffffff;
+    font-size: 16px;
+    font-feature-settings: "cv11", "ss01";
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-navy-800);
+    font-feature-settings: "liga" 0, "clig" 0;
+  }
+  /* unified focus style (CHG-091): one global focus-visible, orange */
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+/* ── Fluid type scale (CHG-044) — Fortune-100 scale with clamp() ─────── */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+.text-display-1 {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5.2vw, 72px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+.text-display-2 {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3.6vw, 48px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+.text-display-3 {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+.text-body-lg {
+  font-size: clamp(15px, 1.1vw, 16.5px);
+  line-height: 1.65;
+}
+
+/* ── Container + rhythm (CHG-047 / CHG-049) ──────────────────────────── */
+.container-dq {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 40px);
+}
+.section-y {
+  padding-block: clamp(80px, 10vw, 144px);
+}
+.section-y-sm {
+  padding-block: clamp(56px, 7vw, 96px);
+}
+
+/* ── Sanctioned gradients (CHG-035) — ad-hoc gradients prohibited ────── */
+.grad-navy-field {
+  background-image: linear-gradient(160deg, #221d3a 0%, #18142d 55%, #0f0c20 100%);
+}
+.grad-orange-glow {
+  background-image: radial-gradient(58% 85% at 82% 10%, rgba(254, 87, 34, 0.22) 0%, rgba(254, 87, 34, 0) 62%);
+}
+.grad-orange-glow-soft {
+  background-image: radial-gradient(46% 70% at 12% 88%, rgba(254, 87, 34, 0.13) 0%, rgba(254, 87, 34, 0) 58%);
+}
+.grad-sweep {
+  background-image: linear-gradient(118deg, rgba(254, 87, 34, 0.16) 0%, rgba(254, 87, 34, 0) 46%);
+}
+
+/* ── Dark-band pattern library (CHG-089 / CHG-015) ───────────────────── */
+.dot-grid {
+  background-image: radial-gradient(rgba(254, 87, 34, 0.16) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.dot-grid-light {
+  background-image: radial-gradient(rgba(24, 20, 45, 0.1) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.pattern-hatch {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.05) 0 1px,
+    transparent 1px 12px
+  );
+}
+.pattern-mesh {
+  background-image:
+    radial-gradient(42% 60% at 84% 18%, rgba(254, 87, 34, 0.18) 0%, transparent 60%),
+    radial-gradient(38% 52% at 8% 86%, rgba(58, 51, 88, 0.55) 0%, transparent 62%);
+}
+.pattern-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Brand motif: orange kicker bar (CHG-036) ────────────────────────── */
+.kicker-bar::before {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--color-brand);
+  margin-bottom: 10px;
+}
+
+/* ── Orange kicker bar for dark surfaces ─────────────────────────────── */
+.kicker-bar-dark::before {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--color-brand);
+  margin-bottom: 10px;
+}
+
+/* ── Elevation tokens, navy-tinted (CHG-050) ─────────────────────────── */
+.shadow-1 {
+  box-shadow: 0 1px 2px rgba(24, 20, 45, 0.06), 0 4px 12px rgba(24, 20, 45, 0.06);
+}
+.shadow-2 {
+  box-shadow: 0 10px 28px -14px rgba(24, 20, 45, 0.28);
+}
+.shadow-3 {
+  box-shadow: 0 24px 60px -16px rgba(24, 20, 45, 0.35);
+}
+
+/* ── Scroll reveal (unchanged mechanics, brand motion tokens) ────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity var(--dur-3) var(--ease-out), transform var(--dur-3) var(--ease-out);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ── Mega menu ────────────────────────────────────────────────────────── */
+.mega-panel {
+  transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
+  /* Menu-overflow fix (hotfix 2026-11-20): on short viewports the tallest
+     panels (Services ≈ 550px) used to extend past the bottom edge of the
+     screen. The panel now caps at the space below the utility bar (2rem)
+     and main bar (4rem) and scrolls inside that space instead of going
+     outside. dvh tracks mobile browser toolbars; vh is the fallback. */
+  max-height: calc(100vh - 6rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+@supports (height: 100dvh) {
+  .mega-panel {
+    max-height: calc(100dvh - 6rem);
+  }
+}
+
+/* ── Mobile drawer scroll area (hotfix 2026-11-20) ─────────────────────
+   100vh on iOS Safari / Android Chrome is the LARGE viewport: with the
+   browser toolbars visible the drawer bottom (and its Book-a-Briefing CTA)
+   landed below the visible screen. dvh keeps the drawer fully on-screen. */
+.drawer-scroll {
+  max-height: calc(100vh - 6rem);
+}
+@supports (height: 100dvh) {
+  .drawer-scroll {
+    max-height: calc(100dvh - 6rem);
+  }
+}
+.mega-hidden {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+}
+
+/* ── Header nav sliding underline (CHG-087) ──────────────────────────── */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 2px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--color-brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-2) var(--ease-out);
+}
+.nav-link:hover::after,
+.nav-link[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+/* ── Global inline link treatment (CHG-086) ──────────────────────────── */
+.link-animated {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: left calc(100% - 1px);
+  transition: background-size var(--dur-2) var(--ease-out), color var(--dur-1) ease;
+}
+.link-animated:hover {
+  background-size: 100% 1px;
+}
+
+/* ── Primary button sheen (CHG-053) ──────────────────────────────────── */
+.btn-sheen {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    105deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.32) 50%,
+    transparent 58%
+  );
+  transform: translateX(-130%);
+  transition: transform var(--dur-3) var(--ease-out);
+  pointer-events: none;
+}
+.btn-sheen:hover::after {
+  transform: translateX(130%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-sheen::after {
+    display: none;
+  }
+}
+
+/* ── Prose measure (CHG-088) ──────────────────────────────────────────── */
+.measure {
+  max-width: 68ch;
+}
+.measure-none {
+  max-width: none;
+}
+
+/* ── Selection + scrollbar (CHG-014 / CHG-092) ───────────────────────── */
+::selection {
+  background: rgba(254, 87, 34, 0.28);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(58, 51, 88, 0.45) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(58, 51, 88, 0.45);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(44, 38, 72, 0.65);
+  background-clip: padding-box;
+}
+
+/* ── Logo hover micro-motion (CHG-040): the orange "o" dot bounces ───── */
+.logo-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform var(--dur-2) var(--ease-spring);
+}
+.logo-lockup:hover .logo-dot {
+  transform: scale(1.14);
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-dot {
+    transition: none;
+  }
+  .logo-lockup:hover .logo-dot {
+    transform: none;
+  }
+}
+
+/* ── 12-column grid utility (CHG-048) ────────────────────────────────── */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 20px;
+}
+@media (min-width: 640px) {
+  .grid-12 { gap: 24px; }
+}
+
+/* ── Container queries for card grids (CHG-094) ──────────────────────── */
+.cq-cards {
+  container-type: inline-size;
+  container-name: cards;
+}
+@container cards (min-width: 560px) {
+  .cq-cards .cq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container cards (min-width: 960px) {
+  .cq-cards .cq-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.cq-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+
+/* ── Wave 2 — Visual & Motion System (CHG-101 … CHG-172) ─────────────────
+   Library: duration/easing tokens reused everywhere; every animation has a
+   prefers-reduced-motion kill switch (block below).                       */
+
+/* hero + section entrance choreography (CHG-102/103/104/151) */
+.rise-item {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--rise-delay, 0ms);
+}
+.is-visible .rise-item,
+.rise-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* word-by-word headline highlight (CHG-149) */
+.rise-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.55em) rotate(2deg);
+  transition:
+    opacity 600ms var(--ease-out),
+    transform 750ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--rise-delay, 0ms);
+}
+.is-visible .rise-word {
+  opacity: 1;
+  transform: translateY(0) rotate(0);
+}
+.rise-word em {
+  font-style: normal;
+  color: var(--color-brand);
+}
+
+/* animated background field (CHG-106/107): slow dot-grid drift + glow pulse */
+@keyframes field-drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-14px, -10px, 0) scale(1.045); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+.bg-field-drift {
+  animation: field-drift 26s var(--ease-out) infinite;
+}
+.bg-glow-pulse {
+  animation: glow-pulse 9s var(--ease-out) infinite;
+}
+
+/* float loop (ghost numerals, hero chips, 404 — CHG-162/148) */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+.animate-float {
+  animation: float-y 5.5s ease-in-out infinite;
+}
+
+/* marquee (CHG-124/125/170) */
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-inner {
+  animation: marquee-x var(--marquee-speed, 42s) linear infinite;
+}
+.marquee:hover .marquee-inner {
+  animation-play-state: paused;
+}
+.marquee::before,
+.marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 64px;
+  z-index: 1;
+  pointer-events: none;
+}
+.marquee::before { left: 0; background: linear-gradient(90deg, var(--color-background), transparent); }
+.marquee::after { right: 0; background: linear-gradient(270deg, var(--color-background), transparent); }
+.marquee.marquee-dark::before { background: linear-gradient(90deg, var(--color-navy-900), transparent); }
+.marquee.marquee-dark::after { background: linear-gradient(270deg, var(--color-navy-900), transparent); }
+
+/* quote glyph scale-in (CHG-168) */
+.quote-mark {
+  opacity: 0;
+  transform: scale(0.45) translateY(8px);
+  transform-origin: top left;
+  transition:
+    opacity 500ms var(--ease-out) 120ms,
+    transform 700ms cubic-bezier(0.34, 1.56, 0.64, 1) 120ms;
+}
+.reveal.is-visible .quote-mark {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* connector + SVG draw utilities (CHG-132/152) — DataVisuals drives inline
+   transitions; these helpers cover plain-CSS uses */
+@keyframes shimmer-x {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+.text-shimmer {
+  background: linear-gradient(90deg, currentColor 40%, var(--color-brand) 50%, currentColor 60%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer-x 5s linear infinite;
+}
+
+/* skeleton shimmer (CHG-137) */
+@keyframes skeleton-wave {
+  from { background-position: -320px 0; }
+  to { background-position: 320px 0; }
+}
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #eceaf2 8%, #f7f5fb 18%, #eceaf2 33%);
+  background-size: 640px 100%;
+  animation: skeleton-wave 1.4s linear infinite;
+}
+
+/* footer column stagger (CHG-143) */
+.footer-stagger > * {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 600ms var(--ease-out),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.footer-stagger.is-visible > *,
+.reveal.is-visible .footer-stagger > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+.footer-stagger > *:nth-child(1) { transition-delay: 40ms; }
+.footer-stagger > *:nth-child(2) { transition-delay: 110ms; }
+.footer-stagger > *:nth-child(3) { transition-delay: 180ms; }
+.footer-stagger > *:nth-child(4) { transition-delay: 250ms; }
+.footer-stagger > *:nth-child(5) { transition-delay: 320ms; }
+.footer-stagger > *:nth-child(6) { transition-delay: 390ms; }
+
+/* drawer slide-in (CHG-165) */
+@keyframes drawer-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.drawer-slide {
+  animation: drawer-in 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* success checkmark draw (CHG-141) */
+@keyframes tick-draw {
+  from { stroke-dashoffset: 26; }
+  to { stroke-dashoffset: 0; }
+}
+.tick-draw path {
+  stroke-dasharray: 26;
+  animation: tick-draw 500ms var(--ease-out) forwards;
+}
+
+/* ── reduced-motion kill switch (CHG-157): every Wave-2 animation stops ── */
+@media (prefers-reduced-motion: reduce) {
+  .rise-item,
+  .rise-word,
+  .quote-mark,
+  .footer-stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .bg-field-drift,
+  .bg-glow-pulse,
+  .animate-float,
+  .marquee-inner,
+  .text-shimmer,
+  .skeleton-shimmer,
+  .drawer-slide {
+    animation: none !important;
+  }
+  .marquee-inner {
+    transform: none;
+  }
+}
