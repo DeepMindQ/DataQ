@@ -570,18 +570,22 @@ export function PatentGrid() {
 /* ── Offices world map (CHG-186) — consumed by global-offices via template */
 export function OfficesMap({ offices }: { offices: { city: string }[] }) {
   const coords: Record<string, { x: number; y: number }> = {
-    Hyderabad: { x: 0.69, y: 0.56 },
-    Bengaluru: { x: 0.685, y: 0.575 },
-    Dubai: { x: 0.585, y: 0.47 },
-    Riyadh: { x: 0.575, y: 0.455 },
+    "United States": { x: 0.268, y: 0.375 },
     "Tysons Corner": { x: 0.268, y: 0.375 },
-    London: { x: 0.46, y: 0.3 },
     "New York": { x: 0.26, y: 0.36 },
+    "United Kingdom": { x: 0.46, y: 0.3 },
+    London: { x: 0.46, y: 0.3 },
+    India: { x: 0.69, y: 0.56 },
+    Bengaluru: { x: 0.685, y: 0.575 },
+    "Kingdom of Saudi Arabia": { x: 0.575, y: 0.455 },
+    "Saudi Arabia": { x: 0.575, y: 0.455 },
+    Riyadh: { x: 0.575, y: 0.455 },
+    Dubai: { x: 0.585, y: 0.47 },
     Singapore: { x: 0.755, y: 0.6 },
   };
   const pins = offices
     .map((o) => {
-      const city = o.city.split(",")[0].split("(")[0].trim();
+      const city = o.city.split(",")[0].split("(")[0].split("—")[0].split(" — ")[0].trim();
       const c = coords[city];
       return c ? { id: city, ...c } : null;
     })

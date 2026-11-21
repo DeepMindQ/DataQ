@@ -7,18 +7,19 @@ import os, re, sys
 
 out = sys.argv[1] if len(sys.argv) > 1 else '/home/z/my-project/site/out'
 
-# 1. redirect stub
+# 1. redirect stub (basePath-aware)
+bp = '/DataQ' if os.path.basename(os.path.normpath(out)) == 'out-gh' else ''
 rd = os.path.join(out, 'why-dataq-soft')
 os.makedirs(rd, exist_ok=True)
 with open(os.path.join(rd, 'index.html'), 'w', encoding='utf-8') as f:
-    f.write("""<!doctype html><html lang="en"><head><meta charset="utf-8">
+    f.write(f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <title>Redirecting… | Dataq Software</title>
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="https://www.dataqsoft.com/why-dataq/">
-<meta http-equiv="refresh" content="0; url=/why-dataq/">
-<script>window.location.replace('/why-dataq/');</script>
+<meta http-equiv="refresh" content="0; url={bp}/why-dataq/">
+<script>window.location.replace('{bp}/why-dataq/');</script>
 </head><body>
-<p>This page moved to <a href="/why-dataq/">/why-dataq/</a>.</p>
+<p>This page moved to <a href="{bp}/why-dataq/">{bp}/why-dataq/</a>.</p>
 </body></html>""")
 print('redirect stub written:', os.path.join(rd, 'index.html'))
 
@@ -40,7 +41,10 @@ for h in htmls:
         checked += 1
         if s.startswith('http'):
             continue
-        fp = os.path.join(out, s.lstrip('/').split('?')[0])
+        rel = s.lstrip('/').split('?')[0]
+        if rel.startswith('DataQ/'):
+            rel = rel[len('DataQ/'):]  # gh-pages basePath: URL /DataQ/x maps to repo-root x
+        fp = os.path.join(out, rel)
         if not os.path.exists(fp):
             bad += 1
             print('BROKEN:', h.replace(out, ''), '->', s)
