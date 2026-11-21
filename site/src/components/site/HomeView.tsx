@@ -84,7 +84,9 @@ export default function HomeView() {
                   <span className="line-mask-inner block">Enterprise AI, data and automation,</span>
                 </span>
                 <span className="line-mask block" style={{ ["--rise-delay" as string]: "260ms" }}>
-                  <span className="line-mask-inner block">delivered against a signed baseline.</span>
+                  <span className="line-mask-inner block">
+                    delivered against a <span className="grad-text">signed baseline.</span>
+                  </span>
                 </span>
               </h1>
               <p className="rise-item measure mt-5 text-body-lg leading-relaxed text-white/70" style={{ ["--rise-delay" as string]: "560ms" }}>
@@ -149,22 +151,26 @@ export default function HomeView() {
         />
       </div>
 
-      {/* steering pack — what leadership receives from week two (Batch 2) */}
-      <section id="output" className="container-dq scroll-mt-24 section-y-sm">
-        <Reveal>
-          <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">What a delivery produces</p>
-          <h2 className="text-display-3 mt-1 max-w-4xl text-navy-800 sm:text-[28px]">
-            The steering pack your leadership receives from week two
-          </h2>
-          <p className="mt-2 max-w-4xl text-[14.5px] text-slate-body/75">
-            Every engagement reports the same eight panels against a baseline locked with your team:
-            decision latency, autonomous coverage, where the value lands, the gate-by-gate delta, the
-            year-one cost walk, control coverage vs committed targets, maturity-to-outcome position and
-            the engagement model — a named owner on each metric. The figures below are illustrative
-            composites from our pattern library, not client data.
-          </p>
-        </Reveal>
-        <SteeringPack />
+      {/* steering pack — dark executive band: the delivery output, board-grade (Batch 2) */}
+      <section id="output" className="relative scroll-mt-24 overflow-hidden grad-navy-field text-white">
+        <div className="bg-field-drift absolute inset-0 dot-grid" aria-hidden="true" />
+        <div className="absolute inset-0 pattern-noise" aria-hidden="true" />
+        <div className="relative container-dq section-y-sm">
+          <Reveal>
+            <p className="kicker-bar-dark text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-300">What a delivery produces</p>
+            <h2 className="text-display-3 mt-1 max-w-4xl text-white sm:text-[28px]">
+              The steering pack your leadership receives from week two
+            </h2>
+            <p className="mt-2 max-w-4xl text-[14.5px] leading-relaxed text-white/65">
+              Every engagement reports the same eight panels against a baseline locked with your team:
+              decision latency, autonomous coverage, where the value lands, the gate-by-gate delta, the
+              year-one cost walk, control coverage vs committed targets, maturity-to-outcome position and
+              the engagement model — a named owner on each metric. The figures below are illustrative
+              composites from our pattern library, not client data.
+            </p>
+          </Reveal>
+          <SteeringPack />
+        </div>
       </section>
 
       {/* towers */}

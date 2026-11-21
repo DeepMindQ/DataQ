@@ -17,12 +17,12 @@ const GATE_ROWS: { metric: string; base: string; gates: [string, string, string]
   { metric: "Price refresh cycle", base: "64 hrs", gates: ["44 hrs", "30 hrs", "22 hrs"], owner: "VP Revenue Mgmt" },
 ];
 
-function GateTable() {
+function GateTable({ dark = false }: { dark?: boolean }) {
   return (
-    <div className="overflow-hidden rounded-xl border border-line">
+    <div className="overflow-hidden rounded-xl border border-white/10">
       <table className="w-full border-separate border-spacing-0 text-[11px]">
         <thead>
-          <tr className="bg-navy-800 text-white">
+          <tr className={dark ? "bg-brand/15 text-white" : "bg-navy-800 text-white"}>
             <th className="px-3 py-2 text-left font-semibold">Metric</th>
             <th className="px-2 py-2 text-center font-semibold">Base</th>
             <th className="px-2 py-2 text-center font-semibold">G1</th>
@@ -33,15 +33,15 @@ function GateTable() {
         </thead>
         <tbody>
           {GATE_ROWS.map((r, i) => (
-            <tr key={r.metric} className={i % 2 ? "bg-mist/60" : "bg-white"}>
-              <td className="border-b border-line px-3 py-2 text-left font-medium text-navy-800">{r.metric}</td>
-              <td className="border-b border-line px-2 py-2 text-center tabular-nums text-slate-body/70">{r.base}</td>
+            <tr key={r.metric} className={dark ? (i % 2 ? "bg-white/[0.05]" : "bg-white/[0.02]") : i % 2 ? "bg-mist/60" : "bg-white"}>
+              <td className={`border-b px-3 py-2 text-left font-medium ${dark ? "border-white/10 text-white" : "border-line text-navy-800"}`}>{r.metric}</td>
+              <td className={`border-b px-2 py-2 text-center tabular-nums ${dark ? "border-white/10 text-white/60" : "border-line text-slate-body/70"}`}>{r.base}</td>
               {r.gates.map((g, k) => (
-                <td key={k} className="border-b border-line px-2 py-2 text-center tabular-nums text-navy-800">
+                <td key={k} className={`border-b px-2 py-2 text-center tabular-nums ${dark ? "border-white/10 text-brand-300" : "border-line text-navy-800"}`}>
                   {g}
                 </td>
               ))}
-              <td className="border-b border-line px-3 py-2 text-left text-slate-body/75">{r.owner}</td>
+              <td className={`border-b px-3 py-2 text-left ${dark ? "border-white/10 text-white/60" : "border-line text-slate-body/75"}`}>{r.owner}</td>
             </tr>
           ))}
         </tbody>
@@ -55,6 +55,7 @@ export function SteeringPack() {
   return (
     <div className="mt-8 grid gap-4 md:grid-cols-2 lg:items-stretch lg:auto-rows-fr">
       <BarChart2
+        dark
         title="Decision latency after 90 days"
         caption="Sample engagement"
         labels={["Fraud triage", "Claims routing", "Demand plan", "Risk review"]}
@@ -66,6 +67,7 @@ export function SteeringPack() {
         footnote={FOOT}
       />
       <LineArea2
+        dark
         title="Autonomous resolution vs committed band"
         caption="12-week ramp"
         labels={Array.from({ length: 12 }, (_, i) => `W${i + 1}`)}
@@ -75,6 +77,7 @@ export function SteeringPack() {
         footnote={FOOT}
       />
       <StackBar
+        dark
         title="Where the value landed"
         caption="$ impact mix"
         segments={[
@@ -85,20 +88,21 @@ export function SteeringPack() {
         ]}
         footnote={FOOT}
       />
-      <figure className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-2">
-        <figcaption className="flex items-start justify-between gap-3 border-b border-line bg-mist/70 px-5 py-3">
-          <span className="text-[13px] font-semibold leading-snug text-navy-800">Gate-by-gate delta, named owners</span>
-          <span className="shrink-0 rounded-full bg-brand-tint px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.12em] text-brand-deep">
+      <figure className="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] shadow-2 backdrop-blur">
+        <figcaption className="flex items-start justify-between gap-3 border-b border-white/10 bg-white/[0.04] px-5 py-3">
+          <span className="text-[13px] font-semibold leading-snug text-white">Gate-by-gate delta, named owners</span>
+          <span className="shrink-0 rounded-full bg-brand/20 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.12em] text-brand-300">
             Gate report
           </span>
         </figcaption>
-        <div className="flex flex-1 flex-col px-5 pt-4">
-          <GateTable />
-          <p className="mt-auto pt-2 text-[10.5px] leading-snug text-slate-body/60">{FOOT}</p>
+        <div className="flex min-h-[272px] flex-1 flex-col justify-center px-5 pb-2 pt-4">
+          <GateTable dark />
+          <p className="pt-2 text-[10.5px] leading-snug text-white/50">{FOOT}</p>
         </div>
       </figure>
       {/* second row: economics, risk posture, maturity-to-outcome (BG-040/042/044) */}
       <Waterfall
+        dark
         title="Year-one run-cost walk, $10M program"
         caption="Value walk"
         steps={[
@@ -112,6 +116,7 @@ export function SteeringPack() {
         footnote={FOOT}
       />
       <BulletRow
+        dark
         title="Control coverage vs committed target"
         caption="Risk posture"
         rows={[
@@ -124,6 +129,7 @@ export function SteeringPack() {
         footnote={FOOT}
       />
       <MaturityScatter
+        dark
         title="AI maturity vs typical outcome, engagement composite"
         caption="350+ programs"
         xLabels={["Stage 1", "Stage 2", "Stage 3", "Stage 4", "Stage 5"]}
@@ -179,10 +185,10 @@ const MODELS = [
 
 function EngagementModels() {
   return (
-    <figure className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-2">
-      <figcaption className="flex items-start justify-between gap-3 border-b border-line bg-mist/70 px-5 py-3">
-        <span className="text-[13px] font-semibold leading-snug text-navy-800">Three ways in — each gates the next</span>
-        <span className="shrink-0 rounded-full bg-brand-tint px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.12em] text-brand-deep">
+    <figure className="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] shadow-2 backdrop-blur">
+      <figcaption className="flex items-start justify-between gap-3 border-b border-white/10 bg-white/[0.04] px-5 py-3">
+        <span className="text-[13px] font-semibold leading-snug text-white">Three ways in — each gates the next</span>
+        <span className="shrink-0 rounded-full bg-brand/20 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.12em] text-brand-300">
           Engagement models
         </span>
       </figcaption>
@@ -190,22 +196,22 @@ function EngagementModels() {
         {MODELS.map((m, i) => (
           <div key={m.name} className="grid items-center gap-3 sm:grid-cols-[1fr_120px]">
             <div>
-              <p className="flex flex-wrap items-center gap-2 text-[13px] font-semibold text-navy-800">
+              <p className="flex flex-wrap items-center gap-2 text-[13px] font-semibold text-white">
                 {m.name}
-                <span className="rounded-full bg-navy-800/5 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.1em] text-navy-800/70">
+                <span className="rounded-full bg-white/10 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.1em] text-white/70">
                   {m.tag}
                 </span>
               </p>
-              <p className="mt-1 text-[11.5px] leading-snug text-slate-body/75">{m.desc}</p>
+              <p className="mt-1 text-[11.5px] leading-snug text-white/65">{m.desc}</p>
             </div>
-            <div className="rounded-lg border border-line bg-mist/50 px-2.5 pb-1.5 pt-1">
-              <MiniTrend values={m.spark} labels={m.labels} band={m.band} unit={m.unit} dark={false} />
+            <div className="rounded-lg border border-white/10 bg-navy-900/50 px-2.5 pb-1.5 pt-1">
+              <MiniTrend values={m.spark} labels={m.labels} band={m.band} unit={m.unit} dark />
             </div>
           </div>
         ))}
       </div>
-      <div className="mt-auto border-t border-line px-5 py-2.5">
-        <p className="text-[10.5px] leading-snug text-slate-body/60">{FOOT}</p>
+      <div className="mt-auto border-t border-white/10 px-5 py-2.5">
+        <p className="text-[10.5px] leading-snug text-white/50">{FOOT}</p>
       </div>
     </figure>
   );

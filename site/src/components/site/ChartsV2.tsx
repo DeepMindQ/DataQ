@@ -11,6 +11,16 @@ import { useInView } from "./Motion";
 export const BRAND = "#FE5722";
 export const NAVY = "#18142D";
 const NAVY_SOFT = "#3A3358";
+/* Dark-mode-aware series colors: navy bars vanish on the dark band,
+   so swap in luminous grays when rendering on glass. */
+const onDark = (c: string, dark?: boolean) =>
+  !dark
+    ? c
+    : c === NAVY
+      ? "rgba(255,255,255,0.30)"
+      : c === NAVY_SOFT
+        ? "rgba(255,255,255,0.42)"
+        : c;
 
 type Dark = { dark?: boolean };
 
@@ -63,7 +73,7 @@ export function ChartFrame({
           </span>
         )}
       </figcaption>
-      <div className="flex flex-1 flex-col px-5 pt-4">{children}</div>
+      <div className="flex min-h-[272px] flex-1 flex-col justify-center px-5 pb-2 pt-4">{children}</div>
       <div className={`mt-auto border-t px-5 py-2.5 ${dark ? "border-white/10" : "border-line"}`}>
         <p className={`text-[10.5px] leading-snug ${dark ? "text-white/50" : "text-slate-body/60"}`}>
           {footnote ?? "Illustrative composite - replaced by your baseline at the value assessment."}
@@ -145,7 +155,7 @@ export function BarChart2({
   const plotH = H - pad.t - pad.b;
   const gw = plotW / labels.length;
   const barW = Math.min(30, (gw - 10) / series.length - 3);
-  const colorOf = (si: number, s: { color?: string }) => s.color ?? (si === 0 ? NAVY_SOFT : BRAND);
+  const colorOf = (si: number, s: { color?: string }) => s.color ?? onDark(si === 0 ? NAVY_SOFT : BRAND, dark);
   const y = (v: number) => pad.t + (1 - v / max) * plotH;
 
   return (
@@ -432,7 +442,7 @@ export function StackBar({
   const { ref, inView } = useInView<HTMLDivElement>(0.3);
   const [hover, setHover] = useState<number | null>(null);
   const total = segments.reduce((a, s) => a + s.value, 0) || 1;
-  const palette = [BRAND, NAVY, "#FE9C77", NAVY_SOFT];
+  const palette = dark ? [BRAND, "rgba(255,255,255,0.32)", "#FE9C77", "rgba(255,255,255,0.5)"] : [BRAND, NAVY, "#FE9C77", NAVY_SOFT];
   let acc = 0;
   return (
     <div ref={ref}>
@@ -525,7 +535,17 @@ export function Waterfall({
   const barW = Math.min(46, gw - 18);
   const y = (v: number) => pad.t + (1 - v / max) * plotH;
   const colorOf = (b: (typeof bars)[number]) =>
-    b.kind === "down" ? BRAND : b.kind === "up" ? NAVY_SOFT : NAVY;
+    dark
+      ? b.kind === "down"
+        ? BRAND
+        : b.kind === "up"
+          ? "rgba(255,255,255,0.5)"
+          : "rgba(255,255,255,0.26)"
+      : b.kind === "down"
+        ? BRAND
+        : b.kind === "up"
+          ? NAVY_SOFT
+          : NAVY;
   return (
     <div ref={ref}>
       <ChartFrame title={title} caption={caption} footnote={footnote} dark={dark}>
@@ -726,7 +746,7 @@ export function MaturityScatter({
                 cx={x(p.x)}
                 cy={y(p.y)}
                 r={hover === i ? rOf(p) + 2 : rOf(p)}
-                fill={i % 2 ? NAVY_SOFT : BRAND}
+                fill={dark ? (i % 2 ? "rgba(255,255,255,0.45)" : BRAND) : i % 2 ? NAVY_SOFT : BRAND}
                 opacity={hover === null || hover === i ? 0.78 : 0.3}
                 onMouseEnter={() => setHover(i)}
                 style={{
@@ -792,7 +812,7 @@ export function Radar2({
   const angle = (i: number) => (Math.PI * 2 * i) / n - Math.PI / 2;
   const pt = (i: number, v: number) => `${cx + Math.cos(angle(i)) * (v / 100) * R},${cy + Math.sin(angle(i)) * (v / 100) * R}`;
   const rings = [25, 50, 75, 100];
-  const colors = [NAVY_SOFT, BRAND, "#8B85A6"];
+  const colors = dark ? ["rgba(255,255,255,0.45)", BRAND, "#B9B3CC"] : [NAVY_SOFT, BRAND, "#8B85A6"];
   return (
     <div ref={ref}>
       <ChartFrame title={title} caption={caption} footnote={footnote} dark={dark}>
