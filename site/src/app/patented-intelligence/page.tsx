@@ -63,7 +63,7 @@ export default function PatentedIntelligencePage() {
       <div className="py-12">
         <Reveal>
           <p className="mx-auto mb-10 max-w-3xl px-4 text-center text-[14px] leading-relaxed text-slate-body/75">
-            Every family maps to platforms and service towers you can open directly — the chips under
+            Every family maps to platforms and service domains you can open directly — the chips under
             each card link to them. Capability summaries are engineering distillations of the patent
             specifications; claims language stays with the filings.
           </p>

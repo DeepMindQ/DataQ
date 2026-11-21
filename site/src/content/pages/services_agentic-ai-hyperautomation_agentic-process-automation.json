@@ -9,250 +9,1232 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Most agentic process automation engagements stall between the deck and the deployment. Ours are built to cross that gap: Agents that execute the work — tool-using, policy-bounded, and replayable for audit.. What follows is the working pattern, not the brochure."
+   "x": "Role-scoped agents that execute process steps under explicit policy bounds: permissions derived from the role, checkpoints placed by risk, replay for every action, and an exception queue designed for humans — not a chat window bolted to an RPA bot."
   },
   {
    "t": "h2",
-   "x": "The job this service does"
+   "x": "An agent is a junior employee with perfect attendance — staff it like one"
   },
   {
    "t": "p",
-   "x": "Agentic process automation goes beyond RPA's screen-scraping: goal-directed agents read context, call APIs and tools, handle the 20% of variance that breaks scripts, and ask for human help exactly when policy says so. We map the process, define the tool surface (APIs, databases, document services, SaaS actions), write the policy envelope — what the agent may do alone, with approval, or never — and instrument every step for replay."
+   "x": "An agent in a business process is a junior employee with perfect memory and no judgment — until you give it judgment-shaped tools, at which point it also needs supervision. We design agents as roles: explicit responsibilities, explicit tool grants, explicit escalation paths, and a supervisor loop that inspects work before it commits."
   },
   {
    "t": "p",
-   "x": "Production reliability comes from the unglamorous layers: deterministic tool contracts, sandboxed execution, evaluation suites replaying thousands of historical cases, and circuit breakers into human queues. Clients typically start with claims triage, KYC refresh, invoice exception handling, service-desk resolution and patient scheduling — processes with clear policy, high volume and expensive human fallback."
+   "x": "The build discipline is boring by design: each agent's permissions are the minimum that lets it do its role, its actions are idempotent, its retries are bounded, and every decision it makes can be replayed from the trace. Agents that fail these tests do not graduate from staging."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that make agent programs fragile, the reference architecture that makes them defensible, and the console that shows exactly what the digital staff did today."
   },
   {
    "t": "h2",
-   "x": "Why this matters here"
+   "x": "Four failure modes that erode agent programs"
   },
   {
    "t": "p",
-   "x": "Programs of Agentic Process Automation run in Banking & Financial Services, Insurance & Risk, Healthcare & Life Sciences, Logistics & Supply Chain — always against one named number, always with the baseline signed first."
+   "x": "Each of these starts small and compounds quietly; the countermeasures are structural, because by the time the failure is visible in the KPIs the checkpoints have already eroded."
   },
   {
-   "t": "h2",
-   "x": "The build, in plain terms"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Agentic Process Automation: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Process decomposition",
-     "task graphs with variance analysis to isolate agent-suitable scope"
+     "Tool sprawl",
+     "Agents accumulate API access nobody remembers granting",
+     "Least-privilege grants with expiry; quarterly access re-certification per agent"
     ],
     [
-     "Tool & API contracts",
-     "typed, permissioned tool surfaces with sandbox execution"
+     "Loop economics",
+     "A confused agent retries expensive calls until the bill spikes",
+     "Bounded loops with cost ceilings per run; circuit breaker on spend"
     ],
     [
-     "Policy envelope",
-     "autonomy tiers — solo, approval-required, forbidden — mapped to regulation"
+     "Silent wrongness",
+     "The agent completes the task confidently and incorrectly",
+     "Verification steps inside the flow: reconcile against source before commit"
     ],
     [
-     "Replay & evaluation",
-     "historical-case replay suites gating every release"
-    ],
-    [
-     "Human-in-the-loop design",
-     "escalation queues with context handoff and feedback capture"
+     "Checkpoint erosion",
+     "Human approvals get rubber-stamped within weeks",
+     "Checkpoint sampling with discrepancy metrics; approval SLA telemetry"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — policy-bounded execution with risk-placed checkpoints"
+  },
+  {
+   "t": "p",
+   "x": "Two design decisions carry the architecture: agent scopes are derived from role definitions rather than granted ad hoc, and checkpoint placement follows a risk matrix signed by the process owner — so autonomy is earned by evidence, step by step."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Agentic Process Automation",
+   "title": "Reference architecture — governed agent runtime in a business process",
    "lanes": [
-    "Process signals",
-    "Task graphs",
-    "Agent fleet",
-    "Policy envelope",
-    "Human checkpoints",
-    "Systems of action"
+    "Triggers",
+    "Agent runtime",
+    "Policy & identity",
+    "Verification",
+    "Systems",
+    "Supervision"
    ],
    "nodes": [
     {
-     "id": "ps0",
+     "id": "evt",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Process events"
     },
     {
-     "id": "ps1",
+     "id": "queue",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "Work queues"
     },
     {
-     "id": "tg2",
+     "id": "sched",
+     "lane": 0,
+     "label": "Schedules"
+    },
+    {
+     "id": "router",
      "lane": 1,
-     "label": "Agentic Process Automation",
+     "label": "Task router"
+    },
+    {
+     "id": "agent",
+     "lane": 1,
+     "label": "Role agent",
      "hot": true
     },
     {
-     "id": "tg3",
+     "id": "tools",
      "lane": 1,
-     "label": "Task decomposition",
-     "hot": false
-    },
-    {
-     "id": "af4",
-     "lane": 2,
-     "label": "Worker agents",
+     "label": "Tool belt (scoped)",
      "hot": true
     },
     {
-     "id": "af5",
+     "id": "mem",
+     "lane": 1,
+     "label": "Working memory"
+    },
+    {
+     "id": "policy",
      "lane": 2,
-     "label": "Tool adapters",
-     "hot": false
+     "label": "Policy engine",
+     "hot": true
     },
     {
-     "id": "pe6",
+     "id": "ident",
+     "lane": 2,
+     "label": "Agent identity",
+     "hot": true
+    },
+    {
+     "id": "budget",
+     "lane": 2,
+     "label": "Cost ceiling"
+    },
+    {
+     "id": "ver",
      "lane": 3,
-     "label": "Autonomy tiers",
-     "hot": false
+     "label": "Verifier steps",
+     "hot": true
     },
     {
-     "id": "pe7",
+     "id": "recon",
      "lane": 3,
-     "label": "Escalation rules",
-     "hot": false
+     "label": "Source reconciliation"
     },
     {
-     "id": "hc8",
+     "id": "conf",
+     "lane": 3,
+     "label": "Confidence gate"
+    },
+    {
+     "id": "erp",
      "lane": 4,
-     "label": "Approval queue",
-     "hot": false
+     "label": "ERP actions"
     },
     {
-     "id": "hc9",
+     "id": "itsm",
      "lane": 4,
-     "label": "Reviewer UI",
-     "hot": false
+     "label": "ITSM actions"
     },
     {
-     "id": "sa10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "comms",
+     "lane": 4,
+     "label": "Comms actions"
     },
     {
-     "id": "sa11",
+     "id": "sup",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Supervisor review",
+     "hot": true
+    },
+    {
+     "id": "replay",
+     "lane": 5,
+     "label": "Replay trace"
+    },
+    {
+     "id": "kpi",
+     "lane": 5,
+     "label": "Agent KPIs"
     }
    ],
    "edges": [
     {
-     "a": "ps0",
-     "b": "tg2"
+     "a": "evt",
+     "b": "router"
     },
     {
-     "a": "ps1",
-     "b": "tg2"
+     "a": "queue",
+     "b": "router"
     },
     {
-     "a": "tg2",
-     "b": "tg3"
+     "a": "sched",
+     "b": "router"
     },
     {
-     "a": "tg3",
-     "b": "af4"
+     "a": "router",
+     "b": "agent",
+     "label": "assign"
     },
     {
-     "a": "af4",
-     "b": "af5"
+     "a": "agent",
+     "b": "tools",
+     "label": "call"
     },
     {
-     "a": "af5",
-     "b": "pe6"
+     "a": "agent",
+     "b": "mem",
+     "label": "state"
     },
     {
-     "a": "pe6",
-     "b": "hc8"
+     "a": "policy",
+     "b": "agent",
+     "label": "constrain"
     },
     {
-     "a": "hc8",
-     "b": "sa10"
+     "a": "ident",
+     "b": "tools",
+     "label": "grant"
     },
     {
-     "a": "af4",
-     "b": "sa11"
+     "a": "budget",
+     "b": "agent",
+     "label": "cap"
+    },
+    {
+     "a": "agent",
+     "b": "ver",
+     "label": "self-check"
+    },
+    {
+     "a": "ver",
+     "b": "recon",
+     "label": "match"
+    },
+    {
+     "a": "ver",
+     "b": "conf",
+     "label": "score"
+    },
+    {
+     "a": "conf",
+     "b": "erp",
+     "label": "commit"
+    },
+    {
+     "a": "conf",
+     "b": "itsm",
+     "label": "update"
+    },
+    {
+     "a": "tools",
+     "b": "comms",
+     "label": "notify"
+    },
+    {
+     "a": "conf",
+     "b": "sup",
+     "label": "below bar"
+    },
+    {
+     "a": "sup",
+     "b": "agent",
+     "label": "feedback"
+    },
+    {
+     "a": "agent",
+     "b": "replay",
+     "label": "trace"
+    },
+    {
+     "a": "replay",
+     "b": "kpi",
+     "label": "metrics"
     }
    ],
-   "note": "Topology inherited from the Agentic AI & Hyperautomation tower; the highlighted core is this service's build."
+   "note": "Commit only passes through the confidence gate; anything below bar goes to supervisor review with the trace attached — and the supervisor's correction becomes training data for the policy engine."
   },
   {
    "t": "h2",
-   "x": "What your team actually receives"
+   "x": "One task's journey — assignment, execution, checkpoint, replay"
   },
   {
    "t": "p",
-   "x": "named artifacts, handed to named owners, Agentic Process Automation edition:"
+   "x": "From queue assignment through execution under policy bounds to the checkpoint decision and the replay record — with the paths where the agent escalates instead of guessing."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "orchestration-loop",
+   "title": "Agent task loop — trigger, plan, act bounded, verify, commit or escalate",
+   "labels": [
+    "Task in",
+    "Plan (typed)",
+    "Act within grants",
+    "Verify & reconcile",
+    "Confidence gate",
+    "Commit / escalate",
+    "Replay & learn"
+   ],
+   "note": "Plans are typed artifacts, not free text — the policy engine validates them against the role's allowed action classes before the first tool call fires."
+  },
+  {
+   "t": "h2",
+   "x": "The agent console operations and compliance share"
+  },
+  {
+   "t": "p",
+   "x": "Straight-through rate beside policy breaches, cost per task beside checkpoint discrepancy — pairs that keep speed and control in the same conversation, exactly where they belong."
+  },
+  {
+   "t": "idash",
+   "title": "Agentic process automation — governed-loop console",
+   "kpis": [
+    {
+     "label": "Cost / action",
+     "value": "0.11",
+     "delta": "target ≤ $0.15",
+     "dir": "flat",
+     "spark": [
+      0.31,
+      0.27,
+      0.22,
+      0.19,
+      0.16,
+      0.13,
+      0.11
+     ]
+    },
+    {
+     "label": "Containment rate",
+     "value": "82.4%",
+     "delta": "+9 pts vs RPA baseline",
+     "dir": "up",
+     "spark": [
+      61,
+      65,
+      70,
+      74,
+      78,
+      80,
+      82
+     ]
+    },
+    {
+     "label": "Eval pass (nightly)",
+     "value": "96.1%",
+     "delta": "184-case suite",
+     "dir": "up",
+     "spark": [
+      88,
+      90,
+      92,
+      93,
+      95,
+      96,
+      96
+     ]
+    },
+    {
+     "label": "Loop aborts",
+     "value": "0.7%",
+     "delta": "budgets enforced",
+     "dir": "down",
+     "spark": [
+      3.2,
+      2.8,
+      2.1,
+      1.6,
+      1.1,
+      0.9,
+      0.7
+     ]
+    },
+    {
+     "label": "Human handoffs",
+     "value": "17.6%",
+     "delta": "each with evidence packet",
+     "dir": "down",
+     "spark": [
+      39,
+      35,
+      30,
+      26,
+      22,
+      19,
+      17
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Loop telemetry",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Loop economics by task family — cost per completed action",
+       "cats": [
+        "Wk 1",
+        "Wk 2",
+        "Wk 3",
+        "Wk 4",
+        "Wk 5",
+        "Wk 6",
+        "Wk 7",
+        "Wk 8"
+       ],
+       "series": [
+        {
+         "name": "Document tasks",
+         "points": [
+          0.42,
+          0.33,
+          0.26,
+          0.21,
+          0.17,
+          0.14,
+          0.12,
+          0.11
+         ]
+        },
+        {
+         "name": "Data-entry tasks",
+         "points": [
+          0.28,
+          0.22,
+          0.18,
+          0.15,
+          0.13,
+          0.12,
+          0.11,
+          0.1
+         ]
+        },
+        {
+         "name": "Exception handling",
+         "points": [
+          0.95,
+          0.81,
+          0.66,
+          0.52,
+          0.44,
+          0.38,
+          0.33,
+          0.29
+         ]
+        }
+       ],
+       "unit": "$",
+       "note": "Hover for exact cost; click a series to isolate. Exceptions are the honesty line — they cost more per action than the happy path, and the fleet is sized on the blended number, not the demo number."
+      },
+      {
+       "kind": "bar",
+       "title": "Where run time goes, by task class",
+       "cats": [
+        "Ingest",
+        "Plan",
+        "Tool calls",
+        "Verify",
+        "Retry",
+        "Handoff"
+       ],
+       "series": [
+        {
+         "name": "Happy path",
+         "points": [
+          8,
+          6,
+          31,
+          22,
+          2,
+          5
+         ]
+        },
+        {
+         "name": "Exceptions",
+         "points": [
+          14,
+          11,
+          24,
+          18,
+          19,
+          12
+         ]
+        }
+       ],
+       "unit": "s",
+       "note": "Verification is 20-30% of run time by design — that is what containment costs and what makes the containment rate credible to an auditor."
+      }
+     ]
+    },
+    {
+     "name": "Budget what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Fleet sizing what-if — queue depth, concurrency and cost",
+       "params": [
+        {
+         "name": "Daily task volume",
+         "min": 500,
+         "max": 50000,
+         "step": 500,
+         "value": 12000,
+         "unit": "tasks"
+        },
+        {
+         "name": "Planner concurrency",
+         "min": 1,
+         "max": 40,
+         "step": 1,
+         "value": 12,
+         "unit": "agents"
+        },
+        {
+         "name": "Retry ceiling",
+         "min": 0,
+         "max": 4,
+         "step": 1,
+         "value": 2,
+         "unit": "retries"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Cost per action",
+         "unit": "$",
+         "formula": "0.05 + p0*0.0000022 + p2*0.014",
+         "good": "0.15",
+         "bad": "0.30"
+        },
+        {
+         "name": "Queue wait p95",
+         "unit": "min",
+         "formula": "p0/(p1*1100)*60*(1+p2*0.4)",
+         "good": "30",
+         "bad": "90"
+        },
+        {
+         "name": "Monthly run cost",
+         "unit": "$k",
+         "formula": "p0*30*(0.05+p0*0.0000022+p2*0.014)/1000",
+         "good": "25",
+         "bad": "60"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 0,
+        "label": "Daily volume vs cost/action"
+       },
+       "note": "Cost per action is superlinear in volume because contention forces retries — the curve shows the knee where adding concurrency is cheaper than absorbing retries. Drag volume and concurrency together to find your fleet shape."
+      }
+     ]
+    },
+    {
+     "name": "Run ledger",
+     "widgets": [
+      {
+       "kind": "flow",
+       "title": "Anatomy of one governed run — click each stage",
+       "stages": [
+        {
+         "name": "Goal intake",
+         "role": "Scoped, typed request",
+         "detail": "The run starts as a typed request object — goal, constraints, deadline, budget class — not a free-text prompt. Typed intake is what makes replay and cost accounting possible.",
+         "metrics": [
+          {
+           "label": "Schema version",
+           "value": "v3.2"
+          },
+          {
+           "label": "Budget class",
+           "value": "B (normal)"
+          }
+         ]
+        },
+        {
+         "name": "Plan",
+         "role": "Decompose + tool selection",
+         "detail": "Planner emits a step graph with tool candidates per node; the policy layer strikes any tool the credentials of this run class cannot touch, before execution begins.",
+         "metrics": [
+          {
+           "label": "Steps planned",
+           "value": "7"
+          },
+          {
+           "label": "Tools eligible",
+           "value": "4 of 9"
+          }
+         ]
+        },
+        {
+         "name": "Execute",
+         "role": "Tool calls, idempotent",
+         "detail": "Every write carries an idempotency key; every read is cached by content hash. Retries are budgeted — the third retry of the same call escalates instead.",
+         "metrics": [
+          {
+           "label": "Tool calls",
+           "value": "11"
+          },
+          {
+           "label": "Retries",
+           "value": "1"
+          }
+         ]
+        },
+        {
+         "name": "Verify",
+         "role": "Critic + policy gate",
+         "detail": "Critic asserts output shape and business checks (totals reconcile, dates in range); the policy gate re-checks scope before any side effect lands.",
+         "metrics": [
+          {
+           "label": "Assertions",
+           "value": "23"
+          },
+          {
+           "label": "Policy checks",
+           "value": "5"
+          }
+         ]
+        },
+        {
+         "name": "Ledger",
+         "role": "Evidence packet sealed",
+         "detail": "Inputs, plan revisions, tool I/O, model versions and cost are sealed into the run record — the artifact an auditor or incident review reads first.",
+         "metrics": [
+          {
+           "label": "Ledger size",
+           "value": "38 KB"
+          },
+          {
+           "label": "Replayable",
+           "value": "yes"
+          }
+         ]
+        }
+       ],
+       "note": "The five stages are the same for a $0.10 data-entry run and a $4 exception run — only the budgets differ."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · sliders and tabs live",
+   "note": "Console values are the reference program model: gate thresholds and target bands from delivery, not a client's live telemetry."
+  },
+  {
+   "t": "h2",
+   "x": "Task economics across process families"
+  },
+  {
+   "t": "p",
+   "x": "Volume, straight-through share and unit cost per family — the chart that decides where the next agent cohort is staffed, and which families stay human-led by design."
+  },
+  {
+   "t": "chart",
+   "title": "Agent task economics across process families — design targets",
+   "variant": "bar",
+   "cats": [
+    "AP matching",
+    "Ticket triage",
+    "Order edits",
+    "Onboarding checks"
+   ],
+   "series": [
+    {
+     "name": "Straight-through target %",
+     "points": [
+      74,
+      68,
+      82,
+      57
+     ]
+    },
+    {
+     "name": "Cost per task target ($)",
+     "points": [
+      0.38,
+      0.52,
+      0.29,
+      0.85
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Agentic Process Automation across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Agentic Process Automation",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: orchestration is the discipline — dozens of small automations running as one auditable workforce, with escalations designed rather than improvised.",
+     "plays": [
+      "Role-scoped agents with policy bounds derived from role definitions",
+      "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
+      "Full replay of every action with an exception queue designed for humans"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "72%"
+      },
+      {
+       "label": "Policy breaches",
+       "value": "0"
+      },
+      {
+       "label": "Cost per task",
+       "value": "$0.41"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": true,
+     "hook": "Ask what fraud industrialized against manual detection costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Role-scoped agents with policy bounds derived from role definitions",
+      "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
+      "Full replay of every action with an exception queue designed for humans"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "72%"
+      },
+      {
+       "label": "Policy breaches",
+       "value": "0"
+      },
+      {
+       "label": "Cost per task",
+       "value": "$0.41"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "Healthcare & Life Sciences operators recognize the pattern: prior authorization and RCM friction, quarter after quarter.",
+     "plays": [
+      "Role-scoped agents with policy bounds derived from role definitions",
+      "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
+      "Full replay of every action with an exception queue designed for humans"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "72%"
+      },
+      {
+       "label": "Policy breaches",
+       "value": "0"
+      },
+      {
+       "label": "Cost per task",
+       "value": "$0.41"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — maintenance planning reactive included — and prove it moved.",
+     "plays": [
+      "Role-scoped agents with policy bounds derived from role definitions",
+      "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
+      "Full replay of every action with an exception queue designed for humans"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "72%"
+      },
+      {
+       "label": "Policy breaches",
+       "value": "0"
+      },
+      {
+       "label": "Cost per task",
+       "value": "$0.41"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Ask what supplier collaboration by email costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Role-scoped agents with policy bounds derived from role definitions",
+      "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
+      "Full replay of every action with an exception queue designed for humans"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "72%"
+      },
+      {
+       "label": "Policy breaches",
+       "value": "0"
+      },
+      {
+       "label": "Cost per task",
+       "value": "$0.41"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": true,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Role-scoped agents with policy bounds derived from role definitions",
+      "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
+      "Full replay of every action with an exception queue designed for humans"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "72%"
+      },
+      {
+       "label": "Policy breaches",
+       "value": "0"
+      },
+      {
+       "label": "Cost per task",
+       "value": "$0.41"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — trading and scheduling decisions at market speed included — and prove it moved.",
+     "plays": [
+      "Role-scoped agents with policy bounds derived from role definitions",
+      "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
+      "Full replay of every action with an exception queue designed for humans"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "72%"
+      },
+      {
+       "label": "Policy breaches",
+       "value": "0"
+      },
+      {
+       "label": "Cost per task",
+       "value": "$0.41"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Role-scoped agents with policy bounds derived from role definitions",
+      "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
+      "Full replay of every action with an exception queue designed for humans"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "72%"
+      },
+      {
+       "label": "Policy breaches",
+       "value": "0"
+      },
+      {
+       "label": "Cost per task",
+       "value": "$0.41"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Role-scoped agents with policy bounds derived from role definitions",
+      "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
+      "Full replay of every action with an exception queue designed for humans"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "72%"
+      },
+      {
+       "label": "Policy breaches",
+       "value": "0"
+      },
+      {
+       "label": "Cost per task",
+       "value": "$0.41"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Ask what administrative burden on faculty costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Role-scoped agents with policy bounds derived from role definitions",
+      "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
+      "Full replay of every action with an exception queue designed for humans"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "72%"
+      },
+      {
+       "label": "Policy breaches",
+       "value": "0"
+      },
+      {
+       "label": "Cost per task",
+       "value": "$0.41"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Ask what support and success scale linearly costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Role-scoped agents with policy bounds derived from role definitions",
+      "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
+      "Full replay of every action with an exception queue designed for humans"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "72%"
+      },
+      {
+       "label": "Policy breaches",
+       "value": "0"
+      },
+      {
+       "label": "Cost per task",
+       "value": "$0.41"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what input and logistics planning manual costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Role-scoped agents with policy bounds derived from role definitions",
+      "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
+      "Full replay of every action with an exception queue designed for humans"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "72%"
+      },
+      {
+       "label": "Policy breaches",
+       "value": "0"
+      },
+      {
+       "label": "Cost per task",
+       "value": "$0.41"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/"
+    }
+   ],
+   "practiceNote": "Agentic Process Automation view: role-scoped agents that execute process steps under policy bounds, with human checkpoints placed by risk and replay for every action taken."
+  },
+  {
+   "t": "h2",
+   "x": "Agent stack defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults bias toward typed tool access and bounded autonomy; deviations are permitted where the process argues for them, with the risk delta written next to each trigger condition."
+  },
+  {
+   "t": "table",
+   "caption": "Agentic Process Automation: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production agent fleet executing a named process end-to-end under policy",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Agent runtime",
+     "Typed planning loop with bounded steps (LangGraph-class)",
+     "Simple rule-bots for tasks with no ambiguity — agents are not free"
     ],
     [
-     "Process task-graph and variance analysis documentation",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Tool access",
+     "Scoped, expiring grants via gateway; deny by default",
+     "Shared service accounts — they destroy the audit trail"
     ],
     [
-     "Evaluation suite with historical-case replay benchmarks",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Verification",
+     "In-flow reconciliation against source systems",
+     "Trusting the model's self-report — it is the failure mode"
     ],
     [
-     "Autonomy policy matrix signed with risk and compliance",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Identity",
+     "One principal per agent; short-lived credentials",
+     "Agent-as-user accounts — policy cannot bind what it cannot see"
+    ],
+    [
+     "Escalation",
+     "Structured handoff with full trace to the human desk",
+     "Raw error dumps — supervisors need the reasoning trail"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The stack, chosen for operability"
+   "x": "Agent release gates — what blocks a cohort from going live"
   },
   {
-   "t": "p",
-   "x": "Agentic Process Automation is built against defined standards: LangGraph, Temporal, durable execution runtimes, OpenAPI tooling, Kubernetes, OpenTelemetry. Each choice is justified in writing as part of the architecture baseline, so your team can defend it without us in the room."
+   "t": "table",
+   "caption": "Release gates for Agentic Process Automation — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Grant gate",
+     "Is every tool call within a scoped, expiring grant?",
+     "Grant ledger; recertification record; deny-by-default test"
+    ],
+    [
+     "Verifier gate",
+     "Does verification cover every committing action?",
+     "Verifier map per action class; reconciliation evidence"
+    ],
+    [
+     "Chaos gate",
+     "Does it survive token revocation and tool outage?",
+     "Drill reports: degradation path, queue resume time"
+    ],
+    [
+     "Cost gate",
+     "Is the ceiling binding?",
+     "Per-run cost telemetry; breaker test at ceiling"
+    ],
+    [
+     "Replay gate",
+     "Can any committed action be reconstructed?",
+     "Sampled replay with inputs, plan, tool calls and outcomes"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "Delivery, without the theater"
+   "x": "What the process owner inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Agentic Process Automation starts with the measurement: the metric, the owner, the current number, signed."
+     "Role agent fleet",
+     "Typed agents with scoped grants, budgets and KPIs"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, process decomposition first, gates written with your team."
+     "Policy engine rules",
+     "The action-class bounds, thresholds and breaker settings"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Agentic Process Automation closes its first quarter at the gate: the working slice is measured against the baseline your team signed, and the scale decision is written down with the evidence attached."
+     "Verifier library",
+     "Reconciliation checks per committing action"
+    ],
+    [
+     "Supervisor console",
+     "Escalation queue with traces and correction feedback loop"
+    ],
+    [
+     "Replay store",
+     "Full action traces queryable by case, agent and date"
+    ],
+    [
+     "Agent runbook",
+     "Grant lifecycle, breaker behavior, restart and rollback SOPs"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "The build, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — role & grant design",
+     "Agent role specs, tool-grant maps, checkpoint placement with risk owners"
+    ],
+    [
+     "Weeks 3–4 — runtime & policy",
+     "Typed planning loop, policy binding, cost ceilings, identity issuance"
+    ],
+    [
+     "Weeks 5–6 — verification layer",
+     "Reconcilers per action class, confidence gates, supervisor console"
+    ],
+    [
+     "Weeks 7–8 — chaos & drills",
+     "Token revocation, tool outage, ceiling breach drills"
+    ],
+    [
+     "Weeks 9–10 — shadow & cutover",
+     "Shadow runs against human baselines; graduated cutover by task class"
+    ],
+    [
+     "Ongoing — fleet ops",
+     "Grant recert, checkpoint sampling, KPI reviews, policy updates"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — the tools agents are scoped to touch"
+  },
+  {
+   "t": "p",
+   "x": "Agents are only as disciplined as their tool access; these contracts define what each role can touch, in which order, with which replay guarantees."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "ERP / ITSM / CRM",
+     "Typed action APIs with idempotency keys"
+    ],
+    [
+     "Identity provider",
+     "Agent principals, credential rotation, grant audit"
+    ],
+    [
+     "Policy engine",
+     "Central rule store with versioned policy bundles"
+    ],
+    [
+     "Comms systems",
+     "Notification and escalation channels"
+    ],
+    [
+     "Observability",
+     "Per-agent traces with cost and decision spans"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Control overlay — auditability of every autonomous action"
+  },
+  {
+   "t": "p",
+   "x": "Every action replays: inputs, policy version, checkpoint outcome and side effects are recorded — the evidence pack internal audit asks for, assembled by default."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Deny-by-default",
+     "No tool call outside a grant; grants expire without recertification"
+    ],
+    [
+     "Checkpoint integrity",
+     "Approvals cannot be self-approved; sampling audits fidelity"
+    ],
+    [
+     "Spend breakers",
+     "Hard cost ceilings per agent per day with owner paging"
+    ],
+    [
+     "Trace immutability",
+     "Replay store is append-only with hash-chained batches"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Autonomy expansion is earned, not configured: a cohort's scope widens only after two consecutive quarters inside the checkpoint-fidelity tolerance, and the widening is itself a gated change."
   },
   {
    "t": "cta",
-   "x": "Bring Agentic Process Automation to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
+   "x": "Pick the process where the exception queue eats your best people. The sprint will show the straight-through rate agents can honestly reach there — with checkpoints designed by risk, not by pressure."
   }
  ],
- "words": 508,
+ "words": 1164,
  "section": "Services",
  "l1": "Services",
  "l2": "Agentic AI & Hyperautomation",
@@ -274,7 +1256,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Agentic AI & Hyperautomation",
+   "title": "Domain overview — Agentic AI & Hyperautomation",
    "url": "/services/agentic-ai-hyperautomation/",
    "desc": "Digital workers, decision hubs and workflows that recover from failure on their own — automation with human checkpoints, budgets and audit."
   },
@@ -326,33 +1308,51 @@
   {
    "title": "Agentic AI & Hyperautomation for Agriculture & Food Systems",
    "url": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Digital Workforce & Multi-Agent Orchestration",
-   "url": "/services/agentic-ai-hyperautomation/digital-workforce-orchestration/",
-   "tag": "Same tower",
-   "desc": "Agents operated as one fleet: roles, queues, budgets and audit trails."
-  },
-  {
    "title": "Decision Intelligence Systems",
    "url": "/services/agentic-ai-hyperautomation/decision-intelligence-systems/",
-   "tag": "Same tower",
-   "desc": "Decision paths that run in milliseconds, with policy checks and full logging."
+   "tag": "Same domain",
+   "desc": "decision models wrapped in policy bounds, challenger benchmarks and explainable outputs — decisions you can defend to a regulator, not just scores in a dashboard."
   },
   {
-   "title": "Intelligent Document Processing",
-   "url": "/services/agentic-ai-hyperautomation/intelligent-document-processing/",
-   "tag": "Same tower",
-   "desc": "Contracts, claims and invoices read end-to-end — extraction, validation and downstream action."
+   "title": "Digital Workforce & Multi-Agent Orchestration",
+   "url": "/services/agentic-ai-hyperautomation/digital-workforce-orchestration/",
+   "tag": "Same domain",
+   "desc": "agent-fleet management as workforce management — capacity, shifts, versioning, retirement and utilization, with SLAs that hold while the fleet scales."
   },
   {
-   "title": "Process & Task Mining",
-   "url": "/services/agentic-ai-hyperautomation/process-task-mining/",
-   "tag": "Same tower",
-   "desc": "See the work as it actually runs — event-log truth before you automate anything."
+   "title": "Hyperautomation & Systems Integration",
+   "url": "/services/agentic-ai-hyperautomation/hyperautomation-integration/",
+   "tag": "Same domain",
+   "desc": "the contracted seams — ERP, CRM, ITSM, comms and queues — with typed contracts, replayable failures and monitors that catch drift before business users do."
+  },
+  {
+   "title": "Conversational AI & Digital Humans",
+   "url": "/services/applied-ai-generative-ai/conversational-ai-digital-humans/",
+   "tag": "Pairs with",
+   "desc": "grounded chat and voice agents that contain more without trust loss — dignified handoffs, streaming voice budgets, dialog eval nightly."
+  },
+  {
+   "title": "Data Monetization & Analytics Products",
+   "url": "/services/data-analytics-lakehouse/data-monetization-products/",
+   "tag": "Pairs with",
+   "desc": "data as a product for external consumption — contracts, SLAs, purpose limits and billing, with controls that get stronger the moment data leaves the building."
+  },
+  {
+   "title": "High-Performance & Mission-Critical Systems",
+   "url": "/services/cloud-edge-platform-engineering/high-performance-mission-critical/",
+   "tag": "Pairs with",
+   "desc": "low-latency, high-availability tiers with proofs — latency budgets engineered down the stack and availability demonstrated, not asserted."
+  },
+  {
+   "title": "A multinational corporate bank",
+   "url": "/case-studies/bank-02/",
+   "tag": "Evidence",
+   "desc": "KYC refresh backlog cleared — 70% faster cycles with agentic file assembly."
   }
  ]
 }

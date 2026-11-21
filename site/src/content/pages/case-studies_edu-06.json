@@ -1,0 +1,263 @@
+{
+ "id": "CASE-edu-06",
+ "title": "An online university",
+ "url": "/case-studies/edu-06/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Education & Research > An online university",
+ "seo_title": "An online university | Case Study | Dataq Software",
+ "meta_description": "Admissions operations on governed agents — application processing time down 66% and counselor hours returned to recruitment",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Admissions operations on governed agents — application processing time down 66% and counselor hours returned to recruitment"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — an online university whose admissions funnel processed 40,000 applications a term with counselors doing data entry between recruitment trips. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline term timed the funnel: 9.4 days median application-to-decision, 71% of counselor hours on transcript verification and data entry, and enrollment yield leaking at every waiting week."
+  },
+  {
+   "t": "p",
+   "x": "Verification rules existed but lived in training docs; execution depended on which counselor read which page. The rules were the product; the application was just its paperwork."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We moved admissions processing to governed agents: transcripts parsed and verified against the codified rules with confidence per field, exceptions routed to counselors with the evidence attached, decision packets assembled automatically, and the rules library versioned under the registrar's ownership. Counselors review decisions, not documents."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — An online university",
+   "lanes": [
+    "Application intake",
+    "Verification engine",
+    "Counselor queue",
+    "Rules library"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "Application & transcript intake",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Credential verification feeds",
+     "hot": true
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Rule-based verification engine",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Confidence-gated parsing",
+     "hot": true
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Exception queue with evidence",
+     "hot": true
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Decision packet assembly"
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Versioned rules library",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Registrar governance"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — An online university",
+   "kpis": [
+    {
+     "label": "Application-to-decision time",
+     "value": "-66%",
+     "delta": "9.4 → 3.2 days",
+     "dir": "down"
+    },
+    {
+     "label": "Counselor hours on data entry",
+     "value": "-71%",
+     "delta": "returned to recruitment",
+     "dir": "down"
+    },
+    {
+     "label": "Verification consistency",
+     "value": "one library",
+     "delta": "was training-doc folklore",
+     "dir": "up"
+    },
+    {
+     "label": "Yield at decision week",
+     "value": "+0",
+     "delta": "faster decisions, same standards",
+     "dir": "flat"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed with the registrar and admissions dean",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 05",
+     "msg": "Engine live for two programs",
+     "tag": "build"
+    },
+    {
+     "t": "wk 11",
+     "msg": "Gate review — registrar audit of verification quality",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Program rollout; rules library under registrar",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Processing-time baseline signed with the registrar"
+    ],
+    [
+     "Build gate",
+     "No rule automated until the registrar signed its codification"
+    ],
+    [
+     "Run gate",
+     "Termly verification audit against the signed baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The codified-rules pattern transfers to any verification workflow; the rules were this university's admissions policy. Replication starts from its training docs — the diagnostic turns them into the first library."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "9 months",
+     "10-person blended team",
+     "Global",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "Start with the diagnostic, not the contract: the same diagnostic that baselined this program takes two weeks, and a scoped proposal follows only if the delta justifies it."
+  }
+ ],
+ "words": 418,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Education & Research",
+ "l3": "An online university",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Education & Research",
+   "url": "/industries/education-research/"
+  },
+  {
+   "name": "An online university",
+   "url": "/case-studies/edu-06/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Education & Research — industry hub",
+   "url": "/industries/education-research/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Agentic AI & Hyperautomation",
+   "url": "/services/agentic-ai-hyperautomation/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A public research university (38,000 students)",
+   "url": "/case-studies/edu-01/",
+   "desc": "Retention +4.1 points in target cohorts — early-warning to advising loop"
+  },
+  {
+   "title": "A national EdTech platform (2M learners)",
+   "url": "/case-studies/edu-02/",
+   "desc": "Outcome evidence published — renewals secured with learning-gain pipelines"
+  },
+  {
+   "title": "A multi-campus university group",
+   "url": "/case-studies/edu-03/",
+   "desc": "Research throughput up 2.8x — governed HPC/cloud platform"
+  }
+ ],
+ "cards": []
+}

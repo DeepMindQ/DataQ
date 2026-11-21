@@ -1,0 +1,262 @@
+{
+ "id": "CASE-ins-08",
+ "title": "A commercial P&C insurer",
+ "url": "/case-studies/ins-08/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Insurance & Risk > A commercial P&C insurer",
+ "seo_title": "A commercial P&C insurer | Case Study | Dataq Software",
+ "meta_description": "Broker email intake automated end to end — quote turnaround from three days to same-day on 70% of standard risks",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Broker email intake automated end to end — quote turnaround from three days to same-day on 70% of standard risks"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a commercial P&C insurer whose brokers emailed risk submissions and whose underwriters retyped them into the rating system, sometimes twice. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline fortnight measured the retyping: 68% of submissions arrived by email, extraction to the rating system took a median 3.1 days, and 9% of quotes went out with fields the broker never sent."
+  },
+  {
+   "t": "p",
+   "x": "Standard risks and complex risks queued identically. Underwriters spent mornings on data entry for risks a trainee could quote, afternoons on the complex ones the queue had aged."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We rebuilt intake as an extraction-and-routing pipeline: submissions parsed into a structured risk record with confidence per field, standard risks quoted automatically within appetite rules the underwriting committee signed, complex risks routed with their extracted file attached, and every auto-quote logged with its rule trail for the committee's monthly read."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — A commercial P&C insurer",
+   "lanes": [
+    "Broker submissions",
+    "Extraction & routing",
+    "Underwriting",
+    "Committee oversight"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "Email & portal intake",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Schedule attachments"
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Risk-record parser",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Complexity classifier",
+     "hot": true
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Auto-quote within appetite",
+     "hot": true
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Complex-risk workbench"
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Rule-trail log",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Committee monthly read"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A commercial P&C insurer",
+   "kpis": [
+    {
+     "label": "Quote turnaround",
+     "value": "3 days → same-day",
+     "delta": "on 70% of standard risks",
+     "dir": "down"
+    },
+    {
+     "label": "Manual extraction",
+     "value": "-72%",
+     "delta": "parser-first intake",
+     "dir": "down"
+    },
+    {
+     "label": "Field errors in quotes",
+     "value": "-81%",
+     "delta": "confidence-gated",
+     "dir": "down"
+    },
+    {
+     "label": "Underwriter hours on standard risks",
+     "value": "-64%",
+     "delta": "redeployed to complex",
+     "dir": "down"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed with underwriting operations",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 06",
+     "msg": "Parser live on property schedules",
+     "tag": "build"
+    },
+    {
+     "t": "wk 12",
+     "msg": "Gate review — appetite rules signed by the committee",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Lines extended; appetite rules under committee ownership",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Turnaround and error baselines signed with underwriting ops"
+    ],
+    [
+     "Build gate",
+     "No risk class auto-quoted until its appetite rules were committee-signed"
+    ],
+    [
+     "Run gate",
+     "Monthly committee read on every auto-quote's rule trail"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The parse-then-route pattern with committee-signed appetite rules has run in two other commercial books. The schedule formats were this broker panel's habits; another carrier's diagnostic will map different ones."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "10 months",
+     "13-person blended team",
+     "EU",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "If this case sits close to your operation, the briefing is the right next step: 45 minutes with the practice lead who ran it, your metric against the pattern that moved here."
+  }
+ ],
+ "words": 437,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Insurance & Risk",
+ "l3": "A commercial P&C insurer",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Insurance & Risk",
+   "url": "/industries/insurance/"
+  },
+  {
+   "name": "A commercial P&C insurer",
+   "url": "/case-studies/ins-08/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Insurance & Risk — industry hub",
+   "url": "/industries/insurance/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Agentic AI & Hyperautomation",
+   "url": "/services/agentic-ai-hyperautomation/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A top-5 global P&C insurer",
+   "url": "/case-studies/ins-01/",
+   "desc": "Claims triage in minutes — 55% faster cycle times with document intelligence"
+  },
+  {
+   "title": "A leading life insurer (North America)",
+   "url": "/case-studies/ins-02/",
+   "desc": "Underwriting evidence assembled in hours — case cycle time down 44%"
+  },
+  {
+   "title": "A European specialty reinsurer",
+   "url": "/case-studies/ins-03/",
+   "desc": "Bordereaux automation and settlement evidence — reconciliation effort down 74%"
+  }
+ ],
+ "cards": []
+}

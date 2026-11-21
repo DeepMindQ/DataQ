@@ -1,0 +1,262 @@
+{
+ "id": "CASE-hc-06",
+ "title": "A clinical research organization",
+ "url": "/case-studies/hc-06/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Healthcare & Life Sciences > A clinical research organization",
+ "seo_title": "A clinical research organization | Case Study | Dataq Software",
+ "meta_description": "Trial patient-matching grounded in protocol criteria — screen-fail rate down 28% and enrollment timelines met on three of three studies",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Trial patient-matching grounded in protocol criteria — screen-fail rate down 28% and enrollment timelines met on three of three studies"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a global CRO whose enrollment engine was coordinator memory: the right patients existed in referring networks, but nobody could search them against a protocol's fine print. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline across three studies: 41% screen-fail rate on first-line candidates, coordinators hand-screening 60 records per enrolled patient, and two studies forecasting missed enrollment milestones."
+  },
+  {
+   "t": "p",
+   "x": "Protocol criteria lived in PDFs; candidate records lived in EHRs. Every match was a human crosswalk between two languages, done under enrollment pressure."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We built matching on the retrieval layer: protocol eligibility criteria parsed into a machine-checkable form with the coordinator reviewing each interpretation, candidate records normalized across referring EHRs, and match rankings produced with every criterion hit cited to its source. Coordinators approve with evidence attached; the study dashboard shows exactly which criterion loses candidates."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — A clinical research organization",
+   "lanes": [
+    "Protocols",
+    "Candidate records",
+    "Matching core",
+    "Coordinator review"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "Protocol criteria parser",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Referring-network EHRs",
+     "hot": true
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Normalized candidate model",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Criteria-evidence retriever"
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Cited match ranking",
+     "hot": true
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Criterion-level funnel view"
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Coordinator approval queue",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Sponsor enrollment dashboard"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A clinical research organization",
+   "kpis": [
+    {
+     "label": "Screen-fail rate",
+     "value": "-28%",
+     "delta": "41% → 30%",
+     "dir": "down"
+    },
+    {
+     "label": "Records screened per enrollment",
+     "value": "60 → 22",
+     "delta": "cited pre-screening",
+     "dir": "down"
+    },
+    {
+     "label": "Milestone attainment",
+     "value": "3 of 3 studies",
+     "delta": "was forecasting 2 misses",
+     "dir": "up"
+    },
+    {
+     "label": "Criterion-level transparency",
+     "value": "100%",
+     "delta": "every miss attributable",
+     "dir": "up"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed with the enrollment lead",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 06",
+     "msg": "Matching live on first study's screening list",
+     "tag": "build"
+    },
+    {
+     "t": "wk 12",
+     "msg": "Gate review — IRB-facing documentation completed",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Studies onboarded sequentially; criteria parser under medical ownership",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Screen-fail baselines signed with the enrollment lead"
+    ],
+    [
+     "Build gate",
+     "No study live until parser interpretations were medically reviewed"
+    ],
+    [
+     "Run gate",
+     "Per-study funnel review against the signed baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "What transfers is the criteria-as-data pattern with medical ownership of interpretation. The EHR normalizations were network-specific; every replication starts from its referring map."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "12 months",
+     "12-person blended team",
+     "Global",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "The method on this page is documented because it worked twice — here and on the next estate. Book a briefing and bring the metric you need to move."
+  }
+ ],
+ "words": 422,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Healthcare & Life Sciences",
+ "l3": "A clinical research organization",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Healthcare & Life Sciences",
+   "url": "/industries/healthcare-life-sciences/"
+  },
+  {
+   "name": "A clinical research organization",
+   "url": "/case-studies/hc-06/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Healthcare & Life Sciences — industry hub",
+   "url": "/industries/healthcare-life-sciences/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Applied AI & Generative AI",
+   "url": "/services/applied-ai-generative-ai/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A 12-hospital US health system",
+   "url": "/case-studies/hc-01/",
+   "desc": "Clinicians get 90 minutes a day back — ambient documentation inside the EHR"
+  },
+  {
+   "title": "A national health insurer",
+   "url": "/case-studies/hc-02/",
+   "desc": "Prior authorization turnaround down 62% — clinical evidence assembled automatically"
+  },
+  {
+   "title": "A European biopharma group",
+   "url": "/case-studies/hc-03/",
+   "desc": "Trial eligibility matching at 10x — enrollment windows met"
+  }
+ ],
+ "cards": []
+}

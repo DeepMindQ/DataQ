@@ -9,254 +9,1211 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The honest pitch for identity & access modernization fits in a sentence — Identity as the perimeter — workforce, customer and machine identities on one governed plane. — and the rest of this page is the how: measured baseline, bounded build, evidence in flight."
+   "x": "Identity lifecycle done properly: joiner-mover-leaver automation that revokes on the leaver SLA, privileged access in vaults instead of spreadsheets, standing admin accounts driven to zero — and MFA that people actually complete."
   },
   {
    "t": "h2",
-   "x": "What we deliver under this name"
+   "x": "Identity is the perimeter now — and it runs on process, not enthusiasm"
   },
   {
    "t": "p",
-   "x": "Identity programs drown in scope: workforce access, customer IAM (CIAM), and the machine identities that now outnumber humans ten to one. We modernize all three on governed planes — workforce IAM with lifecycle driven by HR events (joiner-mover-leaver automation), CIAM with consent, step-up authentication and fraud signals, and machine identity management for service accounts, certificates and workload identities with rotation and attestation."
+   "x": "Identity is where most breaches begin and where most programs under-invest: accounts outlive their owners, service accounts share passwords, and privileged access is granted with a ticket and forgotten. Modernization is lifecycle engineering — every identity born with an owner, moved with re-attestation, and killed on schedule."
   },
   {
    "t": "p",
-   "x": "The compliance dividend is immediate: access reviews that take weeks become continuous entitlement analytics; certification evidence exports directly; orphaned accounts surface within hours of the triggering event. We include the migration psychology — phased cutover, helpdesk surge support and communication plans — because failed logins are how good security programs die politically."
+   "x": "Machine identity gets the same discipline as humans: workload identities with short-lived credentials, secrets vaulted and rotated, and the hygiene score reported weekly because credential rot is a countdown, not an event."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that turn identity programs into audit findings, the reference architecture of the lifecycle, and the console that keeps revocation honest."
   },
   {
    "t": "h2",
-   "x": "The stakes, stated plainly"
+   "x": "Four identity failures auditors find first"
   },
   {
    "t": "p",
-   "x": "Programs of Identity & Access Modernization run in Banking & Financial Services, Insurance & Risk, Healthcare & Life Sciences, Retail & Consumer Goods — always against one named number, always with the baseline signed first."
+   "x": "Every one of these is a process failure, not a tool failure — the countermeasures bind the lifecycle to HR and operational reality so revocation is an event, not a TODO."
   },
   {
-   "t": "h2",
-   "x": "What we put in place"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Identity & Access Modernization: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Workforce IAM",
-     "joiner-mover-leaver automation driven by HR source-of-truth events"
+     "Leaver lag",
+     "Departed staff keep working access for weeks",
+     "HR-driven leaver automation; 24h revocation SLA with evidence"
     ],
     [
-     "CIAM",
-     "customer identity with consent management, step-up auth and fraud signals"
+     "Service account sprawl",
+     "Keys and passwords shared across teams",
+     "Vaulted, rotated workload identities; shared-secret ban enforced"
     ],
     [
-     "Machine identity management",
-     "service accounts, certificates and workload identities with rotation"
+     "Privilege creep",
+     "Access accumulates across role changes",
+     "Mover re-attestation; time-bound elevation via PAM"
     ],
     [
-     "Entitlement analytics",
-     "continuous access reviews replacing periodic spreadsheet rituals"
-    ],
-    [
-     "Migration run model",
-     "phased cutover with helpdesk surge and communication plan"
+     "MFA fatigue",
+     "Approval bombing wears users down",
+     "Number matching + risk-based step-up; phishing-resistant tokens for admins"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — lifecycle from joiner to leaver"
+  },
+  {
+   "t": "p",
+   "x": "The lifecycle is event-driven: joiners provisioned from HR truth, movers re-scoped by role change, leavers revoked on SLA — and privileged access checked out of vaults just-in-time, reviewed, and never standing."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Identity & Access Modernization",
+   "title": "Reference architecture — identity lifecycle plane",
    "lanes": [
-    "Identity signals",
-    "Network fabric",
-    "Encrypted compute",
-    "Detection & response",
-    "Trust layer",
-    "Estate"
+    "Sources",
+    "Lifecycle engine",
+    "Directory & federation",
+    "Privileged access",
+    "Machine identity",
+    "Assurance"
    ],
    "nodes": [
     {
-     "id": "id0",
+     "id": "hr",
      "lane": 0,
-     "label": "Identity & Access Modernization",
+     "label": "HR system"
+    },
+    {
+     "id": "proc",
+     "lane": 0,
+     "label": "Procurement"
+    },
+    {
+     "id": "dev",
+     "lane": 0,
+     "label": "Dev platforms"
+    },
+    {
+     "id": "jml",
+     "lane": 1,
+     "label": "Joiner-Mover-Leaver",
      "hot": true
     },
     {
-     "id": "id1",
-     "lane": 0,
-     "label": "Human identities",
-     "hot": false
-    },
-    {
-     "id": "nf2",
+     "id": "attest",
      "lane": 1,
-     "label": "Micro-segmentation",
-     "hot": false
+     "label": "Re-attestation"
     },
     {
-     "id": "nf3",
+     "id": "prov",
      "lane": 1,
-     "label": "Zero-trust edges",
-     "hot": false
+     "label": "Provisioning"
     },
     {
-     "id": "ec4",
+     "id": "dir",
      "lane": 2,
-     "label": "Encrypted computation",
+     "label": "Directory"
+    },
+    {
+     "id": "fed",
+     "lane": 2,
+     "label": "Federation & SSO",
      "hot": true
     },
     {
-     "id": "ec5",
+     "id": "mfa",
      "lane": 2,
-     "label": "Key governance",
-     "hot": false
+     "label": "MFA & step-up",
+     "hot": true
     },
     {
-     "id": "dr6",
+     "id": "pam",
      "lane": 3,
-     "label": "Managed SOC / XDR",
-     "hot": false
+     "label": "Privileged vault",
+     "hot": true
     },
     {
-     "id": "dr7",
+     "id": "elev",
      "lane": 3,
-     "label": "Automated response",
-     "hot": false
+     "label": "Just-in-time elevation"
     },
     {
-     "id": "tl8",
+     "id": "session",
+     "lane": 3,
+     "label": "Session recording"
+    },
+    {
+     "id": "wl",
      "lane": 4,
-     "label": "Policy consensus",
-     "hot": false
+     "label": "Workload identity",
+     "hot": true
     },
     {
-     "id": "tl9",
+     "id": "vault",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Secrets vault"
     },
     {
-     "id": "es10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "rot",
+     "lane": 4,
+     "label": "Rotation engine"
     },
     {
-     "id": "es11",
+     "id": "score",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Hygiene scoring",
+     "hot": true
+    },
+    {
+     "id": "orphan",
+     "lane": 5,
+     "label": "Orphan sweep"
+    },
+    {
+     "id": "ev",
+     "lane": 5,
+     "label": "Evidence packs"
     }
    ],
    "edges": [
     {
-     "a": "id0",
-     "b": "nf2"
+     "a": "hr",
+     "b": "jml",
+     "label": "join/leave"
     },
     {
-     "a": "id1",
-     "b": "nf3"
+     "a": "proc",
+     "b": "jml",
+     "label": "assets"
     },
     {
-     "a": "nf2",
-     "b": "ec4"
+     "a": "dev",
+     "b": "wl",
+     "label": "register"
     },
     {
-     "a": "nf3",
-     "b": "ec5"
+     "a": "jml",
+     "b": "prov",
+     "label": "grants"
     },
     {
-     "a": "ec4",
-     "b": "dr6"
+     "a": "jml",
+     "b": "attest",
+     "label": "mover"
     },
     {
-     "a": "dr6",
-     "b": "dr7"
+     "a": "prov",
+     "b": "dir",
+     "label": "write"
     },
     {
-     "a": "dr6",
-     "b": "tl8"
+     "a": "dir",
+     "b": "fed",
+     "label": "identity"
     },
     {
-     "a": "tl8",
-     "b": "tl9"
+     "a": "fed",
+     "b": "mfa",
+     "label": "challenge"
     },
     {
-     "a": "tl8",
-     "b": "es10"
+     "a": "elev",
+     "b": "pam",
+     "label": "request"
     },
     {
-     "a": "dr7",
-     "b": "es11"
+     "a": "pam",
+     "b": "session",
+     "label": "record"
+    },
+    {
+     "a": "pam",
+     "b": "elev",
+     "label": "time-bound"
+    },
+    {
+     "a": "wl",
+     "b": "vault",
+     "label": "issue"
+    },
+    {
+     "a": "vault",
+     "b": "rot",
+     "label": "rotate"
+    },
+    {
+     "a": "prov",
+     "b": "score",
+     "label": "feed"
+    },
+    {
+     "a": "score",
+     "b": "orphan",
+     "label": "flag"
+    },
+    {
+     "a": "score",
+     "b": "ev",
+     "label": "packs"
     }
    ],
-   "note": "Topology inherited from the Cyber & Zero-Trust tower; the highlighted core is this service's build."
+   "note": "Elevation is time-bound and recorded: standing admin access is replaced by just-in-time grants whose sessions are recorded and whose grants expire on a clock."
   },
   {
    "t": "h2",
-   "x": "The artifacts, named"
+   "x": "One leaver, from HR event to verified revocation"
   },
   {
    "t": "p",
-   "x": "what changes hands, in writing, Identity & Access Modernization edition:"
+   "x": "From the HR trigger through downstream revocations, session invalidation, shared-account rotation and the verification probe — including where the SLA clock starts and what proves it stopped."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Lifecycle flows — join, move, elevate, rotate, leave",
+   "labels": [
+    "Join: HR event",
+    "Provision & MFA",
+    "Move: re-attest",
+    "Elevate: JIT",
+    "Rotate: secrets",
+    "Leave: revoke 24h",
+    "Evidence pack"
+   ],
+   "note": "Every flow ends in evidence: the join, the elevation, the rotation and the revocation all land in the pack an auditor will ask for."
+  },
+  {
+   "t": "h2",
+   "x": "The identity console — revocation as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Leaver revocation SLA, MFA coverage, standing admin count and service-account hygiene — the four numbers that decide whether identity is a control or a finding."
+  },
+  {
+   "t": "idash",
+   "title": "Identity & access — modernization console",
+   "kpis": [
+    {
+     "label": "Orphaned accounts",
+     "value": "0",
+     "delta": "was 3,214 — lifecycle automated",
+     "dir": "down",
+     "spark": [
+      3214,
+      2100,
+      1200,
+      600,
+      180,
+      40,
+      0
+     ]
+    },
+    {
+     "label": "JIT elevation share",
+     "value": "82%",
+     "delta": "standing admin nearly gone",
+     "dir": "up",
+     "spark": [
+      12,
+      25,
+      40,
+      55,
+      68,
+      76,
+      82
+     ]
+    },
+    {
+     "label": "Toxic combinations",
+     "value": "2",
+     "delta": "was 47 — graph-mined",
+     "dir": "down",
+     "spark": [
+      47,
+      31,
+      19,
+      11,
+      6,
+      3,
+      2
+     ]
+    },
+    {
+     "label": "Access-review effort",
+     "value": "4 h",
+     "delta": "quarterly, evidence-based",
+     "dir": "down",
+     "spark": [
+      210,
+      140,
+      90,
+      55,
+      28,
+      14,
+      4
+     ]
+    },
+    {
+     "label": "Phishing-resistant MFA",
+     "value": "96%",
+     "delta": "passkeys + FIDO2",
+     "dir": "up",
+     "spark": [
+      38,
+      52,
+      64,
+      74,
+      83,
+      90,
+      96
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Access graph",
+     "widgets": [
+      {
+       "kind": "scatter",
+       "title": "Entitlement risk map — privilege vs usage",
+       "points": [
+        {
+         "x": 88,
+         "y": 6,
+         "label": "Legacy ERP admin",
+         "group": "Standing"
+        },
+        {
+         "x": 72,
+         "y": 14,
+         "label": "Cloud root keys",
+         "group": "Standing"
+        },
+        {
+         "x": 55,
+         "y": 48,
+         "label": "Finance approver",
+         "group": "Active"
+        },
+        {
+         "x": 38,
+         "y": 72,
+         "label": "Support read",
+         "group": "Active"
+        },
+        {
+         "x": 64,
+         "y": 9,
+         "label": "Prod SQL write",
+         "group": "Standing"
+        },
+        {
+         "x": 30,
+         "y": 55,
+         "label": "Analytics read",
+         "group": "Active"
+        },
+        {
+         "x": 45,
+         "y": 12,
+         "label": "CI/CD service acct",
+         "group": "Orphaned"
+        },
+        {
+         "x": 25,
+         "y": 84,
+         "label": "HR self-serve",
+         "group": "Active"
+        },
+        {
+         "x": 78,
+         "y": 22,
+         "label": "Payments write",
+         "group": "Dormant"
+        },
+        {
+         "x": 15,
+         "y": 30,
+         "label": "Wiki editor",
+         "group": "Active"
+        }
+       ],
+       "groups": [
+        "Standing",
+        "Active",
+        "Dormant",
+        "Orphaned"
+       ],
+       "xLabel": "Privilege (0-100)",
+       "yLabel": "Usage in 180d (0-100)",
+       "note": "Hover for names. The upper-left quadrant is the standing-privilege backlog — high privilege, no usage — and it is where JIT elevation lands first."
+      }
+     ]
+    },
+    {
+     "name": "Lifecycle what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Lifecycle automation what-if — revocation SLAs vs exposure",
+       "params": [
+        {
+         "name": "Leavers / month",
+         "min": 5,
+         "max": 200,
+         "step": 5,
+         "value": 62,
+         "unit": "leavers"
+        },
+        {
+         "name": "Revocation SLA",
+         "min": 24,
+         "max": 240,
+         "step": 24,
+         "value": 72,
+         "unit": "hours"
+        },
+        {
+         "name": "Mover volume",
+         "min": 10,
+         "max": 300,
+         "step": 10,
+         "value": 85,
+         "unit": "moves/mo"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Exposure window",
+         "unit": "acct-days/mo",
+         "formula": "p0*p1/24*0.9",
+         "good": "80",
+         "bad": "400"
+        },
+        {
+         "name": "Orphan regrowth / yr",
+         "unit": "acct",
+         "formula": "p0*12*max(0,(p1-48))*0.06+p2*0.5*(100-p1)/100",
+         "good": "20",
+         "bad": "120"
+        },
+        {
+         "name": "Review effort",
+         "unit": "h/qtr",
+         "formula": "p0*0.9+p2*0.35",
+         "good": "40",
+         "bad": "180"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 1,
+        "label": "Revocation SLA vs orphan regrowth"
+       },
+       "note": "Past 48 hours of revocation SLA, orphaned accounts regrow faster than reviews kill them — the curve is the argument for HR-driven automation over annual cleanups."
+      }
+     ]
+    },
+    {
+     "name": "Fabric topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The identity fabric — click nodes for the lifecycle contract",
+       "lanes": [
+        "Source",
+        "Fabric",
+        "Enforcement",
+        "Evidence"
+       ],
+       "nodes": [
+        {
+         "id": "hr",
+         "lane": 0,
+         "label": "HR system of record",
+         "detail": "Joiner-mover-leaver events drive everything: identities born, moved and retired here — the org chart and the access truth converge.",
+         "hot": true
+        },
+        {
+         "id": "dir",
+         "lane": 1,
+         "label": "Authoritative directory",
+         "detail": "One directory with federated authentication; passkeys/FIDO2 for humans, workload federation for machines — phishing-resistant by default."
+        },
+        {
+         "id": "rbac",
+         "lane": 1,
+         "label": "Mined RBAC",
+         "detail": "Roles mined from the access graph's actual usage patterns — entitlement packs that describe work, not checkbox archaeology."
+        },
+        {
+         "id": "jit",
+         "lane": 2,
+         "label": "JIT elevation",
+         "detail": "Standing admin replaced by time-boxed, session-recorded elevation with approval routing — privilege is an event, not a state."
+        },
+        {
+         "id": "nh",
+         "lane": 2,
+         "label": "Non-human identities",
+         "detail": "Service accounts, workload identities and agent identities under the same registry discipline — owners, scopes, rotation, revocation."
+        },
+        {
+         "id": "gate",
+         "lane": 2,
+         "label": "Policy enforcement",
+         "detail": "Access decisions at resources (zero-trust style) with toxic-combination blocking — the graph's findings become runtime policy."
+        },
+        {
+         "id": "rev",
+         "lane": 3,
+         "label": "Access reviews",
+         "detail": "Evidence-based reviews: usage data pre-attached, rubber-stamping detectable, decisions fed back into RBAC mining."
+        }
+       ],
+       "edges": [
+        {
+         "a": "hr",
+         "b": "dir",
+         "label": "drives"
+        },
+        {
+         "a": "dir",
+         "b": "rbac"
+        },
+        {
+         "a": "rbac",
+         "b": "jit"
+        },
+        {
+         "a": "dir",
+         "b": "nh"
+        },
+        {
+         "a": "jit",
+         "b": "gate",
+         "label": "session"
+        },
+        {
+         "a": "nh",
+         "b": "gate"
+        },
+        {
+         "a": "gate",
+         "b": "rev",
+         "label": "evidence"
+        },
+        {
+         "a": "rev",
+         "b": "rbac",
+         "label": "re-mine"
+        }
+       ],
+       "note": "Click nodes for the lifecycle contract each layer carries. The review lane feeds the RBAC miner — access governance that learns."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · access model",
+   "note": "Reference program model: lifecycle bands and privilege scores from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Revocation SLA and MFA coverage across the estate"
+  },
+  {
+   "t": "p",
+   "x": "Two series across the estate's identity populations — workforce, contractor, service and privileged. The populations where SLA adherence dips are where the next automation investment goes."
+  },
+  {
+   "t": "chart",
+   "title": "Credential hygiene metrics across the estate — design targets",
+   "variant": "bar",
+   "cats": [
+    "Workforce",
+    "Service accounts",
+    "Workload identities",
+    "External partners",
+    "Break-glass"
+   ],
+   "series": [
+    {
+     "name": "Rotation on-time target %",
+     "points": [
+      98,
+      96,
+      95,
+      92,
+      100
+     ]
+    },
+    {
+     "name": "Stale-credential target %",
+     "points": [
+      0.5,
+      1.0,
+      0.8,
+      2.0,
+      0.0
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Identity & Access Modernization across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Identity & Access Modernization",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Banking & Financial Services operators recognize the pattern: genAI stuck between pilot and policy, quarter after quarter.",
+     "plays": [
+      "HR-driven joiner-mover-leaver automation with a verified revocation SLA",
+      "Privileged access vaulted, just-in-time, session-recorded and reviewed",
+      "Standing admin accounts driven to zero — and kept there"
+     ],
+     "kpis": [
+      {
+       "label": "Leaver revocation SLA",
+       "value": "99.4%"
+      },
+      {
+       "label": "MFA coverage",
+       "value": "98%"
+      },
+      {
+       "label": "Standing admin accounts",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Insurance & Risk operators recognize the pattern: sensitive data estate under pressure, quarter after quarter.",
+     "plays": [
+      "HR-driven joiner-mover-leaver automation with a verified revocation SLA",
+      "Privileged access vaulted, just-in-time, session-recorded and reviewed",
+      "Standing admin accounts driven to zero — and kept there"
+     ],
+     "kpis": [
+      {
+       "label": "Leaver revocation SLA",
+       "value": "99.4%"
+      },
+      {
+       "label": "MFA coverage",
+       "value": "98%"
+      },
+      {
+       "label": "Standing admin accounts",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": true,
+     "hook": "Ask what PHI concentration and ransomware exposure costs Healthcare & Life Sciences firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "HR-driven joiner-mover-leaver automation with a verified revocation SLA",
+      "Privileged access vaulted, just-in-time, session-recorded and reviewed",
+      "Standing admin accounts driven to zero — and kept there"
+     ],
+     "kpis": [
+      {
+       "label": "Leaver revocation SLA",
+       "value": "99.4%"
+      },
+      {
+       "label": "MFA coverage",
+       "value": "98%"
+      },
+      {
+       "label": "Standing admin accounts",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — IT/OT convergence exposure included — and prove it moved.",
+     "plays": [
+      "HR-driven joiner-mover-leaver automation with a verified revocation SLA",
+      "Privileged access vaulted, just-in-time, session-recorded and reviewed",
+      "Standing admin accounts driven to zero — and kept there"
+     ],
+     "kpis": [
+      {
+       "label": "Leaver revocation SLA",
+       "value": "99.4%"
+      },
+      {
+       "label": "MFA coverage",
+       "value": "98%"
+      },
+      {
+       "label": "Standing admin accounts",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone.",
+     "plays": [
+      "HR-driven joiner-mover-leaver automation with a verified revocation SLA",
+      "Privileged access vaulted, just-in-time, session-recorded and reviewed",
+      "Standing admin accounts driven to zero — and kept there"
+     ],
+     "kpis": [
+      {
+       "label": "Leaver revocation SLA",
+       "value": "99.4%"
+      },
+      {
+       "label": "MFA coverage",
+       "value": "98%"
+      },
+      {
+       "label": "Standing admin accounts",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the design assumes breach: blast radii contained, lateral movement priced, and detection tuned to the attacks your sector actually sees.",
+     "plays": [
+      "HR-driven joiner-mover-leaver automation with a verified revocation SLA",
+      "Privileged access vaulted, just-in-time, session-recorded and reviewed",
+      "Standing admin accounts driven to zero — and kept there"
+     ],
+     "kpis": [
+      {
+       "label": "Leaver revocation SLA",
+       "value": "99.4%"
+      },
+      {
+       "label": "MFA coverage",
+       "value": "98%"
+      },
+      {
+       "label": "Standing admin accounts",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — OT estate exposed by convergence included — and prove it moved.",
+     "plays": [
+      "HR-driven joiner-mover-leaver automation with a verified revocation SLA",
+      "Privileged access vaulted, just-in-time, session-recorded and reviewed",
+      "Standing admin accounts driven to zero — and kept there"
+     ],
+     "kpis": [
+      {
+       "label": "Leaver revocation SLA",
+       "value": "99.4%"
+      },
+      {
+       "label": "MFA coverage",
+       "value": "98%"
+      },
+      {
+       "label": "Standing admin accounts",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "HR-driven joiner-mover-leaver automation with a verified revocation SLA",
+      "Privileged access vaulted, just-in-time, session-recorded and reviewed",
+      "Standing admin accounts driven to zero — and kept there"
+     ],
+     "kpis": [
+      {
+       "label": "Leaver revocation SLA",
+       "value": "99.4%"
+      },
+      {
+       "label": "MFA coverage",
+       "value": "98%"
+      },
+      {
+       "label": "Standing admin accounts",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": true,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "HR-driven joiner-mover-leaver automation with a verified revocation SLA",
+      "Privileged access vaulted, just-in-time, session-recorded and reviewed",
+      "Standing admin accounts driven to zero — and kept there"
+     ],
+     "kpis": [
+      {
+       "label": "Leaver revocation SLA",
+       "value": "99.4%"
+      },
+      {
+       "label": "MFA coverage",
+       "value": "98%"
+      },
+      {
+       "label": "Standing admin accounts",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone.",
+     "plays": [
+      "HR-driven joiner-mover-leaver automation with a verified revocation SLA",
+      "Privileged access vaulted, just-in-time, session-recorded and reviewed",
+      "Standing admin accounts driven to zero — and kept there",
+      "Sector working pattern: research ip protection: classification-aware controls for sensitive research programs. Export-control posture evidenced is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Leaver revocation SLA",
+       "value": "99.4%"
+      },
+      {
+       "label": "MFA coverage",
+       "value": "98%"
+      },
+      {
+       "label": "Standing admin accounts",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "HR-driven joiner-mover-leaver automation with a verified revocation SLA",
+      "Privileged access vaulted, just-in-time, session-recorded and reviewed",
+      "Standing admin accounts driven to zero — and kept there"
+     ],
+     "kpis": [
+      {
+       "label": "Leaver revocation SLA",
+       "value": "99.4%"
+      },
+      {
+       "label": "MFA coverage",
+       "value": "98%"
+      },
+      {
+       "label": "Standing admin accounts",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means security here is architecture, not product sprawl — identity-first controls, segmented networks, and telemetry your SOC can act on the same hour.",
+     "plays": [
+      "HR-driven joiner-mover-leaver automation with a verified revocation SLA",
+      "Privileged access vaulted, just-in-time, session-recorded and reviewed",
+      "Standing admin accounts driven to zero — and kept there"
+     ],
+     "kpis": [
+      {
+       "label": "Leaver revocation SLA",
+       "value": "99.4%"
+      },
+      {
+       "label": "MFA coverage",
+       "value": "98%"
+      },
+      {
+       "label": "Standing admin accounts",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/cybersecurity-zero-trust/"
+    }
+   ],
+   "practiceNote": "Identity & Access Modernization view: workforce and machine identity lifecycle done properly — joiner-mover-leaver automation, privileged access vaulting and credential hygiene that is measured weekly."
+  },
+  {
+   "t": "h2",
+   "x": "Identity stack defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor HR-driven lifecycle and vaulted privilege over DIY workflows; deviation triggers are written because each one re-creates the manual gap auditors find."
+  },
+  {
+   "t": "table",
+   "caption": "Identity & Access Modernization: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Consolidated identity plane for workforce, customer and machine identities",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Lifecycle",
+     "HR-driven JML automation with SLAs",
+     "Ticket-driven provisioning — lag is structural"
     ],
     [
-     "Lifecycle automation from HR events with exception handling",
-     "Handed to a named owner on your side, with a working session included."
+     "Privileged access",
+     "PAM vault with JIT elevation and recording",
+     "Standing admin groups — the standing attack path"
     ],
     [
-     "Continuous entitlement analytics and review exports",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Machine identity",
+     "Workload identity federation; vaulted secrets",
+     "Static API keys in repos — the most common breach aid"
     ],
     [
-     "Machine identity inventory with rotation and attestation",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Assurance",
+     "Weekly hygiene scoring with orphan sweeps",
+     "Annual access reviews — rot compounds weekly"
+    ],
+    [
+     "Phishing resistance",
+     "FIDO2 for admins; number matching broadly",
+     "SMS OTP as a control — it is not one"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Under the hood"
+   "x": "Identity release gates — evidence before enforcement"
   },
   {
-   "t": "p",
-   "x": "Identity & Access Modernization ships against enterprise IdPs (Entra/Okta-class), IGA platforms, FIDO2/WebAuthn, SPIFFE/SPIRE, SCIM. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for Identity & Access Modernization — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Leaver gate",
+     "Do departures revoke within 24h?",
+     "SLA evidence per event; exception register"
+    ],
+    [
+     "Privilege gate",
+     "Is standing admin eliminated?",
+     "JIT-only evidence; session recording samples"
+    ],
+    [
+     "Vault gate",
+     "Are secrets vaulted and rotating?",
+     "Coverage scan; rotation calendar proof"
+    ],
+    [
+     "Orphan gate",
+     "Does every identity have an owner?",
+     "Sweep results; quarantine evidence"
+    ],
+    [
+     "Evidence gate",
+     "Would identity controls pass audit?",
+     "Auto-generated packs for sampled events"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "What the weeks look like"
+   "x": "What the IAM team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Identity & Access Modernization starts with the measurement: the metric, the owner, the current number, signed."
+     "JML automation",
+     "HR-event-driven lifecycle with SLAs and evidence"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, workforce iam first, gates written with your team."
+     "PAM vault",
+     "JIT elevation, recording, break-glass procedure"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Identity & Access Modernization are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Workload identity kit",
+     "Federated identities with vaulted rotation"
+    ],
+    [
+     "Hygiene scorecard",
+     "Weekly credential-health reporting"
+    ],
+    [
+     "Orphan sweep tool",
+     "Ownerless-identity detection and quarantine"
+    ],
+    [
+     "Evidence generator",
+     "Auditor packs per control, on demand"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Lifecycle in order, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — census & hygiene baseline",
+     "Identity census, orphan scan, credential-rot report"
+    ],
+    [
+     "Weeks 3–4 — lifecycle automation",
+     "JML wiring, SLA design, first leaver drill"
+    ],
+    [
+     "Weeks 5–6 — privileged access",
+     "PAM vault, JIT policy, break-glass, recording"
+    ],
+    [
+     "Weeks 7–8 — machine identity",
+     "Vault migration, federation, rotation engine"
+    ],
+    [
+     "Weeks 9–10 — assurance",
+     "Scoring live, sweeps scheduled, packs automated"
+    ],
+    [
+     "Ongoing — identity ops",
+     "Weekly scoring, monthly orphan sweep, quarterly recert"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — HR truth and downstream estates"
+  },
+  {
+   "t": "p",
+   "x": "Lifecycle automation lives or dies on HR truth; these contracts carry joiner, mover and leaver events into every downstream estate that grants anything."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "HR systems",
+     "Joiner/leaver event contracts"
+    ],
+    [
+     "SaaS estate",
+     "Provisioning connectors with revocation"
+    ],
+    [
+     "Dev platforms",
+     "Workload identity federation"
+    ],
+    [
+     "Secrets manager",
+     "Vault and rotation integration"
+    ],
+    [
+     "SIEM",
+     "Identity event export for detection"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Privileged-access governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Privileged access is vaulted, checked out just-in-time, session-recorded and reviewed — the standing-admin count reaching zero is the program's proof, not its slogan."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "24h revocation",
+     "Leaver access dies within a day, with evidence"
+    ],
+    [
+     "No standing admin",
+     "Privilege is time-bound, recorded, reviewed"
+    ],
+    [
+     "Shared-secret ban",
+     "Shared credentials quarantine on detection"
+    ],
+    [
+     "Phishing-resistant admin",
+     "Administrators use FIDO2 tokens"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Verification probes run after every revocation wave: synthetic authentication attempts against revoked identities, with any success treated as a sev-1 and traced to the exact process gap."
   },
   {
    "t": "cta",
-   "x": "The next step is small and real: one working session on Identity & Access Modernization, your data, and a written feasibility read you can circulate."
+   "x": "Ask how fast your last leaver actually lost access — then ask who verified it. The diagnostic will measure your real revocation SLA and vault your privilege before your auditor asks."
   }
  ],
- "words": 499,
+ "words": 983,
  "section": "Services",
  "l1": "Services",
  "l2": "Cybersecurity & Zero-Trust",
@@ -278,7 +1235,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Cybersecurity & Zero-Trust",
+   "title": "Domain overview — Cybersecurity & Zero-Trust",
    "url": "/services/cybersecurity-zero-trust/",
    "desc": "Identity, detection, resilience and AI security in one program."
   },
@@ -330,33 +1287,51 @@
   {
    "title": "Applied AI & GenAI for Telecom, Media & Entertainment",
    "url": "/industries/telecom-media/capabilities/applied-ai-generative-ai/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Zero-Trust Architecture & Implementation",
-   "url": "/services/cybersecurity-zero-trust/zero-trust-architecture/",
-   "tag": "Same tower",
-   "desc": "Never trust, always verify — zero-trust as an executable architecture, not a slide."
-  },
-  {
-   "title": "Threat Intelligence & Managed SOC",
-   "url": "/services/cybersecurity-zero-trust/threat-intelligence-managed-soc/",
-   "tag": "Same tower",
-   "desc": "Detection that keeps pace — intelligence-driven SOC with the boring parts (tuning, coverage) done properly."
-  },
-  {
    "title": "Cloud Security & Posture Management",
    "url": "/services/cybersecurity-zero-trust/cloud-security-posture/",
-   "tag": "Same tower",
-   "desc": "Secure at the control plane — posture, workload and data security engineered into the platform."
+   "tag": "Same domain",
+   "desc": "multi-cloud misconfiguration and entitlement control — infrastructure-as-code guardrails, CSPM with dwell-time metrics, and drift that fixes itself."
   },
   {
-   "title": "AI security & Model Protection",
-   "url": "/services/cybersecurity-zero-trust/ai-security-model-protection/",
-   "tag": "Same tower",
-   "desc": "Secure the models themselves — prompt-injection defense, agent containment and AI red-teaming."
+   "title": "Compliance, Audit & Digital Trust",
+   "url": "/services/cybersecurity-zero-trust/compliance-audit-digital-trust/",
+   "tag": "Same domain",
+   "desc": "evidence-grade compliance without theater — controls mapped once, evidence generated continuously, audits that pass first time."
+  },
+  {
+   "title": "Cyber Resilience & Incident Recovery",
+   "url": "/services/cybersecurity-zero-trust/cyber-resilience-incident-recovery/",
+   "tag": "Same domain",
+   "desc": "recovery that is rehearsed, not documented — immutable backups, clean-room restores and business-service RTOs you can actually meet on a bad Friday."
+  },
+  {
+   "title": "Edge Computing & Distributed Infrastructure",
+   "url": "/services/cloud-edge-platform-engineering/edge-computing-infrastructure/",
+   "tag": "Pairs with",
+   "desc": "compute and delivery close to users and devices — regional clusters with store-and-forward resilience, fleet ops at scale and honest latency budgets."
+  },
+  {
+   "title": "Post-Quantum Cryptography Migration",
+   "url": "/services/quantum-advanced-compute/post-quantum-cryptography/",
+   "tag": "Pairs with",
+   "desc": "PQC migration as engineering — crypto inventory with endpoint-level truth, hybrid deployments where standards allow, and crypto-agility that makes the next swap cheap."
+  },
+  {
+   "title": "Generative AI Platform Engineering",
+   "url": "/services/applied-ai-generative-ai/genai-platform-engineering/",
+   "tag": "Pairs with",
+   "desc": "one governed door for every model call — authz, budgets, caching, guardrails and traces — so fifty use cases stay operable and affordable."
+  },
+  {
+   "title": "A tier-1 US bank",
+   "url": "/case-studies/bank-03/",
+   "tag": "Evidence",
+   "desc": "DORA-grade resilience posture — third-party and incident evidence automated."
   }
  ]
 }

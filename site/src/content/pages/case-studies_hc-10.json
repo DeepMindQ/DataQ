@@ -1,0 +1,263 @@
+{
+ "id": "CASE-hc-10",
+ "title": "A genomics laboratory",
+ "url": "/case-studies/hc-10/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Healthcare & Life Sciences > A genomics laboratory",
+ "seo_title": "A genomics laboratory | Case Study | Dataq Software",
+ "meta_description": "Genomic pipeline platform on hybrid cloud — cost per genome down 44% and turnaround from nine days to three",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Genomic pipeline platform on hybrid cloud — cost per genome down 44% and turnaround from nine days to three"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a genomics lab whose sequencing machines outran its compute: samples queued for days while the on-prem cluster churned, and clinical reports waited on batch windows. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline month priced the queue: nine days median sample-to-report, EUR 214 compute cost per genome, and secondary analysis capacity fixed by hardware procurement cycles."
+  },
+  {
+   "t": "p",
+   "x": "Clinical demand was spiky — oncology panels arrived in bursts — and the cluster sized for average load failed both directions: idle most days, overrun on burst days."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We rebuilt the pipeline as a hybrid platform: burstable secondary analysis on cloud with data gravity respected — sequencing data staged once, cached hot — workload manager scheduling across both estates, and the clinical report chain kept inside the lab's validated boundary. Cost guards run in the platform: every workload carries its budget, and overrun is a governed exception."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — A genomics laboratory",
+   "lanes": [
+    "Sequencers",
+    "Hybrid scheduler",
+    "Validated analysis",
+    "Clinical reporting"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "On-prem sequencers",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Cloud burst tier",
+     "hot": true
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Data-gravity-aware staging",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Workload manager (both estates)",
+     "hot": true
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Validated pipeline boundary",
+     "hot": true
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Variant calling & annotation"
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Report chain (validated)",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Cost guard & budget ledger"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A genomics laboratory",
+   "kpis": [
+    {
+     "label": "Sample-to-report turnaround",
+     "value": "9 days → 3 days",
+     "delta": "median",
+     "dir": "down"
+    },
+    {
+     "label": "Cost per genome",
+     "value": "-44%",
+     "delta": "EUR 214 → EUR 120",
+     "dir": "down"
+    },
+    {
+     "label": "Burst-day capacity",
+     "value": "+5.8x",
+     "delta": "cloud tier absorbs peaks",
+     "dir": "up"
+    },
+    {
+     "label": "Validated boundary incidents",
+     "value": "0",
+     "delta": "report chain unchanged",
+     "dir": "flat"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed — turnaround and unit cost locked with the lab director",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 07",
+     "msg": "Hybrid scheduler live for secondary analysis",
+     "tag": "build"
+    },
+    {
+     "t": "wk 13",
+     "msg": "Gate review — validation pack accepted by the quality unit",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Panels onboarded in waves; budget ledger under named owner",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Turnaround and unit-cost baselines signed with the lab"
+    ],
+    [
+     "Build gate",
+     "No pipeline stage moved outside the validated boundary"
+    ],
+    [
+     "Run gate",
+     "Monthly cost-per-genome review against the signed baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The hybrid pattern with cost guards transfers to any bursty scientific workload; the validation boundary layout was this lab's accreditation and does not move. Another lab starts from its own validation map."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "11 months",
+     "12-person blended team",
+     "EU",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "If this case sits close to your operation, the briefing is the right next step: 45 minutes with the practice lead who ran it, your metric against the pattern that moved here."
+  }
+ ],
+ "words": 455,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Healthcare & Life Sciences",
+ "l3": "A genomics laboratory",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Healthcare & Life Sciences",
+   "url": "/industries/healthcare-life-sciences/"
+  },
+  {
+   "name": "A genomics laboratory",
+   "url": "/case-studies/hc-10/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Healthcare & Life Sciences — industry hub",
+   "url": "/industries/healthcare-life-sciences/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Cloud, Edge & Platform Engineering",
+   "url": "/services/cloud-edge-platform-engineering/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A 12-hospital US health system",
+   "url": "/case-studies/hc-01/",
+   "desc": "Clinicians get 90 minutes a day back — ambient documentation inside the EHR"
+  },
+  {
+   "title": "A national health insurer",
+   "url": "/case-studies/hc-02/",
+   "desc": "Prior authorization turnaround down 62% — clinical evidence assembled automatically"
+  },
+  {
+   "title": "A European biopharma group",
+   "url": "/case-studies/hc-03/",
+   "desc": "Trial eligibility matching at 10x — enrollment windows met"
+  }
+ ],
+ "cards": []
+}

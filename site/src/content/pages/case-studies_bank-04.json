@@ -1,0 +1,267 @@
+{
+ "id": "CASE-bank-04",
+ "title": "A cross-border payments group",
+ "url": "/case-studies/bank-04/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Banking & Financial Services > A cross-border payments group",
+ "seo_title": "A cross-border payments group | Case Study | Dataq Software",
+ "meta_description": "Sanctions screening rebuilt on a decision hub — screening latency down 84% and false positives down 47% without widening risk appetite",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Sanctions screening rebuilt on a decision hub — screening latency down 84% and false positives down 47% without widening risk appetite"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a cross-border payments group clearing correspondent traffic for mid-sized banks across Europe, outcome-linked engagement, blended delivery team. Screening ran as a nightly batch bolted onto a ledger that had long since moved to real time. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline fortnight measured what the batch design actually cost: 41% of interbank transfers sat in manual screening queues longer than four hours, and correspondent partners had begun routing around the corridor at peak hours."
+  },
+  {
+   "t": "p",
+   "x": "Every alert was treated as equal — a salary payment and a shell-company pattern hit the same queue. Screeners worked oldest-first, so the riskiest items waited behind the easiest ones, and the audit trail could not say why an item had been released."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We rebuilt screening as an event-driven decision hub: messages scored at ingest, a policy layer separating risk appetite from detection logic, and a workbench where alert dossiers assemble themselves — names, network links, prior dispositions — before a human opens them. Agents prepare; people decide; every release is replayable line by line."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — A cross-border payments group",
+   "lanes": [
+    "Message ingest",
+    "Decision core",
+    "Analyst workbench",
+    "Evidence & audit"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "SWIFT & SEPA gateways",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Sanctions lists feed"
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Real-time scorer",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Policy & thresholds layer",
+     "hot": true
+    },
+    {
+     "id": "n4",
+     "lane": 1,
+     "label": "Network link analysis"
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Auto-dossier assembly",
+     "hot": true
+    },
+    {
+     "id": "n6",
+     "lane": 2,
+     "label": "Liquidity-aware queue ranking"
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Decision replay store",
+     "hot": true
+    },
+    {
+     "id": "n8",
+     "lane": 3,
+     "label": "Regulator evidence pack"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A cross-border payments group",
+   "kpis": [
+    {
+     "label": "Screening latency (p95)",
+     "value": "-84%",
+     "delta": "from hours to under 90 seconds",
+     "dir": "down"
+    },
+    {
+     "label": "False positives",
+     "value": "-47%",
+     "delta": "with tighter, not looser, policy",
+     "dir": "down"
+    },
+    {
+     "label": "Manual touches per alert",
+     "value": "-58%",
+     "delta": "dossiers pre-assembled",
+     "dir": "down"
+    },
+    {
+     "label": "Corridor volume at peak",
+     "value": "+0",
+     "delta": "recovered after partners returned",
+     "dir": "flat"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed — queue times locked with operations",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 07",
+     "msg": "Scorer shadow-running on live corridor traffic",
+     "tag": "build"
+    },
+    {
+     "t": "wk 13",
+     "msg": "Gate review — regulator observer present",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Runbooks with named owners; quarterly policy recalibration",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Four-week baseline signed by operations and compliance jointly"
+    ],
+    [
+     "Build gate",
+     "No scorer promotion until replay accuracy matched human dispositions"
+    ],
+    [
+     "Run gate",
+     "Monthly policy review against realized, not forecast, false-positive rates"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The generalizable pieces here are the queue-ranking policy and the dossier assembly pattern — both moved to two other corridors with estate-specific rework. What did not transfer was the scorer; it had been trained on this group's own disposition history, and pretending otherwise would have been the expensive mistake."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "11 months",
+     "19-person blended team",
+     "EU",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "Start with the diagnostic, not the contract: the same diagnostic that baselined this program takes two weeks, and a scoped proposal follows only if the delta justifies it."
+  }
+ ],
+ "words": 499,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Banking & Financial Services",
+ "l3": "A cross-border payments group",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Banking & Financial Services",
+   "url": "/industries/banking-financial-services/"
+  },
+  {
+   "name": "A cross-border payments group",
+   "url": "/case-studies/bank-04/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Banking & Financial Services — industry hub",
+   "url": "/industries/banking-financial-services/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Agentic AI & Hyperautomation",
+   "url": "/services/agentic-ai-hyperautomation/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A top-10 European retail bank",
+   "url": "/case-studies/bank-01/",
+   "desc": "Real-time fraud decisioning on instant rails — 38% lower fraud losses at a higher approval rate"
+  },
+  {
+   "title": "A multinational corporate bank",
+   "url": "/case-studies/bank-02/",
+   "desc": "KYC refresh backlog cleared — 70% faster cycles with agentic file assembly"
+  },
+  {
+   "title": "A tier-1 US bank",
+   "url": "/case-studies/bank-03/",
+   "desc": "DORA-grade resilience posture — third-party and incident evidence automated"
+  }
+ ],
+ "cards": []
+}

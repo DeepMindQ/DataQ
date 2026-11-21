@@ -9,254 +9,1217 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Most edge computing & distributed infrastructure engagements stall between the deck and the deployment. Ours are built to cross that gap: Compute where the physics is — edge fabric for plants, stores, vehicles and grids.. What follows is the working pattern, not the brochure."
+   "x": "Compute and delivery close to users and devices: regional clusters with store-and-forward resilience, fleet operations across heterogeneous hardware, rollout waves that respect site windows — and monitors that notice when a site goes silent instead of assuming it is fine."
   },
   {
    "t": "h2",
-   "x": "The working definition"
+   "x": "The edge is defined by its failures: partitions, silence and heterogeneity"
   },
   {
    "t": "p",
-   "x": "When the decision lives at the machine — a vision inspection, a grid relay setting, a store kiosk — the cloud round trip is the architecture mistake. We engineer edge fabric: hardware selection and sizing for the environment (IP-rated, DIN-rail, GPU-capable), KubeEdge/K3s-class orchestration with fleet management, offline-first application patterns, model deployment pipelines with OTA updates, and store-and-forward telemetry that survives connectivity loss."
+   "x": "Edge is where the cloud's assumptions break: networks partition, power flickers, hardware is diverse, and nobody is there to reboot the box. Edge infrastructure is fleet engineering — regional clusters with autonomous degradation, store-and-forward data paths, and deployment tooling that treats a hundred sites like one release train."
   },
   {
    "t": "p",
-   "x": "Security gets specific at the edge: physical tamper considerations, hardware roots of trust, signed images and measured boot, and network segmentation aligned to IEC 62443 zones-and-conduits for industrial estates. Fleet operations are the real product — thousands of nodes versioned, monitored and updated like a software estate, with SLOs per site."
+   "x": "The practice spans the regional tier (metro clusters and CDN), the site tier (factory/store boxes), device gateways, and the fleet operations that keep hundreds of nodes observable and upgradable from one console."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that make edge estates fragile, the reference architecture of partition-tolerant design, and the console that keeps a thousand sites honest."
   },
   {
    "t": "h2",
-   "x": "What makes this urgent now"
+   "x": "Four failure modes that make edge estates fragile"
   },
   {
    "t": "p",
-   "x": "Programs of Edge Computing & Distributed Infrastructure run in Manufacturing & Industrial, Energy & Utilities, Logistics & Supply Chain, Retail & Consumer Goods — always against one named number, always with the baseline signed first."
+   "x": "Each of these hides behind scale — a thousand sites make wonderful averages and terrible individual failures — the countermeasures measure sites as individuals."
   },
   {
-   "t": "h2",
-   "x": "How the capability takes shape"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Edge Computing & Distributed Infrastructure: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Hardware engineering",
-     "environment-rated selection, sizing and lifecycle planning per site class"
+     "Partition behavior",
+     "Sites go dark and servers forget what happened",
+     "Store-and-forward with clocks and dedup; conflict resolution tested"
     ],
     [
-     "Edge orchestration",
-     "KubeEdge/K3s fleets with remote management and SLOs per site"
+     "Fleet heterogeneity",
+     "Six hardware SKUs, four OS versions",
+     "Fleet abstraction layer; SKUs certified into release trains"
     ],
     [
-     "Offline-first patterns",
-     "store-and-forward, local decisioning and sync-on-reconnect"
+     "Update freezes",
+     "Sites stuck on old firmware for quarters",
+     "Staged rollout trains with health gates; rollback drills"
     ],
     [
-     "Model OTA pipeline",
-     "signed model/artifact deployment with staged rollout and rollback"
-    ],
-    [
-     "Edge security",
-     "hardware roots of trust, signed boot and IEC 62443-aligned segmentation"
+     "Silent sites",
+     "A site dies and nobody notices for days",
+     "Site-level observability with heartbeat SLOs"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — regional clusters with store-and-forward"
+  },
+  {
+   "t": "p",
+   "x": "Sites survive isolation by design: local decision-making on regional clusters, store-and-forward queues that reconcile on reconnect, rollout waves that respect site windows, and heartbeats that make silence a monitored state rather than an assumption."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Edge Computing & Distributed Infrastructure",
+   "title": "Reference architecture — edge infrastructure stack",
    "lanes": [
-    "Estates",
-    "Migration waves",
-    "Modern runtimes",
-    "Observability",
-    "Governance",
-    "Products"
+    "Sites",
+    "Site runtime",
+    "Data path",
+    "Regional tier",
+    "Fleet ops",
+    "Observability"
    ],
    "nodes": [
     {
-     "id": "es0",
+     "id": "store",
      "lane": 0,
-     "label": "MES & line historians",
-     "hot": false
+     "label": "Retail/industrial sites"
     },
     {
-     "id": "es1",
+     "id": "metro",
      "lane": 0,
-     "label": "SCADA / OT telemetry",
-     "hot": false
+     "label": "Metro PoPs"
     },
     {
-     "id": "mw2",
+     "id": "device",
+     "lane": 0,
+     "label": "Device gateways"
+    },
+    {
+     "id": "os",
      "lane": 1,
-     "label": "Edge Computing & Distributed Infrastructure",
+     "label": "Edge OS & runtime",
      "hot": true
     },
     {
-     "id": "mw3",
+     "id": "workload",
      "lane": 1,
-     "label": "Cutover runbooks",
-     "hot": false
+     "label": "Edge workloads"
     },
     {
-     "id": "mr4",
-     "lane": 2,
-     "label": "Containers & IaC",
-     "hot": false
-    },
-    {
-     "id": "mr5",
-     "lane": 2,
-     "label": "Managed data services",
+     "id": "hw",
+     "lane": 1,
+     "label": "Hardware abstraction",
      "hot": true
     },
     {
-     "id": "ob6",
+     "id": "saf",
+     "lane": 2,
+     "label": "Store-and-forward",
+     "hot": true
+    },
+    {
+     "id": "sync",
+     "lane": 2,
+     "label": "Conflict resolution"
+    },
+    {
+     "id": "clock",
+     "lane": 2,
+     "label": "Time sync"
+    },
+    {
+     "id": "cluster",
      "lane": 3,
-     "label": "Golden signals",
-     "hot": false
+     "label": "Regional clusters"
     },
     {
-     "id": "ob7",
+     "id": "cdn",
      "lane": 3,
-     "label": "Incident automation",
-     "hot": false
+     "label": "CDN & cache"
     },
     {
-     "id": "gv8",
+     "id": "agg",
+     "lane": 3,
+     "label": "Aggregation services"
+    },
+    {
+     "id": "train",
      "lane": 4,
-     "label": "Cloud posture (CNAPP)",
-     "hot": false
+     "label": "Release trains",
+     "hot": true
     },
     {
-     "id": "gv9",
+     "id": "staging",
      "lane": 4,
-     "label": "IEC 62443 posture",
-     "hot": false
+     "label": "Staged rollout"
     },
     {
-     "id": "pr10",
-     "lane": 5,
-     "label": "Production scheduling",
-     "hot": false
+     "id": "rollback",
+     "lane": 4,
+     "label": "Fleet rollback"
     },
     {
-     "id": "pr11",
+     "id": "heart",
      "lane": 5,
-     "label": "Maintenance planner",
-     "hot": false
+     "label": "Heartbeat SLOs",
+     "hot": true
+    },
+    {
+     "id": "site-mon",
+     "lane": 5,
+     "label": "Site telemetry"
+    },
+    {
+     "id": "alert",
+     "lane": 5,
+     "label": "Site alerting"
     }
    ],
    "edges": [
     {
-     "a": "es0",
-     "b": "mw2"
+     "a": "store",
+     "b": "os",
+     "label": "runs"
     },
     {
-     "a": "es1",
-     "b": "mw3"
+     "a": "metro",
+     "b": "cluster",
+     "label": "serves"
     },
     {
-     "a": "mw2",
-     "b": "mr4"
+     "a": "device",
+     "b": "os",
+     "label": "gateways"
     },
     {
-     "a": "mw3",
-     "b": "mr5"
+     "a": "hw",
+     "b": "os",
+     "label": "abstract"
     },
     {
-     "a": "mr4",
-     "b": "ob6"
+     "a": "os",
+     "b": "workload",
+     "label": "host"
     },
     {
-     "a": "mr5",
-     "b": "ob7"
+     "a": "workload",
+     "b": "saf",
+     "label": "write"
     },
     {
-     "a": "ob6",
-     "b": "gv8"
+     "a": "saf",
+     "b": "sync",
+     "label": "reconcile"
     },
     {
-     "a": "gv8",
-     "b": "gv9"
+     "a": "clock",
+     "b": "saf",
+     "label": "order"
     },
     {
-     "a": "mr4",
-     "b": "pr10"
+     "a": "saf",
+     "b": "cluster",
+     "label": "upstream"
     },
     {
-     "a": "mr5",
-     "b": "pr11"
+     "a": "cluster",
+     "b": "agg",
+     "label": "aggregate"
+    },
+    {
+     "a": "cdn",
+     "b": "metro",
+     "label": "deliver"
+    },
+    {
+     "a": "train",
+     "b": "staging",
+     "label": "stage"
+    },
+    {
+     "a": "staging",
+     "b": "workload",
+     "label": "update"
+    },
+    {
+     "a": "staging",
+     "b": "rollback",
+     "label": "guard"
+    },
+    {
+     "a": "workload",
+     "b": "heart",
+     "label": "report"
+    },
+    {
+     "a": "site-mon",
+     "b": "heart",
+     "label": "feed"
+    },
+    {
+     "a": "heart",
+     "b": "alert",
+     "label": "page"
     }
    ],
-   "note": "Topology inherited from the Cloud, Edge & Platform tower; the highlighted core is this service's build."
+   "note": "Store-and-forward with clock discipline is the contract: a partitioned site keeps working, and its data reconciles with dedup and conflict rules when the link returns."
   },
   {
    "t": "h2",
-   "x": "What your team actually receives"
+   "x": "One partitioned site, from isolation to reconciliation"
   },
   {
    "t": "p",
-   "x": "For Edge Computing & Distributed Infrastructure, deliverables, without dressing them up:"
+   "x": "From link loss through local operation, bounded queues, reconnect and reconciliation — including the conflict rules that decide what wins when both sides moved."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "edge-topology",
+   "title": "Edge data and release flows — capture, forward, aggregate, update",
+   "labels": [
+    "Site event",
+    "Local process",
+    "Forward queue",
+    "Link restore",
+    "Regional aggregate",
+    "Release train",
+    "Health-gated rollout"
+   ],
+   "note": "Rollouts are health-gated per cohort: a site class that degrades holds the train, and rollback is one command per train, not a week of site visits."
+  },
+  {
+   "t": "h2",
+   "x": "The edge console — sites as individuals"
+  },
+  {
+   "t": "p",
+   "x": "Site heartbeat SLO, worst-site queue depth and rollout wave success — the three numbers that run a fleet, because averages across a thousand sites hide exactly the failure you care about."
+  },
+  {
+   "t": "idash",
+   "title": "Edge computing — fleet console",
+   "kpis": [
+    {
+     "label": "Sites managed",
+     "value": "318",
+     "delta": "4 countries, 3 silicon classes",
+     "dir": "up",
+     "spark": [
+      120,
+      160,
+      200,
+      240,
+      280,
+      300,
+      318
+     ]
+    },
+    {
+     "label": "Offline-capable services",
+     "value": "86%",
+     "delta": "decide through WAN loss",
+     "dir": "up",
+     "spark": [
+      42,
+      54,
+      62,
+      70,
+      78,
+      83,
+      86
+     ]
+    },
+    {
+     "label": "Sync reconciliation delta",
+     "value": "0.00%",
+     "delta": "daily totals, all sites",
+     "dir": "flat",
+     "spark": [
+      0.4,
+      0.2,
+      0.1,
+      0.05,
+      0.02,
+      0,
+      0
+     ]
+    },
+    {
+     "label": "Fleet p95 (WAN-dead)",
+     "value": "9 ms",
+     "delta": "local decision latency",
+     "dir": "flat",
+     "spark": [
+      14,
+      12,
+      11,
+      10,
+      9.6,
+      9.2,
+      9
+     ]
+    },
+    {
+     "label": "Site intervention rate",
+     "value": "1.1/mo",
+     "delta": "truck rolls per site",
+     "dir": "down",
+     "spark": [
+      3.4,
+      2.8,
+      2.2,
+      1.7,
+      1.4,
+      1.2,
+      1.1
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Placement map",
+     "widgets": [
+      {
+       "kind": "scatter",
+       "title": "Workload placement — latency vs autonomy requirement",
+       "points": [
+        {
+         "x": 6,
+         "y": 92,
+         "label": "Safety interlock",
+         "group": "Autonomous"
+        },
+        {
+         "x": 4,
+         "y": 88,
+         "label": "Vision inspection",
+         "group": "Autonomous"
+        },
+        {
+         "x": 9,
+         "y": 71,
+         "label": "Access control",
+         "group": "Autonomous"
+        },
+        {
+         "x": 22,
+         "y": 45,
+         "label": "Inventory events",
+         "group": "Hybrid"
+        },
+        {
+         "x": 31,
+         "y": 38,
+         "label": "Pricing engine",
+         "group": "Hybrid"
+        },
+        {
+         "x": 48,
+         "y": 22,
+         "label": "Analytics stream",
+         "group": "Cloud-ok"
+        },
+        {
+         "x": 65,
+         "y": 12,
+         "label": "Model training",
+         "group": "Cloud-ok"
+        },
+        {
+         "x": 15,
+         "y": 64,
+         "label": "Local cache serve",
+         "group": "Hybrid"
+        },
+        {
+         "x": 80,
+         "y": 8,
+         "label": "Batch ETL",
+         "group": "Cloud-ok"
+        },
+        {
+         "x": 11,
+         "y": 82,
+         "label": "Robot guidance",
+         "group": "Autonomous"
+        }
+       ],
+       "groups": [
+        "Autonomous",
+        "Hybrid",
+        "Cloud-ok"
+       ],
+       "xLabel": "Latency budget (ms)",
+       "yLabel": "Autonomy need (0-100)",
+       "note": "Hover points for names. The upper-left cluster runs at the edge with offline contracts; the lower-right cluster belongs in cloud — placement is a measured map, not a mandate."
+      }
+     ]
+    },
+    {
+     "name": "Site health",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Site health by region × subsystem — the fleet at a glance",
+       "rows": [
+        "North",
+        "South",
+        "East",
+        "West",
+        "Remote"
+       ],
+       "cats": [
+        "Runtime",
+        "Sync queue",
+        "Storage",
+        "Sensors",
+        "Link"
+       ],
+       "matrix": [
+        [
+         99.4,
+         99.1,
+         99.6,
+         98.8,
+         99.7
+        ],
+        [
+         99.2,
+         98.4,
+         99.5,
+         97.9,
+         99.1
+        ],
+        [
+         99.5,
+         99.3,
+         99.7,
+         99.0,
+         99.8
+        ],
+        [
+         99.3,
+         99.0,
+         99.4,
+         98.2,
+         99.5
+        ],
+        [
+         98.1,
+         96.8,
+         99.0,
+         96.4,
+         94.2
+        ]
+       ],
+       "unit": "% health",
+       "note": "Hover cells to read health. The Remote column tells the capacity plan: link and sensor health at remote sites is where intervention budgets go, and store-and-forward exists precisely for that row."
+      }
+     ]
+    },
+    {
+     "name": "Fleet topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The edge stack — click nodes for their offline contract",
+       "lanes": [
+        "Sites",
+        "Edge runtime",
+        "Sync plane",
+        "Cloud core"
+       ],
+       "nodes": [
+        {
+         "id": "site",
+         "lane": 0,
+         "label": "Edge sites",
+         "detail": "Declarative site config under gitops; drift corrected automatically; a site that cannot reach the controller keeps the last-known-good config.",
+         "hot": true
+        },
+        {
+         "id": "rt",
+         "lane": 1,
+         "label": "Edge runtime",
+         "detail": "Lightweight orchestration sized to silicon; mesh controller features disabled where they cannot degrade gracefully."
+        },
+        {
+         "id": "svc",
+         "lane": 1,
+         "label": "Offline services",
+         "detail": "Local decision services with bounded-staleness contracts — each declares what it decides without the WAN and for how long."
+        },
+        {
+         "id": "sense",
+         "lane": 1,
+         "label": "Sensor fabric",
+         "detail": "Instrument capture with local buffering; sensor health is part of the site contract, not an afterthought."
+        },
+        {
+         "id": "sync",
+         "lane": 2,
+         "label": "Store-and-forward",
+         "detail": "Batched, compressed, prioritized upload — safety events jump the queue; conflicts resolve by declared domain rules, not last-write accidents."
+        },
+        {
+         "id": "rec",
+         "lane": 2,
+         "label": "Reconciliation",
+         "detail": "Totals matched both ends daily; any delta blocks the site's config updates until explained."
+        },
+        {
+         "id": "core",
+         "lane": 3,
+         "label": "Cloud control",
+         "detail": "Fleet observability over 2 Mbps links — metrics downsampled at the edge, traces sampled, dashboards site-scoped."
+        },
+        {
+         "id": "train",
+         "lane": 3,
+         "label": "Model delivery",
+         "detail": "Models built centrally, staged per silicon class, rolled out with site cohorts and automatic rollback on regression."
+        }
+       ],
+       "edges": [
+        {
+         "a": "site",
+         "b": "rt"
+        },
+        {
+         "a": "rt",
+         "b": "svc"
+        },
+        {
+         "a": "rt",
+         "b": "sense"
+        },
+        {
+         "a": "sense",
+         "b": "sync",
+         "label": "buffer"
+        },
+        {
+         "a": "svc",
+         "b": "sync",
+         "label": "forward"
+        },
+        {
+         "a": "sync",
+         "b": "rec",
+         "label": "reconcile"
+        },
+        {
+         "a": "sync",
+         "b": "core",
+         "label": "2 Mbps safe"
+        },
+        {
+         "a": "core",
+         "b": "train",
+         "label": "cohort roll"
+        }
+       ],
+       "note": "Click nodes to read the offline contract each layer offers. The sync plane is where edge programs live or die."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · site model",
+   "note": "Reference program model: placement bands and health targets from delivery, not client telemetry."
+  },
+  {
+   "t": "h2",
+   "x": "Fleet behavior across rollout waves"
+  },
+  {
+   "t": "p",
+   "x": "Wave success and rollback rates across site cohorts — the shape that shows which hardware generations tolerate change and which need their own windows."
+  },
+  {
+   "t": "chart",
+   "title": "Latency and resilience by site class — design targets",
+   "variant": "bar",
+   "cats": [
+    "Metro edge",
+    "Factory site",
+    "Retail store",
+    "Remote gateway"
+   ],
+   "series": [
+    {
+     "name": "Regional round-trip target (ms)",
+     "points": [
+      12,
+      38,
+      55,
+      90
+     ]
+    },
+    {
+     "name": "Autonomous hours target",
+     "points": [
+      4,
+      72,
+      96,
+      168
+     ]
+    }
+   ],
+   "yMax": 180,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Edge Computing & Distributed Infrastructure across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Edge Computing & Distributed Infrastructure",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: infrastructure is treated as a product: versioned, observable, costed, and handed to your team with runbooks rather than folklore.",
+     "plays": [
+      "Store-and-forward site autonomy with bounded conflict reconciliation",
+      "Fleet operations across hardware generations with wave discipline",
+      "Heartbeat SLOs where silence is an incident, never an assumption",
+      "Sector working pattern: core-adjacent modernization in Banking & Financial Services, where strangler-pattern decomposition of monolith wrappers around core with parallel-run equivalence."
+     ],
+     "kpis": [
+      {
+       "label": "Site heartbeat SLO",
+       "value": "99.2%"
+      },
+      {
+       "label": "Forward queue (max site)",
+       "value": "4.2k events"
+      },
+      {
+       "label": "Rollout wave success",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident.",
+     "plays": [
+      "Store-and-forward site autonomy with bounded conflict reconciliation",
+      "Fleet operations across hardware generations with wave discipline",
+      "Heartbeat SLOs where silence is an incident, never an assumption"
+     ],
+     "kpis": [
+      {
+       "label": "Site heartbeat SLO",
+       "value": "99.2%"
+      },
+      {
+       "label": "Forward queue (max site)",
+       "value": "4.2k events"
+      },
+      {
+       "label": "Rollout wave success",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — validated-environment rigidity included — and prove it moved.",
+     "plays": [
+      "Store-and-forward site autonomy with bounded conflict reconciliation",
+      "Fleet operations across hardware generations with wave discipline",
+      "Heartbeat SLOs where silence is an incident, never an assumption"
+     ],
+     "kpis": [
+      {
+       "label": "Site heartbeat SLO",
+       "value": "99.2%"
+      },
+      {
+       "label": "Forward queue (max site)",
+       "value": "4.2k events"
+      },
+      {
+       "label": "Rollout wave success",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident.",
+     "plays": [
+      "Store-and-forward site autonomy with bounded conflict reconciliation",
+      "Fleet operations across hardware generations with wave discipline",
+      "Heartbeat SLOs where silence is an incident, never an assumption"
+     ],
+     "kpis": [
+      {
+       "label": "Site heartbeat SLO",
+       "value": "99.2%"
+      },
+      {
+       "label": "Forward queue (max site)",
+       "value": "4.2k events"
+      },
+      {
+       "label": "Rollout wave success",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": true,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Store-and-forward site autonomy with bounded conflict reconciliation",
+      "Fleet operations across hardware generations with wave discipline",
+      "Heartbeat SLOs where silence is an incident, never an assumption"
+     ],
+     "kpis": [
+      {
+       "label": "Site heartbeat SLO",
+       "value": "99.2%"
+      },
+      {
+       "label": "Forward queue (max site)",
+       "value": "4.2k events"
+      },
+      {
+       "label": "Rollout wave success",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: energy cost compounds, quarter after quarter.",
+     "plays": [
+      "Store-and-forward site autonomy with bounded conflict reconciliation",
+      "Fleet operations across hardware generations with wave discipline",
+      "Heartbeat SLOs where silence is an incident, never an assumption"
+     ],
+     "kpis": [
+      {
+       "label": "Site heartbeat SLO",
+       "value": "99.2%"
+      },
+      {
+       "label": "Forward queue (max site)",
+       "value": "4.2k events"
+      },
+      {
+       "label": "Rollout wave success",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": true,
+     "hook": "Ask what customer and market platforms creak costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Store-and-forward site autonomy with bounded conflict reconciliation",
+      "Fleet operations across hardware generations with wave discipline",
+      "Heartbeat SLOs where silence is an incident, never an assumption"
+     ],
+     "kpis": [
+      {
+       "label": "Site heartbeat SLO",
+       "value": "99.2%"
+      },
+      {
+       "label": "Forward queue (max site)",
+       "value": "4.2k events"
+      },
+      {
+       "label": "Rollout wave success",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — peak surges break planning included — and prove it moved.",
+     "plays": [
+      "Store-and-forward site autonomy with bounded conflict reconciliation",
+      "Fleet operations across hardware generations with wave discipline",
+      "Heartbeat SLOs where silence is an incident, never an assumption",
+      "Sector working pattern: peak surge engineering: elastic capacity with load modeling for trading peaks. Peak absorbed at controlled unit cost is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Site heartbeat SLO",
+       "value": "99.2%"
+      },
+      {
+       "label": "Forward queue (max site)",
+       "value": "4.2k events"
+      },
+      {
+       "label": "Rollout wave success",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the platform work decides the unit economics: right-sized runtimes, automated environments, and FinOps telemetry from the first workload.",
+     "plays": [
+      "Store-and-forward site autonomy with bounded conflict reconciliation",
+      "Fleet operations across hardware generations with wave discipline",
+      "Heartbeat SLOs where silence is an incident, never an assumption"
+     ],
+     "kpis": [
+      {
+       "label": "Site heartbeat SLO",
+       "value": "99.2%"
+      },
+      {
+       "label": "Forward queue (max site)",
+       "value": "4.2k events"
+      },
+      {
+       "label": "Rollout wave success",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Education & Research operators recognize the pattern: research computing fragmented, quarter after quarter.",
+     "plays": [
+      "Store-and-forward site autonomy with bounded conflict reconciliation",
+      "Fleet operations across hardware generations with wave discipline",
+      "Heartbeat SLOs where silence is an incident, never an assumption"
+     ],
+     "kpis": [
+      {
+       "label": "Site heartbeat SLO",
+       "value": "99.2%"
+      },
+      {
+       "label": "Forward queue (max site)",
+       "value": "4.2k events"
+      },
+      {
+       "label": "Rollout wave success",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Ask what cloud unit economics opaque costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Store-and-forward site autonomy with bounded conflict reconciliation",
+      "Fleet operations across hardware generations with wave discipline",
+      "Heartbeat SLOs where silence is an incident, never an assumption"
+     ],
+     "kpis": [
+      {
+       "label": "Site heartbeat SLO",
+       "value": "99.2%"
+      },
+      {
+       "label": "Forward queue (max site)",
+       "value": "4.2k events"
+      },
+      {
+       "label": "Rollout wave success",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what season peaks break systems costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Store-and-forward site autonomy with bounded conflict reconciliation",
+      "Fleet operations across hardware generations with wave discipline",
+      "Heartbeat SLOs where silence is an incident, never an assumption"
+     ],
+     "kpis": [
+      {
+       "label": "Site heartbeat SLO",
+       "value": "99.2%"
+      },
+      {
+       "label": "Forward queue (max site)",
+       "value": "4.2k events"
+      },
+      {
+       "label": "Rollout wave success",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/cloud-edge-platform-engineering/"
+    }
+   ],
+   "practiceNote": "Edge Computing & Distributed Infrastructure view: compute and delivery close to users and devices — regional clusters with store-and-forward resilience, fleet ops at scale and honest latency budgets."
+  },
+  {
+   "t": "h2",
+   "x": "Edge defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor store-and-forward autonomy with bounded conflicts over split-brain optimism; deviation triggers are written because each one changes what reconciliation means after a partition."
+  },
+  {
+   "t": "table",
+   "caption": "Edge Computing & Distributed Infrastructure: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production edge fabric with fleet management and site SLOs",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Site runtime",
+     "Lightweight k8s/containers with hardware abstraction",
+     "Per-site bespoke installs — the fleet dies of variety"
     ],
     [
-     "Reference hardware designs per site/environment class",
-     "Handed to a named owner on your side, with a working session included."
+     "Data path",
+     "Store-and-forward with dedup and conflict rules",
+     "Direct-to-cloud writes — partitions lose data"
     ],
     [
-     "OTA deployment pipeline with staged rollout",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Releases",
+     "Staged trains with health gates",
+     "SSH-to-sites updates — it does not scale past ten"
     ],
     [
-     "Edge security pack: boot trust, segmentation, monitoring",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Observability",
+     "Site heartbeat SLOs with site-scoped alerts",
+     "Cloud-only monitoring — silent sites are invisible"
+    ],
+    [
+     "Hardware",
+     "Certified SKU list per train",
+     "Any-box-will-do — drivers become the incident"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Under the hood"
+   "x": "Edge release gates — evidence before a wave"
   },
   {
-   "t": "p",
-   "x": "Edge Computing & Distributed Infrastructure is built against defined standards: KubeEdge, K3s, NVIDIA Jetson / industrial GPUs, MQTT/Sparkplug B, OPC UA, IEC 62443. Each choice is justified in writing as part of the architecture baseline, so your team can defend it without us in the room."
+   "t": "table",
+   "caption": "Release gates for Edge Computing & Distributed Infrastructure — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "SKU gate",
+     "Are SKUs certified into trains?",
+     "Certification matrix per release"
+    ],
+    [
+     "Partition gate",
+     "Do sites survive disconnection?",
+     "Store-and-forward drills; dedup evidence"
+    ],
+    [
+     "Rollout gate",
+     "Are trains health-gated?",
+     "Wave evidence; rollback drill timing"
+    ],
+    [
+     "Heartbeat gate",
+     "Would a dead site page?",
+     "Heartbeat SLO alerts; silent-site test"
+    ],
+    [
+     "Latency gate",
+     "Do regions meet budgets?",
+     "p95 evidence per site class"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "Sequencing, honestly"
+   "x": "What the fleet operations team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Edge Computing & Distributed Infrastructure starts with the measurement: the metric, the owner, the current number, signed."
+     "Edge runtime standard",
+     "OS and runtime per certified SKU"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, hardware engineering first, gates written with your team."
+     "Store-and-forward fabric",
+     "Dedup, conflict rules and clock discipline"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Edge Computing & Distributed Infrastructure closes its first quarter at the gate: the working slice is measured against the baseline your team signed, and the scale decision is written down with the evidence attached."
+     "Release train system",
+     "Staged, health-gated fleet rollouts"
+    ],
+    [
+     "Fleet console",
+     "One view of every site and its health"
+    ],
+    [
+     "Heartbeat SLO pack",
+     "Site-level liveness with alerting"
+    ],
+    [
+     "SKU certification kit",
+     "Hardware approval process with evidence"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Waves and windows, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — site & SKU census",
+     "Site inventory, hardware classes, network profiles"
+    ],
+    [
+     "Weeks 3–4 — site runtime",
+     "Abstraction layer, runtime standard, first pilots"
+    ],
+    [
+     "Weeks 5–6 — data path",
+     "Store-and-forward, dedup, conflict drills"
+    ],
+    [
+     "Weeks 7–8 — fleet ops",
+     "Release trains, staged rollout, rollback drills"
+    ],
+    [
+     "Weeks 9–10 — observability",
+     "Heartbeat SLOs, site telemetry, alert routing"
+    ],
+    [
+     "Ongoing — fleet ops",
+     "Weekly train; monthly drills; quarterly SKU audit"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — sites, backends and the device fleet"
+  },
+  {
+   "t": "p",
+   "x": "The estate spans sites, regional backends and devices; these contracts define what each site must do alone, and how it must behave when the link returns."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "CDN providers",
+     "Delivery and cache contracts"
+    ],
+    [
+     "ISP links",
+     "Dual-path connectivity where feasible"
+    ],
+    [
+     "Device fleets",
+     "Gateway contracts with attestation"
+    ],
+    [
+     "Central data platform",
+     "Aggregation feeds with dedup"
+    ],
+    [
+     "Security domain",
+     "Edge identity and attestation"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Fleet-security governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Physical access, device identity and signed updates are the controls that make a distributed fleet survivable — each site's trust is provisioned, rotated and revoked like any other principal."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Autonomy by design",
+     "Sites keep serving through partitions"
+    ],
+    [
+     "Health-gated rollout",
+     "No train proceeds with degraded cohorts"
+    ],
+    [
+     "Certified hardware",
+     "Uncertified SKUs cannot join the fleet"
+    ],
+    [
+     "Site visibility",
+     "Heartbeat evidence for every site, always"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Silence is an alarm: a site that stops heartbeating pages within minutes, because the difference between 'offline' and 'compromised' is discovered by going to look — the monitor's job is to make someone look."
   },
   {
    "t": "cta",
-   "x": "Talk to the team that runs Edge Computing & Distributed Infrastructure in production — the briefing is technical by design, and the first one costs nothing but the hour."
+   "x": "Ask how long your quietest site ran without anyone noticing. The diagnostic will wire heartbeats, worst-site metrics and partition drills — and price what fleet-honest operations costs."
   }
  ],
- "words": 511,
+ "words": 1006,
  "section": "Services",
  "l1": "Services",
  "l2": "Cloud, Edge & Platform Engineering",
@@ -278,7 +1241,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Cloud, Edge & Platform Engineering",
+   "title": "Domain overview — Cloud, Edge & Platform Engineering",
    "url": "/services/cloud-edge-platform-engineering/",
    "desc": "Hybrid estates, edge estate and internal platforms — engineered for reliability and unit cost."
   },
@@ -330,33 +1293,51 @@
   {
    "title": "IoT, Twin & Robotics for Public Sector & Government",
    "url": "/industries/public-sector/capabilities/iot-digital-twin-robotics/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
    "title": "Hybrid & Multicloud Architecture",
    "url": "/services/cloud-edge-platform-engineering/hybrid-multicloud-architecture/",
-   "tag": "Same tower",
-   "desc": "The estate as designed system — landing zones, network fabric and workload placement by economics."
-  },
-  {
-   "title": "Cloud-Native & Legacy Modernization",
-   "url": "/services/cloud-edge-platform-engineering/cloud-native-modernization/",
-   "tag": "Same tower",
-   "desc": "Retire the legacy tax — strangler-pattern modernization with measurable unit economics."
-  },
-  {
-   "title": "SRE & Reliability Engineering",
-   "url": "/services/cloud-edge-platform-engineering/sre-reliability-engineering/",
-   "tag": "Same tower",
-   "desc": "Reliability as product — SLOs, error budgets and incident discipline that engineers actually follow."
+   "tag": "Same domain",
+   "desc": "one operating model across clouds and on-prem — workload placement by policy, portable patterns, and drift that is measured in one place."
   },
   {
    "title": "Platform Engineering & Developer Experience",
    "url": "/services/cloud-edge-platform-engineering/platform-engineering-devex/",
-   "tag": "Same tower",
-   "desc": "Golden paths, paved roads — an internal platform that turns months into days."
+   "tag": "Same domain",
+   "desc": "the platform as product — golden paths as versioned APIs, scaffolds that carry SLOs and budgets by default, and a developer experience measured like a funnel."
+  },
+  {
+   "title": "SRE & Reliability Engineering",
+   "url": "/services/cloud-edge-platform-engineering/sre-reliability-engineering/",
+   "tag": "Same domain",
+   "desc": "SLOs with teeth — error budgets that gate releases, chaos that proves recovery, and incident craft that turns 3am into a rehearsed system."
+  },
+  {
+   "title": "Cyber Resilience & Incident Recovery",
+   "url": "/services/cybersecurity-zero-trust/cyber-resilience-incident-recovery/",
+   "tag": "Pairs with",
+   "desc": "recovery that is rehearsed, not documented — immutable backups, clean-room restores and business-service RTOs you can actually meet on a bad Friday."
+  },
+  {
+   "title": "Predictive Maintenance & Asset Intelligence",
+   "url": "/services/iot-digital-twin-robotics/predictive-asset-intelligence/",
+   "tag": "Pairs with",
+   "desc": "maintenance scheduled by evidence — failure-mode-driven models, work-order integration, and the honesty to retire predictions that never came true."
+  },
+  {
+   "title": "Master Data, Governance & Cataloging",
+   "url": "/services/data-analytics-lakehouse/master-data-governance/",
+   "tag": "Pairs with",
+   "desc": "golden records with owners, survivorship rules and a catalog people actually trust — governance as engineering, not committee minutes."
+  },
+  {
+   "title": "A B2B SaaS platform (Series D)",
+   "url": "/case-studies/tech-01/",
+   "tag": "Evidence",
+   "desc": "Lead time down 58%, AI margin protected — platform engineering plus AI factory."
   }
  ]
 }

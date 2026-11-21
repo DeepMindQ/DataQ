@@ -9,254 +9,1202 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "There is a plain version of robotics & autonomous systems integration: Robots into workflows — AMRs, cobots and autonomous vehicles integrated with safety and orchestration. We run it with named gates, signed baselines and a weekly evidence cadence — the details are below, in the order they happen."
+   "x": "Robot fleets with safety cases: autonomy bounded by signed envelopes, incident-ready telemetry on every platform, utilization measured honestly including blocked time — and dock congestion engineered away instead of normalized."
   },
   {
    "t": "h2",
-   "x": "The service, described plainly"
+   "x": "Autonomy is granted by the safety case, not the sales brochure"
   },
   {
    "t": "p",
-   "x": "Robotics projects stall between pilot and fleet: the demo works, the integration doesn't. We deliver the integration discipline that closes that gap — fleet orchestration (multi-vendor AMR/cobot coordination, traffic and charging policy), WMS/MES integration so robot tasks come from real demand, safety engineering under ISO 10218/TS 15066 (cobots) with risk assessments, and exception workflows where robots hand off to humans with context. Autonomous mobile robots, palletizers, inspection robots and autonomous yard/warehouse vehicles all follow the same pattern."
+   "x": "A robot fleet is staffed with machines: shift scheduling, task allocation, charging logistics, and the safety case that says what each robot may do unattended. The engineering spans fleet orchestration, mission autonomy with bounded loops, and the telemetry that reconstructs any incident frame by frame."
   },
   {
    "t": "p",
-   "x": "The economics are engineered explicitly: cycle-time and labor-reallocation baselines, retrofit constraints, and a scaling path from cell to zone to site. We include the change package — operator training, maintenance contracts, floor-culture integration — because robots that the floor resents get unplugged."
+   "x": "The discipline borrows from aviation: pre-flight checks, briefed missions, reported deviations, and a no-blame debrief that updates the fleet's playbooks. Utilization is measured honestly — busy, blocked, charging, down — because a robot stuck at a dock is not utilization, it is an incident signal."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that make robot fleets unsafe or theatrical, the reference architecture of bounded autonomy, and the console that keeps utilization honest."
   },
   {
    "t": "h2",
-   "x": "Why the timing matters"
+   "x": "Four failure modes that make robot fleets unsafe or theatrical"
   },
   {
    "t": "p",
-   "x": "Programs of Robotics & Autonomous Systems Integration run in Manufacturing & Industrial, Logistics & Supply Chain, Retail & Consumer Goods, Healthcare & Life Sciences — always against one named number, always with the baseline signed first."
+   "x": "Every one of these shows up as an incident, a utilization number nobody believes, or both — the countermeasures bound autonomy by evidence and measure the fleet as it actually runs."
   },
   {
-   "t": "h2",
-   "x": "Engineering that moves the number"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Robotics & Autonomous Systems Integration: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Fleet orchestration",
-     "multi-vendor AMR/cobot coordination with traffic and charging policy"
+     "Autonomy creep",
+     "Robots doing more than the safety case allows",
+     "Bounded mission envelopes; envelope-violation telemetry"
     ],
     [
-     "Demand integration",
-     "WMS/MES-driven tasking so robots follow real workflow demand"
+     "Incident blindness",
+     "Something goes wrong; nobody knows what",
+     "Full mission telemetry with replay; incident reconstruct in minutes"
     ],
     [
-     "Safety engineering",
-     "ISO 10218/TS 15066 risk assessments and cell design"
+     "Dock congestion",
+     "Charging logistics strangle utilization",
+     "Dock scheduling as a resource; state-honest utilization"
     ],
     [
-     "Exception workflows",
-     "human handoff with context, escalation and recovery"
-    ],
-    [
-     "Scaling economics",
-     "cell-to-zone-to-site path with per-stage business case"
+     "Integration friction",
+     "Robots don't speak to the plant systems",
+     "Mission-API contracts with MES/WMS; exception flows"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — bounded autonomy with incident readiness"
+  },
+  {
+   "t": "p",
+   "x": "Autonomy levels are signed per zone and task with envelope monitors enforcing them in real time, telemetry is incident-ready by design, fleet orchestration manages dock and corridor contention, and integration friction with WMS and PLCs is a scoped contract — not a surprise."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Robotics & Autonomous Systems Integration",
+   "title": "Reference architecture — robot fleet orchestration",
    "lanes": [
-    "Robots & sensors",
-    "Real-time layer",
-    "Perception stack",
-    "Orchestration",
-    "Safety",
-    "Floor"
+    "Fleet",
+    "Mission system",
+    "Safety case",
+    "Telemetry",
+    "Plant integration",
+    "Ops loop"
    ],
    "nodes": [
     {
-     "id": "rs0",
+     "id": "robots",
      "lane": 0,
-     "label": "MES & line historians",
-     "hot": false
-    },
-    {
-     "id": "rs1",
-     "lane": 0,
-     "label": "AMR / robot fleets",
-     "hot": false
-    },
-    {
-     "id": "rtl2",
-     "lane": 1,
-     "label": "Robotics & Autonomous Systems Integration",
+     "label": "Robot fleet",
      "hot": true
     },
     {
-     "id": "rtl3",
+     "id": "amr",
+     "lane": 0,
+     "label": "AMRs/AGVs"
+    },
+    {
+     "id": "arm",
+     "lane": 0,
+     "label": "Robotic arms"
+    },
+    {
+     "id": "mission",
      "lane": 1,
-     "label": "Time sync",
-     "hot": false
-    },
-    {
-     "id": "pst4",
-     "lane": 2,
-     "label": "Vision inspection",
-     "hot": false
-    },
-    {
-     "id": "pst5",
-     "lane": 2,
-     "label": "Localization",
-     "hot": false
-    },
-    {
-     "id": "orc6",
-     "lane": 3,
-     "label": "Task orchestration",
+     "label": "Mission planner",
      "hot": true
     },
     {
-     "id": "orc7",
+     "id": "alloc",
+     "lane": 1,
+     "label": "Task allocation"
+    },
+    {
+     "id": "bound",
+     "lane": 1,
+     "label": "Autonomy bounds",
+     "hot": true
+    },
+    {
+     "id": "case",
+     "lane": 2,
+     "label": "Safety case",
+     "hot": true
+    },
+    {
+     "id": "preflight",
+     "lane": 2,
+     "label": "Pre-flight checks"
+    },
+    {
+     "id": "interlock",
+     "lane": 2,
+     "label": "Physical interlocks",
+     "hot": true
+    },
+    {
+     "id": "telem",
      "lane": 3,
-     "label": "Fleet scheduler",
-     "hot": false
+     "label": "Mission telemetry",
+     "hot": true
     },
     {
-     "id": "sf8",
+     "id": "replay",
+     "lane": 3,
+     "label": "Replay store"
+    },
+    {
+     "id": "dev",
+     "lane": 3,
+     "label": "Deviation reporting"
+    },
+    {
+     "id": "mes",
      "lane": 4,
-     "label": "Human-in-the-loop stops",
-     "hot": false
+     "label": "MES / WMS"
     },
     {
-     "id": "sf9",
+     "id": "api",
      "lane": 4,
-     "label": "Safety cases",
-     "hot": false
+     "label": "Mission API"
     },
     {
-     "id": "fl10",
-     "lane": 5,
-     "label": "Production scheduling",
-     "hot": false
+     "id": "exc",
+     "lane": 4,
+     "label": "Exception flows"
     },
     {
-     "id": "fl11",
+     "id": "sched",
      "lane": 5,
-     "label": "Maintenance planner",
-     "hot": false
+     "label": "Shift & charge scheduling"
+    },
+    {
+     "id": "state",
+     "lane": 5,
+     "label": "State-honest utilization",
+     "hot": true
+    },
+    {
+     "id": "debrief",
+     "lane": 5,
+     "label": "No-blame debrief"
     }
    ],
    "edges": [
     {
-     "a": "rs0",
-     "b": "rtl2"
+     "a": "robots",
+     "b": "mission",
+     "label": "execute"
     },
     {
-     "a": "rs1",
-     "b": "rtl3"
+     "a": "mission",
+     "b": "alloc",
+     "label": "assign"
     },
     {
-     "a": "rtl2",
-     "b": "pst4"
+     "a": "bound",
+     "b": "mission",
+     "label": "constrain"
     },
     {
-     "a": "rtl3",
-     "b": "pst5"
+     "a": "case",
+     "b": "bound",
+     "label": "define"
     },
     {
-     "a": "pst4",
-     "b": "orc6"
+     "a": "case",
+     "b": "preflight",
+     "label": "require"
     },
     {
-     "a": "pst5",
-     "b": "orc7"
+     "a": "interlock",
+     "b": "robots",
+     "label": "protect"
     },
     {
-     "a": "orc6",
-     "b": "sf8"
+     "a": "robots",
+     "b": "telem",
+     "label": "stream"
     },
     {
-     "a": "sf8",
-     "b": "sf9"
+     "a": "telem",
+     "b": "replay",
+     "label": "store"
     },
     {
-     "a": "orc7",
-     "b": "fl10"
+     "a": "telem",
+     "b": "dev",
+     "label": "flag"
     },
     {
-     "a": "sf9",
-     "b": "fl11"
+     "a": "mission",
+     "b": "api",
+     "label": "contract"
+    },
+    {
+     "a": "api",
+     "b": "mes",
+     "label": "integrate"
+    },
+    {
+     "a": "mes",
+     "b": "exc",
+     "label": "exceptions"
+    },
+    {
+     "a": "sched",
+     "b": "mission",
+     "label": "shifts"
+    },
+    {
+     "a": "telem",
+     "b": "state",
+     "label": "honest"
+    },
+    {
+     "a": "dev",
+     "b": "debrief",
+     "label": "review"
     }
    ],
-   "note": "Topology inherited from the IoT, Twin & Robotics tower; the highlighted core is this service's build."
+   "note": "The safety case defines the autonomy envelope per robot class; violations are telemetry events, and the envelope only widens through the debrief process with evidence."
   },
   {
    "t": "h2",
-   "x": "Deliverables, without dressing them up"
+   "x": "One mission, assignment to envelope-checked completion"
   },
   {
    "t": "p",
-   "x": "For Robotics & Autonomous Systems Integration, what your team holds at the end:"
+   "x": "From mission assignment through path planning, envelope checks, the dock and corridor contention and completion — including the violation path and what the fleet does when a platform breaches its envelope."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "orchestration-loop",
+   "title": "Fleet ops loop — brief, execute, report, debrief, adjust",
+   "labels": [
+    "Pre-flight check",
+    "Mission briefed",
+    "Bounded execution",
+    "Deviation reported",
+    "Incident replay",
+    "No-blame debrief",
+    "Envelope update"
+   ],
+   "note": "Debriefs widen envelopes only with evidence: a deviation that ended safely still updates the playbook before the envelope grows."
+  },
+  {
+   "t": "h2",
+   "x": "The fleet console — honest utilization as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Busy utilization, blocked time and envelope violations — the three numbers that run the fleet, with blocked time reported beside busy time because flattery is how fleets hide their real capacity."
+  },
+  {
+   "t": "idash",
+   "title": "Robotics integration — fleet console",
+   "kpis": [
+    {
+     "label": "Fleet size",
+     "value": "38",
+     "delta": "AMRs across 4 zones",
+     "dir": "up",
+     "spark": [
+      8,
+      14,
+      20,
+      26,
+      31,
+      35,
+      38
+     ]
+    },
+    {
+     "label": "Task completion",
+     "value": "97.9%",
+     "delta": "with exception escalation",
+     "dir": "up",
+     "spark": [
+      82,
+      88,
+      92,
+      94,
+      96,
+      97,
+      98
+     ]
+    },
+    {
+     "label": "Throughput uplift",
+     "value": "+34%",
+     "delta": "vs manual baseline",
+     "dir": "up",
+     "spark": [
+      8,
+      14,
+      20,
+      25,
+      29,
+      32,
+      34
+     ]
+    },
+    {
+     "label": "Safety stops (day)",
+     "value": "2.1",
+     "delta": "per fleet — zone geometry tuned",
+     "dir": "down",
+     "spark": [
+      14,
+      10,
+      7,
+      5,
+      3,
+      2.5,
+      2.1
+     ]
+    },
+    {
+     "label": "Exception MTTR",
+     "value": "4.6 min",
+     "delta": "human escalation loop",
+     "dir": "down",
+     "spark": [
+      22,
+      15,
+      10,
+      7,
+      6,
+      5,
+      4.6
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Throughput",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Fleet throughput by zone — orders per hour through the ramp",
+       "cats": [
+        "W1",
+        "W2",
+        "W3",
+        "W4",
+        "W5",
+        "W6",
+        "W7",
+        "W8"
+       ],
+       "series": [
+        {
+         "name": "Zone A picking",
+         "points": [
+          42,
+          48,
+          55,
+          61,
+          66,
+          70,
+          73,
+          75
+         ]
+        },
+        {
+         "name": "Zone B replen",
+         "points": [
+          28,
+          32,
+          37,
+          41,
+          44,
+          47,
+          49,
+          51
+         ]
+        },
+        {
+         "name": "Zone C returns",
+         "points": [
+          18,
+          21,
+          25,
+          28,
+          31,
+          33,
+          35,
+          36
+         ]
+        },
+        {
+         "name": "Manual baseline",
+         "points": [
+          56,
+          56,
+          56,
+          56,
+          56,
+          56,
+          56,
+          56
+         ]
+        }
+       ],
+       "unit": "tasks/h",
+       "note": "Click to isolate. The fleet crosses the manual baseline in week 3 and compounds — the uplift is real only because exception MTTR fell alongside, which the console tracks as a first-class metric."
+      }
+     ]
+    },
+    {
+     "name": "Fleet what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Fleet sizing what-if — robots, congestion, zones",
+       "params": [
+        {
+         "name": "Fleet size",
+         "min": 5,
+         "max": 80,
+         "step": 5,
+         "value": 38,
+         "unit": "AMRs"
+        },
+        {
+         "name": "Zone congestion factor",
+         "min": 1,
+         "max": 5,
+         "step": 1,
+         "value": 3,
+         "unit": "density"
+        },
+        {
+         "name": "Charge strategy",
+         "min": 1,
+         "max": 3,
+         "step": 1,
+         "value": 2,
+         "unit": "mode"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Effective throughput",
+         "unit": "tasks/h",
+         "formula": "p0*2.1/max(1,p2*0.85)*(1-(p1-1)*0.12)",
+         "good": "75",
+         "bad": "45"
+        },
+        {
+         "name": "Congestion delays",
+         "unit": "%",
+         "formula": "min(45, (p1-1)*11+p0*0.3)",
+         "good": "10",
+         "bad": "30"
+        },
+        {
+         "name": "Charge idle share",
+         "unit": "%",
+         "formula": "26-p1*4+max(0,2-p2)*4",
+         "good": "15",
+         "bad": "30"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 0,
+        "label": "Fleet size vs effective throughput"
+       },
+       "note": "The throughput curve saturates on congestion: past the zone's density knee, more robots delay each other — the fix is zone geometry and traffic rules, not more units."
+      }
+     ]
+    },
+    {
+     "name": "Integration topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The fleet integration fabric — click nodes for the contract",
+       "lanes": [
+        "Plant systems",
+        "Fleet layer",
+        "Robot layer",
+        "Safety"
+       ],
+       "nodes": [
+        {
+         "id": "wms",
+         "lane": 0,
+         "label": "WMS / MES",
+         "detail": "Task sources with priority semantics and timeout contracts — the fleet manager plans, the WMS decides, the boundary is explicit."
+        },
+        {
+         "id": "fm",
+         "lane": 1,
+         "label": "Fleet manager",
+         "detail": "Task allocation, traffic rules and charging strategy — the distributed-systems brain with mission failure semantics defined."
+        },
+        {
+         "id": "infra",
+         "lane": 1,
+         "label": "Infrastructure control",
+         "detail": "Elevators, doors, chargers — the unglamorous integrations that stall fleets; each carries timing budgets and failure fallbacks."
+        },
+        {
+         "id": "amr",
+         "lane": 2,
+         "label": "AMR robots",
+         "detail": "Per-robot health contracts (battery, sensors, localization quality) with automatic mission reassignment on degradation."
+        },
+        {
+         "id": "line",
+         "lane": 2,
+         "label": "Line controls",
+         "detail": "Interlocks and handoff timing with the line PLCs — robot speed regimes tied to zone state, changes gated by safety review."
+        },
+        {
+         "id": "safe",
+         "lane": 3,
+         "label": "Safety system",
+         "detail": "Safety-rated scanning with zone geometry per speed regime, TS 15066 limits for collaborative zones — the safety case is versioned with every layout change.",
+         "hot": true
+        },
+        {
+         "id": "exc",
+         "lane": 3,
+         "label": "Exception desk",
+         "detail": "Blocked aisles, dead robots, failed missions escalate to humans with context — the MTTR here is the trust metric."
+        }
+       ],
+       "edges": [
+        {
+         "a": "wms",
+         "b": "fm",
+         "label": "tasks"
+        },
+        {
+         "a": "infra",
+         "b": "fm",
+         "label": "unlocks"
+        },
+        {
+         "a": "fm",
+         "b": "amr",
+         "label": "missions"
+        },
+        {
+         "a": "line",
+         "b": "amr",
+         "label": "interlock"
+        },
+        {
+         "a": "safe",
+         "b": "amr",
+         "label": "zones"
+        },
+        {
+         "a": "amr",
+         "b": "exc",
+         "label": "escalate"
+        }
+       ],
+       "note": "Click nodes for the contract each layer carries. The safety lane overrides everything — zone geometry is versioned with layout changes, no exceptions."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · throughput model",
+   "note": "Reference program model: throughput bands and safety-stop targets from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Utilization and blocking across shifts"
+  },
+  {
+   "t": "p",
+   "x": "Busy and blocked shares across shifts and zones — the shape that shows where congestion lives, which zones need re-layout and what the fleet's honest capacity actually is."
+  },
+  {
+   "t": "chart",
+   "title": "Fleet state composition across shifts — design targets",
+   "variant": "line",
+   "cats": [
+    "Shift A",
+    "Shift B",
+    "Shift C",
+    "Weekend"
+   ],
+   "series": [
+    {
+     "name": "Busy % target",
+     "points": [
+      72,
+      68,
+      64,
+      45
+     ]
+    },
+    {
+     "name": "Charging % target",
+     "points": [
+      12,
+      14,
+      16,
+      20
+     ]
+    },
+    {
+     "name": "Blocked % target",
+     "points": [
+      4,
+      5,
+      6,
+      3
+     ]
+    }
+   ],
+   "unit": "%",
+   "yMax": 80,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Robotics & Autonomous Systems Integration across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Robotics & Autonomous Systems Integration",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the work spans the stack: devices and gateways in the field, perception models in the middle, actuation plans on the board.",
+     "plays": [
+      "Autonomy levels signed per zone and task, enforced by envelope monitors",
+      "Incident-ready telemetry designed before the first deployment",
+      "Utilization measured honestly — busy and blocked reported side by side"
+     ],
+     "kpis": [
+      {
+       "label": "Utilization (busy)",
+       "value": "68%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "6%"
+      },
+      {
+       "label": "Envelope violations",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Autonomy levels signed per zone and task, enforced by envelope monitors",
+      "Incident-ready telemetry designed before the first deployment",
+      "Utilization measured honestly — busy and blocked reported side by side"
+     ],
+     "kpis": [
+      {
+       "label": "Utilization (busy)",
+       "value": "68%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "6%"
+      },
+      {
+       "label": "Envelope violations",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Autonomy levels signed per zone and task, enforced by envelope monitors",
+      "Incident-ready telemetry designed before the first deployment",
+      "Utilization measured honestly — busy and blocked reported side by side"
+     ],
+     "kpis": [
+      {
+       "label": "Utilization (busy)",
+       "value": "68%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "6%"
+      },
+      {
+       "label": "Envelope violations",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "Ask what quality escapes and manual inspection costs Manufacturing & Industrial firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Autonomy levels signed per zone and task, enforced by envelope monitors",
+      "Incident-ready telemetry designed before the first deployment",
+      "Utilization measured honestly — busy and blocked reported side by side"
+     ],
+     "kpis": [
+      {
+       "label": "Utilization (busy)",
+       "value": "68%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "6%"
+      },
+      {
+       "label": "Envelope violations",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Retail & Consumer Goods operators recognize the pattern: shelf truth unknown, quarter after quarter.",
+     "plays": [
+      "Autonomy levels signed per zone and task, enforced by envelope monitors",
+      "Incident-ready telemetry designed before the first deployment",
+      "Utilization measured honestly — busy and blocked reported side by side"
+     ],
+     "kpis": [
+      {
+       "label": "Utilization (busy)",
+       "value": "68%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "6%"
+      },
+      {
+       "label": "Envelope violations",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Ask what network telemetry underused costs Telecom, Media & Entertainment firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Autonomy levels signed per zone and task, enforced by envelope monitors",
+      "Incident-ready telemetry designed before the first deployment",
+      "Utilization measured honestly — busy and blocked reported side by side"
+     ],
+     "kpis": [
+      {
+       "label": "Utilization (busy)",
+       "value": "68%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "6%"
+      },
+      {
+       "label": "Envelope violations",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what asset fleets uninstrumented costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Autonomy levels signed per zone and task, enforced by envelope monitors",
+      "Incident-ready telemetry designed before the first deployment",
+      "Utilization measured honestly — busy and blocked reported side by side"
+     ],
+     "kpis": [
+      {
+       "label": "Utilization (busy)",
+       "value": "68%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "6%"
+      },
+      {
+       "label": "Envelope violations",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": true,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: fleet and yard telemetry gaps, quarter after quarter.",
+     "plays": [
+      "Autonomy levels signed per zone and task, enforced by envelope monitors",
+      "Incident-ready telemetry designed before the first deployment",
+      "Utilization measured honestly — busy and blocked reported side by side"
+     ],
+     "kpis": [
+      {
+       "label": "Utilization (busy)",
+       "value": "68%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "6%"
+      },
+      {
+       "label": "Envelope violations",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "Public Sector & Government operators recognize the pattern: urban assets unmanaged, quarter after quarter.",
+     "plays": [
+      "Autonomy levels signed per zone and task, enforced by envelope monitors",
+      "Incident-ready telemetry designed before the first deployment",
+      "Utilization measured honestly — busy and blocked reported side by side"
+     ],
+     "kpis": [
+      {
+       "label": "Utilization (busy)",
+       "value": "68%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "6%"
+      },
+      {
+       "label": "Envelope violations",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — estates flying blind included — and prove it moved.",
+     "plays": [
+      "Autonomy levels signed per zone and task, enforced by envelope monitors",
+      "Incident-ready telemetry designed before the first deployment",
+      "Utilization measured honestly — busy and blocked reported side by side"
+     ],
+     "kpis": [
+      {
+       "label": "Utilization (busy)",
+       "value": "68%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "6%"
+      },
+      {
+       "label": "Envelope violations",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we connect machines, fleets and facilities into one operational picture, then close the loop into maintenance, scheduling and control.",
+     "plays": [
+      "Autonomy levels signed per zone and task, enforced by envelope monitors",
+      "Incident-ready telemetry designed before the first deployment",
+      "Utilization measured honestly — busy and blocked reported side by side"
+     ],
+     "kpis": [
+      {
+       "label": "Utilization (busy)",
+       "value": "68%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "6%"
+      },
+      {
+       "label": "Envelope violations",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": true,
+     "hook": "The work here has one job: move a named number — field data gap included — and prove it moved.",
+     "plays": [
+      "Autonomy levels signed per zone and task, enforced by envelope monitors",
+      "Incident-ready telemetry designed before the first deployment",
+      "Utilization measured honestly — busy and blocked reported side by side"
+     ],
+     "kpis": [
+      {
+       "label": "Utilization (busy)",
+       "value": "68%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "6%"
+      },
+      {
+       "label": "Envelope violations",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/iot-digital-twin-robotics/"
+    }
+   ],
+   "practiceNote": "Robotics & Autonomous Systems Integration view: robot fleets with safety cases — bounded autonomy, incident-ready telemetry, and utilization measured honestly against safety-critical discipline."
+  },
+  {
+   "t": "h2",
+   "x": "Robotics defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor signed envelopes and incident-ready telemetry over autonomy expansion; deviation triggers are written because each one moves risk from the safety case onto the floor."
+  },
+  {
+   "t": "table",
+   "caption": "Robotics & Autonomous Systems Integration: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production robot fleets integrated with WMS/MES and safety cases",
-     "Handed to a named owner on your side, with a working session included."
+     "Missions",
+     "Bounded envelopes from the safety case",
+     "Free-autonomy demos — the safety case is fiction"
     ],
     [
-     "Fleet orchestration and traffic policy",
-     "Handed to a named owner on your side, with a working session included."
+     "Telemetry",
+     "Full mission replay with frames",
+     "Status pings only — incidents stay mysteries"
     ],
     [
-     "Safety assessments and cell design documentation",
-     "Handed to a named owner on your side, with a working session included."
+     "Integration",
+     "Mission-API contracts with plant systems",
+     "Screen-scraping MES — exceptions surprise everyone"
     ],
     [
-     "Scaling roadmap with economics per stage",
-     "Handed to a named owner on your side, with a working session included."
+     "Scheduling",
+     "Charge logistics as a resource",
+     "Ad-hoc charging — docks strangle shifts"
+    ],
+    [
+     "Ops loop",
+     "Pre-flight + no-blame debrief",
+     "Hero operations — lessons live in one person"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The technology choices, justified"
+   "x": "Robotics release gates — evidence before floor deployment"
   },
   {
-   "t": "p",
-   "x": "Robotics & Autonomous Systems Integration ships against ROS 2, VDA5050, vendor fleet managers, WMS/MES adapters, safety controllers. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for Robotics & Autonomous Systems Integration — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Case gate",
+     "Is the safety case current?",
+     "Currency review; envelope diffs"
+    ],
+    [
+     "Preflight gate",
+     "Do missions start checked?",
+     "Compliance evidence"
+    ],
+    [
+     "Replay gate",
+     "Can any mission be reconstructed?",
+     "Completeness; timing evidence"
+    ],
+    [
+     "Integration gate",
+     "Do plant exceptions flow?",
+     "Contract tests; exception drills"
+    ],
+    [
+     "State gate",
+     "Is utilization honest?",
+     "State decomposition report"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "What the weeks look like"
+   "x": "What the operations and safety teams inherit"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Robotics & Autonomous Systems Integration starts with the measurement: the metric, the owner, the current number, signed."
+     "Safety case",
+     "Per-class autonomy envelopes"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, fleet orchestration first, gates written with your team."
+     "Mission system",
+     "Bounded planning and allocation"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "The Robotics & Autonomous Systems Integration gate review: baseline versus slice, in the metric's own units, plus a scale recommendation your board can audit."
+     "Replay store",
+     "Full mission telemetry with frames"
+    ],
+    [
+     "Plant integration",
+     "Mission-API contracts with exceptions"
+    ],
+    [
+     "Fleet scheduler",
+     "Shifts and charge logistics"
+    ],
+    [
+     "Debrief program",
+     "No-blame reviews with envelope updates"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Zones in order, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — fleet & case",
+     "Robot classes, safety case drafting, envelope v1"
+    ],
+    [
+     "Weeks 3–4 — mission system",
+     "Planner, bounds enforcement, pre-flight"
+    ],
+    [
+     "Weeks 5–6 — telemetry",
+     "Replay store, deviation flags, incident drill"
+    ],
+    [
+     "Weeks 7–8 — integration",
+     "Mission API, MES/WMS contracts, exception flows"
+    ],
+    [
+     "Weeks 9–10 — ops loop",
+     "Scheduling, state metrics, first debriefs"
+    ],
+    [
+     "Ongoing — fleet ops",
+     "Weekly state review; monthly drills; quarterly case review"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — WMS, PLCs and the safety systems"
+  },
+  {
+   "t": "p",
+   "x": "Robots serve the WMS and respect the safety systems; these contracts define task handoffs, interlocks and the PLC integration that keeps humans and machines in designed coexistence."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "MES / WMS",
+     "Mission contracts"
+    ],
+    [
+     "Safety systems",
+     "Interlock interfaces"
+    ],
+    [
+     "Charging infrastructure",
+     "Dock scheduling"
+    ],
+    [
+     "Maintenance systems",
+     "Robot health work orders"
+    ],
+    [
+     "EHS",
+     "Incident reporting"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Safety-case governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "The safety case is a living document: envelope expansions require evidence from clean telemetry hours, incidents feed the case as findings, and the signed autonomy level per zone is visible on the floor — not buried in a vendor folder."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Envelope discipline",
+     "Autonomy never exceeds the safety case"
+    ],
+    [
+     "Replay-ready",
+     "Incidents reconstruct within 10 minutes"
+    ],
+    [
+     "Pre-flight always",
+     "Unchecked robots do not deploy"
+    ],
+    [
+     "Honest states",
+     "Blocked time alarms like downtime"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Incident telemetry is designed before the first deployment: every platform streams the signals an investigation will ask for — because incident blindness is discovered during the incident, which is the worst possible discovery context."
   },
   {
    "t": "cta",
-   "x": "If Robotics & Autonomous Systems Integration is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
+   "x": "Ask who signed the autonomy level for your busiest robot zone — and when it was last re-validated. The diagnostic will wire envelope monitors and honest utilization before the fleet grows."
   }
  ],
- "words": 507,
+ "words": 1008,
  "section": "Services",
  "l1": "Services",
  "l2": "IoT, Digital Twin & Robotics",
@@ -278,7 +1226,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — IoT, Digital Twin & Robotics",
+   "title": "Domain overview — IoT, Digital Twin & Robotics",
    "url": "/services/iot-digital-twin-robotics/",
    "desc": "Sensing, simulating, acting — the operations stack that turns physical assets into self-monitoring systems."
   },
@@ -330,33 +1278,51 @@
   {
    "title": "Cyber & Zero-Trust for Technology & SaaS",
    "url": "/industries/technology-saas/capabilities/cybersecurity-zero-trust/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Industrial IoT & sensor network",
-   "url": "/services/iot-digital-twin-robotics/industrial-iot-sensor-fabric/",
-   "tag": "Same tower",
-   "desc": "Sense everything that matters — retrofit-friendly sensor network with governed telemetry."
-  },
-  {
-   "title": "Digital Twin Platform Engineering",
-   "url": "/services/iot-digital-twin-robotics/digital-twin-platforms/",
-   "tag": "Same tower",
-   "desc": "Simulate before you cut steel — plant, fleet and product twins with governed physics and data."
+   "title": "Smart Infrastructure, Buildings & Cities",
+   "url": "/services/iot-digital-twin-robotics/smart-infrastructure/",
+   "tag": "Same domain",
+   "desc": "city and utility scale on the same disciplines — segmented SCADA-safe architectures, service-continuity SLOs, and privacy-first public data."
   },
   {
    "title": "Computer Vision & Edge AI",
    "url": "/services/iot-digital-twin-robotics/computer-vision-edge-ai/",
-   "tag": "Same tower",
-   "desc": "Cameras into instruments — inspection, safety and counting at the edge, inside policy."
+   "tag": "Same domain",
+   "desc": "inference at the edge with model ops — constrained-hardware deployment, drift monitors on live feeds, and a hard rule that models never bypass interlocks."
   },
   {
-   "title": "Predictive Maintenance & Asset Intelligence",
-   "url": "/services/iot-digital-twin-robotics/predictive-asset-intelligence/",
-   "tag": "Same tower",
-   "desc": "Fix it before it fails — RUL models wired into planning, spare parts and work orders."
+   "title": "Connected Products & Smart Devices",
+   "url": "/services/iot-digital-twin-robotics/connected-products-devices/",
+   "tag": "Same domain",
+   "desc": "product fleets in the field — OTA that never bricks, telemetry that earns its bandwidth, and support APIs that let service diagnose before the customer calls."
+  },
+  {
+   "title": "Platform Engineering & Developer Experience",
+   "url": "/services/cloud-edge-platform-engineering/platform-engineering-devex/",
+   "tag": "Pairs with",
+   "desc": "the platform as product — golden paths as versioned APIs, scaffolds that carry SLOs and budgets by default, and a developer experience measured like a funnel."
+  },
+  {
+   "title": "Real-Time Streaming & Event-Driven Decisioning",
+   "url": "/services/data-analytics-lakehouse/realtime-streaming-decisioning/",
+   "tag": "Pairs with",
+   "desc": "sub-second decision paths on streams — exactly-once state, replay semantics and latency budgets that are measured, not asserted."
+  },
+  {
+   "title": "Agentic Process Automation",
+   "url": "/services/agentic-ai-hyperautomation/agentic-process-automation/",
+   "tag": "Pairs with",
+   "desc": "role-scoped agents that execute process steps under policy bounds, with human checkpoints placed by risk and replay for every action taken."
+  },
+  {
+   "title": "A specialty chemicals producer",
+   "url": "/case-studies/mfg-02/",
+   "tag": "Evidence",
+   "desc": "Yield +3.4 points and energy per tonne down 17% — APC augmentation program."
   }
  ]
 }

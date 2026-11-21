@@ -9,229 +9,1065 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Blockchain & Digital Trust delivers distributed-ledger programs where shared truth has economic value: enterprise DLT networks for multi-party workflows, asset tokenization, smart contract engineering and audit, provenance and traceability, decentralized identity with verifiable credentials, and on-chain analytics for compliance. We are deliberately institution-grade — permissioned networks, key-management discipline, and regulator-readable audit trails."
-  },
-  {
-   "t": "h2",
-   "x": "Why the timing matters"
+   "x": "Blockchain & Digital Trust is delivered as boring infrastructure: permissioned networks with real governance, contracts that pass audits at zero highs, identity that works offline, provenance that survives recalls — the verifiable record regulators accept, built with consensus nobody has to adore."
   },
   {
    "t": "p",
-   "x": "Tokenized collateral, digital bonds, and e-money pilots have crossed from whitepaper to production at tier-one institutions, while supply chain regulation (EU Deforestation Regulation, Digital Product Passports) makes provenance a compliance requirement rather than a marketing story. The technology matured exactly as the regulatory pull arrived."
-  },
-  {
-   "t": "h2",
-   "x": "The working system, described"
+   "x": "This domain treats distributed ledgers as infrastructure for verifiable trust between parties who do not fully trust each other — which means most of the engineering happens off the chain: identity and keys, privacy scoping, off-chain state, and independent verification that does not require faith in anyone's node."
   },
   {
    "t": "p",
-   "x": "The services behind Blockchain & Digital Trust, each page carrying the full build pattern:"
+   "x": "Six practices: enterprise DLT networks, smart-contract engineering with audit discipline, decentralized identity and credentials, provenance and traceability, analytics and compliance, and asset tokenization where the regulatory design comes before the token standard."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "h2",
+   "x": "Six practices from network charter to token lifecycle"
+  },
+  {
+   "t": "table",
+   "caption": "The six practices — scope and the metric each one is judged on",
+   "headers": [
+    "Practice",
+    "Scope in one line",
+    "Metric it moves"
+   ],
+   "rows": [
     [
-     "Enterprise DLT Network Engineering",
-     "Permissioned networks for multi-party truth — governance, consensus and integration done institutionally."
+     "Enterprise DLT Networks",
+     "Permissioned networks with real membership governance",
+     "Ledger txn cost, network uptime"
     ],
     [
-     "Asset Tokenization & Digital Assets",
-     "Instruments as tokens — issuance, custody and lifecycle under securities-law discipline."
+     "Smart Contract Engineering",
+     "Audited contracts with upgrade discipline",
+     "Audit findings at zero high-severity"
     ],
     [
-     "Smart Contract Engineering & Audit",
-     "Contracts as production software — specification, formal verification and audit before value moves."
+     "Decentralized Identity",
+     "DIDs and verifiable credentials that work offline",
+     "Verification cost and time"
     ],
     [
-     "Provenance, Traceability & Supply Chain Trust",
-     "Proof, not paperwork — EUDR, DPP and chain-of-custody systems regulators and customers can verify."
+     "Provenance & Traceability",
+     "End-to-end supply-chain evidence with anchoring",
+     "Provenance completeness"
     ],
     [
-     "Decentralized Identity & Verifiable Credentials",
-     "Credentials users carry — portable, privacy-preserving verification for workforce and customers."
+     "Blockchain Analytics & Compliance",
+     "Ledger intelligence mapped to regulatory duties",
+     "Case cycle time, audit pass"
     ],
     [
-     "Blockchain Analytics & Regulatory Compliance",
-     "On-chain transparency, operationalized — analytics, Travel Rule and MiCA-aligned controls."
+     "Asset Tokenization",
+     "Regulated token designs with transfer controls",
+     "Settlement cycle time"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Boring on purpose: the engineering case for dull distributed systems"
+  },
+  {
+   "t": "p",
+   "x": "The practice's bias is deliberate dullness: boring consensus, boring cryptography, boring governance — because the value of a shared ledger is that nobody argues with it, and nobody argues with systems that behave predictably under stress. The exciting part is what the record enables: recalls resolved in minutes, credentials verified offline, settlements that reconcile to the ledger by construction."
+  },
+  {
+   "t": "p",
+   "x": "Regulation is a design input, not an afterthought: transfer restrictions enforced in code, travel-rule workflows built into analytics, privacy domains engineered into the network charter. The practices assume the regulator reads the architecture — because eventually, one does."
+  },
+  {
+   "t": "h2",
+   "x": "The domain reference architecture — charter to verifiable surface"
+  },
+  {
+   "t": "p",
+   "x": "The charter governs membership and privacy domains, consensus carries the ledger, contracts and credentials build on it, analytics maps it to regulatory duties, and every surface inherits the controls — one stack where verifiability is structural, not aspirational."
+  },
+  {
    "t": "arch",
-   "title": "Blockchain & Digital Trust — reference topology",
+   "title": "Blockchain & Digital Trust — domain reference architecture",
    "lanes": [
-    "Event sources",
-    "Signing layer",
+    "Business networks",
     "Ledger core",
-    "Provenance",
-    "Disclosure",
-    "Participants"
+    "Trust services",
+    "Off-chain layer",
+    "Verification",
+    "Governance"
    ],
    "nodes": [
     {
-     "id": "evs0",
+     "id": "members",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Network members"
     },
     {
-     "id": "evs1",
+     "id": "actors",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "External counterparties"
     },
     {
-     "id": "sg2",
+     "id": "reg",
+     "lane": 0,
+     "label": "Regulators"
+    },
+    {
+     "id": "chain",
      "lane": 1,
-     "label": "Enterprise DLT Network Engineering",
+     "label": "Permissioned ledger",
      "hot": true
     },
     {
-     "id": "sg3",
+     "id": "cons",
      "lane": 1,
-     "label": "Stream validation",
-     "hot": false
+     "label": "Consensus config"
     },
     {
-     "id": "lc4",
-     "lane": 2,
-     "label": "Asset Tokenization & Digital Assets",
+     "id": "priv",
+     "lane": 1,
+     "label": "Privacy domains",
      "hot": true
     },
     {
-     "id": "lc5",
+     "id": "id",
      "lane": 2,
-     "label": "DAG ordering",
-     "hot": false
+     "label": "Decentralized identity",
+     "hot": true
     },
     {
-     "id": "pg6",
+     "id": "vc",
+     "lane": 2,
+     "label": "Verifiable credentials"
+    },
+    {
+     "id": "key",
+     "lane": 2,
+     "label": "Key ceremonies",
+     "hot": true
+    },
+    {
+     "id": "off",
      "lane": 3,
-     "label": "Provenance graph",
-     "hot": false
+     "label": "Off-chain store"
     },
     {
-     "id": "pg7",
+     "id": "anchor",
      "lane": 3,
-     "label": "Attribution & lineage",
-     "hot": false
+     "label": "Anchoring service"
     },
     {
-     "id": "di8",
+     "id": "doc",
+     "lane": 3,
+     "label": "Document vaults"
+    },
+    {
+     "id": "audit",
      "lane": 4,
-     "label": "Selective disclosure",
-     "hot": false
+     "label": "Independent verifier",
+     "hot": true
     },
     {
-     "id": "di9",
+     "id": "proof",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Proof service"
     },
     {
-     "id": "pt10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "rec",
+     "lane": 4,
+     "label": "Reconciliation"
     },
     {
-     "id": "pt11",
+     "id": "gov",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Network governance",
+     "hot": true
+    },
+    {
+     "id": "contract",
+     "lane": 5,
+     "label": "Contract lifecycle"
+    },
+    {
+     "id": "comp",
+     "lane": 5,
+     "label": "Compliance mapping"
     }
    ],
    "edges": [
     {
-     "a": "evs0",
-     "b": "sg2"
+     "a": "members",
+     "b": "chain",
+     "label": "transact"
     },
     {
-     "a": "evs1",
-     "b": "sg3"
+     "a": "actors",
+     "b": "chain",
+     "label": "via anchors"
     },
     {
-     "a": "sg2",
-     "b": "lc4"
+     "a": "reg",
+     "b": "audit",
+     "label": "read"
     },
     {
-     "a": "sg3",
-     "b": "lc5"
+     "a": "cons",
+     "b": "chain",
+     "label": "bind"
     },
     {
-     "a": "lc4",
-     "b": "pg6"
+     "a": "priv",
+     "b": "chain",
+     "label": "scope"
     },
     {
-     "a": "lc5",
-     "b": "pg7"
+     "a": "id",
+     "b": "chain",
+     "label": "sign"
     },
     {
-     "a": "pg6",
-     "b": "di8"
+     "a": "vc",
+     "b": "id",
+     "label": "issue"
     },
     {
-     "a": "di8",
-     "b": "di9"
+     "a": "key",
+     "b": "id",
+     "label": "protect"
     },
     {
-     "a": "pg7",
-     "b": "pt10"
+     "a": "chain",
+     "b": "anchor",
+     "label": "hash"
     },
     {
-     "a": "di9",
-     "b": "pt11"
+     "a": "anchor",
+     "b": "off",
+     "label": "store"
+    },
+    {
+     "a": "doc",
+     "b": "off",
+     "label": "hold"
+    },
+    {
+     "a": "chain",
+     "b": "audit",
+     "label": "verify"
+    },
+    {
+     "a": "off",
+     "b": "proof",
+     "label": "serve"
+    },
+    {
+     "a": "audit",
+     "b": "rec",
+     "label": "match"
+    },
+    {
+     "a": "gov",
+     "b": "cons",
+     "label": "decide"
+    },
+    {
+     "a": "gov",
+     "b": "contract",
+     "label": "lifecycle"
+    },
+    {
+     "a": "gov",
+     "b": "comp",
+     "label": "map"
     }
    ],
-   "note": "Highlighted nodes are the tower's named services in their architectural position."
+   "note": "Boring cryptography wins here: permissioned ledgers where membership is real, identity that works offline, and off-chain state that keeps the chain small and provable."
   },
   {
    "t": "h2",
-   "x": "What the weeks look like"
+   "x": "The network on one screen — trust with its numbers"
   },
   {
    "t": "p",
-   "x": "What a Blockchain & Digital Trust engagement shares across services: the baseline is signed, the slice is bounded, and the gates can stop the program — that last part is a feature. Baselines are signed in the first two weeks, the working slice lands inside the quarter, and the value ledger stays open to your finance team."
+   "x": "Transaction cost, network uptime, version currency and the governance ledger — tiles that read like infrastructure because that is what trust requires."
+  },
+  {
+   "t": "idash",
+   "title": "Digital trust portfolio — the six practices on one console",
+   "kpis": [
+    {
+     "label": "Practices live",
+     "value": "6",
+     "delta": "evidence packs signed",
+     "dir": "flat",
+     "spark": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      6,
+      6
+     ]
+    },
+    {
+     "label": "Reconciliation deltas",
+     "value": "0",
+     "delta": "across asset programs",
+     "dir": "flat",
+     "spark": [
+      3,
+      2,
+      1,
+      0,
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "label": "Drill pass rate",
+     "value": "94%",
+     "delta": "custody, recall, upgrade drills",
+     "dir": "up",
+     "spark": [
+      62,
+      70,
+      78,
+      84,
+      89,
+      92,
+      94
+     ]
+    },
+    {
+     "label": "Credentials issued",
+     "value": "412k",
+     "delta": "across ecosystems",
+     "dir": "up",
+     "spark": [
+      40,
+      90,
+      160,
+      240,
+      310,
+      370,
+      412
+     ]
+    },
+    {
+     "label": "Audit findings (high)",
+     "value": "0",
+     "delta": "last cycle, all domains",
+     "dir": "flat",
+     "spark": [
+      2,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Trust depth",
+     "widgets": [
+      {
+       "kind": "radar",
+       "title": "Practice depth — what the domain holds itself to",
+       "cats": [
+        "Tokenization",
+        "Analytics",
+        "Identity",
+        "DLT ops",
+        "Provenance",
+        "Contracts"
+       ],
+       "series": [
+        {
+         "name": "Delivery depth",
+         "points": [
+          88,
+          86,
+          84,
+          90,
+          86,
+          92
+         ]
+        },
+        {
+         "name": "Evidence rigor",
+         "points": [
+          92,
+          94,
+          86,
+          88,
+          90,
+          94
+         ]
+        }
+       ],
+       "yMax": 100,
+       "note": "Toggle series. Evidence rigor sits above delivery depth by design — trust programs are judged by their evidence packs first."
+      },
+      {
+       "kind": "donut",
+       "title": "Where digital-trust spend concentrates — engagement mix",
+       "cats": [
+        "Tokenization",
+        "Analytics & compliance",
+        "Identity",
+        "DLT networks",
+        "Provenance",
+        "Contracts"
+       ],
+       "points": [
+        24,
+        22,
+        16,
+        14,
+        15,
+        9
+       ],
+       "unit": "% of engagements",
+       "note": "Click segments to pin. Tokenization and analytics lead the mix; identity is the fastest compounding practice by adoption."
+      }
+     ]
+    },
+    {
+     "name": "Sector depth",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Practice depth by sector — where digital trust runs deepest",
+       "rows": [
+        "Tokenization",
+        "Analytics",
+        "Identity",
+        "DLT",
+        "Provenance",
+        "Contracts"
+       ],
+       "cats": [
+        "Banking",
+        "Public sector",
+        "Manufacturing",
+        "Logistics",
+        "Energy"
+       ],
+       "matrix": [
+        [
+         92,
+         88,
+         74,
+         80,
+         72,
+         84
+        ],
+        [
+         70,
+         66,
+         92,
+         84,
+         62,
+         70
+        ],
+        [
+         62,
+         60,
+         58,
+         66,
+         92,
+         78
+        ],
+        [
+         58,
+         62,
+         54,
+         60,
+         88,
+         66
+        ],
+        [
+         74,
+         58,
+         52,
+         70,
+         82,
+         76
+        ]
+       ],
+       "unit": "depth index",
+       "note": "Hover cells for depth. Provenance carries manufacturing and logistics flagship records; identity carries the public-sector record — pick your sector cell and the practice page below."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · portfolio model",
+   "note": "Reference portfolio model: depth indices and drill pass rates from delivery, not client telemetry."
   },
   {
    "t": "h2",
-   "x": "Engagements that used this pattern"
+   "x": "The network as a system — membership and flow topology"
   },
   {
    "t": "p",
-   "x": "Evidence from Blockchain & Digital Trust, published with the client's permission to show numbers but never names:"
+   "x": "A permissioned network rendered as topology: members, endorsing nodes, privacy domains and the anchoring points where external evidence enters the ledger. The orange hubs are where governance actually happens."
+  },
+  {
+   "t": "chart",
+   "title": "Permissioned network topology — members, privacy domains, anchor points",
+   "variant": "network",
+   "cats": [],
+   "series": [],
+   "unit": "score",
+   "yMax": 100,
+   "nodes": [
+    {
+     "id": "anchor",
+     "x": 0.5,
+     "y": 0.12,
+     "hub": true,
+     "label": "Notary anchor"
+    },
+    {
+     "id": "m1",
+     "x": 0.12,
+     "y": 0.38,
+     "hub": true,
+     "label": "Member A"
+    },
+    {
+     "id": "m2",
+     "x": 0.5,
+     "y": 0.42,
+     "hub": true,
+     "label": "Member B"
+    },
+    {
+     "id": "m3",
+     "x": 0.88,
+     "y": 0.38,
+     "hub": true,
+     "label": "Member C"
+    },
+    {
+     "id": "m4",
+     "x": 0.26,
+     "y": 0.72,
+     "label": "Member D"
+    },
+    {
+     "id": "m5",
+     "x": 0.74,
+     "y": 0.72,
+     "label": "Member E"
+    },
+    {
+     "id": "reg",
+     "x": 0.5,
+     "y": 0.92,
+     "label": "Regulator read"
+    }
+   ],
+   "links": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     6
+    ],
+    [
+     5,
+     6
+    ],
+    [
+     2,
+     6
+    ]
+   ],
+   "note": "",
+   "caption": "Reference topology for a five-member permissioned network with a notary anchor and regulator read access — privacy domains sit between members."
+  },
+  {
+   "t": "h2",
+   "x": "Sector depth — where the digital-trust practice runs deepest today"
+  },
+  {
+   "t": "p",
+   "x": "Trade finance, provenance and tokenization concentrate in different sectors — and so does our published depth. The bars count sub-industry briefs live on this site."
+  },
+  {
+   "t": "chart",
+   "title": "Blockchain & Digital Trust — published sub-industry briefs by sector",
+   "variant": "bar",
+   "cats": [
+    "Banking & Financial Services",
+    "Insurance & Risk",
+    "Healthcare & Life Sciences",
+    "Manufacturing & Industrial",
+    "Retail & Consumer Goods",
+    "Telecom, Media & Entertainment",
+    "Energy & Utilities",
+    "Logistics & Supply Chain",
+    "Public Sector & Government",
+    "Education & Research",
+    "Technology & SaaS",
+    "Agriculture & Food Systems"
+   ],
+   "series": [
+    {
+     "name": "Published sub-industry briefs",
+     "points": [
+      0,
+      1,
+      0,
+      0,
+      2,
+      2,
+      1,
+      2,
+      1,
+      1,
+      0,
+      3
+     ]
+    }
+   ],
+   "unit": "briefs",
+   "yMax": 5,
+   "note": "",
+   "caption": "Counts are live pages on this site. Taller bars mean deeper published sector coverage; every cell also has the domain-level sector brief."
+  },
+  {
+   "t": "explorer",
+   "title": "Verifiable records in your sector — pick the industry and see the plan",
+   "intro": "A bank's settlement network and a grocer's provenance chain share the ledger discipline but not the regulations. Select your sector: the panel shows the entry problem, the deliverables, the targets and the sector brief.",
+   "service": "Blockchain & Digital Trust",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "plays": [
+      "Permissioned networks with real charters, privacy domains and boring consensus",
+      "Contracts and credentials that pass independent audits at zero highs",
+      "Regulatory duties engineered into the stack — transfer controls, travel rule, evidence"
+     ],
+     "kpis": [
+      {
+       "label": "Verification cost",
+       "value": "$0.11"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": true,
+     "hook": "The work here has one job: move a named number — claims, policy and exposure data fragmented included — and prove it moved.",
+     "plays": [
+      "Permissioned networks with real charters, privacy domains and boring consensus",
+      "Contracts and credentials that pass independent audits at zero highs",
+      "Regulatory duties engineered into the stack — transfer controls, travel rule, evidence"
+     ],
+     "kpis": [
+      {
+       "label": "Verification cost",
+       "value": "$0.11"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Permissioned networks with real charters, privacy domains and boring consensus",
+      "Contracts and credentials that pass independent audits at zero highs",
+      "Regulatory duties engineered into the stack — transfer controls, travel rule, evidence"
+     ],
+     "kpis": [
+      {
+       "label": "Verification cost",
+       "value": "$0.11"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "plays": [
+      "Permissioned networks with real charters, privacy domains and boring consensus",
+      "Contracts and credentials that pass independent audits at zero highs",
+      "Regulatory duties engineered into the stack — transfer controls, travel rule, evidence"
+     ],
+     "kpis": [
+      {
+       "label": "Verification cost",
+       "value": "$0.11"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Retail & Consumer Goods operators recognize the pattern: provenance claims unverifiable, quarter after quarter.",
+     "plays": [
+      "Permissioned networks with real charters, privacy domains and boring consensus",
+      "Contracts and credentials that pass independent audits at zero highs",
+      "Regulatory duties engineered into the stack — transfer controls, travel rule, evidence",
+      "Sector working pattern: provenance verification — EUDR/DPP-grade chain-of-custody for claim-bearing products. Claims verified, greenwashing risk down is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Verification cost",
+       "value": "$0.11"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: interconnect and roaming reconciliation, quarter after quarter.",
+     "plays": [
+      "Permissioned networks with real charters, privacy domains and boring consensus",
+      "Contracts and credentials that pass independent audits at zero highs",
+      "Regulatory duties engineered into the stack — transfer controls, travel rule, evidence"
+     ],
+     "kpis": [
+      {
+       "label": "Verification cost",
+       "value": "$0.11"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what GO/REC certificate integrity costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Permissioned networks with real charters, privacy domains and boring consensus",
+      "Contracts and credentials that pass independent audits at zero highs",
+      "Regulatory duties engineered into the stack — transfer controls, travel rule, evidence"
+     ],
+     "kpis": [
+      {
+       "label": "Verification cost",
+       "value": "$0.11"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — compliance-grade provenance missing included — and prove it moved.",
+     "plays": [
+      "Permissioned networks with real charters, privacy domains and boring consensus",
+      "Contracts and credentials that pass independent audits at zero highs",
+      "Regulatory duties engineered into the stack — transfer controls, travel rule, evidence"
+     ],
+     "kpis": [
+      {
+       "label": "Verification cost",
+       "value": "$0.11"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — records integrity under dispute included — and prove it moved.",
+     "plays": [
+      "Permissioned networks with real charters, privacy domains and boring consensus",
+      "Contracts and credentials that pass independent audits at zero highs",
+      "Regulatory duties engineered into the stack — transfer controls, travel rule, evidence"
+     ],
+     "kpis": [
+      {
+       "label": "Verification cost",
+       "value": "$0.11"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Permissioned networks with real charters, privacy domains and boring consensus",
+      "Contracts and credentials that pass independent audits at zero highs",
+      "Regulatory duties engineered into the stack — transfer controls, travel rule, evidence"
+     ],
+     "kpis": [
+      {
+       "label": "Verification cost",
+       "value": "$0.11"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the trust layer is engineered, not asserted: signed events, permissioned consensus, and a provenance graph every participant can verify.",
+     "plays": [
+      "Permissioned networks with real charters, privacy domains and boring consensus",
+      "Contracts and credentials that pass independent audits at zero highs",
+      "Regulatory duties engineered into the stack — transfer controls, travel rule, evidence"
+     ],
+     "kpis": [
+      {
+       "label": "Verification cost",
+       "value": "$0.11"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": true,
+     "hook": "Ask what provenance claims unverifiable costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Permissioned networks with real charters, privacy domains and boring consensus",
+      "Contracts and credentials that pass independent audits at zero highs",
+      "Regulatory duties engineered into the stack — transfer controls, travel rule, evidence"
+     ],
+     "kpis": [
+      {
+       "label": "Verification cost",
+       "value": "$0.11"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/blockchain-digital-trust/"
+    }
+   ],
+   "practiceNote": "Domain-level view — pick a practice above for the practice-specific sector plan and console."
+  },
+  {
+   "t": "h2",
+   "x": "How digital-trust engagements run"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "A European specialty reinsurer",
-     "Bordereaux automation and settlement evidence — reconciliation effort down 74%"
+     "Diagnostic — two weeks",
+     "The charter drafted, privacy domains scoped, the governance ledger designed — you keep the network blueprint with member obligations spelled out."
     ],
     [
-     "A global fashion group",
-     "Sell-through +8 points and hero-SKU availability +24% — assortment intelligence"
+     "Provability sprint — four weeks",
+     "One verification problem runs a fund-or-kill slice: provenance completeness, verification latency or settlement delta on your real records."
     ],
     [
-     "A global coffee trader",
-     "EUDR due-diligence automated — compliance evidence in hours, premium channels opened"
+     "Build — ten to fourteen weeks",
+     "Network, contracts and surfaces built to the reference architecture, with audits scheduled before go-live — not after incidents."
+    ],
+    [
+     "Industrialize — ongoing",
+     "Governance cadence with the members, version upgrades with zero-downtime coordination, and the analytics that keep regulators satisfied."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Engineering standards we hold"
+   "x": "Network release gates — the domain contract"
   },
   {
-   "t": "p",
-   "x": "The tower runs on Dataq Ledger, Dataq Sentinel — platforms with documented controls, so the governance story is part of the product rather than an annex."
+   "t": "table",
+   "caption": "Domain-level release gates — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Membership gate",
+     "Is governance real, not decorative?",
+     "Signed network charter; onboarding SOP"
+    ],
+    [
+     "Contract gate",
+     "Would an auditor sign the code?",
+     "Independent audit with zero high findings"
+    ],
+    [
+     "Key gate",
+     "Are keys ceremony-grade?",
+     "Ceremony pack with quorum evidence"
+    ],
+    [
+     "Privacy gate",
+     "Is data scoped before it chains?",
+     "Privacy-domain tests; leak probes"
+    ],
+    [
+     "Verification gate",
+     "Can a third party verify without trust?",
+     "Independent verifier walkthrough"
+    ]
+   ]
   },
   {
    "t": "cta",
-   "x": "A value assessment prices the delta in your estate before anything is signed: Blockchain & Digital Trust, measured against your baseline, in two weeks."
+   "x": "Bring the record-keeping problem your auditors and your trading partners both distrust. The two-week diagnostic will draft the charter and price what verifiable evidence costs on your network."
   }
  ],
- "words": 401,
+ "words": 799,
  "section": "Services",
  "l1": "Services",
  "l2": "Blockchain & Digital Trust",

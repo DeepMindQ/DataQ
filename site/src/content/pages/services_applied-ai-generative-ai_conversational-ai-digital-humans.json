@@ -9,264 +9,1187 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "There is a plain version of conversational ai & digital humans: Voice and avatar interfaces that resolve, not deflect — with emotion-aware escalation and full auditability. We run it with named gates, signed baselines and a weekly evidence cadence — the details are below, in the order they happen."
+   "x": "Voice and chat agents that resolve more without losing trust: grounded answers, dignified handoffs that carry full context, streaming voice inside real-time budgets, and nightly dialog evaluation that measures containment honestly."
   },
   {
    "t": "h2",
-   "x": "The job this service does"
+   "x": "Containment and trust are one metric, not two"
   },
   {
    "t": "p",
-   "x": "Contact-center chatbots gave conversational AI a bad name: intent trees, deflection metrics and frustrated customers. We build resolution-first assistants — voice and chat agents grounded in your policy corpus, integrated with your CRM, core and telephony stack, measured on resolution and downstream repeat-contact, with emotion-aware escalation to humans and full transcript provenance for compliance."
+   "x": "Conversational systems are judged on containment and trust at the same time: resolve more without human help, and never strand a customer mid-issue. The build is dialogue design, retrieval grounding, handoff choreography and voice engineering — with the metrics wired before the first transcript."
   },
   {
    "t": "p",
-   "x": "Digital humans extend the pattern to front-desk scenarios: onboarding in branches, patient intake, training simulation and accessibility interfaces. We deploy them with the same discipline — scripted boundaries, disclosure that the interface is synthetic, consent capture, and fall-back paths — so the experience is engaging without becoming a regulatory liability."
+   "x": "Digital humans add a presentation layer, not a magic one. The avatar succeeds when the conversation underneath is grounded, the handoffs are dignified, and the voice stack holds latency budgets on real networks."
+  },
+  {
+   "t": "p",
+   "x": "What follows is the build anatomy: the failure modes that inflate containment while destroying CSAT, the architecture that holds both, and the console that keeps the trade visible every day."
   },
   {
    "t": "h2",
-   "x": "Why the timing matters"
+   "x": "Four failure modes that inflate containment and destroy trust"
   },
   {
    "t": "p",
-   "x": "The sectors where Conversational AI & Digital Humans currently runs: Banking & Financial Services, Insurance & Risk, Healthcare & Life Sciences, Retail & Consumer Goods. Each engagement anchors to one named metric in that sector's own language."
+   "x": "Each of these produces a dashboard that looks great in the monthly review and a customer base that quietly stops using the channel — the countermeasures target the trust side of the ledger."
   },
   {
-   "t": "h2",
-   "x": "Inside the engagement"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Conversational AI & Digital Humans: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Resolution-first design",
-     "task-completion architecture measured on resolution and repeat contact, not deflection"
+     "Containment theater",
+     "Bot loops until the customer gives up; containment looks great, CSAT dies",
+     "Containment paired with CSAT and recontact rate; escalation dignity designed in"
     ],
     [
-     "Voice stack",
-     "streaming ASR, barge-in handling, prosody-aware TTS and telephony integration (SIP/WebRTC)"
+     "Grounding gaps",
+     "Agent invents policy in the gap between knowledge updates",
+     "Grounded-only policy with refusal and immediate human handoff on thin context"
     ],
     [
-     "Grounded dialogue",
-     "policy-corpus grounding with citations to source clauses on every answer"
+     "Voice latency stack",
+     "Each hop adds 300ms; callers hear robotic pauses",
+     "Streaming pipeline end to end with barge-in; per-hop latency budgets"
     ],
     [
-     "Emotion & escalation",
-     "sentiment signals that route to humans with context handoff, never cold transfer"
-    ],
-    [
-     "Compliance by design",
-     "consent capture, synthetic-agent disclosure and transcript retention policies"
+     "Handoff amnesia",
+     "Human asks the customer to repeat everything",
+     "Structured transcript + intent state + sentiment passed on transfer"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — grounded dialog with dignified escalation"
+  },
+  {
+   "t": "p",
+   "x": "Grounding is the spine: intent understanding, retrieval against the knowledge contracts, guarded generation and a handoff design that carries the full conversation state to a human who never asks the customer to repeat themselves."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Conversational AI & Digital Humans",
+   "title": "Reference architecture — grounded conversational stack with voice path",
    "lanes": [
-    "Estate",
-    "Ingest",
-    "Knowledge spine",
-    "Task services",
-    "Governance",
-    "Users"
+    "Channels",
+    "Dialogue brain",
+    "Knowledge & actions",
+    "Voice stack",
+    "Human desk",
+    "Evidence"
    ],
    "nodes": [
     {
-     "id": "src0",
+     "id": "web",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Web & mobile chat"
     },
     {
-     "id": "src1",
+     "id": "voice",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "IVR / phone"
     },
     {
-     "id": "src2",
+     "id": "social",
      "lane": 0,
-     "label": "KYC / AML case manager",
-     "hot": false
+     "label": "Messaging apps"
     },
     {
-     "id": "in3",
+     "id": "nlu",
      "lane": 1,
-     "label": "Event & batch intake",
-     "hot": false
-    },
-    {
-     "id": "in4",
-     "lane": 1,
-     "label": "PII minimization",
-     "hot": false
-    },
-    {
-     "id": "ks5",
-     "lane": 2,
-     "label": "Conversational AI & Digital Humans",
+     "label": "Intent & state tracker",
      "hot": true
     },
     {
-     "id": "ks6",
+     "id": "policy",
+     "lane": 1,
+     "label": "Dialogue policy",
+     "hot": true
+    },
+    {
+     "id": "persona",
+     "lane": 1,
+     "label": "Persona & tone"
+    },
+    {
+     "id": "rag",
      "lane": 2,
-     "label": "Citations & provenance",
-     "hot": false
+     "label": "Grounded retrieval",
+     "hot": true
     },
     {
-     "id": "ts7",
+     "id": "tools",
+     "lane": 2,
+     "label": "Action APIs (orders, accounts)"
+    },
+    {
+     "id": "guard",
+     "lane": 2,
+     "label": "Topic & PII guards",
+     "hot": true
+    },
+    {
+     "id": "asr",
      "lane": 3,
-     "label": "Classify & extract",
-     "hot": false
+     "label": "Streaming ASR"
     },
     {
-     "id": "ts8",
+     "id": "tts",
      "lane": 3,
-     "label": "Summarize & draft",
-     "hot": false
+     "label": "Neural TTS"
     },
     {
-     "id": "gv9",
+     "id": "vad",
+     "lane": 3,
+     "label": "Barge-in & VAD"
+    },
+    {
+     "id": "desk",
      "lane": 4,
-     "label": "Eval gates",
-     "hot": false
+     "label": "Agent desktop"
     },
     {
-     "id": "gv10",
+     "id": "route",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Skill routing"
     },
     {
-     "id": "us11",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "csat",
+     "lane": 4,
+     "label": "CSAT capture"
     },
     {
-     "id": "us12",
+     "id": "trace",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Transcript store"
+    },
+    {
+     "id": "eval",
+     "lane": 5,
+     "label": "Dialogue eval",
+     "hot": true
+    },
+    {
+     "id": "rep",
+     "lane": 5,
+     "label": "Containment reports"
     }
    ],
    "edges": [
     {
-     "a": "src0",
-     "b": "in3"
+     "a": "web",
+     "b": "nlu"
     },
     {
-     "a": "src1",
-     "b": "in3"
+     "a": "voice",
+     "b": "asr"
     },
     {
-     "a": "src2",
-     "b": "in4"
+     "a": "social",
+     "b": "nlu"
     },
     {
-     "a": "in3",
-     "b": "ks5"
+     "a": "asr",
+     "b": "nlu",
+     "label": "text"
     },
     {
-     "a": "in4",
-     "b": "ks5"
+     "a": "nlu",
+     "b": "policy",
+     "label": "state"
     },
     {
-     "a": "ks5",
-     "b": "ts7"
+     "a": "policy",
+     "b": "persona",
+     "label": "tone"
     },
     {
-     "a": "ks5",
-     "b": "ts8"
+     "a": "policy",
+     "b": "rag",
+     "label": "query"
     },
     {
-     "a": "ts7",
-     "b": "gv9"
+     "a": "policy",
+     "b": "tools",
+     "label": "calls"
     },
     {
-     "a": "gv9",
-     "b": "gv10"
+     "a": "guard",
+     "b": "policy",
+     "label": "constrain"
     },
     {
-     "a": "ts7",
-     "b": "us11"
+     "a": "rag",
+     "b": "policy",
+     "label": "grounded draft"
     },
     {
-     "a": "ts8",
-     "b": "us12"
+     "a": "policy",
+     "b": "tts",
+     "label": "voice path"
+    },
+    {
+     "a": "vad",
+     "b": "asr",
+     "label": "interrupt"
+    },
+    {
+     "a": "policy",
+     "b": "route",
+     "label": "transfer"
+    },
+    {
+     "a": "route",
+     "b": "desk",
+     "label": "context pack"
+    },
+    {
+     "a": "desk",
+     "b": "csat"
+    },
+    {
+     "a": "policy",
+     "b": "trace",
+     "label": "transcript"
+    },
+    {
+     "a": "trace",
+     "b": "eval",
+     "label": "nightly"
+    },
+    {
+     "a": "eval",
+     "b": "rep",
+     "label": "metrics"
     }
    ],
-   "note": "Topology inherited from the Applied AI & GenAI tower; the highlighted core is this service's build."
+   "note": "Transfer carries a context pack — structured state, grounded sources used, sentiment — so the customer never repeats themselves. That rule is a gate, not a hope."
   },
   {
    "t": "h2",
-   "x": "Deliverables, without dressing them up"
+   "x": "A conversation's lifecycle, turn by turn"
   },
   {
    "t": "p",
-   "x": "In Conversational AI & Digital Humans, the artifacts, each with a walkthrough when it lands:"
+   "x": "From greeting through intent and grounding to resolution or handoff — with the guard interventions, the emotion-aware escalation triggers and the timeout paths marked where they actually fire."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "orchestration-loop",
+   "title": "Conversation lifecycle — hear, ground, act, hand off, learn",
+   "labels": [
+    "Utterance",
+    "State update",
+    "Guardrail check",
+    "Ground & act",
+    "Respond (text/voice)",
+    "Handoff pack",
+    "Eval & retrain"
+   ],
+   "note": "Refusal and handoff are first-class responses with the same instrumentation as answers — the eval set scores them, not just resolutions."
+  },
+  {
+   "t": "h2",
+   "x": "The conversation console — containment with its cost visible"
+  },
+  {
+   "t": "p",
+   "x": "Containment next to CSAT, recontact within seven days next to voice latency, guard interventions next to volume — pairs, not solo metrics, because every one of them is a trade."
+  },
+  {
+   "t": "idash",
+   "title": "Conversational AI — turn & containment console",
+   "kpis": [
+    {
+     "label": "Turn latency p95",
+     "value": "1.18 s",
+     "delta": "voice, end-to-end",
+     "dir": "down",
+     "spark": [
+      1.9,
+      1.7,
+      1.5,
+      1.38,
+      1.28,
+      1.22,
+      1.18
+     ]
+    },
+    {
+     "label": "Containment",
+     "value": "71.3%",
+     "delta": "resolved without agent",
+     "dir": "up",
+     "spark": [
+      52,
+      56,
+      60,
+      63,
+      66,
+      69,
+      71
+     ]
+    },
+    {
+     "label": "Escalation quality",
+     "value": "4.5/5",
+     "delta": "human CSAT on handoffs",
+     "dir": "up",
+     "spark": [
+      3.6,
+      3.8,
+      4.0,
+      4.2,
+      4.3,
+      4.4,
+      4.5
+     ]
+    },
+    {
+     "label": "Policy blocks",
+     "value": "0.9%",
+     "delta": "screened pre-send",
+     "dir": "flat",
+     "spark": [
+      2.1,
+      1.8,
+      1.5,
+      1.2,
+      1.0,
+      0.95,
+      0.9
+     ]
+    },
+    {
+     "label": "Barge-in success",
+     "value": "97.8%",
+     "delta": "cancels within 150 ms",
+     "dir": "up",
+     "spark": [
+      88,
+      91,
+      93,
+      95,
+      96,
+      97,
+      98
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Latency budget",
+     "widgets": [
+      {
+       "kind": "gauge",
+       "title": "Voice turn budget — each hop against its cap",
+       "items": [
+        {
+         "name": "Endpoint",
+         "value": 0.42,
+         "max": 0.6,
+         "unit": "s",
+         "warn": 0.5,
+         "crit": 0.58
+        },
+        {
+         "name": "ASR final",
+         "value": 0.21,
+         "max": 0.4,
+         "unit": "s",
+         "warn": 0.3,
+         "crit": 0.38
+        },
+        {
+         "name": "TTFT",
+         "value": 0.36,
+         "max": 0.6,
+         "unit": "s",
+         "warn": 0.45,
+         "crit": 0.55
+        },
+        {
+         "name": "Synth first audio",
+         "value": 0.19,
+         "max": 0.5,
+         "unit": "s",
+         "warn": 0.35,
+         "crit": 0.45
+        }
+       ],
+       "note": "Gauges show each hop against its cap with warn/crit bands. Total budget 1.2 s at p95 — the endpointing gauge is the one to watch; it eats whatever the others leave behind."
+      }
+     ]
+    },
+    {
+     "name": "Turn pipeline",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The conversation stack — click nodes for their contract",
+       "lanes": [
+        "Capture",
+        "Understanding",
+        "Reasoning",
+        "Delivery"
+       ],
+       "nodes": [
+        {
+         "id": "mic",
+         "lane": 0,
+         "label": "Audio capture",
+         "detail": "Streaming capture with VAD and jitter buffer; packet loss concealment keeps ASR fed through network hiccups.",
+         "hot": true
+        },
+        {
+         "id": "asr",
+         "lane": 1,
+         "label": "Streaming ASR",
+         "detail": "Partial hypotheses from 120 ms chunks drive prefetch; finalization triggers the reasoning turn with confidence stamped."
+        },
+        {
+         "id": "ept",
+         "lane": 1,
+         "label": "Endpointing policy",
+         "detail": "Adaptive endpointer tuned per locale and call type; barge-in cancels generation mid-token and rewinds dialogue state."
+        },
+        {
+         "id": "intent",
+         "lane": 2,
+         "label": "Intent & signals",
+         "detail": "Classifies distress, legal exposure, VIP status — signals route the turn before generation, not after."
+        },
+        {
+         "id": "gen",
+         "lane": 2,
+         "label": "Grounded generation",
+         "detail": "Retrieval-grounded with citations attached to claims; the persona prompt and policy gate are versioned artifacts."
+        },
+        {
+         "id": "pol",
+         "lane": 2,
+         "label": "Policy gate",
+         "detail": "Screens against commitment rules per channel; blocked responses regenerate with a safer strategy and log the block."
+        },
+        {
+         "id": "tts",
+         "lane": 3,
+         "label": "Streaming synthesis",
+         "detail": "Sentence-chunked synthesis; prosody profile is part of the persona contract and A/B tested like copy."
+        },
+        {
+         "id": "esc",
+         "lane": 3,
+         "label": "Escalation bridge",
+         "detail": "Warm handoff with transcript, evidence and predicted intent — the human agent never asks the customer to repeat."
+        }
+       ],
+       "edges": [
+        {
+         "a": "mic",
+         "b": "asr"
+        },
+        {
+         "a": "asr",
+         "b": "ept"
+        },
+        {
+         "a": "ept",
+         "b": "intent"
+        },
+        {
+         "a": "intent",
+         "b": "gen"
+        },
+        {
+         "a": "gen",
+         "b": "pol",
+         "label": "screen"
+        },
+        {
+         "a": "pol",
+         "b": "tts"
+        },
+        {
+         "a": "tts",
+         "b": "esc",
+         "label": "on signal"
+        }
+       ],
+       "note": "Click nodes to read each contract. The escalation bridge is a first-class lane: handoffs carry full context by design."
+      }
+     ]
+    },
+    {
+     "name": "Containment what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Containment vs escalation what-if — deflection, CSAT and load",
+       "params": [
+        {
+         "name": "Daily sessions",
+         "min": 2000,
+         "max": 100000,
+         "step": 1000,
+         "value": 24000,
+         "unit": "sessions"
+        },
+        {
+         "name": "Knowledge coverage",
+         "min": 40,
+         "max": 100,
+         "step": 5,
+         "value": 85,
+         "unit": "%"
+        },
+        {
+         "name": "Escalation threshold",
+         "min": 1,
+         "max": 10,
+         "step": 1,
+         "value": 6,
+         "unit": "turns"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Containment",
+         "unit": "%",
+         "formula": "min(88, p1*0.72+p2*1.1)",
+         "good": "70",
+         "bad": "55"
+        },
+        {
+         "name": "CSAT risk",
+         "unit": "0-100",
+         "formula": "max(10, 100-p2*9-(100-p1)*0.6)",
+         "good": "30",
+         "bad": "55"
+        },
+        {
+         "name": "Agent load",
+         "unit": "sessions/h",
+         "formula": "p0*(1-p1*0.0072-p2*0.011)*0.4",
+         "good": "800",
+         "bad": "2000"
+        }
+       ],
+       "curve": {
+        "param": 2,
+        "output": 0,
+        "label": "Escalation threshold vs containment"
+       },
+       "note": "The containment curve saturates: past ~8 turns, holding sessions longer stops deflecting and starts damaging CSAT — the panel shows where your threshold buys volume and where it buys complaints."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · voice budget model",
+   "note": "Reference program model: latency caps and containment bands from delivery, not client telemetry."
+  },
+  {
+   "t": "h2",
+   "x": "The containment–satisfaction frontier by intent family"
+  },
+  {
+   "t": "p",
+   "x": "Two series across intent families: containment share and CSAT for bot-handled sessions. The families where the two series diverge are exactly where the next tuning cycle is spent."
+  },
+  {
+   "t": "chart",
+   "title": "Containment vs CSAT by intent family — design targets",
+   "variant": "bar",
+   "cats": [
+    "Order status",
+    "Billing",
+    "Tech support",
+    "Bookings",
+    "Policy Q&A"
+   ],
+   "series": [
+    {
+     "name": "Containment target %",
+     "points": [
+      78,
+      55,
+      42,
+      70,
+      84
+     ]
+    },
+    {
+     "name": "CSAT target (1–5)",
+     "points": [
+      4.4,
+      4.0,
+      4.1,
+      4.3,
+      4.5
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Conversational AI & Digital Humans across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Conversational AI & Digital Humans",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Grounded voice and chat with streaming budgets inside real-time bounds",
+      "Dignified handoffs that carry full context to the human desktop",
+      "Nightly dialog eval that reports containment only beside its CSAT pair"
+     ],
+     "kpis": [
+      {
+       "label": "Containment",
+       "value": "63%"
+      },
+      {
+       "label": "CSAT (bot sessions)",
+       "value": "4.3"
+      },
+      {
+       "label": "Recontact 7d",
+       "value": "9%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Ask what pricing sophistication outrunning governance costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Grounded voice and chat with streaming budgets inside real-time bounds",
+      "Dignified handoffs that carry full context to the human desktop",
+      "Nightly dialog eval that reports containment only beside its CSAT pair"
+     ],
+     "kpis": [
+      {
+       "label": "Containment",
+       "value": "63%"
+      },
+      {
+       "label": "CSAT (bot sessions)",
+       "value": "4.3"
+      },
+      {
+       "label": "Recontact 7d",
+       "value": "9%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Grounded voice and chat with streaming budgets inside real-time bounds",
+      "Dignified handoffs that carry full context to the human desktop",
+      "Nightly dialog eval that reports containment only beside its CSAT pair",
+      "Sector working pattern: ambient clinical documentation: visit audio to structured draft notes in EHR templates with clinician sign-off. Documentation time down 25%+ is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Containment",
+       "value": "63%"
+      },
+      {
+       "label": "CSAT (bot sessions)",
+       "value": "4.3"
+      },
+      {
+       "label": "Recontact 7d",
+       "value": "9%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "Manufacturing & Industrial operators recognize the pattern: quality escapes and manual inspection, quarter after quarter.",
+     "plays": [
+      "Grounded voice and chat with streaming budgets inside real-time bounds",
+      "Dignified handoffs that carry full context to the human desktop",
+      "Nightly dialog eval that reports containment only beside its CSAT pair"
+     ],
+     "kpis": [
+      {
+       "label": "Containment",
+       "value": "63%"
+      },
+      {
+       "label": "CSAT (bot sessions)",
+       "value": "4.3"
+      },
+      {
+       "label": "Recontact 7d",
+       "value": "9%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": true,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Grounded voice and chat with streaming budgets inside real-time bounds",
+      "Dignified handoffs that carry full context to the human desktop",
+      "Nightly dialog eval that reports containment only beside its CSAT pair"
+     ],
+     "kpis": [
+      {
+       "label": "Containment",
+       "value": "63%"
+      },
+      {
+       "label": "CSAT (bot sessions)",
+       "value": "4.3"
+      },
+      {
+       "label": "Recontact 7d",
+       "value": "9%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": true,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Grounded voice and chat with streaming budgets inside real-time bounds",
+      "Dignified handoffs that carry full context to the human desktop",
+      "Nightly dialog eval that reports containment only beside its CSAT pair",
+      "Sector working pattern: resolution-first voice care — grounded voice agents resolving top intents with telephony integration and escalation context. Care cost per contact down 30% is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Containment",
+       "value": "63%"
+      },
+      {
+       "label": "CSAT (bot sessions)",
+       "value": "4.3"
+      },
+      {
+       "label": "Recontact 7d",
+       "value": "9%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Grounded voice and chat with streaming budgets inside real-time bounds",
+      "Dignified handoffs that carry full context to the human desktop",
+      "Nightly dialog eval that reports containment only beside its CSAT pair"
+     ],
+     "kpis": [
+      {
+       "label": "Containment",
+       "value": "63%"
+      },
+      {
+       "label": "CSAT (bot sessions)",
+       "value": "4.3"
+      },
+      {
+       "label": "Recontact 7d",
+       "value": "9%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: demand and capacity planning stale, quarter after quarter.",
+     "plays": [
+      "Grounded voice and chat with streaming budgets inside real-time bounds",
+      "Dignified handoffs that carry full context to the human desktop",
+      "Nightly dialog eval that reports containment only beside its CSAT pair",
+      "Sector working pattern: eta prediction in Logistics & Supply Chain, where traffic, weather and history-driven ETA models per lane and mode. Promise accuracy up; penalties down is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Containment",
+       "value": "63%"
+      },
+      {
+       "label": "CSAT (bot sessions)",
+       "value": "4.3"
+      },
+      {
+       "label": "Recontact 7d",
+       "value": "9%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use.",
+     "plays": [
+      "Grounded voice and chat with streaming budgets inside real-time bounds",
+      "Dignified handoffs that carry full context to the human desktop",
+      "Nightly dialog eval that reports containment only beside its CSAT pair"
+     ],
+     "kpis": [
+      {
+       "label": "Containment",
+       "value": "63%"
+      },
+      {
+       "label": "CSAT (bot sessions)",
+       "value": "4.3"
+      },
+      {
+       "label": "Recontact 7d",
+       "value": "9%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Grounded voice and chat with streaming budgets inside real-time bounds",
+      "Dignified handoffs that carry full context to the human desktop",
+      "Nightly dialog eval that reports containment only beside its CSAT pair"
+     ],
+     "kpis": [
+      {
+       "label": "Containment",
+       "value": "63%"
+      },
+      {
+       "label": "CSAT (bot sessions)",
+       "value": "4.3"
+      },
+      {
+       "label": "Recontact 7d",
+       "value": "9%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Grounded voice and chat with streaming budgets inside real-time bounds",
+      "Dignified handoffs that carry full context to the human desktop",
+      "Nightly dialog eval that reports containment only beside its CSAT pair"
+     ],
+     "kpis": [
+      {
+       "label": "Containment",
+       "value": "63%"
+      },
+      {
+       "label": "CSAT (bot sessions)",
+       "value": "4.3"
+      },
+      {
+       "label": "Recontact 7d",
+       "value": "9%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Grounded voice and chat with streaming budgets inside real-time bounds",
+      "Dignified handoffs that carry full context to the human desktop",
+      "Nightly dialog eval that reports containment only beside its CSAT pair"
+     ],
+     "kpis": [
+      {
+       "label": "Containment",
+       "value": "63%"
+      },
+      {
+       "label": "CSAT (bot sessions)",
+       "value": "4.3"
+      },
+      {
+       "label": "Recontact 7d",
+       "value": "9%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/"
+    }
+   ],
+   "practiceNote": "Conversational AI & Digital Humans view: grounded chat and voice agents that contain more without trust loss — dignified handoffs, streaming voice budgets, dialog eval nightly."
+  },
+  {
+   "t": "h2",
+   "x": "Dialog stack defaults — and when we deviate"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor grounding quality and handoff dignity over raw automation rate; deviation conditions are written because each one moves the trust ledger."
+  },
+  {
+   "t": "table",
+   "caption": "Conversational AI & Digital Humans: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Omnichannel assistant (voice + chat) integrated with CRM, core systems and telephony",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "NLU & state",
+     "LLM-based state tracking with typed slots",
+     "Classic NLU only for tiny, closed intent sets with hard latency floors"
     ],
     [
-     "Grounded knowledge service with citation support for regulated answers",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Grounding",
+     "Same RAG spine as knowledge domain, scoped per channel",
+     "Un-grounded generation on policy topics — permanently barred"
     ],
     [
-     "Resolution analytics and conversation-intelligence dashboards",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Voice",
+     "Streaming ASR → LLM → neural TTS with barge-in",
+     "Cascaded non-streaming stack — it fails the latency budget on cellular"
     ],
     [
-     "Digital-human reference builds for onboarding, intake and training",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Guardrails",
+     "Topic, PII and advisability guards per jurisdiction",
+     "Global one-size guard config — jurisdictions differ and audits notice"
+    ],
+    [
+     "Handoff",
+     "Skill-based routing with context packs",
+     "Blind transfer to generic queues — it wastes the automation's work"
+    ],
+    [
+     "Analytics",
+     "Transcript-level eval with intent-family scorecards",
+     "Only aggregate CSAT — it hides exactly the intents that need work"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Standards and components"
+   "x": "Dialog release gates — what blocks a channel launch"
   },
   {
-   "t": "p",
-   "x": "The engineering baseline for Conversational AI & Digital Humans: WebRTC / SIP, streaming ASR, neural TTS, LangGraph, Genesys / Amazon Connect adapters, CRM connectors. The justifications are written, versioned and handed over — the decisions are yours to own after the engagement."
+   "t": "table",
+   "caption": "Release gates for Conversational AI & Digital Humans — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Grounding gate",
+     "Does policy content stay grounded?",
+     "Dialog suite with groundedness and refusal-quality scoring"
+    ],
+    [
+     "Latency gate",
+     "Does voice hold budgets on real networks?",
+     "Carrier-grade load tests including jitter and packet loss shapes"
+    ],
+    [
+     "Handoff gate",
+     "Do transfers carry full context?",
+     "Context pack audit; repeat-request flag at zero in samples"
+    ],
+    [
+     "Red-team gate",
+     "Do manipulations fail safely?",
+     "Adversarial dialog suite: jailbreak, griefing, PII phishing"
+    ],
+    [
+     "Humanity gate",
+     "Is escalation dignified and measured?",
+     "CSAT paired with containment per intent; recontact tracking"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "What the weeks look like"
+   "x": "What the contact center inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Conversational AI & Digital Humans starts with the measurement: the metric, the owner, the current number, signed."
+     "Omnichannel agent",
+     "Chat and voice with shared brain, per-channel tone"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, resolution-first design first, gates written with your team."
+     "Grounded policy spine",
+     "Scoped retrieval with refusal-first behavior on thin context"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Conversational AI & Digital Humans closes its first quarter at the gate: the working slice is measured against the baseline your team signed, and the scale decision is written down with the evidence attached."
+     "Voice pipeline",
+     "Streaming ASR/TTS with barge-in, per-hop latency budgets"
+    ],
+    [
+     "Handoff choreography",
+     "Skill routing with context packs and dignity rules"
+    ],
+    [
+     "Dialog eval suite",
+     "Intent-family scorecards: grounding, refusal, containment, CSAT"
+    ],
+    [
+     "Ops runbook",
+     "Carrier failover, guard policy updates, surge staffing triggers"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Channel build-out, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — transcript forensics",
+     "Historic transcript analysis, intent families, containment bars, CSAT pairing"
+    ],
+    [
+     "Weeks 3–4 — brain & grounding",
+     "State tracker, policy, grounded retrieval, refusal design"
+    ],
+    [
+     "Weeks 5–6 — channels & tools",
+     "Chat surfaces, action APIs with idempotency, guard config per jurisdiction"
+    ],
+    [
+     "Weeks 7–8 — voice path",
+     "Streaming stack, barge-in, carrier load tests"
+    ],
+    [
+     "Weeks 9–10 — desk integration",
+     "Skill routing, context packs, CSAT capture, agent training"
+    ],
+    [
+     "Ongoing — eval & tuning",
+     "Nightly dialog eval, monthly policy refresh, quarterly persona review"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — telephony, CRM and the agent desktop"
+  },
+  {
+   "t": "p",
+   "x": "Conversations end in systems, not in chat windows: telephony, CRM, agent desktop and the identity layer are the integration scope that decides whether handoffs are dignified or amnesiac."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Contact center platform",
+     "SIP/webRTC bridges and agent desktop context APIs"
+    ],
+    [
+     "CRM & order systems",
+     "Action APIs with idempotency and consent checks"
+    ],
+    [
+     "Knowledge domain",
+     "Shared RAG spine with channel-scoped corpora"
+    ],
+    [
+     "Telephony carriers",
+     "Multi-carrier failover with codec adaptation"
+    ],
+    [
+     "Analytics",
+     "Transcript export to the eval pipeline nightly"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Dialog governance — consent, guard decisions, trace retention"
+  },
+  {
+   "t": "p",
+   "x": "Dialog traces are retained with consent state, guard decisions and handoff context attached — the audit path a communications regulator would ask for, already assembled."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Advisability guard",
+     "Regulated advice topics refuse and route; refusal text cites policy"
+    ],
+    [
+     "Consent & recording rules",
+     "Voice recording consent enforced per jurisdiction before ASR retains"
+    ],
+    [
+     "PII minimization",
+     "Card and identifier masking in transcripts and logs by default"
+    ],
+    [
+     "Human override",
+     "Agents can seize sessions; the action is logged and reviewed weekly"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Every guard intervention is reviewable as a transcript pair — the turn attempted and the grounded alternative served — so policy tuning is evidence-led, not anecdote-led."
   },
   {
    "t": "cta",
-   "x": "Bring Conversational AI & Digital Humans to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
+   "x": "Bring the intent family your contact center handles worst. The sprint will measure honest containment and the CSAT cost of chasing it — before you commit the channel."
   }
  ],
- "words": 526,
+ "words": 1164,
  "section": "Services",
  "l1": "Services",
  "l2": "Applied AI & Generative AI",
@@ -288,7 +1211,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Applied AI & Generative AI",
+   "title": "Domain overview — Applied AI & Generative AI",
    "url": "/services/applied-ai-generative-ai/",
    "desc": "From enterprise strategy to production models — AI measured on the P&L."
   },
@@ -340,33 +1263,51 @@
   {
    "title": "Blockchain & Digital Trust for Energy & Utilities",
    "url": "/industries/energy-utilities/capabilities/blockchain-digital-trust/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Enterprise AI Strategy & Roadmapping",
-   "url": "/services/applied-ai-generative-ai/enterprise-ai-strategy/",
-   "tag": "Same tower",
-   "desc": "Align AI to P&L lines and risk mandates — a sequenced portfolio, not a pile of pilots."
-  },
-  {
-   "title": "Generative AI Platform Engineering",
-   "url": "/services/applied-ai-generative-ai/genai-platform-engineering/",
-   "tag": "Same tower",
-   "desc": "One governed platform, many GenAI products — retrieval, guardrails and cost control as shared services."
-  },
-  {
-   "title": "LLM Fine-Tuning & Model Operations",
-   "url": "/services/applied-ai-generative-ai/llm-fine-tuning-ops/",
-   "tag": "Same tower",
-   "desc": "Own your models — tune, distill and operate LLMs with measurable quality, controlled cost and enforceable policy."
+   "title": "Multimodal AI & Vision-Language Systems",
+   "url": "/services/applied-ai-generative-ai/multimodal-vision-systems/",
+   "tag": "Same domain",
+   "desc": "document and scene understanding wired into systems of record, with confidence gating, ledger reconciliation and per-field evidence for auditors."
   },
   {
    "title": "RAG & Enterprise Knowledge Systems",
    "url": "/services/applied-ai-generative-ai/rag-knowledge-systems/",
-   "tag": "Same tower",
-   "desc": "Answers with citations, not vibes — permission-aware retrieval over your regulated document estate."
+   "tag": "Same domain",
+   "desc": "permission-aware retrieval over your regulated document estate, with answers that cite their sources and refuse when the ground is thin."
+  },
+  {
+   "title": "AI Proof-of-Concept & Value Validation",
+   "url": "/services/applied-ai-generative-ai/ai-poc-value-validation/",
+   "tag": "Same domain",
+   "desc": "the four-week sprint that ends in a fund-or-kill verdict with auditable numbers — baseline first, real data path, no demo-ware."
+  },
+  {
+   "title": "Hyperautomation & Systems Integration",
+   "url": "/services/agentic-ai-hyperautomation/hyperautomation-integration/",
+   "tag": "Pairs with",
+   "desc": "the contracted seams — ERP, CRM, ITSM, comms and queues — with typed contracts, replayable failures and monitors that catch drift before business users do."
+  },
+  {
+   "title": "Master Data, Governance & Cataloging",
+   "url": "/services/data-analytics-lakehouse/master-data-governance/",
+   "tag": "Pairs with",
+   "desc": "golden records with owners, survivorship rules and a catalog people actually trust — governance as engineering, not committee minutes."
+  },
+  {
+   "title": "Zero-Trust Architecture & Implementation",
+   "url": "/services/cybersecurity-zero-trust/zero-trust-architecture/",
+   "tag": "Pairs with",
+   "desc": "per-request policy decisions on identity, device and context — network location stops being a privilege, and coverage is measured on the paths that matter."
+  },
+  {
+   "title": "A top-5 global P&C insurer",
+   "url": "/case-studies/ins-01/",
+   "tag": "Evidence",
+   "desc": "Claims triage in minutes — 55% faster cycle times with document intelligence."
   }
  ]
 }

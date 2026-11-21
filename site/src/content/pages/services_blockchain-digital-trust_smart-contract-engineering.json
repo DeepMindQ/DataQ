@@ -9,254 +9,1189 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "There is a plain version of smart contract engineering & audit: Contracts as production software — specification, formal verification and audit before value moves. We run it with named gates, signed baselines and a weekly evidence cadence — the details are below, in the order they happen."
+   "x": "Contracts that pass independent audits at zero highs: formal-verified cores with invariant coverage measured, fuzzing that runs around the clock, upgrade discipline that removes ambush risk — and a spec written before the first line of Solidity."
   },
   {
    "t": "h2",
-   "x": "What we deliver under this name"
+   "x": "The specification is the contract; the code is just its executable form"
   },
   {
    "t": "p",
-   "x": "Smart contracts hold real value and fail expensively; we treat them as production software with a safety culture. Delivery starts with specification: state machines, invariants and failure modes written down and reviewed with the business before code. Implementation follows patterns with known properties (upgradeability chosen deliberately, access control explicit, reentrancy and oracle risks engineered out), verified with static analysis, property-based fuzzing and — where stakes justify — formal verification of core invariants."
+   "x": "Smart contracts are business law in executable form — and like law, the writing matters more than the cleverness. The practice is boring on purpose: minimal contract surfaces, formal verification of the core, independent audits with zero high-severity findings, and upgrade mechanisms (proxies, governance) that are themselves audited."
   },
   {
    "t": "p",
-   "x": "Audit is a stage, not a rubber stamp: independent review by specialists separate from the build team, findings triaged by severity, fixes re-tested, and a public (or supervisory) audit trail. Post-deployment, monitoring watches for anomalous state transitions, and incident runbooks pre-define pause procedures — because the ability to stop safely is a feature, not an admission."
+   "x": "The lifecycle is the discipline: spec first, audit before deploy, staged rollout with monitoring, and an incident path rehearsed like any production system — because a contract bug is a business-logic bug with finality."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that put vulnerabilities on mainnet, the reference architecture of the verification pipeline, and the console that tracks audit readiness."
   },
   {
    "t": "h2",
-   "x": "Why this matters here"
+   "x": "Four failure modes that put vulnerabilities on mainnet"
   },
   {
    "t": "p",
-   "x": "The sectors where Smart Contract Engineering & Audit currently runs: Banking & Financial Services, Insurance & Risk, Logistics & Supply Chain, Energy & Utilities. Each engagement anchors to one named metric in that sector's own language."
+   "x": "Each of these has shipped eight-figure incidents — the countermeasures front-load specification, verification and upgrade discipline so the bugs never deploy."
   },
   {
-   "t": "h2",
-   "x": "Inside the engagement"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Smart Contract Engineering & Audit: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Specification-first",
-     "state machines, invariants and failure modes agreed before code"
+     "Spec absence",
+     "Code written before behavior is specified",
+     "Executable spec suite binding contract behavior to business rules"
     ],
     [
-     "Verified implementation",
-     "static analysis, fuzzing and formal verification of core invariants"
+     "Audit theater",
+     "One audit, findings closed by email",
+     "Independent audit with zero highs; fix verification re-audit"
     ],
     [
-     "Independent audit",
-     "separate specialist review with severity-triaged findings"
+     "Upgrade ambush",
+     "Proxy upgrades change semantics silently",
+     "Upgrade governance with timelock, diff publication, member notice"
     ],
     [
-     "Operational safety",
-     "pause/override paths, monitoring and incident runbooks"
-    ],
-    [
-     "Upgrade governance",
-     "deliberate upgradeability with timelocks and multisig control"
+     "Reentrancy-class bugs",
+     "Classic vulnerabilities rediscovered",
+     "Lint + formal verification on core paths; audit checklists per pattern"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — from spec to audited contract"
+  },
+  {
+   "t": "p",
+   "x": "The pipeline runs specification first: formal-verified cores with invariants as testable properties, property-based fuzzing around the clock, coverage measured against the spec, and an upgrade proxy pattern that makes every change a governed release."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Smart Contract Engineering & Audit",
+   "title": "Reference architecture — contract engineering lifecycle",
    "lanes": [
-    "Event sources",
-    "Signing layer",
-    "Ledger core",
-    "Provenance",
-    "Disclosure",
-    "Participants"
+    "Specification",
+    "Development",
+    "Verification",
+    "Audit",
+    "Deploy & monitor",
+    "Upgrade"
    ],
    "nodes": [
     {
-     "id": "evs0",
+     "id": "spec",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
-    },
-    {
-     "id": "evs1",
-     "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
-    },
-    {
-     "id": "sg2",
-     "lane": 1,
-     "label": "Smart Contract Engineering & Audit",
+     "label": "Executable spec",
      "hot": true
     },
     {
-     "id": "sg3",
-     "lane": 1,
-     "label": "Stream validation",
-     "hot": false
+     "id": "biz",
+     "lane": 0,
+     "label": "Business rules"
     },
     {
-     "id": "lc4",
+     "id": "threat",
+     "lane": 0,
+     "label": "Threat model"
+    },
+    {
+     "id": "impl",
+     "lane": 1,
+     "label": "Contract code"
+    },
+    {
+     "id": "tests",
+     "lane": 1,
+     "label": "Property tests"
+    },
+    {
+     "id": "lint",
+     "lane": 1,
+     "label": "Static analysis"
+    },
+    {
+     "id": "formal",
      "lane": 2,
-     "label": "Permissioned consensus",
+     "label": "Formal verification",
      "hot": true
     },
     {
-     "id": "lc5",
+     "id": "invar",
      "lane": 2,
-     "label": "DAG ordering",
-     "hot": false
+     "label": "Invariant suite"
     },
     {
-     "id": "pg6",
+     "id": "fuzz",
+     "lane": 2,
+     "label": "Fuzzing harness"
+    },
+    {
+     "id": "audit",
      "lane": 3,
-     "label": "Provenance graph",
-     "hot": false
+     "label": "Independent audit",
+     "hot": true
     },
     {
-     "id": "pg7",
+     "id": "refix",
      "lane": 3,
-     "label": "Attribution & lineage",
-     "hot": false
+     "label": "Fix verification"
     },
     {
-     "id": "di8",
+     "id": "sign",
+     "lane": 3,
+     "label": "Audit sign-off"
+    },
+    {
+     "id": "deploy",
      "lane": 4,
-     "label": "Selective disclosure",
-     "hot": false
+     "label": "Staged deployment"
     },
     {
-     "id": "di9",
+     "id": "watch",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Runtime monitor",
+     "hot": true
     },
     {
-     "id": "pt10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "incident",
+     "lane": 4,
+     "label": "Incident path"
     },
     {
-     "id": "pt11",
+     "id": "gov",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Upgrade governance",
+     "hot": true
+    },
+    {
+     "id": "timelock",
+     "lane": 5,
+     "label": "Timelock & notice"
+    },
+    {
+     "id": "archive",
+     "lane": 5,
+     "label": "Version archive"
     }
    ],
    "edges": [
     {
-     "a": "evs0",
-     "b": "sg2"
+     "a": "biz",
+     "b": "spec",
+     "label": "bind"
     },
     {
-     "a": "evs1",
-     "b": "sg3"
+     "a": "threat",
+     "b": "spec",
+     "label": "informs"
     },
     {
-     "a": "sg2",
-     "b": "lc4"
+     "a": "spec",
+     "b": "impl",
+     "label": "guide"
     },
     {
-     "a": "sg3",
-     "b": "lc5"
+     "a": "impl",
+     "b": "tests",
+     "label": "verify"
     },
     {
-     "a": "lc4",
-     "b": "pg6"
+     "a": "impl",
+     "b": "lint",
+     "label": "scan"
     },
     {
-     "a": "lc5",
-     "b": "pg7"
+     "a": "impl",
+     "b": "formal",
+     "label": "prove"
     },
     {
-     "a": "pg6",
-     "b": "di8"
+     "a": "formal",
+     "b": "invar",
+     "label": "hold"
     },
     {
-     "a": "di8",
-     "b": "di9"
+     "a": "fuzz",
+     "b": "invar",
+     "label": "stress"
     },
     {
-     "a": "pg7",
-     "b": "pt10"
+     "a": "impl",
+     "b": "audit",
+     "label": "review"
     },
     {
-     "a": "di9",
-     "b": "pt11"
+     "a": "audit",
+     "b": "refix",
+     "label": "verify fixes"
+    },
+    {
+     "a": "refix",
+     "b": "sign",
+     "label": "clear"
+    },
+    {
+     "a": "sign",
+     "b": "deploy",
+     "label": "release"
+    },
+    {
+     "a": "deploy",
+     "b": "watch",
+     "label": "telemetry"
+    },
+    {
+     "a": "watch",
+     "b": "incident",
+     "label": "escalate"
+    },
+    {
+     "a": "gov",
+     "b": "timelock",
+     "label": "schedule"
+    },
+    {
+     "a": "timelock",
+     "b": "deploy",
+     "label": "authorize"
+    },
+    {
+     "a": "gov",
+     "b": "archive",
+     "label": "record"
     }
    ],
-   "note": "Topology inherited from the Blockchain & Digital Trust tower; the highlighted core is this service's build."
+   "note": "The invariant suite is the contract's constitution: formal-checked properties that every upgrade must preserve — the fuzzing harness attacks them continuously."
   },
   {
    "t": "h2",
-   "x": "Deliverables, without dressing them up"
+   "x": "One contract change, from spec diff to audited release"
   },
   {
    "t": "p",
-   "x": "What your team holds at the end — Smart Contract Engineering & Audit edition:"
+   "x": "From the spec change through invariant updates, fuzzing, formal verification, independent audit and the staged deployment — including the rollback path if any gate fails."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Contract lifecycle — spec, build, prove, audit, deploy, upgrade",
+   "labels": [
+    "Specify behavior",
+    "Implement & test",
+    "Prove invariants",
+    "Independent audit",
+    "Fix verification",
+    "Timelocked deploy",
+    "Monitor & archive"
+   ],
+   "note": "Nothing deploys without audit sign-off and a timelock: the network gets notice, the diff is public, and the upgrade train has a veto window."
+  },
+  {
+   "t": "h2",
+   "x": "The contract console — audit readiness as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Audit highs at zero, invariant coverage and fuzz uptime — the three numbers that decide whether the next audit is a formality or an event."
+  },
+  {
+   "t": "idash",
+   "title": "Smart contract engineering — assurance console",
+   "kpis": [
+    {
+     "label": "Invariant tests",
+     "value": "142",
+     "delta": "executed per CI run",
+     "dir": "up",
+     "spark": [
+      30,
+      55,
+      78,
+      98,
+      115,
+      130,
+      142
+     ]
+    },
+    {
+     "label": "Fuzz campaigns",
+     "value": "38",
+     "delta": "runs, 0 invariant violations",
+     "dir": "up",
+     "spark": [
+      8,
+      14,
+      20,
+      26,
+      31,
+      35,
+      38
+     ]
+    },
+    {
+     "label": "Audit findings (high)",
+     "value": "0",
+     "delta": "external audit, final",
+     "dir": "flat",
+     "spark": [
+      2,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "label": "Gas / core action",
+     "value": "84.2k",
+     "delta": "after layout optimization",
+     "dir": "down",
+     "spark": [
+      210,
+      168,
+      132,
+      108,
+      95,
+      88,
+      84
+     ]
+    },
+    {
+     "label": "Coverage (branches)",
+     "value": "97.4%",
+     "delta": "with property tests",
+     "dir": "up",
+     "spark": [
+      72,
+      80,
+      86,
+      90,
+      93,
+      96,
+      97
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Assurance loop",
+     "widgets": [
+      {
+       "kind": "flow",
+       "title": "The assurance pipeline — click stages for the gate",
+       "stages": [
+        {
+         "name": "Spec",
+         "role": "Invariants written",
+         "detail": "State invariants and trust model written before code; every invariant is an executable property the fuzzer will attack for the rest of the project.",
+         "metrics": [
+          {
+           "label": "Invariants",
+           "value": "18"
+          },
+          {
+           "label": "Trust model",
+           "value": "signed"
+          }
+         ]
+        },
+        {
+         "name": "Build",
+         "role": "Property-tested",
+         "detail": "Implementation against spec with the fuzz harness in CI — violations block merges, and every fix strengthens a property rather than patching a symptom.",
+         "metrics": [
+          {
+           "label": "CI fuzz",
+           "value": "every PR"
+          },
+          {
+           "label": "Block on violation",
+           "value": "yes"
+          }
+         ]
+        },
+        {
+         "name": "Review",
+         "role": "Internal adversarial",
+         "detail": "Internal review runs adversarial passes (economic exploits, griefing, oracle windows) with findings filed against invariants — the list auditors later see is short by design.",
+         "metrics": [
+          {
+           "label": "Adversarial passes",
+           "value": "5"
+          },
+          {
+           "label": "Findings filed",
+           "value": "tracked"
+          }
+         ]
+        },
+        {
+         "name": "Audit",
+         "role": "External, scoped",
+         "detail": "External audit with the spec attached; findings triaged with the same invariant discipline, and the audit report becomes part of the deploy evidence.",
+         "metrics": [
+          {
+           "label": "High findings",
+           "value": "0"
+          },
+          {
+           "label": "Report",
+           "value": "published"
+          }
+         ]
+        },
+        {
+         "name": "Deploy",
+         "role": "Ceremony-gated",
+         "detail": "Deployment via key ceremony with timelock and pause authority defined; post-deploy monitoring watches invariant proxies on mainnet state.",
+         "metrics": [
+          {
+           "label": "Ceremony",
+           "value": "rehearsed"
+          },
+          {
+           "label": "Timelock",
+           "value": "48 h"
+          }
+         ]
+        }
+       ],
+       "note": "The pipeline's point: auditors confirm, they do not discover — the classes they find were excluded by construction."
+      }
+     ]
+    },
+    {
+     "name": "Gas what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Gas economics what-if — layout, batching, chain class",
+       "params": [
+        {
+         "name": "Storage slots / action",
+         "min": 1,
+         "max": 12,
+         "step": 1,
+         "value": 4,
+         "unit": "slots"
+        },
+        {
+         "name": "Batch size",
+         "min": 1,
+         "max": 50,
+         "step": 1,
+         "value": 20,
+         "unit": "ops"
+        },
+        {
+         "name": "Chain class",
+         "min": 0,
+         "max": 3,
+         "step": 1,
+         "value": 2,
+         "unit": "L2 tier"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Gas / op",
+         "unit": "k",
+         "formula": "21+p0*5.2*100/max(1,p1)*0.52",
+         "good": "90",
+         "bad": "220"
+        },
+        {
+         "name": "Cost / op",
+         "unit": "$",
+         "formula": "(21+p0*5.2*100/max(1,p1)*0.52)*0.4*pow(2.35,min(3,p2))/1000*30",
+         "good": "0.10",
+         "bad": "0.60"
+        },
+        {
+         "name": "Monthly burn",
+         "unit": "$k",
+         "formula": "p0*1200*(21+p0*5.2*100/max(1,p1)*0.52)*0.4*pow(2.35,min(3,p2))/1000*30/1000*1000/1000",
+         "good": "30",
+         "bad": "120"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 0,
+        "label": "Storage slots vs gas per op"
+       },
+       "note": "The layout curve is the design argument: every storage slot you do not allocate is gas you never burn. Batch size is the amortization dial the product team controls."
+      }
+     ]
+    },
+    {
+     "name": "Invariant sheet",
+     "widgets": [
+      {
+       "kind": "table",
+       "title": "Living invariant sheet — what the fuzzer defends",
+       "headers": [
+        "#",
+        "Invariant",
+        "Class",
+        "Fuzz status"
+       ],
+       "rows": [
+        [
+         "I-01",
+         "Total supply equals minted minus burned at all times",
+         "Conservation",
+         "38 campaigns clean"
+        ],
+        [
+         "I-02",
+         "No transfer may move more than the sender's spendable balance",
+         "Arithmetic",
+         "38 campaigns clean"
+        ],
+        [
+         "I-03",
+         "Admin functions callable only through timelock window",
+         "Access",
+         "38 campaigns clean"
+        ],
+        [
+         "I-04",
+         "Oracle price deviation beyond band reverts settlement",
+         "Oracle",
+         "38 campaigns clean"
+        ],
+        [
+         "I-05",
+         "Paused state blocks all value-moving entry points",
+         "Liveness",
+         "38 campaigns clean"
+        ],
+        [
+         "I-06",
+         "Reentrancy guard holds on all external calls",
+         "Reentrancy",
+         "38 campaigns clean"
+        ],
+        [
+         "I-07",
+         "Quorum changes require two-signature ceremony",
+         "Governance",
+         "38 campaigns clean"
+        ],
+        [
+         "I-08",
+         "Event log emitted for every state transition of value",
+         "Auditability",
+         "38 campaigns clean"
+        ]
+       ],
+       "note": "Sort and filter the sheet — it is the specification made executable, and it ships with the contract as deploy evidence."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · invariant model",
+   "note": "Reference program model: invariant counts and gas bands from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Invariant coverage across contract versions"
+  },
+  {
+   "t": "p",
+   "x": "Coverage per contract version and per audit round — the shape that shows the verification investment compounding instead of resetting at every release."
+  },
+  {
+   "t": "chart",
+   "title": "Verification depth by contract class — design targets",
+   "variant": "bar",
+   "cats": [
+    "Core ledger",
+    "Token logic",
+    "Access control",
+    "Utility functions",
+    "View helpers"
+   ],
+   "series": [
+    {
+     "name": "Formal proof coverage %",
+     "points": [
+      95,
+      90,
+      92,
+      60,
+      30
+     ]
+    },
+    {
+     "name": "Audit intensity (days)",
+     "points": [
+      15,
+      10,
+      8,
+      4,
+      2
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Smart Contract Engineering & Audit across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Smart Contract Engineering & Audit",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "plays": [
+      "Specification-first development with formal-verified cores",
+      "Property-based fuzzing around the clock, invariants measured against the spec",
+      "Upgrade discipline: multi-party approval, timed locks, rehearsed pause"
+     ],
+     "kpis": [
+      {
+       "label": "Audit highs",
+       "value": "0"
+      },
+      {
+       "label": "Invariant coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Fuzz uptime",
+       "value": "24/7"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": true,
+     "hook": "The work here has one job: move a named number — claims, policy and exposure data fragmented included — and prove it moved.",
+     "plays": [
+      "Specification-first development with formal-verified cores",
+      "Property-based fuzzing around the clock, invariants measured against the spec",
+      "Upgrade discipline: multi-party approval, timed locks, rehearsed pause"
+     ],
+     "kpis": [
+      {
+       "label": "Audit highs",
+       "value": "0"
+      },
+      {
+       "label": "Invariant coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Fuzz uptime",
+       "value": "24/7"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Specification-first development with formal-verified cores",
+      "Property-based fuzzing around the clock, invariants measured against the spec",
+      "Upgrade discipline: multi-party approval, timed locks, rehearsed pause"
+     ],
+     "kpis": [
+      {
+       "label": "Audit highs",
+       "value": "0"
+      },
+      {
+       "label": "Invariant coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Fuzz uptime",
+       "value": "24/7"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "plays": [
+      "Specification-first development with formal-verified cores",
+      "Property-based fuzzing around the clock, invariants measured against the spec",
+      "Upgrade discipline: multi-party approval, timed locks, rehearsed pause"
+     ],
+     "kpis": [
+      {
+       "label": "Audit highs",
+       "value": "0"
+      },
+      {
+       "label": "Invariant coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Fuzz uptime",
+       "value": "24/7"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Retail & Consumer Goods operators recognize the pattern: provenance claims unverifiable, quarter after quarter.",
+     "plays": [
+      "Specification-first development with formal-verified cores",
+      "Property-based fuzzing around the clock, invariants measured against the spec",
+      "Upgrade discipline: multi-party approval, timed locks, rehearsed pause",
+      "Sector working pattern: provenance verification — EUDR/DPP-grade chain-of-custody for claim-bearing products. Claims verified, greenwashing risk down is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Audit highs",
+       "value": "0"
+      },
+      {
+       "label": "Invariant coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Fuzz uptime",
+       "value": "24/7"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: interconnect and roaming reconciliation, quarter after quarter.",
+     "plays": [
+      "Specification-first development with formal-verified cores",
+      "Property-based fuzzing around the clock, invariants measured against the spec",
+      "Upgrade discipline: multi-party approval, timed locks, rehearsed pause"
+     ],
+     "kpis": [
+      {
+       "label": "Audit highs",
+       "value": "0"
+      },
+      {
+       "label": "Invariant coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Fuzz uptime",
+       "value": "24/7"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what GO/REC certificate integrity costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Specification-first development with formal-verified cores",
+      "Property-based fuzzing around the clock, invariants measured against the spec",
+      "Upgrade discipline: multi-party approval, timed locks, rehearsed pause"
+     ],
+     "kpis": [
+      {
+       "label": "Audit highs",
+       "value": "0"
+      },
+      {
+       "label": "Invariant coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Fuzz uptime",
+       "value": "24/7"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — compliance-grade provenance missing included — and prove it moved.",
+     "plays": [
+      "Specification-first development with formal-verified cores",
+      "Property-based fuzzing around the clock, invariants measured against the spec",
+      "Upgrade discipline: multi-party approval, timed locks, rehearsed pause"
+     ],
+     "kpis": [
+      {
+       "label": "Audit highs",
+       "value": "0"
+      },
+      {
+       "label": "Invariant coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Fuzz uptime",
+       "value": "24/7"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — records integrity under dispute included — and prove it moved.",
+     "plays": [
+      "Specification-first development with formal-verified cores",
+      "Property-based fuzzing around the clock, invariants measured against the spec",
+      "Upgrade discipline: multi-party approval, timed locks, rehearsed pause"
+     ],
+     "kpis": [
+      {
+       "label": "Audit highs",
+       "value": "0"
+      },
+      {
+       "label": "Invariant coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Fuzz uptime",
+       "value": "24/7"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Specification-first development with formal-verified cores",
+      "Property-based fuzzing around the clock, invariants measured against the spec",
+      "Upgrade discipline: multi-party approval, timed locks, rehearsed pause"
+     ],
+     "kpis": [
+      {
+       "label": "Audit highs",
+       "value": "0"
+      },
+      {
+       "label": "Invariant coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Fuzz uptime",
+       "value": "24/7"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": true,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the trust layer is engineered, not asserted: signed events, permissioned consensus, and a provenance graph every participant can verify.",
+     "plays": [
+      "Specification-first development with formal-verified cores",
+      "Property-based fuzzing around the clock, invariants measured against the spec",
+      "Upgrade discipline: multi-party approval, timed locks, rehearsed pause"
+     ],
+     "kpis": [
+      {
+       "label": "Audit highs",
+       "value": "0"
+      },
+      {
+       "label": "Invariant coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Fuzz uptime",
+       "value": "24/7"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what provenance claims unverifiable costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Specification-first development with formal-verified cores",
+      "Property-based fuzzing around the clock, invariants measured against the spec",
+      "Upgrade discipline: multi-party approval, timed locks, rehearsed pause"
+     ],
+     "kpis": [
+      {
+       "label": "Audit highs",
+       "value": "0"
+      },
+      {
+       "label": "Invariant coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Fuzz uptime",
+       "value": "24/7"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/blockchain-digital-trust/"
+    }
+   ],
+   "practiceNote": "Smart Contract Engineering & Audit view: audited contracts with upgrade discipline — formal-verified cores, independent audits at zero highs, and upgrade paths that cannot surprise the network."
+  },
+  {
+   "t": "h2",
+   "x": "Contract defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor formal verification and property-based fuzzing over test-by-coverage; deviation triggers are written because each one widens the gap between what is tested and what is trusted."
+  },
+  {
+   "t": "table",
+   "caption": "Smart Contract Engineering & Audit: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production contracts with specification, verification and audit trail",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Specification",
+     "Executable specs bound to business rules",
+     "Comments-as-spec — behavior and intent drift apart"
     ],
     [
-     "Audit report with finding disposition",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Verification",
+     "Formal proofs on core + invariant fuzzing",
+     "Unit tests only — they miss the compositional bugs"
     ],
     [
-     "Monitoring and incident runbook with pause procedures",
-     "Handed to a named owner on your side, with a working session included."
+     "Audits",
+     "Independent, zero-high gate, re-audit on fixes",
+     "Fixes-closed-by-email — nobody verifies the fix"
     ],
     [
-     "Upgrade governance (timelocks, multisig) documentation",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Upgrades",
+     "Timelocked, diff-published governance",
+     "Admin-key upgrades — trust assumption nobody reads"
+    ],
+    [
+     "Monitoring",
+     "Runtime anomaly detection wired to SOC",
+     "Deploy-and-forget — finality means no patch after"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Under the hood"
+   "x": "Contract release gates — evidence before deployment"
   },
   {
-   "t": "p",
-   "x": "Smart Contract Engineering & Audit ships against Solidity/Rust, Foundry, static analyzers, formal verification tools, multisig/timelock patterns. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for Smart Contract Engineering & Audit — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Spec gate",
+     "Does the spec capture business intent?",
+     "Spec-to-rule traceability"
+    ],
+    [
+     "Proof gate",
+     "Do invariants hold formally?",
+     "Proof evidence; fuzz cycle logs"
+    ],
+    [
+     "Audit gate",
+     "Zero highs, fixes verified?",
+     "Audit report; re-audit evidence"
+    ],
+    [
+     "Upgrade gate",
+     "Is the upgrade path audited and timelocked?",
+     "Governance config; diff publication"
+    ],
+    [
+     "Monitor gate",
+     "Would a runtime anomaly page?",
+     "SOC handoff drill"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "The cadence you would see"
+   "x": "What the engineering team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Smart Contract Engineering & Audit starts with the measurement: the metric, the owner, the current number, signed."
+     "Executable spec suite",
+     "Business rules as testable bindings"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, specification-first first, gates written with your team."
+     "Invariant library",
+     "Formally-checked constitution per contract"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Smart Contract Engineering & Audit closes its first quarter at the gate: the working slice is measured against the baseline your team signed, and the scale decision is written down with the evidence attached."
+     "Audit pack",
+     "Report, fixes, re-audit and sign-off"
+    ],
+    [
+     "Upgrade governance kit",
+     "Timelock, notice templates, veto windows"
+    ],
+    [
+     "Runtime monitor",
+     "Anomaly detection with SOC escalation"
+    ],
+    [
+     "Version archive",
+     "Every deployed version with provenance"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Spec to audit, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — spec & threat model",
+     "Business rules bound, threat model, invariant candidates"
+    ],
+    [
+     "Weeks 3–4 — build & prove",
+     "Implementation, property tests, formal proofs on core"
+    ],
+    [
+     "Weeks 5–6 — audit",
+     "Independent audit, fixes, re-audit, sign-off"
+    ],
+    [
+     "Weeks 7–8 — deploy",
+     "Staged rollout, monitors, SOC handoff drill"
+    ],
+    [
+     "Weeks 9–10 — governance",
+     "Upgrade kit live, timelock tested, archive"
+    ],
+    [
+     "Ongoing — contract ops",
+     "Continuous fuzz; monthly monitor review; upgrade trains"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — ledgers, oracles and the business systems"
+  },
+  {
+   "t": "p",
+   "x": "Contracts touch ledgers, oracles and the systems that trigger them; these contracts define event boundaries and the data each side trusts."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Ledger runtime",
+     "Deployment targets"
+    ],
+    [
+     "Audit firms",
+     "Independent review cycle"
+    ],
+    [
+     "SOC",
+     "Runtime anomaly escalation"
+    ],
+    [
+     "Network governance",
+     "Upgrade authorization"
+    ],
+    [
+     "ERP adapters",
+     "Business-event binding"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Upgrade-governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Upgrades are governed releases: multi-party approval, timed locks, spec-diff evidence and a rehearsed emergency pause — the discipline that removes ambush risk from live contracts."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Zero-high gate",
+     "Contracts do not deploy with open high findings"
+    ],
+    [
+     "Timelock rule",
+     "No surprise upgrades, ever"
+    ],
+    [
+     "Invariant preservation",
+     "Upgrades must prove unchanged invariants"
+    ],
+    [
+     "Key discipline",
+     "Admin keys are quorum-controlled, not personal"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "The fuzzer runs continuously between releases: 24/7 property-based fuzzing means a newly discovered bug class is tested against your contracts the same week it is published, not the next audit cycle."
   },
   {
    "t": "cta",
-   "x": "If Smart Contract Engineering & Audit is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
+   "x": "Bring the contract your auditors keep reopening. The verification sprint will write the spec, pin the invariants and run the fuzzer — until the audit is a formality."
   }
  ],
- "words": 512,
+ "words": 969,
  "section": "Services",
  "l1": "Services",
  "l2": "Blockchain & Digital Trust",
@@ -278,7 +1213,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Blockchain & Digital Trust",
+   "title": "Domain overview — Blockchain & Digital Trust",
    "url": "/services/blockchain-digital-trust/",
    "desc": "DLT networks, tokenization and verifiable credentials — a shared, verifiable record with controls regulators accept."
   },
@@ -330,33 +1265,51 @@
   {
    "title": "Applied AI & GenAI for Public Sector & Government",
    "url": "/industries/public-sector/capabilities/applied-ai-generative-ai/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Enterprise DLT Network Engineering",
-   "url": "/services/blockchain-digital-trust/enterprise-dlt-networks/",
-   "tag": "Same tower",
-   "desc": "Permissioned networks for multi-party truth — governance, consensus and integration done institutionally."
-  },
-  {
-   "title": "Asset Tokenization & Digital Assets",
-   "url": "/services/blockchain-digital-trust/asset-tokenization/",
-   "tag": "Same tower",
-   "desc": "Instruments as tokens — issuance, custody and lifecycle under securities-law discipline."
-  },
-  {
-   "title": "Provenance, Traceability & Supply Chain Trust",
-   "url": "/services/blockchain-digital-trust/provenance-traceability/",
-   "tag": "Same tower",
-   "desc": "Proof, not paperwork — EUDR, DPP and chain-of-custody systems regulators and customers can verify."
+   "title": "Blockchain Analytics & Regulatory Compliance",
+   "url": "/services/blockchain-digital-trust/blockchain-analytics-compliance/",
+   "tag": "Same domain",
+   "desc": "ledger intelligence mapped to regulatory duties — transaction risk scoring, travel-rule workflows, and audit-ready case files built automatically."
   },
   {
    "title": "Decentralized Identity & Verifiable Credentials",
    "url": "/services/blockchain-digital-trust/decentralized-identity/",
-   "tag": "Same tower",
-   "desc": "Credentials users carry — portable, privacy-preserving verification for workforce and customers."
+   "tag": "Same domain",
+   "desc": "DIDs and verifiable credentials that work offline — issuer governance, holder wallets, selective disclosure, and verification at 200ms without a phone-home."
+  },
+  {
+   "title": "Enterprise DLT Network Engineering",
+   "url": "/services/blockchain-digital-trust/enterprise-dlt-networks/",
+   "tag": "Same domain",
+   "desc": "permissioned networks with real governance — membership charters, privacy domains, boring consensus, and operations that treat nodes like production systems."
+  },
+  {
+   "title": "Data Engineering & Pipeline Modernization",
+   "url": "/services/data-analytics-lakehouse/data-engineering-modernization/",
+   "tag": "Pairs with",
+   "desc": "legacy pipelines rebuilt as typed, contract-gated, observable jobs — with a strangler pattern that retires the old estate without a big-bang cutover."
+  },
+  {
+   "title": "Digital Twin Platform Engineering",
+   "url": "/services/iot-digital-twin-robotics/digital-twin-platforms/",
+   "tag": "Pairs with",
+   "desc": "twins that stay honest — state synchronization with fidelity metrics, simulation tiers for what-ifs, and governance for who may change what."
+  },
+  {
+   "title": "Cyber Resilience & Incident Recovery",
+   "url": "/services/cybersecurity-zero-trust/cyber-resilience-incident-recovery/",
+   "tag": "Pairs with",
+   "desc": "recovery that is rehearsed, not documented — immutable backups, clean-room restores and business-service RTOs you can actually meet on a bad Friday."
+  },
+  {
+   "title": "A European specialty reinsurer",
+   "url": "/case-studies/ins-03/",
+   "tag": "Evidence",
+   "desc": "Bordereaux automation and settlement evidence — reconciliation effort down 74%."
   }
  ]
 }

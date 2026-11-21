@@ -1,0 +1,263 @@
+{
+ "id": "CASE-en-04",
+ "title": "A distribution system operator",
+ "url": "/case-studies/en-04/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Energy & Utilities > A distribution system operator",
+ "seo_title": "A distribution system operator | Case Study | Dataq Software",
+ "meta_description": "Grid-edge visibility and orchestration — curtailment of renewables down 31% and congestion costs down 24% on a network built for one direction",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Grid-edge visibility and orchestration — curtailment of renewables down 31% and congestion costs down 24% on a network built for one direction"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a DSO whose network was engineered for power flowing one way and whose rooftops had other plans. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline year measured the wrong-way traffic: 4.1 GWh of solar curtailed for lack of visibility below the secondary substation, congestion costs rising each quarter, and connection queues growing because the network's real capacity was unknown."
+  },
+  {
+   "t": "p",
+   "x": "Low-voltage observability was nearly zero; flexibility offers existed but nothing could schedule them safely. The grid team planned with worst-case assumptions because best-case was invisible."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We built the grid-edge spine: LV-level monitoring where it mattered and model-based observability where it didn't, flexibility assets registered with their true envelope, an orchestration layer scheduling flexibility against congestion forecasts with the DSO's safety envelope enforced, and connection assessments running on measured headroom. The network found capacity it had been refusing."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — A distribution system operator",
+   "lanes": [
+    "Grid sensing",
+    "Edge spine",
+    "Flexibility orchestration",
+    "Connection planning"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "LV monitoring & smart meters",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Network model state estimation",
+     "hot": true
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Congestion forecast service",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Flexibility asset registry",
+     "hot": true
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Safety-envelope orchestrator",
+     "hot": true
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Flex dispatch optimizer"
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Connection headroom engine",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Regulator reporting pack"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A distribution system operator",
+   "kpis": [
+    {
+     "label": "Renewable curtailment",
+     "value": "-31%",
+     "delta": "4.1 → 2.8 GWh",
+     "dir": "down"
+    },
+    {
+     "label": "Congestion costs",
+     "value": "-24%",
+     "delta": "scheduled flexibility",
+     "dir": "down"
+    },
+    {
+     "label": "Connection queue cleared",
+     "value": "+180 connections",
+     "delta": "on measured headroom",
+     "dir": "up"
+    },
+    {
+     "label": "LV observability coverage",
+     "value": "12% → 61%",
+     "delta": "sensing + estimation",
+     "dir": "up"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed with the grid operations director",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 10",
+     "msg": "Spine live on two high-DERP feeders",
+     "tag": "build"
+    },
+    {
+     "t": "wk 16",
+     "msg": "Gate review — regulator comfort review on dispatch evidence",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Feeder rollout; envelope policies under grid owner",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Curtailment and congestion baselines signed with grid ops"
+    ],
+    [
+     "Build gate",
+     "No feeder live until its safety envelope passed the operator review"
+    ],
+    [
+     "Run gate",
+     "Quarterly curtailment review reconciled to settlement data"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The observability-plus-envelope pattern transfers to any DER-heavy network; the flexibility registry was this DSO's market reality. Another operator starts from its curtailment ledger — the diagnostic reconciles it to settlement first."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "16 months",
+     "16-person blended team",
+     "EU",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "Bring your own baseline. The two-week diagnostic is how this engagement started, and it is how we find out whether your estate can carry the same delta."
+  }
+ ],
+ "words": 441,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Energy & Utilities",
+ "l3": "A distribution system operator",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Energy & Utilities",
+   "url": "/industries/energy-utilities/"
+  },
+  {
+   "name": "A distribution system operator",
+   "url": "/case-studies/en-04/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Energy & Utilities — industry hub",
+   "url": "/industries/energy-utilities/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Data, Analytics & Lakehouse",
+   "url": "/services/data-analytics-lakehouse/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A European TSO-DSO group",
+   "url": "/case-studies/en-01/",
+   "desc": "Forecast error down 31% — imbalance cost recovered across three control zones"
+  },
+  {
+   "title": "A global integrated energy major",
+   "url": "/case-studies/en-02/",
+   "desc": "Turnaround duration down 14% — scheduling optimization at refinery scale"
+  },
+  {
+   "title": "A national water utility",
+   "url": "/case-studies/en-03/",
+   "desc": "Non-revenue water down 21% — district metering to decision loop"
+  }
+ ],
+ "cards": []
+}

@@ -9,254 +9,1203 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Where most programs improvise, platform engineering & developer experience as we deliver it is sequenced: Golden paths, paved roads — an internal platform that turns months into days. The sequence matters more than the stack — both are documented here."
+   "x": "The platform as a product with developers as customers: golden paths published as versioned APIs, scaffolds that carry SLOs and budgets by default, bypass reasons logged and answered — adoption earned through experience, never mandated."
   },
   {
    "t": "h2",
-   "x": "What this service is"
+   "x": "Adoption is the metric; everything else is the product roadmap"
   },
   {
    "t": "p",
-   "x": "Every hour an engineer spends fighting infrastructure is an hour not spent on the product. We build internal developer platforms: golden-path templates (service scaffolding, pipelines, observability, security defaults), a self-service catalog (Backstage-class) with scorecards, environment provisioning in minutes under policy, and a paved road so compelling that the secure path is also the easiest path."
+   "x": "Platform engineering exists to make the right thing the easy thing: a new service should inherit observability, security defaults, SLOs and cost budgets because it rode a golden path — not because a hero wired them by hand. The platform team runs this as a product with a roadmap, SLAs and customers: your engineers."
   },
   {
    "t": "p",
-   "x": "Developer experience is measured, not vibes: DORA metrics (lead time, deployment frequency, change-failure rate, MTTR), onboarding time-to-first-commit, and platform NPS from the engineers themselves. The platform team runs as a product team with a roadmap and a budget — the organizational pattern that separates platforms people adopt from platforms people route around."
+   "x": "The funnel is the honest measure: time from repo creation to first production deploy, adoption of paths versus off-path workarounds, and the platform NPS that tells you whether engineers would fight to keep it."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that make internal platforms mandatory-but-bypassed, the reference architecture of paths-as-products, and the console that tracks adoption honestly — including why people leave the path."
   },
   {
    "t": "h2",
-   "x": "What makes this urgent now"
+   "x": "Four ways internal platforms become mandatory-but-bypassed"
   },
   {
    "t": "p",
-   "x": "Platform Engineering & Developer Experience delivery today concentrates in Technology & SaaS, Banking & Financial Services, Telecom, Media & Entertainment, Retail & Consumer Goods. The metric is chosen with your finance lead, and the baseline is signed before any build begins."
+   "x": "Each failure mode drives a quiet fork around the platform — the countermeasures log the bypass reasons and fix the platform until leaving is harder than staying."
   },
   {
-   "t": "h2",
-   "x": "How the capability takes shape"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Platform Engineering & Developer Experience: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Golden-path templates",
-     "scaffolding for services with security, observability and CI/CD defaults"
+     "Golden-path bypass",
+     "Teams off-road because the path is missing a feature",
+     "Path telemetry with bypass reasons; roadmap driven by bypass data"
     ],
     [
-     "Self-service catalog",
-     "Backstage-class portal with scorecards and ownership visibility"
+     "Platform as side job",
+     "Platform team fragmented across tickets",
+     "Product model: roadmap, SLAs, support tiers"
     ],
     [
-     "Environment automation",
-     "policy-governed provisioning in minutes with cost tags"
+     "Template rot",
+     "Scaffolds age and teams pin old versions",
+     "Versioned templates with upgrade automation; LTS policy"
     ],
     [
-     "DORA instrumentation",
-     "flow metrics and platform NPS driving the platform roadmap"
-    ],
-    [
-     "Platform-as-product",
-     "roadmap, budget and adoption targets for the platform team"
+     "Adoption theater",
+     "Mandated usage without benefits",
+     "DevEx funnel metrics; before/after delivery evidence"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — golden paths as versioned APIs"
+  },
+  {
+   "t": "p",
+   "x": "A path is a product surface: versioned, documented, owned, carrying SLOs and budget defaults, deprecated on a schedule. Scaffolds instantiate paths, not templates — so every new service is observable and costed before its first commit."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Platform Engineering & Developer Experience",
+   "title": "Reference architecture — internal developer platform",
    "lanes": [
-    "Estates",
-    "Migration waves",
-    "Modern runtimes",
-    "Observability",
-    "Governance",
-    "Products"
+    "Engineers",
+    "Platform product",
+    "Golden paths",
+    "Shared services",
+    "Runtime",
+    "Measure"
    ],
    "nodes": [
     {
-     "id": "es0",
+     "id": "dev",
      "lane": 0,
-     "label": "Product telemetry",
-     "hot": false
+     "label": "Product engineers"
     },
     {
-     "id": "es1",
+     "id": "portal",
      "lane": 0,
-     "label": "Billing & entitlements",
-     "hot": false
+     "label": "Dev portal"
     },
     {
-     "id": "mw2",
+     "id": "cli",
+     "lane": 0,
+     "label": "CLI & APIs"
+    },
+    {
+     "id": "team",
      "lane": 1,
-     "label": "Platform Engineering & Developer Experience",
+     "label": "Platform product team",
      "hot": true
     },
     {
-     "id": "mw3",
+     "id": "road",
      "lane": 1,
-     "label": "Cutover runbooks",
-     "hot": false
+     "label": "Roadmap & SLAs"
     },
     {
-     "id": "mr4",
-     "lane": 2,
-     "label": "Containers & IaC",
-     "hot": false
+     "id": "sup",
+     "lane": 1,
+     "label": "Support tiers"
     },
     {
-     "id": "mr5",
+     "id": "scaffold",
      "lane": 2,
-     "label": "Managed data services",
+     "label": "Service scaffold",
      "hot": true
     },
     {
-     "id": "ob6",
+     "id": "obs",
+     "lane": 2,
+     "label": "Observability path"
+    },
+    {
+     "id": "sec",
+     "lane": 2,
+     "label": "Security path",
+     "hot": true
+    },
+    {
+     "id": "cicd",
      "lane": 3,
-     "label": "Golden signals",
-     "hot": false
+     "label": "CI/CD services"
     },
     {
-     "id": "ob7",
+     "id": "reg",
      "lane": 3,
-     "label": "Incident automation",
-     "hot": false
+     "label": "Artifact registry"
     },
     {
-     "id": "gv8",
+     "id": "secrets",
+     "lane": 3,
+     "label": "Secrets service"
+    },
+    {
+     "id": "k8s",
      "lane": 4,
-     "label": "Cloud posture (CNAPP)",
-     "hot": false
+     "label": "Runtime fleet"
     },
     {
-     "id": "gv9",
+     "id": "env",
      "lane": 4,
-     "label": "SOC 2 evidence pack",
-     "hot": false
+     "label": "Environment service"
     },
     {
-     "id": "pr10",
-     "lane": 5,
-     "label": "Growth & pricing console",
-     "hot": false
+     "id": "db",
+     "lane": 4,
+     "label": "Data services"
     },
     {
-     "id": "pr11",
+     "id": "funnel",
      "lane": 5,
-     "label": "Customer-success cockpit",
-     "hot": false
+     "label": "DevEx funnel",
+     "hot": true
+    },
+    {
+     "id": "nps",
+     "lane": 5,
+     "label": "Platform NPS"
+    },
+    {
+     "id": "adopt",
+     "lane": 5,
+     "label": "Adoption telemetry"
     }
    ],
    "edges": [
     {
-     "a": "es0",
-     "b": "mw2"
+     "a": "dev",
+     "b": "portal"
     },
     {
-     "a": "es1",
-     "b": "mw3"
+     "a": "dev",
+     "b": "cli",
+     "label": "automate"
     },
     {
-     "a": "mw2",
-     "b": "mr4"
+     "a": "team",
+     "b": "road",
+     "label": "plan"
     },
     {
-     "a": "mw3",
-     "b": "mr5"
+     "a": "team",
+     "b": "sup",
+     "label": "tiered"
     },
     {
-     "a": "mr4",
-     "b": "ob6"
+     "a": "scaffold",
+     "b": "obs",
+     "label": "wired"
     },
     {
-     "a": "mr5",
-     "b": "ob7"
+     "a": "scaffold",
+     "b": "sec",
+     "label": "defaults"
     },
     {
-     "a": "ob6",
-     "b": "gv8"
+     "a": "sec",
+     "b": "cicd",
+     "label": "gate"
     },
     {
-     "a": "gv8",
-     "b": "gv9"
+     "a": "scaffold",
+     "b": "cicd",
+     "label": "pipeline"
     },
     {
-     "a": "mr4",
-     "b": "pr10"
+     "a": "cicd",
+     "b": "reg",
+     "label": "publish"
     },
     {
-     "a": "mr5",
-     "b": "pr11"
+     "a": "cicd",
+     "b": "secrets",
+     "label": "inject"
+    },
+    {
+     "a": "scaffold",
+     "b": "k8s",
+     "label": "deploy"
+    },
+    {
+     "a": "scaffold",
+     "b": "env",
+     "label": "ephemeral"
+    },
+    {
+     "a": "scaffold",
+     "b": "db",
+     "label": "provision"
+    },
+    {
+     "a": "portal",
+     "b": "funnel",
+     "label": "telemetry"
+    },
+    {
+     "a": "funnel",
+     "b": "nps",
+     "label": "score"
+    },
+    {
+     "a": "adopt",
+     "b": "road",
+     "label": "evidence"
     }
    ],
-   "note": "Topology inherited from the Cloud, Edge & Platform tower; the highlighted core is this service's build."
+   "note": "Scaffolds carry the defaults: a service created on the path has dashboards, alarms, SLO stubs, security scans and a budget from minute one."
   },
   {
    "t": "h2",
-   "x": "What you hold at the end"
+   "x": "One service, from scaffold to production on the path"
   },
   {
    "t": "p",
-   "x": "The artifacts, each with a walkthrough when it lands — Platform Engineering & Developer Experience edition:"
+   "x": "From scaffold instantiation through CI with SLO defaults, budget wiring, progressive delivery and the review that logs any manual step — including the bypass fork and what pulled the team off the path."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "delivery-cadence",
+   "title": "Developer journey — repo to production on the golden path",
+   "labels": [
+    "Scaffold service",
+    "CI gates green",
+    "Ephemeral env",
+    "Review & scan",
+    "Deploy to staging",
+    "SLO check",
+    "Prod with budget"
+   ],
+   "note": "The funnel times each stage; the slowest stage becomes the platform roadmap's next item — evidence, not vibes."
+  },
+  {
+   "t": "h2",
+   "x": "The platform console — adoption with its reasons"
+  },
+  {
+   "t": "p",
+   "x": "Repo-to-prod median, path adoption and logged bypass reasons — the three numbers that run the platform backlog, because every bypass reason is a feature request the product owes its customers."
+  },
+  {
+   "t": "idash",
+   "title": "Platform engineering — product console",
+   "kpis": [
+    {
+     "label": "Golden-path adoption",
+     "value": "89%",
+     "delta": "of production services",
+     "dir": "up",
+     "spark": [
+      45,
+      55,
+      63,
+      71,
+      78,
+      84,
+      89
+     ]
+    },
+    {
+     "label": "Lead time p50",
+     "value": "4.2 h",
+     "delta": "commit → prod",
+     "dir": "down",
+     "spark": [
+      38,
+      26,
+      18,
+      12,
+      8,
+      6,
+      4.2
+     ]
+    },
+    {
+     "label": "Onboard → first commit",
+     "value": "3.5 d",
+     "delta": "was 3 weeks",
+     "dir": "down",
+     "spark": [
+      15,
+      11,
+      8,
+      6,
+      5,
+      4,
+      3.5
+     ]
+    },
+    {
+     "label": "Scorecard median",
+     "value": "86",
+     "delta": "estate maturity 0-100",
+     "dir": "up",
+     "spark": [
+      58,
+      63,
+      68,
+      73,
+      78,
+      82,
+      86
+     ]
+    },
+    {
+     "label": "DevEx survey",
+     "value": "8.1/10",
+     "delta": "quarterly, 74% response",
+     "dir": "up",
+     "spark": [
+      5.8,
+      6.4,
+      6.9,
+      7.3,
+      7.6,
+      7.9,
+      8.1
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Throughput",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "DORA pair vs platform releases — the causal story",
+       "cats": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8"
+       ],
+       "series": [
+        {
+         "name": "Lead time p50 (h)",
+         "points": [
+          38,
+          26,
+          18,
+          12,
+          8,
+          6,
+          5,
+          4.2
+         ]
+        },
+        {
+         "name": "Deploy freq / wk",
+         "points": [
+          6,
+          9,
+          13,
+          18,
+          24,
+          29,
+          34,
+          38
+         ]
+        },
+        {
+         "name": "Platform releases",
+         "points": [
+          2,
+          3,
+          2,
+          4,
+          3,
+          2,
+          4,
+          3
+         ]
+        }
+       ],
+       "note": "Click to isolate. Each platform release should bend a throughput line — releases that do not are re-justified at the quarterly review, which keeps the platform roadmap honest."
+      }
+     ]
+    },
+    {
+     "name": "Scorecard",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Service maturity by domain × dimension — the live estate",
+       "rows": [
+        "Checkout",
+        "Catalog",
+        "Identity",
+        "Ledger",
+        "Search",
+        "Comms"
+       ],
+       "cats": [
+        "Security",
+        "Reliability",
+        "Docs",
+        "Deps",
+        "Cost",
+        "Ops"
+       ],
+       "matrix": [
+        [
+         92,
+         88,
+         74,
+         90,
+         81,
+         86
+        ],
+        [
+         84,
+         79,
+         68,
+         82,
+         74,
+         79
+        ],
+        [
+         90,
+         85,
+         72,
+         88,
+         76,
+         84
+        ],
+        [
+         96,
+         93,
+         82,
+         94,
+         85,
+         90
+        ],
+        [
+         81,
+         76,
+         65,
+         79,
+         70,
+         75
+        ],
+        [
+         77,
+         72,
+         60,
+         74,
+         68,
+         71
+        ]
+       ],
+       "unit": "score 0-100",
+       "note": "Hover cells to read scores. The docs column is dark everywhere — documentation freshness is the classic scorecard finding, and the platform's answer is docs-in-the-template, not exhortation."
+      }
+     ]
+    },
+    {
+     "name": "Platform topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The internal developer platform — click nodes for the offered contract",
+       "lanes": [
+        "Portal",
+        "Paths",
+        "Rails",
+        "Evidence"
+       ],
+       "nodes": [
+        {
+         "id": "portal",
+         "lane": 0,
+         "label": "Service portal",
+         "detail": "Every service's page: ownership, scorecard, SLOs, dependencies, runbook links — the catalog is the front door and it must never lie.",
+         "hot": true
+        },
+        {
+         "id": "tpl",
+         "lane": 1,
+         "label": "Golden template",
+         "detail": "Versioned service scaffold with the inheritance pack built in; template releases carry changelogs and migration notes."
+        },
+        {
+         "id": "prov",
+         "lane": 1,
+         "label": "Environment provisioning",
+         "detail": "Declarative environment requests through policy gates — a new environment is a pull request, not a ticket."
+        },
+        {
+         "id": "cicd",
+         "lane": 2,
+         "label": "Deployment rails",
+         "detail": "Progressive delivery configured by default: canary, analysis, automatic rollback on budget breach."
+        },
+        {
+         "id": "obs",
+         "lane": 2,
+         "label": "Observability defaults",
+         "detail": "Dashboards, alerts and trace wiring born with the service — a service without telemetry cannot leave the template."
+        },
+        {
+         "id": "score",
+         "lane": 3,
+         "label": "Scorecards",
+         "detail": "Maturity computed from evidence (security, reliability, docs, deps, cost, ops) — visible to everyone, reviewed quarterly."
+        },
+        {
+         "id": "exc",
+         "lane": 3,
+         "label": "Exception registry",
+         "detail": "Off-path deployments documented, owned and expiry-dated — the exception review is where standards evolve."
+        }
+       ],
+       "edges": [
+        {
+         "a": "portal",
+         "b": "tpl",
+         "label": "scaffold"
+        },
+        {
+         "a": "portal",
+         "b": "score",
+         "label": "reads"
+        },
+        {
+         "a": "tpl",
+         "b": "prov"
+        },
+        {
+         "a": "tpl",
+         "b": "cicd"
+        },
+        {
+         "a": "cicd",
+         "b": "obs",
+         "label": "born wired"
+        },
+        {
+         "a": "score",
+         "b": "exc",
+         "label": "flags"
+        },
+        {
+         "a": "exc",
+         "b": "tpl",
+         "label": "feeds standards"
+        }
+       ],
+       "note": "Click nodes for the contract each rail offers. The exception registry feeds the template roadmap — standards evolve from real exceptions, not from committees."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · adoption model",
+   "note": "Reference program model: adoption and DORA bands from delivery benchmarks, not client telemetry."
+  },
+  {
+   "t": "h2",
+   "x": "Delivery velocity on and off the path"
+  },
+  {
+   "t": "p",
+   "x": "Lead time and change failure rate for teams on-path versus off-path — the comparison that makes the platform's value statement unnecessary, because the numbers argue for it."
+  },
+  {
+   "t": "chart",
+   "title": "DevEx funnel stage medians — design targets",
+   "variant": "bar",
+   "cats": [
+    "Scaffold",
+    "First CI green",
+    "Ephemeral env",
+    "Review",
+    "Staging",
+    "Prod"
+   ],
+   "series": [
+    {
+     "name": "Median target (h)",
+     "points": [
+      0.2,
+      0.5,
+      0.3,
+      19,
+      2,
+      1
+     ]
+    },
+    {
+     "name": "Median current (h)",
+     "points": [
+      0.2,
+      1.1,
+      0.6,
+      34,
+      4,
+      2
+     ]
+    }
+   ],
+   "yMax": 40,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Platform Engineering & Developer Experience across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Platform Engineering & Developer Experience",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: infrastructure is treated as a product: versioned, observable, costed, and handed to your team with runbooks rather than folklore.",
+     "plays": [
+      "Golden paths as versioned APIs with SLO and budget defaults",
+      "Bypass reasons logged, triaged and answered on the roadmap",
+      "Scaffolds that make new services observable and costed before first commit",
+      "Sector working pattern: core-adjacent modernization in Banking & Financial Services, where strangler-pattern decomposition of monolith wrappers around core with parallel-run equivalence."
+     ],
+     "kpis": [
+      {
+       "label": "Repo → prod (median)",
+       "value": "3.1d"
+      },
+      {
+       "label": "Path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Bypass reasons logged",
+       "value": "9"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident.",
+     "plays": [
+      "Golden paths as versioned APIs with SLO and budget defaults",
+      "Bypass reasons logged, triaged and answered on the roadmap",
+      "Scaffolds that make new services observable and costed before first commit"
+     ],
+     "kpis": [
+      {
+       "label": "Repo → prod (median)",
+       "value": "3.1d"
+      },
+      {
+       "label": "Path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Bypass reasons logged",
+       "value": "9"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — validated-environment rigidity included — and prove it moved.",
+     "plays": [
+      "Golden paths as versioned APIs with SLO and budget defaults",
+      "Bypass reasons logged, triaged and answered on the roadmap",
+      "Scaffolds that make new services observable and costed before first commit"
+     ],
+     "kpis": [
+      {
+       "label": "Repo → prod (median)",
+       "value": "3.1d"
+      },
+      {
+       "label": "Path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Bypass reasons logged",
+       "value": "9"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident.",
+     "plays": [
+      "Golden paths as versioned APIs with SLO and budget defaults",
+      "Bypass reasons logged, triaged and answered on the roadmap",
+      "Scaffolds that make new services observable and costed before first commit"
+     ],
+     "kpis": [
+      {
+       "label": "Repo → prod (median)",
+       "value": "3.1d"
+      },
+      {
+       "label": "Path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Bypass reasons logged",
+       "value": "9"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Golden paths as versioned APIs with SLO and budget defaults",
+      "Bypass reasons logged, triaged and answered on the roadmap",
+      "Scaffolds that make new services observable and costed before first commit"
+     ],
+     "kpis": [
+      {
+       "label": "Repo → prod (median)",
+       "value": "3.1d"
+      },
+      {
+       "label": "Path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Bypass reasons logged",
+       "value": "9"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": true,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: energy cost compounds, quarter after quarter.",
+     "plays": [
+      "Golden paths as versioned APIs with SLO and budget defaults",
+      "Bypass reasons logged, triaged and answered on the roadmap",
+      "Scaffolds that make new services observable and costed before first commit"
+     ],
+     "kpis": [
+      {
+       "label": "Repo → prod (median)",
+       "value": "3.1d"
+      },
+      {
+       "label": "Path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Bypass reasons logged",
+       "value": "9"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what customer and market platforms creak costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Golden paths as versioned APIs with SLO and budget defaults",
+      "Bypass reasons logged, triaged and answered on the roadmap",
+      "Scaffolds that make new services observable and costed before first commit"
+     ],
+     "kpis": [
+      {
+       "label": "Repo → prod (median)",
+       "value": "3.1d"
+      },
+      {
+       "label": "Path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Bypass reasons logged",
+       "value": "9"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — peak surges break planning included — and prove it moved.",
+     "plays": [
+      "Golden paths as versioned APIs with SLO and budget defaults",
+      "Bypass reasons logged, triaged and answered on the roadmap",
+      "Scaffolds that make new services observable and costed before first commit",
+      "Sector working pattern: peak surge engineering: elastic capacity with load modeling for trading peaks. Peak absorbed at controlled unit cost is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Repo → prod (median)",
+       "value": "3.1d"
+      },
+      {
+       "label": "Path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Bypass reasons logged",
+       "value": "9"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the platform work decides the unit economics: right-sized runtimes, automated environments, and FinOps telemetry from the first workload.",
+     "plays": [
+      "Golden paths as versioned APIs with SLO and budget defaults",
+      "Bypass reasons logged, triaged and answered on the roadmap",
+      "Scaffolds that make new services observable and costed before first commit"
+     ],
+     "kpis": [
+      {
+       "label": "Repo → prod (median)",
+       "value": "3.1d"
+      },
+      {
+       "label": "Path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Bypass reasons logged",
+       "value": "9"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Education & Research operators recognize the pattern: research computing fragmented, quarter after quarter.",
+     "plays": [
+      "Golden paths as versioned APIs with SLO and budget defaults",
+      "Bypass reasons logged, triaged and answered on the roadmap",
+      "Scaffolds that make new services observable and costed before first commit"
+     ],
+     "kpis": [
+      {
+       "label": "Repo → prod (median)",
+       "value": "3.1d"
+      },
+      {
+       "label": "Path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Bypass reasons logged",
+       "value": "9"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": true,
+     "hook": "Ask what cloud unit economics opaque costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Golden paths as versioned APIs with SLO and budget defaults",
+      "Bypass reasons logged, triaged and answered on the roadmap",
+      "Scaffolds that make new services observable and costed before first commit"
+     ],
+     "kpis": [
+      {
+       "label": "Repo → prod (median)",
+       "value": "3.1d"
+      },
+      {
+       "label": "Path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Bypass reasons logged",
+       "value": "9"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what season peaks break systems costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Golden paths as versioned APIs with SLO and budget defaults",
+      "Bypass reasons logged, triaged and answered on the roadmap",
+      "Scaffolds that make new services observable and costed before first commit"
+     ],
+     "kpis": [
+      {
+       "label": "Repo → prod (median)",
+       "value": "3.1d"
+      },
+      {
+       "label": "Path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Bypass reasons logged",
+       "value": "9"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/cloud-edge-platform-engineering/"
+    }
+   ],
+   "practiceNote": "Platform Engineering & Developer Experience view: the platform as product — golden paths as versioned APIs, scaffolds that carry SLOs and budgets by default, and a developer experience measured like a funnel."
+  },
+  {
+   "t": "h2",
+   "x": "Platform defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor paved-road opinionation with escape hatches over both free-for-alls and mandates; deviation triggers are written because each one is a bet on where the fork risk actually lives."
+  },
+  {
+   "t": "table",
+   "caption": "Platform Engineering & Developer Experience: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Internal developer platform with golden paths and catalog",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Portal",
+     "Backstage-class portal with scorecards",
+     "Wiki-only docs — nobody finds anything"
     ],
     [
-     "Scorecard and ownership model across services",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Scaffolds",
+     "Versioned templates with automated upgrades",
+     "Copy-paste starter repos — rot is instant"
     ],
     [
-     "DORA and DevEx measurement with published baselines",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Environments",
+     "Ephemeral envs per PR with cost caps",
+     "Long-lived shared staging — contention and drift"
     ],
     [
-     "Platform product roadmap and operating model",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Support",
+     "Tiered support with SLAs",
+     "Slack-only support — it dies at scale"
+    ],
+    [
+     "Measurement",
+     "Funnel telemetry + NPS",
+     "Ticket counts — they measure complaints, not velocity"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Standards and components"
+   "x": "Platform release gates — evidence before a path ships"
   },
   {
-   "t": "p",
-   "x": "Platform Engineering & Developer Experience ships against Backstage, Kubernetes, Argo CD, Terraform modules, OpenTelemetry, DORA tooling. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for Platform Engineering & Developer Experience — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Default gate",
+     "Do scaffolds carry security + SLO defaults?",
+     "Scaffold audit; new-service inspection"
+    ],
+    [
+     "Upgrade gate",
+     "Do templates upgrade automatically?",
+     "Upgrade PR evidence; LTS policy"
+    ],
+    [
+     "Ephemeral gate",
+     "Do PRs get real environments?",
+     "Env provision evidence with cost caps"
+    ],
+    [
+     "Adoption gate",
+     "Is the path winning on merit?",
+     "Adoption telemetry with bypass reasons"
+    ],
+    [
+     "Support gate",
+     "Does the platform meet its SLAs?",
+     "First-response and resolution evidence"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "The cadence you would see"
+   "x": "What the platform product team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Platform Engineering & Developer Experience starts with the measurement: the metric, the owner, the current number, signed."
+     "Developer portal",
+     "Scorecards, catalog, path discovery"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, golden-path templates first, gates written with your team."
+     "Golden path library",
+     "Versioned scaffolds with upgrade automation"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Platform Engineering & Developer Experience closes its first quarter at the gate: the working slice is measured against the baseline your team signed, and the scale decision is written down with the evidence attached."
+     "Ephemeral environment service",
+     "Per-PR envs with cost caps"
+    ],
+    [
+     "Support model",
+     "Tiers, SLAs and escalation paths"
+    ],
+    [
+     "DevEx funnel",
+     "Stage-by-stage delivery telemetry"
+    ],
+    [
+     "Platform roadmap",
+     "Evidence-driven, bypass-informed"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Paths as products, sprint by sprint"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — product setup",
+     "Team charter, SLA design, telemetry plan, census of workarounds"
+    ],
+    [
+     "Weeks 3–4 — first path",
+     "Service scaffold with full defaults; pilot team onboarded"
+    ],
+    [
+     "Weeks 5–6 — shared services",
+     "Ephemeral envs, registry, secrets on the path"
+    ],
+    [
+     "Weeks 7–8 — portal & measurement",
+     "Portal launch, funnel instrumentation, first NPS"
+    ],
+    [
+     "Weeks 9–10 — adoption wave",
+     "Three pilot teams; bypass-reason review; roadmap v2"
+    ],
+    [
+     "Ongoing — platform product",
+     "Quarterly roadmap; upgrade waves; NPS-driven fixes"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — repos, CI and the runtime estate"
+  },
+  {
+   "t": "p",
+   "x": "Golden paths touch repos, pipelines and runtimes; these contracts define what a path carries by default and where teams may legitimately diverge."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Identity provider",
+     "SSO into portal and services"
+    ],
+    [
+     "Artifact registries",
+     "Publishing with signing"
+    ],
+    [
+     "Secrets manager",
+     "Path-integrated injection"
+    ],
+    [
+     "Observability stack",
+     "Dashboards and alarms by default"
+    ],
+    [
+     "FinOps",
+     "Budget stubs on every scaffold"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Platform governance — product discipline for infrastructure"
+  },
+  {
+   "t": "p",
+   "x": "Paths have roadmaps, versions and deprecation dates like any product; the governance that keeps the platform credible is product management, not enforcement memos."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Security-by-default",
+     "Scans and policies cannot be scaffolded away"
+    ],
+    [
+     "Budget-by-default",
+     "Every service gets a cost budget on creation"
+    ],
+    [
+     "Versioned paths",
+     "Scaffolds are semver'd with upgrade evidence"
+    ],
+    [
+     "Telemetry honesty",
+     "Funnel data drives the roadmap, not politics"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Deprecation is enforced by migration support: an old path version is removed only when its last consumer has a scheduled migration, and the removal note includes the helping team's name."
   },
   {
    "t": "cta",
-   "x": "If Platform Engineering & Developer Experience is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
+   "x": "Count the services created last quarter and ask which ran the paved road. The diagnostic will score adoption with bypass reasons attached — and turn the top two into the platform roadmap."
   }
  ],
- "words": 490,
+ "words": 1026,
  "section": "Services",
  "l1": "Services",
  "l2": "Cloud, Edge & Platform Engineering",
@@ -278,7 +1227,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Cloud, Edge & Platform Engineering",
+   "title": "Domain overview — Cloud, Edge & Platform Engineering",
    "url": "/services/cloud-edge-platform-engineering/",
    "desc": "Hybrid estates, edge estate and internal platforms — engineered for reliability and unit cost."
   },
@@ -330,33 +1279,51 @@
   {
    "title": "Agentic AI & Hyperautomation for Technology & SaaS",
    "url": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Hybrid & Multicloud Architecture",
-   "url": "/services/cloud-edge-platform-engineering/hybrid-multicloud-architecture/",
-   "tag": "Same tower",
-   "desc": "The estate as designed system — landing zones, network fabric and workload placement by economics."
-  },
-  {
    "title": "Cloud-Native & Legacy Modernization",
    "url": "/services/cloud-edge-platform-engineering/cloud-native-modernization/",
-   "tag": "Same tower",
-   "desc": "Retire the legacy tax — strangler-pattern modernization with measurable unit economics."
+   "tag": "Same domain",
+   "desc": "workloads rebuilt for cloud-native operations — containerized, observable, resilient by default, with a strangler path that retires VMs on evidence."
   },
   {
    "title": "Edge Computing & Distributed Infrastructure",
    "url": "/services/cloud-edge-platform-engineering/edge-computing-infrastructure/",
-   "tag": "Same tower",
-   "desc": "Compute where the physics is — edge estate for plants, stores, vehicles and grids."
+   "tag": "Same domain",
+   "desc": "compute and delivery close to users and devices — regional clusters with store-and-forward resilience, fleet ops at scale and honest latency budgets."
   },
   {
-   "title": "SRE & Reliability Engineering",
-   "url": "/services/cloud-edge-platform-engineering/sre-reliability-engineering/",
-   "tag": "Same tower",
-   "desc": "Reliability as product — SLOs, error budgets and incident discipline that engineers actually follow."
+   "title": "FinOps & Sustainable Computing",
+   "url": "/services/cloud-edge-platform-engineering/finops-sustainable-computing/",
+   "tag": "Same domain",
+   "desc": "cost and carbon as engineering inputs — unit economics per workload, rightsizing with teeth, and sustainability reported like any SLO."
+  },
+  {
+   "title": "AI Security & Model Protection",
+   "url": "/services/cybersecurity-zero-trust/ai-security-model-protection/",
+   "tag": "Pairs with",
+   "desc": "security for the models themselves — prompt-injection defense, abuse containment, model theft resistance and eval-based red teams wired into the platform."
+  },
+  {
+   "title": "Connected Products & Smart Devices",
+   "url": "/services/iot-digital-twin-robotics/connected-products-devices/",
+   "tag": "Pairs with",
+   "desc": "product fleets in the field — OTA that never bricks, telemetry that earns its bandwidth, and support APIs that let service diagnose before the customer calls."
+  },
+  {
+   "title": "Data Monetization & Analytics Products",
+   "url": "/services/data-analytics-lakehouse/data-monetization-products/",
+   "tag": "Pairs with",
+   "desc": "data as a product for external consumption — contracts, SLAs, purpose limits and billing, with controls that get stronger the moment data leaves the building."
+  },
+  {
+   "title": "A tier-1 US bank",
+   "url": "/case-studies/bank-03/",
+   "tag": "Evidence",
+   "desc": "DORA-grade resilience posture — third-party and incident evidence automated."
   }
  ]
 }

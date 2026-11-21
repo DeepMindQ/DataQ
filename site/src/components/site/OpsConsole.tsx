@@ -102,7 +102,7 @@ export default function OpsConsole() {
             { label: "Decision p95", value: "148ms", delta: "within SLO", dir: "flat" },
           ].map((k, i) => (
             <div key={k.label} className="rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2.5" style={{ animation: `dash-in .5s ${i * 0.1}s both` }}>
-              <p className="truncate text-[9.5px] font-bold uppercase tracking-[0.12em] text-white/40">{k.label}</p>
+              <p className="text-[9.5px] font-bold uppercase leading-tight tracking-[0.12em] text-white/40">{k.label}</p>
               <p className="mt-0.5 font-display text-[17px] font-bold tabular-nums text-white">
                 {k.value}
                 <span className={`ml-1.5 align-middle text-[10px] font-semibold ${k.dir === "up" ? "text-brand-300" : "text-white/45"}`}>{k.delta}</span>

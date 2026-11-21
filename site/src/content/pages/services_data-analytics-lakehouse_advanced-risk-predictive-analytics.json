@@ -9,254 +9,1155 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Most advanced risk & predictive analytics engagements stall between the deck and the deployment. Ours are built to cross that gap: Forward-looking risk on governed data — credit, insurance, operational and market models that explain themselves.. What follows is the working pattern, not the brochure."
+   "x": "Risk and forecasting models with signed baselines, time-based holdouts and governance that survives the quarter they are judged in: predictions built to be checked, not presentations built to be believed."
   },
   {
    "t": "h2",
-   "x": "The job this service does"
+   "x": "A forecast earns trust by being falsifiable"
   },
   {
    "t": "p",
-   "x": "Risk analytics earns its keep when it changes decisions: limits adjusted, reserves calibrated, interventions targeted. We build predictive models across credit risk, insurance pricing and reserving, operational risk sensing, churn and default early warning — always with explainability (SHAP-class attribution), stability monitoring and documented validation aligned to SR 11-7 / TRIM expectations. Champion-challenger discipline keeps the model room honest."
+   "x": "Predictive analytics fails quietly: the model was good in the notebook, decent at launch, and three quarters later nobody knows it drifted. We build risk and forecasting with the decision-domain's discipline — signed baselines, time-based holdouts, champion-challenger on live data — because a prediction that cannot be scored against reality is an opinion."
   },
   {
    "t": "p",
-   "x": "The differentiator is integration: scores flow into decision hubs with policy layers, into risk dashboards with the operating cadence, and into stress scenarios that finance and risk run jointly. Model risk documentation — development evidence, validation findings, limitations — is produced as part of delivery, not reconstructed for audit a year later."
+   "x": "The practice spans credit and operational risk, demand and capacity forecasting, and early-warning systems — always with the governance layer that says who may act on the model and under what bounds."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that make analytics theater, the reference architecture that keeps models honest, and the console the risk function reads."
   },
   {
    "t": "h2",
-   "x": "Why the timing matters"
+   "x": "Four failure modes that make analytics theater"
   },
   {
    "t": "p",
-   "x": "The sectors where Advanced Risk & Predictive Analytics currently runs: Banking & Financial Services, Insurance & Risk, Energy & Utilities, Retail & Consumer Goods. Each engagement anchors to one named metric in that sector's own language."
+   "x": "Every one of these produces beautiful numbers that collapse in the quarter they were meant to serve — the countermeasures make the model falsifiable and the action real."
   },
   {
-   "t": "h2",
-   "x": "Inside the engagement"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Advanced Risk & Predictive Analytics: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Model development",
-     "credit, pricing, reserving, churn and early-warning models with validation-grade documentation"
+     "Leakage",
+     "Future information sneaks into features; backtests sparkle",
+     "Point-in-time feature joins; leakage tests as a gate"
     ],
     [
-     "Explainability",
-     "SHAP-class attribution wired into scoring responses and analyst tooling"
+     "Static holdouts",
+     "One random split hides regime change",
+     "Time-based holdouts; rolling origin evaluation for forecasts"
     ],
     [
-     "Champion-challenger program",
-     "shadow scoring, incremental rollout and retirement policy"
+     "Forecast theater",
+     "Accuracy quoted without a baseline",
+     "Signed baselines: naive and seasonal-naive must be beaten to matter"
     ],
     [
-     "Stress & scenario integration",
-     "models feeding joint finance-risk scenario exercises"
-    ],
-    [
-     "Validation packaging",
-     "SR 11-7 / TRIM-aligned documentation produced during build"
+     "Action gap",
+     "Predictions never change decisions",
+     "Decision wiring spec: who acts, when, under what bounds"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — baselines, holdouts and the action loop"
+  },
+  {
+   "t": "p",
+   "x": "The architecture enforces humility structurally: every model ships beside its signed baseline, holdouts are time-based rather than random, leakage screens run on every feature set, and the action loop records what the prediction actually caused."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Advanced Risk & Predictive Analytics",
+   "title": "Reference architecture — governed predictive pipeline",
    "lanes": [
-    "Events",
-    "Real-time core",
-    "Analytics store",
-    "Decision surfaces",
-    "Observability",
-    "Business"
+    "Data",
+    "Feature discipline",
+    "Modeling",
+    "Validation",
+    "Serving",
+    "Governance"
    ],
    "nodes": [
     {
-     "id": "ev0",
+     "id": "hist",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "History store"
     },
     {
-     "id": "ev1",
+     "id": "rt",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "Real-time feeds"
     },
     {
-     "id": "rt2",
+     "id": "ref",
+     "lane": 0,
+     "label": "Reference data"
+    },
+    {
+     "id": "pit",
      "lane": 1,
-     "label": "Advanced Risk & Predictive Analytics",
+     "label": "Point-in-time joins",
      "hot": true
     },
     {
-     "id": "rt3",
+     "id": "leak",
      "lane": 1,
-     "label": "Stream processors",
-     "hot": false
-    },
-    {
-     "id": "an4",
-     "lane": 2,
-     "label": "Lakehouse tables",
-     "hot": false
-    },
-    {
-     "id": "an5",
-     "lane": 2,
-     "label": "Online store",
-     "hot": false
-    },
-    {
-     "id": "ds6",
-     "lane": 3,
-     "label": "Executive BI",
-     "hot": false
-    },
-    {
-     "id": "ds7",
-     "lane": 3,
-     "label": "Embedded analytics",
+     "label": "Leakage tests",
      "hot": true
     },
     {
-     "id": "ob8",
+     "id": "feats",
+     "lane": 1,
+     "label": "Feature registry"
+    },
+    {
+     "id": "train",
+     "lane": 2,
+     "label": "Model training"
+    },
+    {
+     "id": "tune",
+     "lane": 2,
+     "label": "HPO sweeps"
+    },
+    {
+     "id": "ens",
+     "lane": 2,
+     "label": "Ensembles"
+    },
+    {
+     "id": "hold",
+     "lane": 3,
+     "label": "Time-based holdouts",
+     "hot": true
+    },
+    {
+     "id": "roll",
+     "lane": 3,
+     "label": "Rolling-origin eval",
+     "hot": true
+    },
+    {
+     "id": "base",
+     "lane": 3,
+     "label": "Baseline compare",
+     "hot": true
+    },
+    {
+     "id": "serve",
      "lane": 4,
-     "label": "Freshness SLOs",
-     "hot": false
+     "label": "Scoring services"
     },
     {
-     "id": "ob9",
+     "id": "batch",
      "lane": 4,
-     "label": "Lineage alerts",
-     "hot": false
+     "label": "Batch scoring"
     },
     {
-     "id": "bs10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "mon",
+     "lane": 4,
+     "label": "Drift monitors"
     },
     {
-     "id": "bs11",
+     "id": "gov",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Use-case governance",
+     "hot": true
+    },
+    {
+     "id": "act",
+     "lane": 5,
+     "label": "Decision wiring"
+    },
+    {
+     "id": "rep",
+     "lane": 5,
+     "label": "Performance ledger"
     }
    ],
    "edges": [
     {
-     "a": "ev0",
-     "b": "rt2"
+     "a": "hist",
+     "b": "pit"
     },
     {
-     "a": "ev1",
-     "b": "rt3"
+     "a": "rt",
+     "b": "feats"
     },
     {
-     "a": "rt2",
-     "b": "an4"
+     "a": "ref",
+     "b": "pit"
     },
     {
-     "a": "rt3",
-     "b": "an5"
+     "a": "pit",
+     "b": "leak",
+     "label": "test"
     },
     {
-     "a": "an4",
-     "b": "ds6"
+     "a": "leak",
+     "b": "feats",
+     "label": "gate"
     },
     {
-     "a": "an5",
-     "b": "ds7"
+     "a": "feats",
+     "b": "train"
     },
     {
-     "a": "rt2",
-     "b": "ob8"
+     "a": "train",
+     "b": "tune"
     },
     {
-     "a": "ob8",
-     "b": "ob9"
+     "a": "tune",
+     "b": "ens",
+     "label": "select"
     },
     {
-     "a": "ds6",
-     "b": "bs10"
+     "a": "ens",
+     "b": "hold",
+     "label": "eval"
     },
     {
-     "a": "ds7",
-     "b": "bs11"
+     "a": "ens",
+     "b": "roll",
+     "label": "eval"
+    },
+    {
+     "a": "hold",
+     "b": "base",
+     "label": "must beat"
+    },
+    {
+     "a": "ens",
+     "b": "serve",
+     "label": "promote"
+    },
+    {
+     "a": "ens",
+     "b": "batch",
+     "label": "score"
+    },
+    {
+     "a": "serve",
+     "b": "mon",
+     "label": "watch"
+    },
+    {
+     "a": "gov",
+     "b": "serve",
+     "label": "bounds"
+    },
+    {
+     "a": "serve",
+     "b": "act",
+     "label": "wired"
+    },
+    {
+     "a": "mon",
+     "b": "rep",
+     "label": "ledger"
     }
    ],
-   "note": "Topology inherited from the Data & Lakehouse tower; the highlighted core is this service's build."
+   "note": "A model that cannot beat its signed naive baseline does not serve — the baseline comparison is the most honest gate in analytics."
   },
   {
    "t": "h2",
-   "x": "Deliverables, without dressing them up"
+   "x": "One forecast, from features to accountability"
   },
   {
    "t": "p",
-   "x": "For Advanced Risk & Predictive Analytics, what changes hands, in writing:"
+   "x": "From feature assembly through leakage screens, backtesting against time holdouts, baseline comparison and the action record — including the drift watch that triggers re-baselining."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Prediction lifecycle — features, train, validate, serve, govern",
+   "labels": [
+    "Point-in-time data",
+    "Leakage tests",
+    "Train & tune",
+    "Time holdouts",
+    "Beat baseline",
+    "Serve & monitor",
+    "Performance ledger"
+   ],
+   "note": "Drift monitors feed the performance ledger monthly; a model that stops beating baseline is re-certified or retired — retirement is a normal outcome."
+  },
+  {
+   "t": "h2",
+   "x": "The risk console — skill against the baseline"
+  },
+  {
+   "t": "p",
+   "x": "Forecast accuracy, baseline status, leakage findings and drift score — the four numbers that decide whether the model keeps its mandate or goes back for re-work."
+  },
+  {
+   "t": "idash",
+   "title": "Advanced risk & predictive analytics — validation console",
+   "kpis": [
+    {
+     "label": "Models in production",
+     "value": "18",
+     "delta": "all with signed validation files",
+     "dir": "up",
+     "spark": [
+      4,
+      7,
+      9,
+      12,
+      14,
+      16,
+      18
+     ]
+    },
+    {
+     "label": "Backtest AUROC (OOD)",
+     "value": "0.781",
+     "delta": "credit score, out-of-time",
+     "dir": "up",
+     "spark": [
+      62,
+      66,
+      69,
+      72,
+      74,
+      76,
+      78
+     ]
+    },
+    {
+     "label": "Calibration error",
+     "value": "2.1%",
+     "delta": "Brier-scaled, score bands",
+     "dir": "down",
+     "spark": [
+      9,
+      7,
+      5.5,
+      4,
+      3.2,
+      2.6,
+      2.1
+     ]
+    },
+    {
+     "label": "Signal precision",
+     "value": "68%",
+     "delta": "early-warning suite",
+     "dir": "up",
+     "spark": [
+      31,
+      42,
+      50,
+      57,
+      62,
+      66,
+      68
+     ]
+    },
+    {
+     "label": "PSI alarms (30d)",
+     "value": "1",
+     "delta": "evidence-windowed",
+     "dir": "flat",
+     "spark": [
+      6,
+      5,
+      4,
+      3,
+      2,
+      1,
+      1
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Backtest quality",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Out-of-time performance by quarter — stability across regimes",
+       "cats": [
+        "2024 Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "2025 Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+       ],
+       "series": [
+        {
+         "name": "AUROC (out-of-time)",
+         "points": [
+          0.74,
+          0.745,
+          0.752,
+          0.748,
+          0.755,
+          0.762,
+          0.774,
+          0.781
+         ]
+        },
+        {
+         "name": "Approval floor",
+         "points": [
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.73,
+          0.73,
+          0.74,
+          0.74
+         ]
+        },
+        {
+         "name": "Gini trend",
+         "points": [
+          48,
+          49,
+          50.4,
+          49.6,
+          51,
+          52.4,
+          54.8,
+          56.2
+         ]
+        }
+       ],
+       "note": "Click to isolate. Out-of-time beats the approval floor every quarter — the model earns trust by surviving quarters it has never seen, and the trend line is the validation story."
+      },
+      {
+       "kind": "radar",
+       "title": "Model validation profile — what the reviewer reads",
+       "cats": [
+        "Discriminatory power",
+        "Calibration",
+        "Stability (PSI)",
+        "Sensitivity",
+        "Benchmark delta",
+        "Documentation"
+       ],
+       "series": [
+        {
+         "name": "Credit score v4",
+         "points": [
+          78,
+          88,
+          84,
+          76,
+          72,
+          92
+         ]
+        },
+        {
+         "name": "Bar for production",
+         "points": [
+          72,
+          80,
+          75,
+          70,
+          65,
+          85
+         ]
+        },
+        {
+         "name": "Legacy v2",
+         "points": [
+          71,
+          62,
+          55,
+          64,
+          60,
+          58
+         ]
+        }
+       ],
+       "yMax": 100,
+       "note": "Toggle series. The legacy v2 polygon is why validations fail — calibration and documentation under the bar. v4 clears everywhere; the file was written during development."
+      }
+     ]
+    },
+    {
+     "name": "Signal what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Early-warning what-if — threshold economics",
+       "params": [
+        {
+         "name": "Event base rate",
+         "min": 0.5,
+         "max": 20,
+         "step": 0.5,
+         "value": 4,
+         "unit": "% / month"
+        },
+        {
+         "name": "Detection threshold",
+         "min": 50,
+         "max": 99,
+         "step": 1,
+         "value": 88,
+         "unit": "score"
+        },
+        {
+         "name": "Investigation cost",
+         "min": 200,
+         "max": 8000,
+         "step": 100,
+         "value": 1200,
+         "unit": "$/alarm"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Alarms / month",
+         "unit": "cnt",
+         "formula": "p0*12*max(0.02,(99-p1))*0.03",
+         "good": "40",
+         "bad": "200"
+        },
+        {
+         "name": "Miss cost / yr",
+         "unit": "$k",
+         "formula": "p0*12*(1-(p1-50)/49)*p2*9/1000",
+         "good": "150",
+         "bad": "800"
+        },
+        {
+         "name": "Alarm fatigue score",
+         "unit": "0-100",
+         "formula": "min(95, p0*12*max(0.02,(99-p1))*0.03*p2/8000*22)",
+         "good": "30",
+         "bad": "70"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 1,
+        "label": "Threshold vs alarm fatigue"
+       },
+       "note": "The fatigue curve is the operational truth: thresholds too high flood the operators and trains them to ignore the signal. The panel prices precision against the cost of missing."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · backtest model",
+   "note": "Reference program model: validation bands and signal economics from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Forecast skill against baselines, horizon by horizon"
+  },
+  {
+   "t": "p",
+   "x": "Skill versus naive and seasonal baselines across forecast horizons — the shape that shows where the model genuinely adds value and where the seasonal baseline remains embarrassingly hard to beat."
+  },
+  {
+   "t": "chart",
+   "title": "Forecast skill vs baselines across horizons — design targets",
+   "variant": "line",
+   "cats": [
+    "1 week",
+    "2 weeks",
+    "1 month",
+    "1 quarter",
+    "2 quarters"
+   ],
+   "series": [
+    {
+     "name": "Model MAPE target %",
+     "points": [
+      8,
+      11,
+      13,
+      17,
+      22
+     ]
+    },
+    {
+     "name": "Seasonal-naive MAPE %",
+     "points": [
+      19,
+      21,
+      24,
+      28,
+      33
+     ]
+    },
+    {
+     "name": "Improvement target (pt)",
+     "points": [
+      11,
+      10,
+      11,
+      11,
+      11
+     ]
+    }
+   ],
+   "unit": "%",
+   "yMax": 40,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Advanced Risk & Predictive Analytics across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Advanced Risk & Predictive Analytics",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Ask what fraud and AML decisions too slow costs Banking & Financial Services firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Signed baselines beside every model — skill is a recorded fact",
+      "Time-based holdouts and leakage screens on every feature change",
+      "An action loop that records what each prediction actually caused"
+     ],
+     "kpis": [
+      {
+       "label": "Forecast accuracy (MAPE)",
+       "value": "11.2%"
+      },
+      {
+       "label": "Baseline beaten",
+       "value": "Yes"
+      },
+      {
+       "label": "Leakage findings",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": true,
+     "hook": "Insurance & Risk operators recognize the pattern: claims, policy and exposure data fragmented, quarter after quarter.",
+     "plays": [
+      "Signed baselines beside every model — skill is a recorded fact",
+      "Time-based holdouts and leakage screens on every feature change",
+      "An action loop that records what each prediction actually caused"
+     ],
+     "kpis": [
+      {
+       "label": "Forecast accuracy (MAPE)",
+       "value": "11.2%"
+      },
+      {
+       "label": "Baseline beaten",
+       "value": "Yes"
+      },
+      {
+       "label": "Leakage findings",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "Healthcare & Life Sciences operators recognize the pattern: trial recruitment and RWE pipelines manual, quarter after quarter.",
+     "plays": [
+      "Signed baselines beside every model — skill is a recorded fact",
+      "Time-based holdouts and leakage screens on every feature change",
+      "An action loop that records what each prediction actually caused"
+     ],
+     "kpis": [
+      {
+       "label": "Forecast accuracy (MAPE)",
+       "value": "11.2%"
+      },
+      {
+       "label": "Baseline beaten",
+       "value": "Yes"
+      },
+      {
+       "label": "Leakage findings",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Signed baselines beside every model — skill is a recorded fact",
+      "Time-based holdouts and leakage screens on every feature change",
+      "An action loop that records what each prediction actually caused",
+      "Sector working pattern: plant data backbone — OPC UA/Sparkplug telemetry, MES and quality records unified with lineage. Root cause in hours, not weeks is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Forecast accuracy (MAPE)",
+       "value": "11.2%"
+      },
+      {
+       "label": "Baseline beaten",
+       "value": "Yes"
+      },
+      {
+       "label": "Leakage findings",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the work is pipeline and lakehouse engineering — modeled once, certified once, reused everywhere the decision appears.",
+     "plays": [
+      "Signed baselines beside every model — skill is a recorded fact",
+      "Time-based holdouts and leakage screens on every feature change",
+      "An action loop that records what each prediction actually caused"
+     ],
+     "kpis": [
+      {
+       "label": "Forecast accuracy (MAPE)",
+       "value": "11.2%"
+      },
+      {
+       "label": "Baseline beaten",
+       "value": "Yes"
+      },
+      {
+       "label": "Leakage findings",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: network telemetry underused, quarter after quarter.",
+     "plays": [
+      "Signed baselines beside every model — skill is a recorded fact",
+      "Time-based holdouts and leakage screens on every feature change",
+      "An action loop that records what each prediction actually caused"
+     ],
+     "kpis": [
+      {
+       "label": "Forecast accuracy (MAPE)",
+       "value": "11.2%"
+      },
+      {
+       "label": "Baseline beaten",
+       "value": "Yes"
+      },
+      {
+       "label": "Leakage findings",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": true,
+     "hook": "Energy & Utilities operators recognize the pattern: forecasting under intermittency, quarter after quarter.",
+     "plays": [
+      "Signed baselines beside every model — skill is a recorded fact",
+      "Time-based holdouts and leakage screens on every feature change",
+      "An action loop that records what each prediction actually caused"
+     ],
+     "kpis": [
+      {
+       "label": "Forecast accuracy (MAPE)",
+       "value": "11.2%"
+      },
+      {
+       "label": "Baseline beaten",
+       "value": "Yes"
+      },
+      {
+       "label": "Leakage findings",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: visibility stitched from portals, quarter after quarter.",
+     "plays": [
+      "Signed baselines beside every model — skill is a recorded fact",
+      "Time-based holdouts and leakage screens on every feature change",
+      "An action loop that records what each prediction actually caused",
+      "Sector working pattern: control-tower event spine in Logistics & Supply Chain, where TMS/WMS/telematics/carrier events streamed into one governed estate. Network truth in seconds is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Forecast accuracy (MAPE)",
+       "value": "11.2%"
+      },
+      {
+       "label": "Baseline beaten",
+       "value": "Yes"
+      },
+      {
+       "label": "Leakage findings",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "Public Sector & Government operators recognize the pattern: agency data islands, quarter after quarter.",
+     "plays": [
+      "Signed baselines beside every model — skill is a recorded fact",
+      "Time-based holdouts and leakage screens on every feature change",
+      "An action loop that records what each prediction actually caused"
+     ],
+     "kpis": [
+      {
+       "label": "Forecast accuracy (MAPE)",
+       "value": "11.2%"
+      },
+      {
+       "label": "Baseline beaten",
+       "value": "Yes"
+      },
+      {
+       "label": "Leakage findings",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we make the source systems agree: one governed definition per metric, streaming where the decision is time-critical, batch where it is not.",
+     "plays": [
+      "Signed baselines beside every model — skill is a recorded fact",
+      "Time-based holdouts and leakage screens on every feature change",
+      "An action loop that records what each prediction actually caused",
+      "Sector working pattern: student success platform: SIS/LMS/support data unified with outcome lineage. Intervention targeting measurable is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Forecast accuracy (MAPE)",
+       "value": "11.2%"
+      },
+      {
+       "label": "Baseline beaten",
+       "value": "Yes"
+      },
+      {
+       "label": "Leakage findings",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Technology & SaaS operators recognize the pattern: data moat unrealized, quarter after quarter.",
+     "plays": [
+      "Signed baselines beside every model — skill is a recorded fact",
+      "Time-based holdouts and leakage screens on every feature change",
+      "An action loop that records what each prediction actually caused"
+     ],
+     "kpis": [
+      {
+       "label": "Forecast accuracy (MAPE)",
+       "value": "11.2%"
+      },
+      {
+       "label": "Baseline beaten",
+       "value": "Yes"
+      },
+      {
+       "label": "Leakage findings",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": true,
+     "hook": "Agriculture & Food Systems operators recognize the pattern: chain data broken at every handoff, quarter after quarter.",
+     "plays": [
+      "Signed baselines beside every model — skill is a recorded fact",
+      "Time-based holdouts and leakage screens on every feature change",
+      "An action loop that records what each prediction actually caused"
+     ],
+     "kpis": [
+      {
+       "label": "Forecast accuracy (MAPE)",
+       "value": "11.2%"
+      },
+      {
+       "label": "Baseline beaten",
+       "value": "Yes"
+      },
+      {
+       "label": "Leakage findings",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/"
+    }
+   ],
+   "practiceNote": "Advanced Risk & Predictive Analytics view: risk and forecasting models with signed baselines, time-based holdouts and governance — predictions that survive the quarter they were made in."
+  },
+  {
+   "t": "h2",
+   "x": "Modeling defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor interpretable models with audited feature stores over black-box accuracy; deviation triggers are written because each one changes what a model-risk review can reconstruct."
+  },
+  {
+   "t": "table",
+   "caption": "Advanced Risk & Predictive Analytics: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production risk models integrated with decision hubs and dashboards",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Features",
+     "Point-in-time feature store with leakage tests",
+     "As-of joins by hand — leakage is a when, not an if"
     ],
     [
-     "Model documentation and validation packs (SR 11-7 / TRIM aligned)",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Validation",
+     "Rolling-origin and time-based splits",
+     "Random CV on time series — it lies"
     ],
     [
-     "Champion-challenger operating procedure",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Models",
+     "GBMs and econometric baselines first",
+     "Deep models without a baseline case — they rarely win tabular risk"
     ],
     [
-     "Scenario and stress integration for finance-risk exercises",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Baselines",
+     "Naive and seasonal-naive signed per use case",
+     "Skipping baselines — accuracy means nothing alone"
+    ],
+    [
+     "Serving",
+     "Batch + online scoring with drift monitors",
+     "One-time deployment without drift watch — it decays silently"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The stack, chosen for operability"
+   "x": "Model release gates — evidence before the mandate"
   },
   {
-   "t": "p",
-   "x": "The engineering baseline for Advanced Risk & Predictive Analytics: Python statistical stack, XGBoost/LightGBM, SHAP, Databricks MLflow, credit/actuarial tooling. The justifications are written, versioned and handed over — the decisions are yours to own after the engagement."
+   "t": "table",
+   "caption": "Release gates for Advanced Risk & Predictive Analytics — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Leakage gate",
+     "Is the pipeline leakage-free?",
+     "Leakage test suite green; PIT join audit"
+    ],
+    [
+     "Baseline gate",
+     "Does it beat signed baselines?",
+     "Rolling-origin comparison report"
+    ],
+    [
+     "Stability gate",
+     "Does it hold across regimes?",
+     "Multi-regime holdout evidence"
+    ],
+    [
+     "Governance gate",
+     "Is the use case bounded?",
+     "Use-case memo; decision wiring spec"
+    ],
+    [
+     "Ledger gate",
+     "Is performance tracked against reality?",
+     "Monthly ledger entries with actuals"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "Delivery, without the theater"
+   "x": "What the risk and planning teams inherit"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Advanced Risk & Predictive Analytics starts with the measurement: the metric, the owner, the current number, signed."
+     "Validated model family",
+     "Models with holdout, baseline and stability evidence"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, model development first, gates written with your team."
+     "PIT feature pipeline",
+     "Leakage-tested feature registry"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "The Advanced Risk & Predictive Analytics gate review: baseline versus slice, in the metric's own units, plus a scale recommendation your board can audit."
+     "Performance ledger",
+     "Monthly actuals-vs-forecast with drift scores"
+    ],
+    [
+     "Decision wiring spec",
+     "Who acts on predictions, under what bounds"
+    ],
+    [
+     "Governance memos",
+     "Use-case bounds and re-certification rules"
+    ],
+    [
+     "Retirement kit",
+     "Re-certify or retire SOP with evidence"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Baseline to accountability, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — problem & baselines",
+     "Decision spec, signed baselines, horizon definitions"
+    ],
+    [
+     "Weeks 3–4 — feature discipline",
+     "PIT joins, leakage suite, feature registry"
+    ],
+    [
+     "Weeks 5–6 — modeling",
+     "Baselines first, GBMs, ensembles; HPO within budget"
+    ],
+    [
+     "Weeks 7–8 — validation",
+     "Rolling-origin eval, regime tests, governance memo"
+    ],
+    [
+     "Weeks 9–10 — serving & wiring",
+     "Scoring services, decision wiring, ledger live"
+    ],
+    [
+     "Ongoing — model health",
+     "Monthly ledger, drift watch, quarterly re-certification"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — feature stores and planning systems"
+  },
+  {
+   "t": "p",
+   "x": "Predictions matter only when they reach a decision system; these contracts carry features in and actions out, with the loop closed by design."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Warehouse / lakehouse",
+     "PIT feature contracts"
+    ],
+    [
+     "Decision systems",
+     "Wiring specs into action points"
+    ],
+    [
+     "Risk & finance",
+     "Ledger reporting cadence"
+    ],
+    [
+     "ML registry",
+     "Version pinning with governance metadata"
+    ],
+    [
+     "Observability",
+     "Drift monitors with owner routing"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Model-risk governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Feature lineage, holdout definitions and drift scores are retained per model version — the model-risk inventory a supervisor asks for is generated as the work runs."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Baseline rule",
+     "No serving without beating the signed baseline"
+    ],
+    [
+     "Leakage sentinel",
+     "Every feature change reruns the leakage suite"
+    ],
+    [
+     "Use-case bounds",
+     "Governance memo defines where outputs may act"
+    ],
+    [
+     "Re-certification clock",
+     "Models expire quarterly without ledger evidence"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Leakage screens run on every feature change: temporal overlap, target proxies and group leakage are tested automatically, and a finding blocks promotion until explained."
   },
   {
    "t": "cta",
-   "x": "If Advanced Risk & Predictive Analytics is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
+   "x": "Bring the forecast that embarrasses itself every quarter. The diagnostic will baseline it honestly, screen the features for leakage, and price what real skill would cost."
   }
  ],
- "words": 494,
+ "words": 1004,
  "section": "Services",
  "l1": "Services",
  "l2": "Data, Analytics & Lakehouse",
@@ -278,7 +1179,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Data, Analytics & Lakehouse",
+   "title": "Domain overview — Data, Analytics & Lakehouse",
    "url": "/services/data-analytics-lakehouse/",
    "desc": "Trusted data, delivered in near real time — pipelines, lakehouse and governance that holds up under audit."
   },
@@ -330,33 +1231,51 @@
   {
    "title": "Agentic AI & Hyperautomation for Public Sector & Government",
    "url": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Data Engineering & Pipeline Modernization",
-   "url": "/services/data-analytics-lakehouse/data-engineering-modernization/",
-   "tag": "Same tower",
-   "desc": "Resilient, observable pipelines — trusted data from source to decision at SLA."
-  },
-  {
-   "title": "Lakehouse Architecture & Migration",
-   "url": "/services/data-analytics-lakehouse/lakehouse-architecture/",
-   "tag": "Same tower",
-   "desc": "Lakehouse the right way — Unity Catalog governance, cost-aware design and AI-ready foundations."
+   "title": "Master Data, Governance & Cataloging",
+   "url": "/services/data-analytics-lakehouse/master-data-governance/",
+   "tag": "Same domain",
+   "desc": "golden records with owners, survivorship rules and a catalog people actually trust — governance as engineering, not committee minutes."
   },
   {
    "title": "Real-Time Streaming & Event-Driven Decisioning",
    "url": "/services/data-analytics-lakehouse/realtime-streaming-decisioning/",
-   "tag": "Same tower",
-   "desc": "Decisions at event speed — sub-second pipelines from sensor, click or transaction to action."
+   "tag": "Same domain",
+   "desc": "sub-second decision paths on streams — exactly-once state, replay semantics and latency budgets that are measured, not asserted."
   },
   {
-   "title": "Enterprise BI & Executive Analytics",
-   "url": "/services/data-analytics-lakehouse/enterprise-bi-executive-analytics/",
-   "tag": "Same tower",
-   "desc": "Metrics into management — one governed semantic layer, decision cadence built in."
+   "title": "Data Engineering & Pipeline Modernization",
+   "url": "/services/data-analytics-lakehouse/data-engineering-modernization/",
+   "tag": "Same domain",
+   "desc": "legacy pipelines rebuilt as typed, contract-gated, observable jobs — with a strangler pattern that retires the old estate without a big-bang cutover."
+  },
+  {
+   "title": "LLM Fine-Tuning & Model Operations",
+   "url": "/services/applied-ai-generative-ai/llm-fine-tuning-ops/",
+   "tag": "Pairs with",
+   "desc": "a tuning factory with decontaminated datasets, a multi-task eval gate that blocks silent regressions, and canary rollout with rehearsed rollback."
+  },
+  {
+   "title": "Intelligent Document Processing",
+   "url": "/services/agentic-ai-hyperautomation/intelligent-document-processing/",
+   "tag": "Pairs with",
+   "desc": "extraction and adjudication inside the process — documents become decisions with confidence gates, evidence and a human queue that shrinks on measurement."
+  },
+  {
+   "title": "SRE & Reliability Engineering",
+   "url": "/services/cloud-edge-platform-engineering/sre-reliability-engineering/",
+   "tag": "Pairs with",
+   "desc": "SLOs with teeth — error budgets that gate releases, chaos that proves recovery, and incident craft that turns 3am into a rehearsed system."
+  },
+  {
+   "title": "A national EdTech platform (2M learners)",
+   "url": "/case-studies/edu-02/",
+   "tag": "Evidence",
+   "desc": "Outcome evidence published — renewals secured with learning-gain pipelines."
   }
  ]
 }

@@ -9,250 +9,1223 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Decision Intelligence Systems is the Agentic AI & Hyperautomation answer to a specific job: Enterprise decisions in milliseconds — decision hubs with policy, evidence and replay built in.. This page is the build as we actually run it — sequencing, artifacts and the parts most vendors leave out."
+   "x": "Decision models wrapped in policy bounds, challenger benchmarks and explainable outputs: decisions a regulator can read, a panel can challenge, and a board can defend — with defer-to-human paths that are designed, not improvised."
   },
   {
    "t": "h2",
-   "x": "The service, described plainly"
+   "x": "A decision system is judged by its worst defensible case"
   },
   {
    "t": "p",
-   "x": "High-volume decisions — credit, claims, pricing, triage, fraud, service routing — deserve dedicated decision infrastructure, not rules buried in application code. We build decision hubs that combine predictive models, business rules and agentic reasoning behind one decision API, with champion-challenger testing, decision policies as versioned artifacts, and full replay so every outcome can be explained months later to an auditor or a customer."
+   "x": "Decision intelligence is where analytics stops advising and starts acting: credit lines, fraud holds, service credits, triage priorities. That step from report to action is governed differently — the decision needs a policy envelope, a challenger, an explanation shape and an appeal path before it earns the right to act."
   },
   {
    "t": "p",
-   "x": "The design principle is separability: models score, policy decides, and humans supervise. That separation lets risk teams change policy without retraining models, lets data scientists ship models without touching code paths, and gives compliance a single place to inspect what decision logic actually ran on any given day."
+   "x": "We build the envelope first: what the decision may consider, what it may not, what it must explain, when it must defer to a human, and how its quality is measured against a signed benchmark panel. Only then does the model inside get tuned."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that make decision models indefensible, the reference architecture that wraps them in challenge and explanation, and the console the risk committee reads."
   },
   {
    "t": "h2",
-   "x": "Why this matters here"
+   "x": "Four failure modes that make decisions indefensible"
   },
   {
    "t": "p",
-   "x": "Decision Intelligence Systems delivery today concentrates in Banking & Financial Services, Insurance & Risk, Healthcare & Life Sciences, Retail & Consumer Goods. The metric is chosen with your finance lead, and the baseline is signed before any build begins."
+   "x": "Each of these survives a demo and dies in a supervisory review — the countermeasures are the difference between a score and a decision."
   },
   {
-   "t": "h2",
-   "x": "What gets built first"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Decision Intelligence Systems: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Decision API & hub",
-     "one governed entry point for all high-volume decisions with SLA guarantees"
+     "Proxy bias",
+     "The model learns a protected attribute through its proxies",
+     "Feature governance with proxy screening; disparate-impact tests per release"
     ],
     [
-     "Policy-as-artifact",
-     "versioned decision policies with effective-dating and simulation"
+     "Score inflation",
+     "Backtest wins on stale, easy cohorts",
+     "Time-based holdouts; champion-challenger on live traffic, not archives"
     ],
     [
-     "Champion-challenger testing",
-     "shadow scoring and incremental traffic shifting on evidence"
+     "Explanation theater",
+     "SHAP values that explain nothing a customer can act on",
+     "Reason-code taxonomy mapped to policy language; plain-language templates"
     ],
     [
-     "Decision replay",
-     "full input/model/policy snapshot per decision for audit and dispute"
-    ],
-    [
-     "Feature platform",
-     "online feature store with point-in-time correctness"
+     "Defer-to-human erosion",
+     "The model defers everything hard; humans become the fallback dump",
+     "Deferral budgets with quality-of-deferred metrics; deferral is scored too"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — challenger panels around every decision"
+  },
+  {
+   "t": "p",
+   "x": "The architecture wraps the primary model in a challenger panel: agreement thresholds gate autonomy, disparate-impact monitors run continuously, and every output carries reason codes a human panel can audit line by line."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Decision Intelligence Systems",
+   "title": "Reference architecture — governed decision service",
    "lanes": [
-    "Mined processes",
-    "Decision fabric",
-    "Automation fleet",
-    "Control layer",
-    "People",
-    "Outcomes"
+    "Inputs",
+    "Decision core",
+    "Policy envelope",
+    "Quality & challenge",
+    "Action & appeal",
+    "Governance"
    ],
    "nodes": [
     {
-     "id": "mp0",
+     "id": "feat",
      "lane": 0,
-     "label": "Highest-volume workflow",
-     "hot": false
+     "label": "Feature store"
     },
     {
-     "id": "mp1",
+     "id": "docs",
      "lane": 0,
-     "label": "Second workflow",
-     "hot": false
+     "label": "Document signals"
     },
     {
-     "id": "df2",
+     "id": "behavior",
+     "lane": 0,
+     "label": "Behavioral events"
+    },
+    {
+     "id": "score",
      "lane": 1,
-     "label": "Decision Intelligence Systems",
+     "label": "Decision model",
      "hot": true
     },
     {
-     "id": "df3",
+     "id": "ensemble",
      "lane": 1,
-     "label": "Policy-as-artifact",
-     "hot": false
+     "label": "Challenger models"
     },
     {
-     "id": "aufl4",
+     "id": "rules",
+     "lane": 1,
+     "label": "Rule overlays"
+    },
+    {
+     "id": "bounds",
      "lane": 2,
-     "label": "RPA + agent blend",
-     "hot": false
+     "label": "Policy bounds",
+     "hot": true
     },
     {
-     "id": "aufl5",
+     "id": "eligible",
      "lane": 2,
-     "label": "IDP pipeline",
-     "hot": false
+     "label": "Eligibility rules"
     },
     {
-     "id": "cl6",
+     "id": "explain",
+     "lane": 2,
+     "label": "Explanation layer",
+     "hot": true
+    },
+    {
+     "id": "panel",
      "lane": 3,
-     "label": "Risk register hooks",
-     "hot": false
+     "label": "Benchmark panel",
+     "hot": true
     },
     {
-     "id": "cl7",
+     "id": "fair",
      "lane": 3,
-     "label": "Model-risk pack",
-     "hot": false
+     "label": "Fairness tests",
+     "hot": true
     },
     {
-     "id": "pp8",
+     "id": "drift",
+     "lane": 3,
+     "label": "Population drift"
+    },
+    {
+     "id": "act",
      "lane": 4,
-     "label": "Reviewer console",
-     "hot": false
+     "label": "Action APIs"
     },
     {
-     "id": "pp9",
+     "id": "appeal",
      "lane": 4,
-     "label": "Escalation SLAs",
-     "hot": false
+     "label": "Appeal path",
+     "hot": true
     },
     {
-     "id": "oc10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "override",
+     "lane": 4,
+     "label": "Human override"
     },
     {
-     "id": "oc11",
+     "id": "ledger",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Decision ledger",
+     "hot": true
+    },
+    {
+     "id": "report",
+     "lane": 5,
+     "label": "Regulatory reports"
+    },
+    {
+     "id": "audit",
+     "lane": 5,
+     "label": "Audit sampling"
     }
    ],
    "edges": [
     {
-     "a": "mp0",
-     "b": "df2"
+     "a": "feat",
+     "b": "score"
     },
     {
-     "a": "mp1",
-     "b": "df3"
+     "a": "docs",
+     "b": "score"
     },
     {
-     "a": "df2",
-     "b": "aufl4"
+     "a": "behavior",
+     "b": "score"
     },
     {
-     "a": "df3",
-     "b": "aufl5"
+     "a": "score",
+     "b": "ensemble",
+     "label": "challenge"
     },
     {
-     "a": "aufl4",
-     "b": "cl6"
+     "a": "ensemble",
+     "b": "rules",
+     "label": "arbitrate"
     },
     {
-     "a": "cl6",
-     "b": "pp8"
+     "a": "bounds",
+     "b": "score",
+     "label": "constrain"
     },
     {
-     "a": "aufl4",
-     "b": "oc10"
+     "a": "eligible",
+     "b": "bounds",
+     "label": "feed"
     },
     {
-     "a": "aufl5",
-     "b": "oc11"
+     "a": "score",
+     "b": "explain",
+     "label": "reasons"
     },
     {
-     "a": "pp8",
-     "b": "oc10"
+     "a": "score",
+     "b": "panel",
+     "label": "bench"
+    },
+    {
+     "a": "score",
+     "b": "fair",
+     "label": "test"
+    },
+    {
+     "a": "score",
+     "b": "drift",
+     "label": "watch"
+    },
+    {
+     "a": "score",
+     "b": "act",
+     "label": "above bar"
+    },
+    {
+     "a": "score",
+     "b": "override",
+     "label": "below bar"
+    },
+    {
+     "a": "act",
+     "b": "appeal",
+     "label": "route"
+    },
+    {
+     "a": "act",
+     "b": "ledger",
+     "label": "log"
+    },
+    {
+     "a": "ledger",
+     "b": "report",
+     "label": "aggregate"
+    },
+    {
+     "a": "ledger",
+     "b": "audit",
+     "label": "samples"
     }
    ],
-   "note": "Topology inherited from the Agentic AI & Hyperautomation tower; the highlighted core is this service's build."
+   "note": "The champion only acts inside the policy envelope; the challenger scores every case silently, and disagreement rates above threshold force a review before promotion."
   },
   {
    "t": "h2",
-   "x": "What your team actually receives"
+   "x": "One decision, challenged and explained"
   },
   {
    "t": "p",
-   "x": "The artifacts, each with a walkthrough when it lands — Decision Intelligence Systems edition:"
+   "x": "From feature assembly through primary and challenger scoring, agreement gating, reason-code generation and the defer-to-human path — including what happens when the panel disagrees."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "decision-fabric",
+   "title": "Decision path — score inside bounds, explain, act, appeal, govern",
+   "labels": [
+    "Features in",
+    "Policy pre-check",
+    "Score + challenger",
+    "Explain & reason-code",
+    "Act or defer",
+    "Appeal route",
+    "Ledger & report"
+   ],
+   "note": "Every action writes a decision row: inputs, versions, reason codes and the envelope revision that was in force — the row is the regulator's first read."
+  },
+  {
+   "t": "h2",
+   "x": "The decision console the risk committee reads"
+  },
+  {
+   "t": "p",
+   "x": "Panel agreement, disparate impact, reason-code coverage and deferral quality — four numbers that decide whether the model earns more autonomy or a mandatory human review."
+  },
+  {
+   "t": "idash",
+   "title": "Decision intelligence — governed decision-path console",
+   "kpis": [
+    {
+     "label": "Decision p99",
+     "value": "240 ms",
+     "delta": "budget 300 ms",
+     "dir": "flat",
+     "spark": [
+      310,
+      295,
+      280,
+      265,
+      252,
+      244,
+      240
+     ]
+    },
+    {
+     "label": "Override rate",
+     "value": "3.8%",
+     "delta": "target < 5%",
+     "dir": "down",
+     "spark": [
+      7.2,
+      6.5,
+      5.8,
+      5.1,
+      4.5,
+      4.1,
+      3.8
+     ]
+    },
+    {
+     "label": "Uplift (holdout)",
+     "value": "+11.4%",
+     "delta": "95% CI +7.9…+14.8",
+     "dir": "up",
+     "spark": [
+      6.1,
+      7.3,
+      8.2,
+      9.4,
+      10.2,
+      10.9,
+      11.4
+     ]
+    },
+    {
+     "label": "Reason coverage",
+     "value": "100%",
+     "delta": "counterfactuals logged",
+     "dir": "flat",
+     "spark": [
+      82,
+      88,
+      92,
+      96,
+      98,
+      100,
+      100
+     ]
+    },
+    {
+     "label": "Drift alarms (30d)",
+     "value": "2",
+     "delta": "both actioned",
+     "dir": "flat",
+     "spark": [
+      6,
+      5,
+      4,
+      3,
+      3,
+      2,
+      2
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Latency–evidence map",
+     "widgets": [
+      {
+       "kind": "scatter",
+       "title": "Where each decision type sits — act fast vs explain deep",
+       "points": [
+        {
+         "x": 240,
+         "y": 62,
+         "label": "Credit line",
+         "group": "High-stakes"
+        },
+        {
+         "x": 180,
+         "y": 71,
+         "label": "Fraud hold",
+         "group": "High-stakes"
+        },
+        {
+         "x": 90,
+         "y": 48,
+         "label": "Cart pricing",
+         "group": "Tactical"
+        },
+        {
+         "x": 120,
+         "y": 55,
+         "label": "Next-best-action",
+         "group": "Tactical"
+        },
+        {
+         "x": 420,
+         "y": 84,
+         "label": "Underwriting",
+         "group": "High-stakes"
+        },
+        {
+         "x": 60,
+         "y": 31,
+         "label": "Layout choice",
+         "group": "Cosmetic"
+        },
+        {
+         "x": 300,
+         "y": 76,
+         "label": "Claim triage",
+         "group": "High-stakes"
+        },
+        {
+         "x": 150,
+         "y": 42,
+         "label": "Sort/rank",
+         "group": "Tactical"
+        },
+        {
+         "x": 500,
+         "y": 90,
+         "label": "KYC edd",
+         "group": "High-stakes"
+        },
+        {
+         "x": 45,
+         "y": 22,
+         "label": "UI copy",
+         "group": "Cosmetic"
+        }
+       ],
+       "groups": [
+        "High-stakes",
+        "Tactical",
+        "Cosmetic"
+       ],
+       "xLabel": "Decision latency (ms)",
+       "yLabel": "Evidence depth (0-100)",
+       "note": "Hover points for names. High-stakes decisions sit top-right by design — they spend latency and evidence budget deliberately; cosmetic decisions buy speed by spending neither."
+      }
+     ]
+    },
+    {
+     "name": "Latency what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Decision-path what-if — where the milliseconds and the evidence go",
+       "params": [
+        {
+         "name": "Feature budget",
+         "min": 20,
+         "max": 200,
+         "step": 10,
+         "value": 80,
+         "unit": "ms"
+        },
+        {
+         "name": "Ensemble size",
+         "min": 1,
+         "max": 5,
+         "step": 1,
+         "value": 3,
+         "unit": "models"
+        },
+        {
+         "name": "Reason depth",
+         "min": 1,
+         "max": 5,
+         "step": 1,
+         "value": 3,
+         "unit": "levels"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Decision p99",
+         "unit": "ms",
+         "formula": "p0+p1*35+p2*22+40",
+         "good": "300",
+         "bad": "500"
+        },
+        {
+         "name": "Evidence score",
+         "unit": "0-100",
+         "formula": "40+p2*14+p1*4-min(p0,120)*0.08",
+         "good": "70",
+         "bad": "45"
+        },
+        {
+         "name": "Override rate",
+         "unit": "%",
+         "formula": "14-p2*2.6-p1*0.8",
+         "good": "5",
+         "bad": "9"
+        }
+       ],
+       "curve": {
+        "param": 2,
+        "output": 1,
+        "label": "Reason depth vs evidence score"
+       },
+       "note": "The tension is explicit: deeper reasons and bigger ensembles cost milliseconds and buy override reduction. Drag reason depth against feature budget — the override curve shows what the business buys with each level."
+      }
+     ]
+    },
+    {
+     "name": "Uplift evidence",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Incremental uplift by campaign wave — holdout-adjusted",
+       "cats": [
+        "Wave 1",
+        "Wave 2",
+        "Wave 3",
+        "Wave 4",
+        "Wave 5",
+        "Wave 6"
+       ],
+       "series": [
+        {
+         "name": "Treatment uplift %",
+         "points": [
+          6.2,
+          7.8,
+          9.1,
+          10.3,
+          11.0,
+          11.4
+         ]
+        },
+        {
+         "name": "Naive lift %",
+         "points": [
+          9.8,
+          11.2,
+          12.9,
+          14.6,
+          15.1,
+          15.6
+         ]
+        },
+        {
+         "name": "Target band",
+         "points": [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+         ]
+        }
+       ],
+       "unit": "%",
+       "note": "The gap between naive lift and holdout-adjusted uplift is the honest number — clicking each series makes the difference visible to a steering committee in one glance."
+      },
+      {
+       "kind": "radar",
+       "title": "Decision-path maturity profile — where the estate stands",
+       "cats": [
+        "Signals",
+        "Candidates",
+        "Policy",
+        "Evidence",
+        "Reversal",
+        "Monitoring"
+       ],
+       "series": [
+        {
+         "name": "Day 0 audit",
+         "points": [
+          42,
+          55,
+          30,
+          25,
+          20,
+          38
+         ]
+        },
+        {
+         "name": "Week 12 target",
+         "points": [
+          85,
+          88,
+          90,
+          86,
+          80,
+          84
+         ]
+        },
+        {
+         "name": "Reference bar",
+         "points": [
+          80,
+          80,
+          80,
+          80,
+          80,
+          80
+         ]
+        }
+       ],
+       "yMax": 100,
+       "note": "Toggle series. Day-0 audits cluster at policy, evidence and reversal — the components teams skip when they ship models. The engagement plan budgets those first."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · evidence model",
+   "note": "Reference program model: uplift figures are holdout-adjusted reference bands, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Decision quality against the human panel, quarter by quarter"
+  },
+  {
+   "t": "p",
+   "x": "Benchmarks across quarterly suites: model agreement with the expert panel, and the disagreement cases where the model was later shown right — the evidence that earns autonomy step by step."
+  },
+  {
+   "t": "chart",
+   "title": "Decision quality vs human panel across quarterly benchmarks — design targets",
+   "variant": "line",
+   "cats": [
+    "Q1 bench",
+    "Q2 bench",
+    "Q3 bench",
+    "Q4 bench"
+   ],
+   "series": [
+    {
+     "name": "Panel agreement target %",
+     "points": [
+      84,
+      87,
+      89,
+      91
+     ]
+    },
+    {
+     "name": "Deferral quality target %",
+     "points": [
+      72,
+      76,
+      80,
+      84
+     ]
+    },
+    {
+     "name": "Overturn rate target %",
+     "points": [
+      6,
+      4.5,
+      3.2,
+      2.4
+     ]
+    }
+   ],
+   "unit": "%",
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Decision Intelligence Systems across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Decision Intelligence Systems",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: orchestration is the discipline — dozens of small automations running as one auditable workforce, with escalations designed rather than improvised.",
+     "plays": [
+      "Challenger benchmarks with agreement-gated autonomy",
+      "Continuous disparate-impact monitoring with signed tolerances",
+      "Reason-code coverage on every output, audited line by line"
+     ],
+     "kpis": [
+      {
+       "label": "Panel agreement",
+       "value": "91%"
+      },
+      {
+       "label": "Disparate impact",
+       "value": "0.92"
+      },
+      {
+       "label": "Reason-code coverage",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": true,
+     "hook": "Ask what fraud industrialized against manual detection costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Challenger benchmarks with agreement-gated autonomy",
+      "Continuous disparate-impact monitoring with signed tolerances",
+      "Reason-code coverage on every output, audited line by line"
+     ],
+     "kpis": [
+      {
+       "label": "Panel agreement",
+       "value": "91%"
+      },
+      {
+       "label": "Disparate impact",
+       "value": "0.92"
+      },
+      {
+       "label": "Reason-code coverage",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "Healthcare & Life Sciences operators recognize the pattern: prior authorization and RCM friction, quarter after quarter.",
+     "plays": [
+      "Challenger benchmarks with agreement-gated autonomy",
+      "Continuous disparate-impact monitoring with signed tolerances",
+      "Reason-code coverage on every output, audited line by line"
+     ],
+     "kpis": [
+      {
+       "label": "Panel agreement",
+       "value": "91%"
+      },
+      {
+       "label": "Disparate impact",
+       "value": "0.92"
+      },
+      {
+       "label": "Reason-code coverage",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — maintenance planning reactive included — and prove it moved.",
+     "plays": [
+      "Challenger benchmarks with agreement-gated autonomy",
+      "Continuous disparate-impact monitoring with signed tolerances",
+      "Reason-code coverage on every output, audited line by line"
+     ],
+     "kpis": [
+      {
+       "label": "Panel agreement",
+       "value": "91%"
+      },
+      {
+       "label": "Disparate impact",
+       "value": "0.92"
+      },
+      {
+       "label": "Reason-code coverage",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Ask what supplier collaboration by email costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Challenger benchmarks with agreement-gated autonomy",
+      "Continuous disparate-impact monitoring with signed tolerances",
+      "Reason-code coverage on every output, audited line by line"
+     ],
+     "kpis": [
+      {
+       "label": "Panel agreement",
+       "value": "91%"
+      },
+      {
+       "label": "Disparate impact",
+       "value": "0.92"
+      },
+      {
+       "label": "Reason-code coverage",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Challenger benchmarks with agreement-gated autonomy",
+      "Continuous disparate-impact monitoring with signed tolerances",
+      "Reason-code coverage on every output, audited line by line"
+     ],
+     "kpis": [
+      {
+       "label": "Panel agreement",
+       "value": "91%"
+      },
+      {
+       "label": "Disparate impact",
+       "value": "0.92"
+      },
+      {
+       "label": "Reason-code coverage",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — trading and scheduling decisions at market speed included — and prove it moved.",
+     "plays": [
+      "Challenger benchmarks with agreement-gated autonomy",
+      "Continuous disparate-impact monitoring with signed tolerances",
+      "Reason-code coverage on every output, audited line by line"
+     ],
+     "kpis": [
+      {
+       "label": "Panel agreement",
+       "value": "91%"
+      },
+      {
+       "label": "Disparate impact",
+       "value": "0.92"
+      },
+      {
+       "label": "Reason-code coverage",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Challenger benchmarks with agreement-gated autonomy",
+      "Continuous disparate-impact monitoring with signed tolerances",
+      "Reason-code coverage on every output, audited line by line"
+     ],
+     "kpis": [
+      {
+       "label": "Panel agreement",
+       "value": "91%"
+      },
+      {
+       "label": "Disparate impact",
+       "value": "0.92"
+      },
+      {
+       "label": "Reason-code coverage",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": true,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Challenger benchmarks with agreement-gated autonomy",
+      "Continuous disparate-impact monitoring with signed tolerances",
+      "Reason-code coverage on every output, audited line by line"
+     ],
+     "kpis": [
+      {
+       "label": "Panel agreement",
+       "value": "91%"
+      },
+      {
+       "label": "Disparate impact",
+       "value": "0.92"
+      },
+      {
+       "label": "Reason-code coverage",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Ask what administrative burden on faculty costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Challenger benchmarks with agreement-gated autonomy",
+      "Continuous disparate-impact monitoring with signed tolerances",
+      "Reason-code coverage on every output, audited line by line"
+     ],
+     "kpis": [
+      {
+       "label": "Panel agreement",
+       "value": "91%"
+      },
+      {
+       "label": "Disparate impact",
+       "value": "0.92"
+      },
+      {
+       "label": "Reason-code coverage",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Ask what support and success scale linearly costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Challenger benchmarks with agreement-gated autonomy",
+      "Continuous disparate-impact monitoring with signed tolerances",
+      "Reason-code coverage on every output, audited line by line"
+     ],
+     "kpis": [
+      {
+       "label": "Panel agreement",
+       "value": "91%"
+      },
+      {
+       "label": "Disparate impact",
+       "value": "0.92"
+      },
+      {
+       "label": "Reason-code coverage",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what input and logistics planning manual costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Challenger benchmarks with agreement-gated autonomy",
+      "Continuous disparate-impact monitoring with signed tolerances",
+      "Reason-code coverage on every output, audited line by line"
+     ],
+     "kpis": [
+      {
+       "label": "Panel agreement",
+       "value": "91%"
+      },
+      {
+       "label": "Disparate impact",
+       "value": "0.92"
+      },
+      {
+       "label": "Reason-code coverage",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/"
+    }
+   ],
+   "practiceNote": "Decision Intelligence Systems view: decision models wrapped in policy bounds, challenger benchmarks and explainable outputs — decisions you can defend to a regulator, not just scores in a dashboard."
+  },
+  {
+   "t": "h2",
+   "x": "Decision stack defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor challenger coverage and reason-code completeness over raw accuracy; deviation triggers are written because each one has fairness or explainability consequences."
+  },
+  {
+   "t": "table",
+   "caption": "Decision Intelligence Systems: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Decision hub serving named high-volume decisions with SLA and replay",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Decision core",
+     "Gradient-boosted scorecards with rule overlays",
+     "Deep models only where the lift justifies the explanation cost"
     ],
     [
-     "Policy repository with simulation and effective-dating",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Challengers",
+     "Two permanent challengers scored silently on live traffic",
+     "Offline-only benchmarking — it misses population drift"
     ],
     [
-     "Feature store with online serving and monitoring",
-     "Handed to a named owner on your side, with a working session included."
+     "Explanations",
+     "Reason-code taxonomy bound to policy language",
+     "Raw SHAP dumps as customer-facing explanations — unusable"
     ],
     [
-     "Decision-performance and fairness monitoring dashboards",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Fairness",
+     "Disparate-impact and equal-opportunity tests per release",
+     "One-time fairness audit — drift makes it stale in months"
+    ],
+    [
+     "Ledger",
+     "Immutable decision rows with envelope version",
+     "Logging only outcomes — inputs are what audits need"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Under the hood"
+   "x": "Decision release gates — what a supervisory review will ask"
   },
   {
-   "t": "p",
-   "x": "Decision Intelligence Systems ships against Databricks Feature Store, Feast, Kafka, Flink, Redis, OPA. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for Decision Intelligence Systems — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Proxy gate",
+     "Are protected attributes kept out, directly and by proxy?",
+     "Proxy screening report; feature governance sign-off"
+    ],
+    [
+     "Panel gate",
+     "Does it match the human benchmark panel?",
+     "Panel agreement at target on time-based holdouts"
+    ],
+    [
+     "Fairness gate",
+     "Do protected segments clear the bands?",
+     "Disparate-impact and equal-opportunity reports per release"
+    ],
+    [
+     "Explanation gate",
+     "Can outputs be explained in policy language?",
+     "Reason-code coverage; template walkthrough evidence"
+    ],
+    [
+     "Ledger gate",
+     "Is every decision reconstructible?",
+     "Ledger completeness check; envelope version binding"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "How the work actually runs"
+   "x": "What risk and compliance inherit"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Decision Intelligence Systems starts with the measurement: the metric, the owner, the current number, signed."
+     "Decision service with envelope",
+     "Bounded scoring with eligibility, explain and defer paths"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, decision api & hub first, gates written with your team."
+     "Challenger bench",
+     "Silent challengers with disagreement alerting"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Decision Intelligence Systems are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Reason-code taxonomy",
+     "Policy-language explanations with plain templates"
+    ],
+    [
+     "Benchmark panel pack",
+     "The signed panel, its scoring rubric and quarterly results"
+    ],
+    [
+     "Decision ledger",
+     "Immutable rows: inputs, versions, reasons, envelope revision"
+    ],
+    [
+     "Appeal SOP",
+     "The appeal path, overturn tracking and feedback into the taxonomy"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Wrap the model, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — decision & envelope",
+     "Decision spec, policy bounds, eligibility rules, reason-code taxonomy"
+    ],
+    [
+     "Weeks 3–4 — panel & data",
+     "Benchmark panel convened; feature governance; proxy screening"
+    ],
+    [
+     "Weeks 5–6 — model & challenger",
+     "Scorecard build; challenger bench; time-based holdouts"
+    ],
+    [
+     "Weeks 7–8 — explanation & ledger",
+     "Reason codes, templates, ledger schema, audit sampling"
+    ],
+    [
+     "Weeks 9–10 — action & appeal",
+     "Action APIs, human override, appeal routing with overturn metrics"
+    ],
+    [
+     "Ongoing — governance",
+     "Quarterly panel re-benchmark; drift memos; fairness suite per release"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — policy engines and case systems"
+  },
+  {
+   "t": "p",
+   "x": "Decisions land in policy engines and case systems; these contracts carry the reason codes and deferral states that keep the human loop real."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Feature store",
+     "Typed feature contracts with freshness SLAs"
+    ],
+    [
+     "Policy systems",
+     "Eligibility rule feeds with version sync"
+    ],
+    [
+     "Action systems",
+     "Commit APIs with ledger-first writes"
+    ],
+    [
+     "Case management",
+     "Appeal and override queues with SLAs"
+    ],
+    [
+     "Reporting",
+     "Regulatory report generation from the ledger"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Fairness and explainability overlay"
+  },
+  {
+   "t": "p",
+   "x": "Disparate-impact monitors, reason-code audits and deferral-quality reviews run on schedules — the model's social license is maintained as operational discipline, not annual paperwork."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Envelope versioning",
+     "Bounds are versioned; every decision cites the version in force"
+    ],
+    [
+     "Protected-attribute firewall",
+     "Direct and proxy features screened and logged per release"
+    ],
+    [
+     "Appeal integrity",
+     "Appeals adjudicated outside the scoring team; overturns feed back"
+    ],
+    [
+     "Deferral budget",
+     "Deferral rates bounded; deferred-case quality measured monthly"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Defer-to-human is measured, not assumed: deferral quality is scored against panel outcomes quarterly, and eroding deferral quality narrows model autonomy automatically."
   },
   {
    "t": "cta",
-   "x": "The next step is small and real: one working session on Decision Intelligence Systems, your data, and a written feasibility read you can circulate."
+   "x": "Bring the decision your regulator keeps asking about. The diagnostic will show where the challenger panel, reason codes and deferral design would sit — and what evidence you could produce tomorrow."
   }
  ],
- "words": 494,
+ "words": 1081,
  "section": "Services",
  "l1": "Services",
  "l2": "Agentic AI & Hyperautomation",
@@ -274,7 +1247,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Agentic AI & Hyperautomation",
+   "title": "Domain overview — Agentic AI & Hyperautomation",
    "url": "/services/agentic-ai-hyperautomation/",
    "desc": "Digital workers, decision hubs and workflows that recover from failure on their own — automation with human checkpoints, budgets and audit."
   },
@@ -326,33 +1299,51 @@
   {
    "title": "Data & Lakehouse for Manufacturing & Industrial",
    "url": "/industries/manufacturing/capabilities/data-analytics-lakehouse/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Agentic Process Automation",
-   "url": "/services/agentic-ai-hyperautomation/agentic-process-automation/",
-   "tag": "Same tower",
-   "desc": "Agents that execute the work — tool-using, policy-bounded, and fully logged for audit."
-  },
-  {
-   "title": "Digital Workforce & Multi-Agent Orchestration",
-   "url": "/services/agentic-ai-hyperautomation/digital-workforce-orchestration/",
-   "tag": "Same tower",
-   "desc": "Agents operated as one fleet: roles, queues, budgets and audit trails."
+   "title": "Hyperautomation & Systems Integration",
+   "url": "/services/agentic-ai-hyperautomation/hyperautomation-integration/",
+   "tag": "Same domain",
+   "desc": "the contracted seams — ERP, CRM, ITSM, comms and queues — with typed contracts, replayable failures and monitors that catch drift before business users do."
   },
   {
    "title": "Intelligent Document Processing",
    "url": "/services/agentic-ai-hyperautomation/intelligent-document-processing/",
-   "tag": "Same tower",
-   "desc": "Contracts, claims and invoices read end-to-end — extraction, validation and downstream action."
+   "tag": "Same domain",
+   "desc": "extraction and adjudication inside the process — documents become decisions with confidence gates, evidence and a human queue that shrinks on measurement."
   },
   {
    "title": "Process & Task Mining",
    "url": "/services/agentic-ai-hyperautomation/process-task-mining/",
-   "tag": "Same tower",
-   "desc": "See the work as it actually runs — event-log truth before you automate anything."
+   "tag": "Same domain",
+   "desc": "event-log forensics that turns system footprints into a defensible automation pipeline — conformance-checked, variant-ranked and ROI-priced before anything is built."
+  },
+  {
+   "title": "Generative AI Platform Engineering",
+   "url": "/services/applied-ai-generative-ai/genai-platform-engineering/",
+   "tag": "Pairs with",
+   "desc": "one governed door for every model call — authz, budgets, caching, guardrails and traces — so fifty use cases stay operable and affordable."
+  },
+  {
+   "title": "Lakehouse Architecture & Migration",
+   "url": "/services/data-analytics-lakehouse/lakehouse-architecture/",
+   "tag": "Pairs with",
+   "desc": "bronze→silver→gold on open table formats — a promotion path with quality gates, time travel and honest storage economics instead of a data swamp."
+  },
+  {
+   "title": "Platform Engineering & Developer Experience",
+   "url": "/services/cloud-edge-platform-engineering/platform-engineering-devex/",
+   "tag": "Pairs with",
+   "desc": "the platform as product — golden paths as versioned APIs, scaffolds that carry SLOs and budgets by default, and a developer experience measured like a funnel."
+  },
+  {
+   "title": "A European TSO-DSO group",
+   "url": "/case-studies/en-01/",
+   "tag": "Evidence",
+   "desc": "Forecast error down 31% — imbalance cost recovered across three control zones."
   }
  ]
 }

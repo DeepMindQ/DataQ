@@ -9,254 +9,1195 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Simulation as a competitive instrument — clusters, solvers and pipelines engineered for throughput. That is the contract HPC & Simulation Engineering signs. Below: what we build, in what order, and what your team holds at every gate."
+   "x": "Classical HPC that does the heavy lifting today: benchmarked clusters, tuned solvers with folklore replaced by measurement, I/O pipelines that do not wall, and a cost-per-solve discipline that makes every simulation job justify itself."
   },
   {
    "t": "h2",
-   "x": "What this service is"
+   "x": "Most 'we need quantum' conversations are really HPC conversations"
   },
   {
    "t": "p",
-   "x": "Simulation-heavy industries live or die by iteration speed: how many design variants per week, how fast a risk grid recalculates, how quickly a formulation space is explored. We engineer HPC estates end-to-end: workload profiling, scheduler tuning (Slurm-class), GPU partitioning and multi-instance strategies, storage tiering for burst patterns, containerized reproducibility, and solver modernization (GPU ports, mixed precision where valid) that often delivers more throughput than hardware alone."
+   "x": "HPC is where this domain pays the bills today: risk Monte Carlo, CFD/FEA, molecular dynamics, large-scale optimization. The engineering is workload-shaped — solvers tuned to the math, clusters benchmarked like engines (HPL and application-level), data pipelines that feed simulations with provenance, and a cost-per-solve metric that keeps the queue honest."
   },
   {
    "t": "p",
-   "x": "The cloud-burst pattern extends capacity without capital: on-prem base load with elastic burst to cloud under data-governance rules, cost-modeled per workload. We close with the operations rhythm — capacity planning, queue-fairness policy, license management — because HPC that scientists fight over is HPC underutilized."
+   "x": "The practice covers architecture (CPU/GPU mix by workload), the solver library with versioned performance, workflow orchestration for ensembles, and the utilization discipline that separates an HPC asset from an HPC bill."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that rot compute estates, the reference architecture of the benchmarked cluster, and the console that prices every solve."
   },
   {
    "t": "h2",
-   "x": "What makes this urgent now"
+   "x": "Four failure modes that rot compute estates"
   },
   {
    "t": "p",
-   "x": "HPC & Simulation Engineering delivery today concentrates in Manufacturing & Industrial, Energy & Utilities, Healthcare & Life Sciences, Banking & Financial Services. The metric is chosen with your finance lead, and the baseline is signed before any build begins."
+   "x": "Each of these wastes queue hours and compute budget invisibly — the countermeasures measure the folklore, break the I/O walls and bring order to ensemble chaos."
   },
   {
-   "t": "h2",
-   "x": "The working system, described"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "HPC & Simulation Engineering: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Workload profiling",
-     "bottleneck analysis across CPU/GPU/IO with modernization candidates"
+     "Queue rot",
+     "Jobs queue for days; utilization looks fine but throughput dies",
+     "Application-level benchmarks; queue-class design with SLOs"
     ],
     [
-     "Cluster engineering",
-     "scheduler tuning, GPU partitioning, storage tiering for bursts"
+     "Solver folkore",
+     "Performance knowledge lives in one engineer's head",
+     "Versioned solver library with performance regression tests"
     ],
     [
-     "Solver modernization",
-     "GPU ports and validated mixed-precision acceleration"
+     "I/O walls",
+     "Simulation output drowns the filesystem",
+     "Parallel I/O design; data-lifecycle policies per workflow"
     ],
     [
-     "Cloud-burst architecture",
-     "elastic overflow under data-governance and cost rules"
-    ],
-    [
-     "Operations rhythm",
-     "capacity planning, queue policy and license management"
+     "Ensemble chaos",
+     "Thousand-run ensembles with spreadsheet tracking",
+     "Workflow orchestration with provenance and resumability"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the benchmarked simulation estate"
+  },
+  {
+   "t": "p",
+   "x": "The estate is managed like a product: application benchmarks with published scores, solver tuning measured against them, an I/O pipeline engineered to the workload, and an ensemble manager that schedules chaos into reproducible runs."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — HPC & Simulation Engineering",
+   "title": "Reference architecture — HPC & simulation platform",
    "lanes": [
-    "Problems",
-    "Formulation",
-    "Solver stack",
-    "Classical baseline",
-    "Verification",
-    "Owners"
+    "Workloads",
+    "Cluster fabric",
+    "Solver layer",
+    "Workflow & data",
+    "Benchmark",
+    "Economics"
    ],
    "nodes": [
     {
-     "id": "pb0",
+     "id": "risk",
      "lane": 0,
-     "label": "Highest-volume workflow",
-     "hot": false
+     "label": "Risk Monte Carlo"
     },
     {
-     "id": "pb1",
+     "id": "cfd",
      "lane": 0,
-     "label": "Second workflow",
-     "hot": false
+     "label": "CFD/FEA"
     },
     {
-     "id": "fm2",
+     "id": "md",
+     "lane": 0,
+     "label": "Molecular dynamics"
+    },
+    {
+     "id": "part",
      "lane": 1,
-     "label": "HPC & Simulation Engineering",
+     "label": "CPU/GPU partitions",
      "hot": true
     },
     {
-     "id": "fm3",
+     "id": "sched",
      "lane": 1,
-     "label": "Constraint linter",
-     "hot": false
+     "label": "Queue scheduler"
     },
     {
-     "id": "ss4",
+     "id": "fab",
+     "lane": 1,
+     "label": "Interconnect fabric"
+    },
+    {
+     "id": "lib",
      "lane": 2,
-     "label": "Quantum-inspired solvers",
+     "label": "Solver library",
      "hot": true
     },
     {
-     "id": "ss5",
+     "id": "perf",
      "lane": 2,
-     "label": "Annealing & walks",
-     "hot": false
+     "label": "Performance regression"
     },
     {
-     "id": "cb6",
+     "id": "math",
+     "lane": 2,
+     "label": "Numeric stacks"
+    },
+    {
+     "id": "wf",
      "lane": 3,
-     "label": "Best classical solver",
-     "hot": false
+     "label": "Ensemble orchestration",
+     "hot": true
     },
     {
-     "id": "cb7",
+     "id": "prov",
      "lane": 3,
-     "label": "Fair benchmark harness",
-     "hot": false
+     "label": "Provenance capture"
     },
     {
-     "id": "vf8",
+     "id": "io",
+     "lane": 3,
+     "label": "Parallel I/O & lifecycle"
+    },
+    {
+     "id": "hpl",
      "lane": 4,
-     "label": "Optimality bounds",
-     "hot": false
+     "label": "System benchmarks"
     },
     {
-     "id": "vf9",
+     "id": "app",
      "lane": 4,
-     "label": "Reproducibility checks",
-     "hot": false
+     "label": "Application benchmarks",
+     "hot": true
     },
     {
-     "id": "ow10",
-     "lane": 5,
-     "label": "Production scheduling",
-     "hot": false
+     "id": "res",
+     "lane": 4,
+     "label": "Result verification"
     },
     {
-     "id": "ow11",
+     "id": "cost",
      "lane": 5,
-     "label": "Maintenance planner",
-     "hot": false
+     "label": "Cost per solve",
+     "hot": true
+    },
+    {
+     "id": "util",
+     "lane": 5,
+     "label": "Utilization honesty"
+    },
+    {
+     "id": "plan",
+     "lane": 5,
+     "label": "Capacity planning"
     }
    ],
    "edges": [
     {
-     "a": "pb0",
-     "b": "fm2"
+     "a": "risk",
+     "b": "part",
+     "label": "gpu-heavy"
     },
     {
-     "a": "pb1",
-     "b": "fm3"
+     "a": "cfd",
+     "b": "part",
+     "label": "cpu-heavy"
     },
     {
-     "a": "fm2",
-     "b": "ss4"
+     "a": "md",
+     "b": "part",
+     "label": "mixed"
     },
     {
-     "a": "fm3",
-     "b": "ss5"
+     "a": "part",
+     "b": "sched",
+     "label": "classes"
     },
     {
-     "a": "ss4",
-     "b": "cb6"
+     "a": "sched",
+     "b": "fab",
+     "label": "topology"
     },
     {
-     "a": "ss5",
-     "b": "cb7"
+     "a": "part",
+     "b": "lib",
+     "label": "tuned"
     },
     {
-     "a": "cb6",
-     "b": "vf8"
+     "a": "lib",
+     "b": "perf",
+     "label": "guarded"
     },
     {
-     "a": "vf8",
-     "b": "vf9"
+     "a": "math",
+     "b": "lib",
+     "label": "underlie"
     },
     {
-     "a": "ss4",
-     "b": "ow10"
+     "a": "sched",
+     "b": "wf",
+     "label": "drive"
     },
     {
-     "a": "vf9",
-     "b": "ow11"
+     "a": "wf",
+     "b": "prov",
+     "label": "record"
+    },
+    {
+     "a": "wf",
+     "b": "io",
+     "label": "stream"
+    },
+    {
+     "a": "lib",
+     "b": "app",
+     "label": "benchmarked"
+    },
+    {
+     "a": "hpl",
+     "b": "part",
+     "label": "baseline"
+    },
+    {
+     "a": "app",
+     "b": "res",
+     "label": "check"
+    },
+    {
+     "a": "app",
+     "b": "cost",
+     "label": "price"
+    },
+    {
+     "a": "sched",
+     "b": "util",
+     "label": "report"
+    },
+    {
+     "a": "cost",
+     "b": "plan",
+     "label": "inform"
     }
    ],
-   "note": "Topology inherited from the Quantum & Advanced Compute tower; the highlighted core is this service's build."
+   "note": "Application-level benchmarks beat HPL for planning: a cluster that LinPACs well but solves your risk runs badly is a procurement error — benchmark what you run."
   },
   {
    "t": "h2",
-   "x": "Deliverables, without dressing them up"
+   "x": "One ensemble, from submission to verified ensemble result"
   },
   {
    "t": "p",
-   "x": "In HPC & Simulation Engineering, the artifacts, each with a walkthrough when it lands:"
+   "x": "From job submission through scheduling, solver execution, I/O staging and the ensemble aggregation — including where queue-wait SLOs are enforced and what happens when a class-A job waits too long."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Solve flow — ingest, stage, solve, verify, archive, price",
+   "labels": [
+    "Problem intake",
+    "Input staging",
+    "Solver dispatch",
+    "Ensemble orchestration",
+    "Verification",
+    "Archive + provenance",
+    "Cost accounting"
+   ],
+   "note": "Ensembles are first-class: thousands of runs orchestrated with resumable state, provenance per run, and results verified before they inform decisions."
+  },
+  {
+   "t": "h2",
+   "x": "The HPC console — cost per solve as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Application benchmark score, cost per solve and class-A queue wait — the three numbers that run the estate and justify every capacity request."
+  },
+  {
+   "t": "idash",
+   "title": "HPC & simulation — throughput console",
+   "kpis": [
+    {
+     "label": "Parallel efficiency",
+     "value": "82%",
+     "delta": "at 1,024 ranks",
+     "dir": "up",
+     "spark": [
+      44,
+      55,
+      63,
+      70,
+      75,
+      79,
+      82
+     ]
+    },
+    {
+     "label": "Serial fraction",
+     "value": "9%",
+     "delta": "was 31% — audit-driven fixes",
+     "dir": "down",
+     "spark": [
+      31,
+      24,
+      18,
+      14,
+      11,
+      10,
+      9
+     ]
+    },
+    {
+     "label": "Design-cycle time",
+     "value": "5.5 d",
+     "delta": "was 6 weeks per iteration",
+     "dir": "down",
+     "spark": [
+      42,
+      30,
+      21,
+      14,
+      10,
+      8,
+      5.5
+     ]
+    },
+    {
+     "label": "GPU utilization",
+     "value": "76%",
+     "delta": "mixed-precision kernels",
+     "dir": "up",
+     "spark": [
+      38,
+      47,
+      55,
+      62,
+      68,
+      72,
+      76
+     ]
+    },
+    {
+     "label": "KAT pass",
+     "value": "100%",
+     "delta": "known-answer tests per release",
+     "dir": "flat",
+     "spark": [
+      90,
+      95,
+      97,
+      99,
+      100,
+      100,
+      100
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Scaling",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Parallel efficiency vs rank count — the Amdahl ceiling in the data",
+       "cats": [
+        "64",
+        "128",
+        "256",
+        "512",
+        "1024",
+        "2048",
+        "4096"
+       ],
+       "series": [
+        {
+         "name": "Before audit (eff %)",
+         "points": [
+          78,
+          71,
+          62,
+          52,
+          44,
+          36,
+          28
+         ]
+        },
+        {
+         "name": "After audit (eff %)",
+         "points": [
+          91,
+          89,
+          87,
+          85,
+          82,
+          79,
+          74
+         ]
+        },
+        {
+         "name": "Serial cap",
+         "points": [
+          97,
+          93,
+          87,
+          77,
+          64,
+          47,
+          31
+         ]
+        }
+       ],
+       "unit": "%",
+       "note": "Click to isolate. The serial-cap line is Amdahl's law made visible: at 9% serial fraction, 4,096 ranks can never exceed 31% efficiency — which is why the solver change preceded the cluster order."
+      }
+     ]
+    },
+    {
+     "name": "Amdahl what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Speedup what-if — serial fraction, comm overhead, precision",
+       "params": [
+        {
+         "name": "Serial fraction",
+         "min": 2,
+         "max": 40,
+         "step": 1,
+         "value": 9,
+         "unit": "%"
+        },
+        {
+         "name": "Comm overhead / rank",
+         "min": 1,
+         "max": 25,
+         "step": 1,
+         "value": 7,
+         "unit": "%"
+        },
+        {
+         "name": "Mixed-precision gain",
+         "min": 1,
+         "max": 2.5,
+         "step": 0.1,
+         "value": 1.8,
+         "unit": "×"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Speedup @1024 ranks",
+         "unit": "×",
+         "formula": "1/(p0/100+max(0,(100-p0)/100*1024)*(p1/100)*0.9/max(1,1024))*min(2.5,p2)*0.85",
+         "good": "60",
+         "bad": "20"
+        },
+        {
+         "name": "Node-hours / design cycle",
+         "unit": "k",
+         "formula": "p0*1.2/(min(2.5,p2)*0.85)",
+         "good": "12",
+         "bad": "40"
+        },
+        {
+         "name": "Cost / cycle",
+         "unit": "$k",
+         "formula": "p0*1.2/(min(2.5,p2)*0.85)*2.1",
+         "good": "30",
+         "bad": "100"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 0,
+        "label": "Serial fraction vs speedup"
+       },
+       "note": "The speedup curve collapses as serial fraction grows — at 30%, a thousand ranks buy nothing. Drag precision gain against it: mixed precision is often the cheapest speedup on the panel."
+      }
+     ]
+    },
+    {
+     "name": "Solver stack",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The simulation stack — click nodes for the verification contract",
+       "lanes": [
+        "Physics",
+        "Numerics",
+        "Runtime",
+        "Verification"
+       ],
+       "nodes": [
+        {
+         "id": "phys",
+         "lane": 0,
+         "label": "Physics kernels",
+         "detail": "Governing equations discretized per domain (CFD, FEA, electromagnetics) with the discretization error budget declared per study.",
+         "hot": true
+        },
+        {
+         "id": "mesh",
+         "lane": 1,
+         "label": "Mesh strategy",
+         "detail": "Adaptive refinement where the error concentrates — refinement driven by error estimators, not by habit."
+        },
+        {
+         "id": "linsolve",
+         "lane": 1,
+         "label": "Linear solvers",
+         "detail": "Krylov with preconditioning (multigrid where the operator allows) — convergence monitored, divergence handled by fallback chains."
+        },
+        {
+         "id": "prec",
+         "lane": 2,
+         "label": "Precision plan",
+         "detail": "Mixed precision where numerics tolerate: 1.5–2× on GPUs for free, with stability watched by the regression suite."
+        },
+        {
+         "id": "sched",
+         "lane": 2,
+         "label": "Cluster scheduling",
+         "detail": "Jobs scheduled against license and power constraints with backfill — the queue is engineered, not suffered."
+        },
+        {
+         "id": "kat",
+         "lane": 3,
+         "label": "Known-answer tests",
+         "detail": "Analytical cases per solver configuration — every solver change passes KAT before production studies."
+        },
+        {
+         "id": "reg",
+         "lane": 3,
+         "label": "Regression suite",
+         "detail": "Convergence-rate checks on canonical problems — solver drift is caught numerically, not by a physicist's frown."
+        }
+       ],
+       "edges": [
+        {
+         "a": "phys",
+         "b": "mesh",
+         "label": "discretize"
+        },
+        {
+         "a": "mesh",
+         "b": "linsolve"
+        },
+        {
+         "a": "linsolve",
+         "b": "prec",
+         "label": "mixed"
+        },
+        {
+         "a": "prec",
+         "b": "sched",
+         "label": "runs"
+        },
+        {
+         "a": "sched",
+         "b": "kat",
+         "label": "validates"
+        },
+        {
+         "a": "kat",
+         "b": "reg",
+         "label": "guards"
+        }
+       ],
+       "note": "Click nodes for the verification contract each layer carries. The KAT lane is what makes speedups publishable — a fast wrong answer is worse than a slow right one."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · Amdahl model",
+   "note": "Reference program model: efficiency bands and cycle-time targets from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Benchmark scores and cost across cluster generations"
+  },
+  {
+   "t": "p",
+   "x": "Application benchmark score and cost per solve across cluster generations — the curve that decides refresh timing and shows where tuning paid for itself."
+  },
+  {
+   "t": "chart",
+   "title": "Solver performance trend across builds — design targets",
+   "variant": "line",
+   "cats": [
+    "Build 1",
+    "Build 2",
+    "Build 3",
+    "Build 4",
+    "Build 5"
+   ],
+   "series": [
+    {
+     "name": "Risk-workload score",
+     "points": [
+      80,
+      84,
+      88,
+      91,
+      94
+     ]
+    },
+    {
+     "name": "CFD-workload score",
+     "points": [
+      75,
+      79,
+      83,
+      87,
+      90
+     ]
+    },
+    {
+     "name": "Cost per solve ($)",
+     "points": [
+      14.2,
+      13.6,
+      12.9,
+      12.3,
+      11.8
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "HPC & Simulation Engineering across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "HPC & Simulation Engineering",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Banking & Financial Services operators recognize the pattern: harvest-now-decrypt-later exposure, quarter after quarter.",
+     "plays": [
+      "Application benchmarks with published scores gating every solver change",
+      "I/O pipelines engineered to the workload — walls broken before they form",
+      "Ensemble management with cost-per-solve discipline and reproducibility ledgers"
+     ],
+     "kpis": [
+      {
+       "label": "App benchmark score",
+       "value": "94"
+      },
+      {
+       "label": "Cost per solve",
+       "value": "$11.80"
+      },
+      {
+       "label": "Queue wait p90 (class A)",
+       "value": "18m"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Ask what long-tail data under PQ risk costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Application benchmarks with published scores gating every solver change",
+      "I/O pipelines engineered to the workload — walls broken before they form",
+      "Ensemble management with cost-per-solve discipline and reproducibility ledgers"
+     ],
+     "kpis": [
+      {
+       "label": "App benchmark score",
+       "value": "94"
+      },
+      {
+       "label": "Cost per solve",
+       "value": "$11.80"
+      },
+      {
+       "label": "Queue wait p90 (class A)",
+       "value": "18m"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — genomic and longitudinal data exposure included — and prove it moved.",
+     "plays": [
+      "Application benchmarks with published scores gating every solver change",
+      "I/O pipelines engineered to the workload — walls broken before they form",
+      "Ensemble management with cost-per-solve discipline and reproducibility ledgers"
+     ],
+     "kpis": [
+      {
+       "label": "App benchmark score",
+       "value": "94"
+      },
+      {
+       "label": "Cost per solve",
+       "value": "$11.80"
+      },
+      {
+       "label": "Queue wait p90 (class A)",
+       "value": "18m"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Application benchmarks with published scores gating every solver change",
+      "I/O pipelines engineered to the workload — walls broken before they form",
+      "Ensemble management with cost-per-solve discipline and reproducibility ledgers"
+     ],
+     "kpis": [
+      {
+       "label": "App benchmark score",
+       "value": "94"
+      },
+      {
+       "label": "Cost per solve",
+       "value": "$11.80"
+      },
+      {
+       "label": "Queue wait p90 (class A)",
+       "value": "18m"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Ask what retail media measurement contested costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Application benchmarks with published scores gating every solver change",
+      "I/O pipelines engineered to the workload — walls broken before they form",
+      "Ensemble management with cost-per-solve discipline and reproducibility ledgers"
+     ],
+     "kpis": [
+      {
+       "label": "App benchmark score",
+       "value": "94"
+      },
+      {
+       "label": "Cost per solve",
+       "value": "$11.80"
+      },
+      {
+       "label": "Queue wait p90 (class A)",
+       "value": "18m"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we treat advanced compute as a tool with a contract — bounded problem classes, measured speedups, and a classical baseline the CFO can read.",
+     "plays": [
+      "Application benchmarks with published scores gating every solver change",
+      "I/O pipelines engineered to the workload — walls broken before they form",
+      "Ensemble management with cost-per-solve discipline and reproducibility ledgers"
+     ],
+     "kpis": [
+      {
+       "label": "App benchmark score",
+       "value": "94"
+      },
+      {
+       "label": "Cost per solve",
+       "value": "$11.80"
+      },
+      {
+       "label": "Queue wait p90 (class A)",
+       "value": "18m"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": true,
+     "hook": "Ask what PQC over infrastructure lifetimes costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Application benchmarks with published scores gating every solver change",
+      "I/O pipelines engineered to the workload — walls broken before they form",
+      "Ensemble management with cost-per-solve discipline and reproducibility ledgers"
+     ],
+     "kpis": [
+      {
+       "label": "App benchmark score",
+       "value": "94"
+      },
+      {
+       "label": "Cost per solve",
+       "value": "$11.80"
+      },
+      {
+       "label": "Queue wait p90 (class A)",
+       "value": "18m"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: routing at combinatorial scale, quarter after quarter.",
+     "plays": [
+      "Application benchmarks with published scores gating every solver change",
+      "I/O pipelines engineered to the workload — walls broken before they form",
+      "Ensemble management with cost-per-solve discipline and reproducibility ledgers"
+     ],
+     "kpis": [
+      {
+       "label": "App benchmark score",
+       "value": "94"
+      },
+      {
+       "label": "Cost per solve",
+       "value": "$11.80"
+      },
+      {
+       "label": "Queue wait p90 (class A)",
+       "value": "18m"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — state-grade adversaries harvesting included — and prove it moved.",
+     "plays": [
+      "Application benchmarks with published scores gating every solver change",
+      "I/O pipelines engineered to the workload — walls broken before they form",
+      "Ensemble management with cost-per-solve discipline and reproducibility ledgers"
+     ],
+     "kpis": [
+      {
+       "label": "App benchmark score",
+       "value": "94"
+      },
+      {
+       "label": "Cost per solve",
+       "value": "$11.80"
+      },
+      {
+       "label": "Queue wait p90 (class A)",
+       "value": "18m"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": true,
+     "hook": "Ask what research frontier advantage costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Application benchmarks with published scores gating every solver change",
+      "I/O pipelines engineered to the workload — walls broken before they form",
+      "Ensemble management with cost-per-solve discipline and reproducibility ledgers"
+     ],
+     "kpis": [
+      {
+       "label": "App benchmark score",
+       "value": "94"
+      },
+      {
+       "label": "Cost per solve",
+       "value": "$11.80"
+      },
+      {
+       "label": "Queue wait p90 (class A)",
+       "value": "18m"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Ask what post-quantum product pressure costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Application benchmarks with published scores gating every solver change",
+      "I/O pipelines engineered to the workload — walls broken before they form",
+      "Ensemble management with cost-per-solve discipline and reproducibility ledgers"
+     ],
+     "kpis": [
+      {
+       "label": "App benchmark score",
+       "value": "94"
+      },
+      {
+       "label": "Cost per solve",
+       "value": "$11.80"
+      },
+      {
+       "label": "Queue wait p90 (class A)",
+       "value": "18m"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the discipline is formulation: express the decision as an optimization problem, solve it with the best classical or quantum-inspired method, and benchmark honestly against both.",
+     "plays": [
+      "Application benchmarks with published scores gating every solver change",
+      "I/O pipelines engineered to the workload — walls broken before they form",
+      "Ensemble management with cost-per-solve discipline and reproducibility ledgers"
+     ],
+     "kpis": [
+      {
+       "label": "App benchmark score",
+       "value": "94"
+      },
+      {
+       "label": "Cost per solve",
+       "value": "$11.80"
+      },
+      {
+       "label": "Queue wait p90 (class A)",
+       "value": "18m"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/quantum-advanced-compute/"
+    }
+   ],
+   "practiceNote": "HPC & Simulation Engineering view: classical HPC that does the heavy lifting — benchmarked clusters, tuned solvers, cost-per-solve discipline and simulation workflows with provenance."
+  },
+  {
+   "t": "h2",
+   "x": "HPC defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor measured solver tuning and engineered I/O over folklore and defaults; deviation triggers are written because each one reintroduces invisible waste."
+  },
+  {
+   "t": "table",
+   "caption": "HPC & Simulation Engineering: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "HPC estate with measured throughput improvements",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Scheduler",
+     "Queue classes with SLOs per workload type",
+     "One FIFO queue — research starves production"
     ],
     [
-     "Reproducible containerized simulation environments",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Solvers",
+     "Versioned library with regression tests",
+     "Hand-tuned scripts — performance folklore"
     ],
     [
-     "Cloud-burst architecture with governance rules",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "I/O",
+     "Parallel filesystem + lifecycle policies",
+     "Default POSIX patterns — checkpoint walls"
     ],
     [
-     "Operations runbook: capacity, queues, licenses",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Workflows",
+     "Ensemble orchestration with provenance",
+     "Shell scripts and spreadsheets — resumability dies"
+    ],
+    [
+     "Benchmarks",
+     "Application-level, workload-shaped",
+     "HPL-only planning — it flatters the wrong things"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The technology choices, justified"
+   "x": "HPC release gates — evidence before cluster changes"
   },
   {
-   "t": "p",
-   "x": "HPC & Simulation Engineering is built against defined standards: Slurm, CUDA, MPI, parallel filesystems, containers, GPU clouds. Each choice is justified in writing as part of the architecture baseline, so your team can defend it without us in the room."
+   "t": "table",
+   "caption": "Release gates for HPC & Simulation Engineering — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Solver gate",
+     "Does the library hold performance?",
+     "Regression test evidence per build"
+    ],
+    [
+     "I/O gate",
+     "Do workflows clear I/O walls?",
+     "Checkpoint/output timing evidence"
+    ],
+    [
+     "Workflow gate",
+     "Are ensembles resumable?",
+     "Kill-and-resume drill evidence"
+    ],
+    [
+     "Verification gate",
+     "Are results checked?",
+     "Verification pass evidence per workflow"
+    ],
+    [
+     "Economics gate",
+     "Is cost per solve owned?",
+     "Cost reports; utilization honesty"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "What the weeks look like"
+   "x": "What the computational engineering team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "HPC & Simulation Engineering starts with the measurement: the metric, the owner, the current number, signed."
+     "Benchmarked cluster fabric",
+     "Partitions shaped by real workloads"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, workload profiling first, gates written with your team."
+     "Solver library",
+     "Versioned, regression-guarded, tuned"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in HPC & Simulation Engineering are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Ensemble orchestrator",
+     "Resumable workflows with provenance"
+    ],
+    [
+     "I/O and lifecycle design",
+     "Checkpoint/output strategies per workflow"
+    ],
+    [
+     "Application benchmark suite",
+     "Workload-shaped cluster scoring"
+    ],
+    [
+     "Cost-per-solve ledger",
+     "Price and utilization honesty"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Benchmarks to ensembles, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — workload census",
+     "Workload shaping, queue-class design, baseline benchmarks"
+    ],
+    [
+     "Weeks 3–4 — fabric & partitions",
+     "CPU/GPU mix, interconnect, scheduler classes"
+    ],
+    [
+     "Weeks 5–6 — solver library",
+     "Versioning, regression harness, tuning sprints"
+    ],
+    [
+     "Weeks 7–8 — workflow layer",
+     "Ensemble orchestration, provenance, I/O tuning"
+    ],
+    [
+     "Weeks 9–10 — economics",
+     "Cost model, utilization reporting, capacity plan"
+    ],
+    [
+     "Ongoing — platform ops",
+     "Monthly benchmarks; quarterly capacity; regression on every build"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — schedulers, storage and the simulation users"
+  },
+  {
+   "t": "p",
+   "x": "The estate serves simulation users and their pipelines; these contracts define submission interfaces, data staging and the SLOs each user class experiences."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Risk & quant teams",
+     "Workload contracts"
+    ],
+    [
+     "Engineering (CFD/FEA)",
+     "Simulation pipelines"
+    ],
+    [
+     "Data platforms",
+     "Input/output staging"
+    ],
+    [
+     "Cloud providers",
+     "Burst capacity with cost gates"
+    ],
+    [
+     "Quantum practice",
+     "Baseline and polish handoffs"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Reproducibility governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Solver versions, library stacks and run configurations are pinned per published result — the reproducibility ledger that makes every simulation citable inside the enterprise."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Regression guard",
+     "No solver build ships slower than the last"
+    ],
+    [
+     "Provenance rule",
+     "Results without provenance do not inform decisions"
+    ],
+    [
+     "Queue SLOs",
+     "Wait-time targets per class, reviewed monthly"
+    ],
+    [
+     "Cost visibility",
+     "Every solve priced and owned"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Solver folklore is retired by measurement: any tuning claim must carry its benchmark delta or it does not reach the cluster — the benchmark score is the estate's only oracle."
   },
   {
    "t": "cta",
-   "x": "Talk to the team that runs HPC & Simulation Engineering in production — the briefing is technical by design, and the first one costs nothing but the hour."
+   "x": "Bring the simulation that queues for days and costs a fortune per run. The benchmark sprint will tune the solver, break the I/O wall — and price every future solve honestly."
   }
  ],
- "words": 487,
+ "words": 958,
  "section": "Services",
  "l1": "Services",
  "l2": "Quantum & Advanced Compute",
@@ -278,7 +1219,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Quantum & Advanced Compute",
+   "title": "Domain overview — Quantum & Advanced Compute",
    "url": "/services/quantum-advanced-compute/",
    "desc": "Quantum readiness, optimization and PQC migration — pragmatic advantage from emerging compute."
   },
@@ -330,33 +1271,51 @@
   {
    "title": "IoT, Twin & Robotics for Logistics & Supply Chain",
    "url": "/industries/logistics-supply-chain/capabilities/iot-digital-twin-robotics/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Quantum Readiness & Strategy",
-   "url": "/services/quantum-advanced-compute/quantum-readiness-strategy/",
-   "tag": "Same tower",
-   "desc": "A quantum plan that survives a CFO — inventory, risk clocks and sequenced roadmaps."
-  },
-  {
    "title": "Quantum Optimization for Enterprise Problems",
    "url": "/services/quantum-advanced-compute/quantum-optimization/",
-   "tag": "Same tower",
-   "desc": "Routing, scheduling, portfolios and formulations — hybrid solvers beating classical baselines."
+   "tag": "Same domain",
+   "desc": "hybrid optimization on real problems — QUBO formulation, annealer and gate-model access, and classical polish that beats the baseline or says so."
   },
   {
-   "title": "Post-Quantum Cryptography Migration",
-   "url": "/services/quantum-advanced-compute/post-quantum-cryptography/",
-   "tag": "Same tower",
-   "desc": "Beat the harvest-now-decrypt-later clock — cryptographic inventory to PQC cutover."
+   "title": "Quantum Readiness & Strategy",
+   "url": "/services/quantum-advanced-compute/quantum-readiness-strategy/",
+   "tag": "Same domain",
+   "desc": "honest quantum strategy — use-case triage on verifiable criteria, vendor-neutral posture, and a roadmap that survives contact with real hardware limits."
   },
   {
-   "title": "Quantum Machine Learning & Simulation",
-   "url": "/services/quantum-advanced-compute/quantum-ml-simulation/",
-   "tag": "Same tower",
-   "desc": "QML and simulation pilots with industrial honesty — real baselines, real data, real verdicts."
+   "title": "Neuromorphic & Emerging Compute Advisory",
+   "url": "/services/quantum-advanced-compute/emerging-compute-advisory/",
+   "tag": "Same domain",
+   "desc": "neutral horizon scanning — photonic, neuromorphic, in-memory and beyond, with evidence memos that translate vendor noise into engineering decisions."
+  },
+  {
+   "title": "Cyber Resilience & Incident Recovery",
+   "url": "/services/cybersecurity-zero-trust/cyber-resilience-incident-recovery/",
+   "tag": "Pairs with",
+   "desc": "recovery that is rehearsed, not documented — immutable backups, clean-room restores and business-service RTOs you can actually meet on a bad Friday."
+  },
+  {
+   "title": "Hybrid & Multicloud Architecture",
+   "url": "/services/cloud-edge-platform-engineering/hybrid-multicloud-architecture/",
+   "tag": "Pairs with",
+   "desc": "one operating model across clouds and on-prem — workload placement by policy, portable patterns, and drift that is measured in one place."
+  },
+  {
+   "title": "Master Data, Governance & Cataloging",
+   "url": "/services/data-analytics-lakehouse/master-data-governance/",
+   "tag": "Pairs with",
+   "desc": "golden records with owners, survivorship rules and a catalog people actually trust — governance as engineering, not committee minutes."
+  },
+  {
+   "title": "A parcel network (12M parcels/week)",
+   "url": "/case-studies/log-03/",
+   "tag": "Evidence",
+   "desc": "Failed deliveries down 34% — promise engine and exception agents."
   }
  ]
 }

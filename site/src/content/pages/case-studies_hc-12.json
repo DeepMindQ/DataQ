@@ -1,0 +1,263 @@
+{
+ "id": "CASE-hc-12",
+ "title": "A telehealth provider",
+ "url": "/case-studies/hc-12/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Healthcare & Life Sciences > A telehealth provider",
+ "seo_title": "A telehealth provider | Case Study | Dataq Software",
+ "meta_description": "Conversational triage with safety gates — 74% of intake conversations resolved without clinician time and escalation accuracy independently audited at 96%",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Conversational triage with safety gates — 74% of intake conversations resolved without clinician time and escalation accuracy independently audited at 96%"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a telehealth provider whose nurses spent half their shifts asking the questions a good intake form should have asked. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline week measured the shifts: 52% of clinician time on intake that followed deterministic patterns, and the previous chatbot retired after it once reassured a patient whose symptoms merited an urgent pathway."
+  },
+  {
+   "t": "p",
+   "x": "Safety was the whole product. Any automation that could not prove its escalation behavior was worse than the queue it relieved."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We built triage as a conversation with gates: red-flag detection runs on every turn outside the language model, urgent pathways are hard-routed with no model discretion, and the escalation behavior was audited against a clinician-labeled historical cohort before any patient saw it. Nurses enter conversations already carrying the structured intake summary."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — A telehealth provider",
+   "lanes": [
+    "Patient intake",
+    "Safety layer",
+    "Conversation core",
+    "Clinician handoff"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "App & web intake",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Red-flag detector (every turn)",
+     "hot": true
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Hard-routed urgent pathways",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "No-discretion routing rules",
+     "hot": true
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Grounded conversation core"
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Structured intake summary",
+     "hot": true
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Nurse handoff queue",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Independent audit trail"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A telehealth provider",
+   "kpis": [
+    {
+     "label": "Intake resolved without clinician time",
+     "value": "74%",
+     "delta": "routine patterns only",
+     "dir": "up"
+    },
+    {
+     "label": "Escalation accuracy",
+     "value": "96%",
+     "delta": "independently audited cohort",
+     "dir": "up"
+    },
+    {
+     "label": "Nurse intake workload",
+     "value": "-52%",
+     "delta": "returned to care",
+     "dir": "down"
+    },
+    {
+     "label": "Red-flag routing discretion",
+     "value": "0",
+     "delta": "hard rules, no model say",
+     "dir": "flat"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed with the clinical director",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 05",
+     "msg": "Two pathways live with weekly safety reads",
+     "tag": "build"
+    },
+    {
+     "t": "wk 11",
+     "msg": "Gate review — independent escalation audit passed",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Pathway expansion; red-flag rules under clinical ownership",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Intake-time and safety baselines signed with the clinical director"
+    ],
+    [
+     "Build gate",
+     "No pathway live until escalation passed the audited cohort"
+    ],
+    [
+     "Run gate",
+     "Monthly safety review published to the clinical board"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The gates-outside-the-model pattern is the transferable asset; the pathway content was this provider's clinical scope. Any replication starts from its own red-flag catalog, signed by its own clinicians."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "8 months",
+     "12-person blended team",
+     "Global",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "Start with the diagnostic, not the contract: the same diagnostic that baselined this program takes two weeks, and a scoped proposal follows only if the delta justifies it."
+  }
+ ],
+ "words": 430,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Healthcare & Life Sciences",
+ "l3": "A telehealth provider",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Healthcare & Life Sciences",
+   "url": "/industries/healthcare-life-sciences/"
+  },
+  {
+   "name": "A telehealth provider",
+   "url": "/case-studies/hc-12/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Healthcare & Life Sciences — industry hub",
+   "url": "/industries/healthcare-life-sciences/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Applied AI & Generative AI",
+   "url": "/services/applied-ai-generative-ai/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A 12-hospital US health system",
+   "url": "/case-studies/hc-01/",
+   "desc": "Clinicians get 90 minutes a day back — ambient documentation inside the EHR"
+  },
+  {
+   "title": "A national health insurer",
+   "url": "/case-studies/hc-02/",
+   "desc": "Prior authorization turnaround down 62% — clinical evidence assembled automatically"
+  },
+  {
+   "title": "A European biopharma group",
+   "url": "/case-studies/hc-03/",
+   "desc": "Trial eligibility matching at 10x — enrollment windows met"
+  }
+ ],
+ "cards": []
+}

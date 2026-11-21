@@ -9,254 +9,1191 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Buyers rarely need another definition of quantum readiness & strategy. They need to know what ships first, what it touches and how value is proven. That is what this page carries: A quantum plan that survives a CFO — inventory, risk clocks and sequenced roadmaps."
+   "x": "Honest quantum strategy: use cases triaged on verifiable criteria, a vendor-neutral posture, baselines measured before any hardware is booked — and a roadmap whose milestones are kill criteria, not keynote dates."
   },
   {
    "t": "h2",
-   "x": "The job this service does"
+   "x": "A quantum strategy is mostly a classical strategy with kill criteria"
   },
   {
    "t": "p",
-   "x": "Quantum strategy fails when it is either hype or paralysis. We run readiness assessments that inventory quantum-relevant workloads (optimization, simulation, ML), identify where quantum or quantum-inspired methods could beat current approaches within 3 years, and map the security clock — which cryptographic assets face harvest-now-decrypt-later exposure. The output is a sequenced roadmap with near-term projects that pay for themselves and a watch-list with trigger conditions."
+   "x": "Most quantum strategy is either hype (quantum will solve everything by 2027) or dismissal (check back in 2035). Both waste money. The honest middle: triage your problem estate against criteria that can be verified — problem structure, data encoding cost, tolerance for noise, and whether a strong classical baseline even exists to beat."
   },
   {
    "t": "p",
-   "x": "We build the internal capability too: a quantum working group with named sponsors, literacy curriculum for architects and risk teams, vendor and hardware-landscape briefings, and pilot governance. The discipline is economic: every proposed quantum initiative carries a classical baseline it must beat, measured on the same benchmark."
+   "x": "The deliverable is a portfolio with three lists: problems worth formulating now, problems to watch as hardware improves, and problems where classical HPC is the right answer today — plus the PQC risk register, because the one quantum-adjacent deadline that is real is the cryptography one."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that capture strategies into vendor keynotes, the reference architecture of the triage process, and the console that tracks the roadmap honestly."
   },
   {
    "t": "h2",
-   "x": "The stakes, stated plainly"
+   "x": "Four ways quantum strategies get captured by hype"
   },
   {
    "t": "p",
-   "x": "Quantum Readiness & Strategy delivery today concentrates in Banking & Financial Services, Energy & Utilities, Logistics & Supply Chain, Manufacturing & Industrial. The metric is chosen with your finance lead, and the baseline is signed before any build begins."
+   "x": "Each failure mode spends real budget on unmeasurable outcomes — the countermeasures make every next step falsifiable and every claim reproducible."
   },
   {
-   "t": "h2",
-   "x": "What gets built first"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Quantum Readiness & Strategy: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Workload inventory",
-     "quantum-relevant problem classes mapped across business units"
+     "Hype capture",
+     "Vendor decks set the roadmap",
+     "Evidence criteria per use case; independent benchmark memos"
     ],
     [
-     "HNDL exposure analysis",
-     "cryptographic assets ranked by harvest-now-decrypt-later risk"
+     "Baseline neglect",
+     "Nobody checks if classical already won",
+     "Baseline gate: no quantum track without a strong classical baseline"
     ],
     [
-     "Sequenced roadmap",
-     "near-term ROI projects plus watch-list with trigger conditions"
+     "PQC complacency",
+     "'Harvest now, decrypt later' ignored",
+     "Crypto inventory in scope from week one"
     ],
     [
-     "Capability building",
-     "quantum working group, literacy curriculum and pilot governance"
-    ],
-    [
-     "Classical-baseline discipline",
-     "every quantum claim benchmarked against the best classical method"
+     "Strategy by press release",
+     "Roadmaps track vendor announcements",
+     "Hardware-neutral capability tracking with dated reassessment"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the triage-to-roadmap pipeline"
+  },
+  {
+   "t": "p",
+   "x": "Candidates enter through a scored rubric — problem structure, data readiness, baseline availability, risk posture — and exit either into a benchmark plan, the PQC track or a documented park. Nothing reaches a hardware budget without a signed classical baseline."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Quantum Readiness & Strategy",
+   "title": "Reference architecture — quantum readiness program",
    "lanes": [
-    "Domains",
-    "Encodings",
-    "Compute",
-    "Validation",
-    "Explanation",
-    "Decisions"
+    "Problem estate",
+    "Triage",
+    "Portfolio",
+    "Vendor posture",
+    "PQC track",
+    "Governance"
    ],
    "nodes": [
     {
-     "id": "dm0",
+     "id": "ops",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Operational problems"
     },
     {
-     "id": "dm1",
+     "id": "r&d",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "R&D problems"
     },
     {
-     "id": "en2",
-     "lane": 1,
-     "label": "Hilbert-space encodings",
-     "hot": false
+     "id": "data",
+     "lane": 0,
+     "label": "Data availability"
     },
     {
-     "id": "en3",
+     "id": "crit",
      "lane": 1,
-     "label": "Quantum Readiness & Strategy",
+     "label": "Verifiable criteria",
      "hot": true
     },
     {
-     "id": "cp4",
-     "lane": 2,
-     "label": "CPU/GPU/accelerator mix",
+     "id": "struct",
+     "lane": 1,
+     "label": "Problem-structure review"
+    },
+    {
+     "id": "base",
+     "lane": 1,
+     "label": "Classical baseline check",
      "hot": true
     },
     {
-     "id": "cp5",
+     "id": "now",
      "lane": 2,
-     "label": "Quantum services (managed)",
-     "hot": false
+     "label": "Formulate-now list"
     },
     {
-     "id": "vl6",
+     "id": "watch",
+     "lane": 2,
+     "label": "Watch list"
+    },
+    {
+     "id": "hpc-first",
+     "lane": 2,
+     "label": "HPC-first list"
+    },
+    {
+     "id": "vend",
      "lane": 3,
-     "label": "Statistical validation",
-     "hot": false
+     "label": "Vendor capability map"
     },
     {
-     "id": "vl7",
+     "id": "bench",
      "lane": 3,
-     "label": "Cross-method comparison",
-     "hot": false
+     "label": "Independent benchmarks",
+     "hot": true
     },
     {
-     "id": "ex8",
+     "id": "lock",
+     "lane": 3,
+     "label": "Lock-in assessment"
+    },
+    {
+     "id": "inv",
      "lane": 4,
-     "label": "Explain reports",
-     "hot": false
+     "label": "Crypto inventory",
+     "hot": true
     },
     {
-     "id": "ex9",
+     "id": "risk",
      "lane": 4,
-     "label": "Sensitivity analysis",
-     "hot": false
+     "label": "Harvest-risk register"
     },
     {
-     "id": "dc10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "plan",
+     "lane": 4,
+     "label": "Migration sketch"
     },
     {
-     "id": "dc11",
+     "id": "gov",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Steering cadence"
+    },
+    {
+     "id": "memo",
+     "lane": 5,
+     "label": "Evidence memos",
+     "hot": true
+    },
+    {
+     "id": "kill",
+     "lane": 5,
+     "label": "Kill criteria"
     }
    ],
    "edges": [
     {
-     "a": "dm0",
-     "b": "en2"
+     "a": "ops",
+     "b": "crit"
     },
     {
-     "a": "dm1",
-     "b": "en3"
+     "a": "r&d",
+     "b": "crit"
     },
     {
-     "a": "en2",
-     "b": "cp4"
+     "a": "data",
+     "b": "crit",
+     "label": "check"
     },
     {
-     "a": "en3",
-     "b": "cp5"
+     "a": "crit",
+     "b": "struct",
+     "label": "test"
     },
     {
-     "a": "cp4",
-     "b": "vl6"
+     "a": "struct",
+     "b": "base",
+     "label": "require"
     },
     {
-     "a": "cp5",
-     "b": "vl7"
+     "a": "base",
+     "b": "crit",
+     "label": "score"
     },
     {
-     "a": "vl6",
-     "b": "ex8"
+     "a": "crit",
+     "b": "now",
+     "label": "pass"
     },
     {
-     "a": "vl7",
-     "b": "ex9"
+     "a": "crit",
+     "b": "watch",
+     "label": "defer"
     },
     {
-     "a": "ex8",
-     "b": "dc10"
+     "a": "crit",
+     "b": "hpc-first",
+     "label": "route"
     },
     {
-     "a": "ex9",
-     "b": "dc11"
+     "a": "vend",
+     "b": "bench",
+     "label": "verify"
+    },
+    {
+     "a": "bench",
+     "b": "lock",
+     "label": "assess"
+    },
+    {
+     "a": "lock",
+     "b": "now",
+     "label": "inform"
+    },
+    {
+     "a": "inv",
+     "b": "risk",
+     "label": "feed"
+    },
+    {
+     "a": "risk",
+     "b": "plan",
+     "label": "prioritize"
+    },
+    {
+     "a": "now",
+     "b": "memo",
+     "label": "evidence"
+    },
+    {
+     "a": "memo",
+     "b": "gov",
+     "label": "review"
+    },
+    {
+     "a": "gov",
+     "b": "kill",
+     "label": "enforce"
     }
    ],
-   "note": "Topology inherited from the Quantum & Advanced Compute tower; the highlighted core is this service's build."
+   "note": "Kill criteria are written at intake: a formulation track without benchmark progress in two quarters goes to the watch list — the program stays honest by design."
   },
   {
    "t": "h2",
-   "x": "Deliverables, without dressing them up"
+   "x": "One use case, from pitch to scored verdict"
   },
   {
    "t": "p",
-   "x": "named artifacts, handed to named owners, Quantum Readiness & Strategy edition:"
+   "x": "From the vendor pitch through rubric scoring, baseline definition, the formulate-now test and the roadmap slot — including the park list where most ideas correctly wait."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "optimization-funnel",
+   "title": "Readiness funnel — triage the estate into three honest lists",
+   "labels": [
+    "Estate census",
+    "Criteria scoring",
+    "Baseline check",
+    "Structure review",
+    "Three lists",
+    "Evidence memos",
+    "Quarterly re-triage"
+   ],
+   "note": "The HPC-first list is a success outcome: most enterprises have three to five problems where classical high-performance compute pays back this year, and quantum talks can wait."
+  },
+  {
+   "t": "h2",
+   "x": "The readiness console — triage as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Problems triaged, formulate-now count and baseline pass rate — the three numbers that show whether the strategy is discovering advantage or collecting slideware."
+  },
+  {
+   "t": "idash",
+   "title": "Quantum readiness — strategy console",
+   "kpis": [
+    {
+     "label": "Risk register items",
+     "value": "24",
+     "delta": "3 clocks, owners named",
+     "dir": "up",
+     "spark": [
+      6,
+      10,
+      14,
+      17,
+      20,
+      22,
+      24
+     ]
+    },
+    {
+     "label": "Mandatory-work funding",
+     "value": "62%",
+     "delta": "of quantum budget — PQC first",
+     "dir": "flat",
+     "spark": [
+      30,
+      40,
+      48,
+      54,
+      58,
+      60,
+      62
+     ]
+    },
+    {
+     "label": "Watch indicators live",
+     "value": "11",
+     "delta": "with decision triggers",
+     "dir": "up",
+     "spark": [
+      3,
+      5,
+      7,
+      8,
+      9,
+      10,
+      11
+     ]
+    },
+    {
+     "label": "Workforce readiness",
+     "value": "46",
+     "delta": "trained practitioners, 3 tracks",
+     "dir": "up",
+     "spark": [
+      8,
+      14,
+      20,
+      27,
+      34,
+      40,
+      46
+     ]
+    },
+    {
+     "label": "Vendor option value",
+     "value": "4",
+     "delta": "contracts with exit terms",
+     "dir": "flat",
+     "spark": [
+      1,
+      2,
+      2,
+      3,
+      4,
+      4,
+      4
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Portfolio what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Quantum investment what-if — allocation vs sector clocks",
+       "params": [
+        {
+         "name": "Annual budget",
+         "min": 200,
+         "max": 3000,
+         "step": 100,
+         "value": 900,
+         "unit": "$k"
+        },
+        {
+         "name": "Mandatory share",
+         "min": 20,
+         "max": 90,
+         "step": 5,
+         "value": 62,
+         "unit": "% PQC-led"
+        },
+        {
+         "name": "Discovery relevance",
+         "min": 1,
+         "max": 5,
+         "step": 1,
+         "value": 3,
+         "unit": "sector fit"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Compliance certainty",
+         "unit": "0-100",
+         "formula": "min(98, p1*1.1)",
+         "good": "85",
+         "bad": "60"
+        },
+        {
+         "name": "Option value",
+         "unit": "0-100",
+         "formula": "min(90, (100-p1)*0.5+p2*8)",
+         "good": "55",
+         "bad": "30"
+        },
+        {
+         "name": "Waste risk",
+         "unit": "0-100",
+         "formula": "max(5, p2*14-(100-p1)*0.3)",
+         "good": "20",
+         "bad": "50"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 1,
+        "label": "Mandatory share vs option value"
+       },
+       "note": "The portfolio curve is the board's argument: mandatory work (PQC) buys certainty, discovery work buys options — the waste-risk curve punishes funding discovery without sector fit."
+      }
+     ]
+    },
+    {
+     "name": "Clock tracker",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Three quantum clocks by sector × indicator strength",
+       "rows": [
+        "Banking",
+        "Pharma",
+        "Chemicals",
+        "Logistics",
+        "Utilities"
+       ],
+       "cats": [
+        "Cryptographic",
+        "Optimization",
+        "Discovery",
+        "Regulatory",
+        "Talent"
+       ],
+       "matrix": [
+        [
+         88,
+         46,
+         22,
+         74,
+         58
+        ],
+        [
+         42,
+         38,
+         88,
+         40,
+         52
+        ],
+        [
+         46,
+         42,
+         84,
+         38,
+         50
+        ],
+        [
+         62,
+         71,
+         28,
+         44,
+         46
+        ],
+        [
+         58,
+         44,
+         36,
+         52,
+         44
+        ]
+       ],
+       "unit": "clock urgency 0-100",
+       "note": "Hover cells for urgency. Banking's cryptographic clock is the loudest; pharma and chemicals run on the discovery clock — the portfolio allocation follows the sector's brightest cells."
+      }
+     ]
+    },
+    {
+     "name": "Readiness fabric",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The readiness program — click nodes for the governance contract",
+       "lanes": [
+        "Assess",
+        "Decide",
+        "Build",
+        "Watch"
+       ],
+       "nodes": [
+        {
+         "id": "reg",
+         "lane": 0,
+         "label": "Risk register",
+         "detail": "Three clocks with owners and decision triggers — the register states what happens when each indicator fires."
+        },
+        {
+         "id": "pqc",
+         "lane": 1,
+         "label": "PQC track",
+         "detail": "The mandatory clock: CBOM, hybrid migration, compliance calendar — funded before anything speculative.",
+         "hot": true
+        },
+        {
+         "id": "opt",
+         "lane": 1,
+         "label": "Optimization track",
+         "detail": "Benchmark envelopes per problem class — watched with triggers, funded as options, not as bets."
+        },
+        {
+         "id": "work",
+         "lane": 2,
+         "label": "Workforce track",
+         "detail": "Three practitioner tracks (crypto, optimization, simulation) with internal certification — the talent is the option."
+        },
+        {
+         "id": "vend",
+         "lane": 2,
+         "label": "Vendor track",
+         "detail": "Relationships with exit terms and verified claims — option value comes from reversibility, not from loyalty."
+        },
+        {
+         "id": "watch",
+         "lane": 3,
+         "label": "Technology watch",
+         "detail": "Indicators tracked quarterly with sources cited — hype filtered by the register's triggers, not by headlines."
+        },
+        {
+         "id": "board",
+         "lane": 3,
+         "label": "Board cadence",
+         "detail": "Annual strategy review with the register as the agenda — readiness is governance, not a lab hobby."
+        }
+       ],
+       "edges": [
+        {
+         "a": "reg",
+         "b": "pqc",
+         "label": "funds"
+        },
+        {
+         "a": "reg",
+         "b": "opt",
+         "label": "prices"
+        },
+        {
+         "a": "pqc",
+         "b": "work",
+         "label": "trains"
+        },
+        {
+         "a": "opt",
+         "b": "vend",
+         "label": "engages"
+        },
+        {
+         "a": "watch",
+         "b": "reg",
+         "label": "updates"
+        },
+        {
+         "a": "board",
+         "b": "reg",
+         "label": "reviews"
+        }
+       ],
+       "note": "Click nodes for the governance contract each layer carries. The watch lane updates the register — readiness compounds as a governance discipline."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · portfolio model",
+   "note": "Reference program model: clock urgencies and portfolio bands from delivery benchmarks, not vendor roadmaps."
+  },
+  {
+   "t": "h2",
+   "x": "Baseline pass rates across candidate use cases"
+  },
+  {
+   "t": "p",
+   "x": "The share of candidates whose classical baseline passed audit, by quarter — the honest curve that shows how much of the quantum conversation survives measurement."
+  },
+  {
+   "t": "chart",
+   "title": "Estate triage outcomes across two quarters — design targets",
+   "variant": "bar",
+   "cats": [
+    "Census",
+    "Criteria pass",
+    "Baseline pass",
+    "Formulate-now",
+    "Watch list",
+    "HPC-first"
+   ],
+   "series": [
+    {
+     "name": "Problem count",
+     "points": [
+      48,
+      19,
+      6,
+      4,
+      8,
+      3
+     ]
+    },
+    {
+     "name": "Baseline strength score",
+     "points": [
+      0,
+      62,
+      88,
+      91,
+      64,
+      93
+     ]
+    }
+   ],
+   "yMax": 95,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Quantum Readiness & Strategy across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Quantum Readiness & Strategy",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Banking & Financial Services operators recognize the pattern: harvest-now-decrypt-later exposure, quarter after quarter.",
+     "plays": [
+      "Scored use-case triage with signed classical baselines",
+      "Vendor-neutral posture — recommendations that survive hardware generations",
+      "A roadmap with kill criteria attached to every milestone"
+     ],
+     "kpis": [
+      {
+       "label": "Problems triaged",
+       "value": "31"
+      },
+      {
+       "label": "Formulate-now",
+       "value": "4"
+      },
+      {
+       "label": "Baseline pass rate",
+       "value": "13%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Ask what long-tail data under PQ risk costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Scored use-case triage with signed classical baselines",
+      "Vendor-neutral posture — recommendations that survive hardware generations",
+      "A roadmap with kill criteria attached to every milestone"
+     ],
+     "kpis": [
+      {
+       "label": "Problems triaged",
+       "value": "31"
+      },
+      {
+       "label": "Formulate-now",
+       "value": "4"
+      },
+      {
+       "label": "Baseline pass rate",
+       "value": "13%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — genomic and longitudinal data exposure included — and prove it moved.",
+     "plays": [
+      "Scored use-case triage with signed classical baselines",
+      "Vendor-neutral posture — recommendations that survive hardware generations",
+      "A roadmap with kill criteria attached to every milestone"
+     ],
+     "kpis": [
+      {
+       "label": "Problems triaged",
+       "value": "31"
+      },
+      {
+       "label": "Formulate-now",
+       "value": "4"
+      },
+      {
+       "label": "Baseline pass rate",
+       "value": "13%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Scored use-case triage with signed classical baselines",
+      "Vendor-neutral posture — recommendations that survive hardware generations",
+      "A roadmap with kill criteria attached to every milestone"
+     ],
+     "kpis": [
+      {
+       "label": "Problems triaged",
+       "value": "31"
+      },
+      {
+       "label": "Formulate-now",
+       "value": "4"
+      },
+      {
+       "label": "Baseline pass rate",
+       "value": "13%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Ask what retail media measurement contested costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Scored use-case triage with signed classical baselines",
+      "Vendor-neutral posture — recommendations that survive hardware generations",
+      "A roadmap with kill criteria attached to every milestone"
+     ],
+     "kpis": [
+      {
+       "label": "Problems triaged",
+       "value": "31"
+      },
+      {
+       "label": "Formulate-now",
+       "value": "4"
+      },
+      {
+       "label": "Baseline pass rate",
+       "value": "13%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": true,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we treat advanced compute as a tool with a contract — bounded problem classes, measured speedups, and a classical baseline the CFO can read.",
+     "plays": [
+      "Scored use-case triage with signed classical baselines",
+      "Vendor-neutral posture — recommendations that survive hardware generations",
+      "A roadmap with kill criteria attached to every milestone"
+     ],
+     "kpis": [
+      {
+       "label": "Problems triaged",
+       "value": "31"
+      },
+      {
+       "label": "Formulate-now",
+       "value": "4"
+      },
+      {
+       "label": "Baseline pass rate",
+       "value": "13%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what PQC over infrastructure lifetimes costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Scored use-case triage with signed classical baselines",
+      "Vendor-neutral posture — recommendations that survive hardware generations",
+      "A roadmap with kill criteria attached to every milestone"
+     ],
+     "kpis": [
+      {
+       "label": "Problems triaged",
+       "value": "31"
+      },
+      {
+       "label": "Formulate-now",
+       "value": "4"
+      },
+      {
+       "label": "Baseline pass rate",
+       "value": "13%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: routing at combinatorial scale, quarter after quarter.",
+     "plays": [
+      "Scored use-case triage with signed classical baselines",
+      "Vendor-neutral posture — recommendations that survive hardware generations",
+      "A roadmap with kill criteria attached to every milestone"
+     ],
+     "kpis": [
+      {
+       "label": "Problems triaged",
+       "value": "31"
+      },
+      {
+       "label": "Formulate-now",
+       "value": "4"
+      },
+      {
+       "label": "Baseline pass rate",
+       "value": "13%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": true,
+     "hook": "The work here has one job: move a named number — state-grade adversaries harvesting included — and prove it moved.",
+     "plays": [
+      "Scored use-case triage with signed classical baselines",
+      "Vendor-neutral posture — recommendations that survive hardware generations",
+      "A roadmap with kill criteria attached to every milestone"
+     ],
+     "kpis": [
+      {
+       "label": "Problems triaged",
+       "value": "31"
+      },
+      {
+       "label": "Formulate-now",
+       "value": "4"
+      },
+      {
+       "label": "Baseline pass rate",
+       "value": "13%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Ask what research frontier advantage costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Scored use-case triage with signed classical baselines",
+      "Vendor-neutral posture — recommendations that survive hardware generations",
+      "A roadmap with kill criteria attached to every milestone"
+     ],
+     "kpis": [
+      {
+       "label": "Problems triaged",
+       "value": "31"
+      },
+      {
+       "label": "Formulate-now",
+       "value": "4"
+      },
+      {
+       "label": "Baseline pass rate",
+       "value": "13%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Ask what post-quantum product pressure costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Scored use-case triage with signed classical baselines",
+      "Vendor-neutral posture — recommendations that survive hardware generations",
+      "A roadmap with kill criteria attached to every milestone"
+     ],
+     "kpis": [
+      {
+       "label": "Problems triaged",
+       "value": "31"
+      },
+      {
+       "label": "Formulate-now",
+       "value": "4"
+      },
+      {
+       "label": "Baseline pass rate",
+       "value": "13%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the discipline is formulation: express the decision as an optimization problem, solve it with the best classical or quantum-inspired method, and benchmark honestly against both.",
+     "plays": [
+      "Scored use-case triage with signed classical baselines",
+      "Vendor-neutral posture — recommendations that survive hardware generations",
+      "A roadmap with kill criteria attached to every milestone"
+     ],
+     "kpis": [
+      {
+       "label": "Problems triaged",
+       "value": "31"
+      },
+      {
+       "label": "Formulate-now",
+       "value": "4"
+      },
+      {
+       "label": "Baseline pass rate",
+       "value": "13%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/quantum-advanced-compute/"
+    }
+   ],
+   "practiceNote": "Quantum Readiness & Strategy view: honest quantum strategy — use-case triage on verifiable criteria, vendor-neutral posture, and a roadmap that survives contact with real hardware limits."
+  },
+  {
+   "t": "h2",
+   "x": "Readiness defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor vendor-neutral rubrics and measured baselines over platform-lock-in; deviation triggers are written because each one trades optionality for a sales cycle."
+  },
+  {
+   "t": "table",
+   "caption": "Quantum Readiness & Strategy: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Quantum readiness report with workload inventory and risk clock",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Triage criteria",
+     "Written, verifiable, published internally",
+     "Gut-feel scoring — the portfolio mirrors politics"
     ],
     [
-     "Sequenced roadmap with funded near-term projects",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Baselines",
+     "Best-known classical results, archived",
+     "Literature numbers — they are rarely your problem"
     ],
     [
-     "Cryptographic asset and HNDL exposure register",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Vendor posture",
+     "Neutral capability tracking with benchmarks",
+     "Single-vendor strategy meetings — lock-in arrives early"
     ],
     [
-     "Capability-building program with named sponsors",
-     "Produced as the build runs, not reconstructed afterwards."
+     "PQC",
+     "Inventory-first, migration-sketch second",
+     "Waiting for standards finality — inventory is usable now"
+    ],
+    [
+     "Governance",
+     "Quarterly re-triage with kill criteria",
+     "Annual strategy refresh — hardware moves faster"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The stack, chosen for operability"
+   "x": "Readiness release gates — evidence before roadmap"
   },
   {
-   "t": "p",
-   "x": "Quantum Readiness & Strategy ships against Qiskit / Azure Quantum / Braket SDKs, NIST PQC standards (FIPS 203/204/205), optimization baselines. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for Quantum Readiness & Strategy — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Criteria gate",
+     "Are criteria verifiable and applied?",
+     "Criteria doc; scoring evidence"
+    ],
+    [
+     "Baseline gate",
+     "Does a strong classical baseline exist?",
+     "Archived solver runs, reproducible"
+    ],
+    [
+     "Benchmark gate",
+     "Are vendor claims independently tested?",
+     "Benchmark memos with pinned instances"
+    ],
+    [
+     "Inventory gate",
+     "Is the crypto estate mapped?",
+     "Scan coverage report with findings"
+    ],
+    [
+     "Kill gate",
+     "Do stalled tracks get killed?",
+     "Kill-criteria enforcement log"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "The delivery rhythm"
+   "x": "What the strategy office inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Quantum Readiness & Strategy starts with the measurement: the metric, the owner, the current number, signed."
+     "Triage portfolio",
+     "Three lists with criteria scores and owners"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, workload inventory first, gates written with your team."
+     "Baseline archive",
+     "Reproducible classical results per problem"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Quantum Readiness & Strategy are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Vendor benchmark memos",
+     "Independent, pinned-instance evidence"
+    ],
+    [
+     "PQC risk register",
+     "Harvest-now-decrypt-later exposure"
+    ],
+    [
+     "Capability tracker",
+     "Hardware-neutral progress with dates"
+    ],
+    [
+     "Governance cadence",
+     "Quarterly re-triage with kill enforcement"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Triage in order, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — estate census",
+     "Problem inventory, data availability check, criteria design"
+    ],
+    [
+     "Weeks 3–4 — triage & baselines",
+     "Scoring, baseline archive build, first three lists"
+    ],
+    [
+     "Weeks 5–6 — vendor posture",
+     "Benchmark protocol, first vendor memos, lock-in review"
+    ],
+    [
+     "Weeks 7–8 — PQC track",
+     "Inventory scan, risk register, migration sketch"
+    ],
+    [
+     "Weeks 9–10 — governance",
+     "Steering cadence, kill criteria, memo templates"
+    ],
+    [
+     "Ongoing — re-triage",
+     "Quarterly portfolio review; semi-annual vendor benchmarks"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — business units, security and procurement"
+  },
+  {
+   "t": "p",
+   "x": "The triage process touches security, procurement and the business units that own the problems; these working agreements keep the roadmap funded and honest."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Business units",
+     "Problem intake with data contracts"
+    ],
+    [
+     "HPC practice",
+     "Baseline builds and handoffs"
+    ],
+    [
+     "Security domain",
+     "Crypto inventory integration"
+    ],
+    [
+     "Vendor programs",
+     "Neutral benchmark access"
+    ],
+    [
+     "Architecture review",
+     "Portfolio alignment"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Governance overlay — the kill-criteria ledger"
+  },
+  {
+   "t": "p",
+   "x": "Every roadmap milestone carries pre-signed kill criteria and the ledger records outcomes — the strategy document your board can trust because its failures are on the same page as its successes."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Baseline-or-nothing",
+     "No quantum track without a beaten-candidate baseline"
+    ],
+    [
+     "Neutral benchmarks",
+     "Vendor claims tested on pinned instances"
+    ],
+    [
+     "Kill discipline",
+     "Stalled tracks move to watch list, funded seats free up"
+    ],
+    [
+     "Inventory honesty",
+     "Crypto gaps are published internally, not hidden"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "PQC complacency is treated as a strategy failure: the triage explicitly scores harvest-now-decrypt-later exposure per data class, so 'wait for standards' is a scored risk, not a shrug."
   },
   {
    "t": "cta",
-   "x": "A value assessment prices the delta in your estate before anything is signed: Quantum Readiness & Strategy, measured against your baseline, in two weeks."
+   "x": "Bring the quantum slide from your last board deck. The two-week triage will score every claim on verifiable criteria — and hand back a roadmap your CFO can actually audit."
   }
  ],
- "words": 497,
+ "words": 996,
  "section": "Services",
  "l1": "Services",
  "l2": "Quantum & Advanced Compute",
@@ -278,7 +1215,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Quantum & Advanced Compute",
+   "title": "Domain overview — Quantum & Advanced Compute",
    "url": "/services/quantum-advanced-compute/",
    "desc": "Quantum readiness, optimization and PQC migration — pragmatic advantage from emerging compute."
   },
@@ -330,33 +1267,51 @@
   {
    "title": "Cloud, Edge & Platform for Retail & Consumer Goods",
    "url": "/industries/retail-consumer-goods/capabilities/cloud-edge-platform-engineering/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Quantum Optimization for Enterprise Problems",
-   "url": "/services/quantum-advanced-compute/quantum-optimization/",
-   "tag": "Same tower",
-   "desc": "Routing, scheduling, portfolios and formulations — hybrid solvers beating classical baselines."
-  },
-  {
-   "title": "Post-Quantum Cryptography Migration",
-   "url": "/services/quantum-advanced-compute/post-quantum-cryptography/",
-   "tag": "Same tower",
-   "desc": "Beat the harvest-now-decrypt-later clock — cryptographic inventory to PQC cutover."
-  },
-  {
-   "title": "Quantum Machine Learning & Simulation",
-   "url": "/services/quantum-advanced-compute/quantum-ml-simulation/",
-   "tag": "Same tower",
-   "desc": "QML and simulation pilots with industrial honesty — real baselines, real data, real verdicts."
+   "title": "Neuromorphic & Emerging Compute Advisory",
+   "url": "/services/quantum-advanced-compute/emerging-compute-advisory/",
+   "tag": "Same domain",
+   "desc": "neutral horizon scanning — photonic, neuromorphic, in-memory and beyond, with evidence memos that translate vendor noise into engineering decisions."
   },
   {
    "title": "HPC & Simulation Engineering",
    "url": "/services/quantum-advanced-compute/hpc-simulation-engineering/",
-   "tag": "Same tower",
-   "desc": "Simulation as a competitive instrument — clusters, solvers and pipelines engineered for throughput."
+   "tag": "Same domain",
+   "desc": "classical HPC that does the heavy lifting — benchmarked clusters, tuned solvers, cost-per-solve discipline and simulation workflows with provenance."
+  },
+  {
+   "title": "Post-Quantum Cryptography Migration",
+   "url": "/services/quantum-advanced-compute/post-quantum-cryptography/",
+   "tag": "Same domain",
+   "desc": "PQC migration as engineering — crypto inventory with endpoint-level truth, hybrid deployments where standards allow, and crypto-agility that makes the next swap cheap."
+  },
+  {
+   "title": "AI Security & Model Protection",
+   "url": "/services/cybersecurity-zero-trust/ai-security-model-protection/",
+   "tag": "Pairs with",
+   "desc": "security for the models themselves — prompt-injection defense, abuse containment, model theft resistance and eval-based red teams wired into the platform."
+  },
+  {
+   "title": "Edge Computing & Distributed Infrastructure",
+   "url": "/services/cloud-edge-platform-engineering/edge-computing-infrastructure/",
+   "tag": "Pairs with",
+   "desc": "compute and delivery close to users and devices — regional clusters with store-and-forward resilience, fleet ops at scale and honest latency budgets."
+  },
+  {
+   "title": "Data Monetization & Analytics Products",
+   "url": "/services/data-analytics-lakehouse/data-monetization-products/",
+   "tag": "Pairs with",
+   "desc": "data as a product for external consumption — contracts, SLAs, purpose limits and billing, with controls that get stronger the moment data leaves the building."
+  },
+  {
+   "title": "A global integrated energy major",
+   "url": "/case-studies/en-02/",
+   "tag": "Evidence",
+   "desc": "Turnaround duration down 14% — scheduling optimization at refinery scale."
   }
  ]
 }

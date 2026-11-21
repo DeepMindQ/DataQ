@@ -7,6 +7,10 @@ const isExport = process.env.NEXT_STATIC_EXPORT === "1";
 const shared = {
   typescript: { ignoreBuildErrors: true },
   reactStrictMode: false,
+  // Pin Turbopack's workspace root to site/ — without this, the stray bun.lock
+  // in the parent repo makes Turbopack trace the whole parent tree (uploads,
+  // second node_modules) and OOM the sandbox during the production build.
+  turbopack: { root: __dirname, memoryLimit: 1536 },
 } satisfies Partial<NextConfig>;
 
 const nextConfig: NextConfig = isExport

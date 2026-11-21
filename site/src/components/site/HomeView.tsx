@@ -66,6 +66,23 @@ export default function HomeView() {
   if (!page || !brand) {
     return <div className="container-dq py-20 text-navy-800">Content not generated yet.</div>;
   }
+
+  /* case-library index counts — read once from the case-studies hub */
+  const hubFile = fileForUrl("/case-studies/");
+  const hubPage = hubFile ? readPage(hubFile) : null;
+  const hubCards = (hubPage?.cards ?? []) as { industry: string; industry_url: string; service?: string; service_url?: string }[];
+  const CASE_COUNT = hubCards.length;
+  const indSeen = new Map<string, string>();
+  for (const c of hubCards) if (!indSeen.has(c.industry)) indSeen.set(c.industry, c.industry_url);
+  const CASE_INDUSTRIES = [...indSeen.keys()].map((name) => ({
+    name, count: hubCards.filter((c) => c.industry === name).length,
+  }));
+  const svcSeen = new Map<string, string>();
+  for (const c of hubCards) if (c.service && !svcSeen.has(c.service)) svcSeen.set(c.service, c.service_url ?? "/services/");
+  const CASE_SERVICES = [...svcSeen.keys()].map((name) => ({
+    name, count: hubCards.filter((c) => c.service === name).length,
+  }));
+
   return (
     <>
       {/* split hero — choreographed text + live intelligence-mesh visual (CHG-234/235) */}
@@ -190,11 +207,11 @@ export default function HomeView() {
                   Services
                 </p>
                 <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[30px]">
-                  Eight towers. One engineering standard.
+                  Eight domains. One engineering standard.
                 </h2>
                 <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
                   Applied AI, agentic automation, data platforms, cybersecurity, cloud, quantum,
-                  digital trust and IoT — each tower carries named services, an architecture you can
+                  digital trust and IoT — each domain carries named services, an architecture you can
                   interrogate, and gates that stop the program when the evidence is missing.
                 </p>
               </div>
@@ -228,7 +245,7 @@ export default function HomeView() {
                     </p>
                     <p className="mt-2 flex-1 text-[12.5px] leading-relaxed text-slate-body/75">{t.desc}</p>
                     <span className="mt-4 inline-flex items-center gap-1 text-[12px] font-semibold text-brand-deep">
-                      Enter tower <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
+                      Enter domain <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
                     </span>
                   </Link>
                 </Reveal>
@@ -443,7 +460,7 @@ export default function HomeView() {
         </div>
       </section>
 
-      {/* featured cases — spotlight slider (CHG-244/245/266) */}
+      {/* featured cases — spotlight slider (CHG-244/245/266) + dual index (Phase 2) */}
       <section id="evidence" className="scroll-mt-24 relative overflow-hidden border-y border-line grad-navy-field text-white">
         <div className="bg-field-drift absolute inset-0 dot-grid" aria-hidden="true" />
         <div className="container-dq section-y-sm">
@@ -451,28 +468,60 @@ export default function HomeView() {
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
                 <p className="kicker-bar-dark text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-300">
-                  Evidence
+                  Evidence library
                 </p>
                 <h2 className="text-display-3 mt-1 text-white sm:text-[28px]">
-                  The numbers are the client's. The method is on the page.
+                  The numbers are the client&rsquo;s. The method is on the page.
                 </h2>
                 <p className="mt-2 max-w-2xl text-[14.5px] text-white/65">
-                  Thirty-six anonymized engagements, each with the measured delta, the system that
-                  produced it, and the architecture as deployed — baselines locked in diagnosis,
-                  methods available under NDA.
+                  {CASE_COUNT} anonymized engagements, indexed by industry and by service area — each with
+                  the measured delta, the system that produced it, and the gates that governed the build.
                 </p>
               </div>
               <Link
                 href="/case-studies/"
                 className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-300"
               >
-                All case studies <ArrowRight className="h-4 w-4" />
+                Browse the full index <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </Reveal>
           <div className="mt-8">
             <SpotlightSlider slides={brand.cases} />
           </div>
+          {/* dual index teaser — industries with counts, linking into the library */}
+          <Reveal>
+            <div className="mt-9 grid gap-5 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-white/45">By industry</p>
+                <div className="mt-2.5 flex flex-wrap gap-2">
+                  {CASE_INDUSTRIES.map((ind) => (
+                    <Link
+                      key={ind.name}
+                      href="/case-studies/#by-industry"
+                      className="rounded-full border border-white/15 bg-white/[0.05] px-3.5 py-1.5 text-[12.5px] font-medium text-white/75 transition hover:border-brand-300 hover:text-brand-300"
+                    >
+                      {ind.name} <span className="text-white/40">{ind.count}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-white/45">By service area</p>
+                <div className="mt-2.5 flex flex-wrap gap-2">
+                  {CASE_SERVICES.map((svc) => (
+                    <Link
+                      key={svc.name}
+                      href="/case-studies/#by-service"
+                      className="rounded-full border border-white/15 bg-white/[0.05] px-3.5 py-1.5 text-[12.5px] font-medium text-white/75 transition hover:border-brand-300 hover:text-brand-300"
+                    >
+                      {svc.name} <span className="text-white/40">{svc.count}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 

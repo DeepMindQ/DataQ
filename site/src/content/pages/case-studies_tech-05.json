@@ -1,0 +1,263 @@
+{
+ "id": "CASE-tech-05",
+ "title": "A payments platform company",
+ "url": "/case-studies/tech-05/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Technology & SaaS > A payments platform company",
+ "seo_title": "A payments platform company | Case Study | Dataq Software",
+ "meta_description": "Authorization path rebuilt for latency — p99 down 83% and the peak-season authorization budget met with headroom",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Authorization path rebuilt for latency — p99 down 83% and the peak-season authorization budget met with headroom"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a payments platform whose merchants measured it in milliseconds and whose authorization path had accreted nine synchronous hops over seven years. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline trace told the story: p99 authorization at 412ms with merchants' SLAs at 300, peak-season projections exceeding the budget entirely, and each hop owned by a team with a reason it was synchronous."
+  },
+  {
+   "t": "p",
+   "x": "The reasons were historical — an ordering system here, a fraud pre-check there — and no single view existed of the whole path's latency budget. Every team optimized locally."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We rebuilt the path as a latency budget: end-to-end budget decomposed per hop with owners, hops re-sequenced — fraud checks parallelized, non-critical work made async with event sourcing, the critical path reduced to four hops — and load models rehearsed at 130% of forecast peak before the season. The budget holds; the reasons became events."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — A payments platform company",
+   "lanes": [
+    "Authorization path",
+    "Latency budget",
+    "Async backbone",
+    "Rehearsal harness"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "Merchant endpoints",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Risk & fraud checks (parallel)",
+     "hot": true
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Four-hop critical path",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Event-sourced side effects",
+     "hot": true
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Per-hop budget owners",
+     "hot": true
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Trace-level SLO dashboards"
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Peak load rehearsal",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Season readiness gate"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A payments platform company",
+   "kpis": [
+    {
+     "label": "Authorization p99",
+     "value": "-83%",
+     "delta": "412ms → 71ms",
+     "dir": "down"
+    },
+    {
+     "label": "Critical-path hops",
+     "value": "9 → 4",
+     "delta": "re-sequenced with owners",
+     "dir": "down"
+    },
+    {
+     "label": "Peak rehearsal coverage",
+     "value": "130% of forecast",
+     "delta": "before the season",
+     "dir": "up"
+    },
+    {
+     "label": "Merchant SLA breaches",
+     "value": "0",
+     "delta": "through peak",
+     "dir": "down"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline trace signed with engineering leads",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 09",
+     "msg": "Critical path live behind progressive rollout",
+     "tag": "build"
+    },
+    {
+     "t": "wk 14",
+     "msg": "Gate review — rehearsal at 130% passed",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Season executed on budget; budget model under platform owner",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Latency budget signed per hop with owning teams"
+    ],
+    [
+     "Build gate",
+     "No hop change ships without its trace-level budget holding"
+    ],
+    [
+     "Run gate",
+     "Game days at 130% ahead of each season"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The budget-per-hop pattern transfers to any latency-critical path; the hop histories were this platform's archaeology. Another platform starts from its traces — the diagnostic decomposes the budget in a fortnight."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "12 months",
+     "15-person blended team",
+     "Global",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "If this case sits close to your operation, the briefing is the right next step: 45 minutes with the practice lead who ran it, your metric against the pattern that moved here."
+  }
+ ],
+ "words": 446,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Technology & SaaS",
+ "l3": "A payments platform company",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Technology & SaaS",
+   "url": "/industries/technology-saas/"
+  },
+  {
+   "name": "A payments platform company",
+   "url": "/case-studies/tech-05/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Technology & SaaS — industry hub",
+   "url": "/industries/technology-saas/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Cloud, Edge & Platform Engineering",
+   "url": "/services/cloud-edge-platform-engineering/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A B2B SaaS platform (Series D)",
+   "url": "/case-studies/tech-01/",
+   "desc": "Lead time down 58%, AI margin protected — platform engineering plus AI factory"
+  },
+  {
+   "title": "A consumer fintech (8M users)",
+   "url": "/case-studies/tech-02/",
+   "desc": "Fraud bps down 31% at +1.5pt approval — real-time decision hub"
+  },
+  {
+   "title": "A global gaming studio (live-service title, 15M MAU)",
+   "url": "/case-studies/tech-03/",
+   "desc": "D30 retention +4.7 points — player intelligence and live-ops automation"
+  }
+ ],
+ "cards": []
+}

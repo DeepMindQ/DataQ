@@ -9,254 +9,1201 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Smart Infrastructure, Buildings & Cities is the IoT, Twin & Robotics answer to a specific job: Facilities that run themselves — BMS/IoT fusion, energy optimization and city-scale platforms.. This page is the build as we actually run it — sequencing, artifacts and the parts most vendors leave out."
+   "x": "City and utility scale, same disciplines: segmented SCADA-safe architectures where IT/OT blur is designed out, service-continuity SLOs for water and energy, public data exposure governed, and vendor islands integrated into one operating picture — continuity measured, not claimed."
   },
   {
    "t": "h2",
-   "x": "The working definition"
+   "x": "Public infrastructure fails publicly — the architecture has to assume it"
   },
   {
    "t": "p",
-   "x": "Buildings and infrastructure waste energy and attention at scale. We fuse building-management systems with IoT and analytics: unified telemetry across HVAC, lighting, meters, occupancy and equipment, analytics layers for fault detection and diagnostics (the 10-20% energy waste that BAS reports hide), occupancy-aware control policies, and portfolio dashboards for facility teams. Energy optimization ties into grid programs — demand-response participation, load-flexibility contracts and carbon reporting feeds."
+   "x": "Smart infrastructure is IoT at civic scale: water networks, district energy, traffic, public buildings. The stakes shift — service continuity is a public duty, SCADA safety is non-negotiable, and public data carries privacy expectations that private fleets never meet. The engineering keeps the domain's disciplines and adds segmentation: IT/OT boundaries that are real, monitored and drill-tested."
   },
   {
    "t": "p",
-   "x": "At city and campus scale, the platform pattern applies: open data contracts across vendors, event fabric for mobility, lighting, safety and waste services, and privacy-by-design governance for anything touching citizens. Delivery emphasizes procurement realism — multi-vendor estates, legacy BMS protocols (BACnet, Modbus) translated into governed streams, and phased rollout by building class with measured savings before scale."
+   "x": "The practice covers the instrumentation census, the segmented architecture (Purdue-style zones with controlled crossings), continuity SLOs per service, and the analytics tier where optimization happens safely behind the boundary."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that make infrastructure programs fragile, the reference architecture of segmented continuity, and the console that keeps continuity honest."
   },
   {
    "t": "h2",
-   "x": "The stakes, stated plainly"
+   "x": "Four failure modes that make infrastructure programs fragile"
   },
   {
    "t": "p",
-   "x": "The sectors where Smart Infrastructure, Buildings & Cities currently runs: Public Sector & Government, Retail & Consumer Goods, Energy & Utilities, Education & Research. Each engagement anchors to one named metric in that sector's own language."
+   "x": "Each of these turns a modernization into a headline — the countermeasures segment the estate, sign continuity SLOs and govern what the public can see."
   },
   {
-   "t": "h2",
-   "x": "The working system, described"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Smart Infrastructure, Buildings & Cities: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "BMS/IoT fusion",
-     "BACnet/Modbus and IoT telemetry unified into governed streams"
+     "IT/OT blur",
+     "Analytics platforms reach into control networks",
+     "Zone segmentation with monitored crossings; unidirectional where warranted"
     ],
     [
-     "FDD analytics",
-     "fault detection and diagnostics surfacing hidden energy waste"
+     "Continuity gaps",
+     "Optimization outages become service outages",
+     "Continuity SLOs per service; safe-mode designs"
     ],
     [
-     "Occupancy-aware control",
-     "policy-driven HVAC/lighting tied to measured occupancy"
+     "Public data exposure",
+     "Location or behavior data identifies people",
+     "Privacy-by-design: aggregation first, identification refused"
     ],
     [
-     "Grid programs",
-     "demand-response participation and load flexibility"
-    ],
-    [
-     "City/campus platform",
-     "open data contracts and privacy-by-design governance"
+     "Vendor islands",
+     "Each utility silo has its own stack",
+     "Federation with open schemas; single sign-on across services"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — segmented, SCADA-safe, SLO'd"
+  },
+  {
+   "t": "p",
+   "x": "IT and OT are segmented by design with controlled crossings, service continuity carries signed SLOs per utility, public-facing data passes through a governed exposure layer, and vendor islands integrate through normalization contracts — so the operating picture is one, and the failures stay small."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Smart Infrastructure, Buildings & Cities",
+   "title": "Reference architecture — smart infrastructure stack",
    "lanes": [
-    "Sites",
-    "Connectivity",
-    "Fleet services",
-    "Simulation",
-    "What-if",
-    "Planners"
+    "Field",
+    "OT zone",
+    "Crossing",
+    "IT analytics",
+    "Services",
+    "Public & privacy"
    ],
    "nodes": [
     {
-     "id": "st0",
+     "id": "field",
      "lane": 0,
-     "label": "Case & registry systems",
-     "hot": false
+     "label": "Field devices"
     },
     {
-     "id": "st1",
+     "id": "rtu",
      "lane": 0,
-     "label": "Citizen service portals",
-     "hot": false
+     "label": "RTUs & PLCs"
     },
     {
-     "id": "cn2",
+     "id": "sens",
+     "lane": 0,
+     "label": "City sensors"
+    },
+    {
+     "id": "scada",
      "lane": 1,
-     "label": "LTE/5G backhaul",
-     "hot": false
-    },
-    {
-     "id": "cn3",
-     "lane": 1,
-     "label": "Store & forward",
-     "hot": false
-    },
-    {
-     "id": "fs4",
-     "lane": 2,
-     "label": "Smart Infrastructure, Buildings & Cities",
+     "label": "SCADA/DCS",
      "hot": true
     },
     {
-     "id": "fs5",
-     "lane": 2,
-     "label": "OTA updates",
-     "hot": false
+     "id": "hist",
+     "lane": 1,
+     "label": "OT historian"
     },
     {
-     "id": "sm6",
-     "lane": 3,
-     "label": "Physics + ML simulation",
+     "id": "safe",
+     "lane": 1,
+     "label": "Safety systems",
      "hot": true
     },
     {
-     "id": "sm7",
+     "id": "dmz",
+     "lane": 2,
+     "label": "Controlled crossing",
+     "hot": true
+    },
+    {
+     "id": "uni",
+     "lane": 2,
+     "label": "Uni-directional gateways"
+    },
+    {
+     "id": "broker",
+     "lane": 2,
+     "label": "Data broker"
+    },
+    {
+     "id": "lake",
      "lane": 3,
-     "label": "Scenario engine",
-     "hot": false
+     "label": "Analytics tier"
     },
     {
-     "id": "wi8",
+     "id": "opt",
+     "lane": 3,
+     "label": "Optimization"
+    },
+    {
+     "id": "ml",
+     "lane": 3,
+     "label": "Prediction"
+    },
+    {
+     "id": "slo",
      "lane": 4,
-     "label": "What-if console",
-     "hot": false
+     "label": "Service SLOs",
+     "hot": true
     },
     {
-     "id": "wi9",
+     "id": "ops",
      "lane": 4,
-     "label": "Sensitivity runs",
-     "hot": false
+     "label": "Utility operations"
     },
     {
-     "id": "pl10",
-     "lane": 5,
-     "label": "Caseworker console",
-     "hot": false
+     "id": "mode",
+     "lane": 4,
+     "label": "Safe-mode design"
     },
     {
-     "id": "pl11",
+     "id": "priv",
      "lane": 5,
-     "label": "Benefits adjudication",
-     "hot": false
+     "label": "Privacy engine",
+     "hot": true
+    },
+    {
+     "id": "portal",
+     "lane": 5,
+     "label": "Public portal"
+    },
+    {
+     "id": "gov",
+     "lane": 5,
+     "label": "Data governance"
     }
    ],
    "edges": [
     {
-     "a": "st0",
-     "b": "cn2"
+     "a": "field",
+     "b": "rtu",
+     "label": "wired"
     },
     {
-     "a": "st1",
-     "b": "cn3"
+     "a": "sens",
+     "b": "rtu",
+     "label": "lpwan"
     },
     {
-     "a": "cn2",
-     "b": "fs4"
+     "a": "rtu",
+     "b": "scada",
+     "label": "control"
     },
     {
-     "a": "cn3",
-     "b": "fs5"
+     "a": "scada",
+     "b": "hist",
+     "label": "record"
     },
     {
-     "a": "fs4",
-     "b": "sm6"
+     "a": "safe",
+     "b": "scada",
+     "label": "trip"
     },
     {
-     "a": "fs5",
-     "b": "sm7"
+     "a": "hist",
+     "b": "dmz",
+     "label": "egress"
     },
     {
-     "a": "sm6",
-     "b": "wi8"
+     "a": "uni",
+     "b": "dmz",
+     "label": "one-way"
     },
     {
-     "a": "sm7",
-     "b": "wi9"
+     "a": "broker",
+     "b": "dmz",
+     "label": "managed"
     },
     {
-     "a": "wi8",
-     "b": "pl10"
+     "a": "broker",
+     "b": "lake",
+     "label": "feed"
     },
     {
-     "a": "wi9",
-     "b": "pl11"
+     "a": "lake",
+     "b": "opt",
+     "label": "analyze"
+    },
+    {
+     "a": "lake",
+     "b": "ml",
+     "label": "learn"
+    },
+    {
+     "a": "opt",
+     "b": "slo",
+     "label": "bounded"
+    },
+    {
+     "a": "slo",
+     "b": "mode",
+     "label": "safe-fallback"
+    },
+    {
+     "a": "mode",
+     "b": "ops",
+     "label": "runbook"
+    },
+    {
+     "a": "lake",
+     "b": "priv",
+     "label": "aggregate"
+    },
+    {
+     "a": "priv",
+     "b": "portal",
+     "label": "publish"
+    },
+    {
+     "a": "gov",
+     "b": "priv",
+     "label": "rules"
     }
    ],
-   "note": "Topology inherited from the IoT, Twin & Robotics tower; the highlighted core is this service's build."
+   "note": "The controlled crossing is where the architecture earns its name: analytics sees data through managed, often one-way gateways — optimization proposes, the OT zone decides."
   },
   {
    "t": "h2",
-   "x": "The artifacts, named"
+   "x": "One crossing, IT to OT and back, controlled"
   },
   {
    "t": "p",
-   "x": "Smart Infrastructure, Buildings & Cities: deliverables, without dressing them up,"
+   "x": "From an IT-side request through the segmented crossing, OT-side enforcement and the response — including the unidirectional paths and the anomaly monitoring that watches the boundary."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "zero-trust-mesh",
+   "title": "Data and control flow — zone crossings, safe modes, public privacy",
+   "labels": [
+    "Field telemetry",
+    "OT record",
+    "Controlled egress",
+    "Analytics tier",
+    "Optimization proposal",
+    "OT decides",
+    "Privacy-safe publish"
+   ],
+   "note": "Safe-mode design is the continuity contract: if analytics or connectivity fails, services revert to pre-programmed operation — optimization is a bonus, never a dependency."
+  },
+  {
+   "t": "h2",
+   "x": "The infrastructure console — continuity as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Water and energy continuity SLOs and boundary anomalies — the three numbers the utility board reads, because continuity is the product the public buys."
+  },
+  {
+   "t": "idash",
+   "title": "Smart infrastructure — estate console",
+   "kpis": [
+    {
+     "label": "Buildings integrated",
+     "value": "34",
+     "delta": "7 systems per building normalized",
+     "dir": "up",
+     "spark": [
+      6,
+      11,
+      16,
+      21,
+      26,
+      30,
+      34
+     ]
+    },
+    {
+     "label": "Energy reduction",
+     "value": "−22.4%",
+     "delta": "M&V-verified, year 1",
+     "dir": "down",
+     "spark": [
+      0,
+      -5,
+      -10,
+      -14,
+      -18,
+      -20,
+      -22
+     ]
+    },
+    {
+     "label": "Comfort compliance",
+     "value": "97.1%",
+     "delta": "occupied-hours band",
+     "dir": "up",
+     "spark": [
+      88,
+      91,
+      93,
+      95,
+      96,
+      97,
+      97.1
+     ]
+    },
+    {
+     "label": "Space utilization",
+     "value": "61%",
+     "delta": "measured, privacy-safe",
+     "dir": "flat",
+     "spark": [
+      42,
+      47,
+      51,
+      55,
+      58,
+      60,
+      61
+     ]
+    },
+    {
+     "label": "M&V savings verified",
+     "value": "2.8",
+     "delta": "$M/yr, IPMVP option C",
+     "dir": "up",
+     "spark": [
+      0.3,
+      0.8,
+      1.3,
+      1.8,
+      2.2,
+      2.5,
+      2.8
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Energy optimization",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Estate energy baseline vs optimized — M&V-verified savings",
+       "cats": [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug"
+       ],
+       "series": [
+        {
+         "name": "Optimized kWh (k)",
+         "points": [
+          1840,
+          1710,
+          1620,
+          1490,
+          1380,
+          1520,
+          1680,
+          1650
+         ]
+        },
+        {
+         "name": "Baseline kWh (k)",
+         "points": [
+          2360,
+          2240,
+          2140,
+          1960,
+          1810,
+          1980,
+          2180,
+          2140
+         ]
+        },
+        {
+         "name": "Savings %",
+         "points": [
+          22,
+          24,
+          24,
+          24,
+          24,
+          23,
+          23,
+          23
+         ]
+        }
+       ],
+       "unit": "k kWh",
+       "note": "Click to isolate. The savings line holds through seasons because the baseline model is weather-normalized — savings that only appear in mild months are measurement luck, not engineering."
+      }
+     ]
+    },
+    {
+     "name": "Setpoint what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "HVAC optimization what-if — comfort band vs energy",
+       "params": [
+        {
+         "name": "Comfort band",
+         "min": 1,
+         "max": 4,
+         "step": 0.5,
+         "value": 2,
+         "unit": "°C width"
+        },
+        {
+         "name": "Pre-heat lead",
+         "min": 15,
+         "max": 120,
+         "step": 15,
+         "value": 45,
+         "unit": "min"
+        },
+        {
+         "name": "Tariff spread",
+         "min": 2,
+         "max": 30,
+         "step": 2,
+         "value": 14,
+         "unit": "¢/kWh"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Energy saving",
+         "unit": "%",
+         "formula": "min(34, p0*6.2+p1*0.12+p2*0.35)",
+         "good": "18",
+         "bad": "8"
+        },
+        {
+         "name": "Comfort complaints",
+         "unit": "/wk",
+         "formula": "max(0, (2.5-p0)*14-p1*0.08)",
+         "good": "4",
+         "bad": "15"
+        },
+        {
+         "name": "Cost saving",
+         "unit": "$k/yr",
+         "formula": "p0*6.2*460*p2/100*1.6",
+         "good": "180",
+         "bad": "60"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 1,
+        "label": "Comfort band vs complaints"
+       },
+       "note": "The comfort curve is the trust constraint: each widened band buys energy and charges complaints — operators widen bands only where occupancy telemetry says nobody is there to complain."
+      }
+     ]
+    },
+    {
+     "name": "Estate topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The estate platform — click nodes for the governance contract",
+       "lanes": [
+        "Buildings",
+        "Integration",
+        "Optimization",
+        "People"
+       ],
+       "nodes": [
+        {
+         "id": "bms",
+         "lane": 0,
+         "label": "BMS & controls",
+         "detail": "Vendor systems integrated through normalized ontology models — control authority stays with the BMS; the platform proposes, operators dispose.",
+         "hot": true
+        },
+        {
+         "id": "meter",
+         "lane": 0,
+         "label": "Metering fabric",
+         "detail": "Circuit-level metering with unit contracts — the M&V baseline is only as honest as the meter data."
+        },
+        {
+         "id": "ont",
+         "lane": 1,
+         "label": "Semantic model",
+         "detail": "Brick/Haystack-class ontology across 7 system types — analytics read one model, not seven vendor schemas."
+        },
+        {
+         "id": "occ",
+         "lane": 1,
+         "label": "Occupancy sensing",
+         "detail": "Zone-level occupancy aggregated with privacy by design — no individual tracking, ever; the estate measures rooms, not people."
+        },
+        {
+         "id": "hvac",
+         "lane": 2,
+         "label": "Energy optimization",
+         "detail": "Setpoint scheduling within comfort bands against tariff windows — bounds, operator override and M&V verification built in."
+        },
+        {
+         "id": "dr",
+         "lane": 2,
+         "label": "Demand response",
+         "detail": "Market participation where allowed — load flexibility bid against comfort constraints, with the control room's override preserved."
+        },
+        {
+         "id": "ops",
+         "lane": 3,
+         "label": "Operations console",
+         "detail": "One pane for the estate teams — alarms with context, comfort compliance, energy position — the platform serves the operators first."
+        },
+        {
+         "id": "gov",
+         "lane": 3,
+         "label": "Privacy governance",
+         "detail": "Occupancy data governance with published principles — city-scale platforms survive on the privacy contract, not on the sensors."
+        }
+       ],
+       "edges": [
+        {
+         "a": "bms",
+         "b": "ont",
+         "label": "normalize"
+        },
+        {
+         "a": "meter",
+         "b": "ont",
+         "label": "feeds"
+        },
+        {
+         "a": "ont",
+         "b": "hvac",
+         "label": "optimize"
+        },
+        {
+         "a": "occ",
+         "b": "hvac",
+         "label": "informs"
+        },
+        {
+         "a": "hvac",
+         "b": "dr",
+         "label": "bid"
+        },
+        {
+         "a": "dr",
+         "b": "ops",
+         "label": "reports"
+        },
+        {
+         "a": "occ",
+         "b": "gov",
+         "label": "governed"
+        }
+       ],
+       "note": "Click nodes for the contract each layer carries. Control authority never leaves the operator — the platform brings evidence, bounds and verification."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · energy model",
+   "note": "Reference program model: energy bands and comfort targets from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Service continuity across the utility estate"
+  },
+  {
+   "t": "p",
+   "x": "Continuity per service and quarter — the shape that shows where modernization helped, where vendor islands still limit visibility and which continuity SLOs are honestly held."
+  },
+  {
+   "t": "chart",
+   "title": "Service continuity by utility — design targets",
+   "variant": "bar",
+   "cats": [
+    "Water network",
+    "District energy",
+    "Traffic management",
+    "Public buildings",
+    "Street lighting"
+   ],
+   "series": [
+    {
+     "name": "Continuity SLO %",
+     "points": [
+      99.95,
+      99.9,
+      99.5,
+      99.9,
+      99.8
+     ]
+    },
+    {
+     "name": "Safe-mode test frequency (/yr)",
+     "points": [
+      4,
+      4,
+      2,
+      2,
+      2
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Smart Infrastructure, Buildings & Cities across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Smart Infrastructure, Buildings & Cities",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the work spans the stack: devices and gateways in the field, perception models in the middle, actuation plans on the board.",
+     "plays": [
+      "IT/OT segmentation with controlled, monitored crossings",
+      "Service-continuity SLOs signed per utility — water, energy, measured",
+      "Public data exposure governed by review; vendor islands normalized into one picture"
+     ],
+     "kpis": [
+      {
+       "label": "Water continuity",
+       "value": "99.97%"
+      },
+      {
+       "label": "District energy continuity",
+       "value": "99.94%"
+      },
+      {
+       "label": "Crossing anomalies",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "IT/OT segmentation with controlled, monitored crossings",
+      "Service-continuity SLOs signed per utility — water, energy, measured",
+      "Public data exposure governed by review; vendor islands normalized into one picture"
+     ],
+     "kpis": [
+      {
+       "label": "Water continuity",
+       "value": "99.97%"
+      },
+      {
+       "label": "District energy continuity",
+       "value": "99.94%"
+      },
+      {
+       "label": "Crossing anomalies",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "IT/OT segmentation with controlled, monitored crossings",
+      "Service-continuity SLOs signed per utility — water, energy, measured",
+      "Public data exposure governed by review; vendor islands normalized into one picture"
+     ],
+     "kpis": [
+      {
+       "label": "Water continuity",
+       "value": "99.97%"
+      },
+      {
+       "label": "District energy continuity",
+       "value": "99.94%"
+      },
+      {
+       "label": "Crossing anomalies",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "Ask what quality escapes and manual inspection costs Manufacturing & Industrial firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "IT/OT segmentation with controlled, monitored crossings",
+      "Service-continuity SLOs signed per utility — water, energy, measured",
+      "Public data exposure governed by review; vendor islands normalized into one picture"
+     ],
+     "kpis": [
+      {
+       "label": "Water continuity",
+       "value": "99.97%"
+      },
+      {
+       "label": "District energy continuity",
+       "value": "99.94%"
+      },
+      {
+       "label": "Crossing anomalies",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Retail & Consumer Goods operators recognize the pattern: shelf truth unknown, quarter after quarter.",
+     "plays": [
+      "IT/OT segmentation with controlled, monitored crossings",
+      "Service-continuity SLOs signed per utility — water, energy, measured",
+      "Public data exposure governed by review; vendor islands normalized into one picture"
+     ],
+     "kpis": [
+      {
+       "label": "Water continuity",
+       "value": "99.97%"
+      },
+      {
+       "label": "District energy continuity",
+       "value": "99.94%"
+      },
+      {
+       "label": "Crossing anomalies",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": true,
+     "hook": "Ask what network telemetry underused costs Telecom, Media & Entertainment firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "IT/OT segmentation with controlled, monitored crossings",
+      "Service-continuity SLOs signed per utility — water, energy, measured",
+      "Public data exposure governed by review; vendor islands normalized into one picture"
+     ],
+     "kpis": [
+      {
+       "label": "Water continuity",
+       "value": "99.97%"
+      },
+      {
+       "label": "District energy continuity",
+       "value": "99.94%"
+      },
+      {
+       "label": "Crossing anomalies",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": true,
+     "hook": "Ask what asset fleets uninstrumented costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "IT/OT segmentation with controlled, monitored crossings",
+      "Service-continuity SLOs signed per utility — water, energy, measured",
+      "Public data exposure governed by review; vendor islands normalized into one picture"
+     ],
+     "kpis": [
+      {
+       "label": "Water continuity",
+       "value": "99.97%"
+      },
+      {
+       "label": "District energy continuity",
+       "value": "99.94%"
+      },
+      {
+       "label": "Crossing anomalies",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: fleet and yard telemetry gaps, quarter after quarter.",
+     "plays": [
+      "IT/OT segmentation with controlled, monitored crossings",
+      "Service-continuity SLOs signed per utility — water, energy, measured",
+      "Public data exposure governed by review; vendor islands normalized into one picture"
+     ],
+     "kpis": [
+      {
+       "label": "Water continuity",
+       "value": "99.97%"
+      },
+      {
+       "label": "District energy continuity",
+       "value": "99.94%"
+      },
+      {
+       "label": "Crossing anomalies",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": true,
+     "hook": "Public Sector & Government operators recognize the pattern: urban assets unmanaged, quarter after quarter.",
+     "plays": [
+      "IT/OT segmentation with controlled, monitored crossings",
+      "Service-continuity SLOs signed per utility — water, energy, measured",
+      "Public data exposure governed by review; vendor islands normalized into one picture"
+     ],
+     "kpis": [
+      {
+       "label": "Water continuity",
+       "value": "99.97%"
+      },
+      {
+       "label": "District energy continuity",
+       "value": "99.94%"
+      },
+      {
+       "label": "Crossing anomalies",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — estates flying blind included — and prove it moved.",
+     "plays": [
+      "IT/OT segmentation with controlled, monitored crossings",
+      "Service-continuity SLOs signed per utility — water, energy, measured",
+      "Public data exposure governed by review; vendor islands normalized into one picture"
+     ],
+     "kpis": [
+      {
+       "label": "Water continuity",
+       "value": "99.97%"
+      },
+      {
+       "label": "District energy continuity",
+       "value": "99.94%"
+      },
+      {
+       "label": "Crossing anomalies",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we connect machines, fleets and facilities into one operational picture, then close the loop into maintenance, scheduling and control.",
+     "plays": [
+      "IT/OT segmentation with controlled, monitored crossings",
+      "Service-continuity SLOs signed per utility — water, energy, measured",
+      "Public data exposure governed by review; vendor islands normalized into one picture"
+     ],
+     "kpis": [
+      {
+       "label": "Water continuity",
+       "value": "99.97%"
+      },
+      {
+       "label": "District energy continuity",
+       "value": "99.94%"
+      },
+      {
+       "label": "Crossing anomalies",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — field data gap included — and prove it moved.",
+     "plays": [
+      "IT/OT segmentation with controlled, monitored crossings",
+      "Service-continuity SLOs signed per utility — water, energy, measured",
+      "Public data exposure governed by review; vendor islands normalized into one picture"
+     ],
+     "kpis": [
+      {
+       "label": "Water continuity",
+       "value": "99.97%"
+      },
+      {
+       "label": "District energy continuity",
+       "value": "99.94%"
+      },
+      {
+       "label": "Crossing anomalies",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/iot-digital-twin-robotics/"
+    }
+   ],
+   "practiceNote": "Smart Infrastructure, Buildings & Cities view: city and utility scale on the same disciplines — segmented SCADA-safe architectures, service-continuity SLOs, and privacy-first public data."
+  },
+  {
+   "t": "h2",
+   "x": "Infrastructure defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor segmentation with controlled crossings and continuity SLOs over IT-led convergenge; deviation triggers are written because each one moves critical services onto architectures the threat model has not earned."
+  },
+  {
+   "t": "table",
+   "caption": "Smart Infrastructure, Buildings & Cities: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production building/infrastructure analytics with measured savings",
-     "Handed to a named owner on your side, with a working session included."
+     "Segmentation",
+     "Zones with monitored crossings",
+     "Flat networks with a firewall — the audit fails there"
     ],
     [
-     "FDD and optimization model library",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Continuity",
+     "Safe-mode designs with drills",
+     "Optimization-dependency — analytics outages become civic outages"
     ],
     [
-     "Demand-response and flexibility integration",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Privacy",
+     "Aggregation-first public data",
+     "Raw feeds to portals — identification risks"
     ],
     [
-     "Portfolio dashboards and ESG data feeds",
-     "Handed to a named owner on your side, with a working session included."
+     "Federation",
+     "Open schemas across utility silos",
+     "Vendor-island stacks — integration is forever"
+    ],
+    [
+     "Analytics",
+     "Proposal-only toward OT",
+     "Direct control writes — the boundary is a lie"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The stack, chosen for operability"
+   "x": "Infrastructure release gates — evidence before cutover"
   },
   {
-   "t": "p",
-   "x": "Smart Infrastructure, Buildings & Cities ships against BACnet/Modbus gateways, IoT platforms, FDD models, demand-response APIs, ESG reporting pipeline. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for Smart Infrastructure, Buildings & Cities — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Zone gate",
+     "Are crossings controlled and monitored?",
+     "Segmentation evidence; anomaly alarms"
+    ],
+    [
+     "Continuity gate",
+     "Do services survive analytics failure?",
+     "Safe-mode drill evidence"
+    ],
+    [
+     "Privacy gate",
+     "Is public data identification-safe?",
+     "Privacy audit; query-block evidence"
+    ],
+    [
+     "Federation gate",
+     "Do silos speak open schemas?",
+     "Schema conformance per silo"
+    ],
+    [
+     "Proposal gate",
+     "Does OT retain decision authority?",
+     "Boundary test evidence"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "The cadence you would see"
+   "x": "What the utility operations team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Smart Infrastructure, Buildings & Cities starts with the measurement: the metric, the owner, the current number, signed."
+     "Segmentation architecture",
+     "Zones with monitored crossings"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, bms/iot fusion first, gates written with your team."
+     "Continuity SLO pack",
+     "Per-service targets with drills"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Smart Infrastructure, Buildings & Cities are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Safe-mode runbooks",
+     "Pre-programmed fallbacks per service"
+    ],
+    [
+     "Privacy engine",
+     "Aggregation rules with audit"
+    ],
+    [
+     "Federation schemas",
+     "Open interfaces across silos"
+    ],
+    [
+     "Public portal",
+     "Privacy-safe civic data"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Segments in order, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — census & zones",
+     "Asset census, zone design, crossing policies"
+    ],
+    [
+     "Weeks 3–4 — crossing build",
+     "Gateways, brokers, monitoring"
+    ],
+    [
+     "Weeks 5–6 — continuity",
+     "SLO signing, safe-mode designs, drills"
+    ],
+    [
+     "Weeks 7–8 — analytics",
+     "Lake tier, optimization proposals, ML"
+    ],
+    [
+     "Weeks 9–10 — public layer",
+     "Privacy engine, portal, governance"
+    ],
+    [
+     "Ongoing — infra ops",
+     "Quarterly drills; monthly crossing review; annual privacy audit"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — SCADA, vendor islands and the public layer"
+  },
+  {
+   "t": "p",
+   "x": "The estate spans SCADA, legacy vendor systems and the public data layer; these contracts define the crossings, the normalization and the exposure rules that keep the picture one and the risks small."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Utility SCADA vendors",
+     "Historian egress contracts"
+    ],
+    [
+     "City IT",
+     "Portal and identity federation"
+    ],
+    [
+     "Regulators",
+     "Continuity and privacy evidence"
+    ],
+    [
+     "Sensor vendors",
+     "LPWAN fleets"
+    ],
+    [
+     "Emergency services",
+     "Safe-mode coordination"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Public-exposure governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Public-facing data is governed by an exposure review: every dataset is classified for sensitivity, aggregated where needed and rate-limited — openness by design, not by accident."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "OT-decides",
+     "Analytics proposes; the control zone disposes"
+    ],
+    [
+     "Continuity-first",
+     "No optimization dependency on civic services"
+    ],
+    [
+     "Aggregate-or-refuse",
+     "Public queries below thresholds fail closed"
+    ],
+    [
+     "Monitored boundary",
+     "Every crossing event is logged and alarmed"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Vendor islands are inventoried with their protocols and support horizons: a vendor approaching end-of-support triggers an integration plan, because the island nobody can see into is the one that fails during the event."
   },
   {
    "t": "cta",
-   "x": "The next step is small and real: one working session on Smart Infrastructure, Buildings & Cities, your data, and a written feasibility read you can circulate."
+   "x": "Bring the service whose continuity the press would report. The diagnostic will sign the SLOs, segment the crossings and price what one operating picture costs across your vendor islands."
   }
  ],
- "words": 503,
+ "words": 977,
  "section": "Services",
  "l1": "Services",
  "l2": "IoT, Digital Twin & Robotics",
@@ -278,7 +1225,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — IoT, Digital Twin & Robotics",
+   "title": "Domain overview — IoT, Digital Twin & Robotics",
    "url": "/services/iot-digital-twin-robotics/",
    "desc": "Sensing, simulating, acting — the operations stack that turns physical assets into self-monitoring systems."
   },
@@ -330,33 +1277,51 @@
   {
    "title": "Applied AI & GenAI for Retail & Consumer Goods",
    "url": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Industrial IoT & sensor network",
-   "url": "/services/iot-digital-twin-robotics/industrial-iot-sensor-fabric/",
-   "tag": "Same tower",
-   "desc": "Sense everything that matters — retrofit-friendly sensor network with governed telemetry."
+   "title": "Computer Vision & Edge AI",
+   "url": "/services/iot-digital-twin-robotics/computer-vision-edge-ai/",
+   "tag": "Same domain",
+   "desc": "inference at the edge with model ops — constrained-hardware deployment, drift monitors on live feeds, and a hard rule that models never bypass interlocks."
+  },
+  {
+   "title": "Connected Products & Smart Devices",
+   "url": "/services/iot-digital-twin-robotics/connected-products-devices/",
+   "tag": "Same domain",
+   "desc": "product fleets in the field — OTA that never bricks, telemetry that earns its bandwidth, and support APIs that let service diagnose before the customer calls."
   },
   {
    "title": "Digital Twin Platform Engineering",
    "url": "/services/iot-digital-twin-robotics/digital-twin-platforms/",
-   "tag": "Same tower",
-   "desc": "Simulate before you cut steel — plant, fleet and product twins with governed physics and data."
+   "tag": "Same domain",
+   "desc": "twins that stay honest — state synchronization with fidelity metrics, simulation tiers for what-ifs, and governance for who may change what."
   },
   {
-   "title": "Computer Vision & Edge AI",
-   "url": "/services/iot-digital-twin-robotics/computer-vision-edge-ai/",
-   "tag": "Same tower",
-   "desc": "Cameras into instruments — inspection, safety and counting at the edge, inside policy."
+   "title": "SRE & Reliability Engineering",
+   "url": "/services/cloud-edge-platform-engineering/sre-reliability-engineering/",
+   "tag": "Pairs with",
+   "desc": "SLOs with teeth — error budgets that gate releases, chaos that proves recovery, and incident craft that turns 3am into a rehearsed system."
   },
   {
-   "title": "Predictive Maintenance & Asset Intelligence",
-   "url": "/services/iot-digital-twin-robotics/predictive-asset-intelligence/",
-   "tag": "Same tower",
-   "desc": "Fix it before it fails — RUL models wired into planning, spare parts and work orders."
+   "title": "Advanced Risk & Predictive Analytics",
+   "url": "/services/data-analytics-lakehouse/advanced-risk-predictive-analytics/",
+   "tag": "Pairs with",
+   "desc": "risk and forecasting models with signed baselines, time-based holdouts and governance — predictions that survive the quarter they were made in."
+  },
+  {
+   "title": "Autonomous Workflow Orchestration",
+   "url": "/services/agentic-ai-hyperautomation/autonomous-workflow-orchestration/",
+   "tag": "Pairs with",
+   "desc": "long-running workflows with durable state, recovery by design, escalation choreography and audit — orchestration that survives partial failure as a normal event."
+  },
+  {
+   "title": "A construction-equipment manufacturer",
+   "url": "/case-studies/mfg-03/",
+   "tag": "Evidence",
+   "desc": "Connected machines to connected margin — service revenue attach up 3x."
   }
  ]
 }

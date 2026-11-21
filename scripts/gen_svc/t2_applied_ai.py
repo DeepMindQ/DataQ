@@ -1,0 +1,550 @@
+#!/usr/bin/env python3
+"""Tower 2 — Applied AI & Generative AI: 7 service pages, full deep rewrite."""
+import sys, os
+sys.path.insert(0, os.path.dirname(__file__))
+from common import *
+
+def gen():
+    tw = {}
+
+    # ════════════════════════════════════════════════════════════════════
+    # 1. AI Proof-of-Concept & Value Validation
+    # ════════════════════════════════════════════════════════════════════
+    tw["services_applied-ai-generative-ai_ai-poc-value-validation.json"] = [
+        hero("Most AI PoCs are theatre: a notebook demo against cherry-picked cases, no baseline, no cost model, no gate that can say no. Our PoCs are designed to be killable — a value hypothesis with a falsifiable metric, a measured baseline, a fixed budget, and gate criteria written before the first experiment runs. Surviving that is what earns production funding."),
+        h2("The value hypothesis comes before the model selection"),
+        p("A PoC starts with one sentence: \"If we do X on process Y with quality Z, the business saves/earns W — and here is how we will measure it.\" Everything downstream hangs off that sentence. The baseline is measured on the current process with the same yardstick the PoC will use — not last year's slide estimate — because the delta is the only thing a funding committee buys. The quality bar (Z) is negotiated with the process owner up front: what error rate is tolerable at what human-check cost, because a 90% solution that needs full review is worth less than a 75% solution that needs spot checks."),
+        p("Technology selection then becomes a weekly experiment loop, not a platform debate. Three candidate approaches, each evaluated on the frozen case set under identical conditions, scored on the yardstick plus cost-per-case. The comparison table decides; nobody marries a vendor in week one."),
+        h2("The gate structure — four chances to kill it, one to fund it"),
+        p("The PoC runs through four gates, each with pre-written criteria. Gate 1 (feasibility): does the candidate beat baseline on the frozen set at all? Gate 2 (economics): does cost-per-case support the value hypothesis at realistic volume? Gate 3 (robustness): does quality hold on adversarial and out-of-distribution cases, not just the happy path? Gate 4 (operability): can the run team support it — monitoring, retraining, fallback? A PoC that passes all four arrives at the funding decision with a signed baseline, a cost model and an operator-ready design. The flow panel below is the gate map; clicking a gate shows what evidence it demands."),
+        idash(
+            "AI PoC & value validation — gate console",
+            badge="Interactive · gates are clickable",
+            kpis_=[
+                kpi("Baseline (measured)", "142 min", delta="per case, manual process", dir_="flat", spark=[148, 147, 145, 144, 143, 142, 142]),
+                kpi("PoC cycle time", "3.1 min", delta="candidate approach", dir_="down", spark=[12, 8, 6, 4.5, 3.8, 3.4, 3.1]),
+                kpi("Case-set pass", "83.6%", delta="184 frozen cases", dir_="up", spark=[54, 62, 68, 74, 78, 81, 84]),
+                kpi("Cost / case", "0.38", delta="at realistic volume", dir_="down", spark=[2.1, 1.4, 0.9, 0.6, 0.5, 0.42, 0.38]),
+                kpi("Gate 1–3 status", "3/4", delta="Gate 4 pending ops review", dir_="up", spark=[0, 1, 1, 2, 2, 3, 3]),
+            ],
+            tabs=[
+                tab("Gate map", [
+                    w_flow("The four gates — click each for its evidence contract",
+                           [flow_stage("Gate 1 — Feasibility", "Quality on frozen set",
+                                       "Candidates run against the frozen case set with identical prompts, identical budgets. Pass bar: beat measured baseline on the primary metric with statistical confidence. No live data, no exceptions.",
+                                       [fm("Evidence", "score table"), fm("Kill rate", "~40%")]),
+                            flow_stage("Gate 2 — Economics", "Cost per case at volume",
+                                       "Cost model with realistic volumes — model spend, human review load, integration amortization. Pass bar: value hypothesis holds with 50% margin, not a rounding error.",
+                                       [fm("Evidence", "TCO model"), fm("Kill rate", "~25%")]),
+                            flow_stage("Gate 3 — Robustness", "Adversarial + OOD",
+                                       "Adversarial cases, out-of-distribution inputs, drift simulation. Pass bar: quality degrades gracefully and monitoring catches the degradation before the business does.",
+                                       [fm("Evidence", "stress report"), fm("Kill rate", "~30%")]),
+                            flow_stage("Gate 4 — Operability", "Run-team readiness",
+                                       "Monitoring wired, fallback path defined, retraining trigger documented, owner named. Pass bar: the run team signs the support contract — not the innovation team.",
+                                       [fm("Evidence", "ops checklist"), fm("Kill rate", "~15%")])],
+                           note_="Four gates, one funding decision. The kill rates are honest: most PoCs should die at Gate 2 or 3 — that is the point of the structure."),
+                ]),
+                tab("Value map", [
+                    w_scatter("Candidate portfolio — value vs readiness",
+                              [sc_pt(64, 82, "Doc triage", "Funded"), sc_pt(48, 55, "Support drafts", "Pilot"),
+                               sc_pt(78, 38, "Contract redline", "Discovery"), sc_pt(31, 71, "QA summary", "Funded"),
+                               sc_pt(88, 29, "Auto-underwrite", "Discovery"), sc_pt(41, 63, "Field ops notes", "Pilot"),
+                               sc_pt(25, 47, "Meeting digest", "Kill — Gate 2"), sc_pt(58, 76, "Invoice exception", "Pilot"),
+                               sc_pt(70, 18, "Voice agent swap", "Kill — Gate 3"), sc_pt(36, 33, "Sentiment feed", "Kill — Gate 1")],
+                              ["Funded", "Pilot", "Discovery", "Kill — Gate 1", "Kill — Gate 2", "Kill — Gate 3"],
+                              "Value score (0-100)", "Readiness (0-100)",
+                              note_="Hover for names and gate status. The upper band is this year's funded slate; the kills are published internally — a visible graveyard is what keeps hypotheses honest."),
+                ]),
+                tab("TCO what-if", [
+                    w_sim("Total cost of ownership what-if — volume, review load, model class",
+                          [sim_param("Monthly volume", 1000, 200000, 1000, 40000, "cases"),
+                           sim_param("Human review share", 0, 60, 5, 20, "%"),
+                           sim_param("Model class", 0, 3, 1, 2, "tier")],
+                          [sim_out("Cost / case", "$", "0.08*p2+p1*0.9+0.12", good="1.20", bad="2.50"),
+                           sim_out("Annual gross value", "$k", "p0*12*(8.4-0.08*p2-p1*0.9-0.12)/1000", good="1500", bad="600"),
+                           sim_out("Payback", "mo", "max(3, 260/(p0*0.15*(1-p1/120)))", good="9", bad="20")],
+                          curve=sim_curve(1, 1, "Review share vs annual value"),
+                          note_="Review load is the silent TCO killer: each 10% of human review adds roughly a dollar per case and erases the delta on mid-value processes. The curve is the argument for investing in quality before scaling volume."),
+                ]),
+            ],
+            note_="Reference program model: gate kill-rates and value bands from delivery experience, not client results.",
+        ),
+        h2("The frozen case set is the PoC's real deliverable"),
+        p("Whatever survives, the case set is the asset that carries forward: cases sampled from real distribution, labelled by the process owner, versioned, and frozen during evaluation so no candidate quietly tunes against the test. Adversarial cases are added deliberately — the malformed input, the edge vendor format, the prompt-injection attempt — because Gate 3 exists precisely where demos never go. Twelve months later the same set gates production model upgrades; the PoC's discipline becomes the estate's regression harness."),
+        bullets([
+            ["Value hypothesis one-pager", "Falsifiable metric, measured baseline, tolerable error rate, owner signature — before any model choice"],
+            ["Frozen case set", "Real-distribution cases + adversarial set, versioned; candidates evaluated blind against it"],
+            ["Pre-written gate criteria", "Four gates with kill bars agreed up front — a pass is arithmetic, not persuasion"],
+            ["Cost-per-case model", "Model spend, review load and integration amortized at realistic volume — TCO before funding"],
+            ["Published graveyard", "Killed PoCs recorded with gate and reason; the visible graveyard keeps the portfolio honest"],
+        ]),
+        h2("Five weeks, fixed budget, funded-or-killed"),
+        p("Weeks 1–2: hypothesis and baseline — yardstick agreed with the process owner, baseline measured live, case set frozen. Weeks 3–4: candidate loop — three approaches evaluated blind, cost model built at realistic volume, adversarial set run. Week 5: gates 1–3 scored, gate 4 checklist drafted with the run team, funding readout with the signed arithmetic. The output is a decision with evidence — fund, redesign, or kill — and either way the organization keeps the case set, the baseline and the honest comparison."),
+        note("The PoC budget is fixed at kickoff — a PoC that needs more money to prove itself has already failed Gate 2 arithmetic in spirit."),
+        cta("Bring the AI idea the board keeps asking about. Five weeks returns a measured baseline, a blind three-way comparison and a fund-or-kill decision with the arithmetic attached."),
+    ]
+
+    # ════════════════════════════════════════════════════════════════════
+    # 2. Conversational AI & Digital Humans
+    # ════════════════════════════════════════════════════════════════════
+    tw["services_applied-ai-generative-ai_conversational-ai-digital-humans.json"] = [
+        hero("A conversation product is a latency-budget system wearing a personality. Voice adds 700 ms of unavoidable physics — ASR, turn detection, synthesis — before the model even thinks. We build conversation stacks where containment, escalation and turn-taking are engineered as rigorously as the persona, because a charming agent that answers the wrong question at 2.5 seconds is a failed product."),
+        h2("The latency stack decides UX before the model does"),
+        p("Perceived responsiveness is the sum of ASR partials, endpointing policy, model time-to-first-token, streaming synthesis and barge-in handling — each hop with its own budget. The gauge panel shows a typical voice budget: endpointing tuned at 350–500 ms (too eager cuts people off, too slow feels dead), TTFT under 400 ms on streaming models, synthesis chunked so first audio lands before the full sentence exists. Text channels get the same discipline with different numbers — typing indicators and progressive render buy the perceived latency that physics does not."),
+        p("Turn-taking is the differentiator between a demo and a product: barge-in must cancel generation mid-token and rewind state; partial hypotheses must drive prefetch; silences must be classified (thinking vs gone) with different policies. None of this is model quality — all of it is engineering, and all of it is measurable."),
+        h2("Containment: the persona is not the policy"),
+        p("The persona says \"helpful and warm\"; the policy layer says what it may promise, what it may refuse, and when it must hand off. Containment is engineered in layers: retrieval-grounded answering so claims cite the knowledge base; a policy gate that screens responses against commitment rules (no refunds above threshold, no medical dosage language); intent classification watching for distress, legal exposure or VIP signals that trigger escalation; and a full transcript trail with the retrieval evidence attached, so \"why did the bot say that\" has a written answer. Red-team suites run the persona against manipulation scripts before every release."),
+        idash(
+            "Conversational AI — turn & containment console",
+            badge="Interactive · voice budget model",
+            kpis_=[
+                kpi("Turn latency p95", "1.18 s", delta="voice, end-to-end", dir_="down", spark=[1.9, 1.7, 1.5, 1.38, 1.28, 1.22, 1.18]),
+                kpi("Containment", "71.3%", delta="resolved without agent", dir_="up", spark=[52, 56, 60, 63, 66, 69, 71]),
+                kpi("Escalation quality", "4.5/5", delta="human CSAT on handoffs", dir_="up", spark=[3.6, 3.8, 4.0, 4.2, 4.3, 4.4, 4.5]),
+                kpi("Policy blocks", "0.9%", delta="screened pre-send", dir_="flat", spark=[2.1, 1.8, 1.5, 1.2, 1.0, 0.95, 0.9]),
+                kpi("Barge-in success", "97.8%", delta="cancels within 150 ms", dir_="up", spark=[88, 91, 93, 95, 96, 97, 98]),
+            ],
+            tabs=[
+                tab("Latency budget", [
+                    w_gauge("Voice turn budget — each hop against its cap",
+                            [gauge_item("Endpoint", 0.42, 0.6, "s", warn=0.5, crit=0.58),
+                             gauge_item("ASR final", 0.21, 0.4, "s", warn=0.3, crit=0.38),
+                             gauge_item("TTFT", 0.36, 0.6, "s", warn=0.45, crit=0.55),
+                             gauge_item("Synth first audio", 0.19, 0.5, "s", warn=0.35, crit=0.45)],
+                            note_="Gauges show each hop against its cap with warn/crit bands. Total budget 1.2 s at p95 — the endpointing gauge is the one to watch; it eats whatever the others leave behind."),
+                ]),
+                tab("Turn pipeline", [
+                    w_arch("The conversation stack — click nodes for their contract",
+                           ["Capture", "Understanding", "Reasoning", "Delivery"],
+                           [arch_node("mic", 0, "Audio capture", "Streaming capture with VAD and jitter buffer; packet loss concealment keeps ASR fed through network hiccups.", hot=True),
+                            arch_node("asr", 1, "Streaming ASR", "Partial hypotheses from 120 ms chunks drive prefetch; finalization triggers the reasoning turn with confidence stamped."),
+                            arch_node("ept", 1, "Endpointing policy", "Adaptive endpointer tuned per locale and call type; barge-in cancels generation mid-token and rewinds dialogue state."),
+                            arch_node("intent", 2, "Intent & signals", "Classifies distress, legal exposure, VIP status — signals route the turn before generation, not after."),
+                            arch_node("gen", 2, "Grounded generation", "Retrieval-grounded with citations attached to claims; the persona prompt and policy gate are versioned artifacts."),
+                            arch_node("pol", 2, "Policy gate", "Screens against commitment rules per channel; blocked responses regenerate with a safer strategy and log the block."),
+                            arch_node("tts", 3, "Streaming synthesis", "Sentence-chunked synthesis; prosody profile is part of the persona contract and A/B tested like copy."),
+                            arch_node("esc", 3, "Escalation bridge", "Warm handoff with transcript, evidence and predicted intent — the human agent never asks the customer to repeat.")],
+                           [edge("mic", "asr"), edge("asr", "ept"), edge("ept", "intent"), edge("intent", "gen"),
+                            edge("gen", "pol", "screen"), edge("pol", "tts"), edge("tts", "esc", "on signal")],
+                           note_="Click nodes to read each contract. The escalation bridge is a first-class lane: handoffs carry full context by design."),
+                ]),
+                tab("Containment what-if", [
+                    w_sim("Containment vs escalation what-if — deflection, CSAT and load",
+                          [sim_param("Daily sessions", 2000, 100000, 1000, 24000, "sessions"),
+                           sim_param("Knowledge coverage", 40, 100, 5, 85, "%"),
+                           sim_param("Escalation threshold", 1, 10, 1, 6, "turns")],
+                          [sim_out("Containment", "%", "min(88, p1*0.72+p2*1.1)", good="70", bad="55"),
+                           sim_out("CSAT risk", "0-100", "max(10, 100-p2*9-(100-p1)*0.6)", good="30", bad="55"),
+                           sim_out("Agent load", "sessions/h", "p0*(1-p1*0.0072-p2*0.011)*0.4", good="800", bad="2000")],
+                          curve=sim_curve(2, 0, "Escalation threshold vs containment"),
+                          note_="The containment curve saturates: past ~8 turns, holding sessions longer stops deflecting and starts damaging CSAT — the panel shows where your threshold buys volume and where it buys complaints."),
+                ]),
+            ],
+            note_="Reference program model: latency caps and containment bands from delivery, not client telemetry.",
+        ),
+        h2("Digital humans: the persona is a spec, not a mood"),
+        p("A digital human adds a visual channel with its own contract: lip-sync alignment to phoneme timings, gesture policies tied to dialogue state (leaning in on clarification, stillness during disclosures), and identity governance — the avatar's appearance and voice are licensed assets with usage scopes, reviewed like any brand asset. The persona itself is written as a specification: vocabulary bands, refusal phrasing, escalation language, forbidden claims — versioned and regression-tested with the same red-team suite as the text stack. The result is a character the compliance team can sign, not just the marketing team."),
+        bullets([
+            ["Per-hop latency budgets", "Endpointing, ASR, TTFT and synthesis each with caps, warn bands and dashboards — perceived latency is engineered"],
+            ["Barge-in correctness", "Mid-token cancellation with dialogue-state rewind — tested with interruption suites, not assumed"],
+            ["Grounded responses", "Claims cite the knowledge base; citation evidence stored with the transcript"],
+            ["Policy gate + red-team suite", "Commitment rules enforced pre-send; manipulation scripts run before every release"],
+            ["Warm handoff contract", "Escalation carries transcript, retrieval evidence and predicted intent — the customer never repeats"],
+            ["Persona as versioned spec", "Vocabulary, refusals and gestures are testable artifacts, not prompt folklore"],
+        ]),
+        h2("From pilot voice to production channel in one quarter"),
+        p("Weeks 1–3: channel inventory — top intents, current handle times, containment targets signed with the service owner; voice stack stood up in the lab with the latency harness measuring every hop. Weeks 4–8: grounded knowledge build with retrieval evidence, policy gate configured, red-team suite first pass; pilot traffic at 5% with live dashboards. Weeks 9–12: endpointing and persona tuning from real calls, escalation bridge wired to the contact centre, ramp by intent class. The containment number is published weekly with the CSAT on its escalations — deflection that damages CSAT is not counted as a win."),
+        note("We optimize containment × CSAT jointly: a contained session with a frustrated customer is recorded as a failure of the threshold policy, not as a deflection success."),
+        cta("Bring the contact-centre metric that will not move. The diagnostic budgets your latency stack and returns the containment plan with the escalation contract in four weeks."),
+    ]
+
+    # ════════════════════════════════════════════════════════════════════
+    # 3. Enterprise AI Strategy & Roadmapping
+    # ════════════════════════════════════════════════════════════════════
+    tw["services_applied-ai-generative-ai_enterprise-ai-strategy.json"] = [
+        hero("Enterprise AI strategy fails as a document and succeeds as an operating model: a portfolio with funding gates, a capability map that names who builds and who runs, a risk tier that decides which use cases need which controls, and a platform decision made once instead of forty times. We run strategy as an engineering engagement — the deliverable is the machine that produces AI value, not a slide deck about it."),
+        h2("Portfolio discipline: value, readiness, risk — scored, not argued"),
+        p("Every candidate use case is scored on three axes with the same rubric: value (measured baseline × realistic delta), readiness (data existence, integration surface, owner engagement), risk (decision impact, regulatory exposure, error consequences). The scoring is done in workshops with the P&L owners, not by the AI team in isolation — ownership of the score transfers with it. The scatter panel is the portfolio view the executive committee gets; the funded slate is the upper band, and everything below the readiness floor is a data-engineering task first, an AI task second."),
+        p("Risk tiering then sets controls per class: a cosmetic copy assistant and an underwriting recommendation carry different evidence bars, different review gates and different audit trails. Writing the tiers down ends the recurring argument about whether \"this one needs human review\" — the tier says so."),
+        h2("Build/buy/platform: the decision made once, with criteria"),
+        p("The platform question — which models, which serving, which eval infra — is decided once at the strategy level with written criteria (data residency, latency classes, cost bands, exit options), then applied by every delivery team. AI factory pattern for high-volume repeatable use cases; boutique pattern for the long tail. The heat grid below shows the typical finding: capability exists patchily — strong data engineering, absent eval infrastructure, no model registry — and the roadmap funds the gaps in dependency order, because eval infrastructure before platform is the wrong order and every portfolio stalls on it."),
+        idash(
+            "Enterprise AI strategy — portfolio & capability console",
+            badge="Interactive · portfolio model",
+            kpis_=[
+                kpi("Use cases scored", "64", delta="3-axis rubric, owners signed", dir_="up", spark=[0, 12, 28, 40, 52, 60, 64]),
+                kpi("Funded slate", "11", delta="year-1 portfolio", dir_="flat", spark=[0, 2, 5, 7, 9, 10, 11]),
+                kpi("Value at stake", "34.2", delta="$M annualized, measured baselines", dir_="up", spark=[8, 14, 20, 25, 29, 32, 34]),
+                kpi("Capability gaps", "6", delta="funded in dependency order", dir_="down", spark=[14, 12, 10, 9, 8, 7, 6]),
+                kpi("Risk tiers defined", "3", delta="controls mapped per tier", dir_="flat", spark=[0, 1, 2, 3, 3, 3, 3]),
+            ],
+            tabs=[
+                tab("Portfolio map", [
+                    w_scatter("The scored estate — value vs readiness, bubble = risk",
+                              [sc_pt(78, 66, "Claims triage", "Tier-1"), sc_pt(64, 48, "Quality inspection", "Tier-2"),
+                               sc_pt(88, 24, "Underwriting assist", "Tier-1"), sc_pt(52, 72, "Service summaries", "Tier-3"),
+                               sc_pt(44, 35, "Demand forecast", "Tier-2"), sc_pt(70, 30, "Contract intel", "Tier-2"),
+                               sc_pt(35, 55, "HR self-serve", "Tier-3"), sc_pt(58, 18, " Fraud graph", "Tier-1"),
+                               sc_pt(30, 68, "Meeting ops", "Tier-3"), sc_pt(82, 12, "Dynamic pricing", "Tier-1")],
+                              ["Tier-1", "Tier-2", "Tier-3"], "Value (0-100)", "Readiness (0-100)",
+                              note_="Hover for names and risk tier. High-value low-readiness candidates become data-engineering line items; the funded slate comes from the upper-right, tiered controls attached."),
+                ]),
+                tab("Capability heat", [
+                    w_heat("Capability maturity × domain — where the estate actually stands",
+                           ["Data foundations", "Eval infra", "Model ops", "Integration", "Governance", "Talent"],
+                           ["Data", "Applications", "Operations", "Front office"],
+                           [[62, 41, 38, 55, 30, 48], [54, 22, 25, 61, 28, 40], [70, 35, 30, 66, 34, 45], [48, 18, 20, 58, 26, 36]],
+                           unit="maturity 0-100",
+                           note_="Hover cells to read maturity. Eval infrastructure is the dark row everywhere — which is why portfolio execution stalls at gate 3. The roadmap funds eval before platform, always."),
+                ]),
+                tab("Roadmap what-if", [
+                    w_sim("Roadmap pacing what-if — delivery pods vs portfolio throughput",
+                          [sim_param("Delivery pods", 1, 12, 1, 5, "pods"),
+                           sim_param("Platform investment", 0, 10, 1, 6, "$M/yr"),
+                           sim_param("Use-case volume", 10, 100, 5, 45, "cases/yr")],
+                          [sim_out("Throughput", "cases/yr delivered", "p0*4.2*(1+p1*0.09)*(p2/45)*0.8", good="30", bad="12"),
+                           sim_out("Cost per delivered case", "$k", "p0*0.9*12/ max(1,p0*4.2*(1+p1*0.09)*(p2/45)*0.8) *10", good="3", bad="7"),
+                           sim_out("Platform coverage", "%", "min(92, 30+p1*7)", good="75", bad="45")],
+                          curve=sim_curve(0, 0, "Pods vs annual throughput"),
+                          note_="Throughput scales sublinearly in pods — platform investment buys the second wave of the curve. The cost-per-case readout is the CFO's argument for funding the platform once instead of forty times."),
+                ]),
+            ],
+            note_="Reference program model: scoring rubric bands and maturity indices from delivery, not client data.",
+        ),
+        h2("The operating model answers who, not what"),
+        p("The strategy document that matters fits on one page per question: who proposes (business with AI-team support), who scores (joint, with P&L owner signature), who funds (portfolio board per quarter), who builds (pods with named delivery standards), who runs (a named run team per tier-1 use case), who audits (risk function with the tier map). Everything else — model choices, vendor shortlists, architecture patterns — flows from those assignments. Organizations that skip the assignment step produce an architecture deck and zero production systems; organizations that answer it produce a delivery machine that survives re-organizations."),
+        bullets([
+            ["Scored portfolio", "Value × readiness × risk rubric with owner signatures — the funding argument is arithmetic"],
+            ["Risk tier map", "Controls per tier: evidence bars, review gates, audit trails — written once, applied everywhere"],
+            ["Capability gap roadmap", "Funded in dependency order: eval infrastructure before platform, platform before the portfolio wave"],
+            ["Operating model page", "Who proposes, scores, funds, builds, runs, audits — the machine that produces value"],
+            ["Quarterly portfolio board", "Funding decisions per quarter with kill authority — the slate is a portfolio, not a museum"],
+        ]),
+        h2("Seventy days to a fundable machine"),
+        p("Days 1–15: estate discovery — use-case inventory, data foundations audit, capability maturity heat, baseline measurement on the ten loudest candidates. Days 16–35: scoring workshops with P&L owners; risk tiers drafted with the risk function; build/buy/platform criteria written. Days 36–50: operating model agreed in a working session that ends with names against every role; roadmap sequenced in dependency order. Days 51–70: portfolio board convened, first slate funded with gates, delivery pods stood up on the first two use cases. The engagement ends with the machine running — the document exists, but as a byproduct."),
+        note("The first slate is deliberately small — two funded use cases run end-to-end beat eleven announced ones; the machine scales after the first two prove the gates work."),
+        cta("Bring the AI ambition and the stalled portfolio. Seventy days returns the scored estate, the tier map and an operating model with names — fundable at the next board."),
+    ]
+
+    # ════════════════════════════════════════════════════════════════════
+    # 4. Generative AI Platform Engineering
+    # ════════════════════════════════════════════════════════════════════
+    tw["services_applied-ai-generative-ai_genai-platform-engineering.json"] = [
+        hero("The GenAI platform is the shared rails that stop every team from re-solving inference, evaluation and safety alone: one gateway that routes models and spends, one prompt registry with versions, one eval harness with published scores, one safety layer with policy evidence. Built once, it turns a pile of demos into a portfolio — and its engineering is the difference between forty teams and one AI estate."),
+        h2("The gateway is the platform's load-bearing wall"),
+        p("Every model call in the estate passes through the gateway, and that single fact buys the platform's value: routing policies (model per task class, fallback chains, cost tiers), spend accounting per team and per feature, quota enforcement that keeps one team's burst from starving another's, caching by content hash for the enormous share of repeated prompts, and PII screens at the edge. Teams get the illusion of direct API access; the estate gets observability, budget control and one place to swap models when the landscape moves — which it does, quarterly."),
+        p("The registry layer makes prompts and agents governed artifacts: prompts versioned with eval scores per version (a prompt change is a deployment, not a paste), retrieval indices catalogued with freshness SLAs, agent definitions registered with tool scopes. Nothing ships from a playground straight to production — the path runs through versioning, evaluation and review, the same as code."),
+        h2("Platform engineering metrics: what the rails must prove"),
+        p("A platform earns adoption with measurable service: time-to-first-LLM-feature for a new team (the onboarding metric), eval coverage of production flows (what share of gen-AI features ship with harness scores), cost per 1k tokens by feature (the unit economics the CFO reads), and incident MTTR attributable to model changes. The console carries those as the platform's own product metrics — the platform team is on call for its rails like any other product team."),
+        idash(
+            "GenAI platform engineering — rails console",
+            badge="Interactive · capacity model",
+            kpis_=[
+                kpi("Onboard → prod", "6.5 d", delta="time-to-first-feature", dir_="down", spark=[28, 22, 17, 13, 10, 8, 6.5]),
+                kpi("Eval coverage", "87%", delta="of prod gen-AI flows", dir_="up", spark=[40, 52, 61, 70, 78, 84, 87]),
+                kpi("Cost / 1k tokens", "0.0021", delta="blended after routing", dir_="down", spark=[0.008, 0.0065, 0.005, 0.0038, 0.0029, 0.0024, 0.0021]),
+                kpi("Gateway p99 overhead", "11 ms", delta="routing + policy + logging", dir_="flat", spark=[18, 16, 14, 13, 12, 11, 11]),
+                kpi("Cache hit share", "38.4%", delta="by content hash", dir_="up", spark=[12, 18, 24, 29, 33, 36, 38]),
+            ],
+            tabs=[
+                tab("Routing & cost", [
+                    w_line("Cost per 1k tokens by feature class — routing discipline compounding",
+                           ["M1", "M2", "M3", "M4", "M5", "M6"],
+                           [{"name": "Summarize class", "points": [0.008, 0.0062, 0.0044, 0.0031, 0.0024, 0.0021]},
+                            {"name": "Reasoning class", "points": [0.021, 0.018, 0.0145, 0.012, 0.0105, 0.0096]},
+                            {"name": "Embedding class", "points": [0.0004, 0.00035, 0.0003, 0.00028, 0.00026, 0.00025]}],
+                           unit="$", note_="Hover for exact costs; click to isolate. The reasoning class stays expensive by design — cheap routing there breaks quality, and the eval harness proves it before any swap."),
+                    w_donut("Where the token spend goes — estate composition",
+                            ["Production features", "Evaluation runs", "Shadow/canary", "Development", "Waste (unrouted)"],
+                            [58, 18, 9, 13, 2],
+                            unit="% of spend",
+                            note_="Click segments to pin. Evaluation spend is deliberate and visible — platforms that cut it ship regressions. Waste under 3% is the routing policy working."),
+                ]),
+                tab("Capacity what-if", [
+                    w_sim("GPU & quota what-if — serving classes and burst behavior",
+                          [sim_param("Peak req/s", 10, 500, 10, 140, "req/s"),
+                           sim_param("Reserved capacity", 20, 100, 5, 65, "%"),
+                           sim_param("Autoscale ceiling", 2, 6, 1, 4, "× base")],
+                          [sim_out("Queue p99", "ms", "max(15, p0*0.35*(100-p1)/100/max(1,p2-1))", good="200", bad="800"),
+                           sim_out("Idle cost share", "%", "(100-p1)*0.55*(1-(p2-1)/8)", good="25", bad="45"),
+                           sim_out("Reject rate", "%", "max(0, (p0-p1*4*(p2-0.4))/p0*100*0.9)", good="1", bad="8")],
+                          curve=sim_curve(0, 0, "Peak load vs queue p99"),
+                          note_="The queue curve is the capacity argument: reserved capacity buys predictability, autoscale ceiling buys burst survival — drag both to see the reject rate's cliff."),
+                ]),
+                tab("Rails topology", [
+                    w_arch("The platform rails — click nodes for the shared contract",
+                           ["Edge", "Gateway", "Registry", "Delivery", "Evidence"],
+                           [arch_node("pii", 0, "PII screen", "Edge screening with entity policy per region; blocked payloads regenerate in-region rather than leaking cross-border.", hot=True),
+                            arch_node("gw", 1, "Model gateway", "Routing, fallbacks, quotas, spend accounting and caching — the single entry point for every model call in the estate."),
+                            arch_node("prompt", 2, "Prompt registry", "Versioned prompts with eval scores per version; a prompt change ships like code — reviewed, scored, roll-back-able."),
+                            arch_node("index", 2, "Retrieval catalogue", "Indices with freshness SLAs, source lineage and access scopes; retrieval quality is measured, not assumed."),
+                            arch_node("safety", 3, "Policy & safety layer", "Commitment rules, refusal policies and output screens — evidence stored per decision for the audit story."),
+                            arch_node("serve", 3, "Serving classes", "Latency-classed serving lanes (interactive, batch, bulk); interactive traffic never queues behind a batch job."),
+                            arch_node("eval", 4, "Eval harness", "Golden cases per feature; nightly scores published on the platform scoreboard; regressions block deploys."),
+                            arch_node("obs", 4, "Observability", "Traces with prompt, retrieval, model, cost and policy outcome per call — the debugging surface for every team.")],
+                           [edge("pii", "gw"), edge("gw", "prompt", "versions"), edge("gw", "index", "retrieval"),
+                            edge("gw", "safety", "screens"), edge("safety", "serve"), edge("serve", "eval", "scored"),
+                            edge("eval", "obs", "publish")],
+                           note_="Click nodes to read the shared contract each rail offers. Teams inherit all eight rails by onboarding — none of them re-solve inference or safety alone."),
+                ]),
+            ],
+            note_="Reference platform model: onboarding and cost bands from delivery benchmarks, not client telemetry.",
+        ),
+        h2("Model swaps are platform events, not fire drills"),
+        p("The landscape moves quarterly, and the platform's real value shows in the swap: new model candidates run through the eval harness on every feature's golden cases, costs re-modelled per routing class, safety screens re-tested, and the routing policy updated with the scores attached. A swap that took a quarter of heroics in an unplatformed estate takes a sprint of scheduled work here — because the harness, the registry and the gateway were built for exactly this day. Feature teams feel a version number change, not a rewrite."),
+        bullets([
+            ["Single gateway", "Routing, fallback, quotas, spend and caching for every model call — one place to observe and control"],
+            ["Versioned prompt registry", "Prompts are deployments with eval scores; rollbacks are one click, not archaeology"],
+            ["Retrieval catalogue", "Indices with freshness SLAs and lineage — retrieval quality measured per index"],
+            ["Nightly eval scoreboard", "Golden-case scores per feature, published; regressions block the deploy train"],
+            ["Capacity classes", "Interactive, batch and bulk lanes with quotas — a bulk backfill cannot stall the chat feature"],
+        ]),
+        h2("Standing up the rails in ninety days"),
+        p("Days 1–30: gateway and registry — the first two features onboard through the rails as the shakedown, spend accounting live from day one. Days 31–60: eval harness with the first golden sets, safety layer with policy evidence, retrieval catalogue with freshness SLAs. Days 61–90: capacity classes and quota policy, swap rehearsal (a scheduled model switch executed as practice), platform scoreboard published. From day 90, every new gen-AI feature inherits the rails by default, and the platform team's roadmap is driven by the scoreboard's gaps — not by the loudest team's request."),
+        note("Onboarding through the rails is mandatory for production traffic; the playground remains free for experiments, and the gateway is where the two worlds separate."),
+        cta("Bring the gen-AI estate that grew team by team. Ninety days returns the gateway, registry, harness and scoreboard — with two production features onboarded as proof."),
+    ]
+
+    # ════════════════════════════════════════════════════════════════════
+    # 5. LLM Fine-Tuning & Model Operations
+    # ════════════════════════════════════════════════════════════════════
+    tw["services_applied-ai-generative-ai_llm-fine-tuning-ops.json"] = [
+        hero("Fine-tuning is a data problem wearing a GPU costume. The models are the easy part — LoRA made adaptation cheap — while dataset curation, contamination control, catastrophic-forgetting evals and the drift treadmill decide whether the tuned model ships or quietly embarrasses the team that shipped it. We run tuning as model operations with a harness from day one."),
+        h2("Dataset curation is the whole game"),
+        p("Tuning quality is bounded by dataset quality, and the failure patterns are predictable: style contamination (the model learns your reviewers' tics instead of the task), label noise (inconsistently graded outputs teach the model that grading is random), task drift (the dataset says classification, the product needs generation), and leakage (test cases present in training data — the score that collapses in production). The curation pipeline treats examples like code: deduplicated by content hash, style-normalized, graded by calibrated reviewers with agreement rates published, and split with provenance so the eval set is provably unseen."),
+        p("Method selection follows the data: LoRA/QLoRA for task adaptation on modest data, full fine-tune only with scale and a reason, preference optimization (DPO/KTO) when pairwise judgments exist, distillation when a big teacher's behaviour must fit a cheap student for cost. Each choice is an experiment against the frozen eval, not a preference."),
+        h2("The evaluation harness decides promotion"),
+        p("The harness runs three eval families on every candidate: task quality (the golden set, scored blind), capability retention (the general-capability suite that catches catastrophic forgetting — a model that learned your domain and lost arithmetic ships anyway without this), and safety/robustness (jailbreak probes, injection resistance, refusal calibration). Promotion requires passing all three; the radar panel shows a typical candidate — strong on task, degraded on retention, and therefore not promoted until the training mix rebalances. Model ops then owns the drift treadmill: production distributions shift, the harness re-runs weekly, and retraining triggers are documented rather than heroic."),
+        idash(
+            "LLM fine-tuning & model ops — tuning console",
+            badge="Interactive · eval model",
+            kpis_=[
+                kpi("Golden-set win rate", "91.2%", delta="vs base model", dir_="up", spark=[62, 68, 74, 79, 84, 88, 91]),
+                kpi("Retention score", "93.8%", delta="general-capability suite", dir_="flat", spark=[99, 98.5, 97.9, 97, 96, 94.6, 93.8]),
+                kpi("Dataset size (curated)", "18.4k", delta="agreement ≥ 0.86", dir_="up", spark=[2, 5, 8.5, 12, 15, 17, 18.4]),
+                kpi("Cost / tuned run", "312", delta="QLoRA on 8×A100 spot", dir_="down", spark=[1400, 980, 640, 460, 380, 340, 312]),
+                kpi("Drift alarms (30d)", "1", delta="retrain queued", dir_="flat", spark=[4, 4, 3, 2, 2, 1, 1]),
+            ],
+            tabs=[
+                tab("Eval progression", [
+                    w_line("Candidate generations — task quality vs capability retention",
+                           ["Exp 1", "Exp 2", "Exp 3", "Exp 4", "Exp 5", "Exp 6", "Exp 7"],
+                           [{"name": "Golden-set win %", "points": [62, 71, 77, 82, 86, 89, 91]},
+                            {"name": "Retention score", "points": [99, 98.4, 97.6, 96.2, 95.1, 94.2, 93.8]},
+                            {"name": "Promotion bar", "points": [85, 85, 85, 85, 85, 85, 85]}],
+                           note_="The scissors are the whole story: task quality climbs while retention slides — the training mix rebalances until both clear the bar. Exp 6 is the first promotable candidate."),
+                    w_radar("Exp 7 capability profile — where the tuned model stands",
+                            ["Task quality", "Instruction following", "Reasoning", "Refusal calibration", "Long context", "Multilinguality"],
+                            [{"name": "Exp 7 (tuned)", "points": [91, 88, 84, 90, 86, 82]},
+                             {"name": "Base model", "points": [62, 86, 88, 91, 90, 89]},
+                             {"name": "Promotion bar", "points": [85, 80, 80, 80, 75, 75]}],
+                            note_="Toggle series to compare. Task quality jumps 29 points; reasoning gives back 4 — inside the acceptable trade signed before training. The radar is what the promotion review reads."),
+                ]),
+                tab("Dataset what-if", [
+                    w_sim("Training what-if — dataset size, mix and epochs",
+                          [sim_param("Curated examples", 2000, 40000, 500, 18400, "examples"),
+                           sim_param("General-data mix", 0, 50, 5, 30, "%"),
+                           sim_param("Epochs", 1, 6, 1, 3, "epochs")],
+                          [sim_out("Win rate", "%", "min(95, 45+p0*0.0016+p2*2.2-p1*0.1)", good="85", bad="70"),
+                           sim_out("Retention", "%", "99-min(p2*1.8, 9)-max(0,(p0-30000))*0.00012+p1*0.12", good="93", bad="88"),
+                           sim_out("Run cost", "$", "p0*p2*0.0055+p1*4", good="400", bad="900")],
+                          curve=sim_curve(0, 0, "Curated examples vs win rate"),
+                          note_="The win-rate curve saturates hard: past ~20k clean examples, more epochs buy overfit, not quality. The retention equation shows why the general-data mix is not optional — it is the forgetting insurance."),
+                ]),
+                tab("Ops treadmill", [
+                    w_flow("Model operations cycle — click stages for the contract",
+                           [flow_stage("Monitor", "Drift watch",
+                                       "Input and output distributions tracked per feature; drift alarms carry the evidence window so retraining decisions cite data, not vibes.",
+                                       [fm("Signals tracked", "14"), fm("Alarm → action", "48 h")]),
+                            flow_stage("Triage", "Is it the model?",
+                                       "Regression triage separates model drift from upstream changes (retrieval index, prompt change, product edit) — the harness replays golden cases to attribute.",
+                                       [fm("Attribution time", "2 h"), fm("False model-blame", "8%")]),
+                            flow_stage("Re-tune", "Mix + new data",
+                                       "Corrections from production join the curated set with provenance; the training mix rebalances; the new candidate trains on spot capacity.",
+                                       [fm("Cycle time", "6 d"), fm("Cost discipline", "spot-first")]),
+                            flow_stage("Gate", "Three eval families",
+                                       "Task quality, capability retention, safety — all three must clear. A candidate that wins the task and loses retention is rejected by arithmetic.",
+                                       [fm("Families", "3"), fm("Bar", "signed")]),
+                            flow_stage("Promote", "Shadow → canary → live",
+                                       "Shadow scoring against live traffic, canary at 5%, promotion with rollback pinned — the harness result travels with the model version.",
+                                       [fm("Rollback", "one call"), fm("Evidence", "versioned")])],
+                           note_="The treadmill is scheduled work: drift alarms arrive, the cycle runs, the harness decides — nobody hand-rolls a fine-tune in a crisis."),
+                ]),
+            ],
+            note_="Reference program model: eval bands and cost curves from delivery benchmarks, not client results.",
+        ),
+        h2("What ships with the tuned model"),
+        p("A promoted model ships with its provenance bundle: dataset manifest (sources, dedup hashes, reviewer agreement rates), training configuration, the three eval-family scores, the capability radar versus base, and the rollback contract. Six months later, when someone asks why the model refuses dosage questions or writes better Spanish than the base did, the bundle answers. The bundle is also what makes the next tuning round cheap — the mix rebalances from evidence, the harness is already wired, and the cost curve only improves because spot orchestration is part of the platform."),
+        bullets([
+            ["Curation pipeline", "Dedup by content hash, style normalization, calibrated review with published agreement — dataset as code"],
+            ["Contamination control", "Eval provenance proves test cases unseen; leakage is checked before scores are believed"],
+            ["Three eval families", "Task quality, capability retention, safety — promotion needs all three, no exceptions"],
+            ["Drift treadmill", "Distribution monitoring with evidence-windowed alarms and a scheduled re-tune cycle"],
+            ["Spot-first training", "Checkpointed training on interruptible capacity; the cost curve is an engineering output"],
+        ]),
+        h2("From base model to promotable candidate in eight weeks"),
+        p("Weeks 1–2: task definition and data survey — the golden set frozen, retention suite selected, promotion bars signed. Weeks 3–4: curation pipeline run — dedup, normalization, calibrated grading; first LoRA experiments on the eval harness. Weeks 5–6: mix experiments — the scissors chart guides rebalancing; cost engineering moves training to spot. Weeks 7–8: promotable candidate gated, shadow deployment wired, provenance bundle assembled. The following quarter runs the treadmill: drift alarms in, gated candidates out, and the win-rate trend line on the console becomes the AI estate's quality telemetry."),
+        note("No candidate is promoted on task quality alone — the retention suite exists because the most dangerous failure is a model that learned your domain and forgot its manners."),
+        cta("Bring the fine-tune that regressed the base model's manners. The diagnostic audits your dataset and harness, and returns the mix plan that clears all three gates."),
+    ]
+
+    # ════════════════════════════════════════════════════════════════════
+    # 6. Multimodal AI & Vision-Language Systems
+    # ════════════════════════════════════════════════════════════════════
+    tw["services_applied-ai-generative-ai_multimodal-vision-systems.json"] = [
+        hero("Vision-language systems earn production trust per task: detection accuracy on your line's defect classes, document understanding on your vendors' layouts, video retrieval that actually finds the incident. The discipline is task-first benchmarking — a VLM that writes beautiful captions and misses the defect is a failed system with good marketing. We build multimodal pipelines with per-task eval harnesses and edge-deployment economics designed in."),
+        h2("Task-first benchmarking before any model choice"),
+        p("Every multimodal program starts with a task inventory and a frozen eval per task: defect classes with verified labels, document fields with reviewer truth, incident clips with timestamps. Candidates — open VLMs, specialized detectors, OCR-free document models — run blind against those evals under identical budgets. The bar chart below is the honest comparison artifact: per-task accuracy, not a single leaderboard number. Task-first benchmarking kills two illusions at once: the general model that underperforms the specialized one on the task that matters, and the specialized one that cannot generalize to next quarter's new layout family."),
+        p("Grounding is the second discipline: claims about images carry their evidence — bounding boxes, cropped regions, OCR strings — attached to the answer. A grounded system says \"the defect is here\" with the region marked; an ungrounded one says \"I see a defect\". The evidence trail is what turns a vision model into a quality-control system an auditor can inspect."),
+        h2("Deployment economics: the cloud model is not the edge answer"),
+        p("Latency, bandwidth and cost decide where inference runs. Quantization (INT8), distillation and format compilation (TensorRT-style) shrink models for edge silicon; the accuracy cost is measured per task on the same frozen eval — a 1.2-point drop for 6× throughput is a trade the panel below makes explicit. The heat grid shows which task classes tolerate edge deployment and which must stay on accelerated cloud nodes, because a nuisance-alarm triage can run at the edge while the final grading model stays central."),
+        idash(
+            "Multimodal & vision-language — task console",
+            badge="Interactive · per-task eval model",
+            kpis_=[
+                kpi("Task eval coverage", "94%", delta="of prod vision flows", dir_="up", spark=[40, 55, 68, 78, 86, 91, 94]),
+                kpi("Detection mAP", "0.912", delta="line-defect classes", dir_="up", spark=[0.72, 0.78, 0.82, 0.86, 0.89, 0.90, 0.912]),
+                kpi("Doc field F1", "0.947", delta="across 214 layouts", dir_="up", spark=[0.81, 0.85, 0.88, 0.91, 0.93, 0.94, 0.947]),
+                kpi("Edge latency p95", "86 ms", delta="INT8, Jetson-class", dir_="down", spark=[240, 180, 140, 112, 96, 90, 86]),
+                kpi("Grounded-answer share", "97.2%", delta="claims with evidence", dir_="up", spark=[61, 72, 80, 88, 92, 95, 97]),
+            ],
+            tabs=[
+                tab("Task benchmarks", [
+                    w_bar("Per-task accuracy — candidates vs the specialized bar",
+                          ["Defect detect", "Doc extract", "Video retrieve", "Count/measure", "Scene QA", "OCR sweep"],
+                          [{"name": "General VLM", "points": [74, 82, 66, 61, 78, 87]},
+                           {"name": "Specialized stack", "points": [91, 95, 78, 72, 80, 93]},
+                           {"name": "Signed bar", "points": [85, 90, 75, 70, 75, 90]}],
+                          unit="%", note_="Click a series to isolate. The general VLM clears scene QA and OCR; the specialized stack clears defect detection by 17 points — the routing policy sends each task to the stack that clears its bar."),
+                ]),
+                tab("Edge what-if", [
+                    w_sim("Edge deployment what-if — quantization, resolution, batch",
+                          [sim_param("Quantization", 16, 8, 8, 8, "bit"),
+                           sim_param("Input resolution", 640, 1920, 320, 1280, "px"),
+                           sim_param("Batch size", 1, 8, 1, 4, "frames")],
+                          [sim_out("Edge p95 latency", "ms", "p0*0.006*p1*0.09*p2*12", good="120", bad="300"),
+                           sim_out("Accuracy cost", "pts", "max(0,(16-p0))*0.9+max(0,(p1-960))*0.006", good="2", bad="5"),
+                           sim_out("Throughput", "fps", "1000/(p0*0.006*p1*0.09*p2*12/1000*p2)", good="25", bad="8")],
+                          curve=sim_curve(1, 0, "Resolution vs edge latency"),
+                          note_="The latency curve rises steeply past 1280 px — the accuracy cost of downscaling is usually cheaper than the latency cost of full resolution. Drag quantization to see where INT8's accuracy tax lands."),
+                ]),
+                tab("Vision pipeline", [
+                    w_flow("From pixels to grounded decision — click each stage",
+                           [flow_stage("Capture", "Sensor contract",
+                                       "Cameras and scanners expose calibration state, lighting conditions and frame rate; a sensor that drifts flags itself before its data poisons the eval.",
+                                       [fm("Sensors", "212"), fm("Auto-recal", "weekly")]),
+                            flow_stage("Preprocess", "Normalization",
+                                       "Resolution normalization, lens correction and class-specific augmentation — the same transforms recorded for training so inference never drifts from training assumptions.",
+                                       [fm("Transform set", "9"), fm("Versioned", "yes")]),
+                            flow_stage("Detect", "Task models",
+                                       "Specialized detectors per task class (defects, presence, geometry) run at the edge; uncertain frames escalate with crops attached rather than guessing centrally.",
+                                       [fm("Edge models", "7"), fm("Escalation rate", "4.2%")]),
+                            flow_stage("Reason", "VLM layer",
+                                       "The VLM reasons over crops and metadata for the tasks that need language: scene QA, incident summaries, doc understanding — always grounded to the regions it was given.",
+                                       [fm("Grounding", "bbox-level"), fm("Hallucination catch", "QA harness")]),
+                            flow_stage("Act & audit", "Evidence trail",
+                                       "Decisions carry their evidence: crops, OCR strings, model versions, confidence — the artifact a quality audit or incident review reads first.",
+                                       [fm("Evidence / decision", "complete"), fm("Retention", "per policy")])],
+                           note_="Edge detects, central reasons, everything grounds — the split is an economics decision the panel above makes explicit."),
+                ]),
+            ],
+            note_="Reference program model: per-task bars and edge bands from delivery benchmarks, not client results.",
+        ),
+        h2("Document understanding: OCR-free beats OCR-first where it matters"),
+        p("Legacy OCR-first pipelines translate pages to text and lose the layout that carries meaning — table structure, stamp positions, handwriting interleaved with print. Modern document models consume the image directly and return structured fields with region evidence, which is why the doc-extract bar clears 0.95 F1 across 214 layout families where the OCR-first stack plateaued at 0.87. The evaluation discipline is identical to vision: frozen field-level truth per layout family, candidates blind, evidence attached. The layout registry from the IDP practice and the vision harness share infrastructure — document understanding is a vision task with a compliance budget."),
+        bullets([
+            ["Task-first frozen evals", "Per-task benchmarks with verified labels; candidates evaluated blind, per-task bars signed"],
+            ["Grounded answers", "Bounding boxes, crops and OCR evidence attached to claims — auditable, not asserted"],
+            ["Edge quantization discipline", "INT8/distilled models with accuracy cost measured on the same eval — trades made in numbers"],
+            ["Sensor contracts", "Calibration and lighting state tracked; drifting sensors flag themselves before data quality lies"],
+            ["Routing policy", "General VLM for language-heavy tasks, specialized stacks for detection — each task to the stack that clears its bar"],
+        ]),
+        h2("From camera estate to grounded decisions in a quarter"),
+        p("Weeks 1–3: task inventory and eval freeze — labels verified per task class, bars signed with the process owner; sensor contracts surveyed. Weeks 4–8: candidate benchmarking, specialized stack training where the general model misses the bar, edge quantization with measured accuracy cost. Weeks 9–12: pipeline integration with grounding and evidence trail, escalation thresholds tuned from real uncertainty distributions, audit tooling reading the evidence store. The console then runs as the quality instrument: per-task bars trended, edge latency watched, and new task classes enter through the same eval discipline."),
+        note("We report per-task accuracy and grounded-answer share, never a single multimodal score — a VLM's leaderboard ranking says nothing about whether it finds your defects."),
+        cta("Bring the vision program stuck at demo quality. Three weeks freezes your task evals and returns the blind candidate comparison plus the edge/cloud split with economics."),
+    ]
+
+    # ════════════════════════════════════════════════════════════════════
+    # 7. RAG & Enterprise Knowledge Systems
+    # ════════════════════════════════════════════════════════════════════
+    tw["services_applied-ai-generative-ai_rag-knowledge-systems.json"] = [
+        hero("Retrieval-augmented generation fails on retrieval, not generation — the model answers faithfully from the wrong chunks. Enterprise RAG is therefore retrieval engineering: chunking strategy, hybrid search, reranking, freshness SLAs and a groundedness harness that measures faithfulness sentence by sentence. The generators are commodities; the retrieval stack is the product."),
+        h2("Chunking is corpus design, not a split() call"),
+        p("Chunk boundaries are an information-design decision: semantic chunking keeps arguments intact; parent-document retrieval embeds summaries while returning full sections; metadata enrichment (section, version, effective date, owner) turns every chunk into a queryable record. The what-if panel makes the trade-offs concrete — chunk size against recall precision, overlap against index cost. Corpora with versioned documents (policies, SOPs, contracts) add the freshness dimension: retrieval must prefer the effective version, and superseded chunks are demoted by policy, not left to cosine similarity to guess."),
+        p("Hybrid retrieval is the default because lexical and dense fail differently: BM25 catches exact identifiers (product codes, regulation numbers) where embeddings blur; dense catches paraphrase where keywords miss. The fusion layer (RRF) plus a cross-encoder reranker typically lifts grounded-answer share by 15–25 points over naive vector search — measured on the harness, not claimed."),
+        h2("The groundedness harness: sentence-level truth"),
+        p("Generation quality is measured by decomposition: every claim sentence in an answer is checked against retrieved evidence — supported, unsupported, or contradicted — and the answer ships with its citations. The harness runs the golden question set nightly; refusal behaviour (the system declining when evidence is absent) is scored as a feature, because a RAG system that answers without evidence is worse than one that says \"not in the corpus\". Access control is enforced at retrieval time per query scope, so the permissions model is the corpus model — a search that returns documents the asker could not read is a security incident, not a bug."),
+        idash(
+            "RAG & enterprise knowledge — retrieval console",
+            badge="Interactive · retrieval model",
+            kpis_=[
+                kpi("Grounded answers", "93.8%", delta="sentence-verified", dir_="up", spark=[58, 66, 74, 81, 87, 91, 94]),
+                kpi("Retrieval recall@10", "0.891", delta="golden questions", dir_="up", spark=[0.52, 0.61, 0.70, 0.78, 0.84, 0.87, 0.891]),
+                kpi("Refusal precision", "96.4%", delta="declines with absent evidence", dir_="up", spark=[71, 78, 84, 89, 92, 95, 96]),
+                kpi("p95 answer latency", "2.1 s", delta="retrieval + rerank + gen", dir_="down", spark=[4.8, 3.9, 3.2, 2.8, 2.4, 2.2, 2.1]),
+                kpi("Stale-chunk rate", "0.4%", delta="freshness SLA enforced", dir_="down", spark=[6.2, 4.1, 2.6, 1.5, 0.9, 0.6, 0.4]),
+            ],
+            tabs=[
+                tab("Retrieval quality", [
+                    w_line("Retrieval stack progression — each stage's contribution measured",
+                           ["BM25 only", "Dense only", "Hybrid RRF", "+ Rerank", "+ Metadata", "+ Freshness"],
+                           [{"name": "Recall@10", "points": [52, 61, 74, 82, 86, 89]},
+                            {"name": "Precision@5", "points": [41, 55, 63, 78, 85, 89]},
+                            {"name": "Latency p95 (s)", "points": [0.8, 1.1, 1.3, 1.9, 2.0, 2.1]}],
+                           note_="Click to isolate. Reranking buys 9 precision points for 600 ms — the latency budget decision is explicit and reviewed per feature class, not felt as a vague slowdown."),
+                ]),
+                tab("Chunking what-if", [
+                    w_sim("Chunk strategy what-if — size, overlap, top-k",
+                          [sim_param("Chunk size", 200, 2000, 100, 800, "tokens"),
+                           sim_param("Overlap", 0, 40, 5, 20, "%"),
+                           sim_param("Top-k to rerank", 10, 100, 10, 40, "chunks")],
+                          [sim_out("Recall@10", "0-1", "min(0.95, p0*0.00028+p1*0.002+p2*0.0028+0.35)", good="0.85", bad="0.65"),
+                           sim_out("Precision@5", "0-1", "max(0.35, 0.95-p0*0.00019-p2*0.0018)", good="0.8", bad="0.6"),
+                           sim_out("Index cost", "×", "p0*(1+p1/100)*0.0016", good="2", bad="5")],
+                          curve=sim_curve(0, 1, "Chunk size vs precision"),
+                          note_="The precision curve falls as chunks grow — big chunks retrieve the neighborhood, not the passage. Small chunks retrieve precisely but lose the argument. The overlap dial buys recall back at index cost."),
+                ]),
+                tab("Retrieval stack", [
+                    w_arch("The retrieval fabric — click nodes for their contract",
+                           ["Sources", "Index", "Retrieve", "Generate", "Evidence"],
+                           [arch_node("docs", 0, "Source estates", "SharePoint, Confluence, ticketing and document stores ingested with ownership metadata — every chunk carries who owns it and when it governs.", hot=True),
+                            arch_node("chunk", 1, "Chunking pipeline", "Semantic chunking with parent-document mapping; metadata enrichment (version, effective date, section) turns chunks into records."),
+                            arch_node("hybrid", 2, "Hybrid search", "BM25 + dense in RRF fusion; lexical catches identifiers, dense catches paraphrase — the fusion is measured, not faith-based."),
+                            arch_node("rerank", 2, "Cross-encoder rerank", "Top-k reranked per query class; latency budget per class decides rerank depth — interactive and batch run different depths."),
+                            arch_node("acl", 2, "Scope filter", "Access control at retrieval time per query scope; the permissions model is the corpus model, enforced before generation sees anything."),
+                            arch_node("gen", 3, "Grounded generation", "Cited generation with refusal when evidence is absent; the persona never answers past its sources."),
+                            arch_node("harness", 4, "Groundedness harness", "Claim decomposition nightly: every sentence checked supported/unsupported/contradicted against retrieved evidence; scores published."),
+                            arch_node("cite", 4, "Citation store", "Answer citations with chunk lineage — the audit artifact that proves which document version answered the question.")],
+                           [edge("docs", "chunk"), edge("chunk", "hybrid"), edge("hybrid", "rerank"),
+                            edge("rerank", "acl", "scope"), edge("acl", "gen"), edge("gen", "cite", "citations"),
+                            edge("cite", "harness", "verified")],
+                           note_="Click nodes to read each contract. The scope filter sits before generation on purpose — permissions are enforced where the corpus is read, not where the answer is written."),
+                ]),
+            ],
+            note_="Reference program model: retrieval bands and latency budgets from delivery benchmarks, not client results.",
+        ),
+        h2("Freshness is a service level, not a hope"),
+        p("Knowledge systems decay silently: the policy was updated last quarter, the org chart moved, the product manual got its November revision. The freshness SLA makes decay visible — every index has a staleness budget (hours for ticketing, days for policies), ingestion pipelines report lag, and the stale-chunk KPI alarms before users notice answers citing superseded versions. Versioned corpora get effective-date policy: retrieval prefers the governing version, superseded chunks remain retrievable for audit questions that explicitly ask \"what did the policy say in March\" — which is itself a valuable capability the freshness design provides for free."),
+        bullets([
+            ["Semantic chunking + parents", "Embed summaries, return sections; metadata (version, owner, effective date) on every chunk"],
+            ["Hybrid retrieval + rerank", "BM25 and dense fused, cross-encoder reranked to the latency budget per query class"],
+            ["Retrieval-time access control", "Scope filters before generation; the permissions model is the corpus model"],
+            ["Groundedness harness", "Sentence-level verification nightly; refusal precision scored as a feature"],
+            ["Freshness SLAs", "Staleness budgets per index with lag reporting — decay is alarmed, not discovered by users"],
+        ]),
+        h2("Eight weeks from corpus to cited answers"),
+        p("Weeks 1–2: corpus survey — source estates, versioning behaviour, access model; golden question set built with the business (100–200 real questions with verified answers). Weeks 3–5: chunking and hybrid retrieval stood up, harness running from the first week, rerank depth tuned per query class against the latency budget. Weeks 6–8: access-control integration, freshness SLAs wired to ingestion, refusal behaviour tuned and scored. Go-live ships the citation store with it — every answer carries its evidence, and the harness scores become the knowledge estate's weekly quality telemetry."),
+        note("Refusal is a feature: a RAG system that says \"not in the corpus\" with 96% precision is more trustworthy than one that answers everything with 71% grounding."),
+        cta("Bring the knowledge base everyone queries and nobody trusts. Two weeks freezes your golden questions; eight weeks returns the cited-answer stack with the harness live."),
+    ]
+
+    total = 0
+    for fname, blocks in tw.items():
+        w = write_page(fname, blocks)
+        total += w
+        print(f"  {fname.split('_', 1)[1]:60s} {w:5d} words")
+    print(f"TOWER 2 DONE — {len(tw)} pages, {total} words")
+
+if __name__ == "__main__":
+    gen()

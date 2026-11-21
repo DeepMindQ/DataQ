@@ -9,250 +9,1199 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Where most programs improvise, digital workforce & multi-agent orchestration as we deliver it is sequenced: Hundreds of agents as one governed fleet — roles, queues, budgets and audit for the AI workforce. The sequence matters more than the stack — both are documented here."
+   "x": "Agent-fleet management run like workforce management: capacity plans against demand curves, shift and version discipline, credential rotation, utilization that is measured honestly — and SLAs that hold while the fleet upgrades underneath the business."
   },
   {
    "t": "h2",
-   "x": "What we deliver under this name"
+   "x": "Fifty agents are a workforce, and workforces need management"
   },
   {
    "t": "p",
-   "x": "Scaling from five agents to five hundred breaks ad-hoc patterns: conflicts over shared systems, duplicated work, no cost accountability, no way to know which agent did what. We build the orchestration layer that treats agents as a managed workforce — role definitions, task queues and bidding, shared-memory contracts, per-team budgets, kill switches, and a control tower showing fleet health, throughput and cost per completed task."
+   "x": "Once you have a dozen agents, you have a workforce — and workforces need management. Capacity planning against demand curves, version upgrades without breaking in-flight work, retirement of agents whose roles have changed, utilization measurement that is honest about idle time."
   },
   {
    "t": "p",
-   "x": "The orchestration core runs on durable execution (Temporal-class runtimes) with idempotent task semantics, priority lanes for SLA-bound work, and a policy engine that routes high-risk actions to approval workflows. Fleet upgrades are staged like software releases: shadow mode, canary cohorts, and automatic rollback on eval regression."
+   "x": "The orchestration layer is the missing middle between 'we built an agent' and 'the agent fleet runs the operation': scheduling, load balancing across agent versions, credential rotation fleets-wide, and the discipline to retire agents instead of letting them become furniture."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that grow fleets into liabilities, the reference architecture of the fleet layer, and the console that runs the digital workforce like the human one."
   },
   {
    "t": "h2",
-   "x": "Why the timing matters"
+   "x": "Four ways fleets sprawl into liabilities"
   },
   {
    "t": "p",
-   "x": "Programs of Digital Workforce & Multi-Agent Orchestration run in Technology & SaaS, Banking & Financial Services, Insurance & Risk, Logistics & Supply Chain — always against one named number, always with the baseline signed first."
+   "x": "Each failure mode is an HR problem wearing a DevOps costume — the countermeasures borrow deliberately from workforce management practice."
   },
   {
-   "t": "h2",
-   "x": "Inside the engagement"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Digital Workforce & Multi-Agent Orchestration: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Fleet control tower",
-     "health, throughput, cost and policy-violation telemetry across all agents"
+     "Fleet sprawl",
+     "Forty agents, nine overlapping, nobody dares delete any",
+     "Agent registry with role ownership; retirement as a gated, celebrated event"
     ],
     [
-     "Role & queue architecture",
-     "agent roles, task bidding, priority lanes and SLA routing"
+     "Upgrade freezes",
+     "In-flight work breaks on fleet-wide upgrades",
+     "Version pinning per workflow; blue-green agent pools; drain-and-upgrade SOP"
     ],
     [
-     "Shared-memory contracts",
-     "blackboard and state-store patterns preventing work duplication"
+     "Credential rot",
+     "Fleet credentials expire on a Sunday night",
+     "Rotated secrets with fleet-wide sync; expiry calendars with paging"
     ],
     [
-     "Budget & metering",
-     "per-team, per-role token and action budgets with chargeback"
-    ],
-    [
-     "Staged rollout machinery",
-     "shadow, canary and cohort releases with automatic rollback"
+     "Honest utilization",
+     "Dashboards claim 95% utilization; the work is queue-wait",
+     "Utilization decomposed: busy vs blocked vs queued; SLA per state"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the fleet layer from capacity to retirement"
+  },
+  {
+   "t": "p",
+   "x": "The fleet layer owns what nobody owned in the tool-rollout era: demand-based capacity, version trains with canary cohorts, credential lifecycle, and the retirement path that stops zombie agents from drawing budget forever."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Digital Workforce & Multi-Agent Orchestration",
+   "title": "Reference architecture — digital workforce management plane",
    "lanes": [
-    "Mined processes",
-    "Decision fabric",
-    "Automation fleet",
-    "Control layer",
-    "People",
-    "Outcomes"
+    "Demand",
+    "Fleet plane",
+    "Lifecycle",
+    "Identity & secrets",
+    "Work pools",
+    "Measurement"
    ],
    "nodes": [
     {
-     "id": "mp0",
+     "id": "forecast",
      "lane": 0,
-     "label": "Highest-volume workflow",
-     "hot": false
+     "label": "Demand forecast"
     },
     {
-     "id": "mp1",
+     "id": "queues",
      "lane": 0,
-     "label": "Second workflow",
-     "hot": false
+     "label": "Work queues"
     },
     {
-     "id": "df2",
+     "id": "cal",
+     "lane": 0,
+     "label": "Business calendar"
+    },
+    {
+     "id": "reg",
      "lane": 1,
-     "label": "Digital Workforce & Multi-Agent Orchestration",
+     "label": "Agent registry",
      "hot": true
     },
     {
-     "id": "df3",
+     "id": "sched",
      "lane": 1,
-     "label": "Policy-as-artifact",
-     "hot": false
+     "label": "Capacity scheduler",
+     "hot": true
     },
     {
-     "id": "aufl4",
+     "id": "pool",
+     "lane": 1,
+     "label": "Version pools"
+    },
+    {
+     "id": "provision",
      "lane": 2,
-     "label": "RPA + agent blend",
-     "hot": false
+     "label": "Provision & drain"
     },
     {
-     "id": "aufl5",
+     "id": "upgrade",
      "lane": 2,
-     "label": "IDP pipeline",
-     "hot": false
+     "label": "Blue-green upgrade"
     },
     {
-     "id": "cl6",
+     "id": "retire",
+     "lane": 2,
+     "label": "Retirement gate",
+     "hot": true
+    },
+    {
+     "id": "secrets",
      "lane": 3,
-     "label": "Risk register hooks",
-     "hot": false
+     "label": "Secret rotation",
+     "hot": true
     },
     {
-     "id": "cl7",
+     "id": "ident",
      "lane": 3,
-     "label": "Model-risk pack",
-     "hot": false
+     "label": "Fleet identity"
     },
     {
-     "id": "pp8",
+     "id": "grants",
+     "lane": 3,
+     "label": "Grant sync"
+    },
+    {
+     "id": "assign",
      "lane": 4,
-     "label": "Reviewer console",
-     "hot": false
+     "label": "Assignment engine"
     },
     {
-     "id": "pp9",
+     "id": "sla",
      "lane": 4,
-     "label": "Escalation SLAs",
-     "hot": false
+     "label": "Queue SLAs"
     },
     {
-     "id": "oc10",
-     "lane": 5,
-     "label": "Growth & pricing console",
-     "hot": false
+     "id": "overflow",
+     "lane": 4,
+     "label": "Overflow rules"
     },
     {
-     "id": "oc11",
+     "id": "util",
      "lane": 5,
-     "label": "Customer-success cockpit",
-     "hot": false
+     "label": "Utilization (busy/blocked)",
+     "hot": true
+    },
+    {
+     "id": "kpi",
+     "lane": 5,
+     "label": "Fleet KPIs"
+    },
+    {
+     "id": "cost",
+     "lane": 5,
+     "label": "Cost per unit"
     }
    ],
    "edges": [
     {
-     "a": "mp0",
-     "b": "df2"
+     "a": "forecast",
+     "b": "sched"
     },
     {
-     "a": "mp1",
-     "b": "df3"
+     "a": "queues",
+     "b": "assign"
     },
     {
-     "a": "df2",
-     "b": "aufl4"
+     "a": "cal",
+     "b": "sched",
+     "label": "shifts"
     },
     {
-     "a": "df3",
-     "b": "aufl5"
+     "a": "reg",
+     "b": "sched",
+     "label": "roster"
     },
     {
-     "a": "aufl4",
-     "b": "cl6"
+     "a": "sched",
+     "b": "pool",
+     "label": "scale"
     },
     {
-     "a": "cl6",
-     "b": "pp8"
+     "a": "sched",
+     "b": "assign",
+     "label": "balance"
     },
     {
-     "a": "aufl4",
-     "b": "oc10"
+     "a": "upgrade",
+     "b": "pool",
+     "label": "drain"
     },
     {
-     "a": "aufl5",
-     "b": "oc11"
+     "a": "provision",
+     "b": "pool",
+     "label": "new"
     },
     {
-     "a": "pp8",
-     "b": "oc10"
+     "a": "retire",
+     "b": "reg",
+     "label": "archive"
+    },
+    {
+     "a": "secrets",
+     "b": "pool",
+     "label": "rotate"
+    },
+    {
+     "a": "ident",
+     "b": "reg",
+     "label": "issue"
+    },
+    {
+     "a": "grants",
+     "b": "ident",
+     "label": "sync"
+    },
+    {
+     "a": "assign",
+     "b": "sla",
+     "label": "clock"
+    },
+    {
+     "a": "sla",
+     "b": "overflow",
+     "label": "on breach"
+    },
+    {
+     "a": "assign",
+     "b": "util",
+     "label": "states"
+    },
+    {
+     "a": "util",
+     "b": "kpi"
+    },
+    {
+     "a": "util",
+     "b": "cost",
+     "label": "per task"
     }
    ],
-   "note": "Topology inherited from the Agentic AI & Hyperautomation tower; the highlighted core is this service's build."
+   "note": "Retirement is a gate, not a cleanup task: role ownership transfers, grants revoke, work reassigns, and the ledger records what the agent did over its life."
   },
   {
    "t": "h2",
-   "x": "What changes hands"
+   "x": "A week in the fleet — demand, shifts, upgrades, retirement"
   },
   {
    "t": "p",
-   "x": "For Digital Workforce & Multi-Agent Orchestration, what your team holds at the end:"
+   "x": "From demand forecasting through shift assignment, version rollout across cohorts and the retirement queue — including how SLAs hold during the upgrade window."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "orchestration-loop",
+   "title": "Fleet operations loop — forecast, schedule, assign, measure, adjust",
+   "labels": [
+    "Demand forecast",
+    "Capacity plan",
+    "Assign & balance",
+    "SLA watch",
+    "Upgrade / drain",
+    "Retire & re-grant",
+    "Utilization review"
+   ],
+   "note": "Blocked and queued states are measured separately from busy time — an agent waiting on a dead system is not utilization, it is an incident signal."
+  },
+  {
+   "t": "h2",
+   "x": "The fleet console — utilization you can trust"
+  },
+  {
+   "t": "p",
+   "x": "Utilization, blocked time, queue SLA breaches and upgrade success — measured honestly, because inflated utilization is how fleets hide their real capacity."
+  },
+  {
+   "t": "idash",
+   "title": "Digital workforce — fleet governance console",
+   "kpis": [
+    {
+     "label": "Agents on roster",
+     "value": "84",
+     "delta": "12 classes, all owned",
+     "dir": "flat",
+     "spark": [
+      52,
+      58,
+      63,
+      70,
+      76,
+      80,
+      84
+     ]
+    },
+    {
+     "label": "Utilization",
+     "value": "73.5%",
+     "delta": "target band 60–80%",
+     "dir": "up",
+     "spark": [
+      54,
+      58,
+      62,
+      66,
+      69,
+      72,
+      73
+     ]
+    },
+    {
+     "label": "Credential hygiene",
+     "value": "98.2%",
+     "delta": "rotation + scope audit",
+     "dir": "up",
+     "spark": [
+      71,
+      78,
+      84,
+      89,
+      93,
+      96,
+      98
+     ]
+    },
+    {
+     "label": "Escalation quality",
+     "value": "4.6/5",
+     "delta": "human rating, weekly",
+     "dir": "up",
+     "spark": [
+      3.4,
+      3.7,
+      3.9,
+      4.2,
+      4.4,
+      4.5,
+      4.6
+     ]
+    },
+    {
+     "label": "Fleet cost / day",
+     "value": "$312",
+     "delta": "-22% after routing fix",
+     "dir": "down",
+     "spark": [
+      520,
+      480,
+      430,
+      390,
+      350,
+      330,
+      312
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Roster load",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Utilization by agent class × daypart — find the idle specialists",
+       "rows": [
+        "Doc intake",
+        "Data entry",
+        "Exception desk",
+        "QA critic",
+        "Reporting"
+       ],
+       "cats": [
+        "06–10",
+        "10–14",
+        "14–18",
+        "18–22",
+        "22–06"
+       ],
+       "matrix": [
+        [
+         71,
+         92,
+         88,
+         64,
+         31
+        ],
+        [
+         58,
+         81,
+         76,
+         49,
+         22
+        ],
+        [
+         43,
+         96,
+         91,
+         72,
+         38
+        ],
+        [
+         35,
+         74,
+         69,
+         41,
+         18
+        ],
+        [
+         22,
+         61,
+         66,
+         44,
+         15
+        ]
+       ],
+       "unit": "% util",
+       "note": "Hover cells to read exact utilization. The 22–06 column is the staffing argument: either route deferred work to night-capable classes or stop paying for idle specialists overnight."
+      }
+     ]
+    },
+    {
+     "name": "Credential what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Identity posture what-if — rotation and scope audit intervals",
+       "params": [
+        {
+         "name": "Rotation interval",
+         "min": 1,
+         "max": 90,
+         "step": 1,
+         "value": 24,
+         "unit": "h"
+        },
+        {
+         "name": "Scope audit cycle",
+         "min": 7,
+         "max": 180,
+         "step": 7,
+         "value": 30,
+         "unit": "days"
+        },
+        {
+         "name": "Fleet size",
+         "min": 10,
+         "max": 200,
+         "step": 10,
+         "value": 84,
+         "unit": "agents"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Exposure window",
+         "unit": "h",
+         "formula": "p0*0.5",
+         "good": "12",
+         "bad": "48"
+        },
+        {
+         "name": "Audit backlog",
+         "unit": "agent-reviews",
+         "formula": "p2/p1*7",
+         "good": "25",
+         "bad": "60"
+        },
+        {
+         "name": "Hygiene score",
+         "unit": "%",
+         "formula": "100-min(p0*0.55,25)-min(p2/p1*18,22)",
+         "good": "95",
+         "bad": "85"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 2,
+        "label": "Rotation interval vs hygiene score"
+       },
+       "note": "The hygiene curve makes the cost of lazy rotation visible: an agent with 90-day credential rotation is a standing finding, and the score shows exactly where the CISO's line sits."
+      }
+     ]
+    },
+    {
+     "name": "Collaboration graph",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "Handoff topology — click a lane node to see its contract",
+       "lanes": [
+        "Intake",
+        "Specialists",
+        "Critics",
+        "Humans"
+       ],
+       "nodes": [
+        {
+         "id": "router",
+         "lane": 0,
+         "label": "Task router",
+         "detail": "Routes by capability registry and current load; every routing decision is logged with the candidates it rejected, so misroutes are debuggable."
+        },
+        {
+         "id": "doc",
+         "lane": 1,
+         "label": "Document agents",
+         "detail": "Class-scoped specialists; they may not hand work sideways to each other — lateral handoffs bypass review and are denied by policy."
+        },
+        {
+         "id": "data",
+         "lane": 1,
+         "label": "Data agents",
+         "detail": "Own typed reads/writes; every write idempotent, every read cached by content hash for cost."
+        },
+        {
+         "id": "qa",
+         "lane": 2,
+         "label": "QA critics",
+         "detail": "Verify outputs against class assertions; a failed assertion returns the work with machine-readable reasons, not a vague rejection."
+        },
+        {
+         "id": "esc",
+         "lane": 2,
+         "label": "Escalation desk",
+         "detail": "Bundles evidence packets for human review; the packet is the contract — no context-free \"please check this\"."
+        },
+        {
+         "id": "human",
+         "lane": 3,
+         "label": "Human queue",
+         "detail": "Reviewers with SLAs; their overrides feed the routing model weekly — the fleet learns from every correction."
+        }
+       ],
+       "edges": [
+        {
+         "a": "router",
+         "b": "doc"
+        },
+        {
+         "a": "router",
+         "b": "data"
+        },
+        {
+         "a": "doc",
+         "b": "qa"
+        },
+        {
+         "a": "data",
+         "b": "qa"
+        },
+        {
+         "a": "qa",
+         "b": "esc",
+         "label": "on fail"
+        },
+        {
+         "a": "esc",
+         "b": "human"
+        },
+        {
+         "a": "human",
+         "b": "router",
+         "label": "override feedback"
+        }
+       ],
+       "note": "Sideways handoffs are denied by policy; the graph is deliberately hierarchical so every output passes exactly one critic."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · roster model",
+   "note": "Reference program model: governance thresholds and target bands from delivery, not client telemetry."
+  },
+  {
+   "t": "h2",
+   "x": "Fleet state across a demand week"
+  },
+  {
+   "t": "p",
+   "x": "Busy, idle, blocked and upgrading shares across the demand curve — the shape that decides fleet size, shift policy and where blocked time is a design problem rather than a staffing one."
+  },
+  {
+   "t": "chart",
+   "title": "Fleet state composition across a demand week — design targets",
+   "variant": "line",
+   "cats": [
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+    "Sun"
+   ],
+   "series": [
+    {
+     "name": "Busy % target",
+     "points": [
+      66,
+      72,
+      74,
+      73,
+      70,
+      52,
+      44
+     ]
+    },
+    {
+     "name": "Queued % target",
+     "points": [
+      14,
+      10,
+      9,
+      10,
+      12,
+      8,
+      6
+     ]
+    },
+    {
+     "name": "Blocked % target",
+     "points": [
+      3,
+      4,
+      3,
+      4,
+      3,
+      2,
+      2
+     ]
+    }
+   ],
+   "unit": "%",
+   "yMax": 90,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Digital Workforce & Multi-Agent Orchestration across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Digital Workforce & Multi-Agent Orchestration",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: orchestration is the discipline — dozens of small automations running as one auditable workforce, with escalations designed rather than improvised.",
+     "plays": [
+      "Demand-based capacity plans and shift policy for agent fleets",
+      "Version trains with cohort canaries and SLA-held upgrade windows",
+      "Credential lifecycle and retirement discipline with an enforced ledger"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet utilization (busy)",
+       "value": "71%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "4%"
+      },
+      {
+       "label": "Queue SLA breach",
+       "value": "1.2%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Ask what fraud industrialized against manual detection costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Demand-based capacity plans and shift policy for agent fleets",
+      "Version trains with cohort canaries and SLA-held upgrade windows",
+      "Credential lifecycle and retirement discipline with an enforced ledger"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet utilization (busy)",
+       "value": "71%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "4%"
+      },
+      {
+       "label": "Queue SLA breach",
+       "value": "1.2%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "Healthcare & Life Sciences operators recognize the pattern: prior authorization and RCM friction, quarter after quarter.",
+     "plays": [
+      "Demand-based capacity plans and shift policy for agent fleets",
+      "Version trains with cohort canaries and SLA-held upgrade windows",
+      "Credential lifecycle and retirement discipline with an enforced ledger"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet utilization (busy)",
+       "value": "71%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "4%"
+      },
+      {
+       "label": "Queue SLA breach",
+       "value": "1.2%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — maintenance planning reactive included — and prove it moved.",
+     "plays": [
+      "Demand-based capacity plans and shift policy for agent fleets",
+      "Version trains with cohort canaries and SLA-held upgrade windows",
+      "Credential lifecycle and retirement discipline with an enforced ledger"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet utilization (busy)",
+       "value": "71%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "4%"
+      },
+      {
+       "label": "Queue SLA breach",
+       "value": "1.2%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": true,
+     "hook": "Ask what supplier collaboration by email costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Demand-based capacity plans and shift policy for agent fleets",
+      "Version trains with cohort canaries and SLA-held upgrade windows",
+      "Credential lifecycle and retirement discipline with an enforced ledger"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet utilization (busy)",
+       "value": "71%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "4%"
+      },
+      {
+       "label": "Queue SLA breach",
+       "value": "1.2%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": true,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Demand-based capacity plans and shift policy for agent fleets",
+      "Version trains with cohort canaries and SLA-held upgrade windows",
+      "Credential lifecycle and retirement discipline with an enforced ledger"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet utilization (busy)",
+       "value": "71%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "4%"
+      },
+      {
+       "label": "Queue SLA breach",
+       "value": "1.2%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — trading and scheduling decisions at market speed included — and prove it moved.",
+     "plays": [
+      "Demand-based capacity plans and shift policy for agent fleets",
+      "Version trains with cohort canaries and SLA-held upgrade windows",
+      "Credential lifecycle and retirement discipline with an enforced ledger"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet utilization (busy)",
+       "value": "71%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "4%"
+      },
+      {
+       "label": "Queue SLA breach",
+       "value": "1.2%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Demand-based capacity plans and shift policy for agent fleets",
+      "Version trains with cohort canaries and SLA-held upgrade windows",
+      "Credential lifecycle and retirement discipline with an enforced ledger"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet utilization (busy)",
+       "value": "71%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "4%"
+      },
+      {
+       "label": "Queue SLA breach",
+       "value": "1.2%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Demand-based capacity plans and shift policy for agent fleets",
+      "Version trains with cohort canaries and SLA-held upgrade windows",
+      "Credential lifecycle and retirement discipline with an enforced ledger"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet utilization (busy)",
+       "value": "71%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "4%"
+      },
+      {
+       "label": "Queue SLA breach",
+       "value": "1.2%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Ask what administrative burden on faculty costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Demand-based capacity plans and shift policy for agent fleets",
+      "Version trains with cohort canaries and SLA-held upgrade windows",
+      "Credential lifecycle and retirement discipline with an enforced ledger"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet utilization (busy)",
+       "value": "71%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "4%"
+      },
+      {
+       "label": "Queue SLA breach",
+       "value": "1.2%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": true,
+     "hook": "Ask what support and success scale linearly costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Demand-based capacity plans and shift policy for agent fleets",
+      "Version trains with cohort canaries and SLA-held upgrade windows",
+      "Credential lifecycle and retirement discipline with an enforced ledger"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet utilization (busy)",
+       "value": "71%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "4%"
+      },
+      {
+       "label": "Queue SLA breach",
+       "value": "1.2%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what input and logistics planning manual costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Demand-based capacity plans and shift policy for agent fleets",
+      "Version trains with cohort canaries and SLA-held upgrade windows",
+      "Credential lifecycle and retirement discipline with an enforced ledger"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet utilization (busy)",
+       "value": "71%"
+      },
+      {
+       "label": "Blocked time",
+       "value": "4%"
+      },
+      {
+       "label": "Queue SLA breach",
+       "value": "1.2%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/"
+    }
+   ],
+   "practiceNote": "Digital Workforce & Multi-Agent Orchestration view: agent-fleet management as workforce management — capacity, shifts, versioning, retirement and utilization, with SLAs that hold while the fleet scales."
+  },
+  {
+   "t": "h2",
+   "x": "Fleet stack defaults — and deliberate deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor version trains and cohort canaries over big-bang fleet upgrades; deviation triggers are written because each one moves SLA risk onto the business."
+  },
+  {
+   "t": "table",
+   "caption": "Digital Workforce & Multi-Agent Orchestration: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Multi-agent orchestration platform with control tower and policy engine",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Registry",
+     "Agent registry with role, owner, version, grants",
+     "Spreadsheet rosters — they rot within one upgrade cycle"
     ],
     [
-     "Agent role catalog with autonomy tiers and budget assignments",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Scheduling",
+     "Demand-forecast-driven capacity scheduler",
+     "Static provisioning — it bleeds cost or SLAs at every peak"
     ],
     [
-     "Release-management runbook for agent fleet upgrades",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Upgrades",
+     "Blue-green pools with drain-and-upgrade SOP",
+     "In-place upgrades — in-flight work breaks every time"
     ],
     [
-     "Chargeback model for digital workforce consumption",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Secrets",
+     "Fleet-wide rotation with expiry calendars",
+     "Per-agent manual rotation — Sunday-night expiries guaranteed"
+    ],
+    [
+     "Measurement",
+     "Utilization decomposed by state with cost per unit",
+     "One blended utilization number — it hides queue rot"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Standards and components"
+   "x": "Fleet change gates — what evidence an upgrade carries"
   },
   {
-   "t": "p",
-   "x": "Digital Workforce & Multi-Agent Orchestration is built against defined standards: Temporal, LangGraph, Kafka, Redis, Kubernetes, OPA policy engine. Each choice is justified in writing as part of the architecture baseline, so your team can defend it without us in the room."
+   "t": "table",
+   "caption": "Release gates for Digital Workforce & Multi-Agent Orchestration — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Registry gate",
+     "Does every agent have an owner, role and version?",
+     "Registry completeness; orphan-agent scan at zero"
+    ],
+    [
+     "Upgrade gate",
+     "Can the fleet upgrade without loss?",
+     "Drain drill report; in-flight loss at zero"
+    ],
+    [
+     "Rotation gate",
+     "Do credentials rotate before expiry?",
+     "Calendar proof; expiry-paging test"
+    ],
+    [
+     "Retirement gate",
+     "Are retired agents fully decommissioned?",
+     "Grant revocation evidence; work reassignment record"
+    ],
+    [
+     "Measurement gate",
+     "Is utilization honest?",
+     "State decomposition report; cost-per-unit reconciliation"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "How we run the build"
+   "x": "What the digital-workforce manager inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Digital Workforce & Multi-Agent Orchestration starts with the measurement: the metric, the owner, the current number, signed."
+     "Agent registry",
+     "The fleet's HR system: roles, owners, versions, grants"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, fleet control tower first, gates written with your team."
+     "Capacity scheduler",
+     "Forecast-driven scaling with shift awareness"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Digital Workforce & Multi-Agent Orchestration closes its first quarter at the gate: the working slice is measured against the baseline your team signed, and the scale decision is written down with the evidence attached."
+     "Upgrade SOP",
+     "Drain-based blue-green process with loss guarantees"
+    ],
+    [
+     "Secret rotation kit",
+     "Fleet-wide rotation with calendars and paging"
+    ],
+    [
+     "Utilization analytics",
+     "Busy/blocked/queued decomposition with cost per unit"
+    ],
+    [
+     "Retirement playbook",
+     "The gated path from active to archived with full revocation"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Fleet quarter in motion, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — fleet census",
+     "Registry built, owners named, grant audit, orphan scan"
+    ],
+    [
+     "Weeks 3–4 — scheduler & pools",
+     "Capacity model, version pools, assignment engine"
+    ],
+    [
+     "Weeks 5–6 — lifecycle",
+     "Provision/drain SOP, blue-green upgrade, first drill"
+    ],
+    [
+     "Weeks 7–8 — identity & secrets",
+     "Fleet identity, rotation calendar, grant sync"
+    ],
+    [
+     "Weeks 9–10 — measurement",
+     "State decomposition, cost per unit, KPI reviews"
+    ],
+    [
+     "Ongoing — workforce ops",
+     "Weekly capacity review, monthly utilization audit, quarterly retirement sweep"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — identity, queues and the demand systems"
+  },
+  {
+   "t": "p",
+   "x": "The fleet layer plugs into identity, work queues and the systems that forecast demand; these contracts make capacity real instead of nominal."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Work queues",
+     "Queue depth and SLA telemetry feeds the scheduler"
+    ],
+    [
+     "Identity provider",
+     "Agent principal lifecycle and grant sync"
+    ],
+    [
+     "Secrets manager",
+     "Rotation orchestration with fleet agents"
+    ],
+    [
+     "Forecast inputs",
+     "Business calendars and demand history"
+    ],
+    [
+     "Finance",
+     "Cost-per-unit export to showback"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Credential and lifecycle governance"
+  },
+  {
+   "t": "p",
+   "x": "Credential rotation, least-privilege scopes and retirement discipline run on schedules — because a fleet's security posture is exactly as current as its oldest credential."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "No orphan agents",
+     "Every agent has a named owner; orphans are quarantined within 24h"
+    ],
+    [
+     "Grant sync",
+     "Registry is the source of truth; grants reconcile nightly"
+    ],
+    [
+     "Retirement completeness",
+     "Revocation verified before archive; ledger closed per agent"
+    ],
+    [
+     "State honesty",
+     "Blocked time alerts at threshold; queue rot is an incident, not a metric footnote"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Retirement is enforced by ledger: an agent that misses its review window is suspended automatically, and the ledger of retirements ships in the handover pack."
   },
   {
    "t": "cta",
-   "x": "Bring Digital Workforce & Multi-Agent Orchestration to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
+   "x": "If your agent count is growing and nobody owns the fleet, the next incident is already scheduled. Bring the inventory to a briefing and we will price the management layer against the sprawl."
   }
  ],
- "words": 514,
+ "words": 1059,
  "section": "Services",
  "l1": "Services",
  "l2": "Agentic AI & Hyperautomation",
@@ -274,7 +1223,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Agentic AI & Hyperautomation",
+   "title": "Domain overview — Agentic AI & Hyperautomation",
    "url": "/services/agentic-ai-hyperautomation/",
    "desc": "Digital workers, decision hubs and workflows that recover from failure on their own — automation with human checkpoints, budgets and audit."
   },
@@ -326,33 +1275,51 @@
   {
    "title": "Quantum & Advanced Compute for Retail & Consumer Goods",
    "url": "/industries/retail-consumer-goods/capabilities/quantum-advanced-compute/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Agentic Process Automation",
-   "url": "/services/agentic-ai-hyperautomation/agentic-process-automation/",
-   "tag": "Same tower",
-   "desc": "Agents that execute the work — tool-using, policy-bounded, and fully logged for audit."
-  },
-  {
-   "title": "Decision Intelligence Systems",
-   "url": "/services/agentic-ai-hyperautomation/decision-intelligence-systems/",
-   "tag": "Same tower",
-   "desc": "Decision paths that run in milliseconds, with policy checks and full logging."
-  },
-  {
    "title": "Intelligent Document Processing",
    "url": "/services/agentic-ai-hyperautomation/intelligent-document-processing/",
-   "tag": "Same tower",
-   "desc": "Contracts, claims and invoices read end-to-end — extraction, validation and downstream action."
+   "tag": "Same domain",
+   "desc": "extraction and adjudication inside the process — documents become decisions with confidence gates, evidence and a human queue that shrinks on measurement."
   },
   {
    "title": "Process & Task Mining",
    "url": "/services/agentic-ai-hyperautomation/process-task-mining/",
-   "tag": "Same tower",
-   "desc": "See the work as it actually runs — event-log truth before you automate anything."
+   "tag": "Same domain",
+   "desc": "event-log forensics that turns system footprints into a defensible automation pipeline — conformance-checked, variant-ranked and ROI-priced before anything is built."
+  },
+  {
+   "title": "Agentic Process Automation",
+   "url": "/services/agentic-ai-hyperautomation/agentic-process-automation/",
+   "tag": "Same domain",
+   "desc": "role-scoped agents that execute process steps under policy bounds, with human checkpoints placed by risk and replay for every action taken."
+  },
+  {
+   "title": "LLM Fine-Tuning & Model Operations",
+   "url": "/services/applied-ai-generative-ai/llm-fine-tuning-ops/",
+   "tag": "Pairs with",
+   "desc": "a tuning factory with decontaminated datasets, a multi-task eval gate that blocks silent regressions, and canary rollout with rehearsed rollback."
+  },
+  {
+   "title": "Master Data, Governance & Cataloging",
+   "url": "/services/data-analytics-lakehouse/master-data-governance/",
+   "tag": "Pairs with",
+   "desc": "golden records with owners, survivorship rules and a catalog people actually trust — governance as engineering, not committee minutes."
+  },
+  {
+   "title": "SRE & Reliability Engineering",
+   "url": "/services/cloud-edge-platform-engineering/sre-reliability-engineering/",
+   "tag": "Pairs with",
+   "desc": "SLOs with teeth — error budgets that gate releases, chaos that proves recovery, and incident craft that turns 3am into a rehearsed system."
+  },
+  {
+   "title": "A global integrated energy major",
+   "url": "/case-studies/en-02/",
+   "tag": "Evidence",
+   "desc": "Turnaround duration down 14% — scheduling optimization at refinery scale."
   }
  ]
 }

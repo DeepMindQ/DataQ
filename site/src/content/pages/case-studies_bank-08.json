@@ -1,0 +1,262 @@
+{
+ "id": "CASE-bank-08",
+ "title": "A securities depository",
+ "url": "/case-studies/bank-08/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Banking & Financial Services > A securities depository",
+ "seo_title": "A securities depository | Case Study | Dataq Software",
+ "meta_description": "Corporate-actions processing with agentic extraction — manual touches down 70% and the exception backlog cleared for the first time in two years",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Corporate-actions processing with agentic extraction — manual touches down 70% and the exception backlog cleared for the first time in two years"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a national CSD whose corporate-actions desk processed announcements by retyping them into twelve downstream systems. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline fortnight found 34% of announcements published late against the client's own SLA, and the exception backlog stood at 1,900 items — older than the youngest analyst on the desk."
+  },
+  {
+   "t": "p",
+   "x": "Each announcement crossed five desks; every handoff retyped fields and introduced its own errors. Income events and voluntary events followed different unspoken procedures that lived in personal notebooks."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We rebuilt the desk around agentic extraction with human gates: announcements parsed into a canonical event model with confidence per field, low-confidence fields routed to the right specialist, downstream systems fed from the canonical record, and the two unspoken procedures written down as policy the agents execute. The backlog was burned down in the open, weekly, against its own baseline."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — A securities depository",
+   "lanes": [
+    "Announcement intake",
+    "Event model",
+    "Specialist gates",
+    "Distribution"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "Issuer & market feeds",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Web & PDF announcements"
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Canonical event parser",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Confidence scoring per field",
+     "hot": true
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Income-event workbench"
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Voluntary-event workbench",
+     "hot": true
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "CSD & registrar systems",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Issuer web & data vendors"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A securities depository",
+   "kpis": [
+    {
+     "label": "Manual touches per event",
+     "value": "-70%",
+     "delta": "canonical record feeds downstream",
+     "dir": "down"
+    },
+    {
+     "label": "Announcements past SLA",
+     "value": "34% → 6%",
+     "delta": "measured weekly",
+     "dir": "down"
+    },
+    {
+     "label": "Exception backlog",
+     "value": "1,900 → 0",
+     "delta": "burned down in 14 weeks",
+     "dir": "down"
+    },
+    {
+     "label": "Field error rate at distribution",
+     "value": "-64%",
+     "delta": "confidence-gated",
+     "dir": "down"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed with the operations directorate",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 05",
+     "msg": "Parser live on income events",
+     "tag": "build"
+    },
+    {
+     "t": "wk 12",
+     "msg": "Gate review — market-wide dry run passed",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Voluntary events onboarded; notebooks retired",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "SLA and backlog baselines signed with operations"
+    ],
+    [
+     "Build gate",
+     "No event type onboarded until parser accuracy cleared its threshold on real announcements"
+    ],
+    [
+     "Run gate",
+     "Weekly backlog burn-down review in the open"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "What generalizes is the canonical-event-model-plus-confidence-gates pattern; it has since run in a fund administration business. The parser models stay estate-specific — announcement formats differ per market — which is why every rollout starts with its own diagnostic."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "14 months",
+     "16-person blended team",
+     "EU",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "The method on this page is documented because it worked twice — here and on the next estate. Book a briefing and bring the metric you need to move."
+  }
+ ],
+ "words": 452,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Banking & Financial Services",
+ "l3": "A securities depository",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Banking & Financial Services",
+   "url": "/industries/banking-financial-services/"
+  },
+  {
+   "name": "A securities depository",
+   "url": "/case-studies/bank-08/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Banking & Financial Services — industry hub",
+   "url": "/industries/banking-financial-services/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Agentic AI & Hyperautomation",
+   "url": "/services/agentic-ai-hyperautomation/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A top-10 European retail bank",
+   "url": "/case-studies/bank-01/",
+   "desc": "Real-time fraud decisioning on instant rails — 38% lower fraud losses at a higher approval rate"
+  },
+  {
+   "title": "A multinational corporate bank",
+   "url": "/case-studies/bank-02/",
+   "desc": "KYC refresh backlog cleared — 70% faster cycles with agentic file assembly"
+  },
+  {
+   "title": "A tier-1 US bank",
+   "url": "/case-studies/bank-03/",
+   "desc": "DORA-grade resilience posture — third-party and incident evidence automated"
+  }
+ ],
+ "cards": []
+}

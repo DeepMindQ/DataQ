@@ -9,254 +9,1176 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The honest pitch for enterprise dlt network engineering fits in a sentence — Permissioned networks for multi-party truth — governance, consensus and integration done institutionally. — and the rest of this page is the how: measured baseline, bounded build, evidence in flight."
+   "x": "Permissioned networks with real governance: membership charters with obligations on paper, privacy domains that end the data-sharing standoff, consensus chosen for dullness, and upgrades coordinated so every member runs the current version — at transaction costs your CFO will not notice."
   },
   {
    "t": "h2",
-   "x": "The service, described plainly"
+   "x": "The network succeeds at the speed of its charter, not its consensus"
   },
   {
    "t": "p",
-   "x": "Enterprise ledgers succeed or fail on governance, not cryptography. We design and build permissioned DLT networks (Hyperledger Fabric, Besu, Corda-class) for multi-party workflows — trade finance consortia, interbank reconciliation, provenance networks, inter-company settlement — with the institutional layer first: membership rules, validator/consensus design, onboarding and KYC gating, data-visibility zones, and the legal wrapper that makes nodes, liabilities and dispute paths explicit."
+   "x": "Enterprise ledger networks fail socially before they fail technically: members who will not operate nodes, governance that exists as a PDF, and privacy scoping discovered to be wrong after the first dispute. The engineering starts with the network charter — who runs what, who sees what, what happens when a member leaves — and the technology follows it."
   },
   {
    "t": "p",
-   "x": "The engineering half is integration-heavy: nodes operated under bank-grade controls, off-chain stores for bulk data with on-chain anchoring, event bridges into legacy cores, and key management under HSM custody. Every network ships with a regulator pack — transaction privacy model, audit exports, jurisdiction analysis — because the first question from a supervisor is never 'which consensus'."
+   "x": "The technical choices favor boring: permissioned chains with proven consensus, HSM-backed keys with real ceremonies, and off-chain stores that keep the chain minimal. The chain is an audit spine, not a database."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that stall consortium networks, the reference architecture of a governed network, and the console that keeps members honest."
   },
   {
    "t": "h2",
-   "x": "Why this matters here"
+   "x": "Four failure modes that stall consortium networks"
   },
   {
    "t": "p",
-   "x": "The sectors where Enterprise DLT Network Engineering currently runs: Banking & Financial Services, Logistics & Supply Chain, Manufacturing & Industrial, Energy & Utilities. Each engagement anchors to one named metric in that sector's own language."
+   "x": "Every one of these is a governance failure wearing a technical costume — the countermeasures put obligations, privacy rules and upgrade discipline in the charter where they belong."
   },
   {
-   "t": "h2",
-   "x": "Inside the engagement"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Enterprise DLT Network Engineering: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Governance design",
-     "membership, consensus roles, visibility zones and legal wrapper"
+     "Node reluctance",
+     "Members refuse to run infrastructure",
+     "Hosted-node tiers in the charter; managed options with SLAs"
     ],
     [
-     "Network build",
-     "permissioned DLT with bank-grade node operations under HSM custody"
+     "Privacy disputes",
+     "Who may see which transaction is contested later",
+     "Privacy domains designed upfront; leak probes in CI"
     ],
     [
-     "Off-chain architecture",
-     "bulk data off-chain with on-chain anchoring and integrity proofs"
+     "Governance vacuum",
+     "Upgrade decisions stall in email",
+     "On-chain governance procedures with quorum and timelines"
     ],
     [
-     "Legacy integration",
-     "event bridges and API gateways into existing cores and ERPs"
-    ],
-    [
-     "Regulator pack",
-     "privacy model, audit exports and jurisdiction documentation"
+     "Chain bloat",
+     "Documents and PII land on the ledger",
+     "Off-chain-first design; ledger holds hashes and proofs only"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the governed permissioned network"
+  },
+  {
+   "t": "p",
+   "x": "Members join under a charter with obligations and exit clauses, privacy domains scope what each member sees, consensus is chosen for predictability over novelty, and the upgrade protocol runs with zero-downtime coordination — governance and engineering as one design."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Enterprise DLT Network Engineering",
+   "title": "Reference architecture — permissioned network stack",
    "lanes": [
-    "Claims",
-    "Verifiable records",
-    "Trust fabric",
-    "Verification",
-    "Portals",
-    "Ecosystem"
+    "Membership",
+    "Ledger core",
+    "Keys & identity",
+    "Privacy",
+    "Off-chain",
+    "Operations"
    ],
    "nodes": [
     {
-     "id": "cl0",
+     "id": "charter",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
-    },
-    {
-     "id": "cl1",
-     "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
-    },
-    {
-     "id": "vr2",
-     "lane": 1,
-     "label": "Enterprise DLT Network Engineering",
+     "label": "Network charter",
      "hot": true
     },
     {
-     "id": "vr3",
-     "lane": 1,
-     "label": "Hash anchoring",
-     "hot": false
+     "id": "board",
+     "lane": 0,
+     "label": "Governance board"
     },
     {
-     "id": "tf4",
-     "lane": 2,
-     "label": "Governed ledger fabric",
+     "id": "member",
+     "lane": 0,
+     "label": "Member onboarding"
+    },
+    {
+     "id": "chain",
+     "lane": 1,
+     "label": "Ledger runtime",
      "hot": true
     },
     {
-     "id": "tf5",
+     "id": "cons",
+     "lane": 1,
+     "label": "Consensus (BFT-class)"
+    },
+    {
+     "id": "msp",
+     "lane": 1,
+     "label": "Membership service"
+    },
+    {
+     "id": "hsm",
      "lane": 2,
-     "label": "Consent scopes",
-     "hot": false
+     "label": "HSM-backed keys",
+     "hot": true
     },
     {
-     "id": "vf6",
+     "id": "cert",
+     "lane": 2,
+     "label": "Certificate authority"
+    },
+    {
+     "id": "did",
+     "lane": 2,
+     "label": "Member DIDs"
+    },
+    {
+     "id": "domain",
      "lane": 3,
-     "label": "Zero-knowledge checks",
-     "hot": false
+     "label": "Privacy domains",
+     "hot": true
     },
     {
-     "id": "vf7",
+     "id": "privdata",
      "lane": 3,
-     "label": "Attestation service",
-     "hot": false
+     "label": "Private data collections"
     },
     {
-     "id": "po8",
+     "id": "probe",
+     "lane": 3,
+     "label": "Leak probes"
+    },
+    {
+     "id": "off",
      "lane": 4,
-     "label": "Counterparty portals",
-     "hot": false
+     "label": "Off-chain store"
     },
     {
-     "id": "po9",
+     "id": "anchor",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Anchoring service"
     },
     {
-     "id": "ec10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "events",
+     "lane": 4,
+     "label": "Event relay"
     },
     {
-     "id": "ec11",
+     "id": "ops",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Node operations"
+    },
+    {
+     "id": "mon",
+     "lane": 5,
+     "label": "Network monitor"
+    },
+    {
+     "id": "upgrade",
+     "lane": 5,
+     "label": "Upgrade train"
     }
    ],
    "edges": [
     {
-     "a": "cl0",
-     "b": "vr2"
+     "a": "charter",
+     "b": "board",
+     "label": "mandate"
     },
     {
-     "a": "cl1",
-     "b": "vr3"
+     "a": "board",
+     "b": "member",
+     "label": "admit"
     },
     {
-     "a": "vr2",
-     "b": "tf4"
+     "a": "member",
+     "b": "chain",
+     "label": "operate"
     },
     {
-     "a": "vr3",
-     "b": "tf5"
+     "a": "msp",
+     "b": "chain",
+     "label": "enroll"
     },
     {
-     "a": "tf4",
-     "b": "vf6"
+     "a": "cons",
+     "b": "chain",
+     "label": "order"
     },
     {
-     "a": "tf5",
-     "b": "vf7"
+     "a": "hsm",
+     "b": "cert",
+     "label": "root"
     },
     {
-     "a": "vf6",
-     "b": "po8"
+     "a": "cert",
+     "b": "did",
+     "label": "issue"
     },
     {
-     "a": "po8",
-     "b": "po9"
+     "a": "did",
+     "b": "chain",
+     "label": "sign"
     },
     {
-     "a": "vf7",
-     "b": "ec10"
+     "a": "domain",
+     "b": "privdata",
+     "label": "scope"
     },
     {
-     "a": "tf5",
-     "b": "ec11"
+     "a": "probe",
+     "b": "privdata",
+     "label": "test"
+    },
+    {
+     "a": "chain",
+     "b": "anchor",
+     "label": "hashes"
+    },
+    {
+     "a": "anchor",
+     "b": "off",
+     "label": "index"
+    },
+    {
+     "a": "off",
+     "b": "events",
+     "label": "emit"
+    },
+    {
+     "a": "ops",
+     "b": "chain",
+     "label": "run"
+    },
+    {
+     "a": "mon",
+     "b": "chain",
+     "label": "watch"
+    },
+    {
+     "a": "upgrade",
+     "b": "chain",
+     "label": "version"
     }
    ],
-   "note": "Topology inherited from the Blockchain & Digital Trust tower; the highlighted core is this service's build."
+   "note": "Privacy domains are designed before the first transaction: who sees what is a charter question answered in configuration, not a dispute settled in court."
   },
   {
    "t": "h2",
-   "x": "What changes hands"
+   "x": "One transaction, endorsed to finality"
   },
   {
    "t": "p",
-   "x": "In Enterprise DLT Network Engineering, named artifacts, handed to named owners:"
+   "x": "From proposal through endorsement within its privacy domain, ordering, commit and the audit record — including where a member's stale version is caught before it forks the ledger."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "ledger-chain",
+   "title": "Network lifecycle — charter, onboard, transact, anchor, upgrade",
+   "labels": [
+    "Charter signed",
+    "Member onboarded",
+    "Keys & DIDs issued",
+    "Privacy scoped",
+    "Transact & anchor",
+    "Monitor & reconcile",
+    "Upgrade train"
+   ],
+   "note": "Upgrades run as trains with member sign-off windows — a chain that cannot upgrade safely is a chain that cannot fix its bugs."
+  },
+  {
+   "t": "h2",
+   "x": "The network console — member health as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Transaction cost, network uptime and version currency across members — the three numbers that decide whether the consortium is compounding or fragmenting."
+  },
+  {
+   "t": "idash",
+   "title": "Enterprise DLT network — operations console",
+   "kpis": [
+    {
+     "label": "TPS (measured)",
+     "value": "1,840",
+     "delta": "at production tx shapes",
+     "dir": "up",
+     "spark": [
+      900,
+      1100,
+      1300,
+      1500,
+      1650,
+      1780,
+      1840
+     ]
+    },
+    {
+     "label": "Version skew",
+     "value": "0 nodes",
+     "delta": "staged upgrade protocol",
+     "dir": "flat",
+     "spark": [
+      6,
+      4,
+      2,
+      1,
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "label": "Member onboarding",
+     "value": "9 d",
+     "delta": "was 3 months ad hoc",
+     "dir": "down",
+     "spark": [
+      90,
+      60,
+      38,
+      22,
+      14,
+      11,
+      9
+     ]
+    },
+    {
+     "label": "Cert-rotation drills",
+     "value": "6/6",
+     "delta": "ceremonies rehearsed",
+     "dir": "up",
+     "spark": [
+      2,
+      3,
+      3,
+      4,
+      5,
+      6,
+      6
+     ]
+    },
+    {
+     "label": "Endorsement failures",
+     "value": "0.3%",
+     "delta": "policy-scope, weekly",
+     "dir": "down",
+     "spark": [
+      2.8,
+      2.1,
+      1.5,
+      0.9,
+      0.5,
+      0.4,
+      0.3
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Network posture",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Node health by member × component — the operations committee view",
+       "rows": [
+        "Member A",
+        "Member B",
+        "Member C",
+        "Member D",
+        "Member E"
+       ],
+       "cats": [
+        "Peer",
+        "Orderer",
+        "CouchDB",
+        "Explorer",
+        "HSM"
+       ],
+       "matrix": [
+        [
+         99.9,
+         99.9,
+         99.5,
+         99.8,
+         100
+        ],
+        [
+         99.7,
+         99.9,
+         99.2,
+         99.6,
+         100
+        ],
+        [
+         99.8,
+         99.9,
+         98.9,
+         99.7,
+         99.9
+        ],
+        [
+         99.6,
+         99.8,
+         99.1,
+         99.5,
+         100
+        ],
+        [
+         99.9,
+         99.9,
+         99.4,
+         99.8,
+         100
+        ]
+       ],
+       "unit": "% uptime",
+       "note": "Hover cells to read uptime. Member C's CouchDB cell is the pattern: members operate their own infrastructure unevenly — the network SLA budget accounts for the weakest operator, which is why onboarding kits matter."
+      }
+     ]
+    },
+    {
+     "name": "Throughput what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Consensus what-if — payload, endorsement and ordering",
+       "params": [
+        {
+         "name": "Tx payload",
+         "min": 1,
+         "max": 64,
+         "step": 1,
+         "value": 12,
+         "unit": "KB"
+        },
+        {
+         "name": "Endorsement set",
+         "min": 1,
+         "max": 8,
+         "step": 1,
+         "value": 3,
+         "unit": "peers"
+        },
+        {
+         "name": "Batch timeout",
+         "min": 100,
+         "max": 2000,
+         "step": 100,
+         "value": 500,
+         "unit": "ms"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "TPS",
+         "unit": "tx/s",
+         "formula": "4200/(1+p0*0.11+p1*0.32)*min(1.6,500/p2)",
+         "good": "1800",
+         "bad": "600"
+        },
+        {
+         "name": "Commit latency p95",
+         "unit": "ms",
+         "formula": "p2+p0*6+p1*45",
+         "good": "800",
+         "bad": "2000"
+        },
+        {
+         "name": "Storage / month",
+         "unit": "GB",
+         "formula": "p0*3.1",
+         "good": "120",
+         "bad": "400"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 0,
+        "label": "Endorsement set size vs TPS"
+       },
+       "note": "Endorsement breadth is the trust/throughput dial: every additional required peer costs a third of your TPS. The policy design decides this once, with the threat model in the room."
+      }
+     ]
+    },
+    {
+     "name": "Upgrade protocol",
+     "widgets": [
+      {
+       "kind": "flow",
+       "title": "Cross-member upgrade — click stages for the readiness gate",
+       "stages": [
+        {
+         "name": "Proposal",
+         "role": "Chaincode + config",
+         "detail": "Upgrade proposal carries diff, rollback plan and endorsement-policy impact; members vote with readiness windows declared, not assumed.",
+         "metrics": [
+          {
+           "label": "Vote quorum",
+           "value": "2/3"
+          },
+          {
+           "label": "Window",
+           "value": "declared"
+          }
+         ]
+        },
+        {
+         "name": "Staging",
+         "role": "Testnet rehearsal",
+         "detail": "Full rehearsal on the staging network with production shapes; the rehearsal report is the gate evidence for member sign-off.",
+         "metrics": [
+          {
+           "label": "Rehearsal",
+           "value": "mandatory"
+          },
+          {
+           "label": "Report",
+           "value": "attached"
+          }
+         ]
+        },
+        {
+         "name": "Readiness",
+         "role": "Member attestation",
+         "detail": "Each member attests version readiness on its own infrastructure; the protocol tracks attestations and will not advance past laggards.",
+         "metrics": [
+          {
+           "label": "Attestation",
+           "value": "signed"
+          },
+          {
+           "label": "Skew allowed",
+           "value": "zero"
+          }
+         ]
+        },
+        {
+         "name": "Cutover",
+         "role": "Coordinated height",
+         "detail": "Cutover at agreed block height with transaction freeze window announced; ordering halts are scheduled, never discovered.",
+         "metrics": [
+          {
+           "label": "Freeze window",
+           "value": "≤ 15 min"
+          },
+          {
+           "label": "Announced",
+           "value": "7 d ahead"
+          }
+         ]
+        },
+        {
+         "name": "Verify",
+         "role": "Post-cutover audit",
+         "detail": "State-root comparison across members, transaction replay verification, and the upgrade record appended to governance history.",
+         "metrics": [
+          {
+           "label": "State roots",
+           "value": "match"
+          },
+          {
+           "label": "Record",
+           "value": "appended"
+          }
+         ]
+        }
+       ],
+       "note": "Five gates, zero skew. Networks that improvise upgrades acquire version drift, and version drift is how shared ledgers fork in practice."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · network model",
+   "note": "Reference program model: throughput and operations bands from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Cost and throughput across network growth"
+  },
+  {
+   "t": "p",
+   "x": "Transaction cost and throughput as membership grows — the curve that shows whether the network's economics survive its own success."
+  },
+  {
+   "t": "chart",
+   "title": "Network economics by member tier — design targets",
+   "variant": "bar",
+   "cats": [
+    "Full node member",
+    "Hosted node",
+    "Read-only member",
+    "External counterparty"
+   ],
+   "series": [
+    {
+     "name": "Monthly cost target ($k)",
+     "points": [
+      4.2,
+      1.8,
+      0.3,
+      0.05
+     ]
+    },
+    {
+     "name": "Onboarding days target",
+     "points": [
+      6,
+      3,
+      2,
+      1
+     ]
+    }
+   ],
+   "yMax": 8,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Enterprise DLT Network Engineering across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Enterprise DLT Network Engineering",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "plays": [
+      "Membership charters with obligations, exit clauses and on-ledger governance",
+      "Privacy domains that end the data-sharing standoff between members",
+      "Zero-downtime upgrade coordination — every member current, or flagged"
+     ],
+     "kpis": [
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      },
+      {
+       "label": "Network uptime",
+       "value": "99.98%"
+      },
+      {
+       "label": "Members on current version",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": true,
+     "hook": "The work here has one job: move a named number — claims, policy and exposure data fragmented included — and prove it moved.",
+     "plays": [
+      "Membership charters with obligations, exit clauses and on-ledger governance",
+      "Privacy domains that end the data-sharing standoff between members",
+      "Zero-downtime upgrade coordination — every member current, or flagged"
+     ],
+     "kpis": [
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      },
+      {
+       "label": "Network uptime",
+       "value": "99.98%"
+      },
+      {
+       "label": "Members on current version",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Membership charters with obligations, exit clauses and on-ledger governance",
+      "Privacy domains that end the data-sharing standoff between members",
+      "Zero-downtime upgrade coordination — every member current, or flagged"
+     ],
+     "kpis": [
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      },
+      {
+       "label": "Network uptime",
+       "value": "99.98%"
+      },
+      {
+       "label": "Members on current version",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "plays": [
+      "Membership charters with obligations, exit clauses and on-ledger governance",
+      "Privacy domains that end the data-sharing standoff between members",
+      "Zero-downtime upgrade coordination — every member current, or flagged"
+     ],
+     "kpis": [
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      },
+      {
+       "label": "Network uptime",
+       "value": "99.98%"
+      },
+      {
+       "label": "Members on current version",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Retail & Consumer Goods operators recognize the pattern: provenance claims unverifiable, quarter after quarter.",
+     "plays": [
+      "Membership charters with obligations, exit clauses and on-ledger governance",
+      "Privacy domains that end the data-sharing standoff between members",
+      "Zero-downtime upgrade coordination — every member current, or flagged",
+      "Sector working pattern: provenance verification — EUDR/DPP-grade chain-of-custody for claim-bearing products. Claims verified, greenwashing risk down is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      },
+      {
+       "label": "Network uptime",
+       "value": "99.98%"
+      },
+      {
+       "label": "Members on current version",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: interconnect and roaming reconciliation, quarter after quarter.",
+     "plays": [
+      "Membership charters with obligations, exit clauses and on-ledger governance",
+      "Privacy domains that end the data-sharing standoff between members",
+      "Zero-downtime upgrade coordination — every member current, or flagged"
+     ],
+     "kpis": [
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      },
+      {
+       "label": "Network uptime",
+       "value": "99.98%"
+      },
+      {
+       "label": "Members on current version",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what GO/REC certificate integrity costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Membership charters with obligations, exit clauses and on-ledger governance",
+      "Privacy domains that end the data-sharing standoff between members",
+      "Zero-downtime upgrade coordination — every member current, or flagged"
+     ],
+     "kpis": [
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      },
+      {
+       "label": "Network uptime",
+       "value": "99.98%"
+      },
+      {
+       "label": "Members on current version",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — compliance-grade provenance missing included — and prove it moved.",
+     "plays": [
+      "Membership charters with obligations, exit clauses and on-ledger governance",
+      "Privacy domains that end the data-sharing standoff between members",
+      "Zero-downtime upgrade coordination — every member current, or flagged"
+     ],
+     "kpis": [
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      },
+      {
+       "label": "Network uptime",
+       "value": "99.98%"
+      },
+      {
+       "label": "Members on current version",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": true,
+     "hook": "The work here has one job: move a named number — records integrity under dispute included — and prove it moved.",
+     "plays": [
+      "Membership charters with obligations, exit clauses and on-ledger governance",
+      "Privacy domains that end the data-sharing standoff between members",
+      "Zero-downtime upgrade coordination — every member current, or flagged"
+     ],
+     "kpis": [
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      },
+      {
+       "label": "Network uptime",
+       "value": "99.98%"
+      },
+      {
+       "label": "Members on current version",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Membership charters with obligations, exit clauses and on-ledger governance",
+      "Privacy domains that end the data-sharing standoff between members",
+      "Zero-downtime upgrade coordination — every member current, or flagged"
+     ],
+     "kpis": [
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      },
+      {
+       "label": "Network uptime",
+       "value": "99.98%"
+      },
+      {
+       "label": "Members on current version",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the trust layer is engineered, not asserted: signed events, permissioned consensus, and a provenance graph every participant can verify.",
+     "plays": [
+      "Membership charters with obligations, exit clauses and on-ledger governance",
+      "Privacy domains that end the data-sharing standoff between members",
+      "Zero-downtime upgrade coordination — every member current, or flagged"
+     ],
+     "kpis": [
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      },
+      {
+       "label": "Network uptime",
+       "value": "99.98%"
+      },
+      {
+       "label": "Members on current version",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what provenance claims unverifiable costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Membership charters with obligations, exit clauses and on-ledger governance",
+      "Privacy domains that end the data-sharing standoff between members",
+      "Zero-downtime upgrade coordination — every member current, or flagged"
+     ],
+     "kpis": [
+      {
+       "label": "Ledger txn cost",
+       "value": "$0.02"
+      },
+      {
+       "label": "Network uptime",
+       "value": "99.98%"
+      },
+      {
+       "label": "Members on current version",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/blockchain-digital-trust/"
+    }
+   ],
+   "practiceNote": "Enterprise DLT Network Engineering view: permissioned networks with real governance — membership charters, privacy domains, boring consensus, and operations that treat nodes like production systems."
+  },
+  {
+   "t": "h2",
+   "x": "Network defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor permissioned, charter-governed designs with predictable consensus over public-chain experiments; deviation triggers are written because each one moves trust from governance to tokenomics."
+  },
+  {
+   "t": "table",
+   "caption": "Enterprise DLT Network Engineering: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production permissioned network with governance charter and operations runbook",
-     "Handed to a named owner on your side, with a working session included."
+     "Ledger",
+     "Permissioned BFT-class runtime",
+     "Public chain for enterprise data — privacy never survives"
     ],
     [
-     "Integration pack for member legacy systems",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Keys",
+     "HSM-backed with ceremony packs",
+     "Software keys in cloud KMS only — quorum matters"
     ],
     [
-     "Key management and node operations under institutional controls",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Privacy",
+     "Private data collections / channels",
+     "Encrypt-everything-on-chain — metadata still leaks"
     ],
     [
-     "Regulator/audit documentation pack",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "State",
+     "Off-chain stores with ledger anchoring",
+     "Documents on-chain — bloat and PII risk"
+    ],
+    [
+     "Governance",
+     "Charter with on-chain procedures",
+     "Email-based governance — upgrades stall"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Engineering standards we hold"
+   "x": "Network release gates — evidence before member onboarding"
   },
   {
-   "t": "p",
-   "x": "Enterprise DLT Network Engineering is built against defined standards: Hyperledger Fabric, Hyperledger Besu, Corda-class platforms, HSM integration, Kubernetes. Each choice is justified in writing as part of the architecture baseline, so your team can defend it without us in the room."
+   "t": "table",
+   "caption": "Release gates for Enterprise DLT Network Engineering — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Charter gate",
+     "Is governance signed and testable?",
+     "Charter with quorum rules; decision log"
+    ],
+    [
+     "Key gate",
+     "Are keys ceremony-grade?",
+     "Ceremony pack; HSM attestation"
+    ],
+    [
+     "Privacy gate",
+     "Do domains hold under probes?",
+     "Leak-probe CI evidence"
+    ],
+    [
+     "Upgrade gate",
+     "Can the network upgrade safely?",
+     "Train evidence; member sign-off record"
+    ],
+    [
+     "Ops gate",
+     "Are nodes production-grade?",
+     "Monitor SLOs; node runbooks"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "The delivery rhythm"
+   "x": "What the consortium inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Enterprise DLT Network Engineering starts with the measurement: the metric, the owner, the current number, signed."
+     "Network charter",
+     "Membership, privacy and upgrade rules signed"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, governance design first, gates written with your team."
+     "Ledger runtime estate",
+     "Nodes, consensus config, membership service"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Enterprise DLT Network Engineering closes its first quarter at the gate: the working slice is measured against the baseline your team signed, and the scale decision is written down with the evidence attached."
+     "Key ceremony kit",
+     "HSM ceremonies with quorum evidence"
+    ],
+    [
+     "Privacy domain config",
+     "Scoping with CI leak probes"
+    ],
+    [
+     "Anchoring service",
+     "Off-chain-to-ledger hash pipeline"
+    ],
+    [
+     "Upgrade train",
+     "Versioned rollouts with sign-off windows"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Charter to mainnet, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — charter & membership",
+     "Charter drafting, member recruitment, node tiers"
+    ],
+    [
+     "Weeks 3–4 — ledger core",
+     "Runtime setup, consensus config, CA and DIDs"
+    ],
+    [
+     "Weeks 5–6 — keys & privacy",
+     "HSM ceremonies, domains, leak probes in CI"
+    ],
+    [
+     "Weeks 7–8 — off-chain layer",
+     "Stores, anchoring, event relay"
+    ],
+    [
+     "Weeks 9–10 — operations",
+     "Monitors, upgrade train, first member onboarding wave"
+    ],
+    [
+     "Ongoing — network ops",
+     "Monthly reconcile; quarterly drills; annual charter review"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — member systems and the shared ledger"
+  },
+  {
+   "t": "p",
+   "x": "Each member integrates their systems of record; these contracts define event emission, identity onboarding and the privacy boundaries every integration must respect."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Member systems",
+     "Event relay with signed feeds"
+    ],
+    [
+     "ERP / core systems",
+     "Reconciliation adapters"
+    ],
+    [
+     "HSM providers",
+     "Ceremony integration"
+    ],
+    [
+     "Identity providers",
+     "DID bridging"
+    ],
+    [
+     "Audit firms",
+     "Verifier access"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Governance overlay — the on-ledger charter"
+  },
+  {
+   "t": "p",
+   "x": "Governance is executed, not laminated: votes, amendments and member obligations recorded on-ledger — the charter your regulator can read directly from the system itself."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Hashes-on-chain",
+     "No PII or documents on the ledger, ever"
+    ],
+    [
+     "Quorum keys",
+     "Critical operations need ceremony-grade quorum"
+    ],
+    [
+     "Charter authority",
+     "Membership and upgrades follow the signed charter"
+    ],
+    [
+     "Independent verification",
+     "A third party can verify without trusting members"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Chain bloat is managed by design: archival policy, state pruning and evidence retention are charter clauses with technical enforcement — because a ledger that grows forever eventually stops serving anyone."
   },
   {
    "t": "cta",
-   "x": "Start with the diagnostic, not the contract: Enterprise DLT Network Engineering baselined in two weeks, and a scoped proposal only if the delta justifies it."
+   "x": "Bring the consortium that has met twelve times without shipping. The diagnostic will draft the charter with privacy domains scoped — and put the network on a build schedule."
   }
  ],
- "words": 504,
+ "words": 981,
  "section": "Services",
  "l1": "Services",
  "l2": "Blockchain & Digital Trust",
@@ -278,7 +1200,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Blockchain & Digital Trust",
+   "title": "Domain overview — Blockchain & Digital Trust",
    "url": "/services/blockchain-digital-trust/",
    "desc": "DLT networks, tokenization and verifiable credentials — a shared, verifiable record with controls regulators accept."
   },
@@ -330,33 +1252,51 @@
   {
    "title": "Blockchain & Digital Trust for Education & Research",
    "url": "/industries/education-research/capabilities/blockchain-digital-trust/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
    "title": "Asset Tokenization & Digital Assets",
    "url": "/services/blockchain-digital-trust/asset-tokenization/",
-   "tag": "Same tower",
-   "desc": "Instruments as tokens — issuance, custody and lifecycle under securities-law discipline."
+   "tag": "Same domain",
+   "desc": "regulated token designs — legal-wrapper-first architecture, transfer controls that enforce restrictions in code, and settlement that shortens cycles honestly."
   },
   {
-   "title": "Smart Contract Engineering & Audit",
-   "url": "/services/blockchain-digital-trust/smart-contract-engineering/",
-   "tag": "Same tower",
-   "desc": "Contracts as production software — specification, formal verification and audit before value moves."
-  },
-  {
-   "title": "Provenance, Traceability & Supply Chain Trust",
-   "url": "/services/blockchain-digital-trust/provenance-traceability/",
-   "tag": "Same tower",
-   "desc": "Proof, not paperwork — EUDR, DPP and chain-of-custody systems regulators and customers can verify."
+   "title": "Blockchain Analytics & Regulatory Compliance",
+   "url": "/services/blockchain-digital-trust/blockchain-analytics-compliance/",
+   "tag": "Same domain",
+   "desc": "ledger intelligence mapped to regulatory duties — transaction risk scoring, travel-rule workflows, and audit-ready case files built automatically."
   },
   {
    "title": "Decentralized Identity & Verifiable Credentials",
    "url": "/services/blockchain-digital-trust/decentralized-identity/",
-   "tag": "Same tower",
-   "desc": "Credentials users carry — portable, privacy-preserving verification for workforce and customers."
+   "tag": "Same domain",
+   "desc": "DIDs and verifiable credentials that work offline — issuer governance, holder wallets, selective disclosure, and verification at 200ms without a phone-home."
+  },
+  {
+   "title": "Advanced Risk & Predictive Analytics",
+   "url": "/services/data-analytics-lakehouse/advanced-risk-predictive-analytics/",
+   "tag": "Pairs with",
+   "desc": "risk and forecasting models with signed baselines, time-based holdouts and governance — predictions that survive the quarter they were made in."
+  },
+  {
+   "title": "Connected Products & Smart Devices",
+   "url": "/services/iot-digital-twin-robotics/connected-products-devices/",
+   "tag": "Pairs with",
+   "desc": "product fleets in the field — OTA that never bricks, telemetry that earns its bandwidth, and support APIs that let service diagnose before the customer calls."
+  },
+  {
+   "title": "Compliance, Audit & Digital Trust",
+   "url": "/services/cybersecurity-zero-trust/compliance-audit-digital-trust/",
+   "tag": "Pairs with",
+   "desc": "evidence-grade compliance without theater — controls mapped once, evidence generated continuously, audits that pass first time."
+  },
+  {
+   "title": "A global coffee trader",
+   "url": "/case-studies/agr-02/",
+   "tag": "Evidence",
+   "desc": "EUDR due-diligence automated — compliance evidence in hours, premium channels opened."
   }
  ]
 }

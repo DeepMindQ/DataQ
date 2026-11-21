@@ -9,254 +9,1202 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Most hybrid & multicloud architecture engagements stall between the deck and the deployment. Ours are built to cross that gap: The estate as designed system — landing zones, network fabric and workload placement by economics.. What follows is the working pattern, not the brochure."
+   "x": "One operating model across clouds and on-premises: workload placement by signed policy, portable patterns instead of dialects, egress budgets that hold, and identity seams that work — so the estate behaves like one system, not three vendors' territories."
   },
   {
    "t": "h2",
-   "x": "What this service is"
+   "x": "Multicloud is an operating-model problem the vendors will not solve for you"
   },
   {
    "t": "p",
-   "x": "Multicloud sprawl is a cost decision nobody made. We design the estate as a system: landing zones per environment with policy-as-code guardrails, a network fabric (hub-spoke, private interconnect, egress control) that makes topology intentional, and workload placement driven by data gravity, latency, regulatory zone and unit economics — not by which team inherited which vendor relationship."
+   "x": "Multicloud done badly is three estates, three security models and three bills. Done well, it is a placement policy — workloads run where latency, data gravity and cost say they should — on top of portable patterns: containers, IaC, and a control plane that treats the clouds as fleets, not countries."
   },
   {
    "t": "p",
-   "x": "We are deliberately multi-vendor across AWS, Azure and GCP, and we write the placement policy down: a workload scoring model each team can apply, with review gates for exceptions. Sovereignty and sector constraints (data residency, regulated zones) are modeled as first-class placement inputs, so audits and architecture reviews read the same truth."
+   "x": "The practice covers the architecture (placement, connectivity, identity spanning), the operating model (one policy language, one observability fabric), and the honest tradeoffs — because some workloads should never leave a specific cloud, and pretending otherwise costs more later."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that make hybrid estates tribal, the reference architecture of placement by policy, and the console that proves parity."
   },
   {
    "t": "h2",
-   "x": "The stakes, stated plainly"
+   "x": "Four failure modes that make hybrid estates tribal"
   },
   {
    "t": "p",
-   "x": "Hybrid & Multicloud Architecture delivery today concentrates in Banking & Financial Services, Telecom, Media & Entertainment, Retail & Consumer Goods, Manufacturing & Industrial. The metric is chosen with your finance lead, and the baseline is signed before any build begins."
+   "x": "Each of these costs money or uptime in ways nobody attributes — the countermeasures make placement, parity and egress contractual rather than folklore."
   },
   {
-   "t": "h2",
-   "x": "The system, piece by piece"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Hybrid & Multicloud Architecture: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Landing zone engineering",
-     "governed account/subscription topology with policy-as-code guardrails"
+     "Cloud tribalism",
+     "Each cloud team optimizes locally; architecture fragments",
+     "Placement policy with data-gravity and latency inputs; architecture review"
     ],
     [
-     "Network fabric",
-     "hub-spoke, private interconnect and egress control designed as intent"
+     "Policy dialects",
+     "Security rules differ per cloud; gaps hide in translation",
+     "One policy model compiled per cloud; parity tests in CI"
     ],
     [
-     "Workload placement model",
-     "scoring on data gravity, latency, sovereignty and unit economics"
+     "Egress surprise",
+     "Cross-cloud traffic costs explode",
+     "Data-flow budgets per workload; egress metering with alerts"
     ],
     [
-     "Sovereignty modeling",
-     "residency and regulated-zone constraints as placement inputs"
-    ],
-    [
-     "FinOps-aware design",
-     "cost telemetry and showback wired into architecture decisions"
+     "Identity seams",
+     "Cross-cloud auth is bolted per project",
+     "Federated identity with short-lived cross-cloud credentials"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — placement by policy, patterns by default"
+  },
+  {
+   "t": "p",
+   "x": "Placement is decided by signed policy — data gravity, latency, cost and regulation — and enforced at deploy time; the pattern library stays portable so a workload's second cloud is a configuration, not a rewrite."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Hybrid & Multicloud Architecture",
+   "title": "Reference architecture — hybrid/multicloud control plane",
    "lanes": [
-    "Devices",
-    "Edge layer",
-    "Regional core",
-    "Data plane",
-    "Ops",
-    "Experience"
+    "Workloads",
+    "Placement",
+    "Connectivity",
+    "Identity",
+    "Policy & observability",
+    "Economics"
    ],
    "nodes": [
     {
-     "id": "dv0",
+     "id": "svc",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Services"
     },
     {
-     "id": "dv1",
+     "id": "data",
      "lane": 0,
-     "label": "OT & IoT fleets",
-     "hot": false
+     "label": "Data workloads"
     },
     {
-     "id": "ed2",
+     "id": "ai",
+     "lane": 0,
+     "label": "AI workloads"
+    },
+    {
+     "id": "place",
      "lane": 1,
-     "label": "Hybrid & Multicloud Architecture",
+     "label": "Placement engine",
      "hot": true
     },
     {
-     "id": "ed3",
+     "id": "gravity",
      "lane": 1,
-     "label": "Local inference",
-     "hot": false
+     "label": "Data-gravity rules"
     },
     {
-     "id": "rc4",
+     "id": "lat",
+     "lane": 1,
+     "label": "Latency targets"
+    },
+    {
+     "id": "mesh",
      "lane": 2,
-     "label": "Regional clusters",
-     "hot": false
+     "label": "Interconnect fabric",
+     "hot": true
     },
     {
-     "id": "rc5",
+     "id": "dns",
      "lane": 2,
-     "label": "Global control plane",
-     "hot": false
+     "label": "Global DNS & LB"
     },
     {
-     "id": "dp6",
+     "id": "egress",
+     "lane": 2,
+     "label": "Egress metering"
+    },
+    {
+     "id": "fed",
      "lane": 3,
-     "label": "Streaming bus",
-     "hot": false
+     "label": "Federated identity",
+     "hot": true
     },
     {
-     "id": "dp7",
+     "id": "shortlived",
      "lane": 3,
-     "label": "Cold & warm tiers",
-     "hot": false
+     "label": "Short-lived creds"
     },
     {
-     "id": "op8",
+     "id": "workload-id",
+     "lane": 3,
+     "label": "Workload identity"
+    },
+    {
+     "id": "policy",
      "lane": 4,
-     "label": "Chaos drills",
-     "hot": false
+     "label": "Unified policy model",
+     "hot": true
     },
     {
-     "id": "op9",
+     "id": "obs",
      "lane": 4,
-     "label": "Cost guardrails",
-     "hot": false
+     "label": "One observability fabric"
     },
     {
-     "id": "ex10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "parity",
+     "lane": 4,
+     "label": "Parity tests"
     },
     {
-     "id": "ex11",
+     "id": "fin",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Cross-cloud FinOps"
+    },
+    {
+     "id": "unit",
+     "lane": 5,
+     "label": "Unit economics"
+    },
+    {
+     "id": "review",
+     "lane": 5,
+     "label": "Placement review"
     }
    ],
    "edges": [
     {
-     "a": "dv0",
-     "b": "ed2"
+     "a": "svc",
+     "b": "place"
     },
     {
-     "a": "dv1",
-     "b": "ed3"
+     "a": "data",
+     "b": "place",
+     "label": "gravity"
     },
     {
-     "a": "ed2",
-     "b": "rc4"
+     "a": "ai",
+     "b": "place",
+     "label": "accelerators"
     },
     {
-     "a": "ed3",
-     "b": "rc5"
+     "a": "gravity",
+     "b": "place",
+     "label": "bind"
     },
     {
-     "a": "rc4",
-     "b": "dp6"
+     "a": "lat",
+     "b": "place",
+     "label": "bind"
     },
     {
-     "a": "rc5",
-     "b": "dp7"
+     "a": "place",
+     "b": "mesh",
+     "label": "attach"
     },
     {
-     "a": "ed2",
-     "b": "op8"
+     "a": "mesh",
+     "b": "dns",
+     "label": "global"
     },
     {
-     "a": "op8",
-     "b": "op9"
+     "a": "mesh",
+     "b": "egress",
+     "label": "meter"
     },
     {
-     "a": "dp6",
-     "b": "ex10"
+     "a": "fed",
+     "b": "workload-id",
+     "label": "issue"
     },
     {
-     "a": "dp7",
-     "b": "ex11"
+     "a": "shortlived",
+     "b": "fed",
+     "label": "mint"
+    },
+    {
+     "a": "policy",
+     "b": "mesh",
+     "label": "guard"
+    },
+    {
+     "a": "policy",
+     "b": "obs",
+     "label": "instrument"
+    },
+    {
+     "a": "parity",
+     "b": "policy",
+     "label": "test"
+    },
+    {
+     "a": "egress",
+     "b": "fin",
+     "label": "cost"
+    },
+    {
+     "a": "fin",
+     "b": "unit",
+     "label": "price"
+    },
+    {
+     "a": "unit",
+     "b": "review",
+     "label": "re-place"
     }
    ],
-   "note": "Topology inherited from the Cloud, Edge & Platform tower; the highlighted core is this service's build."
+   "note": "Placement is a policy decision with measured inputs — latency targets, data gravity and unit economics — reviewed quarterly, not a team habit."
   },
   {
    "t": "h2",
-   "x": "The artifacts, named"
+   "x": "One workload, placed and moved without a rewrite"
   },
   {
    "t": "p",
-   "x": "For Hybrid & Multicloud Architecture, the artifacts, each with a walkthrough when it lands:"
+   "x": "From placement evaluation through policy enforcement, portable-pattern deployment and the egress accounting — including the drift monitor that catches manual divergence between clouds."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "edge-topology",
+   "title": "Workload placement flow — declare, evaluate, place, connect, watch",
+   "labels": [
+    "Workload declared",
+    "Constraints evaluated",
+    "Placement chosen",
+    "Fabric attached",
+    "Identity minted",
+    "Policy applied",
+    "Economics tracked"
+   ],
+   "note": "Parity tests run placement in CI: the same policy must compile and enforce identically on every target cloud."
+  },
+  {
+   "t": "h2",
+   "x": "The multicloud console — parity as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Placement policy coverage, policy parity and egress budget adherence — the three numbers that decide whether the estate is one system or three vendors' territories with a shared invoice."
+  },
+  {
+   "t": "idash",
+   "title": "Hybrid & multicloud — fabric console",
+   "kpis": [
+    {
+     "label": "Workloads fabricated",
+     "value": "87%",
+     "delta": "behind identity + routing policy",
+     "dir": "up",
+     "spark": [
+      40,
+      52,
+      61,
+      70,
+      78,
+      84,
+      87
+     ]
+    },
+    {
+     "label": "Cross-cloud RTT p99",
+     "value": "38 ms",
+     "delta": "interconnect, prod shapes",
+     "dir": "down",
+     "spark": [
+      90,
+      72,
+      61,
+      52,
+      45,
+      41,
+      38
+     ]
+    },
+    {
+     "label": "Placement violations",
+     "value": "0",
+     "delta": "policy-as-code enforced",
+     "dir": "flat",
+     "spark": [
+      14,
+      9,
+      6,
+      4,
+      2,
+      1,
+      0
+     ]
+    },
+    {
+     "label": "Exit cost (high-coupling)",
+     "value": "3",
+     "delta": "workloads — was 11",
+     "dir": "down",
+     "spark": [
+      11,
+      9,
+      8,
+      6,
+      5,
+      4,
+      3
+     ]
+    },
+    {
+     "label": "Data consistency drift",
+     "value": "0.00%",
+     "delta": "reconciliation daily",
+     "dir": "flat",
+     "spark": [
+      0.3,
+      0.2,
+      0.1,
+      0.04,
+      0,
+      0,
+      0
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Estate map",
+     "widgets": [
+      {
+       "kind": "scatter",
+       "title": "Workload coupling vs traffic — the negotiation-leverage map",
+       "points": [
+        {
+         "x": 82,
+         "y": 88,
+         "label": "Core ledger",
+         "group": "Locked-in"
+        },
+        {
+         "x": 64,
+         "y": 71,
+         "label": "Data warehouse",
+         "group": "Locked-in"
+        },
+        {
+         "x": 28,
+         "y": 62,
+         "label": "API services",
+         "group": "Portable"
+        },
+        {
+         "x": 22,
+         "y": 48,
+         "label": "Web tier",
+         "group": "Portable"
+        },
+        {
+         "x": 45,
+         "y": 77,
+         "label": "Managed Kafka",
+         "group": "Partial"
+        },
+        {
+         "x": 18,
+         "y": 35,
+         "label": "Batch jobs",
+         "group": "Portable"
+        },
+        {
+         "x": 75,
+         "y": 40,
+         "label": "Managed DB fleet",
+         "group": "Partial"
+        },
+        {
+         "x": 12,
+         "y": 28,
+         "label": "Static edge",
+         "group": "Portable"
+        },
+        {
+         "x": 88,
+         "y": 55,
+         "label": "AI inference",
+         "group": "Partial"
+        },
+        {
+         "x": 8,
+         "y": 18,
+         "label": "DNS/CDN",
+         "group": "Portable"
+        }
+       ],
+       "groups": [
+        "Locked-in",
+        "Partial",
+        "Portable"
+       ],
+       "xLabel": "Provider coupling (0-100)",
+       "yLabel": "Traffic weight (0-100)",
+       "note": "Hover for names. The upper-right quadrant is the vendor's pricing power — the fabric program's roadmap is exactly the worklist that shrinks it, workload by workload."
+      }
+     ]
+    },
+    {
+     "name": "Fabric topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The multicloud fabric — click nodes for the consistency contract",
+       "lanes": [
+        "Identity",
+        "Network",
+        "Data",
+        "Governance"
+       ],
+       "nodes": [
+        {
+         "id": "idp",
+         "lane": 0,
+         "label": "Federated identity",
+         "detail": "Workload identity federation across clouds — no static keys anywhere; human access through one authentication story with per-cloud policy.",
+         "hot": true
+        },
+        {
+         "id": "mesh",
+         "lane": 1,
+         "label": "Mesh & gateways",
+         "detail": "Cross-cloud calls observed, policy-checked and encrypted; latency budgets per route measured on production shapes."
+        },
+        {
+         "id": "link",
+         "lane": 1,
+         "label": "Interconnect fabric",
+         "detail": "Redundant private paths with measured failover; the internet is the backup, and the backup is drilled."
+        },
+        {
+         "id": "auth",
+         "lane": 2,
+         "label": "Authoritative zones",
+         "detail": "Each data domain has exactly one writer region; everything else reads replicated state with declared staleness."
+        },
+        {
+         "id": "repl",
+         "lane": 2,
+         "label": "Replication plane",
+         "detail": "Replication with lag tolerance per domain; reconciliation jobs prove totals daily — drift of any size is an incident."
+        },
+        {
+         "id": "pol",
+         "lane": 3,
+         "label": "Placement policy",
+         "detail": "Policy-as-code at deploy time: residency, latency, maturity, exit cost — a workload without a stated class does not deploy."
+        },
+        {
+         "id": "exit",
+         "lane": 3,
+         "label": "Exit plans",
+         "detail": "Per-workload exit cost documented with the design choices that keep it honest — leverage is engineered, not negotiated annually."
+        }
+       ],
+       "edges": [
+        {
+         "a": "idp",
+         "b": "mesh"
+        },
+        {
+         "a": "mesh",
+         "b": "link",
+         "label": "routes"
+        },
+        {
+         "a": "auth",
+         "b": "repl",
+         "label": "replicate"
+        },
+        {
+         "a": "repl",
+         "b": "mesh"
+        },
+        {
+         "a": "pol",
+         "b": "mesh",
+         "label": "gates"
+        },
+        {
+         "a": "pol",
+         "b": "repl",
+         "label": "gates"
+        },
+        {
+         "a": "exit",
+         "b": "pol",
+         "label": "informs"
+        }
+       ],
+       "note": "Click nodes for the contract each layer offers. The consistency plane is the architecture; the clouds are plumbing."
+      }
+     ]
+    },
+    {
+     "name": "Consistency what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Replication what-if — lag tolerance vs workload classes",
+       "params": [
+        {
+         "name": "Domains replicated",
+         "min": 2,
+         "max": 20,
+         "step": 1,
+         "value": 9,
+         "unit": "domains"
+        },
+        {
+         "name": "Lag tolerance",
+         "min": 1,
+         "max": 60,
+         "step": 1,
+         "value": 15,
+         "unit": "s"
+        },
+        {
+         "name": "Cross-cloud write share",
+         "min": 5,
+         "max": 80,
+         "step": 5,
+         "value": 30,
+         "unit": "% writes"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Replication cost",
+         "unit": "$k/mo",
+         "formula": "p0*3.4*(1+p2/40)",
+         "good": "40",
+         "bad": "120"
+        },
+        {
+         "name": "Stale-read risk",
+         "unit": "0-100",
+         "formula": "min(90, p2*1.3*(60/max(1,p1)))",
+         "good": "20",
+         "bad": "55"
+        },
+        {
+         "name": "Drift incidents / yr",
+         "unit": "cnt",
+         "formula": "p0*p2*0.09*(60/max(1,p1))",
+         "good": "3",
+         "bad": "12"
+        }
+       ],
+       "curve": {
+        "param": 2,
+        "output": 1,
+        "label": "Write share vs stale-read risk"
+       },
+       "note": "Stale-read risk scales with cross-cloud writes divided by lag tolerance — the design answer is usually single-writer domains, not heroic replication. The curve shows why."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · placement model",
+   "note": "Reference program model: coupling scores and fabric bands from delivery benchmarks, not client data."
+  },
+  {
+   "t": "h2",
+   "x": "Placement and egress economics across the estate"
+  },
+  {
+   "t": "p",
+   "x": "Workload distribution and egress spend by placement policy — the shape that shows where data gravity is quietly taxing the business and which policies are paying off."
+  },
+  {
+   "t": "chart",
+   "title": "Workload distribution and cost by placement class — design targets",
+   "variant": "bar",
+   "cats": [
+    "Cloud A (primary)",
+    "Cloud B (data)",
+    "On-prem (sovereign)",
+    "Edge"
+   ],
+   "series": [
+    {
+     "name": "Workload share target %",
+     "points": [
+      46,
+      27,
+      19,
+      8
+     ]
+    },
+    {
+     "name": "Unit cost index target",
+     "points": [
+      100,
+      78,
+      92,
+      85
+     ]
+    }
+   ],
+   "yMax": 120,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Hybrid & Multicloud Architecture across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Hybrid & Multicloud Architecture",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: infrastructure is treated as a product: versioned, observable, costed, and handed to your team with runbooks rather than folklore.",
+     "plays": [
+      "Placement by signed policy — data gravity, latency, cost, regulation",
+      "Portable pattern library so the second cloud is a configuration",
+      "Egress budgets with attribution, and identity seams that are rehearsed",
+      "Sector working pattern: core-adjacent modernization in Banking & Financial Services, where strangler-pattern decomposition of monolith wrappers around core with parallel-run equivalence."
+     ],
+     "kpis": [
+      {
+       "label": "Placement policy coverage",
+       "value": "83%"
+      },
+      {
+       "label": "Policy parity",
+       "value": "100%"
+      },
+      {
+       "label": "Egress budget adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident.",
+     "plays": [
+      "Placement by signed policy — data gravity, latency, cost, regulation",
+      "Portable pattern library so the second cloud is a configuration",
+      "Egress budgets with attribution, and identity seams that are rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Placement policy coverage",
+       "value": "83%"
+      },
+      {
+       "label": "Policy parity",
+       "value": "100%"
+      },
+      {
+       "label": "Egress budget adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — validated-environment rigidity included — and prove it moved.",
+     "plays": [
+      "Placement by signed policy — data gravity, latency, cost, regulation",
+      "Portable pattern library so the second cloud is a configuration",
+      "Egress budgets with attribution, and identity seams that are rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Placement policy coverage",
+       "value": "83%"
+      },
+      {
+       "label": "Policy parity",
+       "value": "100%"
+      },
+      {
+       "label": "Egress budget adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident.",
+     "plays": [
+      "Placement by signed policy — data gravity, latency, cost, regulation",
+      "Portable pattern library so the second cloud is a configuration",
+      "Egress budgets with attribution, and identity seams that are rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Placement policy coverage",
+       "value": "83%"
+      },
+      {
+       "label": "Policy parity",
+       "value": "100%"
+      },
+      {
+       "label": "Egress budget adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Placement by signed policy — data gravity, latency, cost, regulation",
+      "Portable pattern library so the second cloud is a configuration",
+      "Egress budgets with attribution, and identity seams that are rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Placement policy coverage",
+       "value": "83%"
+      },
+      {
+       "label": "Policy parity",
+       "value": "100%"
+      },
+      {
+       "label": "Egress budget adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: energy cost compounds, quarter after quarter.",
+     "plays": [
+      "Placement by signed policy — data gravity, latency, cost, regulation",
+      "Portable pattern library so the second cloud is a configuration",
+      "Egress budgets with attribution, and identity seams that are rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Placement policy coverage",
+       "value": "83%"
+      },
+      {
+       "label": "Policy parity",
+       "value": "100%"
+      },
+      {
+       "label": "Egress budget adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": true,
+     "hook": "Ask what customer and market platforms creak costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Placement by signed policy — data gravity, latency, cost, regulation",
+      "Portable pattern library so the second cloud is a configuration",
+      "Egress budgets with attribution, and identity seams that are rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Placement policy coverage",
+       "value": "83%"
+      },
+      {
+       "label": "Policy parity",
+       "value": "100%"
+      },
+      {
+       "label": "Egress budget adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — peak surges break planning included — and prove it moved.",
+     "plays": [
+      "Placement by signed policy — data gravity, latency, cost, regulation",
+      "Portable pattern library so the second cloud is a configuration",
+      "Egress budgets with attribution, and identity seams that are rehearsed",
+      "Sector working pattern: peak surge engineering: elastic capacity with load modeling for trading peaks. Peak absorbed at controlled unit cost is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Placement policy coverage",
+       "value": "83%"
+      },
+      {
+       "label": "Policy parity",
+       "value": "100%"
+      },
+      {
+       "label": "Egress budget adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the platform work decides the unit economics: right-sized runtimes, automated environments, and FinOps telemetry from the first workload.",
+     "plays": [
+      "Placement by signed policy — data gravity, latency, cost, regulation",
+      "Portable pattern library so the second cloud is a configuration",
+      "Egress budgets with attribution, and identity seams that are rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Placement policy coverage",
+       "value": "83%"
+      },
+      {
+       "label": "Policy parity",
+       "value": "100%"
+      },
+      {
+       "label": "Egress budget adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Education & Research operators recognize the pattern: research computing fragmented, quarter after quarter.",
+     "plays": [
+      "Placement by signed policy — data gravity, latency, cost, regulation",
+      "Portable pattern library so the second cloud is a configuration",
+      "Egress budgets with attribution, and identity seams that are rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Placement policy coverage",
+       "value": "83%"
+      },
+      {
+       "label": "Policy parity",
+       "value": "100%"
+      },
+      {
+       "label": "Egress budget adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Ask what cloud unit economics opaque costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Placement by signed policy — data gravity, latency, cost, regulation",
+      "Portable pattern library so the second cloud is a configuration",
+      "Egress budgets with attribution, and identity seams that are rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Placement policy coverage",
+       "value": "83%"
+      },
+      {
+       "label": "Policy parity",
+       "value": "100%"
+      },
+      {
+       "label": "Egress budget adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what season peaks break systems costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Placement by signed policy — data gravity, latency, cost, regulation",
+      "Portable pattern library so the second cloud is a configuration",
+      "Egress budgets with attribution, and identity seams that are rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Placement policy coverage",
+       "value": "83%"
+      },
+      {
+       "label": "Policy parity",
+       "value": "100%"
+      },
+      {
+       "label": "Egress budget adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/cloud-edge-platform-engineering/"
+    }
+   ],
+   "practiceNote": "Hybrid & Multicloud Architecture view: one operating model across clouds and on-prem — workload placement by policy, portable patterns, and drift that is measured in one place."
+  },
+  {
+   "t": "h2",
+   "x": "Multicloud defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor portable patterns with policy-enforced placement over per-cloud excellence; deviation triggers are written because each one re-creates a dialect someone must learn to maintain."
+  },
+  {
+   "t": "table",
+   "caption": "Hybrid & Multicloud Architecture: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Reference hybrid/multicloud architecture with landing zones and fabric",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Placement",
+     "Policy engine with measured inputs",
+     "Team habit placement — it follows org charts, not physics"
     ],
     [
-     "Workload placement policy and exception review process",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Connectivity",
+     "Interconnect fabric with egress metering",
+     "VPN-only linking — it hides the cost curve"
     ],
     [
-     "Migration/consolidation roadmap with economics per wave",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Identity",
+     "Workload federation with short-lived creds",
+     "Static cross-cloud keys — the standing risk"
     ],
     [
-     "Governance pack: policy-as-code, network intent, cost telemetry",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Policy",
+     "One model compiled per cloud",
+     "Per-cloud hand translation — gaps are structural"
+    ],
+    [
+     "Observability",
+     "One fabric across estates",
+     "Cloud-native consoles per estate — three blind spots"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The technology choices, justified"
+   "x": "Multicloud release gates — evidence before placement"
   },
   {
-   "t": "p",
-   "x": "Hybrid & Multicloud Architecture is built against defined standards: AWS / Azure / GCP landing zones, Terraform, transit gateways / ExpressRoute / Interconnect, OPA, FinOps tooling. Each choice is justified in writing as part of the architecture baseline, so your team can defend it without us in the room."
+   "t": "table",
+   "caption": "Release gates for Hybrid & Multicloud Architecture — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Placement gate",
+     "Is placement a policy decision?",
+     "Review record with inputs; exceptions dated"
+    ],
+    [
+     "Parity gate",
+     "Does policy enforce identically?",
+     "CI parity tests per cloud"
+    ],
+    [
+     "Identity gate",
+     "Are cross-cloud creds short-lived?",
+     "Federation evidence; TTL audit"
+    ],
+    [
+     "Egress gate",
+     "Are flows budgeted?",
+     "Metering alerts; budget adherence"
+    ],
+    [
+     "Economics gate",
+     "Is placement cost-aware?",
+     "Unit economics per placement class"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "The delivery rhythm"
+   "x": "What the platform architecture team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Hybrid & Multicloud Architecture starts with the measurement: the metric, the owner, the current number, signed."
+     "Placement policy engine",
+     "Measured, reviewable placement decisions"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, landing zone engineering first, gates written with your team."
+     "Interconnect fabric",
+     "Global routing with egress budgets"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Hybrid & Multicloud Architecture are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Federated identity kit",
+     "Short-lived cross-cloud credentials"
+    ],
+    [
+     "Unified policy model",
+     "One language compiled everywhere"
+    ],
+    [
+     "Single observability fabric",
+     "Cross-estate signals in one place"
+    ],
+    [
+     "Placement review board",
+     "Quarterly re-placement with economics"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Policies in order, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — estate & policy design",
+     "Workload census, constraint taxonomy, policy model v1"
+    ],
+    [
+     "Weeks 3–4 — connectivity",
+     "Interconnect fabric, egress metering, DNS/LB"
+    ],
+    [
+     "Weeks 5–6 — identity",
+     "Federation, workload identity, TTL policies"
+    ],
+    [
+     "Weeks 7–8 — policy & parity",
+     "Compilation, CI parity tests, drift detection"
+    ],
+    [
+     "Weeks 9–10 — economics & review",
+     "Unit costs, first placement review board"
+    ],
+    [
+     "Ongoing — plane ops",
+     "Monthly parity; quarterly placement; annual architecture audit"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — clouds, identity and the data estate"
+  },
+  {
+   "t": "p",
+   "x": "The operating model spans clouds, identity planes and data gravity; these contracts define where workloads may live and how identity follows them."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Cloud providers",
+     "Native adapters per estate"
+    ],
+    [
+     "Data platforms",
+     "Gravity-aware placement"
+    ],
+    [
+     "Security domain",
+     "Policy model consumption"
+    ],
+    [
+     "FinOps",
+     "Cross-cloud cost feeds"
+    ],
+    [
+     "Observability",
+     "Fabric instrumentation"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Identity-seam governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Federated identity across clouds is the seam where estates fail; the overlay treats it as a product — tested failover, signed trust policies and a break-glass path per cloud that is rehearsed, not assumed."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "No standing cross-cloud keys",
+     "Short-lived federation only"
+    ],
+    [
+     "Placement by policy",
+     "Exceptions are dated and reviewed"
+    ],
+    [
+     "Egress budgets",
+     "Over-budget flows alert and pause"
+    ],
+    [
+     "Parity enforcement",
+     "Policy drift between clouds blocks deploy"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Egress surprises are attributed publicly: when a workload breaches its egress budget, the architecture decision that caused it is named in the review — tribalism dies by attribution."
   },
   {
    "t": "cta",
-   "x": "A value assessment prices the delta in your estate before anything is signed: Hybrid & Multicloud Architecture, measured against your baseline, in two weeks."
+   "x": "Bring the workload everyone is afraid to move. The diagnostic will price its placement by policy — and show what portability would cost versus what the current dialect costs every month."
   }
  ],
- "words": 511,
+ "words": 1000,
  "section": "Services",
  "l1": "Services",
  "l2": "Cloud, Edge & Platform Engineering",
@@ -278,7 +1226,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Cloud, Edge & Platform Engineering",
+   "title": "Domain overview — Cloud, Edge & Platform Engineering",
    "url": "/services/cloud-edge-platform-engineering/",
    "desc": "Hybrid estates, edge estate and internal platforms — engineered for reliability and unit cost."
   },
@@ -330,28 +1278,46 @@
  ],
  "cards": [
   {
-   "title": "Cloud-Native & Legacy Modernization",
-   "url": "/services/cloud-edge-platform-engineering/cloud-native-modernization/",
-   "tag": "Same tower",
-   "desc": "Retire the legacy tax — strangler-pattern modernization with measurable unit economics."
+   "title": "FinOps & Sustainable Computing",
+   "url": "/services/cloud-edge-platform-engineering/finops-sustainable-computing/",
+   "tag": "Same domain",
+   "desc": "cost and carbon as engineering inputs — unit economics per workload, rightsizing with teeth, and sustainability reported like any SLO."
   },
   {
-   "title": "Edge Computing & Distributed Infrastructure",
-   "url": "/services/cloud-edge-platform-engineering/edge-computing-infrastructure/",
-   "tag": "Same tower",
-   "desc": "Compute where the physics is — edge estate for plants, stores, vehicles and grids."
-  },
-  {
-   "title": "SRE & Reliability Engineering",
-   "url": "/services/cloud-edge-platform-engineering/sre-reliability-engineering/",
-   "tag": "Same tower",
-   "desc": "Reliability as product — SLOs, error budgets and incident discipline that engineers actually follow."
+   "title": "High-Performance & Mission-Critical Systems",
+   "url": "/services/cloud-edge-platform-engineering/high-performance-mission-critical/",
+   "tag": "Same domain",
+   "desc": "low-latency, high-availability tiers with proofs — latency budgets engineered down the stack and availability demonstrated, not asserted."
   },
   {
    "title": "Platform Engineering & Developer Experience",
    "url": "/services/cloud-edge-platform-engineering/platform-engineering-devex/",
-   "tag": "Same tower",
-   "desc": "Golden paths, paved roads — an internal platform that turns months into days."
+   "tag": "Same domain",
+   "desc": "the platform as product — golden paths as versioned APIs, scaffolds that carry SLOs and budgets by default, and a developer experience measured like a funnel."
+  },
+  {
+   "title": "Compliance, Audit & Digital Trust",
+   "url": "/services/cybersecurity-zero-trust/compliance-audit-digital-trust/",
+   "tag": "Pairs with",
+   "desc": "evidence-grade compliance without theater — controls mapped once, evidence generated continuously, audits that pass first time."
+  },
+  {
+   "title": "Industrial IoT & Sensor Fabric",
+   "url": "/services/iot-digital-twin-robotics/industrial-iot-sensor-fabric/",
+   "tag": "Pairs with",
+   "desc": "instrumentation as infrastructure — versioned schemas per device class, store-and-forward resilience, and a device lifecycle that retires zombies."
+  },
+  {
+   "title": "Lakehouse Architecture & Migration",
+   "url": "/services/data-analytics-lakehouse/lakehouse-architecture/",
+   "tag": "Pairs with",
+   "desc": "bronze→silver→gold on open table formats — a promotion path with quality gates, time travel and honest storage economics instead of a data swamp."
+  },
+  {
+   "title": "A national consumer-electronics chain",
+   "url": "/case-studies/ret-03/",
+   "tag": "Evidence",
+   "desc": "Retail media incrementality proven — clean-room measurement adopted by every major brand."
   }
  ]
 }

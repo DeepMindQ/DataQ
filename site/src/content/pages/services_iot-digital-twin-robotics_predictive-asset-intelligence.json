@@ -9,254 +9,1205 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Where most programs improvise, predictive maintenance & asset intelligence as we deliver it is sequenced: Fix it before it fails — RUL models wired into planning, spare parts and work orders. The sequence matters more than the stack — both are documented here."
+   "x": "Maintenance scheduled by evidence: failure-mode-driven models instead of anomaly  soup, work-order integration that closes the action gap, and verified outcomes that pay down truth debt — predictions that the maintenance team actually schedule against."
   },
   {
    "t": "h2",
-   "x": "The service, described plainly"
+   "x": "A prediction that does not change the work order is a prototype"
   },
   {
    "t": "p",
-   "x": "Predictive maintenance pays when it changes the plan: remaining-useful-life models feeding scheduler decisions, spare-parts availability and maintenance-window selection. We build the full loop — governed telemetry from the sensor fabric, failure-mode-driven model design (not generic anomaly detection), RUL and condition models validated against work-order history, and integration into EAM/CMMS (SAP PM/Maximo-class) so predictions become scheduled work with parts reserved, not dashboard decorations."
+   "x": "Predictive maintenance works when it is failure-mode engineering: for each asset class, the physical failure modes (bearing wear, winding insulation, cavitation), the signals that precede them, and a model per mode with a lead-time target. The value is measured in one number — unplanned downtime — and one honesty metric: how many predictions were true, false, or simply never checked."
   },
   {
    "t": "p",
-   "x": "We start where physics pays: rotating equipment, transformers, compressors, conveyors, fleet drivetrains — failure modes with measurable precursors. Clients see the outcome in planning language: unplanned downtime hours, maintenance cost per unit of output, planner trust (the share of predictions acted upon). False-alarm discipline is a first-class design goal; one crying-wolf quarter kills the program politically."
+   "x": "The practice spans signal engineering from the sensor fabric, failure-mode libraries, model-per-mode builds with lead-time targets, and the work-order integration that turns a prediction into a scheduled intervention rather than an alert nobody owns."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that make predictive maintenance theater, the reference architecture of the evidence loop, and the console that tracks verified outcomes."
   },
   {
    "t": "h2",
-   "x": "Why the timing matters"
+   "x": "Four failure modes that make predictive maintenance theater"
   },
   {
    "t": "p",
-   "x": "Programs of Predictive Maintenance & Asset Intelligence run in Manufacturing & Industrial, Energy & Utilities, Logistics & Supply Chain, Retail & Consumer Goods — always against one named number, always with the baseline signed first."
+   "x": "Each of these produces dashboards the planners ignore — the countermeasures tie models to failure modes, alarms to work orders and every prediction to a verified outcome."
   },
   {
-   "t": "h2",
-   "x": "How the capability takes shape"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Predictive Maintenance & Asset Intelligence: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Failure-mode modeling",
-     "physics-informed RUL/condition models per failure mode, not generic alerts"
+     "Mode blindness",
+     "Models trained on 'failure' as one thing",
+     "Failure-mode library per asset class; one model per mode"
     ],
     [
-     "EAM/CMMS integration",
-     "predictions becoming scheduled work orders with parts reserved"
+     "Alert floods",
+     "Predictions nobody trusts or reads",
+     "Precision targets per mode; lead-time windows that fit planning"
     ],
     [
-     "False-alarm discipline",
-     "precision targets, alarm governance and planner feedback loops"
+     "Action gap",
+     "Alert lands; work order never raised",
+     "Work-order integration with owner SLAs; closure tracking"
     ],
     [
-     "Spare-parts optimization",
-     "inventory policy informed by predicted demand"
-    ],
-    [
-     "Outcome metrics",
-     "unplanned downtime, maintenance cost/unit, planner trust rate"
+     "Truth debt",
+     "Nobody verifies whether predictions came true",
+     "Outcome verification: true/false/expired ledger per prediction"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — failure modes to verified outcomes"
+  },
+  {
+   "t": "p",
+   "x": "Models are built per failure mode with labeled history, predictions carry lead-time estimates planners can schedule against, work-order integration closes the loop, and every intervention is verified — the truth ledger that keeps precision honest and the planners trusting."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Predictive Maintenance & Asset Intelligence",
+   "title": "Reference architecture — predictive asset loop",
    "lanes": [
-    "Robots & sensors",
-    "Real-time layer",
-    "Perception stack",
-    "Orchestration",
-    "Safety",
-    "Floor"
+    "Signals",
+    "Failure modes",
+    "Models",
+    "Work orders",
+    "Outcome truth",
+    "Program health"
    ],
    "nodes": [
     {
-     "id": "rs0",
+     "id": "fab",
      "lane": 0,
-     "label": "MES & line historians",
-     "hot": false
+     "label": "Sensor fabric"
     },
     {
-     "id": "rs1",
+     "id": "hist",
      "lane": 0,
-     "label": "AMR / robot fleets",
-     "hot": false
+     "label": "History store"
     },
     {
-     "id": "rtl2",
+     "id": "cmms",
+     "lane": 0,
+     "label": "Maintenance history"
+    },
+    {
+     "id": "lib",
      "lane": 1,
-     "label": "Predictive Maintenance & Asset Intelligence",
+     "label": "Failure-mode library",
      "hot": true
     },
     {
-     "id": "rtl3",
+     "id": "sig",
      "lane": 1,
-     "label": "Time sync",
-     "hot": false
+     "label": "Signal engineering"
     },
     {
-     "id": "pst4",
+     "id": "label",
+     "lane": 1,
+     "label": "Mode labeling"
+    },
+    {
+     "id": "mod",
      "lane": 2,
-     "label": "Vision inspection",
-     "hot": false
-    },
-    {
-     "id": "pst5",
-     "lane": 2,
-     "label": "Localization",
-     "hot": false
-    },
-    {
-     "id": "orc6",
-     "lane": 3,
-     "label": "Task orchestration",
+     "label": "Model per mode",
      "hot": true
     },
     {
-     "id": "orc7",
+     "id": "lead",
+     "lane": 2,
+     "label": "Lead-time targets"
+    },
+    {
+     "id": "thresh",
+     "lane": 2,
+     "label": "Threshold tuning"
+    },
+    {
+     "id": "wo",
      "lane": 3,
-     "label": "Fleet scheduler",
-     "hot": false
+     "label": "Work-order integration",
+     "hot": true
     },
     {
-     "id": "sf8",
+     "id": "plan",
+     "lane": 3,
+     "label": "Planning windows"
+    },
+    {
+     "id": "own",
+     "lane": 3,
+     "label": "Owner SLAs"
+    },
+    {
+     "id": "verify",
      "lane": 4,
-     "label": "Human-in-the-loop stops",
-     "hot": false
+     "label": "Outcome verification",
+     "hot": true
     },
     {
-     "id": "sf9",
+     "id": "tf",
      "lane": 4,
-     "label": "Safety cases",
-     "hot": false
+     "label": "True/false ledger"
     },
     {
-     "id": "fl10",
-     "lane": 5,
-     "label": "Production scheduling",
-     "hot": false
+     "id": "inspect",
+     "lane": 4,
+     "label": "Inspection closure"
     },
     {
-     "id": "fl11",
+     "id": "kpi",
      "lane": 5,
-     "label": "Maintenance planner",
-     "hot": false
+     "label": "Program KPIs",
+     "hot": true
+    },
+    {
+     "id": "prec",
+     "lane": 5,
+     "label": "Precision program"
+    },
+    {
+     "id": "ret",
+     "lane": 5,
+     "label": "Model retirement"
     }
    ],
    "edges": [
     {
-     "a": "rs0",
-     "b": "rtl2"
+     "a": "fab",
+     "b": "sig",
+     "label": "signals"
     },
     {
-     "a": "rs1",
-     "b": "rtl3"
+     "a": "hist",
+     "b": "sig",
+     "label": "history"
     },
     {
-     "a": "rtl2",
-     "b": "pst4"
+     "a": "cmms",
+     "b": "label",
+     "label": "ground truth"
     },
     {
-     "a": "rtl3",
-     "b": "pst5"
+     "a": "sig",
+     "b": "lib",
+     "label": "map"
     },
     {
-     "a": "pst4",
-     "b": "orc6"
+     "a": "lib",
+     "b": "label",
+     "label": "modes"
     },
     {
-     "a": "pst5",
-     "b": "orc7"
+     "a": "lib",
+     "b": "mod",
+     "label": "one per mode"
     },
     {
-     "a": "orc6",
-     "b": "sf8"
+     "a": "mod",
+     "b": "lead",
+     "label": "design"
     },
     {
-     "a": "sf8",
-     "b": "sf9"
+     "a": "mod",
+     "b": "thresh",
+     "label": "tune"
     },
     {
-     "a": "orc7",
-     "b": "fl10"
+     "a": "mod",
+     "b": "wo",
+     "label": "predict"
     },
     {
-     "a": "sf9",
-     "b": "fl11"
+     "a": "wo",
+     "b": "plan",
+     "label": "schedule"
+    },
+    {
+     "a": "own",
+     "b": "wo",
+     "label": "act"
+    },
+    {
+     "a": "wo",
+     "b": "verify",
+     "label": "inspect"
+    },
+    {
+     "a": "verify",
+     "b": "tf",
+     "label": "record"
+    },
+    {
+     "a": "inspect",
+     "b": "tf",
+     "label": "close"
+    },
+    {
+     "a": "tf",
+     "b": "kpi",
+     "label": "score"
+    },
+    {
+     "a": "tf",
+     "b": "prec",
+     "label": "tune"
+    },
+    {
+     "a": "prec",
+     "b": "ret",
+     "label": "retire"
     }
    ],
-   "note": "Topology inherited from the IoT, Twin & Robotics tower; the highlighted core is this service's build."
+   "note": "The true/false ledger is the program's conscience: every prediction is checked — replaced early, survived to next check, or expired unseen — and the scorecard drives both thresholds and retirement."
   },
   {
    "t": "h2",
-   "x": "What changes hands"
+   "x": "One prediction, alarm to verified outcome"
   },
   {
    "t": "p",
-   "x": "Predictive Maintenance & Asset Intelligence: what changes hands, in writing,"
+   "x": "From the model's flag through planner review, work-order creation, the intervention and the verified outcome — including the false-alarm path and what it feeds back into the model."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "orchestration-loop",
+   "title": "Prediction loop — sense, model, schedule, verify, tune",
+   "labels": [
+    "Signals stream",
+    "Mode model fires",
+    "Work order raised",
+    "Planned intervention",
+    "Outcome verified",
+    "Scorecard update",
+    "Thresholds tuned"
+   ],
+   "note": "Lead-time targets fit the planning calendar: a 6-hour prediction is useless if the earliest intervention slot is 3 weeks out — targets are negotiated with planning, not assumed."
+  },
+  {
+   "t": "h2",
+   "x": "The asset console — verified outcomes as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Unplanned downtime trend, prediction precision and verified outcomes — the three numbers that decide whether maintenance is evidence-led or calendar-led."
+  },
+  {
+   "t": "idash",
+   "title": "Predictive maintenance — asset console",
+   "kpis": [
+    {
+     "label": "Assets under watch",
+     "value": "1,842",
+     "delta": "P1 + P2 tiers instrumented",
+     "dir": "up",
+     "spark": [
+      210,
+      420,
+      700,
+      1000,
+      1300,
+      1600,
+      1842
+     ]
+    },
+    {
+     "label": "Alert precision",
+     "value": "87.4%",
+     "delta": "teardown-confirmed faults",
+     "dir": "up",
+     "spark": [
+      45,
+      58,
+      68,
+      75,
+      81,
+      84,
+      87
+     ]
+    },
+    {
+     "label": "Mean warning lead",
+     "value": "23 d",
+     "delta": "P-F interval captured",
+     "dir": "up",
+     "spark": [
+      6,
+      9,
+      12,
+      15,
+      18,
+      21,
+      23
+     ]
+    },
+    {
+     "label": "Unplanned downtime",
+     "value": "−58%",
+     "delta": "vs baseline year",
+     "dir": "down",
+     "spark": [
+      0,
+      -12,
+      -24,
+      -35,
+      -44,
+      -52,
+      -58
+     ]
+    },
+    {
+     "label": "RUL CI coverage",
+     "value": "94%",
+     "delta": "intervals containing truth",
+     "dir": "up",
+     "spark": [
+      70,
+      78,
+      84,
+      88,
+      91,
+      93,
+      94
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Fault coverage",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Detection coverage by fault mode × machine class",
+       "rows": [
+        "Bearing wear",
+        "Gear mesh",
+        "Imbalance",
+        "Misalignment",
+        "Motor elec."
+       ],
+       "cats": [
+        "Centrifugal pumps",
+        "Compressors",
+        "Conveyors",
+        "Gearboxes",
+        "HVAC fans"
+       ],
+       "matrix": [
+        [
+         92,
+         84,
+         76,
+         68,
+         58
+        ],
+        [
+         88,
+         79,
+         72,
+         64,
+         55
+        ],
+        [
+         85,
+         74,
+         70,
+         61,
+         52
+        ],
+        [
+         90,
+         81,
+         74,
+         66,
+         57
+        ],
+        [
+         82,
+         71,
+         66,
+         58,
+         49
+        ]
+       ],
+       "unit": "% detection",
+       "note": "Hover cells for detection rates. The motor-electrical column is the honest one — it needs current signatures, not vibration alone; the sensor fabric's next tier closes it."
+      }
+     ]
+    },
+    {
+     "name": "P-F what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Alert threshold what-if — lead time vs false alarms",
+       "params": [
+        {
+         "name": "Alert threshold",
+         "min": 50,
+         "max": 95,
+         "step": 5,
+         "value": 80,
+         "unit": "degradation %"
+        },
+        {
+         "name": "Assets per planner",
+         "min": 20,
+         "max": 400,
+         "step": 20,
+         "value": 180,
+         "unit": "assets"
+        },
+        {
+         "name": "Intervention cost",
+         "min": 2,
+         "max": 40,
+         "step": 1,
+         "value": 12,
+         "unit": "$k"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Mean lead time",
+         "unit": "days",
+         "formula": "max(2, (95-p0)*1.4)",
+         "good": "14",
+         "bad": "4"
+        },
+        {
+         "name": "False alarms / mo",
+         "unit": "cnt",
+         "formula": "max(1, (p0-50)*1.3)",
+         "good": "15",
+         "bad": "60"
+        },
+        {
+         "name": "Planner load",
+         "unit": "WOs/wk",
+         "formula": "max(1,(p0-50)*1.3)+p1*0.05",
+         "good": "20",
+         "bad": "70"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 0,
+        "label": "Threshold vs false alarms"
+       },
+       "note": "The trade is explicit: earlier thresholds buy lead time and charge false alarms — at 180 assets per planner, the false-alarm curve is the planner's week. Precision compounds from teardown truth."
+      }
+     ]
+    },
+    {
+     "name": "Asset topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The asset intelligence loop — click nodes for the evidence contract",
+       "lanes": [
+        "Sensing",
+        "Physics",
+        "Prediction",
+        "Action"
+       ],
+       "nodes": [
+        {
+         "id": "vib",
+         "lane": 0,
+         "label": "Vibration & current",
+         "detail": "Properly sampled streams (rates set by fault frequencies) with sensor-health contracts — the spectra are only as honest as the sampling.",
+         "hot": true
+        },
+        {
+         "id": "fft",
+         "lane": 1,
+         "label": "Spectral analysis",
+         "detail": "FFT, envelope and band energy per machine class — bearing geometry math (BPFO/BPFI/BSF) defines the fault bands."
+        },
+        {
+         "id": "feat",
+         "lane": 1,
+         "label": "Physics features",
+         "detail": "Trend features from the spectra (band energies, crest factor, kurtosis) — the ML layer learns on physics, not on raw noise."
+        },
+        {
+         "id": "surv",
+         "lane": 2,
+         "label": "Survival & RUL models",
+         "detail": "Weibull-family survival and RUL regression with confidence intervals — new assets start with class-level priors."
+        },
+        {
+         "id": "alert",
+         "lane": 2,
+         "label": "Alert policy",
+         "detail": "Thresholds from P-F interval economics with planner-load accounting — precision published from teardown truth."
+        },
+        {
+         "id": "wo",
+         "lane": 3,
+         "label": "Work-order integration",
+         "detail": "Predictions become CMMS work orders with the evidence attached — planners see why, not just what."
+        },
+        {
+         "id": "truth",
+         "lane": 3,
+         "label": "Teardown feedback",
+         "detail": "Intervention outcomes labeled back (what did the teardown find?) — the next model version trains on confirmed truth."
+        }
+       ],
+       "edges": [
+        {
+         "a": "vib",
+         "b": "fft",
+         "label": "spectra"
+        },
+        {
+         "a": "fft",
+         "b": "feat",
+         "label": "bands"
+        },
+        {
+         "a": "feat",
+         "b": "surv",
+         "label": "features"
+        },
+        {
+         "a": "surv",
+         "b": "alert",
+         "label": "RUL"
+        },
+        {
+         "a": "alert",
+         "b": "wo",
+         "label": "intervene"
+        },
+        {
+         "a": "wo",
+         "b": "truth",
+         "label": "feedback"
+        },
+        {
+         "a": "truth",
+         "b": "surv",
+         "label": "retrain"
+        }
+       ],
+       "note": "Click nodes for the contract each layer carries. The teardown-feedback loop is where precision compounds — every confirmed fault is a labeled example."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · P-F model",
+   "note": "Reference program model: precision bands and lead-time targets from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Downtime and precision across asset classes"
+  },
+  {
+   "t": "p",
+   "x": "Unplanned downtime trend and prediction precision per asset class — the paired shape that shows where predictions are earning their keep and where the failure modes need re-labeling."
+  },
+  {
+   "t": "chart",
+   "title": "Prediction performance by failure mode — design targets",
+   "variant": "bar",
+   "cats": [
+    "Bearing wear",
+    "Winding insulation",
+    "Cavitation",
+    "Valve stiction",
+    "Belt degradation"
+   ],
+   "series": [
+    {
+     "name": "Precision target %",
+     "points": [
+      86,
+      82,
+      84,
+      79,
+      88
+     ]
+    },
+    {
+     "name": "Lead-time target (days)",
+     "points": [
+      14,
+      10,
+      7,
+      5,
+      21
+     ]
+    },
+    {
+     "name": "Verified outcome rate %",
+     "points": [
+      97,
+      95,
+      96,
+      93,
+      98
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Predictive Maintenance & Asset Intelligence across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Predictive Maintenance & Asset Intelligence",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the work spans the stack: devices and gateways in the field, perception models in the middle, actuation plans on the board.",
+     "plays": [
+      "Failure-mode-driven models with labeled history — no anomaly soup",
+      "Work-order integration with lead times planners can schedule against",
+      "Verified outcomes on every prediction — the truth ledger that keeps precision honest"
+     ],
+     "kpis": [
+      {
+       "label": "Unplanned downtime",
+       "value": "-31%"
+      },
+      {
+       "label": "Prediction precision",
+       "value": "84%"
+      },
+      {
+       "label": "Verified outcomes",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Failure-mode-driven models with labeled history — no anomaly soup",
+      "Work-order integration with lead times planners can schedule against",
+      "Verified outcomes on every prediction — the truth ledger that keeps precision honest"
+     ],
+     "kpis": [
+      {
+       "label": "Unplanned downtime",
+       "value": "-31%"
+      },
+      {
+       "label": "Prediction precision",
+       "value": "84%"
+      },
+      {
+       "label": "Verified outcomes",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Failure-mode-driven models with labeled history — no anomaly soup",
+      "Work-order integration with lead times planners can schedule against",
+      "Verified outcomes on every prediction — the truth ledger that keeps precision honest"
+     ],
+     "kpis": [
+      {
+       "label": "Unplanned downtime",
+       "value": "-31%"
+      },
+      {
+       "label": "Prediction precision",
+       "value": "84%"
+      },
+      {
+       "label": "Verified outcomes",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "Ask what quality escapes and manual inspection costs Manufacturing & Industrial firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Failure-mode-driven models with labeled history — no anomaly soup",
+      "Work-order integration with lead times planners can schedule against",
+      "Verified outcomes on every prediction — the truth ledger that keeps precision honest"
+     ],
+     "kpis": [
+      {
+       "label": "Unplanned downtime",
+       "value": "-31%"
+      },
+      {
+       "label": "Prediction precision",
+       "value": "84%"
+      },
+      {
+       "label": "Verified outcomes",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Retail & Consumer Goods operators recognize the pattern: shelf truth unknown, quarter after quarter.",
+     "plays": [
+      "Failure-mode-driven models with labeled history — no anomaly soup",
+      "Work-order integration with lead times planners can schedule against",
+      "Verified outcomes on every prediction — the truth ledger that keeps precision honest"
+     ],
+     "kpis": [
+      {
+       "label": "Unplanned downtime",
+       "value": "-31%"
+      },
+      {
+       "label": "Prediction precision",
+       "value": "84%"
+      },
+      {
+       "label": "Verified outcomes",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Ask what network telemetry underused costs Telecom, Media & Entertainment firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Failure-mode-driven models with labeled history — no anomaly soup",
+      "Work-order integration with lead times planners can schedule against",
+      "Verified outcomes on every prediction — the truth ledger that keeps precision honest"
+     ],
+     "kpis": [
+      {
+       "label": "Unplanned downtime",
+       "value": "-31%"
+      },
+      {
+       "label": "Prediction precision",
+       "value": "84%"
+      },
+      {
+       "label": "Verified outcomes",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": true,
+     "hook": "Ask what asset fleets uninstrumented costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Failure-mode-driven models with labeled history — no anomaly soup",
+      "Work-order integration with lead times planners can schedule against",
+      "Verified outcomes on every prediction — the truth ledger that keeps precision honest"
+     ],
+     "kpis": [
+      {
+       "label": "Unplanned downtime",
+       "value": "-31%"
+      },
+      {
+       "label": "Prediction precision",
+       "value": "84%"
+      },
+      {
+       "label": "Verified outcomes",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": true,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: fleet and yard telemetry gaps, quarter after quarter.",
+     "plays": [
+      "Failure-mode-driven models with labeled history — no anomaly soup",
+      "Work-order integration with lead times planners can schedule against",
+      "Verified outcomes on every prediction — the truth ledger that keeps precision honest"
+     ],
+     "kpis": [
+      {
+       "label": "Unplanned downtime",
+       "value": "-31%"
+      },
+      {
+       "label": "Prediction precision",
+       "value": "84%"
+      },
+      {
+       "label": "Verified outcomes",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "Public Sector & Government operators recognize the pattern: urban assets unmanaged, quarter after quarter.",
+     "plays": [
+      "Failure-mode-driven models with labeled history — no anomaly soup",
+      "Work-order integration with lead times planners can schedule against",
+      "Verified outcomes on every prediction — the truth ledger that keeps precision honest"
+     ],
+     "kpis": [
+      {
+       "label": "Unplanned downtime",
+       "value": "-31%"
+      },
+      {
+       "label": "Prediction precision",
+       "value": "84%"
+      },
+      {
+       "label": "Verified outcomes",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — estates flying blind included — and prove it moved.",
+     "plays": [
+      "Failure-mode-driven models with labeled history — no anomaly soup",
+      "Work-order integration with lead times planners can schedule against",
+      "Verified outcomes on every prediction — the truth ledger that keeps precision honest"
+     ],
+     "kpis": [
+      {
+       "label": "Unplanned downtime",
+       "value": "-31%"
+      },
+      {
+       "label": "Prediction precision",
+       "value": "84%"
+      },
+      {
+       "label": "Verified outcomes",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we connect machines, fleets and facilities into one operational picture, then close the loop into maintenance, scheduling and control.",
+     "plays": [
+      "Failure-mode-driven models with labeled history — no anomaly soup",
+      "Work-order integration with lead times planners can schedule against",
+      "Verified outcomes on every prediction — the truth ledger that keeps precision honest"
+     ],
+     "kpis": [
+      {
+       "label": "Unplanned downtime",
+       "value": "-31%"
+      },
+      {
+       "label": "Prediction precision",
+       "value": "84%"
+      },
+      {
+       "label": "Verified outcomes",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — field data gap included — and prove it moved.",
+     "plays": [
+      "Failure-mode-driven models with labeled history — no anomaly soup",
+      "Work-order integration with lead times planners can schedule against",
+      "Verified outcomes on every prediction — the truth ledger that keeps precision honest"
+     ],
+     "kpis": [
+      {
+       "label": "Unplanned downtime",
+       "value": "-31%"
+      },
+      {
+       "label": "Prediction precision",
+       "value": "84%"
+      },
+      {
+       "label": "Verified outcomes",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/iot-digital-twin-robotics/"
+    }
+   ],
+   "practiceNote": "Predictive Maintenance & Asset Intelligence view: maintenance scheduled by evidence — failure-mode-driven models, work-order integration, and the honesty to retire predictions that never came true."
+  },
+  {
+   "t": "h2",
+   "x": "Predictive defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor failure-mode-driven models with work-order integration over generic anomaly detection; deviation triggers are written because each one widens the gap between prediction and action."
+  },
+  {
+   "t": "table",
+   "caption": "Predictive Maintenance & Asset Intelligence: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production predictive-maintenance loop from sensor to work order",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Modes",
+     "Library per asset class from physics",
+     "One generic 'failure' model — it predicts nothing"
     ],
     [
-     "Failure-mode model library with validation evidence",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Models",
+     "Model-per-mode with thresholds",
+     "Anomaly-only scoring — floods alerts"
     ],
     [
-     "EAM/CMMS integration with scheduling policy",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Lead time",
+     "Negotiated with planning windows",
+     "Technical-only targets — predictions expire unused"
     ],
     [
-     "Outcome dashboards in planning language",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Work orders",
+     "Native CMMS integration",
+     "Email alerts — nobody owns them"
+    ],
+    [
+     "Truth",
+     "Outcome verification ledger",
+     "Set-and-forget models — they decay into noise"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The stack, chosen for operability"
+   "x": "Asset-intelligence release gates — evidence before planner reliance"
   },
   {
-   "t": "p",
-   "x": "Predictive Maintenance & Asset Intelligence is built against defined standards: Databricks, survival/RUL modeling, OPC UA telemetry, SAP PM/Maximo integration, OpenTelemetry. Each choice is justified in writing as part of the architecture baseline, so your team can defend it without us in the room."
+   "t": "table",
+   "caption": "Release gates for Predictive Maintenance & Asset Intelligence — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Mode gate",
+     "Are failure modes physics-grounded?",
+     "Library review with SME sign-off"
+    ],
+    [
+     "Lead gate",
+     "Do lead times fit planning?",
+     "Planning-calendar fit evidence"
+    ],
+    [
+     "Verification gate",
+     "Are predictions checked?",
+     "Outcome ledger completeness"
+    ],
+    [
+     "WO gate",
+     "Do predictions become work orders?",
+     "Integration evidence; closure SLA"
+    ],
+    [
+     "Retirement gate",
+     "Do dead models retire?",
+     "Retirement ledger with reasons"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "The delivery rhythm"
+   "x": "What the maintenance organization inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Predictive Maintenance & Asset Intelligence starts with the measurement: the metric, the owner, the current number, signed."
+     "Failure-mode library",
+     "Physics-grounded, SME-signed"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, failure-mode modeling first, gates written with your team."
+     "Model-per-mode fleet",
+     "Thresholds tuned to precision targets"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "The Predictive Maintenance & Asset Intelligence gate review: baseline versus slice, in the metric's own units, plus a scale recommendation your board can audit."
+     "Work-order integration",
+     "Prediction-to-CMMS pipeline"
+    ],
+    [
+     "Outcome ledger",
+     "True/false/expired per prediction"
+    ],
+    [
+     "Precision program",
+     "Feedback into thresholds"
+    ],
+    [
+     "Retirement process",
+     "Dead models leave with dignity"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes in order, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — asset & mode census",
+     "Critical assets, failure modes, signal mapping"
+    ],
+    [
+     "Weeks 3–4 — signal engineering",
+     "Feature pipelines, labeling from CMMS history"
+    ],
+    [
+     "Weeks 5–6 — first models",
+     "Top modes, lead-time negotiation, thresholds"
+    ],
+    [
+     "Weeks 7–8 — work orders",
+     "CMMS integration, owner SLAs, closure tracking"
+    ],
+    [
+     "Weeks 9–10 — truth program",
+     "Verification ledger, first scorecard"
+    ],
+    [
+     "Ongoing — program ops",
+     "Monthly scorecard; quarterly mode expansion; annual model audit"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — CMMS, sensor fabric and the planner's calendar"
+  },
+  {
+   "t": "p",
+   "x": "Predictions matter when they reach the planner's calendar; these contracts carry flags into the CMMS as work orders with lead times, parts and verification steps attached."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Sensor fabric",
+     "Signal contracts"
+    ],
+    [
+     "CMMS / EAM",
+     "Work-order and history integration"
+    ],
+    [
+     "Planning systems",
+     "Lead-time windows"
+    ],
+    [
+     "Twin platform",
+     "Asset context"
+    ],
+    [
+     "Reliability engineers",
+     "Mode library reviews"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Truth-ledger governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Every prediction is resolved against a verified outcome — component opened, condition confirmed or alarm refuted — and the truth ledger feeds precision metrics that planners can audit."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Verify-or-it-did-not-happen",
+     "Predictions are scored against outcomes"
+    ],
+    [
+     "Mode-native models",
+     "No generic anomaly fleet"
+    ],
+    [
+     "Planning-fit lead times",
+     "Useless precision is still useless"
+    ],
+    [
+     "Retirement honesty",
+     "Models that never predict truthfully get retired"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Alert floods are treated as model failures, not user problems: when alarm volume exceeds the planners' processing capacity, the model is recalibrated against the truth ledger — the action gap is closed by design, not by heroics."
   },
   {
    "t": "cta",
-   "x": "The next step is small and real: one working session on Predictive Maintenance & Asset Intelligence, your data, and a written feasibility read you can circulate."
+   "x": "Ask what fraction of last quarter's predictions were verified against reality. The diagnostic will build the truth ledger for your worst asset class — and show what evidence-led maintenance would save."
   }
  ],
- "words": 491,
+ "words": 983,
  "section": "Services",
  "l1": "Services",
  "l2": "IoT, Digital Twin & Robotics",
@@ -278,7 +1229,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — IoT, Digital Twin & Robotics",
+   "title": "Domain overview — IoT, Digital Twin & Robotics",
    "url": "/services/iot-digital-twin-robotics/",
    "desc": "Sensing, simulating, acting — the operations stack that turns physical assets into self-monitoring systems."
   },
@@ -330,33 +1281,51 @@
   {
    "title": "IoT, Twin & Robotics for Energy & Utilities",
    "url": "/industries/energy-utilities/capabilities/iot-digital-twin-robotics/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Industrial IoT & sensor network",
-   "url": "/services/iot-digital-twin-robotics/industrial-iot-sensor-fabric/",
-   "tag": "Same tower",
-   "desc": "Sense everything that matters — retrofit-friendly sensor network with governed telemetry."
+   "title": "Robotics & Autonomous Systems Integration",
+   "url": "/services/iot-digital-twin-robotics/robotics-autonomous-systems/",
+   "tag": "Same domain",
+   "desc": "robot fleets with safety cases — bounded autonomy, incident-ready telemetry, and utilization measured honestly against safety-critical discipline."
   },
   {
-   "title": "Digital Twin Platform Engineering",
-   "url": "/services/iot-digital-twin-robotics/digital-twin-platforms/",
-   "tag": "Same tower",
-   "desc": "Simulate before you cut steel — plant, fleet and product twins with governed physics and data."
+   "title": "Smart Infrastructure, Buildings & Cities",
+   "url": "/services/iot-digital-twin-robotics/smart-infrastructure/",
+   "tag": "Same domain",
+   "desc": "city and utility scale on the same disciplines — segmented SCADA-safe architectures, service-continuity SLOs, and privacy-first public data."
   },
   {
    "title": "Computer Vision & Edge AI",
    "url": "/services/iot-digital-twin-robotics/computer-vision-edge-ai/",
-   "tag": "Same tower",
-   "desc": "Cameras into instruments — inspection, safety and counting at the edge, inside policy."
+   "tag": "Same domain",
+   "desc": "inference at the edge with model ops — constrained-hardware deployment, drift monitors on live feeds, and a hard rule that models never bypass interlocks."
   },
   {
-   "title": "Robotics & Autonomous Systems Integration",
-   "url": "/services/iot-digital-twin-robotics/robotics-autonomous-systems/",
-   "tag": "Same tower",
-   "desc": "Robots into workflows — AMRs, cobots and autonomous vehicles integrated with safety and orchestration."
+   "title": "Hybrid & Multicloud Architecture",
+   "url": "/services/cloud-edge-platform-engineering/hybrid-multicloud-architecture/",
+   "tag": "Pairs with",
+   "desc": "one operating model across clouds and on-prem — workload placement by policy, portable patterns, and drift that is measured in one place."
+  },
+  {
+   "title": "Master Data, Governance & Cataloging",
+   "url": "/services/data-analytics-lakehouse/master-data-governance/",
+   "tag": "Pairs with",
+   "desc": "golden records with owners, survivorship rules and a catalog people actually trust — governance as engineering, not committee minutes."
+  },
+  {
+   "title": "Process & Task Mining",
+   "url": "/services/agentic-ai-hyperautomation/process-task-mining/",
+   "tag": "Pairs with",
+   "desc": "event-log forensics that turns system footprints into a defensible automation pipeline — conformance-checked, variant-ranked and ROI-priced before anything is built."
+  },
+  {
+   "title": "A global automotive OEM",
+   "url": "/case-studies/mfg-01/",
+   "tag": "Evidence",
+   "desc": "OEE +7.2 points across 14 plants — sensor fabric to scheduling decisions."
   }
  ]
 }

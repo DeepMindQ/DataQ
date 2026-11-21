@@ -9,250 +9,1219 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The honest pitch for hyperautomation & systems integration fits in a sentence — One automation spine — APIs, events, RPA and agents composable under common control. — and the rest of this page is the how: measured baseline, bounded build, evidence in flight."
+   "x": "The contracted seams that make automation real: typed contracts across ERP, CRM, ITSM and comms, replayable failure handling, rate-limit aware traffic shaping and monitors that catch API drift before the month-end close does."
   },
   {
    "t": "h2",
-   "x": "The working definition"
+   "x": "Automation dies in the seams, not in the agents"
   },
   {
    "t": "p",
-   "x": "Most enterprises run four automation technologies as four kingdoms: APIs, event streams, RPA and now agents, each with its own tools, logs and risk reviews. We build the integration spine that makes them composable — an event backbone (Kafka-class), an API mesh with contracts, a governed RPA layer for systems without APIs, and agent tooling that consumes the same contracts — all under one control plane with unified logging and policy."
+   "x": "Integration is where hyperautomation programs actually die: not in the models, but in the seam where an agent writes to an ERP that changed its API on Thursday. We treat every seam as a contract with direction, schema, identity, rate limits, failure behavior and a drift monitor — and the contract is versioned like code."
   },
   {
    "t": "p",
-   "x": "The payoff shows up in change absorption: when the core system changes, one contract update propagates to every consumer, human or agent. We include the migration discipline for legacy RPA estates — inventory, refactor-or-retire decisions, and consolidation onto the spine — which typically cuts automation run cost by a third while improving auditability."
+   "x": "The practice covers the unglamorous essentials: replayable failure queues, idempotency keys on every write, rate-limit shaping, sandbox parity, and the monitors that notice API drift before the business users notice stuck work."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that break integrations at the worst moment, the reference architecture of contracted seams, and the console that keeps seam health visible through month-end load."
   },
   {
    "t": "h2",
-   "x": "What makes this urgent now"
+   "x": "Four failure modes that break seams at month-end"
   },
   {
    "t": "p",
-   "x": "The sectors where Hyperautomation & Systems Integration currently runs: Banking & Financial Services, Insurance & Risk, Telecom, Media & Entertainment, Manufacturing & Industrial. Each engagement anchors to one named metric in that sector's own language."
+   "x": "Every one of these fires during peak load, which is exactly when nobody can afford it — the countermeasures are contractual and structural, not heroic."
   },
   {
-   "t": "h2",
-   "x": "How the capability takes shape"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Hyperautomation & Systems Integration: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Event backbone",
-     "Kafka-class streaming with schema registry and replay"
+     "API drift",
+     "Vendor updates a schema; agents start failing in production",
+     "Contract tests in CI against sandbox; drift monitors on response shapes"
     ],
     [
-     "API mesh",
-     "contract-first APIs with versioning, quotas and observability"
+     "Duplicate writes",
+     "Retry storms double-commit to the ERP",
+     "Idempotency keys everywhere; exactly-once ledger for money paths"
     ],
     [
-     "Governed RPA layer",
-     "legacy automation refactored onto contracts or retired"
+     "Rate-limit cliffs",
+     "Burst load trips vendor throttles at month-end",
+     "Shaped traffic with token buckets; month-end load rehearsals"
     ],
     [
-     "Agent tool integration",
-     "agents consuming the same governed contracts as humans"
-    ],
-    [
-     "Unified control plane",
-     "one policy, logging and monitoring plane across all automation types"
+     "Sandbox fiction",
+     "Sandbox data and behavior diverge from production",
+     "Parity checklist per seam; parity violations block promotion"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — typed seams with replay and drift monitors"
+  },
+  {
+   "t": "p",
+   "x": "Seams are contracts, not credentials: typed request/response schemas, idempotency keys, replay queues and drift monitors that diff live API behavior against the contract — so a vendor's silent change is caught by a monitor, not by a failed close."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Hyperautomation & Systems Integration",
+   "title": "Reference architecture — contracted integration plane",
    "lanes": [
-    "Process signals",
-    "Task graphs",
-    "Agent fleet",
-    "Policy envelope",
-    "Human checkpoints",
-    "Systems of action"
+    "Consumers",
+    "Contract layer",
+    "Transport",
+    "Guard & replay",
+    "Endpoints",
+    "Monitors"
    ],
    "nodes": [
     {
-     "id": "ps0",
+     "id": "agents",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Agent fleet"
     },
     {
-     "id": "ps1",
+     "id": "flows",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "Workflows"
     },
     {
-     "id": "tg2",
+     "id": "idp",
+     "lane": 0,
+     "label": "IDP services"
+    },
+    {
+     "id": "schema",
      "lane": 1,
-     "label": "Hyperautomation & Systems Integration",
+     "label": "Schema registry",
      "hot": true
     },
     {
-     "id": "tg3",
+     "id": "contract",
      "lane": 1,
-     "label": "Task decomposition",
-     "hot": false
-    },
-    {
-     "id": "af4",
-     "lane": 2,
-     "label": "Worker agents",
+     "label": "Contract tests",
      "hot": true
     },
     {
-     "id": "af5",
+     "id": "ver",
+     "lane": 1,
+     "label": "Version pins"
+    },
+    {
+     "id": "gw",
      "lane": 2,
-     "label": "Tool adapters",
-     "hot": false
+     "label": "Integration gateway",
+     "hot": true
     },
     {
-     "id": "pe6",
+     "id": "shape",
+     "lane": 2,
+     "label": "Rate shaping"
+    },
+    {
+     "id": "auth",
+     "lane": 2,
+     "label": "Identity brokering"
+    },
+    {
+     "id": "idem",
      "lane": 3,
-     "label": "Autonomy tiers",
-     "hot": false
+     "label": "Idempotency ledger",
+     "hot": true
     },
     {
-     "id": "pe7",
+     "id": "dlq",
      "lane": 3,
-     "label": "Escalation rules",
-     "hot": false
+     "label": "Replay queues"
     },
     {
-     "id": "hc8",
+     "id": "comp",
+     "lane": 3,
+     "label": "Compensation"
+    },
+    {
+     "id": "erp",
      "lane": 4,
-     "label": "Approval queue",
-     "hot": false
+     "label": "ERP endpoints"
     },
     {
-     "id": "hc9",
+     "id": "crm",
      "lane": 4,
-     "label": "Reviewer UI",
-     "hot": false
+     "label": "CRM / ITSM"
     },
     {
-     "id": "sa10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "comms",
+     "lane": 4,
+     "label": "Comms APIs"
     },
     {
-     "id": "sa11",
+     "id": "drift",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Drift monitors",
+     "hot": true
+    },
+    {
+     "id": "lat",
+     "lane": 5,
+     "label": "Latency & error SLOs"
+    },
+    {
+     "id": "alert",
+     "lane": 5,
+     "label": "Owner alerting"
     }
    ],
    "edges": [
     {
-     "a": "ps0",
-     "b": "tg2"
+     "a": "agents",
+     "b": "gw"
     },
     {
-     "a": "ps1",
-     "b": "tg2"
+     "a": "flows",
+     "b": "gw"
     },
     {
-     "a": "tg2",
-     "b": "tg3"
+     "a": "idp",
+     "b": "gw"
     },
     {
-     "a": "tg3",
-     "b": "af4"
+     "a": "schema",
+     "b": "contract",
+     "label": "pins"
     },
     {
-     "a": "af4",
-     "b": "af5"
+     "a": "contract",
+     "b": "ver",
+     "label": "gate"
     },
     {
-     "a": "af5",
-     "b": "pe6"
+     "a": "ver",
+     "b": "gw",
+     "label": "enforce"
     },
     {
-     "a": "pe6",
-     "b": "hc8"
+     "a": "gw",
+     "b": "shape"
     },
     {
-     "a": "hc8",
-     "b": "sa10"
+     "a": "gw",
+     "b": "auth"
     },
     {
-     "a": "af4",
-     "b": "sa11"
+     "a": "gw",
+     "b": "idem",
+     "label": "keyed"
+    },
+    {
+     "a": "gw",
+     "b": "dlq",
+     "label": "on fail"
+    },
+    {
+     "a": "dlq",
+     "b": "comp",
+     "label": "replay"
+    },
+    {
+     "a": "gw",
+     "b": "erp",
+     "label": "typed"
+    },
+    {
+     "a": "gw",
+     "b": "crm",
+     "label": "typed"
+    },
+    {
+     "a": "gw",
+     "b": "comms",
+     "label": "typed"
+    },
+    {
+     "a": "erp",
+     "b": "drift",
+     "label": "responses"
+    },
+    {
+     "a": "gw",
+     "b": "lat",
+     "label": "slo"
+    },
+    {
+     "a": "drift",
+     "b": "alert",
+     "label": "owners"
     }
    ],
-   "note": "Topology inherited from the Agentic AI & Hyperautomation tower; the highlighted core is this service's build."
+   "note": "Contract tests run in CI against sandbox on every vendor release notification — the drift monitor is the smoke detector, the contract test is the fire drill."
   },
   {
    "t": "h2",
-   "x": "The artifacts, named"
+   "x": "One write across three systems, guaranteed once"
   },
   {
    "t": "p",
-   "x": "For Hyperautomation & Systems Integration, deliverables, without dressing them up:"
+   "x": "From the automation's action through contract validation, rate shaping and the idempotent write to the replay path when a system rejects mid-flight — including where duplicates would otherwise be born."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Seam lifecycle — contract, shape, key, guard, replay, monitor",
+   "labels": [
+    "Call (typed)",
+    "Version check",
+    "Rate shaping",
+    "Idempotency key",
+    "Endpoint call",
+    "Fail → replay queue",
+    "Drift monitor"
+   ],
+   "note": "Failures land in replay queues with their full request context; replay is a supervised action, not an auto-retry storm."
+  },
+  {
+   "t": "h2",
+   "x": "The seam console — health under real load"
+  },
+  {
+   "t": "p",
+   "x": "Seam success rate, replay queue depth, duplicate writes and drift detections — the four numbers that predict whether month-end will be boring, which is the highest compliment an integration can earn."
+  },
+  {
+   "t": "idash",
+   "title": "Hyperautomation & integration — fabric health console",
+   "kpis": [
+    {
+     "label": "Registered automations",
+     "value": "216",
+     "delta": "all with owners",
+     "dir": "up",
+     "spark": [
+      95,
+      120,
+      148,
+      170,
+      190,
+      205,
+      216
+     ]
+    },
+    {
+     "label": "API-first share",
+     "value": "68%",
+     "delta": "target ≥ 75%",
+     "dir": "up",
+     "spark": [
+      41,
+      47,
+      52,
+      58,
+      62,
+      65,
+      68
+     ]
+    },
+    {
+     "label": "Integration MTTR",
+     "value": "38 min",
+     "delta": "was 4.6 h",
+     "dir": "down",
+     "spark": [
+      276,
+      190,
+      140,
+      95,
+      66,
+      47,
+      38
+     ]
+    },
+    {
+     "label": "Contract coverage",
+     "value": "91%",
+     "delta": "schema-validated",
+     "dir": "up",
+     "spark": [
+      52,
+      60,
+      68,
+      76,
+      83,
+      88,
+      91
+     ]
+    },
+    {
+     "label": "Shadow IT links",
+     "value": "4",
+     "delta": "was 31 — absorbed",
+     "dir": "down",
+     "spark": [
+      31,
+      26,
+      18,
+      12,
+      8,
+      5,
+      4
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Estate fragility",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Integration fragility × criticality — remediation order in one grid",
+       "rows": [
+        "Payments",
+        "ERP core",
+        "CRM",
+        "Logistics",
+        "HR suite",
+        "Marketing"
+       ],
+       "cats": [
+        "API",
+        "Event",
+        "RPA",
+        "Agent",
+        "File"
+       ],
+       "matrix": [
+        [
+         2,
+         8,
+         3,
+         1,
+         5
+        ],
+        [
+         4,
+         9,
+         6,
+         2,
+         7
+        ],
+        [
+         3,
+         5,
+         2,
+         2,
+         3
+        ],
+        [
+         5,
+         7,
+         8,
+         1,
+         4
+        ],
+        [
+         2,
+         3,
+         2,
+         1,
+         2
+        ],
+        [
+         3,
+         2,
+         1,
+         1,
+         1
+        ]
+       ],
+       "unit": "risk idx",
+       "note": "Hover cells for the risk index (fragility 0-10 × criticality weight). Logistics-over-RPA is the bright row: brittle surface, high criticality — that is the quarter's re-platforming target."
+      }
+     ]
+    },
+    {
+     "name": "Fabric topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The integration fabric — click nodes for contract posture",
+       "lanes": [
+        "Sources",
+        "Backbone",
+        "Actuation",
+        "Targets"
+       ],
+       "nodes": [
+        {
+         "id": "saas",
+         "lane": 0,
+         "label": "SaaS estate",
+         "detail": "Connectors via iPaaS with schema validation at the edge — a payload that fails schema never enters the backbone."
+        },
+        {
+         "id": "core",
+         "lane": 0,
+         "label": "Core systems",
+         "detail": "ERP/CRM exposure through contract-first APIs; direct DB links are denied by network policy, not by convention."
+        },
+        {
+         "id": "bus",
+         "lane": 1,
+         "label": "Event backbone",
+         "detail": "Kafka with replay per topic; retention sized for reconciliation windows, not for convenience."
+        },
+        {
+         "id": "reg",
+         "lane": 1,
+         "label": "Contract registry",
+         "detail": "Schema-first contracts with compatibility gates; producers cannot break consumers silently."
+        },
+        {
+         "id": "api",
+         "lane": 2,
+         "label": "API actuation",
+         "detail": "Sync paths for request-response business steps; timeouts and budgets per route."
+        },
+        {
+         "id": "rpa",
+         "lane": 2,
+         "label": "RPA surface",
+         "detail": "Reserved for closed surfaces; each bot registered with its UI map version and owner — a bot is a liability until proven otherwise."
+        },
+        {
+         "id": "agent",
+         "lane": 2,
+         "label": "Agent actuation",
+         "detail": "Judgement-heavy steps with human-grade evidence packets; agents call the same registry as any other actuator."
+        },
+        {
+         "id": "sink",
+         "lane": 3,
+         "label": "Downstream targets",
+         "detail": "Idempotent sinks with reconciliation jobs — the fabric assumes at-least-once delivery and proves exactly-once effects."
+        }
+       ],
+       "edges": [
+        {
+         "a": "saas",
+         "b": "bus"
+        },
+        {
+         "a": "core",
+         "b": "bus"
+        },
+        {
+         "a": "reg",
+         "b": "bus",
+         "label": "governs"
+        },
+        {
+         "a": "bus",
+         "b": "api"
+        },
+        {
+         "a": "bus",
+         "b": "rpa"
+        },
+        {
+         "a": "bus",
+         "b": "agent"
+        },
+        {
+         "a": "api",
+         "b": "sink"
+        },
+        {
+         "a": "rpa",
+         "b": "sink"
+        },
+        {
+         "a": "agent",
+         "b": "sink"
+        }
+       ],
+       "note": "Click nodes to read each lane's contract posture. RPA sits in the same registry as APIs — same monitoring, same ownership, same audit story."
+      }
+     ]
+    },
+    {
+     "name": "Consolidation what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Estate consolidation what-if — point-to-point vs fabric",
+       "params": [
+        {
+         "name": "Integrated systems",
+         "min": 5,
+         "max": 40,
+         "step": 1,
+         "value": 18,
+         "unit": "systems"
+        },
+        {
+         "name": "P2P share",
+         "min": 0,
+         "max": 100,
+         "step": 5,
+         "value": 55,
+         "unit": "%"
+        },
+        {
+         "name": "Change frequency",
+         "min": 1,
+         "max": 12,
+         "step": 1,
+         "value": 4,
+         "unit": "chg/mo"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Integration count",
+         "unit": "links",
+         "formula": "p0*(p0-1)/2*p1/100+p0*0.4*(100-p1)/100",
+         "good": "40",
+         "bad": "120"
+        },
+        {
+         "name": "Annual change load",
+         "unit": "chg-refs",
+         "formula": "p0*(p0-1)/2*p1/100*p2*0.35",
+         "good": "150",
+         "bad": "500"
+        },
+        {
+         "name": "Fragility index",
+         "unit": "0-100",
+         "formula": "min(100, p0*2.2*p1/50+p2*1.8)",
+         "good": "45",
+         "bad": "75"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 2,
+        "label": "Systems vs fragility index"
+       },
+       "note": "Metcalfe's law is the debt curve: fragility grows with the square of systems under point-to-point, near-linearly under a fabric. Drag the P2P share down and watch the same estate become maintainable."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · estate model",
+   "note": "Reference program model: fragility indices and targets from delivery diagnostics, not client telemetry."
+  },
+  {
+   "t": "h2",
+   "x": "Seam health across month-end load"
+  },
+  {
+   "t": "p",
+   "x": "Success rate and replay depth across the load curve — the signature that shows where rate limits bite and where the traffic shaping holds."
+  },
+  {
+   "t": "chart",
+   "title": "Seam health across month-end load — design targets",
+   "variant": "line",
+   "cats": [
+    "D-5",
+    "D-3",
+    "D-1",
+    "D-day",
+    "D+1",
+    "D+3"
+   ],
+   "series": [
+    {
+     "name": "Success rate target %",
+     "points": [
+      99.6,
+      99.5,
+      99.4,
+      99.1,
+      99.4,
+      99.6
+     ]
+    },
+    {
+     "name": "p95 latency target (ms)",
+     "points": [
+      480,
+      520,
+      640,
+      780,
+      660,
+      500
+     ]
+    },
+    {
+     "name": "Replay depth target",
+     "points": [
+      12,
+      18,
+      29,
+      41,
+      24,
+      14
+     ]
+    }
+   ],
+   "yMax": 800,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Hyperautomation & Systems Integration across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Hyperautomation & Systems Integration",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: orchestration is the discipline — dozens of small automations running as one auditable workforce, with escalations designed rather than improvised.",
+     "plays": [
+      "Typed seam contracts across ERP, CRM, ITSM and comms",
+      "Replayable failure handling with idempotency and duplicate prevention",
+      "Drift monitors that diff live API behavior against signed contracts"
+     ],
+     "kpis": [
+      {
+       "label": "Seam success rate",
+       "value": "99.4%"
+      },
+      {
+       "label": "Replay queue depth",
+       "value": "37"
+      },
+      {
+       "label": "Duplicate writes",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Ask what fraud industrialized against manual detection costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Typed seam contracts across ERP, CRM, ITSM and comms",
+      "Replayable failure handling with idempotency and duplicate prevention",
+      "Drift monitors that diff live API behavior against signed contracts"
+     ],
+     "kpis": [
+      {
+       "label": "Seam success rate",
+       "value": "99.4%"
+      },
+      {
+       "label": "Replay queue depth",
+       "value": "37"
+      },
+      {
+       "label": "Duplicate writes",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "Healthcare & Life Sciences operators recognize the pattern: prior authorization and RCM friction, quarter after quarter.",
+     "plays": [
+      "Typed seam contracts across ERP, CRM, ITSM and comms",
+      "Replayable failure handling with idempotency and duplicate prevention",
+      "Drift monitors that diff live API behavior against signed contracts"
+     ],
+     "kpis": [
+      {
+       "label": "Seam success rate",
+       "value": "99.4%"
+      },
+      {
+       "label": "Replay queue depth",
+       "value": "37"
+      },
+      {
+       "label": "Duplicate writes",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "The work here has one job: move a named number — maintenance planning reactive included — and prove it moved.",
+     "plays": [
+      "Typed seam contracts across ERP, CRM, ITSM and comms",
+      "Replayable failure handling with idempotency and duplicate prevention",
+      "Drift monitors that diff live API behavior against signed contracts"
+     ],
+     "kpis": [
+      {
+       "label": "Seam success rate",
+       "value": "99.4%"
+      },
+      {
+       "label": "Replay queue depth",
+       "value": "37"
+      },
+      {
+       "label": "Duplicate writes",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Ask what supplier collaboration by email costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Typed seam contracts across ERP, CRM, ITSM and comms",
+      "Replayable failure handling with idempotency and duplicate prevention",
+      "Drift monitors that diff live API behavior against signed contracts"
+     ],
+     "kpis": [
+      {
+       "label": "Seam success rate",
+       "value": "99.4%"
+      },
+      {
+       "label": "Replay queue depth",
+       "value": "37"
+      },
+      {
+       "label": "Duplicate writes",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Typed seam contracts across ERP, CRM, ITSM and comms",
+      "Replayable failure handling with idempotency and duplicate prevention",
+      "Drift monitors that diff live API behavior against signed contracts"
+     ],
+     "kpis": [
+      {
+       "label": "Seam success rate",
+       "value": "99.4%"
+      },
+      {
+       "label": "Replay queue depth",
+       "value": "37"
+      },
+      {
+       "label": "Duplicate writes",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": true,
+     "hook": "The work here has one job: move a named number — trading and scheduling decisions at market speed included — and prove it moved.",
+     "plays": [
+      "Typed seam contracts across ERP, CRM, ITSM and comms",
+      "Replayable failure handling with idempotency and duplicate prevention",
+      "Drift monitors that diff live API behavior against signed contracts"
+     ],
+     "kpis": [
+      {
+       "label": "Seam success rate",
+       "value": "99.4%"
+      },
+      {
+       "label": "Replay queue depth",
+       "value": "37"
+      },
+      {
+       "label": "Duplicate writes",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Typed seam contracts across ERP, CRM, ITSM and comms",
+      "Replayable failure handling with idempotency and duplicate prevention",
+      "Drift monitors that diff live API behavior against signed contracts"
+     ],
+     "kpis": [
+      {
+       "label": "Seam success rate",
+       "value": "99.4%"
+      },
+      {
+       "label": "Replay queue depth",
+       "value": "37"
+      },
+      {
+       "label": "Duplicate writes",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Typed seam contracts across ERP, CRM, ITSM and comms",
+      "Replayable failure handling with idempotency and duplicate prevention",
+      "Drift monitors that diff live API behavior against signed contracts"
+     ],
+     "kpis": [
+      {
+       "label": "Seam success rate",
+       "value": "99.4%"
+      },
+      {
+       "label": "Replay queue depth",
+       "value": "37"
+      },
+      {
+       "label": "Duplicate writes",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": true,
+     "hook": "Ask what administrative burden on faculty costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Typed seam contracts across ERP, CRM, ITSM and comms",
+      "Replayable failure handling with idempotency and duplicate prevention",
+      "Drift monitors that diff live API behavior against signed contracts"
+     ],
+     "kpis": [
+      {
+       "label": "Seam success rate",
+       "value": "99.4%"
+      },
+      {
+       "label": "Replay queue depth",
+       "value": "37"
+      },
+      {
+       "label": "Duplicate writes",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Ask what support and success scale linearly costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Typed seam contracts across ERP, CRM, ITSM and comms",
+      "Replayable failure handling with idempotency and duplicate prevention",
+      "Drift monitors that diff live API behavior against signed contracts"
+     ],
+     "kpis": [
+      {
+       "label": "Seam success rate",
+       "value": "99.4%"
+      },
+      {
+       "label": "Replay queue depth",
+       "value": "37"
+      },
+      {
+       "label": "Duplicate writes",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what input and logistics planning manual costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Typed seam contracts across ERP, CRM, ITSM and comms",
+      "Replayable failure handling with idempotency and duplicate prevention",
+      "Drift monitors that diff live API behavior against signed contracts"
+     ],
+     "kpis": [
+      {
+       "label": "Seam success rate",
+       "value": "99.4%"
+      },
+      {
+       "label": "Replay queue depth",
+       "value": "37"
+      },
+      {
+       "label": "Duplicate writes",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/"
+    }
+   ],
+   "practiceNote": "Hyperautomation & Systems Integration view: the contracted seams — ERP, CRM, ITSM, comms and queues — with typed contracts, replayable failures and monitors that catch drift before business users do."
+  },
+  {
+   "t": "h2",
+   "x": "Integration defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor typed contracts and replay queues over point-to-point credentials; deviation triggers are written because each one moves failure from a queue to a pager."
+  },
+  {
+   "t": "table",
+   "caption": "Hyperautomation & Systems Integration: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Integration spine connecting APIs, events, RPA and agents under one control plane",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Contracts",
+     "Schema registry + CI contract tests against sandbox",
+     "Integration by happy-path example — drift finds it in production"
     ],
     [
-     "Legacy automation consolidation report with refactor/retire decisions",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Gateway",
+     "Central integration gateway with typed endpoints",
+     "Point-to-point calls from agents — unversioned and unmonitored"
     ],
     [
-     "Contract library and schema governance process",
-     "Handed to a named owner on your side, with a working session included."
+     "Idempotency",
+     "Ledger-backed keys on every write",
+     "Best-effort dedup — month-end proves it wrong"
     ],
     [
-     "Unified audit log and policy enforcement pack",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Replay",
+     "Supervised replay queues with full context",
+     "Auto-retry forever — it amplifies vendor incidents"
+    ],
+    [
+     "Monitors",
+     "Response-shape drift + latency/error SLOs",
+     "Uptime-only monitoring — shape drift sails through"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The stack, chosen for operability"
+   "x": "Seam release gates — evidence before the next close"
   },
   {
-   "t": "p",
-   "x": "The engineering baseline for Hyperautomation & Systems Integration: Kafka, API gateway/mesh, enterprise RPA platforms, Temporal, Kubernetes, OpenTelemetry. The justifications are written, versioned and handed over — the decisions are yours to own after the engagement."
+   "t": "table",
+   "caption": "Release gates for Hyperautomation & Systems Integration — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Contract gate",
+     "Do contract tests pin every seam?",
+     "CI results against sandbox; version pins current"
+    ],
+    [
+     "Parity gate",
+     "Does sandbox behave like production?",
+     "Parity checklist signed per seam"
+    ],
+    [
+     "Chaos gate",
+     "Does the plane survive vendor outage?",
+     "Outage drill: queue growth, compensation, recovery time"
+    ],
+    [
+     "Idempotency gate",
+     "Can retries duplicate writes?",
+     "Duplicate-injection test at zero; ledger audit"
+    ],
+    [
+     "Monitor gate",
+     "Would drift be caught before users?",
+     "Drift drill: injected shape change caught in CI"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "Delivery, without the theater"
+   "x": "What the integration team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Hyperautomation & Systems Integration starts with the measurement: the metric, the owner, the current number, signed."
+     "Schema registry",
+     "Versioned contracts per seam with ownership"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, event backbone first, gates written with your team."
+     "Contract test suite",
+     "CI-enforced tests that catch drift pre-production"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Hyperautomation & Systems Integration closes its first quarter at the gate: the working slice is measured against the baseline your team signed, and the scale decision is written down with the evidence attached."
+     "Integration gateway config",
+     "Typed endpoints, rate shaping, identity brokering"
+    ],
+    [
+     "Idempotency ledger",
+     "Exactly-once evidence for every write path"
+    ],
+    [
+     "Replay operations kit",
+     "Supervised replay and compensation SOPs"
+    ],
+    [
+     "Drift monitor pack",
+     "Shape, latency and error monitors with owner routing"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Seam by seam, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — seam census",
+     "Every seam named with owner, direction, schema and rate profile"
+    ],
+    [
+     "Weeks 3–4 — contract layer",
+     "Registry populated, CI contract tests, version pins"
+    ],
+    [
+     "Weeks 5–6 — gateway & shaping",
+     "Typed endpoints, token buckets, identity brokering"
+    ],
+    [
+     "Weeks 7–8 — guard & replay",
+     "Idempotency ledger, replay queues, compensation paths"
+    ],
+    [
+     "Weeks 9–10 — monitors & drills",
+     "Drift monitors, month-end rehearsal, outage drill"
+    ],
+    [
+     "Ongoing — seam health",
+     "Monthly contract review; vendor release watch; quarterly drills"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — the systems list, honestly named"
+  },
+  {
+   "t": "p",
+   "x": "The scope is the estate itself: ERP, CRM, ITSM, communications and the queues between them — each with the contract fields that make automation survive contact with reality."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "ERP",
+     "Typed write/read APIs with rate profiles"
+    ],
+    [
+     "CRM / ITSM",
+     "Case and customer APIs with sandbox parity"
+    ],
+    [
+     "Comms platforms",
+     "Notification APIs with delivery receipts"
+    ],
+    [
+     "Vendor sandboxes",
+     "Contract test targets with parity checklist"
+    ],
+    [
+     "Observability",
+     "Seam SLOs on dashboards with owner routing"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration governance — contracts as controlled artifacts"
+  },
+  {
+   "t": "p",
+   "x": "Contracts are versioned with owners and change windows; a seam change is a reviewed release, and the drift monitor holds the vendor honest between reviews."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Keyed writes",
+     "No un-keyed write reaches a system of record"
+    ],
+    [
+     "Supervised replay",
+     "Replays require human approval above volume thresholds"
+    ],
+    [
+     "Parity enforcement",
+     "Promotion blocked on parity violations"
+    ],
+    [
+     "Seam ownership",
+     "Every seam has one owner and an expiry-dated exception log"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Sandbox parity is verified before every release: if the vendor's sandbox drifts from production behavior, the seam gate stays closed — sandbox fiction is treated as a failed gate."
   },
   {
    "t": "cta",
-   "x": "Talk to the team that runs Hyperautomation & Systems Integration in production — the briefing is technical by design, and the first one costs nothing but the hour."
+   "x": "Map the seams your last close depended on, then count how many have owners and contracts. The diagnostic will score every one — and price what boring month-ends cost."
   }
  ],
- "words": 515,
+ "words": 1077,
  "section": "Services",
  "l1": "Services",
  "l2": "Agentic AI & Hyperautomation",
@@ -274,7 +1243,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Agentic AI & Hyperautomation",
+   "title": "Domain overview — Agentic AI & Hyperautomation",
    "url": "/services/agentic-ai-hyperautomation/",
    "desc": "Digital workers, decision hubs and workflows that recover from failure on their own — automation with human checkpoints, budgets and audit."
   },
@@ -326,33 +1295,51 @@
   {
    "title": "Cyber & Zero-Trust for Logistics & Supply Chain",
    "url": "/industries/logistics-supply-chain/capabilities/cybersecurity-zero-trust/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
    "title": "Agentic Process Automation",
    "url": "/services/agentic-ai-hyperautomation/agentic-process-automation/",
-   "tag": "Same tower",
-   "desc": "Agents that execute the work — tool-using, policy-bounded, and fully logged for audit."
+   "tag": "Same domain",
+   "desc": "role-scoped agents that execute process steps under policy bounds, with human checkpoints placed by risk and replay for every action taken."
   },
   {
-   "title": "Digital Workforce & Multi-Agent Orchestration",
-   "url": "/services/agentic-ai-hyperautomation/digital-workforce-orchestration/",
-   "tag": "Same tower",
-   "desc": "Agents operated as one fleet: roles, queues, budgets and audit trails."
+   "title": "Autonomous Workflow Orchestration",
+   "url": "/services/agentic-ai-hyperautomation/autonomous-workflow-orchestration/",
+   "tag": "Same domain",
+   "desc": "long-running workflows with durable state, recovery by design, escalation choreography and audit — orchestration that survives partial failure as a normal event."
   },
   {
    "title": "Decision Intelligence Systems",
    "url": "/services/agentic-ai-hyperautomation/decision-intelligence-systems/",
-   "tag": "Same tower",
-   "desc": "Decision paths that run in milliseconds, with policy checks and full logging."
+   "tag": "Same domain",
+   "desc": "decision models wrapped in policy bounds, challenger benchmarks and explainable outputs — decisions you can defend to a regulator, not just scores in a dashboard."
   },
   {
-   "title": "Intelligent Document Processing",
-   "url": "/services/agentic-ai-hyperautomation/intelligent-document-processing/",
-   "tag": "Same tower",
-   "desc": "Contracts, claims and invoices read end-to-end — extraction, validation and downstream action."
+   "title": "RAG & Enterprise Knowledge Systems",
+   "url": "/services/applied-ai-generative-ai/rag-knowledge-systems/",
+   "tag": "Pairs with",
+   "desc": "permission-aware retrieval over your regulated document estate, with answers that cite their sources and refuse when the ground is thin."
+  },
+  {
+   "title": "Advanced Risk & Predictive Analytics",
+   "url": "/services/data-analytics-lakehouse/advanced-risk-predictive-analytics/",
+   "tag": "Pairs with",
+   "desc": "risk and forecasting models with signed baselines, time-based holdouts and governance — predictions that survive the quarter they were made in."
+  },
+  {
+   "title": "Edge Computing & Distributed Infrastructure",
+   "url": "/services/cloud-edge-platform-engineering/edge-computing-infrastructure/",
+   "tag": "Pairs with",
+   "desc": "compute and delivery close to users and devices — regional clusters with store-and-forward resilience, fleet ops at scale and honest latency budgets."
+  },
+  {
+   "title": "A European biopharma group",
+   "url": "/case-studies/hc-03/",
+   "tag": "Evidence",
+   "desc": "Trial eligibility matching at 10x — enrollment windows met."
   }
  ]
 }

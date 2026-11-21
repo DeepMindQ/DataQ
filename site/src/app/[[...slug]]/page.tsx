@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ContentPage } from "@/components/site/PagePieces";
 import HomeView from "@/components/site/HomeView";
+import { CaseHubView, CaseStudyView } from "@/components/site/CaseStudies";
 import { brandData, fileForUrl, pageIndex, readPage, urlToSlugSegments, type PageData } from "@/lib/content";
 
 export const dynamicParams = false;
@@ -122,6 +123,26 @@ export default async function CatchAllPage({ params }: { params: Promise<{ slug?
 
   const bc = breadcrumbJsonLd(page);
   const extra = pageJsonLd(page);
+  if (page.template === "cases_hub") {
+    return (
+      <>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(bc) }} />
+        {extra && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(extra) }} />}
+        <CaseHubView page={page} />
+      </>
+    );
+  }
+  if (page.template === "case_study") {
+    const hubFile = fileForUrl("/case-studies/");
+    const hub = hubFile ? readPage(hubFile) : null;
+    return (
+      <>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(bc) }} />
+        {extra && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(extra) }} />}
+        <CaseStudyView page={page} hub={hub} />
+      </>
+    );
+  }
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(bc) }} />

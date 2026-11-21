@@ -9,254 +9,1182 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The honest pitch for high-performance & mission-critical systems fits in a sentence — When microseconds and uptime are the product — HPC, low-latency and always-on engineering. — and the rest of this page is the how: measured baseline, bounded build, evidence in flight."
+   "x": "Low-latency, high-availability tiers with proofs: latency budgets engineered down the stack, failover rehearsed with clocks running, capacity planned from load models — availability measured on rolling windows that include the bad days."
   },
   {
    "t": "h2",
-   "x": "The service, described plainly"
+   "x": "Mission-critical is a budget discipline, not a server label"
   },
   {
    "t": "p",
-   "x": "Some systems are the product: matching and pricing engines, grid-adjacent control workloads, real-time bidding, high-throughput risk calculation. We engineer for their physics — latency budgets broken down per hop, kernel-bypass and FPGA accelerators where justified, NUMA-aware placement, and determinism testing under adversarial load. Availability engineering pairs with it: active-active topologies, chaos-verified failover, and capacity headroom policies tied to revenue risk."
+   "x": "Mission-critical is a contract: payments clear, trading windows hold, clinical systems respond — with availability and latency targets that carry regulatory or revenue consequences. The engineering is unromantic: latency budgets allocated per hop and measured in production, redundancy that fails over in drills, and capacity modeled against the worst credible day."
   },
   {
    "t": "p",
-   "x": "HPC workloads (simulation, risk grids, genomic pipelines, CFD) get the same discipline on clusters: scheduler tuning, GPU partitioning, storage tiering for burst patterns, and reproducible environments via containers. Every mission-critical build ships with a load-and-failure evidence pack — the numbers that let the business sign off on what 'always on' actually means."
+   "x": "High-performance work — inference at scale, event processing at peaks, low-latency paths — rides the same discipline: profile first, budget every layer, and prove the tail with load that exceeds anything the business calendar will throw at it."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that make 'HA' paper, the reference architecture of budgeted tiers, and the console that reports the rolling numbers."
   },
   {
    "t": "h2",
-   "x": "The stakes, stated plainly"
+   "x": "Four failure modes that make high availability paper"
   },
   {
    "t": "p",
-   "x": "Programs of High-Performance & Mission-Critical Systems run in Banking & Financial Services, Energy & Utilities, Telecom, Media & Entertainment, Healthcare & Life Sciences — always against one named number, always with the baseline signed first."
+   "x": "Every one of these survives a whiteboard and dies in a drill — the countermeasures put clocks on failover, budgets on latency and models on capacity."
   },
   {
-   "t": "h2",
-   "x": "Inside the engagement"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "High-Performance & Mission-Critical Systems: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Latency engineering",
-     "per-hop budgets, kernel-bypass networking and hardware acceleration where justified"
+     "Tail blindness",
+     "p50 looks great; p99 users churn",
+     "Per-hop p99 budgets; tail-focused load tests"
     ],
     [
-     "Determinism & fairness testing",
-     "adversarial load tests proving ordering and performance bounds"
+     "Paper HA",
+     "Redundancy exists; failover never drilled",
+     "Failure drills per component class; timing evidence"
     ],
     [
-     "Active-active availability",
-     "multi-region topologies with chaos-verified failover"
+     "Capacity guesswork",
+     "Peak-day sizing by intuition",
+     "Capacity model from measured demand; headroom policy"
     ],
     [
-     "HPC cluster engineering",
-     "scheduler/GPU/storage tuning for simulation and risk grids"
-    ],
-    [
-     "Evidence pack",
-     "load and failure test results signed before go-live"
+     "Budget denial",
+     "One un-budgeted hop eats the SLA",
+     "End-to-end budget tables; hop owners sign"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the budgeted mission-critical tier"
+  },
+  {
+   "t": "p",
+   "x": "Latency budgets are allocated down the stack — network, runtime, data, serializations — and failover is rehearsed with the clock running: the 41-second drill time is a gate result, not a hope, and capacity comes from load models signed per quarter."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — High-Performance & Mission-Critical Systems",
+   "title": "Reference architecture — mission-critical tier",
    "lanes": [
-    "Devices",
-    "Edge layer",
-    "Regional core",
-    "Data plane",
-    "Ops",
-    "Experience"
+    "Business commitments",
+    "Latency engineering",
+    "Availability fabric",
+    "Capacity",
+    "Proof program",
+    "Operations"
    ],
    "nodes": [
     {
-     "id": "dv0",
+     "id": "sla",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
-    },
-    {
-     "id": "dv1",
-     "lane": 0,
-     "label": "OT & IoT fleets",
-     "hot": false
-    },
-    {
-     "id": "ed2",
-     "lane": 1,
-     "label": "High-Performance & Mission-Critical Systems",
+     "label": "Signed SLAs",
      "hot": true
     },
     {
-     "id": "ed3",
+     "id": "rto",
+     "lane": 0,
+     "label": "RTO/RPO targets"
+    },
+    {
+     "id": "peak",
+     "lane": 0,
+     "label": "Peak definitions"
+    },
+    {
+     "id": "budget",
      "lane": 1,
-     "label": "Local inference",
-     "hot": false
+     "label": "Hop budget table",
+     "hot": true
     },
     {
-     "id": "rc4",
+     "id": "prof",
+     "lane": 1,
+     "label": "Profiling rig"
+    },
+    {
+     "id": "tune",
+     "lane": 1,
+     "label": "Stack tuning"
+    },
+    {
+     "id": "redund",
      "lane": 2,
-     "label": "Regional clusters",
-     "hot": false
+     "label": "Redundancy fabric",
+     "hot": true
     },
     {
-     "id": "rc5",
+     "id": "failover",
      "lane": 2,
-     "label": "Global control plane",
-     "hot": false
+     "label": "Failover paths"
     },
     {
-     "id": "dp6",
+     "id": "region",
+     "lane": 2,
+     "label": "Regional spread"
+    },
+    {
+     "id": "model",
      "lane": 3,
-     "label": "Streaming bus",
-     "hot": false
+     "label": "Capacity model",
+     "hot": true
     },
     {
-     "id": "dp7",
+     "id": "head",
      "lane": 3,
-     "label": "Cold & warm tiers",
-     "hot": false
+     "label": "Headroom policy"
     },
     {
-     "id": "op8",
+     "id": "scale",
+     "lane": 3,
+     "label": "Autoscale proof"
+    },
+    {
+     "id": "load",
      "lane": 4,
-     "label": "Chaos drills",
-     "hot": false
+     "label": "Load program",
+     "hot": true
     },
     {
-     "id": "op9",
+     "id": "chaos",
      "lane": 4,
-     "label": "Cost guardrails",
-     "hot": false
+     "label": "Failure drills"
     },
     {
-     "id": "ex10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "tail",
+     "lane": 4,
+     "label": "Tail evidence"
     },
     {
-     "id": "ex11",
+     "id": "ops",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Runbooks"
+    },
+    {
+     "id": "watch",
+     "lane": 5,
+     "label": "Budget monitors"
+    },
+    {
+     "id": "rev",
+     "lane": 5,
+     "label": "Quarterly review"
     }
    ],
    "edges": [
     {
-     "a": "dv0",
-     "b": "ed2"
+     "a": "sla",
+     "b": "budget",
+     "label": "allocate"
     },
     {
-     "a": "dv1",
-     "b": "ed3"
+     "a": "peak",
+     "b": "model",
+     "label": "input"
     },
     {
-     "a": "ed2",
-     "b": "rc4"
+     "a": "rto",
+     "b": "redund",
+     "label": "shape"
     },
     {
-     "a": "ed3",
-     "b": "rc5"
+     "a": "budget",
+     "b": "prof",
+     "label": "measure"
     },
     {
-     "a": "rc4",
-     "b": "dp6"
+     "a": "prof",
+     "b": "tune",
+     "label": "target"
     },
     {
-     "a": "rc5",
-     "b": "dp7"
+     "a": "tune",
+     "b": "budget",
+     "label": "meet"
     },
     {
-     "a": "ed2",
-     "b": "op8"
+     "a": "budget",
+     "b": "redund",
+     "label": "constrain"
     },
     {
-     "a": "op8",
-     "b": "op9"
+     "a": "redund",
+     "b": "failover",
+     "label": "wire"
     },
     {
-     "a": "dp6",
-     "b": "ex10"
+     "a": "failover",
+     "b": "region",
+     "label": "spread"
     },
     {
-     "a": "dp7",
-     "b": "ex11"
+     "a": "peak",
+     "b": "head",
+     "label": "policy"
+    },
+    {
+     "a": "model",
+     "b": "head",
+     "label": "compute"
+    },
+    {
+     "a": "head",
+     "b": "scale",
+     "label": "configure"
+    },
+    {
+     "a": "budget",
+     "b": "load",
+     "label": "test"
+    },
+    {
+     "a": "redund",
+     "b": "chaos",
+     "label": "drill"
+    },
+    {
+     "a": "load",
+     "b": "tail",
+     "label": "record"
+    },
+    {
+     "a": "tail",
+     "b": "watch",
+     "label": "monitor"
+    },
+    {
+     "a": "chaos",
+     "b": "ops",
+     "label": "rehearse"
+    },
+    {
+     "a": "watch",
+     "b": "rev",
+     "label": "quarterly"
     }
    ],
-   "note": "Topology inherited from the Cloud, Edge & Platform tower; the highlighted core is this service's build."
+   "note": "The hop budget table is the contract made executable: every layer owns its milliseconds and its nines, and the monitors prove it continuously."
   },
   {
    "t": "h2",
-   "x": "Deliverables, without dressing them up"
+   "x": "One failover, timed and evidenced"
   },
   {
    "t": "p",
-   "x": "High-Performance & Mission-Critical Systems: what your team holds at the end,"
+   "x": "From failure detection through leader election, state reconciliation, traffic shift and the client recovery — including the p99 tail behavior that decides whether users felt anything."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "optimization-funnel",
+   "title": "Proof funnel — from signed SLA to demonstrated tail",
+   "labels": [
+    "Sign SLA",
+    "Allocate budgets",
+    "Profile & tune",
+    "Build redundancy",
+    "Load beyond peak",
+    "Drill failover",
+    "Quarterly re-proof"
+   ],
+   "note": "Proofs expire: every quarter the funnel re-runs, because estates drift and yesterday's tail evidence is today's folklore."
+  },
+  {
+   "t": "h2",
+   "x": "The mission-critical console — availability with its tail"
+  },
+  {
+   "t": "p",
+   "x": "Rolling availability, p99 end-to-end and failover drill time — the three numbers that decide whether the tier is engineered or merely labeled."
+  },
+  {
+   "t": "idash",
+   "title": "Mission-critical systems — resilience console",
+   "kpis": [
+    {
+     "label": "Availability (90d)",
+     "value": "99.997%",
+     "delta": "signed target 99.99%",
+     "dir": "up",
+     "spark": [
+      99.99,
+      99.992,
+      99.994,
+      99.995,
+      99.996,
+      99.996,
+      99.997
+     ]
+    },
+    {
+     "label": "Drill RTO / target",
+     "value": "14/30 min",
+     "delta": "last regional failover",
+     "dir": "down",
+     "spark": [
+      38,
+      30,
+      24,
+      20,
+      17,
+      15,
+      14
+     ]
+    },
+    {
+     "label": "Headroom p99.9",
+     "value": "3.2×",
+     "delta": "at burst shape",
+     "dir": "up",
+     "spark": [
+      1.4,
+      1.7,
+      2.0,
+      2.3,
+      2.6,
+      2.9,
+      3.2
+     ]
+    },
+    {
+     "label": "Drill findings open",
+     "value": "0",
+     "delta": "all remediated in-window",
+     "dir": "flat",
+     "spark": [
+      6,
+      5,
+      4,
+      3,
+      2,
+      1,
+      0
+     ]
+    },
+    {
+     "label": "Degradation tests",
+     "value": "12/12",
+     "delta": "shed paths verified",
+     "dir": "up",
+     "spark": [
+      4,
+      6,
+      8,
+      9,
+      10,
+      11,
+      12
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Failure topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "Failure-domain map — click nodes for the independence contract",
+       "lanes": [
+        "Clients",
+        "Regional A",
+        "Regional B",
+        "Shared fate"
+       ],
+       "nodes": [
+        {
+         "id": "cdn",
+         "lane": 0,
+         "label": "Multi-CDN edge",
+         "detail": "Two CDNs with independent contracts and health checks; the DNS layer fails over on synthetic probes, not on human seeing a dashboard.",
+         "hot": true
+        },
+        {
+         "id": "regA",
+         "lane": 1,
+         "label": "Region A active",
+         "detail": "Full stack active; writes commit with quorum spanning regions — a zonal loss inside A is invisible to clients."
+        },
+        {
+         "id": "regB",
+         "lane": 1,
+         "label": "Region B active-standby",
+         "detail": "Receives the replication stream with freshness verified by replay lag alarms; assumes load on drill schedule, not only on disaster."
+        },
+        {
+         "id": "data",
+         "lane": 2,
+         "label": "Quorum storage",
+         "detail": "Writes commit across regions with documented conflict semantics; the split-brain answer is decided in the design, not in the incident."
+        },
+        {
+         "id": "secret",
+         "lane": 2,
+         "label": "Independent secrets",
+         "detail": "Each region holds its own secrets plane with break-glass material — a secrets outage in A cannot lock out B."
+        },
+        {
+         "id": "ctrl",
+         "lane": 3,
+         "label": "Control plane",
+         "detail": "The audited shared-fate surface: deploy pipeline and global config. Its blast radius is measured and its changes are gated by the drill calendar."
+        }
+       ],
+       "edges": [
+        {
+         "a": "cdn",
+         "b": "regA"
+        },
+        {
+         "a": "cdn",
+         "b": "regB",
+         "label": "probe failover"
+        },
+        {
+         "a": "regA",
+         "b": "data",
+         "label": "commit quorum"
+        },
+        {
+         "a": "regB",
+         "b": "data"
+        },
+        {
+         "a": "regA",
+         "b": "secret"
+        },
+        {
+         "a": "regB",
+         "b": "secret"
+        },
+        {
+         "a": "ctrl",
+         "b": "regA",
+         "label": "gated"
+        },
+        {
+         "a": "ctrl",
+         "b": "regB",
+         "label": "gated"
+        }
+       ],
+       "note": "Click nodes for the independence contract each domain carries. The control plane is honest about being shared fate — gated, measured, drilled."
+      }
+     ]
+    },
+    {
+     "name": "Drill evidence",
+     "widgets": [
+      {
+       "kind": "gauge",
+       "title": "Last drill cycle — recovery against signed targets",
+       "items": [
+        {
+         "name": "RTO regional",
+         "value": 14,
+         "max": 30,
+         "unit": "min",
+         "warn": 20,
+         "crit": 27
+        },
+        {
+         "name": "RPO effective",
+         "value": 0,
+         "max": 60,
+         "unit": "s",
+         "warn": 30,
+         "crit": 50
+        },
+        {
+         "name": "Backlog drain",
+         "value": 6,
+         "max": 15,
+         "unit": "min",
+         "warn": 10,
+         "crit": 13
+        },
+        {
+         "name": "Failover freshness",
+         "value": 99.98,
+         "max": 100,
+         "unit": "%",
+         "warn": 99.9,
+         "crit": 99.8
+        }
+       ],
+       "note": "Gauges show drill evidence against signed targets with warn/crit bands. RPO effective is measured by replay verification, not assumed from replication marketing."
+      }
+     ]
+    },
+    {
+     "name": "Headroom what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Capacity headroom what-if — burst shape vs degradation plan",
+       "params": [
+        {
+         "name": "Peak multiplier",
+         "min": 1,
+         "max": 10,
+         "step": 0.5,
+         "value": 4,
+         "unit": "× mean"
+        },
+        {
+         "name": "Autoscale ceiling",
+         "min": 1.5,
+         "max": 8,
+         "step": 0.5,
+         "value": 5,
+         "unit": "× base"
+        },
+        {
+         "name": "Shed priority count",
+         "min": 0,
+         "max": 8,
+         "step": 1,
+         "value": 4,
+         "unit": "shed classes"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Headroom",
+         "unit": "×",
+         "formula": "max(0.1, p1-p0)*(1+p2*0.05)",
+         "good": "2",
+         "bad": "0.5"
+        },
+        {
+         "name": "Dropped classes",
+         "unit": "cnt",
+         "formula": "max(0, p0-p1)*2.4+p2*0",
+         "good": "1",
+         "bad": "4"
+        },
+        {
+         "name": "p99.9 at burst",
+         "unit": "ms",
+         "formula": "60+p0*38*(1+0.8*min(1,max(0,p0-p1)))",
+         "good": "300",
+         "bad": "800"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 2,
+        "label": "Peak multiplier vs p99.9 latency"
+       },
+       "note": "The knee in the p99.9 curve is the autoscale ceiling — past it, latency degrades non-linearly and the shed plan earns its keep. Drag the ceiling against realistic peaks."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · drill evidence",
+   "note": "Reference program model: drill targets and headroom bands from delivery, not client telemetry."
+  },
+  {
+   "t": "h2",
+   "x": "Latency budget allocation down the stack"
+  },
+  {
+   "t": "p",
+   "x": "Budget per layer at design load — network, runtime, data, serialization — with the measured p99 beside each allocation, so the optimization order is an engineering fact instead of a hunch."
+  },
+  {
+   "t": "chart",
+   "title": "Latency budget allocation across the critical path — where 200ms goes",
+   "variant": "bar",
+   "cats": [
+    "Edge/CDN",
+    "Auth",
+    "Core logic",
+    "Data read",
+    "Write path",
+    "Response"
+   ],
+   "series": [
+    {
+     "name": "p99 budget (ms)",
+     "points": [
+      25,
+      15,
+      60,
+      40,
+      40,
+      20
+     ]
+    },
+    {
+     "name": "p99 measured (ms)",
+     "points": [
+      18,
+      11,
+      47,
+      33,
+      36,
+      14
+     ]
+    }
+   ],
+   "yMax": 70,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "High-Performance & Mission-Critical Systems across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "High-Performance & Mission-Critical Systems",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: infrastructure is treated as a product: versioned, observable, costed, and handed to your team with runbooks rather than folklore.",
+     "plays": [
+      "Latency budgets allocated down the stack, measured at p99",
+      "Failover rehearsed with clocks running and volumes that match production",
+      "Capacity from signed load models, re-validated quarterly",
+      "Sector working pattern: core-adjacent modernization in Banking & Financial Services, where strangler-pattern decomposition of monolith wrappers around core with parallel-run equivalence."
+     ],
+     "kpis": [
+      {
+       "label": "Availability (rolling 90d)",
+       "value": "99.99%"
+      },
+      {
+       "label": "p99 end-to-end",
+       "value": "187ms"
+      },
+      {
+       "label": "Failover drill time",
+       "value": "41s"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident.",
+     "plays": [
+      "Latency budgets allocated down the stack, measured at p99",
+      "Failover rehearsed with clocks running and volumes that match production",
+      "Capacity from signed load models, re-validated quarterly"
+     ],
+     "kpis": [
+      {
+       "label": "Availability (rolling 90d)",
+       "value": "99.99%"
+      },
+      {
+       "label": "p99 end-to-end",
+       "value": "187ms"
+      },
+      {
+       "label": "Failover drill time",
+       "value": "41s"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — validated-environment rigidity included — and prove it moved.",
+     "plays": [
+      "Latency budgets allocated down the stack, measured at p99",
+      "Failover rehearsed with clocks running and volumes that match production",
+      "Capacity from signed load models, re-validated quarterly"
+     ],
+     "kpis": [
+      {
+       "label": "Availability (rolling 90d)",
+       "value": "99.99%"
+      },
+      {
+       "label": "p99 end-to-end",
+       "value": "187ms"
+      },
+      {
+       "label": "Failover drill time",
+       "value": "41s"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident.",
+     "plays": [
+      "Latency budgets allocated down the stack, measured at p99",
+      "Failover rehearsed with clocks running and volumes that match production",
+      "Capacity from signed load models, re-validated quarterly"
+     ],
+     "kpis": [
+      {
+       "label": "Availability (rolling 90d)",
+       "value": "99.99%"
+      },
+      {
+       "label": "p99 end-to-end",
+       "value": "187ms"
+      },
+      {
+       "label": "Failover drill time",
+       "value": "41s"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Latency budgets allocated down the stack, measured at p99",
+      "Failover rehearsed with clocks running and volumes that match production",
+      "Capacity from signed load models, re-validated quarterly"
+     ],
+     "kpis": [
+      {
+       "label": "Availability (rolling 90d)",
+       "value": "99.99%"
+      },
+      {
+       "label": "p99 end-to-end",
+       "value": "187ms"
+      },
+      {
+       "label": "Failover drill time",
+       "value": "41s"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": true,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: energy cost compounds, quarter after quarter.",
+     "plays": [
+      "Latency budgets allocated down the stack, measured at p99",
+      "Failover rehearsed with clocks running and volumes that match production",
+      "Capacity from signed load models, re-validated quarterly"
+     ],
+     "kpis": [
+      {
+       "label": "Availability (rolling 90d)",
+       "value": "99.99%"
+      },
+      {
+       "label": "p99 end-to-end",
+       "value": "187ms"
+      },
+      {
+       "label": "Failover drill time",
+       "value": "41s"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what customer and market platforms creak costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Latency budgets allocated down the stack, measured at p99",
+      "Failover rehearsed with clocks running and volumes that match production",
+      "Capacity from signed load models, re-validated quarterly"
+     ],
+     "kpis": [
+      {
+       "label": "Availability (rolling 90d)",
+       "value": "99.99%"
+      },
+      {
+       "label": "p99 end-to-end",
+       "value": "187ms"
+      },
+      {
+       "label": "Failover drill time",
+       "value": "41s"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — peak surges break planning included — and prove it moved.",
+     "plays": [
+      "Latency budgets allocated down the stack, measured at p99",
+      "Failover rehearsed with clocks running and volumes that match production",
+      "Capacity from signed load models, re-validated quarterly",
+      "Sector working pattern: peak surge engineering: elastic capacity with load modeling for trading peaks. Peak absorbed at controlled unit cost is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Availability (rolling 90d)",
+       "value": "99.99%"
+      },
+      {
+       "label": "p99 end-to-end",
+       "value": "187ms"
+      },
+      {
+       "label": "Failover drill time",
+       "value": "41s"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the platform work decides the unit economics: right-sized runtimes, automated environments, and FinOps telemetry from the first workload.",
+     "plays": [
+      "Latency budgets allocated down the stack, measured at p99",
+      "Failover rehearsed with clocks running and volumes that match production",
+      "Capacity from signed load models, re-validated quarterly"
+     ],
+     "kpis": [
+      {
+       "label": "Availability (rolling 90d)",
+       "value": "99.99%"
+      },
+      {
+       "label": "p99 end-to-end",
+       "value": "187ms"
+      },
+      {
+       "label": "Failover drill time",
+       "value": "41s"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Education & Research operators recognize the pattern: research computing fragmented, quarter after quarter.",
+     "plays": [
+      "Latency budgets allocated down the stack, measured at p99",
+      "Failover rehearsed with clocks running and volumes that match production",
+      "Capacity from signed load models, re-validated quarterly"
+     ],
+     "kpis": [
+      {
+       "label": "Availability (rolling 90d)",
+       "value": "99.99%"
+      },
+      {
+       "label": "p99 end-to-end",
+       "value": "187ms"
+      },
+      {
+       "label": "Failover drill time",
+       "value": "41s"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": true,
+     "hook": "Ask what cloud unit economics opaque costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Latency budgets allocated down the stack, measured at p99",
+      "Failover rehearsed with clocks running and volumes that match production",
+      "Capacity from signed load models, re-validated quarterly"
+     ],
+     "kpis": [
+      {
+       "label": "Availability (rolling 90d)",
+       "value": "99.99%"
+      },
+      {
+       "label": "p99 end-to-end",
+       "value": "187ms"
+      },
+      {
+       "label": "Failover drill time",
+       "value": "41s"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what season peaks break systems costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Latency budgets allocated down the stack, measured at p99",
+      "Failover rehearsed with clocks running and volumes that match production",
+      "Capacity from signed load models, re-validated quarterly"
+     ],
+     "kpis": [
+      {
+       "label": "Availability (rolling 90d)",
+       "value": "99.99%"
+      },
+      {
+       "label": "p99 end-to-end",
+       "value": "187ms"
+      },
+      {
+       "label": "Failover drill time",
+       "value": "41s"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/cloud-edge-platform-engineering/"
+    }
+   ],
+   "practiceNote": "High-Performance & Mission-Critical Systems view: low-latency, high-availability tiers with proofs — latency budgets engineered down the stack and availability demonstrated, not asserted."
+  },
+  {
+   "t": "h2",
+   "x": "Performance defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor measured budgets and rehearsed failover over vendor availability claims; deviation triggers are written because each one moves a proof into a promise."
+  },
+  {
+   "t": "table",
+   "caption": "High-Performance & Mission-Critical Systems: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production low-latency / high-throughput system with latency budget evidence",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Budgets",
+     "Signed per-hop tables with monitors",
+     "End-to-end latency only — no one owns the tail"
     ],
     [
-     "Availability topology with chaos-verified failover",
-     "Handed to a named owner on your side, with a working session included."
+     "Redundancy",
+     "Drilled regional failover",
+     "Multi-AZ only — region loss is the real test"
     ],
     [
-     "HPC environment with reproducible containers and scheduling policy",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Capacity",
+     "Model-based headroom policy",
+     "Peak-by-spreadsheet sizing"
     ],
     [
-     "Load-and-failure evidence pack for go-live signoff",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Load",
+     "Tail-focused tests beyond peak",
+     "Average-load tests — tails hide"
+    ],
+    [
+     "Proofs",
+     "Quarterly re-certification",
+     "One-time certification — drift erases it"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Standards and components"
+   "x": "Tier release gates — evidence before traffic"
   },
   {
-   "t": "p",
-   "x": "High-Performance & Mission-Critical Systems is built against defined standards: DPDK/io_uring, FPGA accelerators, NUMA tuning, Slurm, Kubernetes, deterministic test suites. Each choice is justified in writing as part of the architecture baseline, so your team can defend it without us in the room."
+   "t": "table",
+   "caption": "Release gates for High-Performance & Mission-Critical Systems — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Budget gate",
+     "Is every hop signed and monitored?",
+     "Budget table; violation alerts"
+    ],
+    [
+     "Failover gate",
+     "Does failover meet timing?",
+     "Drill evidence per component class"
+    ],
+    [
+     "Tail gate",
+     "Does p99 hold beyond peak?",
+     "Load evidence at 2–3× peak"
+    ],
+    [
+     "Capacity gate",
+     "Is headroom policy met?",
+     "Model outputs; autoscale proof"
+    ],
+    [
+     "Re-proof gate",
+     "Is certification current?",
+     "Quarterly evidence with dates"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "The cadence you would see"
+   "x": "What the mission-critical platform team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "High-Performance & Mission-Critical Systems starts with the measurement: the metric, the owner, the current number, signed."
+     "Hop budget table",
+     "The signed latency contract per layer"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, latency engineering first, gates written with your team."
+     "Redundancy fabric",
+     "Regional failover with drill timing"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in High-Performance & Mission-Critical Systems are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Capacity model",
+     "Peak-driven headroom with policy"
+    ],
+    [
+     "Load program",
+     "Tail evidence at multiples of peak"
+    ],
+    [
+     "Proof certificates",
+     "Quarterly re-certification packs"
+    ],
+    [
+     "Ops runbook",
+     "Budget-violation response playbooks"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Budgets to drills, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — commitments",
+     "SLA/RTO signing, peak definitions, hop budget v1"
+    ],
+    [
+     "Weeks 3–4 — profiling",
+     "Measure per hop, tune top offenders, budgets rebalance"
+    ],
+    [
+     "Weeks 5–6 — redundancy",
+     "Failover paths, regional spread, first drills"
+    ],
+    [
+     "Weeks 7–8 — capacity & load",
+     "Model build, headroom policy, tail load at 2–3×"
+    ],
+    [
+     "Weeks 9–10 — proof & ops",
+     "First certificate; monitors; runbooks rehearsed"
+    ],
+    [
+     "Ongoing — proof ops",
+     "Quarterly re-proof; monthly budget review; drill cadence"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — network, data and the client estate"
+  },
+  {
+   "t": "p",
+   "x": "The tier spans network, data and clients; these contracts define what each layer must deliver for the end-to-end budget to hold under peak load."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Business owners",
+     "SLA/RTO/peak signing"
+    ],
+    [
+     "Observability",
+     "Per-hop budget monitors"
+    ],
+    [
+     "Load tooling",
+     "Tail-focused test harness"
+    ],
+    [
+     "Cloud platforms",
+     "Regional placement"
+    ],
+    [
+     "Incident flow",
+     "Budget-violation escalation"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Tail-governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "The tail is governed as strictly as the average: p99 regressions gate releases, load models are re-signed quarterly, and capacity headroom is a reviewed number — because the users who leave live in the tail."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Budget ownership",
+     "Every hop has a named owner"
+    ],
+    [
+     "Drilled failover",
+     "Untested redundancy does not count"
+    ],
+    [
+     "Beyond-peak proof",
+     "Tails are proven at 2–3× peak"
+    ],
+    [
+     "Expiring certificates",
+     "Proofs re-run quarterly or lapse"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Failover drills run with production-like data volumes and the clock published internally: a drill that exceeds its time budget produces findings with owners, and the next drill re-tests them first."
   },
   {
    "t": "cta",
-   "x": "Bring High-Performance & Mission-Critical Systems to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
+   "x": "Ask when your failover was last rehearsed with production-like volume. If the answer is 'never', bring the tier to a briefing — the first drill is complimentary, the outage is not."
   }
  ],
- "words": 497,
+ "words": 965,
  "section": "Services",
  "l1": "Services",
  "l2": "Cloud, Edge & Platform Engineering",
@@ -278,7 +1206,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Cloud, Edge & Platform Engineering",
+   "title": "Domain overview — Cloud, Edge & Platform Engineering",
    "url": "/services/cloud-edge-platform-engineering/",
    "desc": "Hybrid estates, edge estate and internal platforms — engineered for reliability and unit cost."
   },
@@ -330,33 +1258,51 @@
   {
    "title": "Applied AI & GenAI for Agriculture & Food Systems",
    "url": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Hybrid & Multicloud Architecture",
-   "url": "/services/cloud-edge-platform-engineering/hybrid-multicloud-architecture/",
-   "tag": "Same tower",
-   "desc": "The estate as designed system — landing zones, network fabric and workload placement by economics."
-  },
-  {
    "title": "Cloud-Native & Legacy Modernization",
    "url": "/services/cloud-edge-platform-engineering/cloud-native-modernization/",
-   "tag": "Same tower",
-   "desc": "Retire the legacy tax — strangler-pattern modernization with measurable unit economics."
+   "tag": "Same domain",
+   "desc": "workloads rebuilt for cloud-native operations — containerized, observable, resilient by default, with a strangler path that retires VMs on evidence."
   },
   {
    "title": "Edge Computing & Distributed Infrastructure",
    "url": "/services/cloud-edge-platform-engineering/edge-computing-infrastructure/",
-   "tag": "Same tower",
-   "desc": "Compute where the physics is — edge estate for plants, stores, vehicles and grids."
+   "tag": "Same domain",
+   "desc": "compute and delivery close to users and devices — regional clusters with store-and-forward resilience, fleet ops at scale and honest latency budgets."
   },
   {
-   "title": "SRE & Reliability Engineering",
-   "url": "/services/cloud-edge-platform-engineering/sre-reliability-engineering/",
-   "tag": "Same tower",
-   "desc": "Reliability as product — SLOs, error budgets and incident discipline that engineers actually follow."
+   "title": "FinOps & Sustainable Computing",
+   "url": "/services/cloud-edge-platform-engineering/finops-sustainable-computing/",
+   "tag": "Same domain",
+   "desc": "cost and carbon as engineering inputs — unit economics per workload, rightsizing with teeth, and sustainability reported like any SLO."
+  },
+  {
+   "title": "Zero-Trust Architecture & Implementation",
+   "url": "/services/cybersecurity-zero-trust/zero-trust-architecture/",
+   "tag": "Pairs with",
+   "desc": "per-request policy decisions on identity, device and context — network location stops being a privilege, and coverage is measured on the paths that matter."
+  },
+  {
+   "title": "Computer Vision & Edge AI",
+   "url": "/services/iot-digital-twin-robotics/computer-vision-edge-ai/",
+   "tag": "Pairs with",
+   "desc": "inference at the edge with model ops — constrained-hardware deployment, drift monitors on live feeds, and a hard rule that models never bypass interlocks."
+  },
+  {
+   "title": "Data Engineering & Pipeline Modernization",
+   "url": "/services/data-analytics-lakehouse/data-engineering-modernization/",
+   "tag": "Pairs with",
+   "desc": "legacy pipelines rebuilt as typed, contract-gated, observable jobs — with a strangler pattern that retires the old estate without a big-bang cutover."
+  },
+  {
+   "title": "A multi-campus university group",
+   "url": "/case-studies/edu-03/",
+   "tag": "Evidence",
+   "desc": "Research throughput up 2.8x — governed HPC/cloud platform."
   }
  ]
 }

@@ -9,254 +9,1180 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Most autonomous workflow orchestration engagements stall between the deck and the deployment. Ours are built to cross that gap: Self-healing workflows — long-running business processes that adapt, retry and recover without tickets.. What follows is the working pattern, not the brochure."
+   "x": "Long-running workflows with durable state, recovery by design and escalation choreography: orchestration that survives partial failure, duplicate triggers and the Tuesday afternoon when the third-party API goes down mid-process."
   },
   {
    "t": "h2",
-   "x": "What we deliver under this name"
+   "x": "Workflows fail on week three, not in the demo"
   },
   {
    "t": "p",
-   "x": "Enterprise workflows fail silently: a settlement instruction missing a reference, an order blocked on inventory that never arrived, an onboarding task stalled for two weeks. We build orchestration that watches itself — durable execution with saga patterns, automatic compensation on failure, timeout-aware escalation, and agentic remediation that resolves the recoverable 80% (reformat a file, re-request a document, reroute an approval) before a human ever sees a ticket."
+   "x": "A workflow that spans days — onboarding, claims, order-to-cash exceptions — is not a function call; it is a state machine that must survive restarts, token expiries, downstream outages and people going on holiday. The engineering is durable execution: every step idempotent, every state persisted, every failure path drawn before the happy path is celebrated."
   },
   {
    "t": "p",
-   "x": "Every workflow is versioned, simulated against historical traces before deployment, and monitored with SLOs per business outcome — not per microservice. The result is operational: order-to-cash, onboarding, claims and reconciliation flows that complete at higher rates with fewer touches, and an operations team that manages exceptions by policy instead of by inbox."
+   "x": "Autonomy enters in the recovery: the orchestrator retries with backoff, reroutes around degraded systems, escalates when the policy says so, and never loses a unit of work. The audit is the twin: every state transition lands in a trail that answers 'what happened to case 40217' in one query."
+  },
+  {
+   "t": "p",
+   "x": "The sections below cover the failure modes that produce zombie work, the architecture that makes state durable, and the console that shows recovery behavior under injected failure."
   },
   {
    "t": "h2",
-   "x": "What makes this urgent now"
+   "x": "Four failure modes that turn orchestration into case debt"
   },
   {
    "t": "p",
-   "x": "Programs of Autonomous Workflow Orchestration run in Logistics & Supply Chain, Banking & Financial Services, Insurance & Risk, Manufacturing & Industrial — always against one named number, always with the baseline signed first."
+   "x": "Every one of these leaves work stranded rather than failed — which is why they hide until SLA breaches surface them, and why each countermeasure is a structural property of the runtime."
   },
   {
-   "t": "h2",
-   "x": "Inside the engagement"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Autonomous Workflow Orchestration: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Durable execution core",
-     "saga-pattern workflows with compensation and idempotency"
+     "Zombie work",
+     "Cases stuck mid-flight after a deploy; nobody owns them",
+     "Durable state store with age alarms and ownership routing per state"
     ],
     [
-     "Agentic remediation",
-     "recovery playbooks executed by agents for the recoverable failure classes"
+     "Duplicate side effects",
+     "Retry fires the payment twice; reconciliation finds it weeks later",
+     "Idempotency keys on every side effect; exactly-once ledger for money paths"
     ],
     [
-     "Simulation gate",
-     "new workflow versions replayed against historical traces pre-deploy"
+     "Escalation black holes",
+     "Escalations route to a queue nobody reads",
+     "Escalation SLAs with paging; escalation success measured like conversion"
     ],
     [
-     "Outcome SLOs",
-     "business-level service objectives (completion rate, cycle time) with alerting"
-    ],
-    [
-     "Escalation design",
-     "policy-routed human queues with full context handoff"
+     "Flow drift",
+     "The drawn process diverges from the running one after months of patches",
+     "Declarative workflow definitions in version control; drift diff in CI"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — durable state and choreographed escalation"
+  },
+  {
+   "t": "p",
+   "x": "The design centers on three guarantees: state survives process restarts, side effects are idempotent under duplicate triggers, and escalation follows a choreography with timers — so nothing waits forever and nothing fires twice."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Autonomous Workflow Orchestration",
+   "title": "Reference architecture — durable orchestration with recovery by design",
    "lanes": [
-    "Queues",
-    "Orchestrator",
-    "Digital workers",
-    "Evidence",
-    "Exceptions",
-    "Estates"
+    "Entry",
+    "Orchestrator core",
+    "Resilience",
+    "Policy & escalation",
+    "Systems",
+    "Audit"
    ],
    "nodes": [
     {
-     "id": "qu0",
+     "id": "api",
      "lane": 0,
-     "label": "TMS & telematics",
-     "hot": false
+     "label": "Case intake"
     },
     {
-     "id": "qu1",
+     "id": "bus",
      "lane": 0,
-     "label": "WMS events",
-     "hot": false
+     "label": "Event triggers"
     },
     {
-     "id": "or2",
+     "id": "forms",
+     "lane": 0,
+     "label": "Human input"
+    },
+    {
+     "id": "def",
      "lane": 1,
-     "label": "Autonomous Workflow Orchestration",
+     "label": "Workflow definitions",
      "hot": true
     },
     {
-     "id": "or3",
+     "id": "exec",
      "lane": 1,
-     "label": "SLA timers",
-     "hot": false
-    },
-    {
-     "id": "dw4",
-     "lane": 2,
-     "label": "Document workers",
-     "hot": false
-    },
-    {
-     "id": "dw5",
-     "lane": 2,
-     "label": "API workers",
+     "label": "Durable executor",
      "hot": true
     },
     {
-     "id": "ev6",
+     "id": "state",
+     "lane": 1,
+     "label": "State store",
+     "hot": true
+    },
+    {
+     "id": "retry",
+     "lane": 2,
+     "label": "Backoff & retry"
+    },
+    {
+     "id": "circuit",
+     "lane": 2,
+     "label": "Circuit breakers"
+    },
+    {
+     "id": "comp",
+     "lane": 2,
+     "label": "Compensation logic",
+     "hot": true
+    },
+    {
+     "id": "policy",
      "lane": 3,
-     "label": "Replay log",
-     "hot": false
+     "label": "Escalation policy",
+     "hot": true
     },
     {
-     "id": "ev7",
+     "id": "sla",
      "lane": 3,
-     "label": "Cost accounting",
-     "hot": false
+     "label": "SLA clock"
     },
     {
-     "id": "ex8",
+     "id": "page",
+     "lane": 3,
+     "label": "Owner paging"
+    },
+    {
+     "id": "erp",
      "lane": 4,
-     "label": "Exception desk",
-     "hot": false
+     "label": "ERP steps"
     },
     {
-     "id": "ex9",
+     "id": "docs",
      "lane": 4,
-     "label": "Root-cause loop",
-     "hot": false
+     "label": "Doc services"
     },
     {
-     "id": "es10",
-     "lane": 5,
-     "label": "Control tower",
-     "hot": false
+     "id": "desk",
+     "lane": 4,
+     "label": "Human tasks"
     },
     {
-     "id": "es11",
+     "id": "trail",
      "lane": 5,
-     "label": "Yard & dock scheduler",
-     "hot": false
+     "label": "State-transition trail",
+     "hot": true
+    },
+    {
+     "id": "query",
+     "lane": 5,
+     "label": "Case query API"
+    },
+    {
+     "id": "replay",
+     "lane": 5,
+     "label": "Flow replay"
     }
    ],
    "edges": [
     {
-     "a": "qu0",
-     "b": "or2"
+     "a": "api",
+     "b": "exec"
     },
     {
-     "a": "qu1",
-     "b": "or2"
+     "a": "bus",
+     "b": "exec"
     },
     {
-     "a": "or2",
-     "b": "dw4"
+     "a": "forms",
+     "b": "exec"
     },
     {
-     "a": "or3",
-     "b": "dw5"
+     "a": "def",
+     "b": "exec",
+     "label": "versioned"
     },
     {
-     "a": "dw4",
-     "b": "ev6"
+     "a": "exec",
+     "b": "state",
+     "label": "persist"
     },
     {
-     "a": "dw5",
-     "b": "ev7"
+     "a": "exec",
+     "b": "retry",
+     "label": "on fail"
     },
     {
-     "a": "dw4",
-     "b": "ex8"
+     "a": "retry",
+     "b": "circuit",
+     "label": "guard"
     },
     {
-     "a": "ex8",
-     "b": "ex9"
+     "a": "circuit",
+     "b": "comp",
+     "label": "on open"
     },
     {
-     "a": "dw5",
-     "b": "es10"
+     "a": "policy",
+     "b": "page",
+     "label": "on breach"
     },
     {
-     "a": "ev6",
-     "b": "es11"
+     "a": "sla",
+     "b": "policy",
+     "label": "tick"
+    },
+    {
+     "a": "exec",
+     "b": "sla",
+     "label": "timed"
+    },
+    {
+     "a": "exec",
+     "b": "erp",
+     "label": "steps"
+    },
+    {
+     "a": "exec",
+     "b": "docs",
+     "label": "calls"
+    },
+    {
+     "a": "exec",
+     "b": "desk",
+     "label": "tasks"
+    },
+    {
+     "a": "exec",
+     "b": "trail",
+     "label": "every transition"
+    },
+    {
+     "a": "trail",
+     "b": "query",
+     "label": "serve"
+    },
+    {
+     "a": "trail",
+     "b": "replay",
+     "label": "reconstruct"
     }
    ],
-   "note": "Topology inherited from the Agentic AI & Hyperautomation tower; the highlighted core is this service's build."
+   "note": "Compensation logic is a first-class artifact: every non-idempotent step has a defined undo, tested in the chaos drills, not improvised during an incident."
   },
   {
    "t": "h2",
-   "x": "The artifacts, named"
+   "x": "A case under failure — the recovery path in motion"
   },
   {
    "t": "p",
-   "x": "In Autonomous Workflow Orchestration, deliverables, without dressing them up:"
+   "x": "Follow one long-running case through a partial failure: timeout, replay from durable state, idempotent re-execution, escalation timers — and where the audit record is written."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Case lifecycle — durable steps, recovery, escalation and evidence",
+   "labels": [
+    "Case in",
+    "Persist state",
+    "Execute step",
+    "Retry / compensate",
+    "Escalate on policy",
+    "Complete",
+    "Trail & replay"
+   ],
+   "note": "Nothing is lost on restart: the executor resumes from the last durable state, and age alarms surface zombie work before customers complain."
+  },
+  {
+   "t": "h2",
+   "x": "The orchestration console — recovery posture on one screen"
+  },
+  {
+   "t": "p",
+   "x": "On-time completion, zombie count, duplicate side effects and escalation success — the four numbers that tell you whether the runtime is managing work or generating case debt."
+  },
+  {
+   "t": "idash",
+   "title": "Autonomous workflow orchestration — instance-health console",
+   "kpis": [
+    {
+     "label": "In-flight instances",
+     "value": "14,208",
+     "delta": "±3% weekly",
+     "dir": "flat",
+     "spark": [
+      13900,
+      14100,
+      14300,
+      14050,
+      14200,
+      14160,
+      14208
+     ]
+    },
+    {
+     "label": "Saga success",
+     "value": "99.4%",
+     "delta": "after compensation",
+     "dir": "up",
+     "spark": [
+      98.2,
+      98.5,
+      98.8,
+      99,
+      99.2,
+      99.3,
+      99.4
+     ]
+    },
+    {
+     "label": "SLA breaches",
+     "value": "0.3%",
+     "delta": "predicted pre-breach",
+     "dir": "down",
+     "spark": [
+      1.8,
+      1.5,
+      1.1,
+      0.8,
+      0.5,
+      0.4,
+      0.3
+     ]
+    },
+    {
+     "label": "Median instance age",
+     "value": "6.4 h",
+     "delta": "p95 41 h",
+     "dir": "down",
+     "spark": [
+      11.2,
+      10.1,
+      9.3,
+      8.2,
+      7.4,
+      6.8,
+      6.4
+     ]
+    },
+    {
+     "label": "Compensation drills",
+     "value": "30/30",
+     "delta": "last quarter, passed",
+     "dir": "up",
+     "spark": [
+      22,
+      24,
+      26,
+      27,
+      28,
+      29,
+      30
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Instance burn-down",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "In-flight instances by age band — is the process draining or damming?",
+       "cats": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun"
+       ],
+       "series": [
+        {
+         "name": "< 1 h",
+         "points": [
+          8200,
+          8600,
+          8400,
+          8900,
+          9100,
+          7800,
+          8100
+         ]
+        },
+        {
+         "name": "1–24 h",
+         "points": [
+          4600,
+          4300,
+          4700,
+          4200,
+          4000,
+          4900,
+          4700
+         ]
+        },
+        {
+         "name": "> 24 h",
+         "points": [
+          1900,
+          1700,
+          1400,
+          1100,
+          800,
+          700,
+          640
+         ]
+        }
+       ],
+       "unit": "instances",
+       "note": "The >24 h band is the one to watch: a draining process empties it daily; a damming process lets it grow while the <1 h band looks healthy. Hover to read exact counts."
+      }
+     ]
+    },
+    {
+     "name": "Throughput what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Elasticity what-if — burst intake vs worker fleet",
+       "params": [
+        {
+         "name": "Intake burst",
+         "min": 100,
+         "max": 5000,
+         "step": 100,
+         "value": 1200,
+         "unit": "inst/h"
+        },
+        {
+         "name": "Worker pods",
+         "min": 2,
+         "max": 60,
+         "step": 2,
+         "value": 18,
+         "unit": "pods"
+        },
+        {
+         "name": "Timer deadline",
+         "min": 5,
+         "max": 120,
+         "step": 5,
+         "value": 30,
+         "unit": "min"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Drain time",
+         "unit": "h",
+         "formula": "p0*0.9/p1/60*3.2",
+         "good": "2",
+         "bad": "6"
+        },
+        {
+         "name": "Deadline breaches",
+         "unit": "%",
+         "formula": "p0/(p1*70)*(60/p2)*8",
+         "good": "1",
+         "bad": "5"
+        },
+        {
+         "name": "Fleet cost / burst",
+         "unit": "$",
+         "formula": "p1*0.85*(p0/1000+1)",
+         "good": "40",
+         "bad": "120"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 0,
+        "label": "Worker pods vs drain time"
+       },
+       "note": "Burst intake is the truth-teller for elastic design: the drain-time curve against pods shows where autoscaling stops helping because the downstream dependency, not the fleet, is the constraint."
+      }
+     ]
+    },
+    {
+     "name": "Saga anatomy",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "Payment-onboarding saga — click any step for its compensation contract",
+       "lanes": [
+        "Intake",
+        "Verification",
+        "Fulfilment",
+        "Settlement"
+       ],
+       "nodes": [
+        {
+         "id": "intake",
+         "lane": 0,
+         "label": "KYC intake",
+         "detail": "Typed document set with schema validation; a malformed intake never enters the saga — it returns to the submitter with reasons.",
+         "hot": true
+        },
+        {
+         "id": "screen",
+         "lane": 1,
+         "label": "Sanctions screening",
+         "detail": "Calls the screening provider with idempotency key; pended outcomes park on a timer with a 24 h re-screen policy."
+        },
+        {
+         "id": "risk",
+         "lane": 1,
+         "label": "Risk score",
+         "detail": "Model step — pinned model version recorded per instance so a post-incident review knows exactly which score decided."
+        },
+        {
+         "id": "acct",
+         "lane": 2,
+         "label": "Account provisioning",
+         "detail": "The first uncompensatable-by-default step: compensation is a documented account-closure flow with its own SLA, not a rollback."
+        },
+        {
+         "id": "card",
+         "lane": 2,
+         "label": "Card issuance",
+         "detail": "Compensable — cancellation API; the saga holds the cancellation token for the retention window."
+        },
+        {
+         "id": "fund",
+         "lane": 3,
+         "label": "Initial funding",
+         "detail": "Ledger write with two-phase commit into the core-banking adapter; reconciliation job is the last line of defence."
+        },
+        {
+         "id": "notify",
+         "lane": 3,
+         "label": "Customer comms",
+         "detail": "Idempotent notification with template pinning; retries respect quiet-hours policy."
+        }
+       ],
+       "edges": [
+        {
+         "a": "intake",
+         "b": "screen"
+        },
+        {
+         "a": "screen",
+         "b": "risk"
+        },
+        {
+         "a": "risk",
+         "b": "acct"
+        },
+        {
+         "a": "acct",
+         "b": "card"
+        },
+        {
+         "a": "card",
+         "b": "fund",
+         "label": "last write"
+        },
+        {
+         "a": "fund",
+         "b": "notify"
+        }
+       ],
+       "note": "Click nodes to read each compensation contract. The saga is only as strong as its weakest undo — we test that weakness deliberately."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · fault-injection model",
+   "note": "Reference program model: thresholds and target bands from delivery, not client telemetry."
+  },
+  {
+   "t": "h2",
+   "x": "Completion and recovery under injected failure"
+  },
+  {
+   "t": "p",
+   "x": "Design targets for completion rates and recovery time as failure load increases — the curve that proves the runtime degrades gracefully instead of silently stranding cases."
+  },
+  {
+   "t": "chart",
+   "title": "Completion and recovery posture under injected failure — design targets",
+   "variant": "line",
+   "cats": [
+    "Baseline",
+    "+Tool outage",
+    "+Token expiry",
+    "+Queue flood",
+    "+Half-deploy"
+   ],
+   "series": [
+    {
+     "name": "On-time completion target %",
+     "points": [
+      95,
+      88,
+      91,
+      86,
+      89
+     ]
+    },
+    {
+     "name": "Zero-loss target %",
+     "points": [
+      100,
+      100,
+      100,
+      100,
+      100
+     ]
+    }
+   ],
+   "unit": "%",
+   "yMax": 105,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Autonomous Workflow Orchestration across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Autonomous Workflow Orchestration",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: orchestration is the discipline — dozens of small automations running as one auditable workforce, with escalations designed rather than improvised.",
+     "plays": [
+      "Durable workflow state with replay from any checkpoint",
+      "Idempotent side effects under duplicate triggers and partial failure",
+      "Escalation choreography with timers — nothing strands, nothing fires twice"
+     ],
+     "kpis": [
+      {
+       "label": "On-time completion",
+       "value": "93%"
+      },
+      {
+       "label": "Zombie cases",
+       "value": "4"
+      },
+      {
+       "label": "Duplicate side effects",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Ask what fraud industrialized against manual detection costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Durable workflow state with replay from any checkpoint",
+      "Idempotent side effects under duplicate triggers and partial failure",
+      "Escalation choreography with timers — nothing strands, nothing fires twice"
+     ],
+     "kpis": [
+      {
+       "label": "On-time completion",
+       "value": "93%"
+      },
+      {
+       "label": "Zombie cases",
+       "value": "4"
+      },
+      {
+       "label": "Duplicate side effects",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": true,
+     "hook": "Healthcare & Life Sciences operators recognize the pattern: prior authorization and RCM friction, quarter after quarter.",
+     "plays": [
+      "Durable workflow state with replay from any checkpoint",
+      "Idempotent side effects under duplicate triggers and partial failure",
+      "Escalation choreography with timers — nothing strands, nothing fires twice"
+     ],
+     "kpis": [
+      {
+       "label": "On-time completion",
+       "value": "93%"
+      },
+      {
+       "label": "Zombie cases",
+       "value": "4"
+      },
+      {
+       "label": "Duplicate side effects",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — maintenance planning reactive included — and prove it moved.",
+     "plays": [
+      "Durable workflow state with replay from any checkpoint",
+      "Idempotent side effects under duplicate triggers and partial failure",
+      "Escalation choreography with timers — nothing strands, nothing fires twice"
+     ],
+     "kpis": [
+      {
+       "label": "On-time completion",
+       "value": "93%"
+      },
+      {
+       "label": "Zombie cases",
+       "value": "4"
+      },
+      {
+       "label": "Duplicate side effects",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Ask what supplier collaboration by email costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Durable workflow state with replay from any checkpoint",
+      "Idempotent side effects under duplicate triggers and partial failure",
+      "Escalation choreography with timers — nothing strands, nothing fires twice"
+     ],
+     "kpis": [
+      {
+       "label": "On-time completion",
+       "value": "93%"
+      },
+      {
+       "label": "Zombie cases",
+       "value": "4"
+      },
+      {
+       "label": "Duplicate side effects",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": true,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Durable workflow state with replay from any checkpoint",
+      "Idempotent side effects under duplicate triggers and partial failure",
+      "Escalation choreography with timers — nothing strands, nothing fires twice"
+     ],
+     "kpis": [
+      {
+       "label": "On-time completion",
+       "value": "93%"
+      },
+      {
+       "label": "Zombie cases",
+       "value": "4"
+      },
+      {
+       "label": "Duplicate side effects",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — trading and scheduling decisions at market speed included — and prove it moved.",
+     "plays": [
+      "Durable workflow state with replay from any checkpoint",
+      "Idempotent side effects under duplicate triggers and partial failure",
+      "Escalation choreography with timers — nothing strands, nothing fires twice"
+     ],
+     "kpis": [
+      {
+       "label": "On-time completion",
+       "value": "93%"
+      },
+      {
+       "label": "Zombie cases",
+       "value": "4"
+      },
+      {
+       "label": "Duplicate side effects",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": true,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Durable workflow state with replay from any checkpoint",
+      "Idempotent side effects under duplicate triggers and partial failure",
+      "Escalation choreography with timers — nothing strands, nothing fires twice"
+     ],
+     "kpis": [
+      {
+       "label": "On-time completion",
+       "value": "93%"
+      },
+      {
+       "label": "Zombie cases",
+       "value": "4"
+      },
+      {
+       "label": "Duplicate side effects",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Durable workflow state with replay from any checkpoint",
+      "Idempotent side effects under duplicate triggers and partial failure",
+      "Escalation choreography with timers — nothing strands, nothing fires twice"
+     ],
+     "kpis": [
+      {
+       "label": "On-time completion",
+       "value": "93%"
+      },
+      {
+       "label": "Zombie cases",
+       "value": "4"
+      },
+      {
+       "label": "Duplicate side effects",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Ask what administrative burden on faculty costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Durable workflow state with replay from any checkpoint",
+      "Idempotent side effects under duplicate triggers and partial failure",
+      "Escalation choreography with timers — nothing strands, nothing fires twice"
+     ],
+     "kpis": [
+      {
+       "label": "On-time completion",
+       "value": "93%"
+      },
+      {
+       "label": "Zombie cases",
+       "value": "4"
+      },
+      {
+       "label": "Duplicate side effects",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Ask what support and success scale linearly costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Durable workflow state with replay from any checkpoint",
+      "Idempotent side effects under duplicate triggers and partial failure",
+      "Escalation choreography with timers — nothing strands, nothing fires twice"
+     ],
+     "kpis": [
+      {
+       "label": "On-time completion",
+       "value": "93%"
+      },
+      {
+       "label": "Zombie cases",
+       "value": "4"
+      },
+      {
+       "label": "Duplicate side effects",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what input and logistics planning manual costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Durable workflow state with replay from any checkpoint",
+      "Idempotent side effects under duplicate triggers and partial failure",
+      "Escalation choreography with timers — nothing strands, nothing fires twice"
+     ],
+     "kpis": [
+      {
+       "label": "On-time completion",
+       "value": "93%"
+      },
+      {
+       "label": "Zombie cases",
+       "value": "4"
+      },
+      {
+       "label": "Duplicate side effects",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/"
+    }
+   ],
+   "practiceNote": "Autonomous Workflow Orchestration view: long-running workflows with durable state, recovery by design, escalation choreography and audit — orchestration that survives partial failure as a normal event."
+  },
+  {
+   "t": "h2",
+   "x": "Orchestration defaults — and when we deviate"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor durable execution engines with replay semantics over in-memory flows; deviation triggers are written because each one moves recovery from a property to a hope."
+  },
+  {
+   "t": "table",
+   "caption": "Autonomous Workflow Orchestration: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Orchestration platform for named long-running business workflows",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Durable execution",
+     "Temporal-class durable workflow engine",
+     "Step functions only for short flows; days-long cases need durable state"
     ],
     [
-     "Remediation playbook library with measured automation rates",
-     "Handed to a named owner on your side, with a working session included."
+     "State",
+     "Versioned state store with age alarms",
+     "Case state in memory — it dies with the pod and takes the audit with it"
     ],
     [
-     "Workflow simulation and conformance test suites",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Idempotency",
+     "Keys + exactly-once ledger for money paths",
+     "At-least-once without keys — duplicates are inevitable"
     ],
     [
-     "Outcome-SLO dashboards for operations leadership",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Escalation",
+     "SLA-clock driven paging with measured success",
+     "Email-only escalations — they rot silently"
+    ],
+    [
+     "Definitions",
+     "Declarative workflows in git with drift CI",
+     "Builder-UI-only definitions — they drift the moment someone edits live"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The technology choices, justified"
+   "x": "Orchestration release gates — evidence before production load"
   },
   {
-   "t": "p",
-   "x": "Autonomous Workflow Orchestration ships against Temporal, Kafka, LangGraph, Kubernetes, OpenTelemetry, SLO tooling. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for Autonomous Workflow Orchestration — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Durability gate",
+     "Does every step survive restart?",
+     "Kill-mid-step drill with resume proof per step type"
+    ],
+    [
+     "Idempotency gate",
+     "Can retries duplicate side effects?",
+     "Key coverage report; duplicate-injection test at zero"
+    ],
+    [
+     "Compensation gate",
+     "Does every non-idempotent step undo cleanly?",
+     "Compensation test matrix with ledger evidence"
+    ],
+    [
+     "Escalation gate",
+     "Do escalations reach humans in time?",
+     "SLA breach drill; paging receipt evidence"
+    ],
+    [
+     "Audit gate",
+     "Can any case be explained after the fact?",
+     "Case query demo; replay reconstruction sample"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "From baseline to working slice"
+   "x": "What the platform and process teams inherit"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Autonomous Workflow Orchestration starts with the measurement: the metric, the owner, the current number, signed."
+     "Durable workflow engine",
+     "Versioned definitions, resumable state, age alarms"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, durable execution core first, gates written with your team."
+     "Compensation library",
+     "Tested undo paths for every non-idempotent step"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "The Autonomous Workflow Orchestration gate review: baseline versus slice, in the metric's own units, plus a scale recommendation your board can audit."
+     "Escalation choreography",
+     "SLA clocks, paging integration, success metrics"
+    ],
+    [
+     "State-transition trail",
+     "Queryable case history with replay tooling"
+    ],
+    [
+     "Chaos drill suite",
+     "The five injected failures and the evidence they produce"
+    ],
+    [
+     "Ops runbook",
+     "Deploy-with-inflight SOP, queue flood response, ownership routing"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Durability first, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — case taxonomy & SLAs",
+     "Case classes, SLA clocks, escalation owners, durability requirements"
+    ],
+    [
+     "Weeks 3–4 — executor & state",
+     "Durable engine deployed; state schema; resume drills"
+    ],
+    [
+     "Weeks 5–6 — resilience",
+     "Retry policy, breakers, compensation matrix, idempotency ledger"
+    ],
+    [
+     "Weeks 7–8 — escalation & policy",
+     "Paging integration, SLA telemetry, success measurement"
+    ],
+    [
+     "Weeks 9–10 — audit & cutover",
+     "Trail query API, replay tooling, migration of in-flight work"
+    ],
+    [
+     "Ongoing — flow health",
+     "Chaos drills quarterly, drift CI, zombie-age reviews"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — queues, systems and the escalation desk"
+  },
+  {
+   "t": "p",
+   "x": "Orchestration is mostly seam management: the contracts below define how steps join systems without duplicating side effects or losing escalations."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "ERP / core systems",
+     "Step APIs with idempotency keys and status callbacks"
+    ],
+    [
+     "Document services",
+     "Async contracts with circuit-breaker semantics"
+    ],
+    [
+     "Human task desks",
+     "Task assignment with SLA clocks and reassignment"
+    ],
+    [
+     "Paging & comms",
+     "Escalation delivery with receipts"
+    ],
+    [
+     "Observability",
+     "Per-case traces; step latency histograms"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Governance overlay — the audit trail of a running process"
+  },
+  {
+   "t": "p",
+   "x": "Durable state comes with a durable record: every state transition, retry and escalation is journaled, so a regulator's question about any case has a definitive answer."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Exactly-once money path",
+     "Ledger-checked side effects on any payment or commitment"
+    ],
+    [
+     "Ownership rule",
+     "Every state has an owning role; no orphan states by design"
+    ],
+    [
+     "Escalation receipt",
+     "Paging events carry acknowledgment evidence"
+    ],
+    [
+     "Trail immutability",
+     "Append-only transitions with case-level hash chains"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Chaos drills are part of the gate evidence: injected failures at design load are run before promotion, and the recovery traces ship with the release."
   },
   {
    "t": "cta",
-   "x": "If Autonomous Workflow Orchestration is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
+   "x": "Bring the workflow that currently fails quietly at month-end. The diagnostic will map its zombie cases and escalation holes — then price what recovery-by-design would cost."
   }
  ],
- "words": 476,
+ "words": 1118,
  "section": "Services",
  "l1": "Services",
  "l2": "Agentic AI & Hyperautomation",
@@ -278,7 +1204,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Agentic AI & Hyperautomation",
+   "title": "Domain overview — Agentic AI & Hyperautomation",
    "url": "/services/agentic-ai-hyperautomation/",
    "desc": "Digital workers, decision hubs and workflows that recover from failure on their own — automation with human checkpoints, budgets and audit."
   },
@@ -330,33 +1256,51 @@
   {
    "title": "Blockchain & Digital Trust for Telecom, Media & Entertainment",
    "url": "/industries/telecom-media/capabilities/blockchain-digital-trust/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Agentic Process Automation",
-   "url": "/services/agentic-ai-hyperautomation/agentic-process-automation/",
-   "tag": "Same tower",
-   "desc": "Agents that execute the work — tool-using, policy-bounded, and fully logged for audit."
-  },
-  {
    "title": "Digital Workforce & Multi-Agent Orchestration",
    "url": "/services/agentic-ai-hyperautomation/digital-workforce-orchestration/",
-   "tag": "Same tower",
-   "desc": "Agents operated as one fleet: roles, queues, budgets and audit trails."
+   "tag": "Same domain",
+   "desc": "agent-fleet management as workforce management — capacity, shifts, versioning, retirement and utilization, with SLAs that hold while the fleet scales."
   },
   {
-   "title": "Decision Intelligence Systems",
-   "url": "/services/agentic-ai-hyperautomation/decision-intelligence-systems/",
-   "tag": "Same tower",
-   "desc": "Decision paths that run in milliseconds, with policy checks and full logging."
+   "title": "Hyperautomation & Systems Integration",
+   "url": "/services/agentic-ai-hyperautomation/hyperautomation-integration/",
+   "tag": "Same domain",
+   "desc": "the contracted seams — ERP, CRM, ITSM, comms and queues — with typed contracts, replayable failures and monitors that catch drift before business users do."
   },
   {
    "title": "Intelligent Document Processing",
    "url": "/services/agentic-ai-hyperautomation/intelligent-document-processing/",
-   "tag": "Same tower",
-   "desc": "Contracts, claims and invoices read end-to-end — extraction, validation and downstream action."
+   "tag": "Same domain",
+   "desc": "extraction and adjudication inside the process — documents become decisions with confidence gates, evidence and a human queue that shrinks on measurement."
+  },
+  {
+   "title": "Enterprise AI Strategy & Roadmapping",
+   "url": "/services/applied-ai-generative-ai/enterprise-ai-strategy/",
+   "tag": "Pairs with",
+   "desc": "portfolio management under uncertainty: provability screens, risk-tiered gates, a platform decision made once, and a stop-loss that holds."
+  },
+  {
+   "title": "Enterprise BI & Executive Analytics",
+   "url": "/services/data-analytics-lakehouse/enterprise-bi-executive-analytics/",
+   "tag": "Pairs with",
+   "desc": "decision-grade reporting with one truth per metric — certified datasets, metric contracts and an executive layer that does not argue with itself."
+  },
+  {
+   "title": "Hybrid & Multicloud Architecture",
+   "url": "/services/cloud-edge-platform-engineering/hybrid-multicloud-architecture/",
+   "tag": "Pairs with",
+   "desc": "one operating model across clouds and on-prem — workload placement by policy, portable patterns, and drift that is measured in one place."
+  },
+  {
+   "title": "A public research university (38,000 students)",
+   "url": "/case-studies/edu-01/",
+   "tag": "Evidence",
+   "desc": "Retention +4.1 points in target cohorts — early-warning to advising loop."
   }
  ]
 }

@@ -9,254 +9,1157 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "AI Proof-of-Concept & Value Validation sits in the Applied AI & GenAI tower, and it earns that place by being specific: Replace hype with evidence — feasibility, value and adoption risk proven on your data in 6-10 weeks. The build pattern, the artifacts and the guardrails follow."
+   "x": "The four-week sprint that ends in a fund-or-kill verdict with auditable numbers: baseline signed before week one ends, a real data path instead of a demo set, and a written verdict your CFO can take to the bank."
   },
   {
    "t": "h2",
-   "x": "What we deliver under this name"
+   "x": "A PoC exists to produce a decision, not a demo"
   },
   {
    "t": "p",
-   "x": "A good PoC answers three questions with numbers: does it work on our data, is it worth building, and will the organization absorb it? We design PoCs with a falsifiable success criterion up front, an evaluation set built from your records, a controls sketch that shows the production path, and an adoption probe with the actual operating team — so the go/no-go decision is defensible in a capital committee."
+   "x": "A PoC exists to produce a decision, not a demo. Four weeks, one metric, a real data path, and a written kill-or-fund verdict with the evidence attached. The discipline is saying no fast: most ideas die at the provability screen, and that is the program saving money."
   },
   {
    "t": "p",
-   "x": "Deliberately, we also do the no-go work: a third of our PoCs end with a documented stop or a redirected approach, which is exactly the point. Every engagement ends with a value memo — measured performance, projected business impact at production scale, total cost to build and run, and risks with owners — feeding directly into the investment sequence."
+   "x": "The sprint is engineered backwards from the exit report. Baseline collection starts on day one, the eval set is built before the model is touched, and the final deck is one page of numbers your CFO can audit against the ledger."
+  },
+  {
+   "t": "p",
+   "x": "Below is the anatomy of the sprint: the failure modes that turn PoCs into demo-ware, the reference architecture for a four-week evidence machine, and the gates the verdict must clear."
   },
   {
    "t": "h2",
-   "x": "What makes this urgent now"
+   "x": "Four ways PoCs become demo-ware"
   },
   {
    "t": "p",
-   "x": "The sectors where AI Proof-of-Concept & Value Validation currently runs: Banking & Financial Services, Insurance & Risk, Healthcare & Life Sciences, Manufacturing & Industrial. Each engagement anchors to one named metric in that sector's own language."
+   "x": "Each failure here is a shortcut taken in week one that costs a program in month six — the countermeasures are cheap, and none of them is optional in this sprint."
   },
   {
-   "t": "h2",
-   "x": "The system, piece by piece"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "AI Proof-of-Concept & Value Validation: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Falsifiable success criteria",
-     "metrics and thresholds agreed before the first model run"
+     "Demo-ware",
+     "The PoC impresses in a meeting and collapses on real data",
+     "Real-data path contracted in week one; no synthetic demos on the exit report"
     ],
     [
-     "Rapid sandbox build",
-     "secured data room, curated eval set and reference pipeline in weeks"
+     "Moving target metric",
+     "Success redefined when the first number disappoints",
+     "Metric and threshold frozen and signed at kickoff; changes are new sprints"
     ],
     [
-     "Production-path sketch",
-     "controls, integration and run-cost model for the scaled system"
+     "Hidden integration cost",
+     "PoC wins, production estimate triples",
+     "Integration probe in week two: auth, schemas, rate limits on the real path"
     ],
     [
-     "Adoption probe",
-     "workflow trials with the operating team and change-impact readout"
-    ],
-    [
-     "Value memo",
-     "evidence pack for capital allocation with build/run cost and risks"
+     "Baseline never existed",
+     "Nobody can say what 'better' means",
+     "Baseline collection is task zero with a named owner and a collection method"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the four-week evidence machine"
+  },
+  {
+   "t": "p",
+   "x": "The architecture is sized for four weeks: one baseline, one metric, one real data path, one verdict. Everything that does not serve the verdict is explicitly out of scope, and the out-of-scope list is written at kickoff."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — AI Proof-of-Concept & Value Validation",
+   "title": "Reference architecture — the four-week provability sprint",
    "lanes": [
-    "Systems of record",
-    "Contracted inputs",
-    "Retrieval core",
-    "Guarded generation",
-    "Controls",
-    "Surfaces"
+    "Scope",
+    "Baseline",
+    "Build",
+    "Evidence",
+    "Verdict"
    ],
    "nodes": [
     {
-     "id": "src0",
+     "id": "canvas",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
-    },
-    {
-     "id": "src1",
-     "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
-    },
-    {
-     "id": "ct2",
-     "lane": 1,
-     "label": "Schema contracts",
-     "hot": false
-    },
-    {
-     "id": "ct3",
-     "lane": 1,
-     "label": "Freshness SLAs",
-     "hot": false
-    },
-    {
-     "id": "rc4",
-     "lane": 2,
-     "label": "AI Proof-of-Concept & Value Validation",
+     "label": "Provability canvas",
      "hot": true
     },
     {
-     "id": "rc5",
-     "lane": 2,
-     "label": "Embedding pipeline",
-     "hot": false
-    },
-    {
-     "id": "gg6",
-     "lane": 3,
-     "label": "Grounded answering",
+     "id": "path",
+     "lane": 0,
+     "label": "Real data path",
      "hot": true
     },
     {
-     "id": "gg7",
+     "id": "kill",
+     "lane": 0,
+     "label": "Kill criteria"
+    },
+    {
+     "id": "base",
+     "lane": 1,
+     "label": "Baseline collection",
+     "hot": true
+    },
+    {
+     "id": "method",
+     "lane": 1,
+     "label": "Collection method doc"
+    },
+    {
+     "id": "owner",
+     "lane": 1,
+     "label": "Metric owner sign"
+    },
+    {
+     "id": "proto",
+     "lane": 2,
+     "label": "Thin vertical slice"
+    },
+    {
+     "id": "eval",
+     "lane": 2,
+     "label": "Eval set v1",
+     "hot": true
+    },
+    {
+     "id": "cost",
+     "lane": 2,
+     "label": "Cost probe"
+    },
+    {
+     "id": "integ",
      "lane": 3,
-     "label": "Prompt & cost router",
-     "hot": false
+     "label": "Integration probe",
+     "hot": true
     },
     {
-     "id": "co8",
+     "id": "load",
+     "lane": 3,
+     "label": "Load spot-check"
+    },
+    {
+     "id": "audit",
+     "lane": 3,
+     "label": "Evidence pack"
+    },
+    {
+     "id": "gate",
      "lane": 4,
-     "label": "Eval harness",
-     "hot": false
+     "label": "Fund / kill gate",
+     "hot": true
     },
     {
-     "id": "co9",
+     "id": "report",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Exit report"
     },
     {
-     "id": "su10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
-    },
-    {
-     "id": "su11",
-     "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "id": "next",
+     "lane": 4,
+     "label": "Slice plan or stop"
     }
    ],
    "edges": [
     {
-     "a": "src0",
-     "b": "ct2"
+     "a": "canvas",
+     "b": "path"
     },
     {
-     "a": "src1",
-     "b": "ct2"
+     "a": "canvas",
+     "b": "kill"
     },
     {
-     "a": "ct2",
-     "b": "rc4"
+     "a": "path",
+     "b": "base"
     },
     {
-     "a": "ct3",
-     "b": "rc5"
+     "a": "base",
+     "b": "method"
     },
     {
-     "a": "rc4",
-     "b": "gg6"
+     "a": "base",
+     "b": "owner",
+     "label": "sign"
     },
     {
-     "a": "rc5",
-     "b": "gg7"
+     "a": "path",
+     "b": "proto"
     },
     {
-     "a": "gg6",
-     "b": "co8"
+     "a": "proto",
+     "b": "eval"
     },
     {
-     "a": "co8",
-     "b": "co9"
+     "a": "proto",
+     "b": "cost"
     },
     {
-     "a": "gg6",
-     "b": "su10"
+     "a": "proto",
+     "b": "integ"
     },
     {
-     "a": "gg7",
-     "b": "su11"
+     "a": "integ",
+     "b": "load"
+    },
+    {
+     "a": "eval",
+     "b": "audit",
+     "label": "results"
+    },
+    {
+     "a": "integ",
+     "b": "audit",
+     "label": "findings"
+    },
+    {
+     "a": "audit",
+     "b": "gate",
+     "label": "evidence"
+    },
+    {
+     "a": "gate",
+     "b": "report",
+     "label": "verdict"
+    },
+    {
+     "a": "gate",
+     "b": "next",
+     "label": "either branch"
     }
    ],
-   "note": "Topology inherited from the Applied AI & GenAI tower; the highlighted core is this service's build."
+   "note": "The gate is honest by construction: kill criteria are written at kickoff, and the exit report is the same one-pager for funded and killed sprints."
   },
   {
    "t": "h2",
-   "x": "What changes hands"
+   "x": "The sprint path — from kickoff to verdict"
   },
   {
    "t": "p",
-   "x": "In AI Proof-of-Concept & Value Validation, named artifacts, handed to named owners:"
+   "x": "Week-by-week flow from baseline signing through data-path construction to the verdict review — including the mid-sprint checkpoint where weak ideas are killed early and cheaply."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "optimization-funnel",
+   "title": "Sprint flow — week by week to a fund-or-kill verdict",
+   "labels": [
+    "Wk1 scope & baseline",
+    "Wk2 data path",
+    "Wk3 build & eval",
+    "Wk4 integration probe",
+    "Evidence pack",
+    "Fund / kill gate"
+   ],
+   "note": "The integration probe in week two is the sprint's insurance: it prices the production path before anyone falls in love with the demo."
+  },
+  {
+   "t": "h2",
+   "x": "The sprint console — verdicts, not velocity"
+  },
+  {
+   "t": "p",
+   "x": "Sprints run, verdicts on time, ideas funded to production, ideas killed on evidence and baselines signed — the record that shows whether the sprint process is producing decisions or theater."
+  },
+  {
+   "t": "idash",
+   "title": "AI PoC & value validation — gate console",
+   "kpis": [
+    {
+     "label": "Baseline (measured)",
+     "value": "142 min",
+     "delta": "per case, manual process",
+     "dir": "flat",
+     "spark": [
+      148,
+      147,
+      145,
+      144,
+      143,
+      142,
+      142
+     ]
+    },
+    {
+     "label": "PoC cycle time",
+     "value": "3.1 min",
+     "delta": "candidate approach",
+     "dir": "down",
+     "spark": [
+      12,
+      8,
+      6,
+      4.5,
+      3.8,
+      3.4,
+      3.1
+     ]
+    },
+    {
+     "label": "Case-set pass",
+     "value": "83.6%",
+     "delta": "184 frozen cases",
+     "dir": "up",
+     "spark": [
+      54,
+      62,
+      68,
+      74,
+      78,
+      81,
+      84
+     ]
+    },
+    {
+     "label": "Cost / case",
+     "value": "0.38",
+     "delta": "at realistic volume",
+     "dir": "down",
+     "spark": [
+      2.1,
+      1.4,
+      0.9,
+      0.6,
+      0.5,
+      0.42,
+      0.38
+     ]
+    },
+    {
+     "label": "Gate 1–3 status",
+     "value": "3/4",
+     "delta": "Gate 4 pending ops review",
+     "dir": "up",
+     "spark": [
+      0,
+      1,
+      1,
+      2,
+      2,
+      3,
+      3
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Gate map",
+     "widgets": [
+      {
+       "kind": "flow",
+       "title": "The four gates — click each for its evidence contract",
+       "stages": [
+        {
+         "name": "Gate 1 — Feasibility",
+         "role": "Quality on frozen set",
+         "detail": "Candidates run against the frozen case set with identical prompts, identical budgets. Pass bar: beat measured baseline on the primary metric with statistical confidence. No live data, no exceptions.",
+         "metrics": [
+          {
+           "label": "Evidence",
+           "value": "score table"
+          },
+          {
+           "label": "Kill rate",
+           "value": "~40%"
+          }
+         ]
+        },
+        {
+         "name": "Gate 2 — Economics",
+         "role": "Cost per case at volume",
+         "detail": "Cost model with realistic volumes — model spend, human review load, integration amortization. Pass bar: value hypothesis holds with 50% margin, not a rounding error.",
+         "metrics": [
+          {
+           "label": "Evidence",
+           "value": "TCO model"
+          },
+          {
+           "label": "Kill rate",
+           "value": "~25%"
+          }
+         ]
+        },
+        {
+         "name": "Gate 3 — Robustness",
+         "role": "Adversarial + OOD",
+         "detail": "Adversarial cases, out-of-distribution inputs, drift simulation. Pass bar: quality degrades gracefully and monitoring catches the degradation before the business does.",
+         "metrics": [
+          {
+           "label": "Evidence",
+           "value": "stress report"
+          },
+          {
+           "label": "Kill rate",
+           "value": "~30%"
+          }
+         ]
+        },
+        {
+         "name": "Gate 4 — Operability",
+         "role": "Run-team readiness",
+         "detail": "Monitoring wired, fallback path defined, retraining trigger documented, owner named. Pass bar: the run team signs the support contract — not the innovation team.",
+         "metrics": [
+          {
+           "label": "Evidence",
+           "value": "ops checklist"
+          },
+          {
+           "label": "Kill rate",
+           "value": "~15%"
+          }
+         ]
+        }
+       ],
+       "note": "Four gates, one funding decision. The kill rates are honest: most PoCs should die at Gate 2 or 3 — that is the point of the structure."
+      }
+     ]
+    },
+    {
+     "name": "Value map",
+     "widgets": [
+      {
+       "kind": "scatter",
+       "title": "Candidate portfolio — value vs readiness",
+       "points": [
+        {
+         "x": 64,
+         "y": 82,
+         "label": "Doc triage",
+         "group": "Funded"
+        },
+        {
+         "x": 48,
+         "y": 55,
+         "label": "Support drafts",
+         "group": "Pilot"
+        },
+        {
+         "x": 78,
+         "y": 38,
+         "label": "Contract redline",
+         "group": "Discovery"
+        },
+        {
+         "x": 31,
+         "y": 71,
+         "label": "QA summary",
+         "group": "Funded"
+        },
+        {
+         "x": 88,
+         "y": 29,
+         "label": "Auto-underwrite",
+         "group": "Discovery"
+        },
+        {
+         "x": 41,
+         "y": 63,
+         "label": "Field ops notes",
+         "group": "Pilot"
+        },
+        {
+         "x": 25,
+         "y": 47,
+         "label": "Meeting digest",
+         "group": "Kill — Gate 2"
+        },
+        {
+         "x": 58,
+         "y": 76,
+         "label": "Invoice exception",
+         "group": "Pilot"
+        },
+        {
+         "x": 70,
+         "y": 18,
+         "label": "Voice agent swap",
+         "group": "Kill — Gate 3"
+        },
+        {
+         "x": 36,
+         "y": 33,
+         "label": "Sentiment feed",
+         "group": "Kill — Gate 1"
+        }
+       ],
+       "groups": [
+        "Funded",
+        "Pilot",
+        "Discovery",
+        "Kill — Gate 1",
+        "Kill — Gate 2",
+        "Kill — Gate 3"
+       ],
+       "xLabel": "Value score (0-100)",
+       "yLabel": "Readiness (0-100)",
+       "note": "Hover for names and gate status. The upper band is this year's funded slate; the kills are published internally — a visible graveyard is what keeps hypotheses honest."
+      }
+     ]
+    },
+    {
+     "name": "TCO what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Total cost of ownership what-if — volume, review load, model class",
+       "params": [
+        {
+         "name": "Monthly volume",
+         "min": 1000,
+         "max": 200000,
+         "step": 1000,
+         "value": 40000,
+         "unit": "cases"
+        },
+        {
+         "name": "Human review share",
+         "min": 0,
+         "max": 60,
+         "step": 5,
+         "value": 20,
+         "unit": "%"
+        },
+        {
+         "name": "Model class",
+         "min": 0,
+         "max": 3,
+         "step": 1,
+         "value": 2,
+         "unit": "tier"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Cost / case",
+         "unit": "$",
+         "formula": "0.08*p2+p1*0.9+0.12",
+         "good": "1.20",
+         "bad": "2.50"
+        },
+        {
+         "name": "Annual gross value",
+         "unit": "$k",
+         "formula": "p0*12*(8.4-0.08*p2-p1*0.9-0.12)/1000",
+         "good": "1500",
+         "bad": "600"
+        },
+        {
+         "name": "Payback",
+         "unit": "mo",
+         "formula": "max(3, 260/(p0*0.15*(1-p1/120)))",
+         "good": "9",
+         "bad": "20"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 1,
+        "label": "Review share vs annual value"
+       },
+       "note": "Review load is the silent TCO killer: each 10% of human review adds roughly a dollar per case and erases the delta on mid-value processes. The curve is the argument for investing in quality before scaling volume."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · gates are clickable",
+   "note": "Reference program model: gate kill-rates and value bands from delivery experience, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Where PoC ideas actually die"
+  },
+  {
+   "t": "p",
+   "x": "Outcomes across one quarter of sprints, by the stage where each idea was stopped: screening, baseline, data path or verdict. A healthy program kills most ideas before the build — that is the point."
+  },
+  {
+   "t": "chart",
+   "title": "Where PoC ideas die — screen and gate outcomes across a quarter",
+   "variant": "bar",
+   "cats": [
+    "Intake",
+    "Provability screen",
+    "Week-2 probe",
+    "Eval gate",
+    "Fund gate"
+   ],
+   "series": [
+    {
+     "name": "Ideas surviving (count)",
+     "points": [
+      20,
+      8,
+      7,
+      5,
+      2
+     ]
+    },
+    {
+     "name": "Kill reasons logged",
+     "points": [
+      0,
+      12,
+      1,
+      2,
+      3
+     ]
+    }
+   ],
+   "yMax": 24,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "AI Proof-of-Concept & Value Validation across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "AI Proof-of-Concept & Value Validation",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Signed baseline and metric before the first build hour",
+      "A real data path into your estate — no demo sets, no cherry-picked weeks",
+      "A written fund-or-kill verdict with an evidence pack and a priced production path"
+     ],
+     "kpis": [
+      {
+       "label": "Sprints run / quarter",
+       "value": "5"
+      },
+      {
+       "label": "Verdicts on time",
+       "value": "5/5"
+      },
+      {
+       "label": "Funded to production",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Ask what pricing sophistication outrunning governance costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Signed baseline and metric before the first build hour",
+      "A real data path into your estate — no demo sets, no cherry-picked weeks",
+      "A written fund-or-kill verdict with an evidence pack and a priced production path"
+     ],
+     "kpis": [
+      {
+       "label": "Sprints run / quarter",
+       "value": "5"
+      },
+      {
+       "label": "Verdicts on time",
+       "value": "5/5"
+      },
+      {
+       "label": "Funded to production",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Signed baseline and metric before the first build hour",
+      "A real data path into your estate — no demo sets, no cherry-picked weeks",
+      "A written fund-or-kill verdict with an evidence pack and a priced production path",
+      "Sector working pattern: ambient clinical documentation: visit audio to structured draft notes in EHR templates with clinician sign-off. Documentation time down 25%+ is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Sprints run / quarter",
+       "value": "5"
+      },
+      {
+       "label": "Verdicts on time",
+       "value": "5/5"
+      },
+      {
+       "label": "Funded to production",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "Manufacturing & Industrial operators recognize the pattern: quality escapes and manual inspection, quarter after quarter.",
+     "plays": [
+      "Signed baseline and metric before the first build hour",
+      "A real data path into your estate — no demo sets, no cherry-picked weeks",
+      "A written fund-or-kill verdict with an evidence pack and a priced production path"
+     ],
+     "kpis": [
+      {
+       "label": "Sprints run / quarter",
+       "value": "5"
+      },
+      {
+       "label": "Verdicts on time",
+       "value": "5/5"
+      },
+      {
+       "label": "Funded to production",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": true,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Signed baseline and metric before the first build hour",
+      "A real data path into your estate — no demo sets, no cherry-picked weeks",
+      "A written fund-or-kill verdict with an evidence pack and a priced production path"
+     ],
+     "kpis": [
+      {
+       "label": "Sprints run / quarter",
+       "value": "5"
+      },
+      {
+       "label": "Verdicts on time",
+       "value": "5/5"
+      },
+      {
+       "label": "Funded to production",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Signed baseline and metric before the first build hour",
+      "A real data path into your estate — no demo sets, no cherry-picked weeks",
+      "A written fund-or-kill verdict with an evidence pack and a priced production path",
+      "Sector working pattern: resolution-first voice care — grounded voice agents resolving top intents with telephony integration and escalation context. Care cost per contact down 30% is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Sprints run / quarter",
+       "value": "5"
+      },
+      {
+       "label": "Verdicts on time",
+       "value": "5/5"
+      },
+      {
+       "label": "Funded to production",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": true,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Signed baseline and metric before the first build hour",
+      "A real data path into your estate — no demo sets, no cherry-picked weeks",
+      "A written fund-or-kill verdict with an evidence pack and a priced production path"
+     ],
+     "kpis": [
+      {
+       "label": "Sprints run / quarter",
+       "value": "5"
+      },
+      {
+       "label": "Verdicts on time",
+       "value": "5/5"
+      },
+      {
+       "label": "Funded to production",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: demand and capacity planning stale, quarter after quarter.",
+     "plays": [
+      "Signed baseline and metric before the first build hour",
+      "A real data path into your estate — no demo sets, no cherry-picked weeks",
+      "A written fund-or-kill verdict with an evidence pack and a priced production path",
+      "Sector working pattern: eta prediction in Logistics & Supply Chain, where traffic, weather and history-driven ETA models per lane and mode. Promise accuracy up; penalties down is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Sprints run / quarter",
+       "value": "5"
+      },
+      {
+       "label": "Verdicts on time",
+       "value": "5/5"
+      },
+      {
+       "label": "Funded to production",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use.",
+     "plays": [
+      "Signed baseline and metric before the first build hour",
+      "A real data path into your estate — no demo sets, no cherry-picked weeks",
+      "A written fund-or-kill verdict with an evidence pack and a priced production path"
+     ],
+     "kpis": [
+      {
+       "label": "Sprints run / quarter",
+       "value": "5"
+      },
+      {
+       "label": "Verdicts on time",
+       "value": "5/5"
+      },
+      {
+       "label": "Funded to production",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": true,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Signed baseline and metric before the first build hour",
+      "A real data path into your estate — no demo sets, no cherry-picked weeks",
+      "A written fund-or-kill verdict with an evidence pack and a priced production path"
+     ],
+     "kpis": [
+      {
+       "label": "Sprints run / quarter",
+       "value": "5"
+      },
+      {
+       "label": "Verdicts on time",
+       "value": "5/5"
+      },
+      {
+       "label": "Funded to production",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Signed baseline and metric before the first build hour",
+      "A real data path into your estate — no demo sets, no cherry-picked weeks",
+      "A written fund-or-kill verdict with an evidence pack and a priced production path"
+     ],
+     "kpis": [
+      {
+       "label": "Sprints run / quarter",
+       "value": "5"
+      },
+      {
+       "label": "Verdicts on time",
+       "value": "5/5"
+      },
+      {
+       "label": "Funded to production",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Signed baseline and metric before the first build hour",
+      "A real data path into your estate — no demo sets, no cherry-picked weeks",
+      "A written fund-or-kill verdict with an evidence pack and a priced production path"
+     ],
+     "kpis": [
+      {
+       "label": "Sprints run / quarter",
+       "value": "5"
+      },
+      {
+       "label": "Verdicts on time",
+       "value": "5/5"
+      },
+      {
+       "label": "Funded to production",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/"
+    }
+   ],
+   "practiceNote": "AI Proof-of-Concept & Value Validation view: the four-week sprint that ends in a fund-or-kill verdict with auditable numbers — baseline first, real data path, no demo-ware."
+  },
+  {
+   "t": "h2",
+   "x": "Sprint stack defaults — and deliberate deviations"
+  },
+  {
+   "t": "p",
+   "x": "The sprint stack optimizes for disposable speed inside your real controls: production data governance applies from day one, which is exactly why the verdict survives procurement."
+  },
+  {
+   "t": "table",
+   "caption": "AI Proof-of-Concept & Value Validation: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Working PoC on client data with published evaluation results",
-     "Handed to a named owner on your side, with a working session included."
+     "Scope instrument",
+     "One-page canvas with metric, owner, data path, kill criteria",
+     "Charter documents longer than one page — they hide the weak metric"
     ],
     [
-     "Success-criteria charter signed before build starts",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Baseline tooling",
+     "Scripted collection with the owner's system of record",
+     "Baseline 'estimated from memory' — the first audit kills it"
     ],
     [
-     "Production-path and controls sketch for the scaled system",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Build shape",
+     "Thin vertical slice on the real path",
+     "Wide horizontal prototypes — they answer nothing at the gate"
     ],
     [
-     "Value memo with go/no-go recommendation and cost model",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Eval construction",
+     "SME-adjudicated set from historic cases",
+     "Team-invented test cases — they measure the team's imagination"
+    ],
+    [
+     "Verdict format",
+     "One-page exit report: numbers, costs, risks, decision",
+     "Slide decks — they optimize for narrative, not audit"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Engineering standards we hold"
+   "x": "Sprint gates — the evidence a verdict carries"
   },
   {
-   "t": "p",
-   "x": "AI Proof-of-Concept & Value Validation ships against Databricks, vLLM, Ragas, Monte Carlo costing, NIST AI RMF controls sketch, cloud sandboxes. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for AI Proof-of-Concept & Value Validation — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Kickoff gate",
+     "Is the sprint provable on day one?",
+     "Signed canvas: metric, owner, threshold, kill criteria"
+    ],
+    [
+     "Data gate",
+     "Is the real path live in week two?",
+     "Auth resolved, schema known, volume measured"
+    ],
+    [
+     "Eval gate",
+     "Does the eval set represent the task?",
+     "SME adjudication record; class balance report"
+    ],
+    [
+     "Integration gate",
+     "Is the production path priced?",
+     "Probe findings: auth, rate limits, latency, cost to run"
+    ],
+    [
+     "Verdict gate",
+     "Was the decision recorded with evidence?",
+     "One-page exit report filed to the portfolio ledger"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "The cadence you would see"
+   "x": "What you hold at verdict time"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "AI Proof-of-Concept & Value Validation starts with the measurement: the metric, the owner, the current number, signed."
+     "Signed provability canvas",
+     "The sprint's contract: metric, owner, threshold, kill criteria"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, falsifiable success criteria first, gates written with your team."
+     "Baseline pack",
+     "Collection method, historic numbers, owner sign-off"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "The AI Proof-of-Concept & Value Validation gate review: baseline versus slice, in the metric's own units, plus a scale recommendation your board can audit."
+     "Working vertical slice",
+     "Real-data prototype with eval results, not a demo"
+    ],
+    [
+     "Integration probe report",
+     "The production cost estimate before the fund decision"
+    ],
+    [
+     "Exit report",
+     "One page: delta, cost, risks, fund-or-kill with reasons"
+    ],
+    [
+     "Slice plan (if funded)",
+     "Team, gates, baseline dates for the production build"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "The four weeks, gate by gate"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Week 1 — scope & baseline",
+     "Canvas signed; baseline collection scripted and running by day three"
+    ],
+    [
+     "Week 2 — data path",
+     "Real path live with auth and volumes; integration probe started"
+    ],
+    [
+     "Week 3 — build & eval",
+     "Vertical slice on real data; eval set v1 adjudicated and scored"
+    ],
+    [
+     "Week 4 — evidence & verdict",
+     "Load spot-check, cost model, exit report, fund-or-kill recorded"
+    ],
+    [
+     "If funded — slice planning",
+     "Production team, gate dates, baseline freeze"
+    ],
+    [
+     "If killed — lessons",
+     "Reason logged to ledger; reusable parts returned to the platform"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — just enough production to be honest"
+  },
+  {
+   "t": "p",
+   "x": "The sprint touches your real data path by design; these are the minimum contracts that make the numbers auditable without building the platform twice."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Data owners",
+     "Read-replica and event-feed contracts for the sprint window"
+    ],
+    [
+     "Security",
+     "Sprint-scoped access with expiry; no production writes"
+    ],
+    [
+     "Finance",
+     "Cost probe template aligned to showback categories"
+    ],
+    [
+     "Portfolio ledger",
+     "Verdicts and lessons filed automatically"
+    ],
+    [
+     "Platform team",
+     "Reusable assets returned with version tags"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Sprint governance — production-grade data handling in miniature"
+  },
+  {
+   "t": "p",
+   "x": "Sprints run under the same data governance as production: consent, PII handling and access are inherited from your estate, so the verdict is admissible in the steering meeting that counts."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Metric freeze",
+     "Threshold changes require a new sprint, not a quiet edit"
+    ],
+    [
+     "Real-data rule",
+     "Exit reports must cite runs on production-shaped data"
+    ],
+    [
+     "Access expiry",
+     "Sprint credentials die with the sprint"
+    ],
+    [
+     "Verdict integrity",
+     "Both verdicts use the same report format; kills are celebrated in the ledger"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Kill verdicts get the same evidence pack as funded ones — the auditable record of why an idea died is the asset that keeps the next portfolio honest."
   },
   {
    "t": "cta",
-   "x": "Talk to the team that runs AI Proof-of-Concept & Value Validation in production — the briefing is technical by design, and the first one costs nothing but the hour."
+   "x": "Pick the idea your board keeps asking about. Four weeks, one metric, a real data path — and a verdict with numbers attached, whichever way it lands."
   }
  ],
- "words": 534,
+ "words": 1174,
  "section": "Services",
  "l1": "Services",
  "l2": "Applied AI & Generative AI",
@@ -278,7 +1181,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Applied AI & Generative AI",
+   "title": "Domain overview — Applied AI & Generative AI",
    "url": "/services/applied-ai-generative-ai/",
    "desc": "From enterprise strategy to production models — AI measured on the P&L."
   },
@@ -330,33 +1233,51 @@
   {
    "title": "IoT, Twin & Robotics for Education & Research",
    "url": "/industries/education-research/capabilities/iot-digital-twin-robotics/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
+   "title": "Conversational AI & Digital Humans",
+   "url": "/services/applied-ai-generative-ai/conversational-ai-digital-humans/",
+   "tag": "Same domain",
+   "desc": "grounded chat and voice agents that contain more without trust loss — dignified handoffs, streaming voice budgets, dialog eval nightly."
+  },
+  {
    "title": "Enterprise AI Strategy & Roadmapping",
    "url": "/services/applied-ai-generative-ai/enterprise-ai-strategy/",
-   "tag": "Same tower",
-   "desc": "Align AI to P&L lines and risk mandates — a sequenced portfolio, not a pile of pilots."
+   "tag": "Same domain",
+   "desc": "portfolio management under uncertainty: provability screens, risk-tiered gates, a platform decision made once, and a stop-loss that holds."
   },
   {
    "title": "Generative AI Platform Engineering",
    "url": "/services/applied-ai-generative-ai/genai-platform-engineering/",
-   "tag": "Same tower",
-   "desc": "One governed platform, many GenAI products — retrieval, guardrails and cost control as shared services."
+   "tag": "Same domain",
+   "desc": "one governed door for every model call — authz, budgets, caching, guardrails and traces — so fifty use cases stay operable and affordable."
   },
   {
-   "title": "LLM Fine-Tuning & Model Operations",
-   "url": "/services/applied-ai-generative-ai/llm-fine-tuning-ops/",
-   "tag": "Same tower",
-   "desc": "Own your models — tune, distill and operate LLMs with measurable quality, controlled cost and enforceable policy."
+   "title": "Process & Task Mining",
+   "url": "/services/agentic-ai-hyperautomation/process-task-mining/",
+   "tag": "Pairs with",
+   "desc": "event-log forensics that turns system footprints into a defensible automation pipeline — conformance-checked, variant-ranked and ROI-priced before anything is built."
   },
   {
-   "title": "RAG & Enterprise Knowledge Systems",
-   "url": "/services/applied-ai-generative-ai/rag-knowledge-systems/",
-   "tag": "Same tower",
-   "desc": "Answers with citations, not vibes — permission-aware retrieval over your regulated document estate."
+   "title": "Advanced Risk & Predictive Analytics",
+   "url": "/services/data-analytics-lakehouse/advanced-risk-predictive-analytics/",
+   "tag": "Pairs with",
+   "desc": "risk and forecasting models with signed baselines, time-based holdouts and governance — predictions that survive the quarter they were made in."
+  },
+  {
+   "title": "Cloud Security & Posture Management",
+   "url": "/services/cybersecurity-zero-trust/cloud-security-posture/",
+   "tag": "Pairs with",
+   "desc": "multi-cloud misconfiguration and entitlement control — infrastructure-as-code guardrails, CSPM with dwell-time metrics, and drift that fixes itself."
+  },
+  {
+   "title": "A national digital-government agency",
+   "url": "/case-studies/pub-01/",
+   "tag": "Evidence",
+   "desc": "Case processing down 52% — document intelligence under accountable-AI gates."
   }
  ]
 }

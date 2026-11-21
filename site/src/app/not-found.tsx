@@ -6,7 +6,7 @@ import Logo from "@/components/site/Logo";
    brand line, search box, top-8 destination links, closing CTA — no dead ends. */
 export default function NotFound() {
   const top8 = [
-    { label: "Services — eight towers", url: "/services/" },
+    { label: "Services — eight expertise domains", url: "/services/" },
     { label: "Industries — twelve sectors", url: "/industries/" },
     { label: "Platforms in production", url: "/platforms/" },
     { label: "Case studies & evidence", url: "/case-studies/" },

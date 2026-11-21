@@ -9,254 +9,1226 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Generative AI Platform Engineering sits in the Applied AI & GenAI tower, and it earns that place by being specific: One governed platform, many GenAI products — retrieval, guardrails and cost control as shared services. The build pattern, the artifacts and the guardrails follow."
+   "x": "One governed door for every model call in the enterprise: the gateway, registry, prompt CI, guardrails, caching and spend controls that let fifty use cases share infrastructure without sharing incidents — or budgets."
   },
   {
    "t": "h2",
-   "x": "The working definition"
+   "x": "The platform economics nobody prices until month three"
   },
   {
    "t": "p",
-   "x": "Enterprises that build GenAI apps ad hoc end up with a dozen disconnected stacks, inconsistent guardrails and no idea what inference costs. We build the alternative: a central GenAI platform providing model routing, managed retrieval, prompt and policy management, evaluation suites, red-teaming hooks, and per-team cost meters — so product teams ship in days on rails that risk teams already trust."
+   "x": "The GenAI platform is the layer that makes every model call in the enterprise observable, bounded and cheap enough to survive finance. Gateway, registry, prompt CI, guardrails, caching, spend controls — none of it is glamorous, all of it decides whether the fifty use cases on the roadmap become real."
   },
   {
    "t": "p",
-   "x": "The platform is model-agnostic by design: frontier APIs, open-weight models served on vLLM, and fine-tuned specialists behind one gateway with semantic caching, fallback routing and PII redaction enforced at the edge. Every response carries provenance metadata, so audit can trace an answer to the document, the model version and the policy that allowed it."
+   "x": "Without this layer, every team builds its own model plumbing: three vector stores, five prompt formats, no idea what anything costs. With it, a new use case is configuration plus an eval suite — and the platform team holds p95 latency and cost per 1k calls the way SREs hold availability."
+  },
+  {
+   "t": "p",
+   "x": "The sections below are the platform build order: failure modes first, then the reference architecture, then the console that keeps the platform honest in production."
   },
   {
    "t": "h2",
-   "x": "Why this matters here"
+   "x": "Four ways GenAI platforms blow their mandate"
   },
   {
    "t": "p",
-   "x": "The sectors where Generative AI Platform Engineering currently runs: Technology & SaaS, Banking & Financial Services, Insurance & Risk, Retail & Consumer Goods. Each engagement anchors to one named metric in that sector's own language."
+   "x": "Platforms fail politically before they fail technically — these four failure modes are why internal platforms get bypassed, and the countermeasures that keep teams on the governed path."
   },
   {
-   "t": "h2",
-   "x": "Engineering that moves the number"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Generative AI Platform Engineering: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Model gateway & routing",
-     "cost-, latency- and quality-aware routing across frontier and open-weight models"
+     "Cost blowout",
+     "Token spend scales with enthusiasm, not with value",
+     "Gateway-level budgets per use case with hard cutoffs and owner paging"
     ],
     [
-     "Managed retrieval service",
-     "ingestion, chunking, embedding refresh and permission-aware search as shared services"
+     "Model sprawl",
+     "Seven models, four versions, nobody knows which prompt runs on what",
+     "Model registry with prompt-model binding and immutable versions"
     ],
     [
-     "Guardrail layer",
-     "PII detection, jailbreak filters, topic fences and output schemas enforced centrally"
+     "Latency cliffs",
+     "p95 works in the demo, dies at real concurrency",
+     "Gateway-level load shaping, streaming-first contracts, capacity tests per release"
     ],
     [
-     "Evaluation suite",
-     "golden datasets, LLM-as-judge panels and regression gates wired into CI/CD"
-    ],
-    [
-     "Cost & usage telemetry",
-     "per-team, per-use-case token economics with budget alerts"
+     "Guardrail bypass",
+     "One team's 'temporary' direct-to-vendor path becomes permanent",
+     "Egress policy at the network layer; direct vendor calls fail closed"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the governed model gateway"
+  },
+  {
+   "t": "p",
+   "x": "Every property the platform promises — observability, bounded spend, policy enforcement — is a structural fact of this topology, not a policy document. Notice that no lane talks to a model directly except through the gateway."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Generative AI Platform Engineering",
+   "title": "Reference architecture — enterprise inference gateway and model platform",
    "lanes": [
-    "Systems of record",
-    "Contracted inputs",
-    "Retrieval core",
-    "Guarded generation",
-    "Controls",
-    "Surfaces"
+    "Consumers",
+    "Gateway plane",
+    "Model plane",
+    "Data plane",
+    "Control plane",
+    "Finance & audit"
    ],
    "nodes": [
     {
-     "id": "src0",
+     "id": "apps",
      "lane": 0,
-     "label": "Product telemetry",
-     "hot": false
+     "label": "Product apps"
     },
     {
-     "id": "src1",
+     "id": "agents",
      "lane": 0,
-     "label": "Billing & entitlements",
-     "hot": false
+     "label": "Agent runtimes"
     },
     {
-     "id": "ct2",
+     "id": "notebooks",
+     "lane": 0,
+     "label": "Data science"
+    },
+    {
+     "id": "gw",
      "lane": 1,
-     "label": "Schema contracts",
-     "hot": false
-    },
-    {
-     "id": "ct3",
-     "lane": 1,
-     "label": "Freshness SLAs",
-     "hot": false
-    },
-    {
-     "id": "rc4",
-     "lane": 2,
-     "label": "Generative AI Platform Engineering",
+     "label": "Inference gateway",
      "hot": true
     },
     {
-     "id": "rc5",
-     "lane": 2,
-     "label": "Embedding pipeline",
-     "hot": false
-    },
-    {
-     "id": "gg6",
-     "lane": 3,
-     "label": "Grounded answering",
+     "id": "auth",
+     "lane": 1,
+     "label": "Use-case authz",
      "hot": true
     },
     {
-     "id": "gg7",
+     "id": "shape",
+     "lane": 1,
+     "label": "Load shaping"
+    },
+    {
+     "id": "cache",
+     "lane": 1,
+     "label": "Semantic cache",
+     "hot": true
+    },
+    {
+     "id": "reg",
+     "lane": 2,
+     "label": "Model registry",
+     "hot": true
+    },
+    {
+     "id": "host",
+     "lane": 2,
+     "label": "Hosted + self-hosted pool"
+    },
+    {
+     "id": "router",
+     "lane": 2,
+     "label": "Model router"
+    },
+    {
+     "id": "vdb",
      "lane": 3,
-     "label": "Prompt & cost router",
-     "hot": false
+     "label": "Shared vector spine"
     },
     {
-     "id": "co8",
+     "id": "docs",
+     "lane": 3,
+     "label": "Prompt & eval repo",
+     "hot": true
+    },
+    {
+     "id": "trace",
+     "lane": 3,
+     "label": "Trace store"
+    },
+    {
+     "id": "guard",
      "lane": 4,
-     "label": "Eval harness",
-     "hot": false
+     "label": "Guardrail stack",
+     "hot": true
     },
     {
-     "id": "co9",
+     "id": "eval",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Eval CI"
     },
     {
-     "id": "su10",
-     "lane": 5,
-     "label": "Growth & pricing console",
-     "hot": false
+     "id": "policy",
+     "lane": 4,
+     "label": "Egress policy"
     },
     {
-     "id": "su11",
+     "id": "budget",
      "lane": 5,
-     "label": "Customer-success cockpit",
-     "hot": false
+     "label": "Budgets & cutoffs",
+     "hot": true
+    },
+    {
+     "id": "showback",
+     "lane": 5,
+     "label": "Showback per use case"
+    },
+    {
+     "id": "audit",
+     "lane": 5,
+     "label": "Audit ledger"
     }
    ],
    "edges": [
     {
-     "a": "src0",
-     "b": "ct2"
+     "a": "apps",
+     "b": "gw",
+     "label": "SDK"
     },
     {
-     "a": "src1",
-     "b": "ct2"
+     "a": "agents",
+     "b": "gw"
     },
     {
-     "a": "ct2",
-     "b": "rc4"
+     "a": "notebooks",
+     "b": "gw"
     },
     {
-     "a": "ct3",
-     "b": "rc5"
+     "a": "gw",
+     "b": "auth"
     },
     {
-     "a": "rc4",
-     "b": "gg6"
+     "a": "gw",
+     "b": "shape"
     },
     {
-     "a": "rc5",
-     "b": "gg7"
+     "a": "gw",
+     "b": "cache",
+     "label": "hit or miss"
     },
     {
-     "a": "gg6",
-     "b": "co8"
+     "a": "gw",
+     "b": "router"
     },
     {
-     "a": "co8",
-     "b": "co9"
+     "a": "router",
+     "b": "host"
     },
     {
-     "a": "gg6",
-     "b": "su10"
+     "a": "reg",
+     "b": "router",
+     "label": "versions"
     },
     {
-     "a": "gg7",
-     "b": "su11"
+     "a": "reg",
+     "b": "host",
+     "label": "pull"
+    },
+    {
+     "a": "host",
+     "b": "vdb"
+    },
+    {
+     "a": "gw",
+     "b": "trace",
+     "label": "otel"
+    },
+    {
+     "a": "docs",
+     "b": "eval",
+     "label": "prompts"
+    },
+    {
+     "a": "gw",
+     "b": "guard",
+     "label": "inline"
+    },
+    {
+     "a": "guard",
+     "b": "policy",
+     "label": "enforce"
+    },
+    {
+     "a": "eval",
+     "b": "reg",
+     "label": "block on fail"
+    },
+    {
+     "a": "gw",
+     "b": "budget",
+     "label": "metered"
+    },
+    {
+     "a": "budget",
+     "b": "showback"
+    },
+    {
+     "a": "trace",
+     "b": "audit",
+     "label": "samples"
     }
    ],
-   "note": "Topology inherited from the Applied AI & GenAI tower; the highlighted core is this service's build."
+   "note": "Direct vendor egress fails closed at the network layer. The gateway is the only door, which is what makes budgets, caching and audit actually binding."
   },
   {
    "t": "h2",
-   "x": "What you hold at the end"
+   "x": "A request through the governed door"
   },
   {
    "t": "p",
-   "x": "In Generative AI Platform Engineering, named artifacts, handed to named owners:"
+   "x": "Trace one call end to end: authentication, quota check, prompt injection scan, cache lookup, model routing, guardrail pass, metered response — with the short-circuit paths where requests are stopped cheaply."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "decision-fabric",
+   "title": "Call lifecycle — authz, cache, route, guard, meter, audit",
+   "labels": [
+    "Call + use-case key",
+    "Authz check",
+    "Semantic cache probe",
+    "Route (cost/quality)",
+    "Guardrails inline",
+    "Meter & trace",
+    "Audit sample"
+   ],
+   "note": "Cache hits never skip guardrails on output-only checks; input checks run before the cache probe because prompts may embed user data."
+  },
+  {
+   "t": "h2",
+   "x": "The platform console finance and engineering share"
+  },
+  {
+   "t": "p",
+   "x": "Latency, cache economics, unit cost, guardrail pressure and registry drift on one screen — the same numbers in the steering pack and the on-call runbook."
+  },
+  {
+   "t": "idash",
+   "title": "GenAI platform engineering — rails console",
+   "kpis": [
+    {
+     "label": "Onboard → prod",
+     "value": "6.5 d",
+     "delta": "time-to-first-feature",
+     "dir": "down",
+     "spark": [
+      28,
+      22,
+      17,
+      13,
+      10,
+      8,
+      6.5
+     ]
+    },
+    {
+     "label": "Eval coverage",
+     "value": "87%",
+     "delta": "of prod gen-AI flows",
+     "dir": "up",
+     "spark": [
+      40,
+      52,
+      61,
+      70,
+      78,
+      84,
+      87
+     ]
+    },
+    {
+     "label": "Cost / 1k tokens",
+     "value": "0.0021",
+     "delta": "blended after routing",
+     "dir": "down",
+     "spark": [
+      0.008,
+      0.0065,
+      0.005,
+      0.0038,
+      0.0029,
+      0.0024,
+      0.0021
+     ]
+    },
+    {
+     "label": "Gateway p99 overhead",
+     "value": "11 ms",
+     "delta": "routing + policy + logging",
+     "dir": "flat",
+     "spark": [
+      18,
+      16,
+      14,
+      13,
+      12,
+      11,
+      11
+     ]
+    },
+    {
+     "label": "Cache hit share",
+     "value": "38.4%",
+     "delta": "by content hash",
+     "dir": "up",
+     "spark": [
+      12,
+      18,
+      24,
+      29,
+      33,
+      36,
+      38
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Routing & cost",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Cost per 1k tokens by feature class — routing discipline compounding",
+       "cats": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6"
+       ],
+       "series": [
+        {
+         "name": "Summarize class",
+         "points": [
+          0.008,
+          0.0062,
+          0.0044,
+          0.0031,
+          0.0024,
+          0.0021
+         ]
+        },
+        {
+         "name": "Reasoning class",
+         "points": [
+          0.021,
+          0.018,
+          0.0145,
+          0.012,
+          0.0105,
+          0.0096
+         ]
+        },
+        {
+         "name": "Embedding class",
+         "points": [
+          0.0004,
+          0.00035,
+          0.0003,
+          0.00028,
+          0.00026,
+          0.00025
+         ]
+        }
+       ],
+       "unit": "$",
+       "note": "Hover for exact costs; click to isolate. The reasoning class stays expensive by design — cheap routing there breaks quality, and the eval harness proves it before any swap."
+      },
+      {
+       "kind": "donut",
+       "title": "Where the token spend goes — estate composition",
+       "cats": [
+        "Production features",
+        "Evaluation runs",
+        "Shadow/canary",
+        "Development",
+        "Waste (unrouted)"
+       ],
+       "points": [
+        58,
+        18,
+        9,
+        13,
+        2
+       ],
+       "unit": "% of spend",
+       "note": "Click segments to pin. Evaluation spend is deliberate and visible — platforms that cut it ship regressions. Waste under 3% is the routing policy working."
+      }
+     ]
+    },
+    {
+     "name": "Capacity what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "GPU & quota what-if — serving classes and burst behavior",
+       "params": [
+        {
+         "name": "Peak req/s",
+         "min": 10,
+         "max": 500,
+         "step": 10,
+         "value": 140,
+         "unit": "req/s"
+        },
+        {
+         "name": "Reserved capacity",
+         "min": 20,
+         "max": 100,
+         "step": 5,
+         "value": 65,
+         "unit": "%"
+        },
+        {
+         "name": "Autoscale ceiling",
+         "min": 2,
+         "max": 6,
+         "step": 1,
+         "value": 4,
+         "unit": "× base"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Queue p99",
+         "unit": "ms",
+         "formula": "max(15, p0*0.35*(100-p1)/100/max(1,p2-1))",
+         "good": "200",
+         "bad": "800"
+        },
+        {
+         "name": "Idle cost share",
+         "unit": "%",
+         "formula": "(100-p1)*0.55*(1-(p2-1)/8)",
+         "good": "25",
+         "bad": "45"
+        },
+        {
+         "name": "Reject rate",
+         "unit": "%",
+         "formula": "max(0, (p0-p1*4*(p2-0.4))/p0*100*0.9)",
+         "good": "1",
+         "bad": "8"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 0,
+        "label": "Peak load vs queue p99"
+       },
+       "note": "The queue curve is the capacity argument: reserved capacity buys predictability, autoscale ceiling buys burst survival — drag both to see the reject rate's cliff."
+      }
+     ]
+    },
+    {
+     "name": "Rails topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The platform rails — click nodes for the shared contract",
+       "lanes": [
+        "Edge",
+        "Gateway",
+        "Registry",
+        "Delivery",
+        "Evidence"
+       ],
+       "nodes": [
+        {
+         "id": "pii",
+         "lane": 0,
+         "label": "PII screen",
+         "detail": "Edge screening with entity policy per region; blocked payloads regenerate in-region rather than leaking cross-border.",
+         "hot": true
+        },
+        {
+         "id": "gw",
+         "lane": 1,
+         "label": "Model gateway",
+         "detail": "Routing, fallbacks, quotas, spend accounting and caching — the single entry point for every model call in the estate."
+        },
+        {
+         "id": "prompt",
+         "lane": 2,
+         "label": "Prompt registry",
+         "detail": "Versioned prompts with eval scores per version; a prompt change ships like code — reviewed, scored, roll-back-able."
+        },
+        {
+         "id": "index",
+         "lane": 2,
+         "label": "Retrieval catalogue",
+         "detail": "Indices with freshness SLAs, source lineage and access scopes; retrieval quality is measured, not assumed."
+        },
+        {
+         "id": "safety",
+         "lane": 3,
+         "label": "Policy & safety layer",
+         "detail": "Commitment rules, refusal policies and output screens — evidence stored per decision for the audit story."
+        },
+        {
+         "id": "serve",
+         "lane": 3,
+         "label": "Serving classes",
+         "detail": "Latency-classed serving lanes (interactive, batch, bulk); interactive traffic never queues behind a batch job."
+        },
+        {
+         "id": "eval",
+         "lane": 4,
+         "label": "Eval harness",
+         "detail": "Golden cases per feature; nightly scores published on the platform scoreboard; regressions block deploys."
+        },
+        {
+         "id": "obs",
+         "lane": 4,
+         "label": "Observability",
+         "detail": "Traces with prompt, retrieval, model, cost and policy outcome per call — the debugging surface for every team."
+        }
+       ],
+       "edges": [
+        {
+         "a": "pii",
+         "b": "gw"
+        },
+        {
+         "a": "gw",
+         "b": "prompt",
+         "label": "versions"
+        },
+        {
+         "a": "gw",
+         "b": "index",
+         "label": "retrieval"
+        },
+        {
+         "a": "gw",
+         "b": "safety",
+         "label": "screens"
+        },
+        {
+         "a": "safety",
+         "b": "serve"
+        },
+        {
+         "a": "serve",
+         "b": "eval",
+         "label": "scored"
+        },
+        {
+         "a": "eval",
+         "b": "obs",
+         "label": "publish"
+        }
+       ],
+       "note": "Click nodes to read the shared contract each rail offers. Teams inherit all eight rails by onboarding — none of them re-solve inference or safety alone."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · capacity model",
+   "note": "Reference platform model: onboarding and cost bands from delivery benchmarks, not client telemetry."
+  },
+  {
+   "t": "h2",
+   "x": "Cost and latency posture across load tiers"
+  },
+  {
+   "t": "p",
+   "x": "Design targets for the gateway under three load tiers: the caching and routing policy that holds p95 under budget at peak, and the cost per thousand calls finance signs against."
+  },
+  {
+   "t": "chart",
+   "title": "Gateway cost and latency posture across load tiers — design targets",
+   "variant": "bar",
+   "cats": [
+    "10 rps",
+    "50 rps",
+    "150 rps",
+    "400 rps"
+   ],
+   "series": [
+    {
+     "name": "p95 latency target (ms)",
+     "points": [
+      180,
+      260,
+      390,
+      480
+     ]
+    },
+    {
+     "name": "Cost per 1k calls target ($)",
+     "points": [
+      1.6,
+      1.9,
+      2.2,
+      2.4
+     ]
+    }
+   ],
+   "yMax": 600,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Generative AI Platform Engineering across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Generative AI Platform Engineering",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Model gateway with authz, quotas, semantic caching and full traces",
+      "Prompt CI with versioned guardrail suites and model-registry discipline",
+      "Spend controls per domain with signed unit-cost targets and burn-down alerts"
+     ],
+     "kpis": [
+      {
+       "label": "p95 gateway latency",
+       "value": "480ms"
+      },
+      {
+       "label": "Cache hit rate",
+       "value": "58%"
+      },
+      {
+       "label": "Cost per 1k calls",
+       "value": "$2.4"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Ask what pricing sophistication outrunning governance costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Model gateway with authz, quotas, semantic caching and full traces",
+      "Prompt CI with versioned guardrail suites and model-registry discipline",
+      "Spend controls per domain with signed unit-cost targets and burn-down alerts"
+     ],
+     "kpis": [
+      {
+       "label": "p95 gateway latency",
+       "value": "480ms"
+      },
+      {
+       "label": "Cache hit rate",
+       "value": "58%"
+      },
+      {
+       "label": "Cost per 1k calls",
+       "value": "$2.4"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Model gateway with authz, quotas, semantic caching and full traces",
+      "Prompt CI with versioned guardrail suites and model-registry discipline",
+      "Spend controls per domain with signed unit-cost targets and burn-down alerts",
+      "Sector working pattern: ambient clinical documentation: visit audio to structured draft notes in EHR templates with clinician sign-off. Documentation time down 25%+ is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "p95 gateway latency",
+       "value": "480ms"
+      },
+      {
+       "label": "Cache hit rate",
+       "value": "58%"
+      },
+      {
+       "label": "Cost per 1k calls",
+       "value": "$2.4"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "Manufacturing & Industrial operators recognize the pattern: quality escapes and manual inspection, quarter after quarter.",
+     "plays": [
+      "Model gateway with authz, quotas, semantic caching and full traces",
+      "Prompt CI with versioned guardrail suites and model-registry discipline",
+      "Spend controls per domain with signed unit-cost targets and burn-down alerts"
+     ],
+     "kpis": [
+      {
+       "label": "p95 gateway latency",
+       "value": "480ms"
+      },
+      {
+       "label": "Cache hit rate",
+       "value": "58%"
+      },
+      {
+       "label": "Cost per 1k calls",
+       "value": "$2.4"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Model gateway with authz, quotas, semantic caching and full traces",
+      "Prompt CI with versioned guardrail suites and model-registry discipline",
+      "Spend controls per domain with signed unit-cost targets and burn-down alerts"
+     ],
+     "kpis": [
+      {
+       "label": "p95 gateway latency",
+       "value": "480ms"
+      },
+      {
+       "label": "Cache hit rate",
+       "value": "58%"
+      },
+      {
+       "label": "Cost per 1k calls",
+       "value": "$2.4"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": true,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Model gateway with authz, quotas, semantic caching and full traces",
+      "Prompt CI with versioned guardrail suites and model-registry discipline",
+      "Spend controls per domain with signed unit-cost targets and burn-down alerts",
+      "Sector working pattern: resolution-first voice care — grounded voice agents resolving top intents with telephony integration and escalation context. Care cost per contact down 30% is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "p95 gateway latency",
+       "value": "480ms"
+      },
+      {
+       "label": "Cache hit rate",
+       "value": "58%"
+      },
+      {
+       "label": "Cost per 1k calls",
+       "value": "$2.4"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Model gateway with authz, quotas, semantic caching and full traces",
+      "Prompt CI with versioned guardrail suites and model-registry discipline",
+      "Spend controls per domain with signed unit-cost targets and burn-down alerts"
+     ],
+     "kpis": [
+      {
+       "label": "p95 gateway latency",
+       "value": "480ms"
+      },
+      {
+       "label": "Cache hit rate",
+       "value": "58%"
+      },
+      {
+       "label": "Cost per 1k calls",
+       "value": "$2.4"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: demand and capacity planning stale, quarter after quarter.",
+     "plays": [
+      "Model gateway with authz, quotas, semantic caching and full traces",
+      "Prompt CI with versioned guardrail suites and model-registry discipline",
+      "Spend controls per domain with signed unit-cost targets and burn-down alerts",
+      "Sector working pattern: eta prediction in Logistics & Supply Chain, where traffic, weather and history-driven ETA models per lane and mode. Promise accuracy up; penalties down is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "p95 gateway latency",
+       "value": "480ms"
+      },
+      {
+       "label": "Cache hit rate",
+       "value": "58%"
+      },
+      {
+       "label": "Cost per 1k calls",
+       "value": "$2.4"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use.",
+     "plays": [
+      "Model gateway with authz, quotas, semantic caching and full traces",
+      "Prompt CI with versioned guardrail suites and model-registry discipline",
+      "Spend controls per domain with signed unit-cost targets and burn-down alerts"
+     ],
+     "kpis": [
+      {
+       "label": "p95 gateway latency",
+       "value": "480ms"
+      },
+      {
+       "label": "Cache hit rate",
+       "value": "58%"
+      },
+      {
+       "label": "Cost per 1k calls",
+       "value": "$2.4"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Model gateway with authz, quotas, semantic caching and full traces",
+      "Prompt CI with versioned guardrail suites and model-registry discipline",
+      "Spend controls per domain with signed unit-cost targets and burn-down alerts"
+     ],
+     "kpis": [
+      {
+       "label": "p95 gateway latency",
+       "value": "480ms"
+      },
+      {
+       "label": "Cache hit rate",
+       "value": "58%"
+      },
+      {
+       "label": "Cost per 1k calls",
+       "value": "$2.4"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": true,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Model gateway with authz, quotas, semantic caching and full traces",
+      "Prompt CI with versioned guardrail suites and model-registry discipline",
+      "Spend controls per domain with signed unit-cost targets and burn-down alerts"
+     ],
+     "kpis": [
+      {
+       "label": "p95 gateway latency",
+       "value": "480ms"
+      },
+      {
+       "label": "Cache hit rate",
+       "value": "58%"
+      },
+      {
+       "label": "Cost per 1k calls",
+       "value": "$2.4"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Model gateway with authz, quotas, semantic caching and full traces",
+      "Prompt CI with versioned guardrail suites and model-registry discipline",
+      "Spend controls per domain with signed unit-cost targets and burn-down alerts"
+     ],
+     "kpis": [
+      {
+       "label": "p95 gateway latency",
+       "value": "480ms"
+      },
+      {
+       "label": "Cache hit rate",
+       "value": "58%"
+      },
+      {
+       "label": "Cost per 1k calls",
+       "value": "$2.4"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/"
+    }
+   ],
+   "practiceNote": "Generative AI Platform Engineering view: one governed door for every model call — authz, budgets, caching, guardrails and traces — so fifty use cases stay operable and affordable."
+  },
+  {
+   "t": "h2",
+   "x": "Default platform components — and the deviations we allow"
+  },
+  {
+   "t": "p",
+   "x": "The default stack optimizes for operability with a small senior team; each deviation condition is a written trigger, so choosing differently is a documented decision rather than an accumulation of exceptions."
+  },
+  {
+   "t": "table",
+   "caption": "Generative AI Platform Engineering: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production GenAI platform with model gateway, guardrails and evaluation service",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Gateway",
+     "Envoy-based or dedicated LLM gateway with typed use-case keys",
+     "Thin proxy only when a vendor-native feature is genuinely irreplaceable"
     ],
     [
-     "Reference application templates and golden-path documentation",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Registry",
+     "Model + prompt + eval triplet pinned immutably",
+     "Git-only registry is acceptable below ~20 use cases, with CI enforcement"
     ],
     [
-     "Cost allocation and chargeback model for AI consumption",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Guardrails",
+     "Inline classification stack: injection, PII, topic, output schema",
+     "Post-hoc sampling only for internal low-risk tiers — never for regulated surfaces"
     ],
     [
-     "Model risk documentation pack for internal audit and regulators",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Caching",
+     "Semantic cache with similarity threshold + TTL per use case",
+     "Exact-match cache for deterministic workloads like classification"
+    ],
+    [
+     "Hosting",
+     "Vendor APIs default; self-hosted for residency or cost at scale",
+     "Self-hosting a frontier-class model without a residency or unit-cost case"
+    ],
+    [
+     "Observability",
+     "OpenTelemetry end-to-end with cost dimensions on every span",
+     "Sampling at 100% for regulated use cases, 10% elsewhere"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The stack, chosen for operability"
+   "x": "Platform release gates — evidence before exposure"
   },
   {
-   "t": "p",
-   "x": "Generative AI Platform Engineering is built against defined standards: vLLM, Databricks Model Serving, Kubernetes, Milvus / pgvector, LangGraph, OpenTelemetry. Each choice is justified in writing as part of the architecture baseline, so your team can defend it without us in the room."
+   "t": "table",
+   "caption": "Release gates for Generative AI Platform Engineering — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Onboarding gate",
+     "Does the use case declare model, data class and budget?",
+     "Signed use-case manifest; data classification; budget with owner"
+    ],
+    [
+     "Load gate",
+     "Does the path hold at 2× peak concurrency?",
+     "Gateway capacity test with streaming and failover shapes"
+    ],
+    [
+     "Guardrail gate",
+     "Do probes fail closed?",
+     "Red-team suite; egress policy test; block evidence"
+    ],
+    [
+     "Cost gate",
+     "Is showback wired before launch?",
+     "Budget alerts firing in test; per-use-case dashboard live"
+    ],
+    [
+     "Registry gate",
+     "Is every artifact versioned and pinned?",
+     "Registry audit: zero unversioned prompt-model pairs"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "How the work actually runs"
+   "x": "What the platform team hands over"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Generative AI Platform Engineering starts with the measurement: the metric, the owner, the current number, signed."
+     "Inference gateway with SDK",
+     "One door for every model call: authz, budgets, caching, guardrails, traces"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, model gateway & routing first, gates written with your team."
+     "Model registry",
+     "Immutable model-prompt-eval triplets; promotion history; rollback in one action"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Generative AI Platform Engineering are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Prompt CI pipeline",
+     "Every prompt change runs the pinned eval suite before merge"
+    ],
+    [
+     "Guardrail stack",
+     "Injection, PII, topic and schema guards with fleet-wide pattern push"
+    ],
+    [
+     "Showback dashboards",
+     "Cost per use case, per cohort, per model — owned like error budgets"
+    ],
+    [
+     "Capacity runbook",
+     "Load tiers, failover drills and the escalation ladder, rehearsed quarterly"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "The platform build, sprint by sprint"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — estate & baseline",
+     "Inventory existing model calls and spend; define use-case manifest schema; sign latency and cost targets"
+    ],
+    [
+     "Weeks 3–5 — gateway core",
+     "Authz, metering, tracing and budgets behind one SDK; egress policy fail-closed"
+    ],
+    [
+     "Weeks 6–7 — registry & prompt CI",
+     "Triplet pinning, eval CI on merge, rollback drill"
+    ],
+    [
+     "Weeks 8–9 — guardrails & cache",
+     "Inline guard stack per data class; semantic cache with per-use-case thresholds"
+    ],
+    [
+     "Weeks 10–12 — migration & drills",
+     "Move existing calls behind the gateway tier by tier; failover and 2× load drills"
+    ],
+    [
+     "Ongoing — platform product",
+     "Roadmap-driven golden paths; quarterly cost and latency target review"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — identity, finance and every consuming team"
+  },
+  {
+   "t": "p",
+   "x": "A platform is mostly integration: the contracts below are what make fifty teams able to consume one gateway without fifty support tickets."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Identity provider",
+     "Service principals per use case; gateway-issued short-lived tokens"
+    ],
+    [
+     "Vendor model APIs",
+     "Adapter layer isolating pricing and API drift"
+    ],
+    [
+     "Self-hosted GPU pool",
+     "Scheduler integration with queue classes per data tier"
+    ],
+    [
+     "Finance systems",
+     "Showback export keyed to cost centers"
+    ],
+    [
+     "Observability stack",
+     "Trace export with cost dimensions; SLO dashboards"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Governance enforced once, inherited by every consuming team"
+  },
+  {
+   "t": "p",
+   "x": "Platform-level controls multiply across every consuming use case, which is exactly why they are enforced once, here — injection scanning, egress policy, key vaulting and per-domain budget enforcement."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Egress fail-closed",
+     "Network policy denies direct vendor access; gateway is the only route"
+    ],
+    [
+     "Budget cutoffs",
+     "Hard spend cutoff per use case with owner paging before cutoff"
+    ],
+    [
+     "Audit ledger",
+     "Immutable sample of prompts, versions, decisions and costs"
+    ],
+    [
+     "Guardrail change control",
+     "Guard config is versioned; changes run the probe suite before deploy"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Guardrail configuration is versioned like code: a rule change is a pull request with an eval run attached, never a dashboard edit at midnight."
   },
   {
    "t": "cta",
-   "x": "A value assessment prices the delta in your estate before anything is signed: Generative AI Platform Engineering, measured against your baseline, in two weeks."
+   "x": "If every team is wiring its own model calls today, the platform decision is already late. Bring the use-case inventory to a briefing and we will price the governed door against the sprawl you are currently funding."
   }
  ],
- "words": 516,
+ "words": 1248,
  "section": "Services",
  "l1": "Services",
  "l2": "Applied AI & Generative AI",
@@ -278,7 +1250,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Applied AI & Generative AI",
+   "title": "Domain overview — Applied AI & Generative AI",
    "url": "/services/applied-ai-generative-ai/",
    "desc": "From enterprise strategy to production models — AI measured on the P&L."
   },
@@ -330,28 +1302,46 @@
  ],
  "cards": [
   {
+   "title": "Conversational AI & Digital Humans",
+   "url": "/services/applied-ai-generative-ai/conversational-ai-digital-humans/",
+   "tag": "Same domain",
+   "desc": "grounded chat and voice agents that contain more without trust loss — dignified handoffs, streaming voice budgets, dialog eval nightly."
+  },
+  {
    "title": "Enterprise AI Strategy & Roadmapping",
    "url": "/services/applied-ai-generative-ai/enterprise-ai-strategy/",
-   "tag": "Same tower",
-   "desc": "Align AI to P&L lines and risk mandates — a sequenced portfolio, not a pile of pilots."
+   "tag": "Same domain",
+   "desc": "portfolio management under uncertainty: provability screens, risk-tiered gates, a platform decision made once, and a stop-loss that holds."
   },
   {
    "title": "LLM Fine-Tuning & Model Operations",
    "url": "/services/applied-ai-generative-ai/llm-fine-tuning-ops/",
-   "tag": "Same tower",
-   "desc": "Own your models — tune, distill and operate LLMs with measurable quality, controlled cost and enforceable policy."
+   "tag": "Same domain",
+   "desc": "a tuning factory with decontaminated datasets, a multi-task eval gate that blocks silent regressions, and canary rollout with rehearsed rollback."
   },
   {
-   "title": "RAG & Enterprise Knowledge Systems",
-   "url": "/services/applied-ai-generative-ai/rag-knowledge-systems/",
-   "tag": "Same tower",
-   "desc": "Answers with citations, not vibes — permission-aware retrieval over your regulated document estate."
+   "title": "Autonomous Workflow Orchestration",
+   "url": "/services/agentic-ai-hyperautomation/autonomous-workflow-orchestration/",
+   "tag": "Pairs with",
+   "desc": "long-running workflows with durable state, recovery by design, escalation choreography and audit — orchestration that survives partial failure as a normal event."
   },
   {
-   "title": "Multimodal AI & Vision-Language Systems",
-   "url": "/services/applied-ai-generative-ai/multimodal-vision-systems/",
-   "tag": "Same tower",
-   "desc": "Models that read scans, scenes and schematics — multimodal intelligence wired into operations."
+   "title": "Data Monetization & Analytics Products",
+   "url": "/services/data-analytics-lakehouse/data-monetization-products/",
+   "tag": "Pairs with",
+   "desc": "data as a product for external consumption — contracts, SLAs, purpose limits and billing, with controls that get stronger the moment data leaves the building."
+  },
+  {
+   "title": "Cyber Resilience & Incident Recovery",
+   "url": "/services/cybersecurity-zero-trust/cyber-resilience-incident-recovery/",
+   "tag": "Pairs with",
+   "desc": "recovery that is rehearsed, not documented — immutable backups, clean-room restores and business-service RTOs you can actually meet on a bad Friday."
+  },
+  {
+   "title": "A food processor (dairy)",
+   "url": "/case-studies/agr-03/",
+   "tag": "Evidence",
+   "desc": "Yield +2.8 points, recalls scoped in minutes — quality and traceability program."
   }
  ]
 }

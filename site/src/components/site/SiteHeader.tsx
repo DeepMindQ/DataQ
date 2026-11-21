@@ -10,8 +10,11 @@
      capability list so the menu itself teaches the product.
    • Interaction: 60ms hover-intent open, 220ms close grace, Esc closes,
      focus opens, first click opens (second navigates), full keyboard path.
-   The fit-guard from round-2 is kept: the drawer takes over whenever the
-   desktop row cannot physically fit the viewport.                            */
+   Laptop policy (hard rule): from 1024px up the full top navigation is
+   ALWAYS visible — the old JS fit-guard that swapped laptops to a hamburger
+   is gone. A deterministic CSS band compresses type/padding on 1024–1279px
+   screens so the same top bar fits with headroom; the hamburger only exists
+   below the lg breakpoint (phones / small tablets).                           */
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -79,7 +82,7 @@ function platformKey(label: string): string {
 /* singular kicker word above the preview title */
 const PREVIEW_KICKER: Record<string, string> = {
   Consulting: "Consulting practice",
-  Services: "Service tower",
+  Services: "Service domain",
   Industries: "Industry group",
   Solutions: "Solution group",
   Platforms: "Platform",
@@ -91,13 +94,11 @@ const PREVIEW_KICKER: Record<string, string> = {
 function MegaPanel({
   item,
   open,
-  forceDrawer,
   onCancelClose,
   onScheduleClose,
 }: {
   item: Nav["primary"][number];
   open: boolean;
-  forceDrawer: boolean;
   onCancelClose: () => void;
   onScheduleClose: () => void;
 }) {
@@ -115,10 +116,9 @@ function MegaPanel({
   const shortName = col.label.replace(/^Dataq /, "").split(" — ")[0];
 
   return (
-    /* Anchored to the full-width header bar (inset-x-0), NOT the nav item.
-       When the fit-guard forces drawer mode, panels never render. */
+    /* Anchored to the full-width header bar (inset-x-0), NOT the nav item. */
     <div
-      className={`absolute inset-x-0 top-full hidden lg:block ${forceDrawer ? "!hidden" : ""} ${open ? "" : "pointer-events-none"}`}
+      className={`absolute inset-x-0 top-full hidden lg:block ${open ? "" : "pointer-events-none"}`}
       style={{ visibility: open ? "visible" : "hidden" }}
       onMouseEnter={onCancelClose}
       onMouseLeave={onScheduleClose}
@@ -302,67 +302,10 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
   const [mobileSection, setMobileSection] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  /* fit-guard (round-2 hardening): if the desktop nav row cannot physically fit
-     the viewport — Windows/Mac font metrics, browser zoom, 1280px laptops at
-     100%/125% scaling — force the drawer mode instead of letting the menu
-     overflow off-screen. Measured, not assumed: works on every device. */
-  const [forceDrawer, setForceDrawer] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const openTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rowRef = useRef<HTMLDivElement | null>(null);
-  const navRef = useRef<HTMLElement | null>(null);
-  const forceDrawerRef = useRef(false);
-  const navRequired = useRef(0);
-  forceDrawerRef.current = forceDrawer;
   const pathname = usePathname();
-
-  useEffect(() => {
-    // Slack = logo (~150px) + right cluster (~200px) + gaps/padding (~120px).
-    // Two thresholds (overflow on force, generous margin on un-force) give
-    // hysteresis so the mode can never ping-pong at a boundary width.
-    const UNFORCE_SLACK = 480;
-    const check = () => {
-      const row = rowRef.current;
-      const nav = navRef.current;
-      if (!row || !nav) return;
-      try {
-        if (forceDrawerRef.current) {
-          // drawer mode: nav is display:none — estimate from last known width
-          if (row.clientWidth > navRequired.current + UNFORCE_SLACK) setForceDrawer(false);
-        } else if (nav.offsetParent !== null) {
-          // desktop mode: nav laid out — remember its real requirement, force
-          // the drawer the moment it cannot fit its allotted space
-          navRequired.current = nav.scrollWidth;
-          if (nav.scrollWidth > nav.clientWidth + 2) setForceDrawer(true);
-        }
-      } catch {}
-    };
-    check();
-    window.addEventListener("resize", check);
-    const t1 = setTimeout(check, 300);
-    try {
-      (document as Document & { fonts?: { ready?: Promise<unknown> } }).fonts?.ready?.then(check).catch(() => {});
-    } catch {}
-    return () => {
-      window.removeEventListener("resize", check);
-      clearTimeout(t1);
-    };
-  }, []);
-
-  useEffect(() => {
-    // re-settle after every mode change (one short re-check, hysteresis damped)
-    const t = setTimeout(() => {
-      const row = rowRef.current;
-      const nav = navRef.current;
-      if (!row || !nav) return;
-      try {
-        if (!forceDrawer && nav.offsetParent !== null && nav.scrollWidth > nav.clientWidth + 2) {
-          setForceDrawer(true);
-        }
-      } catch {}
-    }, 80);
-    return () => clearTimeout(t);
-  }, [forceDrawer, pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -419,8 +362,9 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
       {/* utility bar — brand navy (CHG-010) */}
       <div className="bg-navy-900 text-white/70 text-[11.5px]">
         <div className="container-dq flex h-8 items-center justify-between">
-          <p className="tracking-wide truncate">
-            SOC 2 Type II · ISO 27001 · ISO 9001 · HIPAA-ready pods
+          <p className="tracking-wide">
+            <span className="hidden sm:inline">SOC 2 Type II · ISO 27001 · ISO 9001 · HIPAA-ready pods</span>
+            <span className="sm:hidden">SOC 2 · ISO 27001 · ISO 9001</span>
           </p>
           <div className="hidden md:flex items-center gap-4">
             <a href={`mailto:${brand.emails.general}`} className="hover:text-brand-300">
@@ -435,25 +379,23 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
         className={`relative border-b border-line bg-white/95 backdrop-blur transition-shadow ${scrolled ? "shadow-2" : ""}`}
       >
         {/* scroll condense (CHG-357) + overflow-x-clip: nothing inside the bar can
-            paint outside the viewport in any rendering condition. rowRef feeds the
-            fit-guard below (menu collapses to drawer if it cannot fit). */}
+            paint outside the viewport in any rendering condition. From 1024px up
+            the top nav is always rendered (laptop policy); the compact band in
+            globals.css keeps it inside the row on 1024–1279px screens. */}
         <div
           ref={rowRef}
           className={`container-dq flex flex-nowrap items-center justify-between gap-4 overflow-x-clip transition-[height] duration-300 ${scrolled ? "h-[56px]" : "h-[72px]"}`}
         >
-          <Link href="/" aria-label="Dataq Software home" className="shrink-0">
+          <Link href="/" aria-label="Dataq Software home" className="hdr-logo shrink-0">
             <Logo height={40} />
           </Link>
 
-          {/* desktop nav — the fit-guard force-collapses it to the drawer whenever
-              the row overflows, so on laptops, zoom or unusual font metrics the
-              menu can never leave the viewport — the drawer takes over instead. */}
-          {/* NOTE: no overflow-clip on the nav itself — the fit-guard measures
-              scrollWidth, and clip() would mask the overflow it exists to catch. */}
+          {/* desktop top navigation — visible from 1024px up, always (laptop
+              policy). No JS fit-guard: a hamburger must never appear on a
+              laptop-sized screen; compression is handled purely in CSS. */}
           <nav
-            ref={navRef}
             aria-label="Primary"
-            className={`hidden lg:flex items-center gap-0.5 min-w-0 ${forceDrawer ? "!hidden" : ""}`}
+            className="hidden lg:flex items-center gap-0 xl:gap-0.5 min-w-0"
           >
             {nav.primary.map((item) => {
               const isOpen = openItem === item.label;
@@ -482,7 +424,7 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
                         setOpenItem(item.label);
                       }
                     }}
-                    className={`nav-link flex items-center gap-1 px-2.5 py-2.5 text-[12.75px] xl:px-3.5 xl:text-[13.5px] font-medium whitespace-nowrap rounded-md transition-colors ${
+                    className={`nav-link flex items-center gap-1 px-2 py-2.5 text-[12px] xl:px-3.5 xl:text-[13.5px] font-medium whitespace-nowrap rounded-md transition-colors ${
                       pathname.startsWith(item.url)
                         ? "text-brand-deep"
                         : "text-navy-800 hover:text-brand-deep"
@@ -509,19 +451,21 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
               type="button"
               onClick={() => setSearchOpen(true)}
               aria-label="Search the site"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-[10px] border border-line text-navy-800 transition hover:border-brand hover:text-brand-deep"
+              className="hdr-search inline-flex h-9 w-9 items-center justify-center rounded-[10px] border border-line text-navy-800 transition hover:border-brand hover:text-brand-deep"
             >
               <Search className="h-4 w-4" aria-hidden="true" />
             </button>
-            {/* primary action: solid orange (CHG-012) with sheen (CHG-053) */}
+            {/* primary action: solid orange (CHG-012) with sheen (CHG-053) —
+                slightly tighter on the 1024–1279px laptop band */}
             <Link
               href={nav.cta.url}
-              className="btn-sheen hidden sm:inline-flex items-center rounded-[10px] bg-brand px-4 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-brand-hover"
+              className="hdr-cta btn-sheen hidden sm:inline-flex items-center rounded-[10px] bg-brand px-3.5 py-2.5 text-[12.5px] font-semibold text-white transition-colors hover:bg-brand-hover xl:px-4 xl:text-[13px]"
             >
               {nav.cta.label}
             </Link>
+            {/* hamburger exists ONLY below the lg breakpoint — never on laptops */}
             <button
-              className={`lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-[10px] border border-line ${forceDrawer ? "!inline-flex" : ""}`}
+              className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-[10px] border border-line"
               aria-label="Open menu"
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((v) => !v)}
@@ -539,7 +483,6 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
               key={item.label}
               item={item}
               open={openItem === item.label}
-              forceDrawer={forceDrawer}
               onCancelClose={cancelClose}
               onScheduleClose={scheduleClose}
             />
@@ -548,10 +491,11 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
 
       {/* mobile drawer — drawer-scroll caps height at the dynamic viewport
           (see .drawer-scroll in globals.css) so the CTA never slides under
-          mobile browser toolbars. Accordion groups with 2-col child grids. */}
+          mobile browser toolbars. Accordion groups with 2-col child grids.
+          Strictly below lg: laptops always use the top navigation. */}
       {mobileOpen && (
         <div
-          className={`drawer-scroll lg:hidden border-b border-line bg-white shadow-3 overflow-y-auto ${forceDrawer ? "!block" : ""}`}
+          className="drawer-scroll lg:hidden border-b border-line bg-white shadow-3 overflow-y-auto"
         >
           <div className="container-dq space-y-1 pt-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
             {nav.primary.map((item) => (

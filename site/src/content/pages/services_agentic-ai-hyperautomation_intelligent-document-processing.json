@@ -9,250 +9,1232 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The honest pitch for intelligent document processing fits in a sentence — Contracts, claims and invoices read end-to-end — extraction, validation and downstream action. — and the rest of this page is the how: measured baseline, bounded build, evidence in flight."
+   "x": "Extraction and adjudication inside the process, not beside it: documents become decisions with confidence gates, per-field evidence and a human queue that shrinks by design — because the root causes of the queue are fixed, not just staffed."
   },
   {
    "t": "h2",
-   "x": "The service, described plainly"
+   "x": "The queue is the product: what it says about your operation"
   },
   {
    "t": "p",
-   "x": "Documents are where knowledge work goes to die: claims packets, trade documents, loan files, clinical referrals, supplier invoices. We build IDP pipelines that classify, extract and validate at document level — combining layout-aware OCR, vision-language extraction, and business-rule validation against upstream systems — then push clean structured data into the process that needs it, with confidence thresholds routing uncertain pages to humans."
+   "x": "IDP inside hyperautomation is different from standalone extraction: the output is not a spreadsheet, it is a process decision — an invoice matched, a claim registered, a contract clause routed. That means confidence gates tuned per field class, adjudication queues that feed the process, and evidence that satisfies the audit two years later."
   },
   {
    "t": "p",
-   "x": "Accuracy is delivered by the feedback loop: extraction QA sampling, correction capture that retrains the extractors, and genre-specific benchmarks (your contracts, not generic legal NER). Typical first-year scope covers 80-90% of document volume in a target process with straight-through rates that make the human team a review function rather than a typing pool."
+   "x": "The measure of success is the human queue, and it must shrink on measurement: straight-through rate climbs as the adjudicated eval set grows, and every correction a reviewer makes becomes training signal under version control."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that keep document queues eternal, the architecture that wires adjudication into the process, and the console that shows the queue shrinking by root cause."
   },
   {
    "t": "h2",
-   "x": "The stakes, stated plainly"
+   "x": "Four failure modes that keep document queues eternal"
   },
   {
    "t": "p",
-   "x": "Programs of Intelligent Document Processing run in Insurance & Risk, Banking & Financial Services, Logistics & Supply Chain, Healthcare & Life Sciences — always against one named number, always with the baseline signed first."
+   "x": "Each of these survives a pilot and bankrupts the operation at scale — the countermeasures target root causes so the queue shrinks instead of being staffed."
   },
   {
-   "t": "h2",
-   "x": "The working system, described"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Intelligent Document Processing: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Ingestion & classification",
-     "multi-channel intake (email, portal, scan, API) with genre routing"
+     "Queue stagnation",
+     "The review queue grows until humans do most of the work",
+     "Queue SLAs with root-cause classes; threshold tuning as a weekly cadence"
     ],
     [
-     "Layout-aware extraction",
-     "OCR + vision-language models tuned to your document genres"
+     "Template drift",
+     "Supplier changes break extraction silently",
+     "Template fingerprints with drift quarantine, per the vision domain standard"
     ],
     [
-     "Validation layer",
-     "business rules, system lookups and cross-field consistency checks"
+     "Adjudication leakage",
+     "Reviewer corrections never reach retraining",
+     "Correction capture wired into retraining pipeline with version tags"
     ],
     [
-     "Confidence routing",
-     "threshold-based human review with correction capture"
-    ],
-    [
-     "Downstream action",
-     "clean structured events into core systems, RPA or agent workflows"
+     "Money-path risk",
+     "Extracted amounts hit payments unreconciled",
+     "Ledger reconciliation gate before any commit, per the agentic standard"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — adjudication wired into the process"
+  },
+  {
+   "t": "p",
+   "x": "Confidence gates route fields, not documents: high-confidence fields post, low-confidence fields route to an adjudication surface whose verdicts feed the extractor — so every human minute makes the next hundred documents cheaper."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Intelligent Document Processing",
+   "title": "Reference architecture — IDP wired into the process",
    "lanes": [
-    "Process signals",
-    "Task graphs",
-    "Agent fleet",
-    "Policy envelope",
-    "Human checkpoints",
-    "Systems of action"
+    "Intake",
+    "Extraction",
+    "Adjudication",
+    "Process wiring",
+    "Evidence",
+    "Learning"
    ],
    "nodes": [
     {
-     "id": "ps0",
+     "id": "mail",
      "lane": 0,
-     "label": "Policy admin system",
-     "hot": false
+     "label": "Email & portal"
     },
     {
-     "id": "ps1",
+     "id": "scan",
      "lane": 0,
-     "label": "Claims document intake",
-     "hot": false
+     "label": "Scan streams"
     },
     {
-     "id": "tg2",
+     "id": "edi",
+     "lane": 0,
+     "label": "EDI feeds"
+    },
+    {
+     "id": "cls",
      "lane": 1,
-     "label": "Intelligent Document Processing",
+     "label": "Doc classify"
+    },
+    {
+     "id": "extr",
+     "lane": 1,
+     "label": "Field extraction",
      "hot": true
     },
     {
-     "id": "tg3",
+     "id": "calc",
      "lane": 1,
-     "label": "Task decomposition",
-     "hot": false
+     "label": "Derived fields"
     },
     {
-     "id": "af4",
+     "id": "gate",
      "lane": 2,
-     "label": "Worker agents",
+     "label": "Confidence gates",
      "hot": true
     },
     {
-     "id": "af5",
+     "id": "queue",
      "lane": 2,
-     "label": "Tool adapters",
-     "hot": false
+     "label": "Adjudication queue"
     },
     {
-     "id": "pe6",
+     "id": "sop",
+     "lane": 2,
+     "label": "Review SOPs"
+    },
+    {
+     "id": "match",
      "lane": 3,
-     "label": "Autonomy tiers",
-     "hot": false
+     "label": "Process match (PO/ledger)",
+     "hot": true
     },
     {
-     "id": "pe7",
+     "id": "wf",
      "lane": 3,
-     "label": "Escalation rules",
-     "hot": false
+     "label": "Workflow events"
     },
     {
-     "id": "hc8",
+     "id": "hold",
+     "lane": 3,
+     "label": "Hold rules"
+    },
+    {
+     "id": "ev",
      "lane": 4,
-     "label": "Approval queue",
-     "hot": false
+     "label": "Evidence store",
+     "hot": true
     },
     {
-     "id": "hc9",
+     "id": "audit",
      "lane": 4,
-     "label": "Reviewer UI",
-     "hot": false
+     "label": "Audit extracts"
     },
     {
-     "id": "sa10",
-     "lane": 5,
-     "label": "Underwriting workbench",
-     "hot": false
+     "id": "kpi",
+     "lane": 4,
+     "label": "STP metrics"
     },
     {
-     "id": "sa11",
+     "id": "retrain",
      "lane": 5,
-     "label": "Claims adjudication",
-     "hot": false
+     "label": "Correction capture",
+     "hot": true
+    },
+    {
+     "id": "eval",
+     "lane": 5,
+     "label": "Eval set growth"
+    },
+    {
+     "id": "ver",
+     "lane": 5,
+     "label": "Model versioning"
     }
    ],
    "edges": [
     {
-     "a": "ps0",
-     "b": "tg2"
+     "a": "mail",
+     "b": "cls"
     },
     {
-     "a": "ps1",
-     "b": "tg2"
+     "a": "scan",
+     "b": "cls"
     },
     {
-     "a": "tg2",
-     "b": "tg3"
+     "a": "edi",
+     "b": "cls",
+     "label": "bypass"
     },
     {
-     "a": "tg3",
-     "b": "af4"
+     "a": "cls",
+     "b": "extr",
+     "label": "route"
     },
     {
-     "a": "af4",
-     "b": "af5"
+     "a": "extr",
+     "b": "calc",
+     "label": "derive"
     },
     {
-     "a": "af5",
-     "b": "pe6"
+     "a": "extr",
+     "b": "gate",
+     "label": "scores"
     },
     {
-     "a": "pe6",
-     "b": "hc8"
+     "a": "gate",
+     "b": "queue",
+     "label": "below bar"
     },
     {
-     "a": "hc8",
-     "b": "sa10"
+     "a": "queue",
+     "b": "sop",
+     "label": "guided"
     },
     {
-     "a": "af4",
-     "b": "sa11"
+     "a": "gate",
+     "b": "match",
+     "label": "above bar"
+    },
+    {
+     "a": "match",
+     "b": "wf",
+     "label": "events"
+    },
+    {
+     "a": "match",
+     "b": "hold",
+     "label": "on mismatch"
+    },
+    {
+     "a": "extr",
+     "b": "ev",
+     "label": "crops+rationale"
+    },
+    {
+     "a": "ev",
+     "b": "audit",
+     "label": "pulls"
+    },
+    {
+     "a": "match",
+     "b": "kpi",
+     "label": "rates"
+    },
+    {
+     "a": "queue",
+     "b": "retrain",
+     "label": "corrections"
+    },
+    {
+     "a": "retrain",
+     "b": "eval",
+     "label": "grow"
+    },
+    {
+     "a": "eval",
+     "b": "ver",
+     "label": "gate"
     }
    ],
-   "note": "Topology inherited from the Agentic AI & Hyperautomation tower; the highlighted core is this service's build."
+   "note": "EDI feeds bypass perception but never bypass the confidence gate — structured input can still be semantically wrong, and the gate is where that is caught."
   },
   {
    "t": "h2",
-   "x": "What changes hands"
+   "x": "A document through the gate, the queue and the ledger"
   },
   {
    "t": "p",
-   "x": "What your team holds at the end — Intelligent Document Processing edition:"
+   "x": "From capture through field-level gates and adjudication to posting and root-cause logging — including the money-path checks that hold high-value documents for review by design."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Document-to-decision flow — classify, extract, gate, match, evidence",
+   "labels": [
+    "Intake",
+    "Classify & route",
+    "Extract fields",
+    "Gate confidence",
+    "Adjudicate (below bar)",
+    "Process match",
+    "Evidence store",
+    "Retrain loop"
+   ],
+   "note": "Holds are decisions too: a mismatch holds with both interpretations attached, and the hold reason is a first-class field in the evidence row."
+  },
+  {
+   "t": "h2",
+   "x": "The document-ops console — queue age as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Straight-through rate beside adjudicated field accuracy, queue age beside hold rate — the pairing that keeps speed honest and the money path protected."
+  },
+  {
+   "t": "idash",
+   "title": "Intelligent document processing — extraction & review console",
+   "kpis": [
+    {
+     "label": "Straight-through",
+     "value": "78.4%",
+     "delta": "target ≥ 75%",
+     "dir": "up",
+     "spark": [
+      52,
+      58,
+      63,
+      68,
+      72,
+      76,
+      78
+     ]
+    },
+    {
+     "label": "Field accuracy (keyed)",
+     "value": "99.2%",
+     "delta": "post-review write",
+     "dir": "up",
+     "spark": [
+      96.5,
+      97.4,
+      98.1,
+      98.6,
+      98.9,
+      99.1,
+      99.2
+     ]
+    },
+    {
+     "label": "ECE (calibration)",
+     "value": "0.031",
+     "delta": "target ≤ 0.04",
+     "dir": "down",
+     "spark": [
+      0.11,
+      0.09,
+      0.07,
+      0.05,
+      0.04,
+      0.035,
+      0.031
+     ]
+    },
+    {
+     "label": "Review time / doc",
+     "value": "26 s",
+     "delta": "was 3.5 min re-key",
+     "dir": "down",
+     "spark": [
+      210,
+      170,
+      120,
+      80,
+      52,
+      34,
+      26
+     ]
+    },
+    {
+     "label": "New layouts absorbed",
+     "value": "12/wk",
+     "delta": "registry, zero incidents",
+     "dir": "flat",
+     "spark": [
+      3,
+      5,
+      7,
+      9,
+      10,
+      11,
+      12
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Confidence flow",
+     "widgets": [
+      {
+       "kind": "donut",
+       "title": "Where documents land after calibrated extraction",
+       "cats": [
+        "Auto-accepted (≥0.95)",
+        "Single-field review",
+        "Multi-field review",
+        "Quarantine (new layout)",
+        "Rejected (unreadable)"
+       ],
+       "points": [
+        784,
+        124,
+        61,
+        22,
+        9
+       ],
+       "unit": "per 1,000 docs",
+       "note": "Click segments to pin. The quarantine band is the health signal: a pipeline that never quarantines is over-accepting, one that quarantines 8% is not learning layouts."
+      },
+      {
+       "kind": "line",
+       "title": "Straight-through rate by week — calibration working or drifting",
+       "cats": [
+        "Wk 1",
+        "Wk 2",
+        "Wk 3",
+        "Wk 4",
+        "Wk 5",
+        "Wk 6",
+        "Wk 7",
+        "Wk 8"
+       ],
+       "series": [
+        {
+         "name": "All documents",
+         "points": [
+          52,
+          57,
+          62,
+          66,
+          70,
+          74,
+          77,
+          78.4
+         ]
+        },
+        {
+         "name": "Invoice family",
+         "points": [
+          61,
+          66,
+          71,
+          75,
+          79,
+          82,
+          85,
+          86
+         ]
+        },
+        {
+         "name": "Freight family",
+         "points": [
+          44,
+          48,
+          53,
+          57,
+          60,
+          63,
+          65,
+          66
+         ]
+        }
+       ],
+       "unit": "%",
+       "note": "Freight lags invoices on template diversity, not on model quality — the plan invests in the freight layout registry rather than re-tuning the shared extractor."
+      }
+     ]
+    },
+    {
+     "name": "Threshold what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Acceptance threshold what-if — throughput vs write-risk",
+       "params": [
+        {
+         "name": "Accept threshold",
+         "min": 0.5,
+         "max": 0.99,
+         "step": 0.01,
+         "value": 0.95,
+         "unit": "conf"
+        },
+        {
+         "name": "Daily volume",
+         "min": 1000,
+         "max": 50000,
+         "step": 1000,
+         "value": 18000,
+         "unit": "docs"
+        },
+        {
+         "name": "Reviewer pool",
+         "min": 2,
+         "max": 40,
+         "step": 1,
+         "value": 9,
+         "unit": "FTE"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Straight-through",
+         "unit": "%",
+         "formula": "min(96, (p0-0.4)*200*(1-p1/80000)+34)",
+         "good": "75",
+         "bad": "60"
+        },
+        {
+         "name": "Wrong-write risk",
+         "unit": "bp/day",
+         "formula": "max(0, (0.97-p0))*400*p1/1000",
+         "good": "30",
+         "bad": "120"
+        },
+        {
+         "name": "Queue wait",
+         "unit": "min",
+         "formula": "p1*0.0035/p2*(1.2-p0)",
+         "good": "15",
+         "bad": "60"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 1,
+        "label": "Threshold vs wrong-write risk"
+       },
+       "note": "The risk curve falls steeply as the threshold rises, but the queue-wait equation bites back through reviewer capacity — the panel is the argument for investing in reviewers before raising thresholds."
+      }
+     ]
+    },
+    {
+     "name": "Pipeline stages",
+     "widgets": [
+      {
+       "kind": "flow",
+       "title": "Document path — click each stage for its contract",
+       "stages": [
+        {
+         "name": "Ingest",
+         "role": "Channel + provenance",
+         "detail": "Mail, portal uploads, EDI and scans land with provenance stamped; channel metadata drives preprocessing (deskew, DPI normalization) before any model sees pixels.",
+         "metrics": [
+          {
+           "label": "Channels",
+           "value": "5"
+          },
+          {
+           "label": "Provenance",
+           "value": "100%"
+          }
+         ]
+        },
+        {
+         "name": "Classify",
+         "role": "Family + layout",
+         "detail": "Document family first, then layout-registry match; unknown layouts quarantine with a low-cost strategy while the registry learns.",
+         "metrics": [
+          {
+           "label": "Layout registry",
+           "value": "214"
+          },
+          {
+           "label": "Quarantine rate",
+           "value": "2.2%"
+          }
+         ]
+        },
+        {
+         "name": "Extract",
+         "role": "Per-field, calibrated",
+         "detail": "Field-level extraction with confidence calibrated per field class; totals get arithmetic cross-checks (line items must sum) before acceptance logic.",
+         "metrics": [
+          {
+           "label": "Fields / doc",
+           "value": "38 avg"
+          },
+          {
+           "label": "ECE",
+           "value": "0.031"
+          }
+         ]
+        },
+        {
+         "name": "Verify",
+         "role": "Business checks",
+         "detail": "Vendor master match, PO match, arithmetic identity, duplicate detection — the checks that catch what confidence cannot see.",
+         "metrics": [
+          {
+           "label": "Checks",
+           "value": "9"
+          },
+          {
+           "label": "Catch rate",
+           "value": "3.1%"
+          }
+         ]
+        },
+        {
+         "name": "Review",
+         "role": "Designed tail",
+         "detail": "Uncertain fields routed with highlights and candidates; corrections typed back with provenance and flow into the next training round.",
+         "metrics": [
+          {
+           "label": "Time / doc",
+           "value": "26 s"
+          },
+          {
+           "label": "Agreement",
+           "value": "94%"
+          }
+         ]
+        },
+        {
+         "name": "Write",
+         "role": "Idempotent posting",
+         "detail": "SAP/ERP postings carry idempotency keys and reconciliation totals; a replayed batch corrects rather than duplicates.",
+         "metrics": [
+          {
+           "label": "Post accuracy",
+           "value": "99.95%"
+          },
+          {
+           "label": "Replay-safe",
+           "value": "yes"
+          }
+         ]
+        }
+       ],
+       "note": "Verification catches about 3% of documents that confidence alone would have waved through — arithmetic does not hallucinate."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · calibration model",
+   "note": "Reference program model: calibration bands and thresholds from delivery, not client telemetry."
+  },
+  {
+   "t": "h2",
+   "x": "Queue shrinkage by root cause, month by month"
+  },
+  {
+   "t": "p",
+   "x": "Queue depth decomposed by root-cause class across six months — template drift, missing fields, edge cases, upstream data debt. The shrinking shape is the evidence the program is fixing causes, not hiring reviewers."
+  },
+  {
+   "t": "chart",
+   "title": "Queue shrinkage by root-cause class — design targets across six months",
+   "variant": "line",
+   "cats": [
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M5",
+    "M6"
+   ],
+   "series": [
+    {
+     "name": "STP target %",
+     "points": [
+      58,
+      64,
+      69,
+      73,
+      76,
+      78
+     ]
+    },
+    {
+     "name": "Review minutes per 1k docs target",
+     "points": [
+      96,
+      82,
+      70,
+      61,
+      52,
+      45
+     ]
+    },
+    {
+     "name": "Hold rate target %",
+     "points": [
+      12,
+      10,
+      9,
+      7,
+      7,
+      6
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Intelligent Document Processing across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Intelligent Document Processing",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: orchestration is the discipline — dozens of small automations running as one auditable workforce, with escalations designed rather than improvised.",
+     "plays": [
+      "Field-level confidence gates with adjudication wired into the process",
+      "Root-cause logging that shrinks the human queue by design",
+      "Money-path holds with dual review above signed value thresholds"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "78%"
+      },
+      {
+       "label": "Field accuracy (adjudicated)",
+       "value": "98.2%"
+      },
+      {
+       "label": "Queue age p90",
+       "value": "4.1h"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": true,
+     "hook": "Ask what fraud industrialized against manual detection costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Field-level confidence gates with adjudication wired into the process",
+      "Root-cause logging that shrinks the human queue by design",
+      "Money-path holds with dual review above signed value thresholds"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "78%"
+      },
+      {
+       "label": "Field accuracy (adjudicated)",
+       "value": "98.2%"
+      },
+      {
+       "label": "Queue age p90",
+       "value": "4.1h"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "Healthcare & Life Sciences operators recognize the pattern: prior authorization and RCM friction, quarter after quarter.",
+     "plays": [
+      "Field-level confidence gates with adjudication wired into the process",
+      "Root-cause logging that shrinks the human queue by design",
+      "Money-path holds with dual review above signed value thresholds"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "78%"
+      },
+      {
+       "label": "Field accuracy (adjudicated)",
+       "value": "98.2%"
+      },
+      {
+       "label": "Queue age p90",
+       "value": "4.1h"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — maintenance planning reactive included — and prove it moved.",
+     "plays": [
+      "Field-level confidence gates with adjudication wired into the process",
+      "Root-cause logging that shrinks the human queue by design",
+      "Money-path holds with dual review above signed value thresholds"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "78%"
+      },
+      {
+       "label": "Field accuracy (adjudicated)",
+       "value": "98.2%"
+      },
+      {
+       "label": "Queue age p90",
+       "value": "4.1h"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Ask what supplier collaboration by email costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Field-level confidence gates with adjudication wired into the process",
+      "Root-cause logging that shrinks the human queue by design",
+      "Money-path holds with dual review above signed value thresholds"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "78%"
+      },
+      {
+       "label": "Field accuracy (adjudicated)",
+       "value": "98.2%"
+      },
+      {
+       "label": "Queue age p90",
+       "value": "4.1h"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Field-level confidence gates with adjudication wired into the process",
+      "Root-cause logging that shrinks the human queue by design",
+      "Money-path holds with dual review above signed value thresholds"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "78%"
+      },
+      {
+       "label": "Field accuracy (adjudicated)",
+       "value": "98.2%"
+      },
+      {
+       "label": "Queue age p90",
+       "value": "4.1h"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — trading and scheduling decisions at market speed included — and prove it moved.",
+     "plays": [
+      "Field-level confidence gates with adjudication wired into the process",
+      "Root-cause logging that shrinks the human queue by design",
+      "Money-path holds with dual review above signed value thresholds"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "78%"
+      },
+      {
+       "label": "Field accuracy (adjudicated)",
+       "value": "98.2%"
+      },
+      {
+       "label": "Queue age p90",
+       "value": "4.1h"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": true,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Field-level confidence gates with adjudication wired into the process",
+      "Root-cause logging that shrinks the human queue by design",
+      "Money-path holds with dual review above signed value thresholds"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "78%"
+      },
+      {
+       "label": "Field accuracy (adjudicated)",
+       "value": "98.2%"
+      },
+      {
+       "label": "Queue age p90",
+       "value": "4.1h"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Field-level confidence gates with adjudication wired into the process",
+      "Root-cause logging that shrinks the human queue by design",
+      "Money-path holds with dual review above signed value thresholds"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "78%"
+      },
+      {
+       "label": "Field accuracy (adjudicated)",
+       "value": "98.2%"
+      },
+      {
+       "label": "Queue age p90",
+       "value": "4.1h"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Ask what administrative burden on faculty costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Field-level confidence gates with adjudication wired into the process",
+      "Root-cause logging that shrinks the human queue by design",
+      "Money-path holds with dual review above signed value thresholds"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "78%"
+      },
+      {
+       "label": "Field accuracy (adjudicated)",
+       "value": "98.2%"
+      },
+      {
+       "label": "Queue age p90",
+       "value": "4.1h"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Ask what support and success scale linearly costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Field-level confidence gates with adjudication wired into the process",
+      "Root-cause logging that shrinks the human queue by design",
+      "Money-path holds with dual review above signed value thresholds"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "78%"
+      },
+      {
+       "label": "Field accuracy (adjudicated)",
+       "value": "98.2%"
+      },
+      {
+       "label": "Queue age p90",
+       "value": "4.1h"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what input and logistics planning manual costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Field-level confidence gates with adjudication wired into the process",
+      "Root-cause logging that shrinks the human queue by design",
+      "Money-path holds with dual review above signed value thresholds"
+     ],
+     "kpis": [
+      {
+       "label": "Straight-through rate",
+       "value": "78%"
+      },
+      {
+       "label": "Field accuracy (adjudicated)",
+       "value": "98.2%"
+      },
+      {
+       "label": "Queue age p90",
+       "value": "4.1h"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/"
+    }
+   ],
+   "practiceNote": "Intelligent Document Processing view: extraction and adjudication inside the process — documents become decisions with confidence gates, evidence and a human queue that shrinks on measurement."
+  },
+  {
+   "t": "h2",
+   "x": "Extraction defaults — and when we deviate"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor adjudication loops and root-cause logging over raw model swaps; deviation triggers are written because each one changes whether the queue can shrink at all."
+  },
+  {
+   "t": "table",
+   "caption": "Intelligent Document Processing: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "IDP pipeline for named document flows with measured straight-through rates",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Extraction",
+     "Domain-standard perception stack (see Multimodal Vision Systems)",
+     "Duplicate extraction stacks per team — standards live at domain level"
     ],
     [
-     "Genre benchmarks and QA sampling protocol",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Gates",
+     "Per-field confidence thresholds with cohort tuning",
+     "One global threshold — it optimizes nothing and everything badly"
     ],
     [
-     "Correction-capture loop feeding extractor retraining",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Adjudication",
+     "Guided queue SOPs with correction capture",
+     "Free-form review without structure — corrections never train anything"
     ],
     [
-     "Integration pack for downstream core systems",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Matching",
+     "Typed PO/ledger reconciliation before commit",
+     "Direct-to-ERP writes from extraction — the fastest way to a bad payment"
+    ],
+    [
+     "Learning",
+     "Versioned retraining gated by the eval set",
+     "Continuous auto-retrain — it bakes reviewer bias into production"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The technology choices, justified"
+   "x": "Document-processing gates — evidence before volume"
   },
   {
-   "t": "p",
-   "x": "Intelligent Document Processing ships against LayoutLM-class models, vision-language models, cloud OCR services, Databricks, Kafka, core-system integrations. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for Intelligent Document Processing — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Coverage gate",
+     "Does the template fleet cover real intake?",
+     "Coverage census; long-tail plan per class"
+    ],
+    [
+     "Accuracy gate",
+     "Does per-field accuracy clear class bars?",
+     "Adjudicated eval report; confusion analysis"
+    ],
+    [
+     "Reconciliation gate",
+     "Do matched values survive the ledger?",
+     "Mismatch rate at class bar; hold evidence"
+    ],
+    [
+     "Queue gate",
+     "Is the queue shrinking on measurement?",
+     "STP trend; root-cause class breakdown"
+    ],
+    [
+     "Evidence gate",
+     "Is every decision explainable later?",
+     "Evidence completeness check; audit pull demo"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "What the weeks look like"
+   "x": "What the operations team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Intelligent Document Processing starts with the measurement: the metric, the owner, the current number, signed."
+     "In-process extraction service",
+     "Confidence-gated extraction wired to workflow events"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, ingestion & classification first, gates written with your team."
+     "Adjudication queues",
+     "Guided SOPs with correction capture and SLAs"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Intelligent Document Processing closes its first quarter at the gate: the working slice is measured against the baseline your team signed, and the scale decision is written down with the evidence attached."
+     "Reconciliation gate",
+     "Typed matching before any commit; hold rules"
+    ],
+    [
+     "Evidence store",
+     "Per-field provenance bound to process decisions"
+    ],
+    [
+     "Growing eval set",
+     "Adjudicated truth that gates every model version"
+    ],
+    [
+     "Queue analytics",
+     "STP trend, root-cause classes, threshold tuning log"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "From pilot volume to full estate, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — process wiring map",
+     "Where documents become decisions; field-class taxonomy; gate design"
+    ],
+    [
+     "Weeks 3–4 — extraction & gates",
+     "Perception stack on your corpus; thresholds per field class"
+    ],
+    [
+     "Weeks 5–6 — adjudication",
+     "Queue SOPs, correction capture, SLA design"
+    ],
+    [
+     "Weeks 7–8 — matching & holds",
+     "PO/ledger reconciliation, hold rules, workflow events"
+    ],
+    [
+     "Weeks 9–10 — evidence & learning",
+     "Evidence store, audit pulls, retrain loop under version control"
+    ],
+    [
+     "Ongoing — queue shrinkage",
+     "Weekly threshold tuning; monthly eval growth; quarterly census"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — capture channels and systems of record"
+  },
+  {
+   "t": "p",
+   "x": "Documents arrive from channels and land in systems of record; these contracts define the whole battlefield where queues are won or lost."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Workflow engine",
+     "Event contracts for holds, matches and completions"
+    ],
+    [
+     "ERP / AP systems",
+     "Reconciliation and commit APIs"
+    ],
+    [
+     "Review desks",
+     "Queue tooling with evidence rendering"
+    ],
+    [
+     "Email & portal",
+     "Intake contracts with dedup rules"
+    ],
+    [
+     "Vision domain stack",
+     "Shared perception services under domain standards"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Controls overlay — evidence and the money path"
+  },
+  {
+   "t": "p",
+   "x": "Per-field evidence, adjudicator identity and money-path holds are structural — the audit question 'who decided this value and why' has a one-click answer."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Gate-before-commit",
+     "No process commit without passing its field-class gate"
+    ],
+    [
+     "Correction provenance",
+     "Every retraining row traces to a reviewer action"
+    ],
+    [
+     "Hold dignity",
+     "Holds carry both interpretations and a reason code, always"
+    ],
+    [
+     "Evidence retention",
+     "Evidence retained to the regulatory clock with hash chains"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Money-path documents carry mandatory dual review above signed value thresholds — automation stops there by design, and the stop is logged as a control, not a failure."
   },
   {
    "t": "cta",
-   "x": "If Intelligent Document Processing is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
+   "x": "Bring the queue your team works nights to clear. The sprint will decompose it by root cause and price what straight-through would honestly cost — hold rates included."
   }
  ],
- "words": 505,
+ "words": 1105,
  "section": "Services",
  "l1": "Services",
  "l2": "Agentic AI & Hyperautomation",
@@ -274,7 +1256,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Agentic AI & Hyperautomation",
+   "title": "Domain overview — Agentic AI & Hyperautomation",
    "url": "/services/agentic-ai-hyperautomation/",
    "desc": "Digital workers, decision hubs and workflows that recover from failure on their own — automation with human checkpoints, budgets and audit."
   },
@@ -326,33 +1308,51 @@
   {
    "title": "Data & Lakehouse for Insurance & Risk",
    "url": "/industries/insurance/capabilities/data-analytics-lakehouse/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Agentic Process Automation",
-   "url": "/services/agentic-ai-hyperautomation/agentic-process-automation/",
-   "tag": "Same tower",
-   "desc": "Agents that execute the work — tool-using, policy-bounded, and fully logged for audit."
-  },
-  {
-   "title": "Digital Workforce & Multi-Agent Orchestration",
-   "url": "/services/agentic-ai-hyperautomation/digital-workforce-orchestration/",
-   "tag": "Same tower",
-   "desc": "Agents operated as one fleet: roles, queues, budgets and audit trails."
-  },
-  {
-   "title": "Decision Intelligence Systems",
-   "url": "/services/agentic-ai-hyperautomation/decision-intelligence-systems/",
-   "tag": "Same tower",
-   "desc": "Decision paths that run in milliseconds, with policy checks and full logging."
-  },
-  {
    "title": "Process & Task Mining",
    "url": "/services/agentic-ai-hyperautomation/process-task-mining/",
-   "tag": "Same tower",
-   "desc": "See the work as it actually runs — event-log truth before you automate anything."
+   "tag": "Same domain",
+   "desc": "event-log forensics that turns system footprints into a defensible automation pipeline — conformance-checked, variant-ranked and ROI-priced before anything is built."
+  },
+  {
+   "title": "Agentic Process Automation",
+   "url": "/services/agentic-ai-hyperautomation/agentic-process-automation/",
+   "tag": "Same domain",
+   "desc": "role-scoped agents that execute process steps under policy bounds, with human checkpoints placed by risk and replay for every action taken."
+  },
+  {
+   "title": "Autonomous Workflow Orchestration",
+   "url": "/services/agentic-ai-hyperautomation/autonomous-workflow-orchestration/",
+   "tag": "Same domain",
+   "desc": "long-running workflows with durable state, recovery by design, escalation choreography and audit — orchestration that survives partial failure as a normal event."
+  },
+  {
+   "title": "Multimodal AI & Vision-Language Systems",
+   "url": "/services/applied-ai-generative-ai/multimodal-vision-systems/",
+   "tag": "Pairs with",
+   "desc": "document and scene understanding wired into systems of record, with confidence gating, ledger reconciliation and per-field evidence for auditors."
+  },
+  {
+   "title": "Real-Time Streaming & Event-Driven Decisioning",
+   "url": "/services/data-analytics-lakehouse/realtime-streaming-decisioning/",
+   "tag": "Pairs with",
+   "desc": "sub-second decision paths on streams — exactly-once state, replay semantics and latency budgets that are measured, not asserted."
+  },
+  {
+   "title": "Cloud-Native & Legacy Modernization",
+   "url": "/services/cloud-edge-platform-engineering/cloud-native-modernization/",
+   "tag": "Pairs with",
+   "desc": "workloads rebuilt for cloud-native operations — containerized, observable, resilient by default, with a strangler path that retires VMs on evidence."
+  },
+  {
+   "title": "A national health insurer",
+   "url": "/case-studies/hc-02/",
+   "tag": "Evidence",
+   "desc": "Prior authorization turnaround down 62% — clinical evidence assembled automatically."
   }
  ]
 }

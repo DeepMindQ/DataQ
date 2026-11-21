@@ -1,0 +1,263 @@
+{
+ "id": "CASE-hc-07",
+ "title": "A pharmacy benefits manager",
+ "url": "/case-studies/hc-07/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Healthcare & Life Sciences > A pharmacy benefits manager",
+ "seo_title": "A pharmacy benefits manager | Case Study | Dataq Software",
+ "meta_description": "Prior-authorization on governed agents — 61% of requests auto-adjudicated within policy and clinician review time down 57%",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Prior-authorization on governed agents — 61% of requests auto-adjudicated within policy and clinician review time down 57%"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a PBM whose prior-authorization desk had become the industry's favorite complaint: clinicians waited days for decisions their patients' pharmacists needed in hours. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline fortnight measured the desk: median 2.9 days per decision, 84% of requests eventually approved as submitted, and clinician reviewers reading records for requests the policy had already answered."
+  },
+  {
+   "t": "p",
+   "x": "The policy existed; applying it was manual. Each request triggered chart-reading that took longer than the clinical question deserved, and the backlog reset every Monday."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We moved prior-auth onto governed agents: requests parsed against the signed policy criteria, chart evidence retrieved and cited per criterion, and the decision path split — policy-satisfied requests auto-adjudicated with the full evidence trail, everything else queued for clinicians with the reading already done. The appeals loop learns back into the criteria library."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — A pharmacy benefits manager",
+   "lanes": [
+    "Request intake",
+    "Policy engine",
+    "Evidence retrieval",
+    "Decision paths"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "ePA & fax intake",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Formulary & criteria store",
+     "hot": true
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Criteria parser",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Policy-satisfaction check",
+     "hot": true
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Cited chart evidence pack",
+     "hot": true
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Auto-adjudication path"
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Clinician queue (reading pre-done)",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Appeals feedback loop"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A pharmacy benefits manager",
+   "kpis": [
+    {
+     "label": "Auto-adjudication share",
+     "value": "61%",
+     "delta": "within signed policy",
+     "dir": "up"
+    },
+    {
+     "label": "Median decision time",
+     "value": "2.9 days → 4 hours",
+     "delta": "portfolio median",
+     "dir": "down"
+    },
+    {
+     "label": "Clinician review time",
+     "value": "-57%",
+     "delta": "reading pre-done",
+     "dir": "down"
+    },
+    {
+     "label": "Appeal overturn rate",
+     "value": "-22%",
+     "delta": "criterion library learning",
+     "dir": "down"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed with pharmacy and clinical leadership",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 06",
+     "msg": "Auto-adjudication live on two therapeutic classes",
+     "tag": "build"
+    },
+    {
+     "t": "wk 12",
+     "msg": "Gate review — clinical society feedback on criteria handling",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Class expansion; criteria library under clinical governance",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Decision-time and overturn baselines signed"
+    ],
+    [
+     "Build gate",
+     "No therapeutic class auto-adjudicated until its criteria were clinically signed"
+    ],
+    [
+     "Run gate",
+     "Monthly appeal-overturn review feeding the criteria library"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The criteria-as-code pattern with clinical governance transfers to any utilization-management desk. The criteria library was this PBM's policy estate; replication starts from its own, under its own clinicians."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "10 months",
+     "13-person blended team",
+     "US",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "Bring your own baseline. The two-week diagnostic is how this engagement started, and it is how we find out whether your estate can carry the same delta."
+  }
+ ],
+ "words": 428,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Healthcare & Life Sciences",
+ "l3": "A pharmacy benefits manager",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Healthcare & Life Sciences",
+   "url": "/industries/healthcare-life-sciences/"
+  },
+  {
+   "name": "A pharmacy benefits manager",
+   "url": "/case-studies/hc-07/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Healthcare & Life Sciences — industry hub",
+   "url": "/industries/healthcare-life-sciences/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Agentic AI & Hyperautomation",
+   "url": "/services/agentic-ai-hyperautomation/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A 12-hospital US health system",
+   "url": "/case-studies/hc-01/",
+   "desc": "Clinicians get 90 minutes a day back — ambient documentation inside the EHR"
+  },
+  {
+   "title": "A national health insurer",
+   "url": "/case-studies/hc-02/",
+   "desc": "Prior authorization turnaround down 62% — clinical evidence assembled automatically"
+  },
+  {
+   "title": "A European biopharma group",
+   "url": "/case-studies/hc-03/",
+   "desc": "Trial eligibility matching at 10x — enrollment windows met"
+  }
+ ],
+ "cards": []
+}

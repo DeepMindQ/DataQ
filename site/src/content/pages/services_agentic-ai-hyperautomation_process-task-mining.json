@@ -9,250 +9,1206 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The honest pitch for process & task mining fits in a sentence — See the work as it actually runs — event-log truth before you automate anything. — and the rest of this page is the how: measured baseline, bounded build, evidence in flight."
+   "x": "Event-log forensics that turn system footprints into a defensible automation pipeline: conformance-checked, variant-ranked, ROI-screened — with kill reasons logged so the backlog your board funds is the backlog reality earned."
   },
   {
    "t": "h2",
-   "x": "The working definition"
+   "x": "Your systems already recorded the truth about your processes"
   },
   {
    "t": "p",
-   "x": "Automating an imagined process is how programs waste their first year. We mine the truth from system event logs and desktop telemetry: variant analysis showing the twelve real paths where the process map shows three, bottleneck heatmaps by team and system, rework loops, and conformance gaps against policy. Task mining adds the human layer — application switching, copy-paste bridges, swivel-chair work — quantifying exactly where minutes bleed."
+   "x": "Process mining is evidence gathering, not workshop theater. The systems already record the truth: timestamps in the ERP, states in the ITSM tool, messages on the bus. We reconstruct the actual process from those logs, measure where time and rework concentrate, and price the automation candidates against the mined baseline rather than a manager's estimate."
   },
   {
    "t": "p",
-   "x": "The output is a ranked automation portfolio with evidence: each candidate scored on frequency, variance, fragmentation and value, with a target-state design for the top flows. Clients use this as the foundation for agentic programs and as a continuous instrument post-deployment, comparing actual execution against design drift every quarter."
+   "x": "The deliverable that matters is a ranked pipeline with kill reasons. Most mined candidates die on data quality, permission reality or volume math — recording why is as valuable as the shortlist, because it stops the same idea being re-proposed every year."
+  },
+  {
+   "t": "p",
+   "x": "What follows is the mining discipline end to end: failure modes, the reference architecture of a mining pipeline, and the console that keeps the backlog honest between cycles."
   },
   {
    "t": "h2",
-   "x": "Why the timing matters"
+   "x": "Four ways mining programs produce fiction instead of pipelines"
   },
   {
    "t": "p",
-   "x": "Process & Task Mining delivery today concentrates in Manufacturing & Industrial, Banking & Financial Services, Insurance & Risk, Logistics & Supply Chain. The metric is chosen with your finance lead, and the baseline is signed before any build begins."
+   "x": "Mining fails as politics before it fails as statistics — each countermeasure below makes the output arguable in a steering meeting, which is where it has to survive."
   },
   {
-   "t": "h2",
-   "x": "The system, piece by piece"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Process & Task Mining: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Event-log extraction",
-     "connectors for ERP, CRM, core systems and ITSM with data hygiene controls"
+     "Event log fragmentation",
+     "The process spans five systems; no single log tells the truth",
+     "Case-correlation key design across systems with join-quality metrics"
     ],
     [
-     "Variant & conformance analysis",
-     "real paths vs. policy paths, rework loops and bottleneck quantification"
+     "Variant explosion",
+     "Two hundred process variants; nobody can reason about the tail",
+     "Variant clustering by outcome cost, not frequency — the expensive tail matters most"
     ],
     [
-     "Task-level telemetry",
-     "desktop mining for swivel-chair and copy-paste waste"
+     "Baseline disputes",
+     "Ops disputes the mined cycle time before the program starts",
+     "Conformance report co-signed by the process owner with the log extracts attached"
     ],
     [
-     "Automation portfolio scoring",
-     "frequency, variance, fragmentation and value-ranked candidates"
-    ],
-    [
-     "Continuous conformance",
-     "post-deployment drift monitoring against target-state design"
+     "Mining as a one-off",
+     "A study that is stale in six months",
+     "Continuous mining agent on the event streams; drift alerts to the process owner"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — from event logs to a ranked candidate list"
+  },
+  {
+   "t": "p",
+   "x": "The pipeline's integrity lives in two places: case correlation across fragmented systems, and the conformance check that separates variants worth automating from variants that should be fixed first."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Process & Task Mining",
+   "title": "Reference architecture — continuous process mining pipeline",
    "lanes": [
-    "Process signals",
-    "Task graphs",
-    "Agent fleet",
-    "Policy envelope",
-    "Human checkpoints",
-    "Systems of action"
+    "Systems",
+    "Log plane",
+    "Correlation",
+    "Analysis",
+    "Decision",
+    "Monitoring"
    ],
    "nodes": [
     {
-     "id": "ps0",
+     "id": "erp",
      "lane": 0,
-     "label": "MES & line historians",
-     "hot": false
+     "label": "ERP events"
     },
     {
-     "id": "ps1",
+     "id": "itsm",
      "lane": 0,
-     "label": "SCADA / OT telemetry",
-     "hot": false
+     "label": "ITSM events"
     },
     {
-     "id": "tg2",
+     "id": "bus",
+     "lane": 0,
+     "label": "Bus telemetry"
+    },
+    {
+     "id": "extract",
      "lane": 1,
-     "label": "Process & Task Mining",
+     "label": "Event extractors"
+    },
+    {
+     "id": "normalize",
+     "lane": 1,
+     "label": "XES-normalize"
+    },
+    {
+     "id": "store",
+     "lane": 1,
+     "label": "Event lake"
+    },
+    {
+     "id": "key",
+     "lane": 2,
+     "label": "Case keys",
      "hot": true
     },
     {
-     "id": "tg3",
-     "lane": 1,
-     "label": "Task decomposition",
-     "hot": false
+     "id": "joinq",
+     "lane": 2,
+     "label": "Join-quality metrics"
     },
     {
-     "id": "af4",
+     "id": " enrich",
      "lane": 2,
-     "label": "Worker agents",
+     "label": "Master-data enrich"
+    },
+    {
+     "id": "disc",
+     "lane": 3,
+     "label": "Discovery models",
      "hot": true
     },
     {
-     "id": "af5",
-     "lane": 2,
-     "label": "Tool adapters",
-     "hot": false
-    },
-    {
-     "id": "pe6",
+     "id": "conf",
      "lane": 3,
-     "label": "Autonomy tiers",
-     "hot": false
+     "label": "Conformance check",
+     "hot": true
     },
     {
-     "id": "pe7",
+     "id": "cost",
      "lane": 3,
-     "label": "Escalation rules",
-     "hot": false
+     "label": "Variant costing"
     },
     {
-     "id": "hc8",
+     "id": "rank",
      "lane": 4,
-     "label": "Approval queue",
-     "hot": false
+     "label": "Candidate ranking",
+     "hot": true
     },
     {
-     "id": "hc9",
+     "id": "kill",
      "lane": 4,
-     "label": "Reviewer UI",
-     "hot": false
+     "label": "Kill-reason ledger"
     },
     {
-     "id": "sa10",
-     "lane": 5,
-     "label": "Production scheduling",
-     "hot": false
+     "id": "roi",
+     "lane": 4,
+     "label": "ROI pricing"
     },
     {
-     "id": "sa11",
+     "id": "cont",
      "lane": 5,
-     "label": "Maintenance planner",
-     "hot": false
+     "label": "Continuous miner",
+     "hot": true
+    },
+    {
+     "id": "drift",
+     "lane": 5,
+     "label": "Drift alerts"
+    },
+    {
+     "id": "rep",
+     "lane": 5,
+     "label": "Owner reports"
     }
    ],
    "edges": [
     {
-     "a": "ps0",
-     "b": "tg2"
+     "a": "erp",
+     "b": "extract"
     },
     {
-     "a": "ps1",
-     "b": "tg2"
+     "a": "itsm",
+     "b": "extract"
     },
     {
-     "a": "tg2",
-     "b": "tg3"
+     "a": "bus",
+     "b": "extract"
     },
     {
-     "a": "tg3",
-     "b": "af4"
+     "a": "extract",
+     "b": "normalize"
     },
     {
-     "a": "af4",
-     "b": "af5"
+     "a": "normalize",
+     "b": "store"
     },
     {
-     "a": "af5",
-     "b": "pe6"
+     "a": "store",
+     "b": "key"
     },
     {
-     "a": "pe6",
-     "b": "hc8"
+     "a": "key",
+     "b": "joinq"
     },
     {
-     "a": "hc8",
-     "b": "sa10"
+     "a": "store",
+     "b": " enrich",
+     "label": "md joins"
     },
     {
-     "a": "af4",
-     "b": "sa11"
+     "a": "key",
+     "b": "disc"
+    },
+    {
+     "a": "disc",
+     "b": "conf"
+    },
+    {
+     "a": "conf",
+     "b": "cost",
+     "label": "rework loops"
+    },
+    {
+     "a": "cost",
+     "b": "rank"
+    },
+    {
+     "a": "rank",
+     "b": "kill",
+     "label": "fails"
+    },
+    {
+     "a": "rank",
+     "b": "roi",
+     "label": "passes"
+    },
+    {
+     "a": "store",
+     "b": "cont",
+     "label": "stream"
+    },
+    {
+     "a": "cont",
+     "b": "drift"
+    },
+    {
+     "a": "drift",
+     "b": "rep",
+     "label": "owners"
     }
    ],
-   "note": "Topology inherited from the Agentic AI & Hyperautomation tower; the highlighted core is this service's build."
+   "note": "Join-quality metrics decide which candidates are minable at all — a case key that correlates 60% of instances is a data-quality finding before it is an automation finding."
   },
   {
    "t": "h2",
-   "x": "What changes hands"
+   "x": "One mining cycle, stage by stage"
   },
   {
    "t": "p",
-   "x": "What your team holds at the end — Process & Task Mining edition:"
+   "x": "From log extraction through case building, variant analysis, conformance scoring and ROI screening to the ranked candidate list — including where the kill reasons get written."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Mining flow — from system footprints to a ranked, priced pipeline",
+   "labels": [
+    "Extract events",
+    "Normalize & correlate",
+    "Discover & conform",
+    "Cost variants",
+    "Rank candidates",
+    "Price ROI",
+    "Fund or kill"
+   ],
+   "note": "Every funded candidate carries its mined baseline forward — the automation will be measured against the same logs that justified it."
+  },
+  {
+   "t": "h2",
+   "x": "The mining console process owners argue with"
+  },
+  {
+   "t": "p",
+   "x": "Correlation quality, conformance score, funded candidates and logged kill reasons — the four numbers that make a backlog defensible or expose it as theater."
+  },
+  {
+   "t": "idash",
+   "title": "Process & task mining — evidence console",
+   "kpis": [
+    {
+     "label": "Variants found",
+     "value": "47",
+     "delta": "designed: 6",
+     "dir": "flat",
+     "spark": [
+      0,
+      12,
+      24,
+      33,
+      41,
+      45,
+      47
+     ]
+    },
+    {
+     "label": "Conformance score",
+     "value": "71%",
+     "delta": "target ≥ 85%",
+     "dir": "up",
+     "spark": [
+      52,
+      58,
+      62,
+      65,
+      68,
+      70,
+      71
+     ]
+    },
+    {
+     "label": "Rework loop share",
+     "value": "18.2%",
+     "delta": "top loop: credit re-enter",
+     "dir": "down",
+     "spark": [
+      31,
+      28,
+      25,
+      22,
+      20,
+      19,
+      18
+     ]
+    },
+    {
+     "label": "Waiting share",
+     "value": "62%",
+     "delta": "of end-to-end time",
+     "dir": "down",
+     "spark": [
+      74,
+      71,
+      68,
+      66,
+      64,
+      63,
+      62
+     ]
+    },
+    {
+     "label": "Automation-ready tasks",
+     "value": "23",
+     "delta": "freq × stability scored",
+     "dir": "up",
+     "spark": [
+      8,
+      12,
+      15,
+      18,
+      20,
+      22,
+      23
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Variant map",
+     "widgets": [
+      {
+       "kind": "scatter",
+       "title": "Discovered variants — frequency vs pain (time × rework)",
+       "points": [
+        {
+         "x": 34,
+         "y": 22,
+         "label": "V1 happy path",
+         "group": "Designed"
+        },
+        {
+         "x": 18,
+         "y": 68,
+         "label": "V3 credit re-enter",
+         "group": "Rework"
+        },
+        {
+         "x": 11,
+         "y": 41,
+         "label": "V5 manual review detour",
+         "group": "Shadow"
+        },
+        {
+         "x": 9,
+         "y": 83,
+         "label": "V7 doc chase loop",
+         "group": "Rework"
+        },
+        {
+         "x": 7,
+         "y": 34,
+         "label": "V9 split approval",
+         "group": "Shadow"
+        },
+        {
+         "x": 6,
+         "y": 57,
+         "label": "V12 SLA breach path",
+         "group": "Breach"
+        },
+        {
+         "x": 4,
+         "y": 76,
+         "label": "V14 exception hold",
+         "group": "Breach"
+        },
+        {
+         "x": 3,
+         "y": 29,
+         "label": "V16 audit variant",
+         "group": "Designed"
+        },
+        {
+         "x": 2,
+         "y": 88,
+         "label": "V18 refund escalation",
+         "group": "Rework"
+        },
+        {
+         "x": 1.6,
+         "y": 52,
+         "label": "V21 legacy detour",
+         "group": "Shadow"
+        }
+       ],
+       "groups": [
+        "Designed",
+        "Rework",
+        "Shadow",
+        "Breach"
+       ],
+       "xLabel": "Case share (%)",
+       "yLabel": "Pain index (0-100)",
+       "note": "Hover points for variant names. The upper-left quadrant is the automation shortlist — frequent enough to matter, painful enough to fund. The lower-right singles are the policy-debate pile."
+      }
+     ]
+    },
+    {
+     "name": "Waiting-time heat",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Waiting time by stage × team — where the calendar disappears",
+       "rows": [
+        "Intake",
+        "Verification",
+        "Approval",
+        "Fulfilment",
+        "QA"
+       ],
+       "cats": [
+        "Front desk",
+        "Ops A",
+        "Ops B",
+        "Risk",
+        "Vendor"
+       ],
+       "matrix": [
+        [
+         3,
+         9,
+         14,
+         8,
+         4
+        ],
+        [
+         6,
+         22,
+         31,
+         12,
+         7
+        ],
+        [
+         4,
+         17,
+         26,
+         9,
+         5
+        ],
+        [
+         8,
+         14,
+         11,
+         6,
+         9
+        ],
+        [
+         2,
+         6,
+         8,
+         3,
+         2
+        ]
+       ],
+       "unit": "h / case",
+       "note": "Hover cells to read hours per case. Ops B's approval column is the finding nobody wanted: 26–31 h per case of waiting that no SLA dashboard surfaced because each hop looked green."
+      }
+     ]
+    },
+    {
+     "name": "Automation economics",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Candidate scoring what-if — frequency, stability, unit cost",
+       "params": [
+        {
+         "name": "Task frequency",
+         "min": 100,
+         "max": 20000,
+         "step": 100,
+         "value": 4200,
+         "unit": "/mo"
+        },
+        {
+         "name": "Execution stability",
+         "min": 50,
+         "max": 100,
+         "step": 1,
+         "value": 88,
+         "unit": "%"
+        },
+        {
+         "name": "Unit handling cost",
+         "min": 2,
+         "max": 60,
+         "step": 1,
+         "value": 14,
+         "unit": "$"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Annual addressable",
+         "unit": "$k",
+         "formula": "p0*12*p2/1000",
+         "good": "400",
+         "bad": "900"
+        },
+        {
+         "name": "Automation viability",
+         "unit": "0-100",
+         "formula": "min(100, p0/300+p1*0.55)",
+         "good": "70",
+         "bad": "45"
+        },
+        {
+         "name": "Payback (est.)",
+         "unit": "mo",
+         "formula": "max(2, 210/(p0*0.08*(1+ (100-p1)/40)))",
+         "good": "9",
+         "bad": "24"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 1,
+        "label": "Stability vs viability score"
+       },
+       "note": "Stability is the gate most programs skip: automating an unstable task mechanizes its chaos. The viability curve shows the score collapse below ~70% stability — fix the process first, automate second."
+      },
+      {
+       "kind": "bar",
+       "title": "Top candidates — annual addressable cost",
+       "cats": [
+        "Doc chase",
+        "Credit re-enter",
+        "Manual review",
+        "Data re-key",
+        "SLA chaser",
+        "Report assembly"
+       ],
+       "series": [
+        {
+         "name": "Addressable $k/yr",
+         "points": [
+          620,
+          480,
+          350,
+          290,
+          180,
+          150
+         ]
+        },
+        {
+         "name": "Viability score",
+         "points": [
+          82,
+          74,
+          66,
+          88,
+          71,
+          79
+         ]
+        }
+       ],
+       "note": "Click a series to isolate. The bar chart pairs money with viability so the first automation is chosen on both axes — the doc-chase loop funds the quarter."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · variant model",
+   "note": "Reference diagnostic model: variant shares and pain indices from delivery baselines, not client telemetry."
+  },
+  {
+   "t": "h2",
+   "x": "Candidate disposition across a mining cycle"
+  },
+  {
+   "t": "p",
+   "x": "Where mined ideas die, by stage and count. A healthy cycle kills most candidates at conformance and ROI screens — the kill reasons are the audit trail that keeps the next cycle honest."
+  },
+  {
+   "t": "chart",
+   "title": "Candidate disposition across a mining cycle — where ideas die and why",
+   "variant": "bar",
+   "cats": [
+    "Mined activities",
+    "Viable cases",
+    "Data-quality fails",
+    "Volume fails",
+    "Permission fails",
+    "Funded"
+   ],
+   "series": [
+    {
+     "name": "Count per cycle",
+     "points": [
+      142,
+      96,
+      23,
+      14,
+      9,
+      7
+     ]
+    },
+    {
+     "name": "Share of rework addressed %",
+     "points": [
+      0,
+      64,
+      0,
+      0,
+      0,
+      58
+     ]
+    }
+   ],
+   "yMax": 150,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Process & Task Mining across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Process & Task Mining",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: orchestration is the discipline — dozens of small automations running as one auditable workforce, with escalations designed rather than improvised.",
+     "plays": [
+      "Case correlation across fragmented system footprints",
+      "Conformance-scored variants with ROI screening and logged kill reasons",
+      "A re-runnable mining pipeline the process team owns after handover"
+     ],
+     "kpis": [
+      {
+       "label": "Case correlation",
+       "value": "91%"
+      },
+      {
+       "label": "Conformance score",
+       "value": "0.88"
+      },
+      {
+       "label": "Candidates funded",
+       "value": "7"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Ask what fraud industrialized against manual detection costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Case correlation across fragmented system footprints",
+      "Conformance-scored variants with ROI screening and logged kill reasons",
+      "A re-runnable mining pipeline the process team owns after handover"
+     ],
+     "kpis": [
+      {
+       "label": "Case correlation",
+       "value": "91%"
+      },
+      {
+       "label": "Conformance score",
+       "value": "0.88"
+      },
+      {
+       "label": "Candidates funded",
+       "value": "7"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "Healthcare & Life Sciences operators recognize the pattern: prior authorization and RCM friction, quarter after quarter.",
+     "plays": [
+      "Case correlation across fragmented system footprints",
+      "Conformance-scored variants with ROI screening and logged kill reasons",
+      "A re-runnable mining pipeline the process team owns after handover"
+     ],
+     "kpis": [
+      {
+       "label": "Case correlation",
+       "value": "91%"
+      },
+      {
+       "label": "Conformance score",
+       "value": "0.88"
+      },
+      {
+       "label": "Candidates funded",
+       "value": "7"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "The work here has one job: move a named number — maintenance planning reactive included — and prove it moved.",
+     "plays": [
+      "Case correlation across fragmented system footprints",
+      "Conformance-scored variants with ROI screening and logged kill reasons",
+      "A re-runnable mining pipeline the process team owns after handover"
+     ],
+     "kpis": [
+      {
+       "label": "Case correlation",
+       "value": "91%"
+      },
+      {
+       "label": "Conformance score",
+       "value": "0.88"
+      },
+      {
+       "label": "Candidates funded",
+       "value": "7"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Ask what supplier collaboration by email costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Case correlation across fragmented system footprints",
+      "Conformance-scored variants with ROI screening and logged kill reasons",
+      "A re-runnable mining pipeline the process team owns after handover"
+     ],
+     "kpis": [
+      {
+       "label": "Case correlation",
+       "value": "91%"
+      },
+      {
+       "label": "Conformance score",
+       "value": "0.88"
+      },
+      {
+       "label": "Candidates funded",
+       "value": "7"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Case correlation across fragmented system footprints",
+      "Conformance-scored variants with ROI screening and logged kill reasons",
+      "A re-runnable mining pipeline the process team owns after handover"
+     ],
+     "kpis": [
+      {
+       "label": "Case correlation",
+       "value": "91%"
+      },
+      {
+       "label": "Conformance score",
+       "value": "0.88"
+      },
+      {
+       "label": "Candidates funded",
+       "value": "7"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — trading and scheduling decisions at market speed included — and prove it moved.",
+     "plays": [
+      "Case correlation across fragmented system footprints",
+      "Conformance-scored variants with ROI screening and logged kill reasons",
+      "A re-runnable mining pipeline the process team owns after handover"
+     ],
+     "kpis": [
+      {
+       "label": "Case correlation",
+       "value": "91%"
+      },
+      {
+       "label": "Conformance score",
+       "value": "0.88"
+      },
+      {
+       "label": "Candidates funded",
+       "value": "7"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Case correlation across fragmented system footprints",
+      "Conformance-scored variants with ROI screening and logged kill reasons",
+      "A re-runnable mining pipeline the process team owns after handover"
+     ],
+     "kpis": [
+      {
+       "label": "Case correlation",
+       "value": "91%"
+      },
+      {
+       "label": "Conformance score",
+       "value": "0.88"
+      },
+      {
+       "label": "Candidates funded",
+       "value": "7"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Case correlation across fragmented system footprints",
+      "Conformance-scored variants with ROI screening and logged kill reasons",
+      "A re-runnable mining pipeline the process team owns after handover"
+     ],
+     "kpis": [
+      {
+       "label": "Case correlation",
+       "value": "91%"
+      },
+      {
+       "label": "Conformance score",
+       "value": "0.88"
+      },
+      {
+       "label": "Candidates funded",
+       "value": "7"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Ask what administrative burden on faculty costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Case correlation across fragmented system footprints",
+      "Conformance-scored variants with ROI screening and logged kill reasons",
+      "A re-runnable mining pipeline the process team owns after handover"
+     ],
+     "kpis": [
+      {
+       "label": "Case correlation",
+       "value": "91%"
+      },
+      {
+       "label": "Conformance score",
+       "value": "0.88"
+      },
+      {
+       "label": "Candidates funded",
+       "value": "7"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Ask what support and success scale linearly costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Case correlation across fragmented system footprints",
+      "Conformance-scored variants with ROI screening and logged kill reasons",
+      "A re-runnable mining pipeline the process team owns after handover"
+     ],
+     "kpis": [
+      {
+       "label": "Case correlation",
+       "value": "91%"
+      },
+      {
+       "label": "Conformance score",
+       "value": "0.88"
+      },
+      {
+       "label": "Candidates funded",
+       "value": "7"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": true,
+     "hook": "Ask what input and logistics planning manual costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Case correlation across fragmented system footprints",
+      "Conformance-scored variants with ROI screening and logged kill reasons",
+      "A re-runnable mining pipeline the process team owns after handover"
+     ],
+     "kpis": [
+      {
+       "label": "Case correlation",
+       "value": "91%"
+      },
+      {
+       "label": "Conformance score",
+       "value": "0.88"
+      },
+      {
+       "label": "Candidates funded",
+       "value": "7"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/"
+    }
+   ],
+   "practiceNote": "Process & Task Mining view: event-log forensics that turns system footprints into a defensible automation pipeline — conformance-checked, variant-ranked and ROI-priced before anything is built."
+  },
+  {
+   "t": "h2",
+   "x": "Mining stack defaults — and when we deviate"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor replayable analysis over one-off consulting artifacts; deviation conditions are written because each one changes whether the mining can be re-run next quarter."
+  },
+  {
+   "t": "table",
+   "caption": "Process & Task Mining: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Process intelligence baseline with variant and bottleneck atlas",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Event extraction",
+     "CDC + scheduled extracts into an event lake with XES mapping",
+     "Vendor mining tools' native connectors only for the pilot phase"
     ],
     [
-     "Ranked automation portfolio with evidence-backed scoring",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Correlation",
+     "Deterministic case keys with documented join logic",
+     "Probabilistic matching only with a measured join-quality floor"
     ],
     [
-     "Target-state process designs for top flows",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Discovery",
+     "Inductive Miner variants + PM4Py for custom analyses",
+     "Hand-drawn BPMN as the source of truth — the log overrules it every time"
     ],
     [
-     "Conformance monitoring instrument for operations",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Conformance",
+     "Token-replay + alignment-based conformance on the happy-path model",
+     "Frequency-only analysis — it hides the expensive rework loops"
+    ],
+    [
+     "Monitoring",
+     "Streaming miner on bus telemetry with drift scoring",
+     "Quarterly batch mining for processes that genuinely change slowly"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The technology choices, justified"
+   "x": "Mining release gates — what evidence a candidate list carries"
   },
   {
-   "t": "p",
-   "x": "Process & Task Mining is built against defined standards: Celonis-class mining engines, PM4Py, event-log ETL on Databricks, BI overlay. Each choice is justified in writing as part of the architecture baseline, so your team can defend it without us in the room."
+   "t": "table",
+   "caption": "Release gates for Process & Task Mining — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Log gate",
+     "Are the logs complete enough to trust?",
+     "Extract coverage census; timestamp quality report"
+    ],
+    [
+     "Correlation gate",
+     "Do cases assemble correctly across systems?",
+     "Join-quality metrics at or above the signed floor"
+    ],
+    [
+     "Conformance gate",
+     "Does the discovered model match reality?",
+     "Owner-signed conformance report with deviations"
+    ],
+    [
+     "ROI gate",
+     "Is the pricing honest?",
+     "Variant costing against mined baseline with sensitivity ranges"
+    ],
+    [
+     "Continuity gate",
+     "Will mining continue after the study?",
+     "Streaming miner deployed; drift alert routing live"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "The cadence you would see"
+   "x": "What the process excellence team owns at handover"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Process & Task Mining starts with the measurement: the metric, the owner, the current number, signed."
+     "Event lake with XES mappings",
+     "The raw truth of the process, refreshable and auditable"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, event-log extraction first, gates written with your team."
+     "Discovered process models",
+     "Variant-ranked models with rework loops and handoff metrics"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Process & Task Mining are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Conformance report",
+     "Owner-signed: where reality deviates from the intended design"
+    ],
+    [
+     "Ranked candidate pipeline",
+     "Priced, with kill reasons recorded for everything rejected"
+    ],
+    [
+     "Continuous mining agent",
+     "Drift alerts and monthly owner reports from the live streams"
+    ],
+    [
+     "ROI ledger entries",
+     "The baseline each automation will be measured against"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "The mining engagement, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — log forensics",
+     "Extract census, timestamp quality, case-key design across systems"
+    ],
+    [
+     "Weeks 3–4 — discovery & conformance",
+     "Models built, variants clustered, owner-signed conformance report"
+    ],
+    [
+     "Weeks 5–6 — costing & ranking",
+     "Variant costing, candidate ranking, kill-reason ledger"
+    ],
+    [
+     "Weeks 7–8 — ROI & pipeline",
+     "Priced shortlist with baselines; funding recommendations"
+    ],
+    [
+     "Week 9–10 — continuous mining",
+     "Streaming miner, drift alerts, owner report cadence"
+    ],
+    [
+     "Ongoing — program rhythm",
+     "Quarterly re-mining; drift-driven candidate refresh"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — the systems whose logs become evidence"
+  },
+  {
+   "t": "p",
+   "x": "Mining quality is bounded by log quality; these are the extraction contracts that decide whether case correlation is possible at all."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "ERP event tables",
+     "CDC contracts with timestamp and state fidelity requirements"
+    ],
+    [
+     "ITSM / CRM",
+     "Ticket and case event extracts with correlation keys"
+    ],
+    [
+     "Message bus",
+     "Telemetry topics with schema registry access"
+    ],
+    [
+     "Master data",
+     "Enrichment joins for organizational and product dimensions"
+    ],
+    [
+     "PMO tooling",
+     "Candidate pipeline export with funding status"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Governance overlay — mining as a repeatable audit artifact"
+  },
+  {
+   "t": "p",
+   "x": "The output must survive internal audit: case definitions, conformance rules and kill reasons are versioned, so last quarter's decisions are re-explainable from the artifacts alone."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Log access minimization",
+     "Pseudonymized event extracts; personal identifiers stripped at ingestion"
+    ],
+    [
+     "Owner consent on scope",
+     "Processes are mined with the owning team's signed scope map"
+    ],
+    [
+     "Immutable extracts",
+     "Mining runs reference hash-pinned extract versions"
+    ],
+    [
+     "Kill-reason integrity",
+     "Kill decisions carry evidence; re-proposals must rebut the recorded reason"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Kill reasons are first-class records: each logged reason cites the conformance or ROI evidence that produced it, and the ledger ships in the handover pack."
   },
   {
    "t": "cta",
-   "x": "Bring Process & Task Mining to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
+   "x": "Bring two quarters of event logs and one contested backlog. The mining cycle will tell you which candidates survive conformance — and which pet automation ideas the evidence kills."
   }
  ],
- "words": 501,
+ "words": 1152,
  "section": "Services",
  "l1": "Services",
  "l2": "Agentic AI & Hyperautomation",
@@ -274,7 +1230,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Agentic AI & Hyperautomation",
+   "title": "Domain overview — Agentic AI & Hyperautomation",
    "url": "/services/agentic-ai-hyperautomation/",
    "desc": "Digital workers, decision hubs and workflows that recover from failure on their own — automation with human checkpoints, budgets and audit."
   },
@@ -326,33 +1282,51 @@
   {
    "title": "Blockchain & Digital Trust for Education & Research",
    "url": "/industries/education-research/capabilities/blockchain-digital-trust/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
    "title": "Agentic Process Automation",
    "url": "/services/agentic-ai-hyperautomation/agentic-process-automation/",
-   "tag": "Same tower",
-   "desc": "Agents that execute the work — tool-using, policy-bounded, and fully logged for audit."
+   "tag": "Same domain",
+   "desc": "role-scoped agents that execute process steps under policy bounds, with human checkpoints placed by risk and replay for every action taken."
   },
   {
-   "title": "Digital Workforce & Multi-Agent Orchestration",
-   "url": "/services/agentic-ai-hyperautomation/digital-workforce-orchestration/",
-   "tag": "Same tower",
-   "desc": "Agents operated as one fleet: roles, queues, budgets and audit trails."
+   "title": "Autonomous Workflow Orchestration",
+   "url": "/services/agentic-ai-hyperautomation/autonomous-workflow-orchestration/",
+   "tag": "Same domain",
+   "desc": "long-running workflows with durable state, recovery by design, escalation choreography and audit — orchestration that survives partial failure as a normal event."
   },
   {
    "title": "Decision Intelligence Systems",
    "url": "/services/agentic-ai-hyperautomation/decision-intelligence-systems/",
-   "tag": "Same tower",
-   "desc": "Decision paths that run in milliseconds, with policy checks and full logging."
+   "tag": "Same domain",
+   "desc": "decision models wrapped in policy bounds, challenger benchmarks and explainable outputs — decisions you can defend to a regulator, not just scores in a dashboard."
   },
   {
-   "title": "Intelligent Document Processing",
-   "url": "/services/agentic-ai-hyperautomation/intelligent-document-processing/",
-   "tag": "Same tower",
-   "desc": "Contracts, claims and invoices read end-to-end — extraction, validation and downstream action."
+   "title": "AI Proof-of-Concept & Value Validation",
+   "url": "/services/applied-ai-generative-ai/ai-poc-value-validation/",
+   "tag": "Pairs with",
+   "desc": "the four-week sprint that ends in a fund-or-kill verdict with auditable numbers — baseline first, real data path, no demo-ware."
+  },
+  {
+   "title": "Data Engineering & Pipeline Modernization",
+   "url": "/services/data-analytics-lakehouse/data-engineering-modernization/",
+   "tag": "Pairs with",
+   "desc": "legacy pipelines rebuilt as typed, contract-gated, observable jobs — with a strangler pattern that retires the old estate without a big-bang cutover."
+  },
+  {
+   "title": "FinOps & Sustainable Computing",
+   "url": "/services/cloud-edge-platform-engineering/finops-sustainable-computing/",
+   "tag": "Pairs with",
+   "desc": "cost and carbon as engineering inputs — unit economics per workload, rightsizing with teeth, and sustainability reported like any SLO."
+  },
+  {
+   "title": "A top-10 European retail bank",
+   "url": "/case-studies/bank-01/",
+   "tag": "Evidence",
+   "desc": "Real-time fraud decisioning on instant rails — 38% lower fraud losses at a higher approval rate."
   }
  ]
 }

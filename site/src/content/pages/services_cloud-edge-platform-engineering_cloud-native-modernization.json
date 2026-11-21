@@ -9,254 +9,1222 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Buyers rarely need another definition of cloud-native & legacy modernization. They need to know what ships first, what it touches and how value is proven. That is what this page carries: Retire the legacy tax — strangler-pattern modernization with measurable unit economics."
+   "x": "Workloads rebuilt for cloud-native operations — containerized, observable, resilient by default — moved on a strangler plan that escapes the lift-and-shift trap, retires the VM estate in waves, and shows the cost per workload falling with each one."
   },
   {
    "t": "h2",
-   "x": "What this service is"
+   "x": "Modernization is a behavior change wearing a container costume"
   },
   {
    "t": "p",
-   "x": "Legacy modernization fails when it is a rewrite project; it succeeds when it is a strangler-pattern program with business metrics. We decompose monoliths along domain seams (event-storming first), route traffic incrementally, and retire components on a schedule the business can see — each wave priced in reduced maintenance cost, deployment lead time and incident load, not just in technology fashion."
+   "x": "Modernization is not 'lift and shift' (which moves your problems and adds a bill) or 'rewrite everything' (which never ships). It is wave-based refactoring: containerize, externalize state, adopt managed services where they remove undifferentiated work, and retire VMs on evidence — one workload class at a time."
   },
   {
    "t": "p",
-   "x": "The modernization stack is standard and deliberately plain: containers on Kubernetes, infrastructure-as-code, CI/CD with progressive delivery, observability from day one. For mainframe estates we add automated code analysis, data-state replay testing, and parallel-run verification — because regulated workloads must prove equivalence before cutover, not after an apology."
+   "x": "The discipline mirrors the data domain's strangler pattern: dual-run where risk demands it, diff-driven cutover, and retirement gates that require the workload to prove its reliability posture on the new runtime first."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that strand modernization halfway, the reference architecture of the strangler waves, and the console that tracks the estate's retirement honestly."
   },
   {
    "t": "h2",
-   "x": "The stakes, stated plainly"
+   "x": "Four failure modes that strand modernization halfway"
   },
   {
    "t": "p",
-   "x": "Cloud-Native & Legacy Modernization delivery today concentrates in Banking & Financial Services, Insurance & Risk, Telecom, Media & Entertainment, Public Sector & Government. The metric is chosen with your finance lead, and the baseline is signed before any build begins."
+   "x": "Each of these produces 'we are containerized' estates that still behave like VMs — the countermeasures make resilience and observability gates, not aspirations."
   },
   {
-   "t": "h2",
-   "x": "Inside the engagement"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Cloud-Native & Legacy Modernization: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Domain decomposition",
-     "event-storming-led seam identification and service boundary design"
+     "Lift-and-shift trap",
+     "VMs moved; nothing improved; costs rose",
+     "Refactor ladder per workload class; retirement gates tied to posture"
     ],
     [
-     "Strangler migration",
-     "traffic-routed incremental cutover with parallel-run verification"
+     "Stateful monoliths",
+     "Session state welded to the box",
+     "State externalization first; containerize after"
     ],
     [
-     "Mainframe analysis",
-     "automated code and data-state analysis with equivalence testing"
+     "Managed-service overreach",
+     "Vendor lock hidden in 'managed' choices",
+     "Portability matrix per service choice; exit-cost review"
     ],
     [
-     "Platform standardization",
-     "containers, IaC, CI/CD and progressive delivery as defaults"
-    ],
-    [
-     "Business-metric tracking",
-     "each wave priced in maintenance, lead time and incident load"
+     "Wave sprawl",
+     "Fifty half-migrated workloads",
+     "Wave discipline: complete a class before starting the next"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — waves, strangler, retirement"
+  },
+  {
+   "t": "p",
+   "x": "Workloads move in waves with explicit exit criteria: containerized, observable, resilient under chaos drills, costed per workload — and the VM estate shrinks on a published schedule instead of never."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Cloud-Native & Legacy Modernization",
+   "title": "Reference architecture — modernization factory",
    "lanes": [
-    "Estates",
-    "Migration waves",
-    "Modern runtimes",
-    "Observability",
-    "Governance",
-    "Products"
+    "Legacy estate",
+    "Refactor ladder",
+    "Target runtime",
+    "Managed services",
+    "Cutover",
+    "Retirement"
    ],
    "nodes": [
     {
-     "id": "es0",
+     "id": "vm",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "VM estate"
     },
     {
-     "id": "es1",
+     "id": "mono",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "Monoliths"
     },
     {
-     "id": "mw2",
+     "id": "batch",
+     "lane": 0,
+     "label": "Legacy batch"
+    },
+    {
+     "id": "ladder",
      "lane": 1,
-     "label": "Cloud-Native & Legacy Modernization",
+     "label": "Refactor ladder",
      "hot": true
     },
     {
-     "id": "mw3",
+     "id": "state",
      "lane": 1,
-     "label": "Cutover runbooks",
-     "hot": false
-    },
-    {
-     "id": "mr4",
-     "lane": 2,
-     "label": "Containers & IaC",
-     "hot": false
-    },
-    {
-     "id": "mr5",
-     "lane": 2,
-     "label": "Managed data services",
+     "label": "State externalization",
      "hot": true
     },
     {
-     "id": "ob6",
+     "id": "api",
+     "lane": 1,
+     "label": "Interface extraction"
+    },
+    {
+     "id": "k8s",
+     "lane": 2,
+     "label": "Container platform",
+     "hot": true
+    },
+    {
+     "id": "helm",
+     "lane": 2,
+     "label": "Golden-path deploy"
+    },
+    {
+     "id": "obs",
+     "lane": 2,
+     "label": "Observability wiring"
+    },
+    {
+     "id": "svc",
      "lane": 3,
-     "label": "Golden signals",
-     "hot": false
+     "label": "Managed services",
+     "hot": true
     },
     {
-     "id": "ob7",
+     "id": "port",
      "lane": 3,
-     "label": "Incident automation",
-     "hot": false
+     "label": "Portability matrix"
     },
     {
-     "id": "gv8",
+     "id": "exit",
+     "lane": 3,
+     "label": "Exit-cost review"
+    },
+    {
+     "id": "dual",
      "lane": 4,
-     "label": "Cloud posture (CNAPP)",
-     "hot": false
+     "label": "Dual-run & diff"
     },
     {
-     "id": "gv9",
+     "id": "shift",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Traffic shifting"
     },
     {
-     "id": "pr10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "proof",
+     "lane": 4,
+     "label": "Posture proof",
+     "hot": true
     },
     {
-     "id": "pr11",
+     "id": "gate",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Retirement gate",
+     "hot": true
+    },
+    {
+     "id": "arch",
+     "lane": 5,
+     "label": "Archive"
+    },
+    {
+     "id": "ledger",
+     "lane": 5,
+     "label": "Cost ledger"
     }
    ],
    "edges": [
     {
-     "a": "es0",
-     "b": "mw2"
+     "a": "vm",
+     "b": "ladder",
+     "label": "classify"
     },
     {
-     "a": "es1",
-     "b": "mw3"
+     "a": "mono",
+     "b": "state",
+     "label": "split"
     },
     {
-     "a": "mw2",
-     "b": "mr4"
+     "a": "batch",
+     "b": "ladder",
+     "label": "re-platform"
     },
     {
-     "a": "mw3",
-     "b": "mr5"
+     "a": "ladder",
+     "b": "state",
+     "label": "stage"
     },
     {
-     "a": "mr4",
-     "b": "ob6"
+     "a": "state",
+     "b": "api",
+     "label": "expose"
     },
     {
-     "a": "mr5",
-     "b": "ob7"
+     "a": "ladder",
+     "b": "k8s",
+     "label": "containerize"
     },
     {
-     "a": "ob6",
-     "b": "gv8"
+     "a": "helm",
+     "b": "k8s",
+     "label": "deploy"
     },
     {
-     "a": "gv8",
-     "b": "gv9"
+     "a": "obs",
+     "b": "k8s",
+     "label": "wire"
     },
     {
-     "a": "mr4",
-     "b": "pr10"
+     "a": "ladder",
+     "b": "svc",
+     "label": "adopt"
     },
     {
-     "a": "mr5",
-     "b": "pr11"
+     "a": "svc",
+     "b": "port",
+     "label": "score"
+    },
+    {
+     "a": "port",
+     "b": "exit",
+     "label": "review"
+    },
+    {
+     "a": "k8s",
+     "b": "dual",
+     "label": "compare"
+    },
+    {
+     "a": "dual",
+     "b": "shift",
+     "label": "cutover"
+    },
+    {
+     "a": "shift",
+     "b": "proof",
+     "label": "require"
+    },
+    {
+     "a": "proof",
+     "b": "gate",
+     "label": "evidence"
+    },
+    {
+     "a": "gate",
+     "b": "arch",
+     "label": "decommission"
+    },
+    {
+     "a": "gate",
+     "b": "ledger",
+     "label": "record"
     }
    ],
-   "note": "Topology inherited from the Cloud, Edge & Platform tower; the highlighted core is this service's build."
+   "note": "Posture proof gates retirement: the workload must show its SLO adherence, recovery drills and cost line on the new runtime before the VM dies."
   },
   {
    "t": "h2",
-   "x": "The artifacts, named"
+   "x": "One workload, from VM to resilient service"
   },
   {
    "t": "p",
-   "x": "For Cloud-Native & Legacy Modernization, what your team holds at the end:"
+   "x": "From assessment through containerization, observability wiring, chaos validation and the cutover — including the rollback path and the state migration that monoliths always hide."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Wave flow — classify, refactor, containerize, cut over, retire",
+   "labels": [
+    "Classify workload",
+    "Externalize state",
+    "Containerize",
+    "Adopt managed",
+    "Dual-run & diff",
+    "Shift traffic",
+    "Retire VM"
+   ],
+   "note": "Waves complete by class — all the stateless APIs, then all the batch, then the monolith slices — so lessons compound instead of scattering."
+  },
+  {
+   "t": "h2",
+   "x": "The modernization console — retirement as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Workloads modernized, VM estate remaining and cost per workload — the three numbers that show whether the program is changing behavior or just renaming servers."
+  },
+  {
+   "t": "idash",
+   "title": "Cloud-native modernization — wave console",
+   "kpis": [
+    {
+     "label": "Extractions live",
+     "value": "14",
+     "delta": "of 23 mapped seams",
+     "dir": "up",
+     "spark": [
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14
+     ]
+    },
+    {
+     "label": "Deploy freq (extracted)",
+     "value": "18.2/wk",
+     "delta": "was 0.6 per quarter",
+     "dir": "up",
+     "spark": [
+      3,
+      5,
+      8,
+      11,
+      14,
+      16,
+      18
+     ]
+    },
+    {
+     "label": "Change failure rate",
+     "value": "4.1%",
+     "delta": "extracted paths",
+     "dir": "down",
+     "spark": [
+      14,
+      11,
+      9,
+      7,
+      6,
+      5,
+      4
+     ]
+    },
+    {
+     "label": "Legacy surface",
+     "value": "38%",
+     "delta": "of original call volume",
+     "dir": "down",
+     "spark": [
+      100,
+      88,
+      74,
+      63,
+      52,
+      44,
+      38
+     ]
+    },
+    {
+     "label": "Reconciliation drift",
+     "value": "0",
+     "delta": "dual-write windows closed",
+     "dir": "flat",
+     "spark": [
+      3,
+      2,
+      1,
+      1,
+      0,
+      0,
+      0
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Wave plan",
+     "widgets": [
+      {
+       "kind": "flow",
+       "title": "Modernization waves — click each for scope and unblocked metric",
+       "stages": [
+        {
+         "name": "Wave 1 — Edge seams",
+         "role": "Low coupling, high churn",
+         "detail": "The two modules with divergent change velocity extract first: customer notifications and document generation. Low blast radius, immediate deploy-frequency win, team learns the ratchet mechanics on forgiving ground.",
+         "metrics": [
+          {
+           "label": "Services",
+           "value": "2"
+          },
+          {
+           "label": "Metric",
+           "value": "deploy freq ×12"
+          }
+         ]
+        },
+        {
+         "name": "Wave 2 — Pricing core",
+         "role": "High value, bounded data",
+         "detail": "Pricing extracts with its schema owned outright; the anti-corruption layer translates legacy discount codes. Business unblocks dynamic pricing the monolith could not ship.",
+         "metrics": [
+          {
+           "label": "Services",
+           "value": "1 + ACL"
+          },
+          {
+           "label": "Metric",
+           "value": "pricing TTW 6mo→2wk"
+          }
+         ]
+        },
+        {
+         "name": "Wave 3 — Customer 360",
+         "role": "Event-carried state",
+         "detail": "The tangled data module: state transfer via event stream first, service extraction second. This is the wave the plan reserves the most rehearsal for.",
+         "metrics": [
+          {
+           "label": "Streams",
+           "value": "4"
+          },
+          {
+           "label": "Metric",
+           "value": "support deflection"
+          }
+         ]
+        },
+        {
+         "name": "Wave 4 — Ledger & audit",
+         "role": "Last, deliberately",
+         "detail": "The financial core moves last, when extraction mechanics are boring. Immutable event log lands with it — the audit story improves as a side effect.",
+         "metrics": [
+          {
+           "label": "Services",
+           "value": "2"
+          },
+          {
+           "label": "Metric",
+           "value": "audit prep −70%"
+          }
+         ]
+        }
+       ],
+       "note": "Waves are sequenced by risk × learning value, not by module size — the edge seams exist to make the ratchet boring before the pricing core needs it."
+      }
+     ]
+    },
+    {
+     "name": "Ratchet what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Traffic ratchet what-if — pace vs incident exposure",
+       "params": [
+        {
+         "name": "Ratchet step size",
+         "min": 5,
+         "max": 50,
+         "step": 5,
+         "value": 20,
+         "unit": "% traffic"
+        },
+        {
+         "name": "Bake time / step",
+         "min": 1,
+         "max": 14,
+         "step": 1,
+         "value": 5,
+         "unit": "days"
+        },
+        {
+         "name": "Error budget / wave",
+         "min": 0.1,
+         "max": 2,
+         "step": 0.1,
+         "value": 0.5,
+         "unit": "%"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Wave duration",
+         "unit": "wk",
+         "formula": "100/p0*p1/5",
+         "good": "6",
+         "bad": "14"
+        },
+        {
+         "name": "Exposure / step",
+         "unit": "user-h at risk",
+         "formula": "p0*14*p1*0.9",
+         "good": "400",
+         "bad": "1500"
+        },
+        {
+         "name": "Rollbacks / wave",
+         "unit": "cnt",
+         "formula": "p0*0.12*(1-p2)",
+         "good": "2",
+         "bad": "6"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 2,
+        "label": "Step size vs rollbacks per wave"
+       },
+       "note": "Aggressive ratchets shorten waves and multiply rollbacks — the rollback curve is the argument for bake times that feel slow and are not."
+      }
+     ]
+    },
+    {
+     "name": "Extraction topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "Target architecture — click nodes for the seam contract",
+       "lanes": [
+        "Channels",
+        "Domain services",
+        "Shared platform",
+        "Legacy core"
+       ],
+       "nodes": [
+        {
+         "id": "web",
+         "lane": 0,
+         "label": "Web & mobile",
+         "detail": "Channels talk only to the API gateway; no channel reaches into services or the core directly — the rule that keeps seams honest.",
+         "hot": true
+        },
+        {
+         "id": "gw",
+         "lane": 1,
+         "label": "API gateway",
+         "detail": "Routing with per-service auth and rate budgets; the ratchet lives here — traffic shifts are gateway config, not code."
+        },
+        {
+         "id": "pricing",
+         "lane": 2,
+         "label": "Pricing service",
+         "detail": "Owns its schema outright; the ACL translates legacy discount semantics until the core stops being asked."
+        },
+        {
+         "id": "cust",
+         "lane": 2,
+         "label": "Customer 360",
+         "detail": "Event-carried state from the legacy core; read models per channel need."
+        },
+        {
+         "id": "ledger",
+         "lane": 2,
+         "label": "Ledger service",
+         "detail": "Immutable event log with reconciliation against the core during the transition window."
+        },
+        {
+         "id": "core",
+         "lane": 3,
+         "label": "Legacy core",
+         "detail": "Shrinks by design: each wave moves call volume out; the remainder is measured weekly and reported without euphemism."
+        },
+        {
+         "id": "bus",
+         "lane": 2,
+         "label": "Event backbone",
+         "detail": "Replayable topics between services and core — the integration fabric from the hyperautomation practice."
+        }
+       ],
+       "edges": [
+        {
+         "a": "web",
+         "b": "gw"
+        },
+        {
+         "a": "gw",
+         "b": "pricing"
+        },
+        {
+         "a": "gw",
+         "b": "cust"
+        },
+        {
+         "a": "gw",
+         "b": "ledger"
+        },
+        {
+         "a": "core",
+         "b": "bus",
+         "label": "events"
+        },
+        {
+         "a": "bus",
+         "b": "cust"
+        },
+        {
+         "a": "bus",
+         "b": "ledger",
+         "label": "reconcile"
+        },
+        {
+         "a": "gw",
+         "b": "core",
+         "label": "remaining %"
+        }
+       ],
+       "note": "Click nodes to read the seam contracts. The gateway is where the strangler actually strangles — everything else is consequence."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · ratchet model",
+   "note": "Reference program model: wave metrics and ratchet bands from delivery, not client telemetry."
+  },
+  {
+   "t": "h2",
+   "x": "Cost per workload across the modernization waves"
+  },
+  {
+   "t": "p",
+   "x": "Unit cost trend per wave — the honest curve that shows where managed-service choices paid off and where the lift-and-shift trap quietly priced itself in."
+  },
+  {
+   "t": "chart",
+   "title": "Migration wave progress and economics — design targets",
+   "variant": "line",
+   "cats": [
+    "W1",
+    "W2",
+    "W3",
+    "W4",
+    "W5",
+    "W6"
+   ],
+   "series": [
+    {
+     "name": "VM estate remaining %",
+     "points": [
+      78,
+      68,
+      56,
+      44,
+      30,
+      18
+     ]
+    },
+    {
+     "name": "Cost per workload index",
+     "points": [
+      100,
+      96,
+      89,
+      82,
+      78,
+      74
+     ]
+    },
+    {
+     "name": "Change failure rate %",
+     "points": [
+      16,
+      14,
+      11,
+      9,
+      7,
+      6
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Cloud-Native & Legacy Modernization across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Cloud-Native & Legacy Modernization",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: infrastructure is treated as a product: versioned, observable, costed, and handed to your team with runbooks rather than folklore.",
+     "plays": [
+      "Strangler waves with chaos-gated exit criteria — no container theater",
+      "State migration and rollback paths planned before the cutover",
+      "VM estate retirement on a published schedule, unit cost falling per wave",
+      "Sector working pattern: core-adjacent modernization in Banking & Financial Services, where strangler-pattern decomposition of monolith wrappers around core with parallel-run equivalence."
+     ],
+     "kpis": [
+      {
+       "label": "Workloads modernized",
+       "value": "38/72"
+      },
+      {
+       "label": "VM estate remaining",
+       "value": "44%"
+      },
+      {
+       "label": "Cost per workload",
+       "value": "-22%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": true,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident.",
+     "plays": [
+      "Strangler waves with chaos-gated exit criteria — no container theater",
+      "State migration and rollback paths planned before the cutover",
+      "VM estate retirement on a published schedule, unit cost falling per wave"
+     ],
+     "kpis": [
+      {
+       "label": "Workloads modernized",
+       "value": "38/72"
+      },
+      {
+       "label": "VM estate remaining",
+       "value": "44%"
+      },
+      {
+       "label": "Cost per workload",
+       "value": "-22%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — validated-environment rigidity included — and prove it moved.",
+     "plays": [
+      "Strangler waves with chaos-gated exit criteria — no container theater",
+      "State migration and rollback paths planned before the cutover",
+      "VM estate retirement on a published schedule, unit cost falling per wave"
+     ],
+     "kpis": [
+      {
+       "label": "Workloads modernized",
+       "value": "38/72"
+      },
+      {
+       "label": "VM estate remaining",
+       "value": "44%"
+      },
+      {
+       "label": "Cost per workload",
+       "value": "-22%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident.",
+     "plays": [
+      "Strangler waves with chaos-gated exit criteria — no container theater",
+      "State migration and rollback paths planned before the cutover",
+      "VM estate retirement on a published schedule, unit cost falling per wave"
+     ],
+     "kpis": [
+      {
+       "label": "Workloads modernized",
+       "value": "38/72"
+      },
+      {
+       "label": "VM estate remaining",
+       "value": "44%"
+      },
+      {
+       "label": "Cost per workload",
+       "value": "-22%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Strangler waves with chaos-gated exit criteria — no container theater",
+      "State migration and rollback paths planned before the cutover",
+      "VM estate retirement on a published schedule, unit cost falling per wave"
+     ],
+     "kpis": [
+      {
+       "label": "Workloads modernized",
+       "value": "38/72"
+      },
+      {
+       "label": "VM estate remaining",
+       "value": "44%"
+      },
+      {
+       "label": "Cost per workload",
+       "value": "-22%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: energy cost compounds, quarter after quarter.",
+     "plays": [
+      "Strangler waves with chaos-gated exit criteria — no container theater",
+      "State migration and rollback paths planned before the cutover",
+      "VM estate retirement on a published schedule, unit cost falling per wave"
+     ],
+     "kpis": [
+      {
+       "label": "Workloads modernized",
+       "value": "38/72"
+      },
+      {
+       "label": "VM estate remaining",
+       "value": "44%"
+      },
+      {
+       "label": "Cost per workload",
+       "value": "-22%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what customer and market platforms creak costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Strangler waves with chaos-gated exit criteria — no container theater",
+      "State migration and rollback paths planned before the cutover",
+      "VM estate retirement on a published schedule, unit cost falling per wave"
+     ],
+     "kpis": [
+      {
+       "label": "Workloads modernized",
+       "value": "38/72"
+      },
+      {
+       "label": "VM estate remaining",
+       "value": "44%"
+      },
+      {
+       "label": "Cost per workload",
+       "value": "-22%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — peak surges break planning included — and prove it moved.",
+     "plays": [
+      "Strangler waves with chaos-gated exit criteria — no container theater",
+      "State migration and rollback paths planned before the cutover",
+      "VM estate retirement on a published schedule, unit cost falling per wave",
+      "Sector working pattern: peak surge engineering: elastic capacity with load modeling for trading peaks. Peak absorbed at controlled unit cost is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Workloads modernized",
+       "value": "38/72"
+      },
+      {
+       "label": "VM estate remaining",
+       "value": "44%"
+      },
+      {
+       "label": "Cost per workload",
+       "value": "-22%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the platform work decides the unit economics: right-sized runtimes, automated environments, and FinOps telemetry from the first workload.",
+     "plays": [
+      "Strangler waves with chaos-gated exit criteria — no container theater",
+      "State migration and rollback paths planned before the cutover",
+      "VM estate retirement on a published schedule, unit cost falling per wave"
+     ],
+     "kpis": [
+      {
+       "label": "Workloads modernized",
+       "value": "38/72"
+      },
+      {
+       "label": "VM estate remaining",
+       "value": "44%"
+      },
+      {
+       "label": "Cost per workload",
+       "value": "-22%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Education & Research operators recognize the pattern: research computing fragmented, quarter after quarter.",
+     "plays": [
+      "Strangler waves with chaos-gated exit criteria — no container theater",
+      "State migration and rollback paths planned before the cutover",
+      "VM estate retirement on a published schedule, unit cost falling per wave"
+     ],
+     "kpis": [
+      {
+       "label": "Workloads modernized",
+       "value": "38/72"
+      },
+      {
+       "label": "VM estate remaining",
+       "value": "44%"
+      },
+      {
+       "label": "Cost per workload",
+       "value": "-22%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": true,
+     "hook": "Ask what cloud unit economics opaque costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Strangler waves with chaos-gated exit criteria — no container theater",
+      "State migration and rollback paths planned before the cutover",
+      "VM estate retirement on a published schedule, unit cost falling per wave"
+     ],
+     "kpis": [
+      {
+       "label": "Workloads modernized",
+       "value": "38/72"
+      },
+      {
+       "label": "VM estate remaining",
+       "value": "44%"
+      },
+      {
+       "label": "Cost per workload",
+       "value": "-22%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what season peaks break systems costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Strangler waves with chaos-gated exit criteria — no container theater",
+      "State migration and rollback paths planned before the cutover",
+      "VM estate retirement on a published schedule, unit cost falling per wave"
+     ],
+     "kpis": [
+      {
+       "label": "Workloads modernized",
+       "value": "38/72"
+      },
+      {
+       "label": "VM estate remaining",
+       "value": "44%"
+      },
+      {
+       "label": "Cost per workload",
+       "value": "-22%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/cloud-edge-platform-engineering/"
+    }
+   ],
+   "practiceNote": "Cloud-Native & Legacy Modernization view: workloads rebuilt for cloud-native operations — containerized, observable, resilient by default, with a strangler path that retires VMs on evidence."
+  },
+  {
+   "t": "h2",
+   "x": "Modernization defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor strangler waves with chaos gates over big-bang cutovers; deviation triggers are written because each one trades retirement certainty for schedule hope."
+  },
+  {
+   "t": "table",
+   "caption": "Cloud-Native & Legacy Modernization: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Modernization program with strangler roadmap and wave economics",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Runtime",
+     "Containers on the platform's golden path",
+     "Custom runtimes per team — the platform cannot help them"
     ],
     [
-     "Reference cloud-native platform (K8s, IaC, CI/CD, observability)",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "State",
+     "Managed stores with portability scoring",
+     "Stateful containers without externalization — restarts lose data"
     ],
     [
-     "Parallel-run and equivalence test suite for regulated workloads",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Managed services",
+     "Portability-matrix-scored adoption",
+     "Managed-for-everything — exit costs compound"
     ],
     [
-     "Per-wave business case tracking (cost, lead time, incidents)",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Cutover",
+     "Dual-run with diff evidence",
+     "Flag-day cutovers — one bad weekend defines the program"
+    ],
+    [
+     "Retirement",
+     "Evidence-gated decommission",
+     "Legacy-left-running 'temporarily'"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The technology choices, justified"
+   "x": "Modernization release gates — evidence before each wave"
   },
   {
-   "t": "p",
-   "x": "Cloud-Native & Legacy Modernization is built against defined standards: Kubernetes, Terraform, Argo CD, event streaming, OpenTelemetry observability. Each choice is justified in writing as part of the architecture baseline, so your team can defend it without us in the room."
+   "t": "table",
+   "caption": "Release gates for Cloud-Native & Legacy Modernization — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Ladder gate",
+     "Is the workload classified honestly?",
+     "Ladder assignment with rationale"
+    ],
+    [
+     "State gate",
+     "Is state externalized before containerizing?",
+     "State store evidence; restart drill"
+    ],
+    [
+     "Portability gate",
+     "Are managed choices exit-reviewed?",
+     "Portability matrix scores"
+    ],
+    [
+     "Diff gate",
+     "Does the new runtime match behavior?",
+     "Dual-run diff under bar"
+    ],
+    [
+     "Retirement gate",
+     "Is the posture proven?",
+     "SLO, recovery and cost evidence on new runtime"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "How the work actually runs"
+   "x": "What the engineering teams inherit"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Cloud-Native & Legacy Modernization starts with the measurement: the metric, the owner, the current number, signed."
+     "Refactor ladder",
+     "Per-class plan with wave assignments"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, domain decomposition first, gates written with your team."
+     "Container platform estate",
+     "Workloads on golden paths"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "The Cloud-Native & Legacy Modernization gate review: baseline versus slice, in the metric's own units, plus a scale recommendation your board can audit."
+     "Portability matrix",
+     "Managed-service choices with exit costs"
+    ],
+    [
+     "Dual-run rig",
+     "Diff evidence per cutover"
+    ],
+    [
+     "Retirement packs",
+     "Evidence per decommissioned VM"
+    ],
+    [
+     "Cost ledger",
+     "Per-workload savings trend"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Waves with exit criteria, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — estate census",
+     "Workload inventory, ladder classification, wave plan"
+    ],
+    [
+     "Weeks 3–4 — wave 1 (stateless)",
+     "Containerize, deploy on paths, first dual-runs"
+    ],
+    [
+     "Weeks 5–6 — wave 2 (stateful)",
+     "State externalization, restart drills, containerize"
+    ],
+    [
+     "Weeks 7–8 — wave 3 (managed)",
+     "Portability-scored adoptions, exit reviews"
+    ],
+    [
+     "Weeks 9–10 — retirements",
+     "First VM retirements; cost ledger review"
+    ],
+    [
+     "Wave N — completion",
+     "Class waves compound; monolith sliced last"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — the legacy estate and its consumers"
+  },
+  {
+   "t": "p",
+   "x": "Waves succeed or die on the seams to the legacy estate; these contracts cover the strangler routes, data synchronization and the consumers who must move last."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Platform golden paths",
+     "Deployment via scaffolds"
+    ],
+    [
+     "Managed service providers",
+     "Scored adoption with exit plans"
+    ],
+    [
+     "Data platforms",
+     "State store contracts"
+    ],
+    [
+     "Observability",
+     "Wiring by default"
+    ],
+    [
+     "FinOps",
+     "Cost ledger per workload"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Resilience governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Resilience is a gate, not a hope: chaos drills per wave, backup and restore paths for stateful services, and the managed-service fallback plan written before the outage, not during it."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "State first",
+     "No containerization of welded state"
+    ],
+    [
+     "Exit-cost review",
+     "Managed adoptions carry dated exit plans"
+    ],
+    [
+     "Wave discipline",
+     "A class completes before the next starts"
+    ],
+    [
+     "Posture-proof retirement",
+     "VMs die only after the new runtime proves itself"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Managed-service overreach is reviewed per wave: every managed dependency carries an exit plan and its price — the lock-in ledger ships with the wave's evidence pack."
   },
   {
    "t": "cta",
-   "x": "The next step is small and real: one working session on Cloud-Native & Legacy Modernization, your data, and a written feasibility read you can circulate."
+   "x": "Bring the monolith everyone protects and nobody loves. The diagnostic will price its wave with chaos gates included — and tell you what its retirement date actually requires."
   }
  ],
- "words": 486,
+ "words": 956,
  "section": "Services",
  "l1": "Services",
  "l2": "Cloud, Edge & Platform Engineering",
@@ -278,7 +1246,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Cloud, Edge & Platform Engineering",
+   "title": "Domain overview — Cloud, Edge & Platform Engineering",
    "url": "/services/cloud-edge-platform-engineering/",
    "desc": "Hybrid estates, edge estate and internal platforms — engineered for reliability and unit cost."
   },
@@ -330,33 +1298,51 @@
   {
    "title": "Cyber & Zero-Trust for Agriculture & Food Systems",
    "url": "/industries/agriculture-food/capabilities/cybersecurity-zero-trust/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Hybrid & Multicloud Architecture",
-   "url": "/services/cloud-edge-platform-engineering/hybrid-multicloud-architecture/",
-   "tag": "Same tower",
-   "desc": "The estate as designed system — landing zones, network fabric and workload placement by economics."
+   "title": "SRE & Reliability Engineering",
+   "url": "/services/cloud-edge-platform-engineering/sre-reliability-engineering/",
+   "tag": "Same domain",
+   "desc": "SLOs with teeth — error budgets that gate releases, chaos that proves recovery, and incident craft that turns 3am into a rehearsed system."
   },
   {
    "title": "Edge Computing & Distributed Infrastructure",
    "url": "/services/cloud-edge-platform-engineering/edge-computing-infrastructure/",
-   "tag": "Same tower",
-   "desc": "Compute where the physics is — edge estate for plants, stores, vehicles and grids."
+   "tag": "Same domain",
+   "desc": "compute and delivery close to users and devices — regional clusters with store-and-forward resilience, fleet ops at scale and honest latency budgets."
   },
   {
-   "title": "SRE & Reliability Engineering",
-   "url": "/services/cloud-edge-platform-engineering/sre-reliability-engineering/",
-   "tag": "Same tower",
-   "desc": "Reliability as product — SLOs, error budgets and incident discipline that engineers actually follow."
+   "title": "FinOps & Sustainable Computing",
+   "url": "/services/cloud-edge-platform-engineering/finops-sustainable-computing/",
+   "tag": "Same domain",
+   "desc": "cost and carbon as engineering inputs — unit economics per workload, rightsizing with teeth, and sustainability reported like any SLO."
   },
   {
-   "title": "Platform Engineering & Developer Experience",
-   "url": "/services/cloud-edge-platform-engineering/platform-engineering-devex/",
-   "tag": "Same tower",
-   "desc": "Golden paths, paved roads — an internal platform that turns months into days."
+   "title": "Threat Intelligence & Managed SOC",
+   "url": "/services/cybersecurity-zero-trust/threat-intelligence-managed-soc/",
+   "tag": "Pairs with",
+   "desc": "detection engineering with measured coverage — threat-informed, purple-teamed, and run by a SOC whose speed is measured from detect to contain."
+  },
+  {
+   "title": "Smart Infrastructure, Buildings & Cities",
+   "url": "/services/iot-digital-twin-robotics/smart-infrastructure/",
+   "tag": "Pairs with",
+   "desc": "city and utility scale on the same disciplines — segmented SCADA-safe architectures, service-continuity SLOs, and privacy-first public data."
+  },
+  {
+   "title": "Advanced Risk & Predictive Analytics",
+   "url": "/services/data-analytics-lakehouse/advanced-risk-predictive-analytics/",
+   "tag": "Pairs with",
+   "desc": "risk and forecasting models with signed baselines, time-based holdouts and governance — predictions that survive the quarter they were made in."
+  },
+  {
+   "title": "A tier-1 US bank",
+   "url": "/case-studies/bank-03/",
+   "tag": "Evidence",
+   "desc": "DORA-grade resilience posture — third-party and incident evidence automated."
   }
  ]
 }

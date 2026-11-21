@@ -9,254 +9,1212 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "There is a plain version of data monetization & analytics products: Turn the data estate into revenue — embedded analytics, data sharing and insight products with real P&L. We run it with named gates, signed baselines and a weekly evidence cadence — the details are below, in the order they happen."
+   "x": "Data as a product for external consumption: contracts and SLAs your customers can rely on, purpose limits that bind, billing that reconciles to the byte, and onboarding measured in days — with controls that get stricter the moment revenue appears."
   },
   {
    "t": "h2",
-   "x": "What this service is"
+   "x": "Selling data is a controls business wearing a revenue costume"
   },
   {
    "t": "p",
-   "x": "Data products are products: they need customers, pricing, SLAs and a roadmap. We help enterprises identify monetizable data assets (telemetry, benchmarks, risk indices, usage analytics), design the product form — embedded analytics in customer portals, subscription insight reports, data-sharing partnerships, marketplace listings — and build the delivery stack: clean rooms, entitlement service, usage metering and billing hooks."
+   "x": "Selling or sharing data products inverts the governance problem: external consumers, contractual SLAs, billing, and regulators who treat your product as their evidence. The engineering is productization — tiered APIs, quality SLAs with credits, entitlement enforcement, and audit packs your customers can hand to theirs."
   },
   {
    "t": "p",
-   "x": "Commercial discipline comes from a thin-slice launch: one customer segment, one insight product, measured willingness-to-pay before platform investment. Legal and privacy architecture (consent scopes, aggregation thresholds, clean-room analytics) is designed in from the first sprint, because data products that cannot answer privacy questions do not survive procurement."
+   "x": "The commercial discipline matters equally: which data can legally and ethically leave, under what purpose limits, priced against the cost to serve. Monetization without that discipline becomes a liability with a price tag."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that make data products liabilities, the reference architecture of a governed data product, and the console that runs it like the product business it is."
   },
   {
    "t": "h2",
-   "x": "Why this matters here"
+   "x": "Four failure modes that turn data products into liabilities"
   },
   {
    "t": "p",
-   "x": "Data Monetization & Analytics Products delivery today concentrates in Technology & SaaS, Telecom, Media & Entertainment, Manufacturing & Industrial, Retail & Consumer Goods. The metric is chosen with your finance lead, and the baseline is signed before any build begins."
+   "x": "Every one of these is survivable as an internal dashboard and fatal as a billed product — the countermeasures assume revenue, regulators and lawyers are watching."
   },
   {
-   "t": "h2",
-   "x": "Inside the engagement"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Data Monetization & Analytics Products: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Asset & market assessment",
-     "which data, for whom, at what willingness-to-pay"
+     "Compliance gaps",
+     "Shared data contains more than the contract allowed",
+     "Purpose-limit enforcement at egress; contract-to-schema traceability"
     ],
     [
-     "Product design",
-     "embedded analytics, subscription insights, sharing or marketplace forms"
+     "SLA fiction",
+     "Uptime promised without measurement or credits",
+     "Product SLOs monitored; credit process automated"
     ],
     [
-     "Delivery stack",
-     "clean rooms, entitlements, metering and billing integration"
+     "Billing opacity",
+     "Consumers dispute usage bills monthly",
+     "Metered usage with exportable evidence per invoice line"
     ],
     [
-     "Privacy architecture",
-     "consent scopes, aggregation thresholds and clean-room analytics design"
-    ],
-    [
-     "Thin-slice launch",
-     "one segment, one product, measured before scale-up"
+     "Onboarding drag",
+     "Every new consumer is a two-month project",
+     "Self-serve onboarding with entitlement templates and sandbox"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the governed data product surface"
+  },
+  {
+   "t": "p",
+   "x": "Product surface and control plane are one design: entitlement and purpose limits enforced at query time, usage metering that reconciles to billing, SLAs with error budgets, and the onboarding pipeline that makes the sixth customer cheaper than the first."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Data Monetization & Analytics Products",
+   "title": "Reference architecture — data product delivery plane",
    "lanes": [
-    "Estates",
-    "Contracts",
-    "Lakehouse",
-    "Governance",
-    "Consumers",
-    "Actions"
+    "Product core",
+    "Contract layer",
+    "Delivery",
+    "Commercial",
+    "Consumer side",
+    "Assurance"
    ],
    "nodes": [
     {
-     "id": "es0",
+     "id": "prod",
      "lane": 0,
-     "label": "Product telemetry",
-     "hot": false
-    },
-    {
-     "id": "es1",
-     "lane": 0,
-     "label": "Billing & entitlements",
-     "hot": false
-    },
-    {
-     "id": "ct2",
-     "lane": 1,
-     "label": "Schema registry",
-     "hot": false
-    },
-    {
-     "id": "ct3",
-     "lane": 1,
-     "label": "Quality gates",
-     "hot": false
-    },
-    {
-     "id": "lh4",
-     "lane": 2,
-     "label": "Data Monetization & Analytics Products",
+     "label": "Product datasets",
      "hot": true
     },
     {
-     "id": "lh5",
+     "id": "lic",
+     "lane": 0,
+     "label": "Licensing catalog"
+    },
+    {
+     "id": "qual",
+     "lane": 0,
+     "label": "Product quality"
+    },
+    {
+     "id": "terms",
+     "lane": 1,
+     "label": "Usage terms",
+     "hot": true
+    },
+    {
+     "id": "purp",
+     "lane": 1,
+     "label": "Purpose limits",
+     "hot": true
+    },
+    {
+     "id": "schema",
+     "lane": 1,
+     "label": "Product schemas"
+    },
+    {
+     "id": "api",
      "lane": 2,
-     "label": "Cost-aware storage",
-     "hot": false
+     "label": "Product APIs"
     },
     {
-     "id": "gv6",
+     "id": "files",
+     "lane": 2,
+     "label": "Secure exports"
+    },
+    {
+     "id": "stream",
+     "lane": 2,
+     "label": "Streaming delivery"
+    },
+    {
+     "id": "meter",
      "lane": 3,
-     "label": "Lineage & catalog",
-     "hot": false
+     "label": "Usage metering",
+     "hot": true
     },
     {
-     "id": "gv7",
+     "id": "bill",
      "lane": 3,
-     "label": "Access policies",
-     "hot": false
+     "label": "Billing engine"
     },
     {
-     "id": "cs8",
+     "id": "slo",
+     "lane": 3,
+     "label": "Product SLOs"
+    },
+    {
+     "id": "onboard",
      "lane": 4,
-     "label": "Growth & pricing console",
-     "hot": false
+     "label": "Self-serve onboarding"
     },
     {
-     "id": "cs9",
+     "id": "sandbox",
      "lane": 4,
-     "label": "Customer-success cockpit",
-     "hot": false
+     "label": "Consumer sandbox"
     },
     {
-     "id": "ac10",
-     "lane": 5,
-     "label": "Owned decisions",
-     "hot": false
+     "id": "keys",
+     "lane": 4,
+     "label": "Entitlement keys"
     },
     {
-     "id": "ac11",
+     "id": "audit",
      "lane": 5,
-     "label": "Metric disputes closed",
-     "hot": false
+     "label": "Audit packs",
+     "hot": true
+    },
+    {
+     "id": "credit",
+     "lane": 5,
+     "label": "SLA credits"
+    },
+    {
+     "id": "egress",
+     "lane": 5,
+     "label": "Egress enforcement",
+     "hot": true
     }
    ],
    "edges": [
     {
-     "a": "es0",
-     "b": "ct2"
+     "a": "prod",
+     "b": "api",
+     "label": "serve"
     },
     {
-     "a": "es1",
-     "b": "ct3"
+     "a": "prod",
+     "b": "files",
+     "label": "export"
     },
     {
-     "a": "ct2",
-     "b": "lh4"
+     "a": "prod",
+     "b": "stream",
+     "label": "feed"
     },
     {
-     "a": "ct3",
-     "b": "lh5"
+     "a": "lic",
+     "b": "terms",
+     "label": "bind"
     },
     {
-     "a": "lh4",
-     "b": "gv6"
+     "a": "terms",
+     "b": "purp",
+     "label": "limits"
     },
     {
-     "a": "lh5",
-     "b": "gv7"
+     "a": "schema",
+     "b": "api",
+     "label": "contract"
     },
     {
-     "a": "gv6",
-     "b": "cs8"
+     "a": "api",
+     "b": "meter",
+     "label": "record"
     },
     {
-     "a": "gv7",
-     "b": "cs9"
+     "a": "files",
+     "b": "meter",
+     "label": "record"
     },
     {
-     "a": "cs8",
-     "b": "ac10"
+     "a": "meter",
+     "b": "bill",
+     "label": "invoice"
     },
     {
-     "a": "cs9",
-     "b": "ac11"
+     "a": "slo",
+     "b": "credit",
+     "label": "on breach"
+    },
+    {
+     "a": "keys",
+     "b": "api",
+     "label": "authz"
+    },
+    {
+     "a": "keys",
+     "b": "files",
+     "label": "authz"
+    },
+    {
+     "a": "onboard",
+     "b": "keys",
+     "label": "issue"
+    },
+    {
+     "a": "onboard",
+     "b": "sandbox",
+     "label": "trial"
+    },
+    {
+     "a": "purp",
+     "b": "egress",
+     "label": "enforce"
+    },
+    {
+     "a": "egress",
+     "b": "audit",
+     "label": "log"
+    },
+    {
+     "a": "slo",
+     "b": "audit",
+     "label": "evidence"
     }
    ],
-   "note": "Topology inherited from the Data & Lakehouse tower; the highlighted core is this service's build."
+   "note": "Purpose limits are enforced at egress, not in the contract PDF: a query that violates the licensed purpose fails at the gate with the clause cited."
   },
   {
    "t": "h2",
-   "x": "Deliverables, without dressing them up"
+   "x": "One subscription, from entitlement to invoice"
   },
   {
    "t": "p",
-   "x": "what your team holds at the end, Data Monetization & Analytics Products edition:"
+   "x": "From contract signing through entitlement provisioning, purpose-limited queries, metered usage and the billing reconciliation — including where a purpose-limit block is logged and reviewed."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Consumer journey — onboard, entitle, consume, meter, assure",
+   "labels": [
+    "Discover catalog",
+    "Contract & terms",
+    "Self-serve onboard",
+    "Entitle & sandbox",
+    "Consume (API/file/stream)",
+    "Meter & bill",
+    "Audit & credits"
+   ],
+   "note": "The sandbox is the sales engine: consumers validate fit in days, and the same entitlement keys graduate to production without a new project."
+  },
+  {
+   "t": "h2",
+   "x": "The product console — SLOs and invoices that agree"
+  },
+  {
+   "t": "p",
+   "x": "SLO adherence, onboarding time, billing accuracy and purpose-limit blocks — the four numbers that decide whether the product is a business or a regulatory incident waiting for a date."
+  },
+  {
+   "t": "idash",
+   "title": "Data monetization — product console",
+   "kpis": [
+    {
+     "label": "Products in catalog",
+     "value": "9",
+     "delta": "5 internal, 3 external, 1 embedded",
+     "dir": "up",
+     "spark": [
+      2,
+      3,
+      5,
+      6,
+      7,
+      8,
+      9
+     ]
+    },
+    {
+     "label": "Annual product revenue",
+     "value": "4.2",
+     "delta": "$M, external + embedded",
+     "dir": "up",
+     "spark": [
+      0.4,
+      0.9,
+      1.6,
+      2.3,
+      3.0,
+      3.7,
+      4.2
+     ]
+    },
+    {
+     "label": "Internal hours saved",
+     "value": "8.4k",
+     "delta": "per year, measured",
+     "dir": "up",
+     "spark": [
+      1.2,
+      2.6,
+      4.0,
+      5.4,
+      6.6,
+      7.6,
+      8.4
+     ]
+    },
+    {
+     "label": "Contract adherence",
+     "value": "99.2%",
+     "delta": "SLA + quality gates",
+     "dir": "up",
+     "spark": [
+      74,
+      82,
+      88,
+      92,
+      95,
+      97,
+      99
+     ]
+    },
+    {
+     "label": "Churn (external)",
+     "value": "3.1%",
+     "delta": "annual logo churn",
+     "dir": "down",
+     "spark": [
+      9,
+      7.5,
+      6.2,
+      5.1,
+      4.3,
+      3.6,
+      3.1
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Portfolio map",
+     "widgets": [
+      {
+       "kind": "scatter",
+       "title": "Product portfolio — value delivered vs adoption depth",
+       "points": [
+        {
+         "x": 82,
+         "y": 64,
+         "label": "Pricing intelligence",
+         "group": "External"
+        },
+        {
+         "x": 64,
+         "y": 78,
+         "label": "Ops cockpit",
+         "group": "Internal"
+        },
+        {
+         "x": 71,
+         "y": 41,
+         "label": "Risk feed API",
+         "group": "External"
+        },
+        {
+         "x": 48,
+         "y": 72,
+         "label": "Executive daily",
+         "group": "Internal"
+        },
+        {
+         "x": 38,
+         "y": 55,
+         "label": "Customer health API",
+         "group": "Embedded"
+        },
+        {
+         "x": 55,
+         "y": 28,
+         "label": "Benchmark set",
+         "group": "External"
+        },
+        {
+         "x": 30,
+         "y": 68,
+         "label": "Catalog search",
+         "group": "Internal"
+        },
+        {
+         "x": 66,
+         "y": 58,
+         "label": "Demand forecast feed",
+         "group": "External"
+        },
+        {
+         "x": 24,
+         "y": 38,
+         "label": "Metadata extract",
+         "group": "Internal"
+        },
+        {
+         "x": 42,
+         "y": 22,
+         "label": "One-off exports",
+         "group": "Sunset"
+        }
+       ],
+       "groups": [
+        "External",
+        "Internal",
+        "Embedded",
+        "Sunset"
+       ],
+       "xLabel": "Value (0-100)",
+       "yLabel": "Adoption depth (0-100)",
+       "note": "Hover for names. The sunsetting one-off exports is deliberate — they are the anti-product: no contract, no owner, no SLA, unlimited support cost."
+      }
+     ]
+    },
+    {
+     "name": "Pricing what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Monetization what-if — tiers, coverage, adoption curve",
+       "params": [
+        {
+         "name": "Target accounts",
+         "min": 20,
+         "max": 500,
+         "step": 10,
+         "value": 140,
+         "unit": "accounts"
+        },
+        {
+         "name": "Price point",
+         "min": 5,
+         "max": 120,
+         "step": 5,
+         "value": 42,
+         "unit": "$k/yr tier"
+        },
+        {
+         "name": "Adoption rate",
+         "min": 5,
+         "max": 80,
+         "step": 5,
+         "value": 28,
+         "unit": "% of target"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Annual revenue",
+         "unit": "$M",
+         "formula": "p0*p1*p2/100/1000",
+         "good": "1.5",
+         "bad": "0.5"
+        },
+        {
+         "name": "Gross margin",
+         "unit": "%",
+         "formula": "min(88, 92-p0*0.06-p1*0.15)",
+         "good": "70",
+         "bad": "50"
+        },
+        {
+         "name": "Payback (build)",
+         "unit": "mo",
+         "formula": "max(6, 380/(p0*p1*p2/100/1000*1000/12))",
+         "good": "14",
+         "bad": "30"
+        }
+       ],
+       "curve": {
+        "param": 2,
+        "output": 0,
+        "label": "Adoption rate vs annual revenue"
+       },
+       "note": "The adoption dial dominates: price cuts of 20% move revenue less than adoption gains of 20 points — which is why the product contract and onboarding come before the price list."
+      }
+     ]
+    },
+    {
+     "name": "Product lifecycle",
+     "widgets": [
+      {
+       "kind": "flow",
+       "title": "Data product lifecycle — click stages for the gate",
+       "stages": [
+        {
+         "name": "Discover",
+         "role": "Willingness-to-pay",
+         "detail": "Candidates ranked by measured demand evidence: internal hours × breadth, external pilot quotes, embedded usage telemetry — no product starts from a hunch.",
+         "metrics": [
+          {
+           "label": "Evidence bar",
+           "value": "signed"
+          },
+          {
+           "label": "Kill rate",
+           "value": "~50%"
+          }
+         ]
+        },
+        {
+         "name": "Contract",
+         "role": "Signed definition",
+         "detail": "Schema, semantics, SLAs, quality gates, versioning and support — the contract is signed by the owner before engineering begins.",
+         "metrics": [
+          {
+           "label": "Contract",
+           "value": "versioned"
+          },
+          {
+           "label": "Owner",
+           "value": "named"
+          }
+         ]
+        },
+        {
+         "name": "Build",
+         "role": "On the platform",
+         "detail": "Built on the lakehouse gold layer with the contract as tests: freshness budgets wired to pipelines, quality gates from the contract clauses.",
+         "metrics": [
+          {
+           "label": "Gates as tests",
+           "value": "yes"
+          },
+          {
+           "label": "Lineage",
+           "value": "complete"
+          }
+         ]
+        },
+        {
+         "name": "Launch",
+         "role": "Adoption measured",
+         "detail": "Launch with instrumentation: adoption telemetry, support tickets as product feedback, and the first quarterly contract review scheduled.",
+         "metrics": [
+          {
+           "label": "Telemetry",
+           "value": "from day 1"
+          },
+          {
+           "label": "Feedback",
+           "value": "ticket-mined"
+          }
+         ]
+        },
+        {
+         "name": "Run & sunset",
+         "role": "Lifecycle discipline",
+         "detail": "Quarterly contract reviews, deprecation policy honored with migration windows — and products that stop earning get sunset with the same care as launches.",
+         "metrics": [
+          {
+           "label": "Reviews",
+           "value": "quarterly"
+          },
+          {
+           "label": "Sunset policy",
+           "value": "published"
+          }
+         ]
+        }
+       ],
+       "note": "The lifecycle's honesty lives in stage 5: a catalog that never sunsets anything is a museum with an SLA problem."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · pricing model",
+   "note": "Reference program model: portfolio bands and pricing curves from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Product economics by consumer tier"
+  },
+  {
+   "t": "p",
+   "x": "Revenue and serving cost per consumer tier — the shape that decides pricing reviews, tier design and where serving costs threaten margin before someone else finds out."
+  },
+  {
+   "t": "chart",
+   "title": "Product economics by consumer tier — design targets",
+   "variant": "bar",
+   "cats": [
+    "Trial",
+    "Standard",
+    "Premium",
+    "Embedded"
+   ],
+   "series": [
+    {
+     "name": "SLO target %",
+     "points": [
+      97,
+      99,
+      99.5,
+      99.9
+     ]
+    },
+    {
+     "name": "Cost-to-serve index",
+     "points": [
+      20,
+      55,
+      85,
+      100
+     ]
+    },
+    {
+     "name": "Onboarding days target",
+     "points": [
+      2,
+      5,
+      8,
+      14
+     ]
+    }
+   ],
+   "yMax": 110,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Data Monetization & Analytics Products across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Data Monetization & Analytics Products",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Ask what fraud and AML decisions too slow costs Banking & Financial Services firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Entitlement and purpose limits enforced at query time, logged and reviewed",
+      "Usage metering that reconciles to billing — exactly",
+      "Onboarding measured in days, with the sixth customer cheaper than the first"
+     ],
+     "kpis": [
+      {
+       "label": "Product SLO adherence",
+       "value": "99.3%"
+      },
+      {
+       "label": "Onboarding time",
+       "value": "6 days"
+      },
+      {
+       "label": "Usage billed accuracy",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Insurance & Risk operators recognize the pattern: claims, policy and exposure data fragmented, quarter after quarter.",
+     "plays": [
+      "Entitlement and purpose limits enforced at query time, logged and reviewed",
+      "Usage metering that reconciles to billing — exactly",
+      "Onboarding measured in days, with the sixth customer cheaper than the first"
+     ],
+     "kpis": [
+      {
+       "label": "Product SLO adherence",
+       "value": "99.3%"
+      },
+      {
+       "label": "Onboarding time",
+       "value": "6 days"
+      },
+      {
+       "label": "Usage billed accuracy",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": true,
+     "hook": "Healthcare & Life Sciences operators recognize the pattern: trial recruitment and RWE pipelines manual, quarter after quarter.",
+     "plays": [
+      "Entitlement and purpose limits enforced at query time, logged and reviewed",
+      "Usage metering that reconciles to billing — exactly",
+      "Onboarding measured in days, with the sixth customer cheaper than the first"
+     ],
+     "kpis": [
+      {
+       "label": "Product SLO adherence",
+       "value": "99.3%"
+      },
+      {
+       "label": "Onboarding time",
+       "value": "6 days"
+      },
+      {
+       "label": "Usage billed accuracy",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Entitlement and purpose limits enforced at query time, logged and reviewed",
+      "Usage metering that reconciles to billing — exactly",
+      "Onboarding measured in days, with the sixth customer cheaper than the first",
+      "Sector working pattern: plant data backbone — OPC UA/Sparkplug telemetry, MES and quality records unified with lineage. Root cause in hours, not weeks is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Product SLO adherence",
+       "value": "99.3%"
+      },
+      {
+       "label": "Onboarding time",
+       "value": "6 days"
+      },
+      {
+       "label": "Usage billed accuracy",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the work is pipeline and lakehouse engineering — modeled once, certified once, reused everywhere the decision appears.",
+     "plays": [
+      "Entitlement and purpose limits enforced at query time, logged and reviewed",
+      "Usage metering that reconciles to billing — exactly",
+      "Onboarding measured in days, with the sixth customer cheaper than the first"
+     ],
+     "kpis": [
+      {
+       "label": "Product SLO adherence",
+       "value": "99.3%"
+      },
+      {
+       "label": "Onboarding time",
+       "value": "6 days"
+      },
+      {
+       "label": "Usage billed accuracy",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": true,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: network telemetry underused, quarter after quarter.",
+     "plays": [
+      "Entitlement and purpose limits enforced at query time, logged and reviewed",
+      "Usage metering that reconciles to billing — exactly",
+      "Onboarding measured in days, with the sixth customer cheaper than the first"
+     ],
+     "kpis": [
+      {
+       "label": "Product SLO adherence",
+       "value": "99.3%"
+      },
+      {
+       "label": "Onboarding time",
+       "value": "6 days"
+      },
+      {
+       "label": "Usage billed accuracy",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Energy & Utilities operators recognize the pattern: forecasting under intermittency, quarter after quarter.",
+     "plays": [
+      "Entitlement and purpose limits enforced at query time, logged and reviewed",
+      "Usage metering that reconciles to billing — exactly",
+      "Onboarding measured in days, with the sixth customer cheaper than the first"
+     ],
+     "kpis": [
+      {
+       "label": "Product SLO adherence",
+       "value": "99.3%"
+      },
+      {
+       "label": "Onboarding time",
+       "value": "6 days"
+      },
+      {
+       "label": "Usage billed accuracy",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: visibility stitched from portals, quarter after quarter.",
+     "plays": [
+      "Entitlement and purpose limits enforced at query time, logged and reviewed",
+      "Usage metering that reconciles to billing — exactly",
+      "Onboarding measured in days, with the sixth customer cheaper than the first",
+      "Sector working pattern: control-tower event spine in Logistics & Supply Chain, where TMS/WMS/telematics/carrier events streamed into one governed estate. Network truth in seconds is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Product SLO adherence",
+       "value": "99.3%"
+      },
+      {
+       "label": "Onboarding time",
+       "value": "6 days"
+      },
+      {
+       "label": "Usage billed accuracy",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "Public Sector & Government operators recognize the pattern: agency data islands, quarter after quarter.",
+     "plays": [
+      "Entitlement and purpose limits enforced at query time, logged and reviewed",
+      "Usage metering that reconciles to billing — exactly",
+      "Onboarding measured in days, with the sixth customer cheaper than the first"
+     ],
+     "kpis": [
+      {
+       "label": "Product SLO adherence",
+       "value": "99.3%"
+      },
+      {
+       "label": "Onboarding time",
+       "value": "6 days"
+      },
+      {
+       "label": "Usage billed accuracy",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we make the source systems agree: one governed definition per metric, streaming where the decision is time-critical, batch where it is not.",
+     "plays": [
+      "Entitlement and purpose limits enforced at query time, logged and reviewed",
+      "Usage metering that reconciles to billing — exactly",
+      "Onboarding measured in days, with the sixth customer cheaper than the first",
+      "Sector working pattern: student success platform: SIS/LMS/support data unified with outcome lineage. Intervention targeting measurable is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Product SLO adherence",
+       "value": "99.3%"
+      },
+      {
+       "label": "Onboarding time",
+       "value": "6 days"
+      },
+      {
+       "label": "Usage billed accuracy",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": true,
+     "hook": "Technology & SaaS operators recognize the pattern: data moat unrealized, quarter after quarter.",
+     "plays": [
+      "Entitlement and purpose limits enforced at query time, logged and reviewed",
+      "Usage metering that reconciles to billing — exactly",
+      "Onboarding measured in days, with the sixth customer cheaper than the first"
+     ],
+     "kpis": [
+      {
+       "label": "Product SLO adherence",
+       "value": "99.3%"
+      },
+      {
+       "label": "Onboarding time",
+       "value": "6 days"
+      },
+      {
+       "label": "Usage billed accuracy",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Agriculture & Food Systems operators recognize the pattern: chain data broken at every handoff, quarter after quarter.",
+     "plays": [
+      "Entitlement and purpose limits enforced at query time, logged and reviewed",
+      "Usage metering that reconciles to billing — exactly",
+      "Onboarding measured in days, with the sixth customer cheaper than the first"
+     ],
+     "kpis": [
+      {
+       "label": "Product SLO adherence",
+       "value": "99.3%"
+      },
+      {
+       "label": "Onboarding time",
+       "value": "6 days"
+      },
+      {
+       "label": "Usage billed accuracy",
+       "value": "100%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/"
+    }
+   ],
+   "practiceNote": "Data Monetization & Analytics Products view: data as a product for external consumption — contracts, SLAs, purpose limits and billing, with controls that get stronger the moment data leaves the building."
+  },
+  {
+   "t": "h2",
+   "x": "Product stack defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor entitlement-first design with metered egress over export-and-hope; deviation triggers are written because each one moves purpose limits from enforced to promised."
+  },
+  {
+   "t": "table",
+   "caption": "Data Monetization & Analytics Products: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Launched data/analytics product with paying customers and SLAs",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Productization",
+     "Tiered product datasets with quality SLAs",
+     "Selling raw internal tables — controls and docs never fit"
     ],
     [
-     "Monetization strategy with pricing and packaging model",
-     "Handed to a named owner on your side, with a working session included."
+     "Entitlement",
+     "Purpose limits enforced at egress",
+     "Contract PDFs only — enforcement lives in the gate"
     ],
     [
-     "Entitlement, metering and billing integration",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Metering",
+     "Event-level metering with invoice export",
+     "Estimates from logs — disputes are guaranteed"
     ],
     [
-     "Privacy and legal architecture documentation",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Delivery",
+     "APIs + signed exports + streams per tier",
+     "One-size delivery — premium and trial have different economics"
+    ],
+    [
+     "Assurance",
+     "Automated audit packs per consumer",
+     "Hand-built audit responses per request — it does not scale"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Standards and components"
+   "x": "Product release gates — evidence before revenue"
   },
   {
-   "t": "p",
-   "x": "Data Monetization & Analytics Products ships against Databricks Clean Rooms, Delta Sharing, entitlement services, metering stacks, embedded BI. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for Data Monetization & Analytics Products — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Licensing gate",
+     "Can this data legally and ethically be shared?",
+     "Licensing review; purpose-limit matrix"
+    ],
+    [
+     "Traceability gate",
+     "Do terms map to schema fields?",
+     "Clause-to-field traceability report"
+    ],
+    [
+     "Egress gate",
+     "Are purpose limits enforced?",
+     "Gate tests; block evidence with clause citations"
+    ],
+    [
+     "Metering gate",
+     "Is billing evidence-grade?",
+     "Metering audit; invoice reconciliation samples"
+    ],
+    [
+     "SLO gate",
+     "Are SLAs measured with credits?",
+     "SLO dashboards; credit process runbook"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "How the work actually runs"
+   "x": "What the data product team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Data Monetization & Analytics Products starts with the measurement: the metric, the owner, the current number, signed."
+     "Product catalog",
+     "Tiered products with licensing and quality badges"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, asset & market assessment first, gates written with your team."
+     "Purpose-limit matrix",
+     "Clause-to-field mapping enforced at egress"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Data Monetization & Analytics Products closes its first quarter at the gate: the working slice is measured against the baseline your team signed, and the scale decision is written down with the evidence attached."
+     "Delivery plane",
+     "APIs, signed exports and streams per tier"
+    ],
+    [
+     "Metering & billing rig",
+     "Evidence-grade usage records and invoice exports"
+    ],
+    [
+     "Self-serve onboarding",
+     "Entitlement templates, sandbox, key lifecycle"
+    ],
+    [
+     "Audit pack generator",
+     "Per-consumer assurance bundles on demand"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Product launch path, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — product & licensing",
+     "Product selection, licensing review, purpose-limit matrix"
+    ],
+    [
+     "Weeks 3–4 — productization",
+     "Tier schemas, quality SLAs, documentation"
+    ],
+    [
+     "Weeks 5–6 — delivery",
+     "APIs, export pipeline, streams; entitlement keys"
+    ],
+    [
+     "Weeks 7–8 — commercial",
+     "Metering, billing engine, credit runbook"
+    ],
+    [
+     "Weeks 9–10 — onboarding & assurance",
+     "Self-serve flow, sandbox, audit pack generator"
+    ],
+    [
+     "Ongoing — product ops",
+     "SLO reviews; consumer health; quarterly licensing audit"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — entitlement, billing and the customer estate"
+  },
+  {
+   "t": "p",
+   "x": "The product touches your commercial stack as much as your data platform; these contracts carry entitlements, meters and invoices without manual reconciliation."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Lakehouse gold",
+     "Product dataset sourcing with quality gates"
+    ],
+    [
+     "Billing systems",
+     "Invoice export and reconciliation"
+    ],
+    [
+     "Identity & keys",
+     "Entitlement lifecycle"
+    ],
+    [
+     "Legal & compliance",
+     "Licensing workflow and audit packs"
+    ],
+    [
+     "Consumer portals",
+     "Docs, sandbox and usage dashboards"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Compliance overlay — purpose limits that bind"
+  },
+  {
+   "t": "p",
+   "x": "Purpose limitations are enforced at query time with logged blocks, reviewed by the privacy office — the control a regulator tests first, built as a structural property rather than a contract clause."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Egress gate",
+     "Purpose limits enforced in code with clause citations"
+    ],
+    [
+     "Usage evidence",
+     "Metering records retained and exportable per invoice"
+    ],
+    [
+     "SLO credits",
+     "Credit process automated against monitored SLOs"
+    ],
+    [
+     "Consumer audit",
+     "Audit packs generated from immutable logs"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Purpose-limit blocks are reviewed weekly with the privacy office: a block is the control working, and the review is where product scope and legal scope stay aligned."
   },
   {
    "t": "cta",
-   "x": "Bring Data Monetization & Analytics Products to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
+   "x": "If your data is valuable enough to sell, it is regulated enough to control. Bring the use case to a briefing — we will price the governed product surface against the liability of shipping without it."
   }
  ],
- "words": 502,
+ "words": 1034,
  "section": "Services",
  "l1": "Services",
  "l2": "Data, Analytics & Lakehouse",
@@ -278,7 +1236,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Data, Analytics & Lakehouse",
+   "title": "Domain overview — Data, Analytics & Lakehouse",
    "url": "/services/data-analytics-lakehouse/",
    "desc": "Trusted data, delivered in near real time — pipelines, lakehouse and governance that holds up under audit."
   },
@@ -330,33 +1288,51 @@
   {
    "title": "Quantum & Advanced Compute for Banking & Financial Services",
    "url": "/industries/banking-financial-services/capabilities/quantum-advanced-compute/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
+   "title": "Advanced Risk & Predictive Analytics",
+   "url": "/services/data-analytics-lakehouse/advanced-risk-predictive-analytics/",
+   "tag": "Same domain",
+   "desc": "risk and forecasting models with signed baselines, time-based holdouts and governance — predictions that survive the quarter they were made in."
+  },
+  {
    "title": "Data Engineering & Pipeline Modernization",
    "url": "/services/data-analytics-lakehouse/data-engineering-modernization/",
-   "tag": "Same tower",
-   "desc": "Resilient, observable pipelines — trusted data from source to decision at SLA."
-  },
-  {
-   "title": "Lakehouse Architecture & Migration",
-   "url": "/services/data-analytics-lakehouse/lakehouse-architecture/",
-   "tag": "Same tower",
-   "desc": "Lakehouse the right way — Unity Catalog governance, cost-aware design and AI-ready foundations."
-  },
-  {
-   "title": "Real-Time Streaming & Event-Driven Decisioning",
-   "url": "/services/data-analytics-lakehouse/realtime-streaming-decisioning/",
-   "tag": "Same tower",
-   "desc": "Decisions at event speed — sub-second pipelines from sensor, click or transaction to action."
+   "tag": "Same domain",
+   "desc": "legacy pipelines rebuilt as typed, contract-gated, observable jobs — with a strangler pattern that retires the old estate without a big-bang cutover."
   },
   {
    "title": "Enterprise BI & Executive Analytics",
    "url": "/services/data-analytics-lakehouse/enterprise-bi-executive-analytics/",
-   "tag": "Same tower",
-   "desc": "Metrics into management — one governed semantic layer, decision cadence built in."
+   "tag": "Same domain",
+   "desc": "decision-grade reporting with one truth per metric — certified datasets, metric contracts and an executive layer that does not argue with itself."
+  },
+  {
+   "title": "RAG & Enterprise Knowledge Systems",
+   "url": "/services/applied-ai-generative-ai/rag-knowledge-systems/",
+   "tag": "Pairs with",
+   "desc": "permission-aware retrieval over your regulated document estate, with answers that cite their sources and refuse when the ground is thin."
+  },
+  {
+   "title": "Agentic Process Automation",
+   "url": "/services/agentic-ai-hyperautomation/agentic-process-automation/",
+   "tag": "Pairs with",
+   "desc": "role-scoped agents that execute process steps under policy bounds, with human checkpoints placed by risk and replay for every action taken."
+  },
+  {
+   "title": "Edge Computing & Distributed Infrastructure",
+   "url": "/services/cloud-edge-platform-engineering/edge-computing-infrastructure/",
+   "tag": "Pairs with",
+   "desc": "compute and delivery close to users and devices — regional clusters with store-and-forward resilience, fleet ops at scale and honest latency budgets."
+  },
+  {
+   "title": "A European TSO-DSO group",
+   "url": "/case-studies/en-01/",
+   "tag": "Evidence",
+   "desc": "Forecast error down 31% — imbalance cost recovered across three control zones."
   }
  ]
 }

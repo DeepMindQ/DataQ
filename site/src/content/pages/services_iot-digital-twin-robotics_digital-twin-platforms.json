@@ -9,254 +9,1196 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Where most programs improvise, digital twin platform engineering as we deliver it is sequenced: Simulate before you cut steel — plant, fleet and product twins with governed physics and data. The sequence matters more than the stack — both are documented here."
+   "x": "Twins that stay honest: state synchronization with fidelity scores verified against physical reality, simulation tiers for what-ifs, conflict rules that resolve ambiguity — and structure drift caught before the twin quietly stops describing the asset it was built for."
   },
   {
    "t": "h2",
-   "x": "The service, described plainly"
+   "x": "A twin that drifts from reality is worse than no twin"
   },
   {
    "t": "p",
-   "x": "A digital twin is a decision instrument, not a 3D screenshot. We build twin platforms that combine physics-based simulation (line throughput, thermal, structural, fluid), data-driven models trained on governed telemetry, and the visualization and interaction layer operators actually use — scenario comparison, what-if analysis, and prescriptive output into planning systems. Governance makes it trustworthy: model validation against measured reality, versioned configurations per asset state, and drift monitoring when the asset changes."
+   "x": "A digital twin is a promise: the model reflects reality close enough to act on. The engineering is synchronization — state deltas from the fabric, conflict resolution when the physical and modeled worlds disagree, and fidelity metrics that tell you when the twin is lying. The simulation tier runs what-ifs on the synced state, never on stale guesses."
   },
   {
    "t": "p",
-   "x": "Delivery patterns by use case: plant twins for capacity and bottleneck decisions, fleet twins for energy and maintenance planning, product twins feeding design iterations from field data, and network twins for utilities and logistics. The economic test is explicit — each twin ships with the decisions it must improve and the baseline it must beat."
+   "x": "Governance is the underrated half: who may write to the twin, which changes need approval, and how the twin's structure evolves as the physical estate does. An ungoverned twin decays into a 3D picture with stale numbers."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that make twins lie, the reference architecture of the synchronization spine, and the console that scores fidelity against physical checks."
   },
   {
    "t": "h2",
-   "x": "What makes this urgent now"
+   "x": "Four failure modes that make twins lie"
   },
   {
    "t": "p",
-   "x": "Programs of Digital Twin Platform Engineering run in Manufacturing & Industrial, Energy & Utilities, Logistics & Supply Chain, Retail & Consumer Goods — always against one named number, always with the baseline signed first."
+   "x": "Every one of these produces confident dashboards over silent divergence — the countermeasures verify the twin against physical ground truth on a schedule and resolve conflicts by rule, not by whoever shouted last."
   },
   {
-   "t": "h2",
-   "x": "Engineering that moves the number"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Digital Twin Platform Engineering: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Twin architecture",
-     "physics + data-driven models with validation against measured reality"
+     "Twin lies",
+     "Model diverges silently; decisions follow fiction",
+     "Fidelity metrics with drift alarms; sync-lag SLOs"
     ],
     [
-     "Scenario engine",
-     "what-if comparison, sensitivity analysis and prescriptive outputs"
+     "Conflict ambiguity",
+     "Sensor says 40°C, model says 35°C — which wins?",
+     "Conflict policy per attribute class with precedence rules"
     ],
     [
-     "Configuration governance",
-     "versioned asset states with change-triggered recalibration"
+     "Simulation rot",
+     "What-ifs run on stale state",
+     "Simulation bound to sync health; staleness gates"
     ],
     [
-     "Operator interaction",
-     "interfaces designed for planners and engineers, not demos"
-    ],
-    [
-     "Decision baseline",
-     "each twin priced against the decisions it must improve"
+     "Structure drift",
+     "Plant changes; twin never updated",
+     "Change-management hook: physical change events update twin schema"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the synchronization spine"
+  },
+  {
+   "t": "p",
+   "x": "State flows from the sensor fabric through sync engines with measured lag, fidelity is scored against physical verification probes, simulation tiers run what-ifs without contaminating the operational twin, and structure drift monitors diff the twin's model against the asset's as-built reality."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Digital Twin Platform Engineering",
+   "title": "Reference architecture — twin platform with simulation",
    "lanes": [
-    "Robots & sensors",
-    "Real-time layer",
-    "Perception stack",
-    "Orchestration",
-    "Safety",
-    "Floor"
+    "Physical estate",
+    "Sync layer",
+    "Twin core",
+    "Simulation",
+    "Consumption",
+    "Governance"
    ],
    "nodes": [
     {
-     "id": "rs0",
+     "id": "fabric",
      "lane": 0,
-     "label": "MES & line historians",
-     "hot": false
+     "label": "Sensor fabric feeds"
     },
     {
-     "id": "rs1",
+     "id": "erp",
      "lane": 0,
-     "label": "AMR / robot fleets",
-     "hot": false
+     "label": "Business context"
     },
     {
-     "id": "rtl2",
+     "id": "cad",
+     "lane": 0,
+     "label": "Asset models (CAD/BIM)"
+    },
+    {
+     "id": "delta",
      "lane": 1,
-     "label": "Digital Twin Platform Engineering",
+     "label": "Delta processor",
      "hot": true
     },
     {
-     "id": "rtl3",
+     "id": "conflict",
      "lane": 1,
-     "label": "Time sync",
-     "hot": false
-    },
-    {
-     "id": "pst4",
-     "lane": 2,
-     "label": "Vision inspection",
-     "hot": false
-    },
-    {
-     "id": "pst5",
-     "lane": 2,
-     "label": "Localization",
-     "hot": false
-    },
-    {
-     "id": "orc6",
-     "lane": 3,
-     "label": "Task orchestration",
+     "label": "Conflict resolver",
      "hot": true
     },
     {
-     "id": "orc7",
+     "id": "lag",
+     "lane": 1,
+     "label": "Sync-lag SLO"
+    },
+    {
+     "id": "reg",
+     "lane": 2,
+     "label": "Twin registry",
+     "hot": true
+    },
+    {
+     "id": "state",
+     "lane": 2,
+     "label": "Current-state store"
+    },
+    {
+     "id": "graph",
+     "lane": 2,
+     "label": "Asset graph"
+    },
+    {
+     "id": "sim",
      "lane": 3,
-     "label": "Fleet scheduler",
-     "hot": false
+     "label": "Simulation tier",
+     "hot": true
     },
     {
-     "id": "sf8",
+     "id": "whatif",
+     "lane": 3,
+     "label": "What-if runner"
+    },
+    {
+     "id": "cal",
+     "lane": 3,
+     "label": "Calibration loop"
+    },
+    {
+     "id": "dash",
      "lane": 4,
-     "label": "Human-in-the-loop stops",
-     "hot": false
+     "label": "Ops dashboards"
     },
     {
-     "id": "sf9",
+     "id": "api",
      "lane": 4,
-     "label": "Safety cases",
-     "hot": false
+     "label": "Twin API"
     },
     {
-     "id": "fl10",
-     "lane": 5,
-     "label": "Production scheduling",
-     "hot": false
+     "id": "ml",
+     "lane": 4,
+     "label": "ML consumption"
     },
     {
-     "id": "fl11",
+     "id": "gov",
      "lane": 5,
-     "label": "Maintenance planner",
-     "hot": false
+     "label": "Twin governance",
+     "hot": true
+    },
+    {
+     "id": "change",
+     "lane": 5,
+     "label": "Change hooks"
+    },
+    {
+     "id": "fidelity",
+     "lane": 5,
+     "label": "Fidelity metrics",
+     "hot": true
     }
    ],
    "edges": [
     {
-     "a": "rs0",
-     "b": "rtl2"
+     "a": "fabric",
+     "b": "delta",
+     "label": "state"
     },
     {
-     "a": "rs1",
-     "b": "rtl3"
+     "a": "erp",
+     "b": "reg",
+     "label": "context"
     },
     {
-     "a": "rtl2",
-     "b": "pst4"
+     "a": "cad",
+     "b": "reg",
+     "label": "structure"
     },
     {
-     "a": "rtl3",
-     "b": "pst5"
+     "a": "delta",
+     "b": "conflict",
+     "label": "disagree"
     },
     {
-     "a": "pst4",
-     "b": "orc6"
+     "a": "conflict",
+     "b": "state",
+     "label": "resolve"
     },
     {
-     "a": "pst5",
-     "b": "orc7"
+     "a": "lag",
+     "b": "delta",
+     "label": "bound"
     },
     {
-     "a": "orc6",
-     "b": "sf8"
+     "a": "state",
+     "b": "reg",
+     "label": "current"
     },
     {
-     "a": "sf8",
-     "b": "sf9"
+     "a": "reg",
+     "b": "graph",
+     "label": "link"
     },
     {
-     "a": "orc7",
-     "b": "fl10"
+     "a": "reg",
+     "b": "sim",
+     "label": "seed"
     },
     {
-     "a": "sf9",
-     "b": "fl11"
+     "a": "state",
+     "b": "whatif",
+     "label": "feed"
+    },
+    {
+     "a": "whatif",
+     "b": "cal",
+     "label": "compare"
+    },
+    {
+     "a": "reg",
+     "b": "dash",
+     "label": "serve"
+    },
+    {
+     "a": "reg",
+     "b": "api",
+     "label": "expose"
+    },
+    {
+     "a": "graph",
+     "b": "ml",
+     "label": "features"
+    },
+    {
+     "a": "gov",
+     "b": "reg",
+     "label": "rules"
+    },
+    {
+     "a": "change",
+     "b": "reg",
+     "label": "update"
+    },
+    {
+     "a": "fidelity",
+     "b": "gov",
+     "label": "report"
     }
    ],
-   "note": "Topology inherited from the IoT, Twin & Robotics tower; the highlighted core is this service's build."
+   "note": "Conflict resolution is a designed policy, not a hope: per attribute class, the twin declares whether sensor or model wins — and logs every disagreement for the calibration loop."
   },
   {
    "t": "h2",
-   "x": "Deliverables, without dressing them up"
+   "x": "One state change, physical to twin and back"
   },
   {
    "t": "p",
-   "x": "The artifacts, each with a walkthrough when it lands — Digital Twin Platform Engineering edition:"
+   "x": "From the physical event through sync, conflict resolution and the twin's updated state to the simulation tier — including the fidelity probe that periodically asks reality whether the twin is still telling the truth."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "twin-loop",
+   "title": "Twin loop — sync, resolve, simulate, calibrate, govern",
+   "labels": [
+    "Physical delta",
+    "Conflict resolve",
+    "State update",
+    "What-if simulation",
+    "Calibration compare",
+    "Fidelity report",
+    "Governance review"
+   ],
+   "note": "Calibration closes the loop: where simulation drifts from reality, parameters re-fit — the twin earns its keep by staying calibrated, not by existing."
+  },
+  {
+   "t": "h2",
+   "x": "The twin console — fidelity as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Sync lag, fidelity score and unresolved conflicts — the three numbers that decide whether the twin is a decision instrument or an expensive mirror maze."
+  },
+  {
+   "t": "idash",
+   "title": "Digital twin — synchronization console",
+   "kpis": [
+    {
+     "label": "Assets twinned",
+     "value": "142",
+     "delta": "L2 median fidelity",
+     "dir": "up",
+     "spark": [
+      18,
+      34,
+      52,
+      74,
+      96,
+      120,
+      142
+     ]
+    },
+    {
+     "label": "State sync lag p95",
+     "value": "1.8 s",
+     "delta": "control-adjacent signals",
+     "dir": "down",
+     "spark": [
+      9,
+      6,
+      4,
+      3,
+      2.4,
+      2,
+      1.8
+     ]
+    },
+    {
+     "label": "Divergence alarms",
+     "value": "2",
+     "delta": "30d — all triaged to owner",
+     "dir": "flat",
+     "spark": [
+      9,
+      7,
+      5,
+      4,
+      3,
+      2,
+      2
+     ]
+    },
+    {
+     "label": "Simulation-to-action",
+     "value": "31",
+     "delta": "validated L3 decisions/mo",
+     "dir": "up",
+     "spark": [
+      4,
+      8,
+      13,
+      18,
+      23,
+      27,
+      31
+     ]
+    },
+    {
+     "label": "Estimator accuracy",
+     "value": "97.2%",
+     "delta": "fused vs observed truth",
+     "dir": "up",
+     "spark": [
+      84,
+      88,
+      91,
+      93,
+      95,
+      96,
+      97.2
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Fidelity map",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Twin fidelity by asset class × decision need",
+       "rows": [
+        "CNC fleet",
+        "HVAC estate",
+        "Logistics fleet",
+        "Power assets",
+        "Packaging line"
+       ],
+       "cats": [
+        "L0 status",
+        "L1 condition",
+        "L2 predictive",
+        "L3 prescriptive",
+        "L4 autonomous"
+       ],
+       "matrix": [
+        [
+         100,
+         94,
+         82,
+         40,
+         12
+        ],
+        [
+         100,
+         96,
+         88,
+         55,
+         20
+        ],
+        [
+         100,
+         90,
+         74,
+         35,
+         8
+        ],
+        [
+         100,
+         92,
+         78,
+         48,
+         15
+        ],
+        [
+         100,
+         95,
+         85,
+         60,
+         28
+        ]
+       ],
+       "unit": "% coverage",
+       "note": "Hover cells for coverage. L4 stays deliberately sparse — autonomy is earned asset class by asset class, with validation evidence as the gate, not a roadmap slide."
+      }
+     ]
+    },
+    {
+     "name": "Sync what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Synchronization what-if — signal classes, cadence, estimator",
+       "params": [
+        {
+         "name": "Signals in scope",
+         "min": 100,
+         "max": 20000,
+         "step": 100,
+         "value": 4200,
+         "unit": "signals"
+        },
+        {
+         "name": "Sync cadence (control)",
+         "min": 50,
+         "max": 2000,
+         "step": 50,
+         "value": 400,
+         "unit": "ms"
+        },
+        {
+         "name": "Estimator complexity",
+         "min": 1,
+         "max": 5,
+         "step": 1,
+         "value": 3,
+         "unit": "filter class"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Sync lag p95",
+         "unit": "s",
+         "formula": "p0*0.0004*p1/100*(1+p2*0.1)",
+         "good": "2",
+         "bad": "8"
+        },
+        {
+         "name": "Estimator accuracy",
+         "unit": "%",
+         "formula": "min(98.5, 82+p2*4.5-p0/1000)",
+         "good": "95",
+         "bad": "88"
+        },
+        {
+         "name": "Compute cost",
+         "unit": "$k/mo",
+         "formula": "p0*0.9*p2*(1-p1/4000)*1.4",
+         "good": "15",
+         "bad": "60"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 0,
+        "label": "Sync cadence vs sync lag"
+       },
+       "note": "The lag curve shows the cadence floor: below ~400 ms for control-adjacent classes, transport and estimator overhead dominate — faster sync costs compute linearly and buys accuracy briefly."
+      }
+     ]
+    },
+    {
+     "name": "Twin topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The twin platform — click nodes for the sync contract",
+       "lanes": [
+        "Asset",
+        "State core",
+        "Simulation",
+        "Decisions"
+       ],
+       "nodes": [
+        {
+         "id": "sense",
+         "lane": 0,
+         "label": "Sensor fabric",
+         "detail": "IIoT streams normalized with unit contracts — the twin's input quality is the sensor fabric's output discipline.",
+         "hot": true
+        },
+        {
+         "id": "est",
+         "lane": 1,
+         "label": "State estimator",
+         "detail": "Kalman-family fusion of sensor and model — divergence alarms fire with triage routing (sensor, model, or asset anomaly)."
+        },
+        {
+         "id": "graph",
+         "lane": 1,
+         "label": "Asset graph",
+         "detail": "Relationships and hierarchy (line → cell → plant) with identity anchoring — the twin is queryable as a system, not a pile of assets."
+        },
+        {
+         "id": "phys",
+         "lane": 2,
+         "label": "Physics models",
+         "detail": "Validated models per asset class (thermal, mechanical, flow) — FMI co-simulation where domains interact, validation evidence attached per model."
+        },
+        {
+         "id": "ml",
+         "lane": 2,
+         "label": "ML surrogates",
+         "detail": "Learned surrogates for expensive physics — trained on validated simulation output with accuracy envelopes declared."
+        },
+        {
+         "id": "sim",
+         "lane": 3,
+         "label": "Scenario engine",
+         "detail": "What-if runs against validated models; every L3 recommendation carries its simulation evidence and assumptions."
+        },
+        {
+         "id": "act",
+         "lane": 3,
+         "label": "Decision integration",
+         "detail": "Prescriptive outputs route to planners and control rooms with human-in-loop gates — autonomy is earned per asset class on the fidelity map."
+        }
+       ],
+       "edges": [
+        {
+         "a": "sense",
+         "b": "est",
+         "label": "fuse"
+        },
+        {
+         "a": "est",
+         "b": "graph",
+         "label": "anchor"
+        },
+        {
+         "a": "graph",
+         "b": "phys",
+         "label": "parameterize"
+        },
+        {
+         "a": "phys",
+         "b": "ml",
+         "label": "surrogate"
+        },
+        {
+         "a": "ml",
+         "b": "sim",
+         "label": "runs"
+        },
+        {
+         "a": "sim",
+         "b": "act",
+         "label": "prescribe"
+        },
+        {
+         "a": "act",
+         "b": "est",
+         "label": "verify"
+        }
+       ],
+       "note": "Click nodes for the contract each layer carries. The verify edge closes the loop — prescriptions are checked against the estimator's reality before credit."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · fidelity model",
+   "note": "Reference program model: fidelity bands and sync targets from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Fidelity across asset classes and sync versions"
+  },
+  {
+   "t": "p",
+   "x": "Fidelity scores per asset class across sync-engine versions — the shape that shows where the twin is honest, where it is degrading and which upgrade fixed what."
+  },
+  {
+   "t": "chart",
+   "title": "Twin fidelity by asset class — design targets",
+   "variant": "bar",
+   "cats": [
+    "Production line",
+    "HVAC systems",
+    "Logistics fleet",
+    "Power distribution",
+    "Building shell"
+   ],
+   "series": [
+    {
+     "name": "Fidelity target",
+     "points": [
+      0.94,
+      0.92,
+      0.9,
+      0.95,
+      0.88
+     ]
+    },
+    {
+     "name": "Sync lag target (s)",
+     "points": [
+      1.5,
+      2.0,
+      3.0,
+      1.0,
+      5.0
+     ]
+    }
+   ],
+   "yMax": 1,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Digital Twin Platform Engineering across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Digital Twin Platform Engineering",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the work spans the stack: devices and gateways in the field, perception models in the middle, actuation plans on the board.",
+     "plays": [
+      "State sync with measured lag and rule-based conflict resolution",
+      "Fidelity scores verified against physical probes on a schedule",
+      "Simulation tiers fenced from operations — what-ifs never contaminate the twin"
+     ],
+     "kpis": [
+      {
+       "label": "Sync lag p95",
+       "value": "1.8s"
+      },
+      {
+       "label": "Fidelity score",
+       "value": "0.93"
+      },
+      {
+       "label": "Unresolved conflicts",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "State sync with measured lag and rule-based conflict resolution",
+      "Fidelity scores verified against physical probes on a schedule",
+      "Simulation tiers fenced from operations — what-ifs never contaminate the twin"
+     ],
+     "kpis": [
+      {
+       "label": "Sync lag p95",
+       "value": "1.8s"
+      },
+      {
+       "label": "Fidelity score",
+       "value": "0.93"
+      },
+      {
+       "label": "Unresolved conflicts",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "State sync with measured lag and rule-based conflict resolution",
+      "Fidelity scores verified against physical probes on a schedule",
+      "Simulation tiers fenced from operations — what-ifs never contaminate the twin"
+     ],
+     "kpis": [
+      {
+       "label": "Sync lag p95",
+       "value": "1.8s"
+      },
+      {
+       "label": "Fidelity score",
+       "value": "0.93"
+      },
+      {
+       "label": "Unresolved conflicts",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "Ask what quality escapes and manual inspection costs Manufacturing & Industrial firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "State sync with measured lag and rule-based conflict resolution",
+      "Fidelity scores verified against physical probes on a schedule",
+      "Simulation tiers fenced from operations — what-ifs never contaminate the twin"
+     ],
+     "kpis": [
+      {
+       "label": "Sync lag p95",
+       "value": "1.8s"
+      },
+      {
+       "label": "Fidelity score",
+       "value": "0.93"
+      },
+      {
+       "label": "Unresolved conflicts",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Retail & Consumer Goods operators recognize the pattern: shelf truth unknown, quarter after quarter.",
+     "plays": [
+      "State sync with measured lag and rule-based conflict resolution",
+      "Fidelity scores verified against physical probes on a schedule",
+      "Simulation tiers fenced from operations — what-ifs never contaminate the twin"
+     ],
+     "kpis": [
+      {
+       "label": "Sync lag p95",
+       "value": "1.8s"
+      },
+      {
+       "label": "Fidelity score",
+       "value": "0.93"
+      },
+      {
+       "label": "Unresolved conflicts",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": true,
+     "hook": "Ask what network telemetry underused costs Telecom, Media & Entertainment firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "State sync with measured lag and rule-based conflict resolution",
+      "Fidelity scores verified against physical probes on a schedule",
+      "Simulation tiers fenced from operations — what-ifs never contaminate the twin"
+     ],
+     "kpis": [
+      {
+       "label": "Sync lag p95",
+       "value": "1.8s"
+      },
+      {
+       "label": "Fidelity score",
+       "value": "0.93"
+      },
+      {
+       "label": "Unresolved conflicts",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": true,
+     "hook": "Ask what asset fleets uninstrumented costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "State sync with measured lag and rule-based conflict resolution",
+      "Fidelity scores verified against physical probes on a schedule",
+      "Simulation tiers fenced from operations — what-ifs never contaminate the twin"
+     ],
+     "kpis": [
+      {
+       "label": "Sync lag p95",
+       "value": "1.8s"
+      },
+      {
+       "label": "Fidelity score",
+       "value": "0.93"
+      },
+      {
+       "label": "Unresolved conflicts",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: fleet and yard telemetry gaps, quarter after quarter.",
+     "plays": [
+      "State sync with measured lag and rule-based conflict resolution",
+      "Fidelity scores verified against physical probes on a schedule",
+      "Simulation tiers fenced from operations — what-ifs never contaminate the twin"
+     ],
+     "kpis": [
+      {
+       "label": "Sync lag p95",
+       "value": "1.8s"
+      },
+      {
+       "label": "Fidelity score",
+       "value": "0.93"
+      },
+      {
+       "label": "Unresolved conflicts",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "Public Sector & Government operators recognize the pattern: urban assets unmanaged, quarter after quarter.",
+     "plays": [
+      "State sync with measured lag and rule-based conflict resolution",
+      "Fidelity scores verified against physical probes on a schedule",
+      "Simulation tiers fenced from operations — what-ifs never contaminate the twin"
+     ],
+     "kpis": [
+      {
+       "label": "Sync lag p95",
+       "value": "1.8s"
+      },
+      {
+       "label": "Fidelity score",
+       "value": "0.93"
+      },
+      {
+       "label": "Unresolved conflicts",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — estates flying blind included — and prove it moved.",
+     "plays": [
+      "State sync with measured lag and rule-based conflict resolution",
+      "Fidelity scores verified against physical probes on a schedule",
+      "Simulation tiers fenced from operations — what-ifs never contaminate the twin"
+     ],
+     "kpis": [
+      {
+       "label": "Sync lag p95",
+       "value": "1.8s"
+      },
+      {
+       "label": "Fidelity score",
+       "value": "0.93"
+      },
+      {
+       "label": "Unresolved conflicts",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we connect machines, fleets and facilities into one operational picture, then close the loop into maintenance, scheduling and control.",
+     "plays": [
+      "State sync with measured lag and rule-based conflict resolution",
+      "Fidelity scores verified against physical probes on a schedule",
+      "Simulation tiers fenced from operations — what-ifs never contaminate the twin"
+     ],
+     "kpis": [
+      {
+       "label": "Sync lag p95",
+       "value": "1.8s"
+      },
+      {
+       "label": "Fidelity score",
+       "value": "0.93"
+      },
+      {
+       "label": "Unresolved conflicts",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — field data gap included — and prove it moved.",
+     "plays": [
+      "State sync with measured lag and rule-based conflict resolution",
+      "Fidelity scores verified against physical probes on a schedule",
+      "Simulation tiers fenced from operations — what-ifs never contaminate the twin"
+     ],
+     "kpis": [
+      {
+       "label": "Sync lag p95",
+       "value": "1.8s"
+      },
+      {
+       "label": "Fidelity score",
+       "value": "0.93"
+      },
+      {
+       "label": "Unresolved conflicts",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/iot-digital-twin-robotics/"
+    }
+   ],
+   "practiceNote": "Digital Twin Platform Engineering view: twins that stay honest — state synchronization with fidelity metrics, simulation tiers for what-ifs, and governance for who may change what."
+  },
+  {
+   "t": "h2",
+   "x": "Twin defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor measured fidelity and rule-based conflict resolution over last-write-wins convenience; deviation triggers are written because each one makes the twin's confidence unearned."
+  },
+  {
+   "t": "table",
+   "caption": "Digital Twin Platform Engineering: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production twin platform for named assets with validated models",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Sync",
+     "Delta processing with SLOs",
+     "Nightly batch sync — the twin is a snapshot, not a twin"
     ],
     [
-     "Scenario library with documented decision outcomes",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Conflicts",
+     "Per-class precedence policies",
+     "Last-write-wins globally — physics loses to logs"
     ],
     [
-     "Model validation and drift-monitoring regime",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Simulation",
+     "Calibrated what-if tier",
+     "Untuned models — what-ifs mislead"
     ],
     [
-     "Integration into planning/execution systems",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Registry",
+     "Asset graph with change hooks",
+     "Static 3D model — structure drifts"
+    ],
+    [
+     "Governance",
+     "Fidelity reports with owners",
+     "Twin-by-initiative — nobody owns the lie"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The technology choices, justified"
+   "x": "Twin release gates — evidence before decision authority"
   },
   {
-   "t": "p",
-   "x": "The engineering baseline for Digital Twin Platform Engineering: physics simulation engines, digital thread / SysML, 3D + telemetry fusion, Databricks, Omniverse-class visualization. The justifications are written, versioned and handed over — the decisions are yours to own after the engagement."
+   "t": "table",
+   "caption": "Release gates for Digital Twin Platform Engineering — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Sync gate",
+     "Does the twin keep up?",
+     "Sync-lag SLOs; conflict evidence"
+    ],
+    [
+     "Fidelity gate",
+     "Is the twin honest?",
+     "Fidelity metrics; drift alarms"
+    ],
+    [
+     "Sim gate",
+     "Are what-ifs on fresh state?",
+     "Staleness gates; calibration records"
+    ],
+    [
+     "Change gate",
+     "Does physical change update the twin?",
+     "Hook coverage; update timing"
+    ],
+    [
+     "Governance gate",
+     "Are twin writes controlled?",
+     "Role matrix; audit trail"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "The cadence you would see"
+   "x": "What the operations engineering team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Digital Twin Platform Engineering starts with the measurement: the metric, the owner, the current number, signed."
+     "Twin registry",
+     "Asset graph with structure governance"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, twin architecture first, gates written with your team."
+     "Sync layer",
+     "Delta processing with conflict policies"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Digital Twin Platform Engineering are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Simulation tier",
+     "Calibrated what-if capability"
+    ],
+    [
+     "Fidelity dashboard",
+     "Trust metrics per asset class"
+    ],
+    [
+     "Change hooks",
+     "Physical-change-to-schema automation"
+    ],
+    [
+     "Twin API",
+     "Governed consumption for dashboards and ML"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Assets in order, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — asset census",
+     "Asset classes, CAD/BIM inventory, fidelity bars"
+    ],
+    [
+     "Weeks 3–4 — sync layer",
+     "Delta pipeline, conflict policies, lag SLOs"
+    ],
+    [
+     "Weeks 5–6 — twin core",
+     "Registry, graph, state store"
+    ],
+    [
+     "Weeks 7–8 — simulation",
+     "What-if runner, calibration loop, staleness gates"
+    ],
+    [
+     "Weeks 9–10 — governance",
+     "Change hooks, role matrix, fidelity reporting"
+    ],
+    [
+     "Ongoing — twin ops",
+     "Weekly fidelity review; monthly calibration; quarterly audit"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — the sensor fabric and the simulation stack"
+  },
+  {
+   "t": "p",
+   "x": "Twins consume the sensor fabric and feed planners; these contracts define state schemas, sync guarantees and the simulation boundaries that keep what-ifs safely fenced."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Sensor fabric",
+     "Delta feed contracts"
+    ],
+    [
+     "CAD/BIM systems",
+     "Structure imports"
+    ],
+    [
+     "ERP / MES",
+     "Business context"
+    ],
+    [
+     "ML platform",
+     "Twin feature consumption"
+    ],
+    [
+     "XR / visualization",
+     "Scene rendering"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Simulation-governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Simulation tiers are fenced from operations: what-if runs cannot write back, results carry their input snapshot, and decisions sourced from simulations are labeled as such in the audit trail."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Sensor-precedence",
+     "The physical world wins by policy, logged"
+    ],
+    [
+     "Fresh-simulation rule",
+     "Stale state cannot seed a what-if"
+    ],
+    [
+     "Hooked changes",
+     "Physical changes update the twin within SLA"
+    ],
+    [
+     "Governed writes",
+     "Twin writes are role-gated and audited"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Fidelity probes are physical, not statistical: the twin's state is compared against sensor readings and periodic human-verified checks — a twin that only agrees with itself is the failure mode, not the proof."
   },
   {
    "t": "cta",
-   "x": "The next step is small and real: one working session on Digital Twin Platform Engineering, your data, and a written feasibility read you can circulate."
+   "x": "Ask when your twin last disagreed with the asset and who noticed. The diagnostic will wire fidelity probes and conflict rules — until the twin earns its decision authority."
   }
  ],
- "words": 513,
+ "words": 1003,
  "section": "Services",
  "l1": "Services",
  "l2": "IoT, Digital Twin & Robotics",
@@ -278,7 +1220,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — IoT, Digital Twin & Robotics",
+   "title": "Domain overview — IoT, Digital Twin & Robotics",
    "url": "/services/iot-digital-twin-robotics/",
    "desc": "Sensing, simulating, acting — the operations stack that turns physical assets into self-monitoring systems."
   },
@@ -330,33 +1272,51 @@
   {
    "title": "Cloud, Edge & Platform for Banking & Financial Services",
    "url": "/industries/banking-financial-services/capabilities/cloud-edge-platform-engineering/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Industrial IoT & sensor network",
-   "url": "/services/iot-digital-twin-robotics/industrial-iot-sensor-fabric/",
-   "tag": "Same tower",
-   "desc": "Sense everything that matters — retrofit-friendly sensor network with governed telemetry."
-  },
-  {
-   "title": "Computer Vision & Edge AI",
-   "url": "/services/iot-digital-twin-robotics/computer-vision-edge-ai/",
-   "tag": "Same tower",
-   "desc": "Cameras into instruments — inspection, safety and counting at the edge, inside policy."
-  },
-  {
    "title": "Predictive Maintenance & Asset Intelligence",
    "url": "/services/iot-digital-twin-robotics/predictive-asset-intelligence/",
-   "tag": "Same tower",
-   "desc": "Fix it before it fails — RUL models wired into planning, spare parts and work orders."
+   "tag": "Same domain",
+   "desc": "maintenance scheduled by evidence — failure-mode-driven models, work-order integration, and the honesty to retire predictions that never came true."
   },
   {
    "title": "Robotics & Autonomous Systems Integration",
    "url": "/services/iot-digital-twin-robotics/robotics-autonomous-systems/",
-   "tag": "Same tower",
-   "desc": "Robots into workflows — AMRs, cobots and autonomous vehicles integrated with safety and orchestration."
+   "tag": "Same domain",
+   "desc": "robot fleets with safety cases — bounded autonomy, incident-ready telemetry, and utilization measured honestly against safety-critical discipline."
+  },
+  {
+   "title": "Smart Infrastructure, Buildings & Cities",
+   "url": "/services/iot-digital-twin-robotics/smart-infrastructure/",
+   "tag": "Same domain",
+   "desc": "city and utility scale on the same disciplines — segmented SCADA-safe architectures, service-continuity SLOs, and privacy-first public data."
+  },
+  {
+   "title": "High-Performance & Mission-Critical Systems",
+   "url": "/services/cloud-edge-platform-engineering/high-performance-mission-critical/",
+   "tag": "Pairs with",
+   "desc": "low-latency, high-availability tiers with proofs — latency budgets engineered down the stack and availability demonstrated, not asserted."
+  },
+  {
+   "title": "Lakehouse Architecture & Migration",
+   "url": "/services/data-analytics-lakehouse/lakehouse-architecture/",
+   "tag": "Pairs with",
+   "desc": "bronze→silver→gold on open table formats — a promotion path with quality gates, time travel and honest storage economics instead of a data swamp."
+  },
+  {
+   "title": "Intelligent Document Processing",
+   "url": "/services/agentic-ai-hyperautomation/intelligent-document-processing/",
+   "tag": "Pairs with",
+   "desc": "extraction and adjudication inside the process — documents become decisions with confidence gates, evidence and a human queue that shrinks on measurement."
+  },
+  {
+   "title": "A container-terminal operator",
+   "url": "/case-studies/log-02/",
+   "tag": "Evidence",
+   "desc": "Berth productivity +16% — planning platform and crane health sensing."
   }
  ]
 }

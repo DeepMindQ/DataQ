@@ -9,254 +9,1195 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Where most programs improvise, threat intelligence & managed soc as we deliver it is sequenced: Detection that keeps pace — intelligence-driven SOC with the boring parts (tuning, coverage) done properly. The sequence matters more than the stack — both are documented here."
+   "x": "Detection engineering with measured coverage: threat-informed detection mapped to the techniques that actually target your sector, purple-teamed quarterly, and run by a SOC whose speed is measured from first signal to containment — not from alert to acknowledgement."
   },
   {
    "t": "h2",
-   "x": "What this service is"
+   "x": "Detection coverage is a measurement, not a maturity score"
   },
   {
    "t": "p",
-   "x": "A SOC's quality is decided by coverage and tuning, not dashboards. We build and operate detection programs grounded in MITRE ATT&CK: coverage mapping by technique, detection-as-code with versioned rules and CI testing, threat-intel feeds fused into hunt hypotheses, and a tuning cadence that cuts false positives quarter over quarter. Co-managed options give you our analysts and platform while your team retains decision authority and context."
+   "x": "A SOC earns trust with two numbers: how fast it contains what matters, and how much of the attacker playbook it can actually see. We run detection engineering against threat-informed attack paths, validate coverage with purple-team drills, and measure everything from first signal to containment."
   },
   {
    "t": "p",
-   "x": "For AI-era threats we add model-specific detection — prompt-injection and data-poisoning monitoring on AI endpoints, shadow-AI discovery, and agent-behavior baselining — plus OT coverage (IEC 62443-informed) where plants and grids are in scope. Every incident feeds the loop: post-incident detections are authored within a week, tested and shipped."
+   "x": "Managed SOC here means an operating rhythm, not a headcount: triage SLAs, escalation ladders, threat-intel feeds that turn into detections within days, and the post-incident loop that turns every incident into new coverage."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that flood SOCs and hide real threats, the reference architecture of measured detection, and the console that reports speed honestly."
   },
   {
    "t": "h2",
-   "x": "The stakes, stated plainly"
+   "x": "Four ways SOC programs drown in their own alerts"
   },
   {
    "t": "p",
-   "x": "The sectors where Threat Intelligence & Managed SOC currently runs: Banking & Financial Services, Insurance & Risk, Healthcare & Life Sciences, Energy & Utilities. Each engagement anchors to one named metric in that sector's own language."
+   "x": "Each failure mode exhausts the analysts while the real attack walks past — the countermeasures buy back precision and make coverage falsifiable."
   },
   {
-   "t": "h2",
-   "x": "What we build, concretely"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Threat Intelligence & Managed SOC: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "ATT&CK coverage program",
-     "technique-level coverage mapping with gap remediation backlog"
+     "Alert flood",
+     "Analysts drown; real attacks queue behind noise",
+     "Detection tuning with precision targets; signal-quality SLOs per rule"
     ],
     [
-     "Detection-as-code",
-     "versioned detection rules with CI testing and peer review"
+     "Coverage myth",
+     "Vendor dashboards claim coverage nobody validated",
+     "Purple-team validation of top attack paths; coverage ledger"
     ],
     [
-     "Intelligence fusion",
-     "feed triage into hunt hypotheses and detection backlogs"
+     "Intel without action",
+     "Reports pile up; detections never change",
+     "Intel-to-detection pipeline with 7-day conversion SLA"
     ],
     [
-     "AI-era detection",
-     "prompt-injection, poisoning and shadow-AI monitoring for AI endpoints"
-    ],
-    [
-     "Co-managed SOC",
-     "shared analysts and platform with client decision authority"
+     "Metrics theater",
+     "MTTD quoted without baseline definitions",
+     "Detect-to-contain measured from first signal, defined in writing"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — from threat intel to rehearsed containment"
+  },
+  {
+   "t": "p",
+   "x": "Intelligence enters as detection requirements, not newsletters: each mapped technique gets a detection, each detection gets a test, and purple-team exercises prove the coverage that dashboards only claim."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Threat Intelligence & Managed SOC",
+   "title": "Reference architecture — detection engineering & SOC flow",
    "lanes": [
-    "Attack surface",
-    "Telemetry lake",
-    "Analytics",
-    "Containment",
-    "Evidence",
-    "Owners"
+    "Telemetry",
+    "Detection",
+    "Intel",
+    "SOC workflow",
+    "Response",
+    "Learning"
    ],
    "nodes": [
     {
-     "id": "as0",
+     "id": "logs",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Estate telemetry"
     },
     {
-     "id": "as1",
+     "id": "cloud",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "Cloud audit"
     },
     {
-     "id": "tlk2",
+     "id": "id",
+     "lane": 0,
+     "label": "Identity events"
+    },
+    {
+     "id": "rules",
      "lane": 1,
-     "label": "Threat Intelligence & Managed SOC",
+     "label": "Detection rules",
      "hot": true
     },
     {
-     "id": "tlk3",
+     "id": "qual",
      "lane": 1,
-     "label": "Threat intel feeds",
-     "hot": false
+     "label": "Signal-quality SLOs"
     },
     {
-     "id": "an4",
+     "id": "lab",
+     "lane": 1,
+     "label": "Detection lab"
+    },
+    {
+     "id": "feed",
      "lane": 2,
-     "label": "Behavioral analytics",
-     "hot": false
+     "label": "Intel feeds"
     },
     {
-     "id": "an5",
+     "id": "map",
      "lane": 2,
-     "label": "Lateral-movement models",
-     "hot": false
-    },
-    {
-     "id": "cn6",
-     "lane": 3,
-     "label": "Blast-radius isolation",
+     "label": "Attack-path mapping",
      "hot": true
     },
     {
-     "id": "cn7",
+     "id": "conv",
+     "lane": 2,
+     "label": "7-day conversion"
+    },
+    {
+     "id": "triage",
      "lane": 3,
-     "label": "Playbook execution",
-     "hot": false
+     "label": "Triage queue"
     },
     {
-     "id": "evd8",
+     "id": "case",
+     "lane": 3,
+     "label": "Case management"
+    },
+    {
+     "id": "esc",
+     "lane": 3,
+     "label": "Escalation ladder"
+    },
+    {
+     "id": "soar",
      "lane": 4,
-     "label": "Audit-ready trails",
-     "hot": false
+     "label": "Response playbooks",
+     "hot": true
     },
     {
-     "id": "evd9",
+     "id": "contain",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Containment actions"
     },
     {
-     "id": "ow10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "recov",
+     "lane": 4,
+     "label": "Recovery hooks"
     },
     {
-     "id": "ow11",
+     "id": "purple",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Purple-team drills",
+     "hot": true
+    },
+    {
+     "id": "post",
+     "lane": 5,
+     "label": "Post-incident loop"
+    },
+    {
+     "id": "cov",
+     "lane": 5,
+     "label": "Coverage ledger"
     }
    ],
    "edges": [
     {
-     "a": "as0",
-     "b": "tlk2"
+     "a": "logs",
+     "b": "rules"
     },
     {
-     "a": "as1",
-     "b": "tlk2"
+     "a": "cloud",
+     "b": "rules"
     },
     {
-     "a": "tlk2",
-     "b": "an4"
+     "a": "id",
+     "b": "rules"
     },
     {
-     "a": "tlk3",
-     "b": "an5"
+     "a": "rules",
+     "b": "qual",
+     "label": "scored"
     },
     {
-     "a": "an4",
-     "b": "cn6"
+     "a": "lab",
+     "b": "rules",
+     "label": "test"
     },
     {
-     "a": "an5",
-     "b": "cn7"
+     "a": "feed",
+     "b": "map",
+     "label": " enrich"
     },
     {
-     "a": "cn6",
-     "b": "evd8"
+     "a": "map",
+     "b": "conv",
+     "label": "plan"
     },
     {
-     "a": "evd8",
-     "b": "evd9"
+     "a": "conv",
+     "b": "rules",
+     "label": "author"
     },
     {
-     "a": "cn7",
-     "b": "ow10"
+     "a": "rules",
+     "b": "triage",
+     "label": "alerts"
     },
     {
-     "a": "evd9",
-     "b": "ow11"
+     "a": "triage",
+     "b": "case",
+     "label": "open"
+    },
+    {
+     "a": "case",
+     "b": "esc",
+     "label": "ladder"
+    },
+    {
+     "a": "case",
+     "b": "soar",
+     "label": "trigger"
+    },
+    {
+     "a": "soar",
+     "b": "contain",
+     "label": "act"
+    },
+    {
+     "a": "contain",
+     "b": "recov",
+     "label": "handoff"
+    },
+    {
+     "a": "purple",
+     "b": "cov",
+     "label": "validate"
+    },
+    {
+     "a": "post",
+     "b": "rules",
+     "label": "new"
+    },
+    {
+     "a": "cov",
+     "b": "qual",
+     "label": "targets"
     }
    ],
-   "note": "Topology inherited from the Cyber & Zero-Trust tower; the highlighted core is this service's build."
+   "note": "The coverage ledger is the SOC's truth: every mapped attack path has a detection state — validated, untested or gap — and gaps are worked like a backlog."
   },
   {
    "t": "h2",
-   "x": "What your team actually receives"
+   "x": "One signal, triaged to containment"
   },
   {
    "t": "p",
-   "x": "In Threat Intelligence & Managed SOC, deliverables, without dressing them up:"
+   "x": "From first signal through enrichment, triage, containment play and the post-incident detection improvement — including where precision is measured and where the analyst's minute is spent."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "orchestration-loop",
+   "title": "SOC loop — detect, triage, contain, learn, cover",
+   "labels": [
+    "Signal fires",
+    "Triage in SLA",
+    "Contain & capture",
+    "Escalate as needed",
+    "Post-incident review",
+    "Detection authored",
+    "Purple revalidation"
+   ],
+   "note": "Post-incident loop closes the system: every incident produces at least one validated detection or one control change — recorded in the ledger."
+  },
+  {
+   "t": "h2",
+   "x": "The SOC console — speed and precision as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Detect-to-contain, triage SLA adherence and detection precision — the three numbers that decide whether the SOC is a control or a cost center with a dashboard."
+  },
+  {
+   "t": "idash",
+   "title": "Threat intel & managed SOC — detection console",
+   "kpis": [
+    {
+     "label": "ATT&CK coverage",
+     "value": "78%",
+     "delta": "sector-weighted technique classes",
+     "dir": "up",
+     "spark": [
+      34,
+      45,
+      54,
+      62,
+      68,
+      74,
+      78
+     ]
+    },
+    {
+     "label": "Triage decision",
+     "value": "9 min",
+     "delta": "median, with evidence",
+     "dir": "down",
+     "spark": [
+      47,
+      32,
+      24,
+      18,
+      14,
+      11,
+      9
+     ]
+    },
+    {
+     "label": "Rule precision",
+     "value": "91.4%",
+     "delta": "replay-tested",
+     "dir": "up",
+     "spark": [
+      52,
+      62,
+      70,
+      78,
+      84,
+      88,
+      91
+     ]
+    },
+    {
+     "label": "Escalation quality",
+     "value": "4.6/5",
+     "delta": "client CSAT on escalations",
+     "dir": "up",
+     "spark": [
+      3.5,
+      3.8,
+      4.0,
+      4.2,
+      4.4,
+      4.5,
+      4.6
+     ]
+    },
+    {
+     "label": "Intel-driven rule changes",
+     "value": "34",
+     "delta": "this quarter",
+     "dir": "up",
+     "spark": [
+      8,
+      12,
+      17,
+      22,
+      27,
+      31,
+      34
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Coverage map",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "ATT&CK coverage by tactic × sector relevance",
+       "rows": [
+        "Initial access",
+        "Execution",
+        "Persistence",
+        "Priv esc",
+        "Exfiltration",
+        "Impact"
+       ],
+       "cats": [
+        "Financial sector",
+        "Healthcare",
+        "Manufacturing",
+        "Retail",
+        "Public sector"
+       ],
+       "matrix": [
+        [
+         88,
+         74,
+         71,
+         69,
+         81,
+         85
+        ],
+        [
+         84,
+         70,
+         66,
+         64,
+         76,
+         80
+        ],
+        [
+         79,
+         72,
+         62,
+         58,
+         70,
+         74
+        ],
+        [
+         82,
+         68,
+         65,
+         61,
+         74,
+         79
+        ],
+        [
+         86,
+         71,
+         68,
+         66,
+         72,
+         81
+        ]
+       ],
+       "unit": "% coverage",
+       "note": "Hover cells to read coverage. Initial access is strong everywhere (the noisy edge); persistence and privilege-escalation are the classic gaps — the detection roadmap prices them by sector threat profile."
+      }
+     ]
+    },
+    {
+     "name": "Triage what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Triage economics what-if — automation vs analyst load",
+       "params": [
+        {
+         "name": "Alert volume",
+         "min": 500,
+         "max": 20000,
+         "step": 500,
+         "value": 6400,
+         "unit": "alerts/day"
+        },
+        {
+         "name": "Tier-1 automation",
+         "min": 0,
+         "max": 100,
+         "step": 10,
+         "value": 72,
+         "unit": "% auto-triaged"
+        },
+        {
+         "name": "Analyst capacity",
+         "min": 2,
+         "max": 30,
+         "step": 2,
+         "value": 9,
+         "unit": "FTE"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Decision time",
+         "unit": "min",
+         "formula": "max(3, p0/70*(100-p1)/100/p2*8)",
+         "good": "10",
+         "bad": "40"
+        },
+        {
+         "name": "Backlog",
+         "unit": "alerts",
+         "formula": "max(0, p0*(100-p1)/100-p2*120)",
+         "good": "200",
+         "bad": "2000"
+        },
+        {
+         "name": "Escalation accuracy",
+         "unit": "%",
+         "formula": "min(96, 60+p1*0.3+p2*1.1)",
+         "good": "90",
+         "bad": "75"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 0,
+        "label": "Tier-1 automation vs decision time"
+       },
+       "note": "Automation buys minutes at this volume: past ~70% tier-1 auto-triage, decision time stabilizes and the analysts' hours move to the cases that need judgment."
+      }
+     ]
+    },
+    {
+     "name": "Response topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "SOC response fabric — click nodes for the playbook contract",
+       "lanes": [
+        "Sources",
+        "Detection",
+        "Triage",
+        "Response"
+       ],
+       "nodes": [
+        {
+         "id": "telem",
+         "lane": 0,
+         "label": "Estate telemetry",
+         "detail": "Endpoints, identity, network and cloud logs normalized to one schema — detection quality is bounded by telemetry quality upstream.",
+         "hot": true
+        },
+        {
+         "id": "intel",
+         "lane": 0,
+         "label": "Intel pipeline",
+         "detail": "Sector feeds, ISAC traffic and finished profiles screened for applicability; indicators promoted with context or not at all."
+        },
+        {
+         "id": "rules",
+         "lane": 1,
+         "label": "Detection-as-code",
+         "detail": "Versioned rules with replay-tested precision scores, ATT&CK mapping and CI deployment — detections are software."
+        },
+        {
+         "id": "t1",
+         "lane": 2,
+         "label": "Tier-1 auto-triage",
+         "detail": "Enrichment, dedup and playbook-driven dispositions for the repetitive classes — analysts see the survivors with context attached."
+        },
+        {
+         "id": "t2",
+         "lane": 2,
+         "label": "Tier-2 investigation",
+         "detail": "Human investigation with the evidence graph pre-built; escalations carry a written narrative, not a raw alert."
+        },
+        {
+         "id": "hunt",
+         "lane": 2,
+         "label": "Threat hunting",
+         "detail": "Hypothesis-driven hunts against the coverage gaps — every hunt ends in a rule, a telemetry request, or a documented negative."
+        },
+        {
+         "id": "soc",
+         "lane": 3,
+         "label": "Response playbooks",
+         "detail": "Containment actions pre-authorized per severity with reversibility-first ordering; execution measured in the game days."
+        }
+       ],
+       "edges": [
+        {
+         "a": "telem",
+         "b": "rules",
+         "label": "feeds"
+        },
+        {
+         "a": "intel",
+         "b": "rules",
+         "label": "informs"
+        },
+        {
+         "a": "rules",
+         "b": "t1"
+        },
+        {
+         "a": "t1",
+         "b": "t2",
+         "label": "survivors"
+        },
+        {
+         "a": "hunt",
+         "b": "rules",
+         "label": "produces"
+        },
+        {
+         "a": "t2",
+         "b": "soc",
+         "label": "escalate"
+        }
+       ],
+       "note": "Click nodes for the contract each layer carries. Hunting feeds the rule repo — the SOC learns from what it looks for, not only from what fires."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · coverage model",
+   "note": "Reference program model: coverage and triage bands from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Coverage by attack technique, before and after purple team"
+  },
+  {
+   "t": "p",
+   "x": "Detection coverage across the technique matrix before and after each purple-team exercise — the honest delta that shows which coverage was real and which was slide-ware."
+  },
+  {
+   "t": "chart",
+   "title": "Attack-path coverage progression — design targets",
+   "variant": "bar",
+   "cats": [
+    "Phishing",
+    "Credential theft",
+    "Cloud misconfig",
+    "Supply chain",
+    "Insider paths",
+    "Physical-digital"
+   ],
+   "series": [
+    {
+     "name": "Validated coverage target %",
+     "points": [
+      92,
+      88,
+      84,
+      76,
+      80,
+      70
+     ]
+    },
+    {
+     "name": "Gaps open target",
+     "points": [
+      1,
+      1,
+      2,
+      3,
+      2,
+      3
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Threat Intelligence & Managed SOC across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Threat Intelligence & Managed SOC",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Banking & Financial Services operators recognize the pattern: genAI stuck between pilot and policy, quarter after quarter.",
+     "plays": [
+      "Threat-informed detection mapped to the techniques that target your sector",
+      "Purple-team-proved coverage, quarterly, signed by both sides",
+      "Containment speed measured from first signal — with playbooks rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Detect-to-contain",
+       "value": "14m"
+      },
+      {
+       "label": "Triage SLA adherence",
+       "value": "97%"
+      },
+      {
+       "label": "Detection precision",
+       "value": "91%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Insurance & Risk operators recognize the pattern: sensitive data estate under pressure, quarter after quarter.",
+     "plays": [
+      "Threat-informed detection mapped to the techniques that target your sector",
+      "Purple-team-proved coverage, quarterly, signed by both sides",
+      "Containment speed measured from first signal — with playbooks rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Detect-to-contain",
+       "value": "14m"
+      },
+      {
+       "label": "Triage SLA adherence",
+       "value": "97%"
+      },
+      {
+       "label": "Detection precision",
+       "value": "91%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "Ask what PHI concentration and ransomware exposure costs Healthcare & Life Sciences firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Threat-informed detection mapped to the techniques that target your sector",
+      "Purple-team-proved coverage, quarterly, signed by both sides",
+      "Containment speed measured from first signal — with playbooks rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Detect-to-contain",
+       "value": "14m"
+      },
+      {
+       "label": "Triage SLA adherence",
+       "value": "97%"
+      },
+      {
+       "label": "Detection precision",
+       "value": "91%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — IT/OT convergence exposure included — and prove it moved.",
+     "plays": [
+      "Threat-informed detection mapped to the techniques that target your sector",
+      "Purple-team-proved coverage, quarterly, signed by both sides",
+      "Containment speed measured from first signal — with playbooks rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Detect-to-contain",
+       "value": "14m"
+      },
+      {
+       "label": "Triage SLA adherence",
+       "value": "97%"
+      },
+      {
+       "label": "Detection precision",
+       "value": "91%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone.",
+     "plays": [
+      "Threat-informed detection mapped to the techniques that target your sector",
+      "Purple-team-proved coverage, quarterly, signed by both sides",
+      "Containment speed measured from first signal — with playbooks rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Detect-to-contain",
+       "value": "14m"
+      },
+      {
+       "label": "Triage SLA adherence",
+       "value": "97%"
+      },
+      {
+       "label": "Detection precision",
+       "value": "91%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the design assumes breach: blast radii contained, lateral movement priced, and detection tuned to the attacks your sector actually sees.",
+     "plays": [
+      "Threat-informed detection mapped to the techniques that target your sector",
+      "Purple-team-proved coverage, quarterly, signed by both sides",
+      "Containment speed measured from first signal — with playbooks rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Detect-to-contain",
+       "value": "14m"
+      },
+      {
+       "label": "Triage SLA adherence",
+       "value": "97%"
+      },
+      {
+       "label": "Detection precision",
+       "value": "91%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": true,
+     "hook": "The work here has one job: move a named number — OT estate exposed by convergence included — and prove it moved.",
+     "plays": [
+      "Threat-informed detection mapped to the techniques that target your sector",
+      "Purple-team-proved coverage, quarterly, signed by both sides",
+      "Containment speed measured from first signal — with playbooks rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Detect-to-contain",
+       "value": "14m"
+      },
+      {
+       "label": "Triage SLA adherence",
+       "value": "97%"
+      },
+      {
+       "label": "Detection precision",
+       "value": "91%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Threat-informed detection mapped to the techniques that target your sector",
+      "Purple-team-proved coverage, quarterly, signed by both sides",
+      "Containment speed measured from first signal — with playbooks rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Detect-to-contain",
+       "value": "14m"
+      },
+      {
+       "label": "Triage SLA adherence",
+       "value": "97%"
+      },
+      {
+       "label": "Detection precision",
+       "value": "91%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Threat-informed detection mapped to the techniques that target your sector",
+      "Purple-team-proved coverage, quarterly, signed by both sides",
+      "Containment speed measured from first signal — with playbooks rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Detect-to-contain",
+       "value": "14m"
+      },
+      {
+       "label": "Triage SLA adherence",
+       "value": "97%"
+      },
+      {
+       "label": "Detection precision",
+       "value": "91%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone.",
+     "plays": [
+      "Threat-informed detection mapped to the techniques that target your sector",
+      "Purple-team-proved coverage, quarterly, signed by both sides",
+      "Containment speed measured from first signal — with playbooks rehearsed",
+      "Sector working pattern: research ip protection: classification-aware controls for sensitive research programs. Export-control posture evidenced is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Detect-to-contain",
+       "value": "14m"
+      },
+      {
+       "label": "Triage SLA adherence",
+       "value": "97%"
+      },
+      {
+       "label": "Detection precision",
+       "value": "91%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": true,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Threat-informed detection mapped to the techniques that target your sector",
+      "Purple-team-proved coverage, quarterly, signed by both sides",
+      "Containment speed measured from first signal — with playbooks rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Detect-to-contain",
+       "value": "14m"
+      },
+      {
+       "label": "Triage SLA adherence",
+       "value": "97%"
+      },
+      {
+       "label": "Detection precision",
+       "value": "91%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means security here is architecture, not product sprawl — identity-first controls, segmented networks, and telemetry your SOC can act on the same hour.",
+     "plays": [
+      "Threat-informed detection mapped to the techniques that target your sector",
+      "Purple-team-proved coverage, quarterly, signed by both sides",
+      "Containment speed measured from first signal — with playbooks rehearsed"
+     ],
+     "kpis": [
+      {
+       "label": "Detect-to-contain",
+       "value": "14m"
+      },
+      {
+       "label": "Triage SLA adherence",
+       "value": "97%"
+      },
+      {
+       "label": "Detection precision",
+       "value": "91%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/cybersecurity-zero-trust/"
+    }
+   ],
+   "practiceNote": "Threat Intelligence & Managed SOC view: detection engineering with measured coverage — threat-informed, purple-teamed, and run by a SOC whose speed is measured from detect to contain."
+  },
+  {
+   "t": "h2",
+   "x": "SOC stack defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor detection-as-code with versioned playbooks over tribal analyst knowledge; deviation triggers are written because each one puts coverage back into someone's head."
+  },
+  {
+   "t": "table",
+   "caption": "Threat Intelligence & Managed SOC: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Detection program with ATT&CK coverage metrics and tuning cadence",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Detection",
+     "Sigma-class rules with lab testing",
+     "Vendor-default rule packs — noise with unmeasured coverage"
     ],
     [
-     "Detection-as-code repository with CI pipeline",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Intel",
+     "Mapped-to-attack-path feeds with conversion SLA",
+     "Report subscription — nothing converts"
     ],
     [
-     "AI-endpoint and OT detection packages where in scope",
-     "Handed to a named owner on your side, with a working session included."
+     "Triage",
+     "SLA-driven queue with severity rubric",
+     "First-in-first-out — criticals wait behind noise"
     ],
     [
-     "Co-managed SOC run model with escalation paths",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Response",
+     "SOAR playbooks rehearsed quarterly",
+     "Runbooks written but never drilled"
+    ],
+    [
+     "Validation",
+     "Purple-team cadence against the ledger",
+     "Annual pen test report — it expires in a month"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Engineering standards we hold"
+   "x": "Detection release gates — evidence before deployment"
   },
   {
-   "t": "p",
-   "x": "Threat Intelligence & Managed SOC ships against MITRE ATT&CK, Sigma, SIEM platforms, XDR, threat-intel platforms (MISP/TAXII). Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for Threat Intelligence & Managed SOC — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Signal gate",
+     "Do detections meet precision targets?",
+     "Signal-quality SLO report per rule"
+    ],
+    [
+     "Conversion gate",
+     "Does intel become detection in 7 days?",
+     "Conversion SLA evidence per feed item"
+    ],
+    [
+     "Validation gate",
+     "Are attack paths purple-teamed?",
+     "Drill evidence per ledger path"
+    ],
+    [
+     "Playbook gate",
+     "Are responses rehearsed?",
+     "Rehearsal logs; timing evidence"
+    ],
+    [
+     "Learning gate",
+     "Does every incident improve coverage?",
+     "Post-incident ledger entries"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "Sequencing, honestly"
+   "x": "What the SOC leadership inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Threat Intelligence & Managed SOC starts with the measurement: the metric, the owner, the current number, signed."
+     "Detection lab",
+     "Tested rule library with signal-quality SLOs"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, att&ck coverage program first, gates written with your team."
+     "Coverage ledger",
+     "Every attack path's detection state"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "The Threat Intelligence & Managed SOC gate review: baseline versus slice, in the metric's own units, plus a scale recommendation your board can audit."
+     "Intel pipeline",
+     "Feeds mapped to paths with 7-day conversion"
+    ],
+    [
+     "SOC playbook set",
+     "Rehearsed containment and recovery flows"
+    ],
+    [
+     "Purple-team cadence",
+     "Drill schedule with evidence per path"
+    ],
+    [
+     "Post-incident loop",
+     "Incident-to-coverage improvement record"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Coverage in order, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — telemetry & baseline",
+     "Signal census, MTTD baseline definition, queue audit"
+    ],
+    [
+     "Weeks 3–4 — detection lab",
+     "Rule tuning, precision targets, lab harness"
+    ],
+    [
+     "Weeks 5–6 — intel & mapping",
+     "Feed onboarding, attack-path map, conversion SLA"
+    ],
+    [
+     "Weeks 7–8 — SOC rhythm",
+     "Triage SLAs, escalation ladder, playbook rehearsal"
+    ],
+    [
+     "Weeks 9–10 — validation",
+     "First purple cycle; ledger populated; gaps backlog"
+    ],
+    [
+     "Ongoing — coverage ops",
+     "Monthly ledger review; quarterly drill cycles"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — telemetry, intel feeds and the response tooling"
+  },
+  {
+   "t": "p",
+   "x": "Detection quality is bounded by telemetry quality; these contracts define what each source must emit and how intel feeds become detection requirements."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Estate telemetry",
+     "Log contracts with source-quality scores"
+    ],
+    [
+     "Identity & cloud",
+     "High-value event sources prioritized"
+    ],
+    [
+     "SOAR platform",
+     "Playbook integrations with receipts"
+    ],
+    [
+     "Threat intel vendors",
+     "Mapped feeds with conversion tracking"
+    ],
+    [
+     "Red/purple teams",
+     "Drill scheduling and evidence capture"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Metrics governance — the anti-theater layer"
+  },
+  {
+   "t": "p",
+   "x": "Every reported metric carries its computation: precision from closed-case truth, containment from first signal, coverage from executed tests — metrics theater is designed out, not discouraged."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Measured containment",
+     "Detect-to-contain defined from first signal, reported"
+    ],
+    [
+     "Intel conversion SLA",
+     "Feed items become detections within 7 days or are dropped"
+    ],
+    [
+     "Ledger honesty",
+     "Gaps are published internally and worked as backlog"
+    ],
+    [
+     "Rehearsal rule",
+     "Playbooks used in anger must have been drilled first"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Quarterly purple-team results are signed by both sides — red for what got through, blue for what caught it — and the delta against claimed coverage ships in the board pack, unedited."
   },
   {
    "t": "cta",
-   "x": "The next step is small and real: one working session on Threat Intelligence & Managed SOC, your data, and a written feasibility read you can circulate."
+   "x": "Ask your SOC to state its detect-to-contain from first signal, by threat class. If the answer is a maturity score, bring the telemetry to a briefing — we will measure it for real."
   }
  ],
- "words": 494,
+ "words": 1000,
  "section": "Services",
  "l1": "Services",
  "l2": "Cybersecurity & Zero-Trust",
@@ -278,7 +1219,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Cybersecurity & Zero-Trust",
+   "title": "Domain overview — Cybersecurity & Zero-Trust",
    "url": "/services/cybersecurity-zero-trust/",
    "desc": "Identity, detection, resilience and AI security in one program."
   },
@@ -330,33 +1271,51 @@
   {
    "title": "Data & Lakehouse for Healthcare & Life Sciences",
    "url": "/industries/healthcare-life-sciences/capabilities/data-analytics-lakehouse/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Zero-Trust Architecture & Implementation",
-   "url": "/services/cybersecurity-zero-trust/zero-trust-architecture/",
-   "tag": "Same tower",
-   "desc": "Never trust, always verify — zero-trust as an executable architecture, not a slide."
+   "title": "Compliance, Audit & Digital Trust",
+   "url": "/services/cybersecurity-zero-trust/compliance-audit-digital-trust/",
+   "tag": "Same domain",
+   "desc": "evidence-grade compliance without theater — controls mapped once, evidence generated continuously, audits that pass first time."
+  },
+  {
+   "title": "Cyber Resilience & Incident Recovery",
+   "url": "/services/cybersecurity-zero-trust/cyber-resilience-incident-recovery/",
+   "tag": "Same domain",
+   "desc": "recovery that is rehearsed, not documented — immutable backups, clean-room restores and business-service RTOs you can actually meet on a bad Friday."
   },
   {
    "title": "Identity & Access Modernization",
    "url": "/services/cybersecurity-zero-trust/identity-access-modernization/",
-   "tag": "Same tower",
-   "desc": "Identity as the perimeter — workforce, customer and machine identities on one governed plane."
+   "tag": "Same domain",
+   "desc": "workforce and machine identity lifecycle done properly — joiner-mover-leaver automation, privileged access vaulting and credential hygiene that is measured weekly."
   },
   {
-   "title": "Cloud Security & Posture Management",
-   "url": "/services/cybersecurity-zero-trust/cloud-security-posture/",
-   "tag": "Same tower",
-   "desc": "Secure at the control plane — posture, workload and data security engineered into the platform."
+   "title": "FinOps & Sustainable Computing",
+   "url": "/services/cloud-edge-platform-engineering/finops-sustainable-computing/",
+   "tag": "Pairs with",
+   "desc": "cost and carbon as engineering inputs — unit economics per workload, rightsizing with teeth, and sustainability reported like any SLO."
   },
   {
-   "title": "AI security & Model Protection",
-   "url": "/services/cybersecurity-zero-trust/ai-security-model-protection/",
-   "tag": "Same tower",
-   "desc": "Secure the models themselves — prompt-injection defense, agent containment and AI red-teaming."
+   "title": "Quantum Machine Learning & Simulation",
+   "url": "/services/quantum-advanced-compute/quantum-ml-simulation/",
+   "tag": "Pairs with",
+   "desc": "circuit-based ML and chemistry simulation with verification-first rigor — benchmarks that survive noise, and classical surrogates that carry the workload meanwhile."
+  },
+  {
+   "title": "LLM Fine-Tuning & Model Operations",
+   "url": "/services/applied-ai-generative-ai/llm-fine-tuning-ops/",
+   "tag": "Pairs with",
+   "desc": "a tuning factory with decontaminated datasets, a multi-task eval gate that blocks silent regressions, and canary rollout with rehearsed rollback."
+  },
+  {
+   "title": "A tier-1 US bank",
+   "url": "/case-studies/bank-03/",
+   "tag": "Evidence",
+   "desc": "DORA-grade resilience posture — third-party and incident evidence automated."
   }
  ]
 }

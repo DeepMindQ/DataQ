@@ -9,233 +9,991 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Cloud, Edge & Platform Engineering builds the runtime for everything else we do: hybrid and multicloud architecture, cloud-native modernization of legacy estates, edge and distributed infrastructure for latency-critical operations, SRE and reliability engineering, internal developer platforms, FinOps, and mission-critical high-performance systems. We measure ourselves on availability, lead time, and unit economics — not migration counts."
-  },
-  {
-   "t": "h2",
-   "x": "The stakes, stated plainly"
+   "x": "Cloud, Edge & Platform Engineering runs the estate as an economic and reliability system: hybrid placement by policy, golden paths that carry SLOs and budgets by default, edge fleets that survive partitions, and unit costs that fall on a signed trend line — across clouds, without tribal dialects."
   },
   {
    "t": "p",
-   "x": "Lift-and-shift savings have evaporated; the value now sits in platform use. A strong internal platform cuts service onboarding from months to days, FinOps discipline turns cloud spend from a board escalation into a unit metric, and edge fabric is mandatory for plants, ports, grids and stores where 200 milliseconds of latency is a lost order or a failed inspection."
-  },
-  {
-   "t": "h2",
-   "x": "What goes live, and in what order"
+   "x": "The platform domain turns infrastructure into product: golden paths that carry SLOs and budgets by default, runtimes that recover before users notice, and an economics discipline that makes every workload justify its cost. Product teams should ship features, not plumbing."
   },
   {
    "t": "p",
-   "x": "Named services for Cloud, Edge & Platform — each page documents the build as delivered:"
+   "x": "Seven practices cover modernization, the runtimes themselves, edge where latency lives, reliability engineering, developer experience, FinOps with sustainability, and the mission-critical tier where downtime is measured in regulators' phone calls."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "h2",
+   "x": "Seven practices from golden paths to mission-critical tiers"
+  },
+  {
+   "t": "table",
+   "caption": "The seven practices — scope and the metric each one is judged on",
+   "headers": [
+    "Practice",
+    "Scope in one line",
+    "Metric it moves"
+   ],
+   "rows": [
+    [
+     "Cloud-Native Modernization",
+     "Workloads rebuilt for cloud-native operations",
+     "Change failure rate, cost per workload"
+    ],
     [
      "Hybrid & Multicloud Architecture",
-     "The estate as designed system — landing zones, network fabric and workload placement by economics."
+     "One operating model across clouds and on-prem",
+     "Cross-cloud drift incidents"
     ],
     [
-     "Cloud-Native & Legacy Modernization",
-     "Retire the legacy tax — strangler-pattern modernization with measurable unit economics."
-    ],
-    [
-     "Edge Computing & Distributed Infrastructure",
-     "Compute where the physics is — edge fabric for plants, stores, vehicles and grids."
+     "Platform Engineering & DevEx",
+     "Golden paths, scaffolds and a platform product team",
+     "Time to first deploy"
     ],
     [
      "SRE & Reliability Engineering",
-     "Reliability as product — SLOs, error budgets and incident discipline that engineers actually follow."
+     "SLOs, error budgets, chaos and incident craft",
+     "Change failure rate, MTTR"
     ],
     [
-     "Platform Engineering & Developer Experience",
-     "Golden paths, paved roads — an internal platform that turns months into days."
+     "Edge Computing Infrastructure",
+     "Compute and delivery close to users and devices",
+     "Regional latency p95"
     ],
     [
      "FinOps & Sustainable Computing",
-     "Cost and carbon as engineering metrics — unit economics, showback and green compute by design."
+     "Cost and carbon as first-class engineering inputs",
+     "Unit cost per workload"
     ],
     [
-     "High-Performance & Mission-Critical Systems",
-     "When microseconds and uptime are the product — HPC, low-latency and always-on engineering."
+     "High-Performance & Mission-Critical",
+     "Low-latency, high-availability tiers with proofs",
+     "Availability vs signed target"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reliability and unit cost: the numbers the business feels"
+  },
+  {
+   "t": "p",
+   "x": "The platform conversation changed: engineering leaders no longer buy infrastructure, they buy change failure rates and unit costs. The seven practices here are managed on exactly those numbers — SLO adherence, path adoption, placement policy coverage, cost per workload — because those are the numbers the business actually experiences."
+  },
+  {
+   "t": "p",
+   "x": "The edge adds a discipline the data center never taught: partition-tolerant behavior, store-and-forward resilience, fleet heterogeneity at scale and sites that fail silently. The practices treat edge as a first-class estate with its own gates, not as a cloud region with worse networking."
+  },
+  {
+   "t": "h2",
+   "x": "The domain reference architecture — estate as one system"
+  },
+  {
+   "t": "p",
+   "x": "Placement policy decides where workloads run, golden paths carry how they deploy, SRE discipline decides when they change, and FinOps prices what it all costs — one operating model across clouds, on-prem and the edge, with drift caught by monitors instead of by incidents."
+  },
+  {
    "t": "arch",
-   "title": "Cloud, Edge & Platform — reference topology",
+   "title": "Cloud, Edge & Platform Engineering — domain reference architecture",
    "lanes": [
-    "Estates",
-    "Migration waves",
-    "Modern runtimes",
-    "Observability",
-    "Governance",
-    "Products"
+    "Consumers",
+    "Golden paths",
+    "Runtime",
+    "Edge tier",
+    "Reliability",
+    "Economics"
    ],
    "nodes": [
     {
-     "id": "es0",
+     "id": "dev",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Product teams"
     },
     {
-     "id": "es1",
+     "id": "agents",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "AI workloads"
     },
     {
-     "id": "mw2",
+     "id": "ops",
+     "lane": 0,
+     "label": "Operations"
+    },
+    {
+     "id": "path",
      "lane": 1,
-     "label": "Hybrid & Multicloud Architecture",
+     "label": "Golden paths (as APIs)",
      "hot": true
     },
     {
-     "id": "mw3",
+     "id": "temp",
      "lane": 1,
-     "label": "Cutover runbooks",
-     "hot": false
+     "label": "Templates & scaffolds"
     },
     {
-     "id": "mr4",
-     "lane": 2,
-     "label": "Containers & IaC",
-     "hot": false
+     "id": "reg",
+     "lane": 1,
+     "label": "Platform registry"
     },
     {
-     "id": "mr5",
+     "id": "k8s",
      "lane": 2,
-     "label": "Cloud-Native & Legacy Modernization",
+     "label": "Kubernetes runtimes",
      "hot": true
     },
     {
-     "id": "ob6",
+     "id": "srv",
+     "lane": 2,
+     "label": "Serverless tier"
+    },
+    {
+     "id": "data",
+     "lane": 2,
+     "label": "Data runtimes"
+    },
+    {
+     "id": "edge",
      "lane": 3,
-     "label": "Golden signals",
-     "hot": false
+     "label": "Edge clusters",
+     "hot": true
     },
     {
-     "id": "ob7",
+     "id": "cdn",
      "lane": 3,
-     "label": "Incident automation",
-     "hot": false
+     "label": "Delivery & cache"
     },
     {
-     "id": "gv8",
+     "id": "iot",
+     "lane": 3,
+     "label": "Device gateways"
+    },
+    {
+     "id": "slo",
      "lane": 4,
-     "label": "Cloud posture (CNAPP)",
-     "hot": false
+     "label": "SLO framework",
+     "hot": true
     },
     {
-     "id": "gv9",
+     "id": "chaos",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Chaos program"
     },
     {
-     "id": "pr10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "inc",
+     "lane": 4,
+     "label": "Incident flow"
     },
     {
-     "id": "pr11",
+     "id": "fin",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "FinOps engine",
+     "hot": true
+    },
+    {
+     "id": "sus",
+     "lane": 5,
+     "label": "Sustainability"
+    },
+    {
+     "id": "unit",
+     "lane": 5,
+     "label": "Unit economics"
     }
    ],
    "edges": [
     {
-     "a": "es0",
-     "b": "mw2"
+     "a": "dev",
+     "b": "path",
+     "label": "consume"
     },
     {
-     "a": "es1",
-     "b": "mw3"
+     "a": "agents",
+     "b": "path",
+     "label": "consume"
     },
     {
-     "a": "mw2",
-     "b": "mr4"
+     "a": "ops",
+     "b": "path"
     },
     {
-     "a": "mw3",
-     "b": "mr5"
+     "a": "path",
+     "b": "temp",
+     "label": "generate"
     },
     {
-     "a": "mr4",
-     "b": "ob6"
+     "a": "temp",
+     "b": "reg",
+     "label": "version"
     },
     {
-     "a": "mr5",
-     "b": "ob7"
+     "a": "path",
+     "b": "k8s",
+     "label": "deploy"
     },
     {
-     "a": "ob6",
-     "b": "gv8"
+     "a": "path",
+     "b": "srv",
+     "label": "deploy"
     },
     {
-     "a": "gv8",
-     "b": "gv9"
+     "a": "path",
+     "b": "data",
+     "label": "provision"
     },
     {
-     "a": "mr4",
-     "b": "pr10"
+     "a": "k8s",
+     "b": "edge",
+     "label": "extend"
     },
     {
-     "a": "mr5",
-     "b": "pr11"
+     "a": "cdn",
+     "b": "edge",
+     "label": "deliver"
+    },
+    {
+     "a": "iot",
+     "b": "edge",
+     "label": "ingest"
+    },
+    {
+     "a": "slo",
+     "b": "k8s",
+     "label": "bound"
+    },
+    {
+     "a": "chaos",
+     "b": "k8s",
+     "label": "test"
+    },
+    {
+     "a": "inc",
+     "b": "slo",
+     "label": "feed"
+    },
+    {
+     "a": "fin",
+     "b": "k8s",
+     "label": "budget"
+    },
+    {
+     "a": "sus",
+     "b": "fin",
+     "label": "report"
+    },
+    {
+     "a": "unit",
+     "b": "fin",
+     "label": "price"
     }
    ],
-   "note": "Highlighted nodes are the tower's named services in their architectural position."
+   "note": "Golden paths are versioned APIs with SLAs — product teams consume the platform like a product, and reliability and cost are properties of the path, not heroics in the team."
   },
   {
    "t": "h2",
-   "x": "The delivery rhythm"
+   "x": "The estate on one screen — reliability and economics together"
   },
   {
    "t": "p",
-   "x": "What a Cloud, Edge & Platform engagement shares across services: the baseline is signed, the slice is bounded, and the gates can stop the program — that last part is a feature. Nothing scales on a demo. The gate criteria are written with your team, and the pilot runs on your data before any rollout plan exists."
+   "x": "SLO adherence, change failure rate, path adoption and unit cost trend — the four tiles the engineering leadership review reads weekly, rendered as they appear there."
+  },
+  {
+   "t": "idash",
+   "title": "Cloud & platform portfolio — the seven practices on one console",
+   "kpis": [
+    {
+     "label": "Practices live",
+     "value": "7",
+     "delta": "wave plans signed",
+     "dir": "flat",
+     "spark": [
+      3,
+      4,
+      5,
+      6,
+      6,
+      7,
+      7
+     ]
+    },
+    {
+     "label": "Legacy surface",
+     "value": "38%",
+     "delta": "of original call volume",
+     "dir": "down",
+     "spark": [
+      100,
+      88,
+      74,
+      63,
+      52,
+      44,
+      38
+     ]
+    },
+    {
+     "label": "Waste eliminated",
+     "value": "23.4%",
+     "delta": "FinOps rightsizing pass",
+     "dir": "up",
+     "spark": [
+      0,
+      4,
+      9,
+      14,
+      18,
+      21,
+      23
+     ]
+    },
+    {
+     "label": "Budget health",
+     "value": "31%",
+     "delta": "30d consumption, healthy",
+     "dir": "flat",
+     "spark": [
+      68,
+      55,
+      48,
+      42,
+      37,
+      34,
+      31
+     ]
+    },
+    {
+     "label": "Golden-path adoption",
+     "value": "89%",
+     "delta": "of production services",
+     "dir": "up",
+     "spark": [
+      45,
+      55,
+      63,
+      71,
+      78,
+      84,
+      89
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Wave tracker",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Infrastructure wave progress — modernization, edge, platform",
+       "cats": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8"
+       ],
+       "series": [
+        {
+         "name": "Extraction waves",
+         "points": [
+          8,
+          18,
+          30,
+          44,
+          58,
+          70,
+          80,
+          88
+         ]
+        },
+        {
+         "name": "Edge rollout",
+         "points": [
+          5,
+          14,
+          26,
+          40,
+          55,
+          68,
+          79,
+          87
+         ]
+        },
+        {
+         "name": "Platform adoption",
+         "points": [
+          12,
+          24,
+          38,
+          52,
+          64,
+          75,
+          83,
+          89
+         ]
+        }
+       ],
+       "unit": "% complete",
+       "note": "Click to isolate. The three programs compound: platform adoption accelerates extraction, edge rollout inherits the placement discipline — the tracks are one program."
+      }
+     ]
+    },
+    {
+     "name": "Estate health",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Practice depth by sector — where infrastructure work runs deepest",
+       "rows": [
+        "Modernization",
+        "Edge",
+        "FinOps",
+        "Mission-crit",
+        "Platform",
+        "SRE"
+       ],
+       "cats": [
+        "Banking",
+        "Telecom",
+        "Manufacturing",
+        "Public sector",
+        "Retail"
+       ],
+       "matrix": [
+        [
+         88,
+         70,
+         84,
+         92,
+         82,
+         90
+        ],
+        [
+         74,
+         92,
+         80,
+         76,
+         78,
+         82
+        ],
+        [
+         80,
+         88,
+         74,
+         70,
+         84,
+         78
+        ],
+        [
+         76,
+         62,
+         78,
+         84,
+         80,
+         86
+        ],
+        [
+         78,
+         74,
+         88,
+         68,
+         86,
+         80
+        ]
+       ],
+       "unit": "depth index",
+       "note": "Hover cells for depth. Mission-critical carries the banking flagship record; edge carries telecom's — pick your sector cell and the practice page below it."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · portfolio model",
+   "note": "Reference portfolio model: wave bands and depth indices from delivery, not client telemetry."
   },
   {
    "t": "h2",
-   "x": "The evidence, briefly"
+   "x": "Change failure and MTTR by service tier — the reliability bands"
   },
   {
    "t": "p",
-   "x": "Evidence from Cloud, Edge & Platform Engineering, published with the client's permission to show numbers but never names:"
+   "x": "Radar profile across six gated axes; the posture-to-target gap is the funded engineering program for the next two quarters, re-scored at every gate review."
+  },
+  {
+   "t": "chart",
+   "title": "Change failure rate and MTTR by service tier — design targets",
+   "variant": "bar",
+   "cats": [
+    "Tier-0 mission critical",
+    "Tier-1 customer facing",
+    "Tier-2 internal",
+    "Tier-3 batch & backoffice"
+   ],
+   "series": [
+    {
+     "name": "Change failure rate %",
+     "points": [
+      4.5,
+      6.2,
+      8.0,
+      11.0
+     ]
+    },
+    {
+     "name": "MTTR (minutes)",
+     "points": [
+      22,
+      31,
+      45,
+      90
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": "",
+   "caption": "Reference bands by service tier — the reliability bar scales with blast radius, and the gates enforce the pairing."
+  },
+  {
+   "t": "h2",
+   "x": "Sector depth — where the platform practice runs deepest today"
+  },
+  {
+   "t": "p",
+   "x": "Retail chains buy edge resilience, banks buy mission-critical tiers, SaaS companies buy developer velocity. The bars count published sub-industry briefs on this site — the honest map of sector depth."
+  },
+  {
+   "t": "chart",
+   "title": "Cloud, Edge & Platform Engineering — published sub-industry briefs by sector",
+   "variant": "bar",
+   "cats": [
+    "Banking & Financial Services",
+    "Insurance & Risk",
+    "Healthcare & Life Sciences",
+    "Manufacturing & Industrial",
+    "Retail & Consumer Goods",
+    "Telecom, Media & Entertainment",
+    "Energy & Utilities",
+    "Logistics & Supply Chain",
+    "Public Sector & Government",
+    "Education & Research",
+    "Technology & SaaS",
+    "Agriculture & Food Systems"
+   ],
+   "series": [
+    {
+     "name": "Published sub-industry briefs",
+     "points": [
+      3,
+      2,
+      2,
+      0,
+      2,
+      3,
+      2,
+      1,
+      2,
+      3,
+      4,
+      0
+     ]
+    }
+   ],
+   "unit": "briefs",
+   "yMax": 5,
+   "note": "",
+   "caption": "Counts are live pages on this site. Taller bars mean deeper published sector coverage; every cell also has the domain-level sector brief."
+  },
+  {
+   "t": "explorer",
+   "title": "Your estate, your sector — pick the industry and see the plan",
+   "intro": "A grid operator's edge estate and a retailer's store fleet are different problems wearing the same protocols. Select your sector: the panel shows the entry problem, the deliverables, the targets and the sector brief.",
+   "service": "Cloud, Edge & Platform Engineering",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: infrastructure is treated as a product: versioned, observable, costed, and handed to your team with runbooks rather than folklore.",
+     "plays": [
+      "Golden paths as versioned APIs — SLOs and budgets carried by default",
+      "One operating model across clouds, on-prem and edge, with policy parity",
+      "Unit economics per workload with FinOps that has teeth",
+      "Sector working pattern: core-adjacent modernization in Banking & Financial Services, where strangler-pattern decomposition of monolith wrappers around core with parallel-run equivalence."
+     ],
+     "kpis": [
+      {
+       "label": "Golden-path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "Time to first deploy",
+       "value": "3.1d"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident.",
+     "plays": [
+      "Golden paths as versioned APIs — SLOs and budgets carried by default",
+      "One operating model across clouds, on-prem and edge, with policy parity",
+      "Unit economics per workload with FinOps that has teeth"
+     ],
+     "kpis": [
+      {
+       "label": "Golden-path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "Time to first deploy",
+       "value": "3.1d"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — validated-environment rigidity included — and prove it moved.",
+     "plays": [
+      "Golden paths as versioned APIs — SLOs and budgets carried by default",
+      "One operating model across clouds, on-prem and edge, with policy parity",
+      "Unit economics per workload with FinOps that has teeth"
+     ],
+     "kpis": [
+      {
+       "label": "Golden-path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "Time to first deploy",
+       "value": "3.1d"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident.",
+     "plays": [
+      "Golden paths as versioned APIs — SLOs and budgets carried by default",
+      "One operating model across clouds, on-prem and edge, with policy parity",
+      "Unit economics per workload with FinOps that has teeth"
+     ],
+     "kpis": [
+      {
+       "label": "Golden-path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "Time to first deploy",
+       "value": "3.1d"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Golden paths as versioned APIs — SLOs and budgets carried by default",
+      "One operating model across clouds, on-prem and edge, with policy parity",
+      "Unit economics per workload with FinOps that has teeth"
+     ],
+     "kpis": [
+      {
+       "label": "Golden-path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "Time to first deploy",
+       "value": "3.1d"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": true,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: energy cost compounds, quarter after quarter.",
+     "plays": [
+      "Golden paths as versioned APIs — SLOs and budgets carried by default",
+      "One operating model across clouds, on-prem and edge, with policy parity",
+      "Unit economics per workload with FinOps that has teeth"
+     ],
+     "kpis": [
+      {
+       "label": "Golden-path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "Time to first deploy",
+       "value": "3.1d"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what customer and market platforms creak costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Golden paths as versioned APIs — SLOs and budgets carried by default",
+      "One operating model across clouds, on-prem and edge, with policy parity",
+      "Unit economics per workload with FinOps that has teeth"
+     ],
+     "kpis": [
+      {
+       "label": "Golden-path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "Time to first deploy",
+       "value": "3.1d"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — peak surges break planning included — and prove it moved.",
+     "plays": [
+      "Golden paths as versioned APIs — SLOs and budgets carried by default",
+      "One operating model across clouds, on-prem and edge, with policy parity",
+      "Unit economics per workload with FinOps that has teeth",
+      "Sector working pattern: peak surge engineering: elastic capacity with load modeling for trading peaks. Peak absorbed at controlled unit cost is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Golden-path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "Time to first deploy",
+       "value": "3.1d"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the platform work decides the unit economics: right-sized runtimes, automated environments, and FinOps telemetry from the first workload.",
+     "plays": [
+      "Golden paths as versioned APIs — SLOs and budgets carried by default",
+      "One operating model across clouds, on-prem and edge, with policy parity",
+      "Unit economics per workload with FinOps that has teeth"
+     ],
+     "kpis": [
+      {
+       "label": "Golden-path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "Time to first deploy",
+       "value": "3.1d"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Education & Research operators recognize the pattern: research computing fragmented, quarter after quarter.",
+     "plays": [
+      "Golden paths as versioned APIs — SLOs and budgets carried by default",
+      "One operating model across clouds, on-prem and edge, with policy parity",
+      "Unit economics per workload with FinOps that has teeth"
+     ],
+     "kpis": [
+      {
+       "label": "Golden-path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "Time to first deploy",
+       "value": "3.1d"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": true,
+     "hook": "Ask what cloud unit economics opaque costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Golden paths as versioned APIs — SLOs and budgets carried by default",
+      "One operating model across clouds, on-prem and edge, with policy parity",
+      "Unit economics per workload with FinOps that has teeth"
+     ],
+     "kpis": [
+      {
+       "label": "Golden-path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "Time to first deploy",
+       "value": "3.1d"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what season peaks break systems costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Golden paths as versioned APIs — SLOs and budgets carried by default",
+      "One operating model across clouds, on-prem and edge, with policy parity",
+      "Unit economics per workload with FinOps that has teeth"
+     ],
+     "kpis": [
+      {
+       "label": "Golden-path adoption",
+       "value": "78%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "Time to first deploy",
+       "value": "3.1d"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/cloud-edge-platform-engineering/"
+    }
+   ],
+   "practiceNote": "Domain-level view — pick a practice above for the practice-specific sector plan and console."
+  },
+  {
+   "t": "h2",
+   "x": "How estate engagements run"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "A tier-1 US bank",
-     "DORA-grade resilience posture — third-party and incident evidence automated"
+     "Diagnostic — two weeks",
+     "Estate mapped by tier, SLOs and unit costs baselined, the gate model scored — with the platform-reuse opportunity priced before anything is built."
     ],
     [
-     "A national consumer-electronics chain",
-     "Retail media incrementality proven — clean-room measurement adopted by every major brand"
+     "Provability sprint — four weeks",
+     "One service family runs a fund-or-kill slice: golden path adoption, change failure rate and unit cost on your real workloads."
     ],
     [
-     "A Middle East operator group",
-     "Energy per site down 18% — telemetry-driven optimization at 12,000 sites"
+     "Build — ten to fourteen weeks",
+     "Paths, placement policy and SLO machinery built to the reference architecture, with the console live from week two."
+    ],
+    [
+     "Industrialize — ongoing",
+     "Quarterly re-baselines, path version reviews, FinOps trends with finance — and the drift monitors that keep the operating model honest."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Under the hood"
+   "x": "Estate release gates — the domain contract"
   },
   {
-   "t": "p",
-   "x": "The tower runs on Dataq Forge, Dataq Twinverse — platforms with documented controls, so the governance story is part of the product rather than an annex."
+   "t": "table",
+   "caption": "Domain-level release gates — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Path gate",
+     "Does the workload ride a golden path?",
+     "Path conformance report or a written exception"
+    ],
+    [
+     "SLO gate",
+     "Are SLOs defined and budgeted?",
+     "SLO documents with error-budget policy"
+    ],
+    [
+     "Recovery gate",
+     "Does it survive failure injection?",
+     "Chaos drill evidence against the path"
+    ],
+    [
+     "Cost gate",
+     "Is unit cost owned and trending?",
+     "Unit-economics entry with owner"
+    ],
+    [
+     "Security gate",
+     "Does the path carry security defaults?",
+     "Policy-as-code evidence from the security domain"
+    ]
+   ]
   },
   {
    "t": "cta",
-   "x": "Talk to the team that runs Cloud, Edge & Platform Engineering in production — the briefing is technical by design, and the first one costs nothing but the hour."
+   "x": "Bring the workload whose unit cost nobody can state and whose SLO nobody signed. The two-week diagnostic will baseline both — and price what golden paths would change on your estate."
   }
  ],
- "words": 449,
+ "words": 838,
  "section": "Services",
  "l1": "Services",
  "l2": "Cloud, Edge & Platform Engineering",

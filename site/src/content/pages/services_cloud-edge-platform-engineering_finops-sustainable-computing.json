@@ -9,254 +9,1174 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "FinOps & Sustainable Computing sits in the Cloud, Edge & Platform tower, and it earns that place by being specific: Cost and carbon as engineering metrics — unit economics, showback and green compute by design. The build pattern, the artifacts and the guardrails follow."
+   "x": "Cost and carbon as engineering inputs: unit economics per workload with allocation coverage that reaches the invoice, rightsizing with teeth, zombie estates hunted on schedule — and sustainability reported from meters, not multipliers."
   },
   {
    "t": "h2",
-   "x": "The job this service does"
+   "x": "Nobody spends someone else's money carefully — allocate it first"
   },
   {
    "t": "p",
-   "x": "Cloud spend becomes rational when it becomes unit economics: cost per transaction, per customer, per model inference. We implement FinOps as an engineering discipline — tagging and allocation architecture, showback and chargeback per team, commitment strategies (reserved/spot mix) with utilization tracking, and architectural cost reviews where the expensive path is redesigned before it is deployed, not after the invoice."
+   "x": "Cloud cost fails as a monthly surprise. FinOps here is engineering: unit economics (cost per customer, per order, per model call) as first-class metrics, budgets wired into deployment paths, and rightsizing driven by measured utilization rather than quarterly panic."
   },
   {
    "t": "p",
-   "x": "Sustainability rides the same instrumentation: carbon telemetry per workload (compute, storage, network), scheduling flexibility for carbon-aware batch windows, right-sizing programs, and efficiency metrics per service. For sustainability-reporting clients we produce the data foundation for ESG disclosures — auditable, tagged and reproducible, aligned to GHG Protocol scope treatment for cloud."
+   "x": "Sustainability rides the same rails: carbon per unit of work, scheduling that follows clean-energy windows, and the waste ledger — idle GPUs, over-provisioned clusters, zombie environments — reported next to cost because they are the same problem."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that keep cloud bills foggy, the reference architecture of unit economics, and the console that trends cost and carbon together."
   },
   {
    "t": "h2",
-   "x": "Why this matters here"
+   "x": "Four failure modes that keep cloud bills foggy"
   },
   {
    "t": "p",
-   "x": "The sectors where FinOps & Sustainable Computing currently runs: Technology & SaaS, Retail & Consumer Goods, Banking & Financial Services, Telecom, Media & Entertainment. Each engagement anchors to one named metric in that sector's own language."
+   "x": "Every one of these hides real money in averages — the countermeasures allocate to the workload, trend the unit cost and hunt the zombies on a schedule."
   },
   {
-   "t": "h2",
-   "x": "The working system, described"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "FinOps & Sustainable Computing: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Allocation architecture",
-     "tagging, shared-cost model and showback/chargeback per team"
+     "Allocation fog",
+     "Nobody knows what anything costs",
+     "Allocation engine with showback per team/workload; tags enforced at deploy"
     ],
     [
-     "Commitment strategy",
-     "reserved/spot mix with utilization and coverage targets"
+     "Rightsizing theater",
+     "Recommendations pile up unactioned",
+     "Rightsizing PRs into IaC; savings tracked to merged changes"
     ],
     [
-     "Unit-economics program",
-     "cost per transaction/customer/inference as review metrics"
+     "Zombie estate",
+     "Idle environments live for quarters",
+     "Zombie detection with TTL policies; reaper with owner notice"
     ],
     [
-     "Carbon telemetry",
-     "per-workload emissions estimates with reporting pipeline"
-    ],
-    [
-     "Carbon-aware operations",
-     "flexible scheduling, right-sizing and efficiency targets"
+     "Carbon guesswork",
+     "Sustainability reported in averages",
+     "Region-aware carbon intensity per workload; scheduling hooks"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — from meters to unit economics"
+  },
+  {
+   "t": "p",
+   "x": "Allocation is the foundation: tagging that reaches 97% of spend, showback per workload and team, rightsizing driven from utilization evidence, and carbon reported from provider meters with documented factors — not marketing multipliers."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — FinOps & Sustainable Computing",
+   "title": "Reference architecture — FinOps & sustainability plane",
    "lanes": [
-    "Workloads",
-    "Landing zones",
-    "Runtime fabric",
-    "Edge & capacity",
-    "SRE & FinOps",
-    "Teams"
+    "Spend sources",
+    "Allocation",
+    "Unit economics",
+    "Optimization",
+    "Sustainability",
+    "Governance"
    ],
    "nodes": [
     {
-     "id": "wl0",
+     "id": "cloud",
      "lane": 0,
-     "label": "Product telemetry",
-     "hot": false
+     "label": "Cloud bills"
     },
     {
-     "id": "wl1",
+     "id": "saas",
      "lane": 0,
-     "label": "New services",
-     "hot": false
+     "label": "SaaS spend"
     },
     {
-     "id": "lz2",
+     "id": "gpu",
+     "lane": 0,
+     "label": "GPU spend"
+    },
+    {
+     "id": "tag",
      "lane": 1,
-     "label": "FinOps & Sustainable Computing",
+     "label": "Tag enforcement",
      "hot": true
     },
     {
-     "id": "lz3",
+     "id": "alloc",
      "lane": 1,
-     "label": "Policy-as-code",
-     "hot": false
-    },
-    {
-     "id": "rf4",
-     "lane": 2,
-     "label": "Kubernetes platforms",
+     "label": "Allocation engine",
      "hot": true
     },
     {
-     "id": "rf5",
+     "id": "show",
+     "lane": 1,
+     "label": "Showback/chargeback"
+    },
+    {
+     "id": "unit",
      "lane": 2,
-     "label": "Serverless runtimes",
-     "hot": false
+     "label": "Unit-economics registry",
+     "hot": true
     },
     {
-     "id": "ec6",
+     "id": "trend",
+     "lane": 2,
+     "label": "Cost trend per unit"
+    },
+    {
+     "id": "owner",
+     "lane": 2,
+     "label": "Cost owners"
+    },
+    {
+     "id": "right",
      "lane": 3,
-     "label": "Edge compute & CDN",
-     "hot": false
+     "label": "Rightsizing engine",
+     "hot": true
     },
     {
-     "id": "ec7",
+     "id": "zombie",
      "lane": 3,
-     "label": "Capacity planners",
-     "hot": false
+     "label": "Zombie reaper"
     },
     {
-     "id": "sf8",
+     "id": "commit",
+     "lane": 3,
+     "label": "Commit strategy"
+    },
+    {
+     "id": "carbon",
      "lane": 4,
-     "label": "SLO dashboards",
-     "hot": false
+     "label": "Carbon intensity feed"
     },
     {
-     "id": "sf9",
+     "id": "sched",
      "lane": 4,
-     "label": "Unit-cost telemetry",
-     "hot": false
+     "label": "Clean-window scheduler"
     },
     {
-     "id": "tm10",
-     "lane": 5,
-     "label": "Growth & pricing console",
-     "hot": false
+     "id": "waste",
+     "lane": 4,
+     "label": "Waste ledger",
+     "hot": true
     },
     {
-     "id": "tm11",
+     "id": "budget",
      "lane": 5,
-     "label": "Customer-success cockpit",
-     "hot": false
+     "label": "Budget gates",
+     "hot": true
+    },
+    {
+     "id": "rev",
+     "lane": 5,
+     "label": "Monthly review"
+    },
+    {
+     "id": "pol",
+     "lane": 5,
+     "label": "Policy exceptions"
     }
    ],
    "edges": [
     {
-     "a": "wl0",
-     "b": "lz2"
+     "a": "cloud",
+     "b": "alloc"
     },
     {
-     "a": "wl1",
-     "b": "lz3"
+     "a": "saas",
+     "b": "alloc"
     },
     {
-     "a": "lz2",
-     "b": "rf4"
+     "a": "gpu",
+     "b": "alloc",
+     "label": "biggest line"
     },
     {
-     "a": "lz3",
-     "b": "rf5"
+     "a": "tag",
+     "b": "alloc",
+     "label": "enforce"
     },
     {
-     "a": "rf4",
-     "b": "ec6"
+     "a": "alloc",
+     "b": "show",
+     "label": "report"
     },
     {
-     "a": "rf5",
-     "b": "ec7"
+     "a": "alloc",
+     "b": "unit",
+     "label": "compute"
     },
     {
-     "a": "rf4",
-     "b": "sf8"
+     "a": "unit",
+     "b": "trend",
+     "label": "track"
     },
     {
-     "a": "rf5",
-     "b": "sf9"
+     "a": "owner",
+     "b": "unit",
+     "label": "sign"
     },
     {
-     "a": "sf8",
-     "b": "tm10"
+     "a": "unit",
+     "b": "right",
+     "label": "drive"
     },
     {
-     "a": "ec6",
-     "b": "tm11"
+     "a": "right",
+     "b": "zombie",
+     "label": "flag"
+    },
+    {
+     "a": "commit",
+     "b": "cloud",
+     "label": "hedge"
+    },
+    {
+     "a": "alloc",
+     "b": "carbon",
+     "label": "map"
+    },
+    {
+     "a": "carbon",
+     "b": "sched",
+     "label": "shift"
+    },
+    {
+     "a": "right",
+     "b": "waste",
+     "label": "record"
+    },
+    {
+     "a": "unit",
+     "b": "budget",
+     "label": "gate"
+    },
+    {
+     "a": "budget",
+     "b": "rev",
+     "label": "cadence"
+    },
+    {
+     "a": "pol",
+     "b": "budget",
+     "label": "exceptions"
     }
    ],
-   "note": "Topology inherited from the Cloud, Edge & Platform tower; the highlighted core is this service's build."
+   "note": "The waste ledger is where cost and carbon meet: idle GPUs and zombie environments are one entry each — with an owner, a date and a merged fix."
   },
   {
    "t": "h2",
-   "x": "What you hold at the end"
+   "x": "One invoice line, attributed to a decision"
   },
   {
    "t": "p",
-   "x": "In FinOps & Sustainable Computing, what your team holds at the end:"
+   "x": "From provider billing through allocation rules, workload showback, rightsizing recommendation and the savings ledger — including where a zombie resource is detected and who signs its retirement."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Cost flow — allocate, price per unit, optimize, gate, report",
+   "labels": [
+    "Spend ingested",
+    "Tags enforced",
+    "Allocate & showback",
+    "Unit economics",
+    "Rightsizing PRs",
+    "Budget gates",
+    "Monthly review"
+   ],
+   "note": "Budget gates sit in the deployment path: a workload that would breach its budget deploys only with a dated exception from the cost owner."
+  },
+  {
+   "t": "h2",
+   "x": "The FinOps console — unit cost as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Allocation coverage, unit-cost trend and rightsizing savings — the three numbers that turn the cloud bill from a surprise into an engineering input."
+  },
+  {
+   "t": "idash",
+   "title": "FinOps & sustainable computing — unit-economics console",
+   "kpis": [
+    {
+     "label": "Cost / checkout",
+     "value": "0.021",
+     "delta": "was 0.048 — 3 quarters",
+     "dir": "down",
+     "spark": [
+      0.048,
+      0.041,
+      0.036,
+      0.031,
+      0.027,
+      0.023,
+      0.021
+     ]
+    },
+    {
+     "label": "Waste eliminated",
+     "value": "23.4%",
+     "delta": "zombie + rightsizing",
+     "dir": "up",
+     "spark": [
+      0,
+      4,
+      9,
+      14,
+      18,
+      21,
+      23
+     ]
+    },
+    {
+     "label": "Commitment coverage",
+     "value": "72%",
+     "delta": "break-even modelled",
+     "dir": "flat",
+     "spark": [
+      30,
+      40,
+      48,
+      55,
+      62,
+      68,
+      72
+     ]
+    },
+    {
+     "label": "gCO2e / 1k requests",
+     "value": "41",
+     "delta": "region-mix aware",
+     "dir": "down",
+     "spark": [
+      78,
+      68,
+      60,
+      54,
+      49,
+      44,
+      41
+     ]
+    },
+    {
+     "label": "Forecast accuracy",
+     "value": "94.7%",
+     "delta": "driver-based, monthly",
+     "dir": "up",
+     "spark": [
+      71,
+      78,
+      84,
+      88,
+      91,
+      93,
+      95
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Spend anatomy",
+     "widgets": [
+      {
+       "kind": "donut",
+       "title": "Where the estate spend goes — split by controllable driver",
+       "cats": [
+        "Compute (rightsizable)",
+        "Managed data",
+        "AI inference",
+        "Network egress",
+        "Licensing",
+        "True waste"
+       ],
+       "points": [
+        34,
+        22,
+        18,
+        11,
+        12,
+        3
+       ],
+       "unit": "% of spend",
+       "note": "Click segments to pin. Waste under 3% after the rightsizing pass — the segment to watch is AI inference, whose unit economics come from the GenAI platform's routing."
+      },
+      {
+       "kind": "line",
+       "title": "Unit cost by product line — the number teams move",
+       "cats": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7"
+       ],
+       "series": [
+        {
+         "name": "Checkout ¢/tx",
+         "points": [
+          4.8,
+          4.1,
+          3.6,
+          3.1,
+          2.7,
+          2.3,
+          2.1
+         ]
+        },
+        {
+         "name": "Docs ¢/1k",
+         "points": [
+          12.4,
+          11.2,
+          9.8,
+          8.4,
+          7.1,
+          6.2,
+          5.4
+         ]
+        },
+        {
+         "name": "Support $/ticket",
+         "points": [
+          0.84,
+          0.79,
+          0.72,
+          0.66,
+          0.61,
+          0.58,
+          0.55
+         ]
+        }
+       ],
+       "note": "Click to isolate. Unit costs are weekly numbers per team — the invoice is monthly and belongs to nobody; these belong to owners."
+      }
+     ]
+    },
+    {
+     "name": "Commitment ladder",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Commitment what-if — coverage, tier and demand variance",
+       "params": [
+        {
+         "name": "Coverage",
+         "min": 0,
+         "max": 95,
+         "step": 5,
+         "value": 72,
+         "unit": "% committed"
+        },
+        {
+         "name": "Discount tier",
+         "min": 0,
+         "max": 3,
+         "step": 1,
+         "value": 2,
+         "unit": "1yr/3yr tier"
+        },
+        {
+         "name": "Demand variance",
+         "min": 5,
+         "max": 60,
+         "step": 5,
+         "value": 25,
+         "unit": "% swing"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Savings vs on-demand",
+         "unit": "%",
+         "formula": "min(62, p0*0.55*(0.6+p1*0.14))",
+         "good": "40",
+         "bad": "20"
+        },
+        {
+         "name": "Strand risk",
+         "unit": "% wasted",
+         "formula": "max(0, (p2-25)*0.7+p0*0.18-p1*4)",
+         "good": "6",
+         "bad": "15"
+        },
+        {
+         "name": "Burst premium",
+         "unit": "%",
+         "formula": "(100-p0)*0.32*(1+p2/60)",
+         "good": "12",
+         "bad": "28"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 0,
+        "label": "Coverage vs savings percent"
+       },
+       "note": "The savings curve flattens while strand risk rises — past ~75% coverage, each committed dollar buys less and risks more. High-variance demand should push coverage down, not up."
+      }
+     ]
+    },
+    {
+     "name": "Carbon schedule",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Deferrable-work scheduling — carbon intensity by hour × region",
+       "rows": [
+        "Batch analytics",
+        "Model training",
+        "Report generation",
+        "Index rebuilds"
+       ],
+       "cats": [
+        "00–04",
+        "04–08",
+        "08–12",
+        "12–16",
+        "16–20",
+        "20–24"
+       ],
+       "matrix": [
+        [
+         38,
+         31,
+         52,
+         61,
+         58,
+         44
+        ],
+        [
+         22,
+         19,
+         34,
+         41,
+         39,
+         28
+        ],
+        [
+         41,
+         35,
+         58,
+         66,
+         62,
+         47
+        ],
+        [
+         35,
+         29,
+         48,
+         57,
+         54,
+         40
+        ]
+       ],
+       "unit": "gCO2e/kWh",
+       "note": "Hover cells to read regional carbon intensity by window. The 08–12 and 12–16 columns are the grid peak — deferrable jobs scheduled into 00–08 windows cut training footprint 30–40% at zero performance cost."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · ladder model",
+   "note": "Reference program model: unit-cost and intensity bands from delivery benchmarks, not client data."
+  },
+  {
+   "t": "h2",
+   "x": "Unit-cost trajectory across the workloads"
+  },
+  {
+   "t": "p",
+   "x": "Cost per unit of business work across workload families, quarter over quarter — the curve that shows which efficiency bets paid and which services are eating their margin quietly."
+  },
+  {
+   "t": "chart",
+   "title": "Unit economics by workload class — design targets",
+   "variant": "bar",
+   "cats": [
+    "API requests (per 1k)",
+    "Model calls (per 1k)",
+    "ETL runs",
+    "Support sessions",
+    "Batch jobs"
+   ],
+   "series": [
+    {
+     "name": "Cost target (cents)",
+     "points": [
+      2.1,
+      240,
+      18,
+      3.4,
+      950
+     ]
+    },
+    {
+     "name": "Carbon target (gCO2e)",
+     "points": [
+      0.9,
+      31,
+      7,
+      1.2,
+      410
+     ]
+    }
+   ],
+   "yMax": 1000,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "FinOps & Sustainable Computing across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "FinOps & Sustainable Computing",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: infrastructure is treated as a product: versioned, observable, costed, and handed to your team with runbooks rather than folklore.",
+     "plays": [
+      "Allocation coverage that reaches the invoice — 97%, gated",
+      "Rightsizing from utilization evidence with a signed savings ledger",
+      "Carbon from meters with documented factors, trended beside cost",
+      "Sector working pattern: core-adjacent modernization in Banking & Financial Services, where strangler-pattern decomposition of monolith wrappers around core with parallel-run equivalence."
+     ],
+     "kpis": [
+      {
+       "label": "Allocation coverage",
+       "value": "97%"
+      },
+      {
+       "label": "Unit cost trend",
+       "value": "-14%"
+      },
+      {
+       "label": "Rightsizing savings",
+       "value": "$41k/mo"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident.",
+     "plays": [
+      "Allocation coverage that reaches the invoice — 97%, gated",
+      "Rightsizing from utilization evidence with a signed savings ledger",
+      "Carbon from meters with documented factors, trended beside cost"
+     ],
+     "kpis": [
+      {
+       "label": "Allocation coverage",
+       "value": "97%"
+      },
+      {
+       "label": "Unit cost trend",
+       "value": "-14%"
+      },
+      {
+       "label": "Rightsizing savings",
+       "value": "$41k/mo"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — validated-environment rigidity included — and prove it moved.",
+     "plays": [
+      "Allocation coverage that reaches the invoice — 97%, gated",
+      "Rightsizing from utilization evidence with a signed savings ledger",
+      "Carbon from meters with documented factors, trended beside cost"
+     ],
+     "kpis": [
+      {
+       "label": "Allocation coverage",
+       "value": "97%"
+      },
+      {
+       "label": "Unit cost trend",
+       "value": "-14%"
+      },
+      {
+       "label": "Rightsizing savings",
+       "value": "$41k/mo"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident.",
+     "plays": [
+      "Allocation coverage that reaches the invoice — 97%, gated",
+      "Rightsizing from utilization evidence with a signed savings ledger",
+      "Carbon from meters with documented factors, trended beside cost"
+     ],
+     "kpis": [
+      {
+       "label": "Allocation coverage",
+       "value": "97%"
+      },
+      {
+       "label": "Unit cost trend",
+       "value": "-14%"
+      },
+      {
+       "label": "Rightsizing savings",
+       "value": "$41k/mo"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": true,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Allocation coverage that reaches the invoice — 97%, gated",
+      "Rightsizing from utilization evidence with a signed savings ledger",
+      "Carbon from meters with documented factors, trended beside cost"
+     ],
+     "kpis": [
+      {
+       "label": "Allocation coverage",
+       "value": "97%"
+      },
+      {
+       "label": "Unit cost trend",
+       "value": "-14%"
+      },
+      {
+       "label": "Rightsizing savings",
+       "value": "$41k/mo"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: energy cost compounds, quarter after quarter.",
+     "plays": [
+      "Allocation coverage that reaches the invoice — 97%, gated",
+      "Rightsizing from utilization evidence with a signed savings ledger",
+      "Carbon from meters with documented factors, trended beside cost"
+     ],
+     "kpis": [
+      {
+       "label": "Allocation coverage",
+       "value": "97%"
+      },
+      {
+       "label": "Unit cost trend",
+       "value": "-14%"
+      },
+      {
+       "label": "Rightsizing savings",
+       "value": "$41k/mo"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what customer and market platforms creak costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Allocation coverage that reaches the invoice — 97%, gated",
+      "Rightsizing from utilization evidence with a signed savings ledger",
+      "Carbon from meters with documented factors, trended beside cost"
+     ],
+     "kpis": [
+      {
+       "label": "Allocation coverage",
+       "value": "97%"
+      },
+      {
+       "label": "Unit cost trend",
+       "value": "-14%"
+      },
+      {
+       "label": "Rightsizing savings",
+       "value": "$41k/mo"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — peak surges break planning included — and prove it moved.",
+     "plays": [
+      "Allocation coverage that reaches the invoice — 97%, gated",
+      "Rightsizing from utilization evidence with a signed savings ledger",
+      "Carbon from meters with documented factors, trended beside cost",
+      "Sector working pattern: peak surge engineering: elastic capacity with load modeling for trading peaks. Peak absorbed at controlled unit cost is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Allocation coverage",
+       "value": "97%"
+      },
+      {
+       "label": "Unit cost trend",
+       "value": "-14%"
+      },
+      {
+       "label": "Rightsizing savings",
+       "value": "$41k/mo"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the platform work decides the unit economics: right-sized runtimes, automated environments, and FinOps telemetry from the first workload.",
+     "plays": [
+      "Allocation coverage that reaches the invoice — 97%, gated",
+      "Rightsizing from utilization evidence with a signed savings ledger",
+      "Carbon from meters with documented factors, trended beside cost"
+     ],
+     "kpis": [
+      {
+       "label": "Allocation coverage",
+       "value": "97%"
+      },
+      {
+       "label": "Unit cost trend",
+       "value": "-14%"
+      },
+      {
+       "label": "Rightsizing savings",
+       "value": "$41k/mo"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Education & Research operators recognize the pattern: research computing fragmented, quarter after quarter.",
+     "plays": [
+      "Allocation coverage that reaches the invoice — 97%, gated",
+      "Rightsizing from utilization evidence with a signed savings ledger",
+      "Carbon from meters with documented factors, trended beside cost"
+     ],
+     "kpis": [
+      {
+       "label": "Allocation coverage",
+       "value": "97%"
+      },
+      {
+       "label": "Unit cost trend",
+       "value": "-14%"
+      },
+      {
+       "label": "Rightsizing savings",
+       "value": "$41k/mo"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": true,
+     "hook": "Ask what cloud unit economics opaque costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Allocation coverage that reaches the invoice — 97%, gated",
+      "Rightsizing from utilization evidence with a signed savings ledger",
+      "Carbon from meters with documented factors, trended beside cost"
+     ],
+     "kpis": [
+      {
+       "label": "Allocation coverage",
+       "value": "97%"
+      },
+      {
+       "label": "Unit cost trend",
+       "value": "-14%"
+      },
+      {
+       "label": "Rightsizing savings",
+       "value": "$41k/mo"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what season peaks break systems costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Allocation coverage that reaches the invoice — 97%, gated",
+      "Rightsizing from utilization evidence with a signed savings ledger",
+      "Carbon from meters with documented factors, trended beside cost"
+     ],
+     "kpis": [
+      {
+       "label": "Allocation coverage",
+       "value": "97%"
+      },
+      {
+       "label": "Unit cost trend",
+       "value": "-14%"
+      },
+      {
+       "label": "Rightsizing savings",
+       "value": "$41k/mo"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/cloud-edge-platform-engineering/"
+    }
+   ],
+   "practiceNote": "FinOps & Sustainable Computing view: cost and carbon as engineering inputs — unit economics per workload, rightsizing with teeth, and sustainability reported like any SLO."
+  },
+  {
+   "t": "h2",
+   "x": "FinOps defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor showback-first with gated commitments over upfront reserved sprees; deviation triggers are written because each one moves risk between finance and engineering."
+  },
+  {
+   "t": "table",
+   "caption": "FinOps & Sustainable Computing: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "FinOps operating model with allocation, showback and unit metrics",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Allocation",
+     "Enforced tags + allocation engine",
+     "Console-tag anarchy — allocation stays fog"
     ],
     [
-     "Commitment plan with utilization tracking",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Unit economics",
+     "Registry with signed owners",
+     "Total-spend-only reporting — nobody can act on it"
     ],
     [
-     "Carbon telemetry pipeline and reporting foundation for ESG",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Rightsizing",
+     "PR-driven changes into IaC",
+     "Email recommendations — they age in inboxes"
     ],
     [
-     "Architectural cost-review process with redesign backlog",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Commits",
+     "Measured commit strategy per workload",
+     "All-upfront or all-ondemand — both leave money"
+    ],
+    [
+     "Carbon",
+     "Region-aware intensity + scheduling",
+     "Annual average reporting — it drives nothing"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The stack, chosen for operability"
+   "x": "FinOps release gates — evidence before commitments"
   },
   {
-   "t": "p",
-   "x": "The engineering baseline for FinOps & Sustainable Computing: FinOps tooling (FOCUS-aligned), cloud cost APIs, carbon estimation libraries, BI overlay. The justifications are written, versioned and handed over — the decisions are yours to own after the engagement."
+   "t": "table",
+   "caption": "Release gates for FinOps & Sustainable Computing — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Tag gate",
+     "Is spend attributable at deploy?",
+     "Tag enforcement evidence; coverage report"
+    ],
+    [
+     "Unit gate",
+     "Does every workload have unit economics?",
+     "Registry entries with owners"
+    ],
+    [
+     "Budget gate",
+     "Do budgets gate deployments?",
+     "Gate evidence; exception register"
+    ],
+    [
+     "Waste gate",
+     "Is waste tracked to fixes?",
+     "Ledger entries with merged changes"
+    ],
+    [
+     "Carbon gate",
+     "Is carbon reported per unit?",
+     "Intensity feed evidence; trend"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "How the work actually runs"
+   "x": "What the FinOps practice inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "FinOps & Sustainable Computing starts with the measurement: the metric, the owner, the current number, signed."
+     "Allocation engine",
+     "Enforced tagging with showback/chargeback"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, allocation architecture first, gates written with your team."
+     "Unit-economics registry",
+     "Cost per unit of work, signed by owners"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "The FinOps & Sustainable Computing gate review: baseline versus slice, in the metric's own units, plus a scale recommendation your board can audit."
+     "Rightsizing pipeline",
+     "PR-based changes with tracked savings"
+    ],
+    [
+     "Zombie reaper",
+     "TTL policies with owner notices"
+    ],
+    [
+     "Carbon scheduler",
+     "Clean-window job placement"
+    ],
+    [
+     "Waste ledger",
+     "Cost and carbon waste with fixes"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Allocation to zombies, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — allocation & tags",
+     "Tag policy, enforcement in deploy paths, allocation v1"
+    ],
+    [
+     "Weeks 3–4 — unit economics",
+     "Registry build, owner signing, dashboards"
+    ],
+    [
+     "Weeks 5–6 — optimization",
+     "Rightsizing pipeline, first merged wave, commits strategy"
+    ],
+    [
+     "Weeks 7–8 — governance",
+     "Budget gates, exception process, monthly review"
+    ],
+    [
+     "Weeks 9–10 — sustainability",
+     "Carbon feed, waste ledger, clean-window scheduler"
+    ],
+    [
+     "Ongoing — FinOps rhythm",
+     "Weekly showback; monthly review; quarterly commit audit"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — billing, tagging and the finance systems"
+  },
+  {
+   "t": "p",
+   "x": "FinOps lives between provider billing and your ledger; these contracts carry allocation into finance systems without manual reconciliation spreadsheets."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Cloud billing",
+     "Daily ingest with anomaly alerts"
+    ],
+    [
+     "IaC repos",
+     "Rightsizing PR flow"
+    ],
+    [
+     "Deploy paths",
+     "Budget gate hooks"
+    ],
+    [
+     "Carbon data providers",
+     "Region intensity feeds"
+    ],
+    [
+     "Finance",
+     "Chargeback reconciliation"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Sustainability governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Carbon is reported from provider meters with documented emission factors per region — reported beside cost, on the same trend line, because efficiency is one metric wearing two currencies."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Enforced attribution",
+     "Untagged deploy is a failed deploy"
+    ],
+    [
+     "Budget authority",
+     "Over-budget deploys need dated exceptions"
+    ],
+    [
+     "Waste ownership",
+     "Every ledger entry names a fixer"
+    ],
+    [
+     "Measured commits",
+     "Commit strategy reviewed quarterly per workload"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Zombie hunts run on schedule with a signed retirement ledger: a resource unidentified for two cycles is suspended automatically, and resurrections are cheaper than the monthly silence was."
   },
   {
    "t": "cta",
-   "x": "Start with the diagnostic, not the contract: FinOps & Sustainable Computing baselined in two weeks, and a scoped proposal only if the delta justifies it."
+   "x": "Bring last month's invoice unexplained variance. The diagnostic will reach 97% allocation on your estate — and name the zombies, the rightsizing candidates and the unit-cost trend your CFO has been asking for."
   }
  ],
- "words": 470,
+ "words": 968,
  "section": "Services",
  "l1": "Services",
  "l2": "Cloud, Edge & Platform Engineering",
@@ -278,7 +1198,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Cloud, Edge & Platform Engineering",
+   "title": "Domain overview — Cloud, Edge & Platform Engineering",
    "url": "/services/cloud-edge-platform-engineering/",
    "desc": "Hybrid estates, edge estate and internal platforms — engineered for reliability and unit cost."
   },
@@ -330,33 +1250,51 @@
   {
    "title": "Quantum & Advanced Compute for Banking & Financial Services",
    "url": "/industries/banking-financial-services/capabilities/quantum-advanced-compute/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Hybrid & Multicloud Architecture",
-   "url": "/services/cloud-edge-platform-engineering/hybrid-multicloud-architecture/",
-   "tag": "Same tower",
-   "desc": "The estate as designed system — landing zones, network fabric and workload placement by economics."
-  },
-  {
-   "title": "Cloud-Native & Legacy Modernization",
-   "url": "/services/cloud-edge-platform-engineering/cloud-native-modernization/",
-   "tag": "Same tower",
-   "desc": "Retire the legacy tax — strangler-pattern modernization with measurable unit economics."
-  },
-  {
-   "title": "Edge Computing & Distributed Infrastructure",
-   "url": "/services/cloud-edge-platform-engineering/edge-computing-infrastructure/",
-   "tag": "Same tower",
-   "desc": "Compute where the physics is — edge estate for plants, stores, vehicles and grids."
+   "title": "Platform Engineering & Developer Experience",
+   "url": "/services/cloud-edge-platform-engineering/platform-engineering-devex/",
+   "tag": "Same domain",
+   "desc": "the platform as product — golden paths as versioned APIs, scaffolds that carry SLOs and budgets by default, and a developer experience measured like a funnel."
   },
   {
    "title": "SRE & Reliability Engineering",
    "url": "/services/cloud-edge-platform-engineering/sre-reliability-engineering/",
-   "tag": "Same tower",
-   "desc": "Reliability as product — SLOs, error budgets and incident discipline that engineers actually follow."
+   "tag": "Same domain",
+   "desc": "SLOs with teeth — error budgets that gate releases, chaos that proves recovery, and incident craft that turns 3am into a rehearsed system."
+  },
+  {
+   "title": "Cloud-Native & Legacy Modernization",
+   "url": "/services/cloud-edge-platform-engineering/cloud-native-modernization/",
+   "tag": "Same domain",
+   "desc": "workloads rebuilt for cloud-native operations — containerized, observable, resilient by default, with a strangler path that retires VMs on evidence."
+  },
+  {
+   "title": "Identity & Access Modernization",
+   "url": "/services/cybersecurity-zero-trust/identity-access-modernization/",
+   "tag": "Pairs with",
+   "desc": "workforce and machine identity lifecycle done properly — joiner-mover-leaver automation, privileged access vaulting and credential hygiene that is measured weekly."
+  },
+  {
+   "title": "Robotics & Autonomous Systems Integration",
+   "url": "/services/iot-digital-twin-robotics/robotics-autonomous-systems/",
+   "tag": "Pairs with",
+   "desc": "robot fleets with safety cases — bounded autonomy, incident-ready telemetry, and utilization measured honestly against safety-critical discipline."
+  },
+  {
+   "title": "Real-Time Streaming & Event-Driven Decisioning",
+   "url": "/services/data-analytics-lakehouse/realtime-streaming-decisioning/",
+   "tag": "Pairs with",
+   "desc": "sub-second decision paths on streams — exactly-once state, replay semantics and latency budgets that are measured, not asserted."
+  },
+  {
+   "title": "A Middle East operator group",
+   "url": "/case-studies/tel-02/",
+   "tag": "Evidence",
+   "desc": "Energy per site down 18% — telemetry-driven optimization at 12,000 sites."
   }
  ]
 }

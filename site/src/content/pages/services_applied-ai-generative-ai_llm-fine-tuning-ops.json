@@ -9,254 +9,1229 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Most llm fine-tuning & model operations engagements stall between the deck and the deployment. Ours are built to cross that gap: Own your models — tune, distill and operate LLMs with measurable quality, controlled cost and enforceable policy.. What follows is the working pattern, not the brochure."
+   "x": "A tuning factory, not a notebook: decontaminated datasets, multi-task eval gates that block silent regressions, distillation that keeps quality while cutting serving cost, and canary rollout with a rehearsed rollback path."
   },
   {
    "t": "h2",
-   "x": "The service, described plainly"
+   "x": "Fine-tuning is a data engineering program that occasionally involves a GPU"
   },
   {
    "t": "p",
-   "x": "General-purpose models plateau on domain language: your claims vocabulary, your ICD coding practice, your credit memos. We run a disciplined adaptation program — instruction-tuning and preference optimization on curated enterprise corpora, distillation to right-sized models, and continuous evaluation against task-specific benchmarks — so the model that ships is measurably better on your work, not on a public leaderboard."
+   "x": "Fine-tuning is a data engineering program that occasionally involves a GPU. The wins come from dataset construction — decontamination, label consistency, hard-negative mining — and the losses come from skipping the eval design and discovering regressions in front of users."
   },
   {
    "t": "p",
-   "x": "Model operations completes the loop: versioned model registries, canary deployment with automatic rollback, drift monitoring on live traffic, and a retraining trigger policy. LoRA and QLoRA pipelines on Databricks or dedicated GPU pools keep iteration cheap; every artifact is logged for model risk committees and EU AI Act technical documentation."
+   "x": "The operational half matters more each quarter: drift watch on live traffic, promotion gates with automatic rollback, distillation pipelines that keep the cheap model close to the expensive one. Tuned models are liabilities unless they are versioned, monitored and reversible."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that produce quietly bad models, the factory architecture that prevents them, and the gates a tuned model clears before it serves a real user."
   },
   {
    "t": "h2",
-   "x": "Why the timing matters"
+   "x": "Four ways tuning programs produce quietly bad models"
   },
   {
    "t": "p",
-   "x": "LLM Fine-Tuning & Model Operations delivery today concentrates in Banking & Financial Services, Insurance & Risk, Healthcare & Life Sciences, Manufacturing & Industrial. The metric is chosen with your finance lead, and the baseline is signed before any build begins."
+   "x": "None of these failures announce themselves in the demo — they surface weeks later in production, which is why each countermeasure is structural rather than procedural."
   },
   {
-   "t": "h2",
-   "x": "What we put in place"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "LLM Fine-Tuning & Model Operations: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Corpus curation & licensing",
-     "domain data extraction, deduplication, PII scrubbing and rights management"
+     "Contaminated training data",
+     "Eval leakage inflates scores; the model looks great until production",
+     "Decontamination pass with n-gram and embedding overlap checks before every run"
     ],
     [
-     "Adaptation pipeline",
-     "SFT, DPO and RLHF variants with LoRA/QLoRA efficiency on managed GPU pools"
+     "Catastrophic regression",
+     "New task improves; three existing tasks silently degrade",
+     "Multi-task eval matrix gating every promotion; per-task thresholds, not averages"
     ],
     [
-     "Distillation & right-sizing",
-     "frontier-teacher to 8B-13B student transfers that cut serving cost at equal task quality"
+     "Dataset rot",
+     "Labels drift as business language shifts; quality decays over months",
+     "Label freshness SLA and quarterly re-labeling sprints on drifting cohorts"
     ],
     [
-     "Evaluation engineering",
-     "task benchmarks, red-team suites and business-metric correlation studies"
-    ],
-    [
-     "Model ops & registry",
-     "versioning, canary rollout, drift alarms and retraining triggers with full lineage"
+     "Orphaned checkpoints",
+     "Twelve adapters, no record of which data made them",
+     "Lineage-bound registry: every checkpoint binds dataset hash, config and eval report"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the tuning factory from dataset to canary"
+  },
+  {
+   "t": "p",
+   "x": "The factory has four hard boundaries: datasets are decontaminated before they enter training, every candidate passes the multi-task eval gate, promotion happens through canary with automatic rollback, and checkpoints are registered or they do not exist."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — LLM Fine-Tuning & Model Operations",
+   "title": "Reference architecture — tuning factory and model ops loop",
    "lanes": [
-    "Signals",
-    "Fabric",
-    "Models",
-    "Decision API",
-    "Audit",
-    "Products"
+    "Source data",
+    "Dataset factory",
+    "Training",
+    "Evaluation",
+    "Registry & rollout",
+    "Live watch"
    ],
    "nodes": [
     {
-     "id": "sg0",
+     "id": "logs",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Interaction logs"
     },
     {
-     "id": "sg1",
+     "id": "sme",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "SME labels"
     },
     {
-     "id": "fb2",
+     "id": "kb",
+     "lane": 0,
+     "label": "Curated corpora"
+    },
+    {
+     "id": "clean",
      "lane": 1,
-     "label": "LLM Fine-Tuning & Model Operations",
+     "label": "Decontamination",
      "hot": true
     },
     {
-     "id": "fb3",
+     "id": "label",
      "lane": 1,
-     "label": "Vector & graph indexes",
-     "hot": false
+     "label": "Label ops"
     },
     {
-     "id": "mo4",
+     "id": "mine",
+     "lane": 1,
+     "label": "Hard-negative mining"
+    },
+    {
+     "id": "train",
      "lane": 2,
-     "label": "Domain models",
-     "hot": false
-    },
-    {
-     "id": "mo5",
-     "lane": 2,
-     "label": "Foundation adapters",
-     "hot": false
-    },
-    {
-     "id": "da6",
-     "lane": 3,
-     "label": "Decision API",
+     "label": "Trainer (LoRA/full)",
      "hot": true
     },
     {
-     "id": "da7",
+     "id": "hpo",
+     "lane": 2,
+     "label": "HPO sweep"
+    },
+    {
+     "id": "distill",
+     "lane": 2,
+     "label": "Distillation"
+    },
+    {
+     "id": "eval",
      "lane": 3,
-     "label": "Champion / challenger",
-     "hot": false
+     "label": "Multi-task eval matrix",
+     "hot": true
     },
     {
-     "id": "au8",
+     "id": "red",
+     "lane": 3,
+     "label": "Safety evals"
+    },
+    {
+     "id": "cost",
+     "lane": 3,
+     "label": "Serving cost model"
+    },
+    {
+     "id": "reg",
      "lane": 4,
-     "label": "Decision replay",
-     "hot": false
+     "label": "Model registry",
+     "hot": true
     },
     {
-     "id": "au9",
+     "id": "canary",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Canary rollout"
     },
     {
-     "id": "pr10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "roll",
+     "lane": 4,
+     "label": "Rollback"
     },
     {
-     "id": "pr11",
+     "id": "drift",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Drift watch",
+     "hot": true
+    },
+    {
+     "id": "samp",
+     "lane": 5,
+     "label": "Traffic sampler"
+    },
+    {
+     "id": "feed",
+     "lane": 5,
+     "label": "Dataset feedback"
     }
    ],
    "edges": [
     {
-     "a": "sg0",
-     "b": "fb2"
+     "a": "logs",
+     "b": "clean"
     },
     {
-     "a": "sg1",
-     "b": "fb3"
+     "a": "sme",
+     "b": "label"
     },
     {
-     "a": "fb2",
-     "b": "mo4"
+     "a": "kb",
+     "b": "clean"
     },
     {
-     "a": "fb3",
-     "b": "mo5"
+     "a": "clean",
+     "b": "mine"
     },
     {
-     "a": "mo4",
-     "b": "da6"
+     "a": "label",
+     "b": "mine"
     },
     {
-     "a": "mo5",
-     "b": "da7"
+     "a": "mine",
+     "b": "train",
+     "label": "batches"
     },
     {
-     "a": "da6",
-     "b": "au8"
+     "a": "train",
+     "b": "eval",
+     "label": "ckpt"
     },
     {
-     "a": "da7",
-     "b": "au9"
+     "a": "hpo",
+     "b": "train",
+     "label": "configs"
     },
     {
-     "a": "da6",
-     "b": "pr10"
+     "a": "distill",
+     "b": "train",
+     "label": "teacher"
     },
     {
-     "a": "da7",
-     "b": "pr11"
+     "a": "eval",
+     "b": "red"
+    },
+    {
+     "a": "eval",
+     "b": "cost"
+    },
+    {
+     "a": "eval",
+     "b": "reg",
+     "label": "gate"
+    },
+    {
+     "a": "reg",
+     "b": "canary"
+    },
+    {
+     "a": "canary",
+     "b": "roll",
+     "label": "auto"
+    },
+    {
+     "a": "reg",
+     "b": "distill",
+     "label": "teacher v(n+1)"
+    },
+    {
+     "a": "samp",
+     "b": "drift"
+    },
+    {
+     "a": "drift",
+     "b": "feed",
+     "label": "hard cases"
+    },
+    {
+     "a": "feed",
+     "b": "label",
+     "label": "queue"
     }
    ],
-   "note": "Topology inherited from the Applied AI & GenAI tower; the highlighted core is this service's build."
+   "note": "Promotion requires the full multi-task matrix plus safety evals; canary auto-rolls back on any per-task threshold breach, not just the aggregate."
   },
   {
    "t": "h2",
-   "x": "Deliverables, without dressing them up"
+   "x": "The promotion path — dataset to production traffic"
   },
   {
    "t": "p",
-   "x": "Named artifacts, handed to named owners — LLM Fine-Tuning & Model Operations edition:"
+   "x": "From raw corpora through decontamination and labeling, into training and candidate eval, then canary exposure with the exact conditions that trigger rollback written into the pipeline itself."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "orchestration-loop",
+   "title": "Model ops loop — data, train, grade, gate, watch, feed back",
+   "labels": [
+    "Dataset v(n)",
+    "Train & sweep",
+    "Eval matrix",
+    "Registry gate",
+    "Canary 5%",
+    "Drift watch",
+    "Feedback queue"
+   ],
+   "note": "The loop is closed on purpose: live hard cases become next version's training data under the same decontamination and labeling discipline."
+  },
+  {
+   "t": "h2",
+   "x": "The model-ops console for tuned fleets"
+  },
+  {
+   "t": "p",
+   "x": "Task accuracy against base, multi-task regressions, contamination rate, distillation retention and time-to-promotion — the five numbers that decide whether tuning is compounding or thrashing."
+  },
+  {
+   "t": "idash",
+   "title": "LLM fine-tuning & model ops — tuning console",
+   "kpis": [
+    {
+     "label": "Golden-set win rate",
+     "value": "91.2%",
+     "delta": "vs base model",
+     "dir": "up",
+     "spark": [
+      62,
+      68,
+      74,
+      79,
+      84,
+      88,
+      91
+     ]
+    },
+    {
+     "label": "Retention score",
+     "value": "93.8%",
+     "delta": "general-capability suite",
+     "dir": "flat",
+     "spark": [
+      99,
+      98.5,
+      97.9,
+      97,
+      96,
+      94.6,
+      93.8
+     ]
+    },
+    {
+     "label": "Dataset size (curated)",
+     "value": "18.4k",
+     "delta": "agreement ≥ 0.86",
+     "dir": "up",
+     "spark": [
+      2,
+      5,
+      8.5,
+      12,
+      15,
+      17,
+      18.4
+     ]
+    },
+    {
+     "label": "Cost / tuned run",
+     "value": "312",
+     "delta": "QLoRA on 8×A100 spot",
+     "dir": "down",
+     "spark": [
+      1400,
+      980,
+      640,
+      460,
+      380,
+      340,
+      312
+     ]
+    },
+    {
+     "label": "Drift alarms (30d)",
+     "value": "1",
+     "delta": "retrain queued",
+     "dir": "flat",
+     "spark": [
+      4,
+      4,
+      3,
+      2,
+      2,
+      1,
+      1
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Eval progression",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Candidate generations — task quality vs capability retention",
+       "cats": [
+        "Exp 1",
+        "Exp 2",
+        "Exp 3",
+        "Exp 4",
+        "Exp 5",
+        "Exp 6",
+        "Exp 7"
+       ],
+       "series": [
+        {
+         "name": "Golden-set win %",
+         "points": [
+          62,
+          71,
+          77,
+          82,
+          86,
+          89,
+          91
+         ]
+        },
+        {
+         "name": "Retention score",
+         "points": [
+          99,
+          98.4,
+          97.6,
+          96.2,
+          95.1,
+          94.2,
+          93.8
+         ]
+        },
+        {
+         "name": "Promotion bar",
+         "points": [
+          85,
+          85,
+          85,
+          85,
+          85,
+          85,
+          85
+         ]
+        }
+       ],
+       "note": "The scissors are the whole story: task quality climbs while retention slides — the training mix rebalances until both clear the bar. Exp 6 is the first promotable candidate."
+      },
+      {
+       "kind": "radar",
+       "title": "Exp 7 capability profile — where the tuned model stands",
+       "cats": [
+        "Task quality",
+        "Instruction following",
+        "Reasoning",
+        "Refusal calibration",
+        "Long context",
+        "Multilinguality"
+       ],
+       "series": [
+        {
+         "name": "Exp 7 (tuned)",
+         "points": [
+          91,
+          88,
+          84,
+          90,
+          86,
+          82
+         ]
+        },
+        {
+         "name": "Base model",
+         "points": [
+          62,
+          86,
+          88,
+          91,
+          90,
+          89
+         ]
+        },
+        {
+         "name": "Promotion bar",
+         "points": [
+          85,
+          80,
+          80,
+          80,
+          75,
+          75
+         ]
+        }
+       ],
+       "yMax": 100,
+       "note": "Toggle series to compare. Task quality jumps 29 points; reasoning gives back 4 — inside the acceptable trade signed before training. The radar is what the promotion review reads."
+      }
+     ]
+    },
+    {
+     "name": "Dataset what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Training what-if — dataset size, mix and epochs",
+       "params": [
+        {
+         "name": "Curated examples",
+         "min": 2000,
+         "max": 40000,
+         "step": 500,
+         "value": 18400,
+         "unit": "examples"
+        },
+        {
+         "name": "General-data mix",
+         "min": 0,
+         "max": 50,
+         "step": 5,
+         "value": 30,
+         "unit": "%"
+        },
+        {
+         "name": "Epochs",
+         "min": 1,
+         "max": 6,
+         "step": 1,
+         "value": 3,
+         "unit": "epochs"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Win rate",
+         "unit": "%",
+         "formula": "min(95, 45+p0*0.0016+p2*2.2-p1*0.1)",
+         "good": "85",
+         "bad": "70"
+        },
+        {
+         "name": "Retention",
+         "unit": "%",
+         "formula": "99-min(p2*1.8, 9)-max(0,(p0-30000))*0.00012+p1*0.12",
+         "good": "93",
+         "bad": "88"
+        },
+        {
+         "name": "Run cost",
+         "unit": "$",
+         "formula": "p0*p2*0.0055+p1*4",
+         "good": "400",
+         "bad": "900"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 0,
+        "label": "Curated examples vs win rate"
+       },
+       "note": "The win-rate curve saturates hard: past ~20k clean examples, more epochs buy overfit, not quality. The retention equation shows why the general-data mix is not optional — it is the forgetting insurance."
+      }
+     ]
+    },
+    {
+     "name": "Ops treadmill",
+     "widgets": [
+      {
+       "kind": "flow",
+       "title": "Model operations cycle — click stages for the contract",
+       "stages": [
+        {
+         "name": "Monitor",
+         "role": "Drift watch",
+         "detail": "Input and output distributions tracked per feature; drift alarms carry the evidence window so retraining decisions cite data, not vibes.",
+         "metrics": [
+          {
+           "label": "Signals tracked",
+           "value": "14"
+          },
+          {
+           "label": "Alarm → action",
+           "value": "48 h"
+          }
+         ]
+        },
+        {
+         "name": "Triage",
+         "role": "Is it the model?",
+         "detail": "Regression triage separates model drift from upstream changes (retrieval index, prompt change, product edit) — the harness replays golden cases to attribute.",
+         "metrics": [
+          {
+           "label": "Attribution time",
+           "value": "2 h"
+          },
+          {
+           "label": "False model-blame",
+           "value": "8%"
+          }
+         ]
+        },
+        {
+         "name": "Re-tune",
+         "role": "Mix + new data",
+         "detail": "Corrections from production join the curated set with provenance; the training mix rebalances; the new candidate trains on spot capacity.",
+         "metrics": [
+          {
+           "label": "Cycle time",
+           "value": "6 d"
+          },
+          {
+           "label": "Cost discipline",
+           "value": "spot-first"
+          }
+         ]
+        },
+        {
+         "name": "Gate",
+         "role": "Three eval families",
+         "detail": "Task quality, capability retention, safety — all three must clear. A candidate that wins the task and loses retention is rejected by arithmetic.",
+         "metrics": [
+          {
+           "label": "Families",
+           "value": "3"
+          },
+          {
+           "label": "Bar",
+           "value": "signed"
+          }
+         ]
+        },
+        {
+         "name": "Promote",
+         "role": "Shadow → canary → live",
+         "detail": "Shadow scoring against live traffic, canary at 5%, promotion with rollback pinned — the harness result travels with the model version.",
+         "metrics": [
+          {
+           "label": "Rollback",
+           "value": "one call"
+          },
+          {
+           "label": "Evidence",
+           "value": "versioned"
+          }
+         ]
+        }
+       ],
+       "note": "The treadmill is scheduled work: drift alarms arrive, the cycle runs, the harness decides — nobody hand-rolls a fine-tune in a crisis."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · eval model",
+   "note": "Reference program model: eval bands and cost curves from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Quality retention against serving cost across model sizes"
+  },
+  {
+   "t": "p",
+   "x": "The distillation decision, quantified: task quality retained and serving cost per thousand calls at each model size — the trade surfaced so the fleet mix is an economic choice, not a default."
+  },
+  {
+   "t": "chart",
+   "title": "Quality retention vs serving cost across model sizes — design targets",
+   "variant": "bar",
+   "cats": [
+    "Frontier API",
+    "32B tuned",
+    "14B tuned",
+    "8B distilled"
+   ],
+   "series": [
+    {
+     "name": "Task quality retention %",
+     "points": [
+      100,
+      97,
+      94,
+      91
+     ]
+    },
+    {
+     "name": "Serving cost index",
+     "points": [
+      100,
+      46,
+      24,
+      11
+     ]
+    }
+   ],
+   "yMax": 110,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "LLM Fine-Tuning & Model Operations across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "LLM Fine-Tuning & Model Operations",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Dataset factory: decontamination, label consistency, hard-negative mining",
+      "Multi-task eval gate with zero-regression promotion policy",
+      "Distillation and adapter tuning with canary rollout and rehearsed rollback"
+     ],
+     "kpis": [
+      {
+       "label": "Task accuracy (vs base)",
+       "value": "+11.2pt"
+      },
+      {
+       "label": "Multi-task regression",
+       "value": "0"
+      },
+      {
+       "label": "Eval contamination",
+       "value": "0.0%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Ask what pricing sophistication outrunning governance costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Dataset factory: decontamination, label consistency, hard-negative mining",
+      "Multi-task eval gate with zero-regression promotion policy",
+      "Distillation and adapter tuning with canary rollout and rehearsed rollback"
+     ],
+     "kpis": [
+      {
+       "label": "Task accuracy (vs base)",
+       "value": "+11.2pt"
+      },
+      {
+       "label": "Multi-task regression",
+       "value": "0"
+      },
+      {
+       "label": "Eval contamination",
+       "value": "0.0%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": true,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Dataset factory: decontamination, label consistency, hard-negative mining",
+      "Multi-task eval gate with zero-regression promotion policy",
+      "Distillation and adapter tuning with canary rollout and rehearsed rollback",
+      "Sector working pattern: ambient clinical documentation: visit audio to structured draft notes in EHR templates with clinician sign-off. Documentation time down 25%+ is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Task accuracy (vs base)",
+       "value": "+11.2pt"
+      },
+      {
+       "label": "Multi-task regression",
+       "value": "0"
+      },
+      {
+       "label": "Eval contamination",
+       "value": "0.0%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "Manufacturing & Industrial operators recognize the pattern: quality escapes and manual inspection, quarter after quarter.",
+     "plays": [
+      "Dataset factory: decontamination, label consistency, hard-negative mining",
+      "Multi-task eval gate with zero-regression promotion policy",
+      "Distillation and adapter tuning with canary rollout and rehearsed rollback"
+     ],
+     "kpis": [
+      {
+       "label": "Task accuracy (vs base)",
+       "value": "+11.2pt"
+      },
+      {
+       "label": "Multi-task regression",
+       "value": "0"
+      },
+      {
+       "label": "Eval contamination",
+       "value": "0.0%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Dataset factory: decontamination, label consistency, hard-negative mining",
+      "Multi-task eval gate with zero-regression promotion policy",
+      "Distillation and adapter tuning with canary rollout and rehearsed rollback"
+     ],
+     "kpis": [
+      {
+       "label": "Task accuracy (vs base)",
+       "value": "+11.2pt"
+      },
+      {
+       "label": "Multi-task regression",
+       "value": "0"
+      },
+      {
+       "label": "Eval contamination",
+       "value": "0.0%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Dataset factory: decontamination, label consistency, hard-negative mining",
+      "Multi-task eval gate with zero-regression promotion policy",
+      "Distillation and adapter tuning with canary rollout and rehearsed rollback",
+      "Sector working pattern: resolution-first voice care — grounded voice agents resolving top intents with telephony integration and escalation context. Care cost per contact down 30% is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Task accuracy (vs base)",
+       "value": "+11.2pt"
+      },
+      {
+       "label": "Multi-task regression",
+       "value": "0"
+      },
+      {
+       "label": "Eval contamination",
+       "value": "0.0%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Dataset factory: decontamination, label consistency, hard-negative mining",
+      "Multi-task eval gate with zero-regression promotion policy",
+      "Distillation and adapter tuning with canary rollout and rehearsed rollback"
+     ],
+     "kpis": [
+      {
+       "label": "Task accuracy (vs base)",
+       "value": "+11.2pt"
+      },
+      {
+       "label": "Multi-task regression",
+       "value": "0"
+      },
+      {
+       "label": "Eval contamination",
+       "value": "0.0%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: demand and capacity planning stale, quarter after quarter.",
+     "plays": [
+      "Dataset factory: decontamination, label consistency, hard-negative mining",
+      "Multi-task eval gate with zero-regression promotion policy",
+      "Distillation and adapter tuning with canary rollout and rehearsed rollback",
+      "Sector working pattern: eta prediction in Logistics & Supply Chain, where traffic, weather and history-driven ETA models per lane and mode. Promise accuracy up; penalties down is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Task accuracy (vs base)",
+       "value": "+11.2pt"
+      },
+      {
+       "label": "Multi-task regression",
+       "value": "0"
+      },
+      {
+       "label": "Eval contamination",
+       "value": "0.0%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use.",
+     "plays": [
+      "Dataset factory: decontamination, label consistency, hard-negative mining",
+      "Multi-task eval gate with zero-regression promotion policy",
+      "Distillation and adapter tuning with canary rollout and rehearsed rollback"
+     ],
+     "kpis": [
+      {
+       "label": "Task accuracy (vs base)",
+       "value": "+11.2pt"
+      },
+      {
+       "label": "Multi-task regression",
+       "value": "0"
+      },
+      {
+       "label": "Eval contamination",
+       "value": "0.0%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Dataset factory: decontamination, label consistency, hard-negative mining",
+      "Multi-task eval gate with zero-regression promotion policy",
+      "Distillation and adapter tuning with canary rollout and rehearsed rollback"
+     ],
+     "kpis": [
+      {
+       "label": "Task accuracy (vs base)",
+       "value": "+11.2pt"
+      },
+      {
+       "label": "Multi-task regression",
+       "value": "0"
+      },
+      {
+       "label": "Eval contamination",
+       "value": "0.0%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": true,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Dataset factory: decontamination, label consistency, hard-negative mining",
+      "Multi-task eval gate with zero-regression promotion policy",
+      "Distillation and adapter tuning with canary rollout and rehearsed rollback"
+     ],
+     "kpis": [
+      {
+       "label": "Task accuracy (vs base)",
+       "value": "+11.2pt"
+      },
+      {
+       "label": "Multi-task regression",
+       "value": "0"
+      },
+      {
+       "label": "Eval contamination",
+       "value": "0.0%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Dataset factory: decontamination, label consistency, hard-negative mining",
+      "Multi-task eval gate with zero-regression promotion policy",
+      "Distillation and adapter tuning with canary rollout and rehearsed rollback"
+     ],
+     "kpis": [
+      {
+       "label": "Task accuracy (vs base)",
+       "value": "+11.2pt"
+      },
+      {
+       "label": "Multi-task regression",
+       "value": "0"
+      },
+      {
+       "label": "Eval contamination",
+       "value": "0.0%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/"
+    }
+   ],
+   "practiceNote": "LLM Fine-Tuning & Model Operations view: a tuning factory with decontaminated datasets, a multi-task eval gate that blocks silent regressions, and canary rollout with rehearsed rollback."
+  },
+  {
+   "t": "h2",
+   "x": "Training and serving defaults — and when we deviate"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor reproducibility and audit: pinned data snapshots, deterministic eval, registered checkpoints. Deviation conditions are written because every one of them has governance consequences."
+  },
+  {
+   "t": "table",
+   "caption": "LLM Fine-Tuning & Model Operations: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Fine-tuned domain models with published eval reports and cost curves",
-     "Handed to a named owner on your side, with a working session included."
+     "Adapter tuning",
+     "LoRA/QLoRA on 8B–32B bases for task specialization",
+     "Full fine-tune only when behavior change is global and budgeted"
     ],
     [
-     "Model registry with lineage from training data to deployed version",
-     "Handed to a named owner on your side, with a working session included."
+     "Distillation",
+     "Frontier teacher → 8B student with task-shaped synthetic data",
+     "Direct SFT on logs when teacher access is contractually blocked"
     ],
     [
-     "Retraining and drift policy with named triggers and owners",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Eval harness",
+     "Per-task suites with thresholds; contamination checks on every run",
+     "Single aggregate score — it hides exactly the regressions that hurt"
     ],
     [
-     "EU AI Act technical documentation and model cards",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Training compute",
+     "Managed GPU pods with spot for sweeps",
+     "Reserved capacity for the promotion-critical rerun window"
+    ],
+    [
+     "Registry",
+     "Lineage-bound: dataset hash, config, eval report per checkpoint",
+     "Name-only versioning — it loses the audit trail regulators ask for"
+    ],
+    [
+     "Rollout",
+     "Canary 5% for 48h with per-task auto-rollback",
+     "Shadow-mode first when the surface is regulated"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Under the hood"
+   "x": "Model promotion gates — what evidence blocks a bad tune"
   },
   {
-   "t": "p",
-   "x": "LLM Fine-Tuning & Model Operations is built against defined standards: PyTorch, PEFT/LoRA, Databricks MLflow, vLLM, Ray, Ragas. Each choice is justified in writing as part of the architecture baseline, so your team can defend it without us in the room."
+   "t": "table",
+   "caption": "Release gates for LLM Fine-Tuning & Model Operations — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Dataset gate",
+     "Is the data clean, consented and decontaminated?",
+     "Hash-logged pipeline run; overlap scan vs holdout; label provenance"
+    ],
+    [
+     "Eval gate",
+     "Does the matrix clear per-task thresholds?",
+     "Full matrix report; zero-regression rule enforced, not averaged"
+    ],
+    [
+     "Safety gate",
+     "Do safety evals hold under adversarial prompts?",
+     "Red-team suite scoped to the model's actual surfaces"
+    ],
+    [
+     "Cost gate",
+     "Does serving cost support promotion?",
+     "Serving cost model at projected traffic with the chosen size"
+    ],
+    [
+     "Rollout gate",
+     "Is the rollback path rehearsed?",
+     "Canary soak report; rollback drill timestamp"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "What the weeks look like"
+   "x": "What you own when the factory is handed over"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "LLM Fine-Tuning & Model Operations starts with the measurement: the metric, the owner, the current number, signed."
+     "Tuned adapter family",
+     "Versioned, lineage-bound, registry-published with eval reports"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, corpus curation & licensing first, gates written with your team."
+     "Dataset factory",
+     "Decontaminated, label-audited pipelines with hard-negative mining"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "The LLM Fine-Tuning & Model Operations gate review: baseline versus slice, in the metric's own units, plus a scale recommendation your board can audit."
+     "Multi-task eval matrix",
+     "The gate that stops silent regressions; per-task thresholds"
+    ],
+    [
+     "Distillation pipeline",
+     "Teacher→student loop with quality retention reporting"
+    ],
+    [
+     "Model ops runbook",
+     "Drift thresholds, promotion SOP, rollback drills"
+    ],
+    [
+     "Cost & quality tradeoff ledger",
+     "The retained-quality-vs-cost curve behind each size decision"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Factory build-out, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — task & metric definition",
+     "Task taxonomy, eval design with SMEs, contamination rules, signed target deltas"
+    ],
+    [
+     "Weeks 3–4 — dataset factory",
+     "Log mining, label ops, decontamination pipeline, dataset v1"
+    ],
+    [
+     "Weeks 5–6 — first training cycle",
+     "LoRA sweeps, eval matrix v1, cost model, registry setup"
+    ],
+    [
+     "Weeks 7–8 — gating & canary",
+     "Promotion gates, canary rollout with auto-rollback drill"
+    ],
+    [
+     "Weeks 9–10 — distillation & scale",
+     "Teacher→student pipeline, serving integration, capacity checks"
+    ],
+    [
+     "Ongoing — model ops",
+     "Drift watch, re-label sprints, quarterly eval re-baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — data platform to serving mesh"
+  },
+  {
+   "t": "p",
+   "x": "The factory sits on your existing data platform and serving mesh; these are the contracts that make the factory a system, not a set of scripts."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Interaction log stores",
+     "Consented event streams feeding the dataset factory"
+    ],
+    [
+     "SME labeling tools",
+     "Queue integration with adjudication and agreement metrics"
+    ],
+    [
+     "GPU scheduler",
+     "Job classes for sweeps vs promotion reruns"
+    ],
+    [
+     "Serving gateway",
+     "Registry-driven adapter loading; canary routing"
+    ],
+    [
+     "Observability",
+     "Per-task eval metrics on dashboards next to serving metrics"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Model governance — dataset-to-canary lineage"
+  },
+  {
+   "t": "p",
+   "x": "Model lineage is the governance product here: every production model traces to decontaminated dataset versions, eval results and approval records that a model-risk committee can walk without a guide."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Consent & provenance check",
+     "Every training row traces to a consented source; untraced rows are rejected"
+    ],
+    [
+     "Contamination sentinel",
+     "Automatic overlap scan against holdout on every dataset version"
+    ],
+    [
+     "Promotion quorum",
+     "Model, eval and business owners sign before registry publish"
+    ],
+    [
+     "Rollback guarantee",
+     "Previous version stays warm for one full canary cycle plus a week"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Contamination probes run against every dataset version: overlapping n-grams against eval sets are measured and reported — zero is the only passing number."
   },
   {
    "t": "cta",
-   "x": "Talk to the team that runs LLM Fine-Tuning & Model Operations in production — the briefing is technical by design, and the first one costs nothing but the hour."
+   "x": "If your tuned model's last regression was discovered by a user, the eval gate is missing, not the talent. Bring the model inventory to a briefing and we will map your promotion path onto the factory."
   }
  ],
- "words": 533,
+ "words": 1180,
  "section": "Services",
  "l1": "Services",
  "l2": "Applied AI & Generative AI",
@@ -278,7 +1253,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Applied AI & Generative AI",
+   "title": "Domain overview — Applied AI & Generative AI",
    "url": "/services/applied-ai-generative-ai/",
    "desc": "From enterprise strategy to production models — AI measured on the P&L."
   },
@@ -330,33 +1305,51 @@
   {
    "title": "Quantum & Advanced Compute for Technology & SaaS",
    "url": "/industries/technology-saas/capabilities/quantum-advanced-compute/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
    "title": "Enterprise AI Strategy & Roadmapping",
    "url": "/services/applied-ai-generative-ai/enterprise-ai-strategy/",
-   "tag": "Same tower",
-   "desc": "Align AI to P&L lines and risk mandates — a sequenced portfolio, not a pile of pilots."
+   "tag": "Same domain",
+   "desc": "portfolio management under uncertainty: provability screens, risk-tiered gates, a platform decision made once, and a stop-loss that holds."
   },
   {
    "title": "Generative AI Platform Engineering",
    "url": "/services/applied-ai-generative-ai/genai-platform-engineering/",
-   "tag": "Same tower",
-   "desc": "One governed platform, many GenAI products — retrieval, guardrails and cost control as shared services."
-  },
-  {
-   "title": "RAG & Enterprise Knowledge Systems",
-   "url": "/services/applied-ai-generative-ai/rag-knowledge-systems/",
-   "tag": "Same tower",
-   "desc": "Answers with citations, not vibes — permission-aware retrieval over your regulated document estate."
+   "tag": "Same domain",
+   "desc": "one governed door for every model call — authz, budgets, caching, guardrails and traces — so fifty use cases stay operable and affordable."
   },
   {
    "title": "Multimodal AI & Vision-Language Systems",
    "url": "/services/applied-ai-generative-ai/multimodal-vision-systems/",
-   "tag": "Same tower",
-   "desc": "Models that read scans, scenes and schematics — multimodal intelligence wired into operations."
+   "tag": "Same domain",
+   "desc": "document and scene understanding wired into systems of record, with confidence gating, ledger reconciliation and per-field evidence for auditors."
+  },
+  {
+   "title": "Decision Intelligence Systems",
+   "url": "/services/agentic-ai-hyperautomation/decision-intelligence-systems/",
+   "tag": "Pairs with",
+   "desc": "decision models wrapped in policy bounds, challenger benchmarks and explainable outputs — decisions you can defend to a regulator, not just scores in a dashboard."
+  },
+  {
+   "title": "Enterprise BI & Executive Analytics",
+   "url": "/services/data-analytics-lakehouse/enterprise-bi-executive-analytics/",
+   "tag": "Pairs with",
+   "desc": "decision-grade reporting with one truth per metric — certified datasets, metric contracts and an executive layer that does not argue with itself."
+  },
+  {
+   "title": "Identity & Access Modernization",
+   "url": "/services/cybersecurity-zero-trust/identity-access-modernization/",
+   "tag": "Pairs with",
+   "desc": "workforce and machine identity lifecycle done properly — joiner-mover-leaver automation, privileged access vaulting and credential hygiene that is measured weekly."
+  },
+  {
+   "title": "A national EdTech platform (2M learners)",
+   "url": "/case-studies/edu-02/",
+   "tag": "Evidence",
+   "desc": "Outcome evidence published — renewals secured with learning-gain pipelines."
   }
  ]
 }

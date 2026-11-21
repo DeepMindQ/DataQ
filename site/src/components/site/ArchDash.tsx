@@ -6,7 +6,7 @@ import { CountUp } from "./Motion";
    architecture / dashboard (no shared template imagery):
 
    1. ArchGraph   — a real architecture graph: lanes + nodes + edges passed
-                    from content. Each (tower × industry × variant) renders a
+                    from content. Each (domain × industry × variant) renders a
                     different topology with that sector's actual systems.
    2. MetricsDash — an operations-console mock: KPI tiles, gate-by-gate bar
                     chart, decision-log ticker. Values are the page's own
@@ -28,7 +28,7 @@ const CL = {
   lane: "rgba(255,255,255,0.05)",
 };
 
-export type ArchNode = { id: string; lane: number; label: string; hot?: boolean };
+export type ArchNode = { id: string; lane: number; label: string; sub?: string; hot?: boolean };
 export type ArchEdge = { a: string; b: string; label?: string };
 
 function wrapLabel(label: string, max = 20): string[] {
@@ -58,8 +58,9 @@ export function ArchGraph({
   note?: string;
   lanes: string[];
   nodes: ArchNode[];
-  edges: ArchEdge[];
+  edges?: ArchEdge[];
 }) {
+  const edgeList = edges ?? [];
   const COL_W = 178;
   const GAP = 64;
   const NODE_W = 158;
@@ -68,25 +69,29 @@ export function ArchGraph({
   const ROW_GAP = 58;
   const W = lanes.length * COL_W + (lanes.length - 1) * GAP + 32;
   const maxRows = Math.max(2, ...lanes.map((_, li) => nodes.filter((n) => n.lane === li).length));
-  const H = TOP + maxRows * (NODE_H + ROW_GAP) + 26;
+  const H = TOP + maxRows * (NODE_H + ROW_GAP + 20) + 26;
 
   // lane x origins
   const laneX = (li: number) => 16 + li * (COL_W + GAP);
-  // node positions per lane, stacked
+  // node positions per lane, stacked (sub-labeled boxes are 16px taller)
   const pos: Record<string, { x: number; y: number }> = {};
+  const boxH = (n: ArchNode) => (n.sub ? NODE_H + 16 : NODE_H);
   const perLaneCount: number[] = lanes.map(() => 0);
   for (const n of nodes) {
     const row = perLaneCount[n.lane]++;
-    const laneNodeCount = nodes.filter((m) => m.lane === n.lane).length;
-    const totalH = laneNodeCount * NODE_H + (laneNodeCount - 1) * ROW_GAP;
+    const laneNodes = nodes.filter((m) => m.lane === n.lane);
+    const laneNodeCount = laneNodes.length;
+    const totalH = laneNodes.reduce((s, m) => s + boxH(m), 0) + (laneNodeCount - 1) * ROW_GAP;
     const startY = TOP + (maxRows * (NODE_H + ROW_GAP) - ROW_GAP - totalH) / 2;
-    pos[n.id] = { x: laneX(n.lane) + (COL_W - NODE_W) / 2, y: startY + row * (NODE_H + ROW_GAP) };
+    pos[n.id] = { x: laneX(n.lane) + (COL_W - NODE_W) / 2, y: startY + laneNodes.slice(0, row).reduce((s, m) => s + boxH(m) + ROW_GAP, 0) };
   }
 
   const anchor = (id: string, side: "l" | "r") => {
     const p = pos[id];
     if (!p) return { x: 0, y: 0 };
-    return { x: side === "l" ? p.x : p.x + NODE_W, y: p.y + NODE_H / 2 };
+    const n = nodes.find((m) => m.id === id);
+    const mid = (n && n.sub ? NODE_H + 16 : NODE_H) / 2;
+    return { x: side === "l" ? p.x : p.x + NODE_W, y: p.y + mid };
   };
 
   return (
@@ -126,7 +131,7 @@ export function ArchGraph({
               </g>
             ))}
             {/* edges */}
-            {edges.map((e, i) => {
+            {edgeList.map((e, i) => {
               const a = anchor(e.a, "r");
               const b = anchor(e.b, "l");
               if (!a || !b) return null;
@@ -158,13 +163,15 @@ export function ArchGraph({
               const p = pos[n.id];
               if (!p) return null;
               const lines = wrapLabel(n.label);
+              const hasSub = !!n.sub;
+              const boxH = hasSub ? NODE_H + 16 : NODE_H;
               return (
                 <g key={n.id}>
                   <rect
                     x={p.x}
                     y={p.y}
                     width={NODE_W}
-                    height={NODE_H}
+                    height={boxH}
                     rx={9}
                     fill={n.hot ? CL.hot : CL.bg}
                     stroke={n.hot ? CL.hotStroke : CL.stroke}
@@ -174,7 +181,7 @@ export function ArchGraph({
                     <text
                       key={k}
                       x={p.x + NODE_W / 2}
-                      y={p.y + NODE_H / 2 + 4 + (k - (lines.length - 1) / 2) * 13}
+                      y={p.y + (hasSub ? 17 : NODE_H / 2 + 4) + (k - (lines.length - 1) / 2) * 13}
                       fontSize={10.5}
                       fontWeight={600}
                       fill={n.hot ? "rgba(255,255,255,0.97)" : CL.txt}
@@ -183,6 +190,17 @@ export function ArchGraph({
                       {ln}
                     </text>
                   ))}
+                  {hasSub && (
+                    <text
+                      x={p.x + NODE_W / 2}
+                      y={p.y + 35}
+                      fontSize={8.5}
+                      fill="rgba(254,87,34,0.85)"
+                      textAnchor="middle"
+                    >
+                      {n.sub}
+                    </text>
+                  )}
                 </g>
               );
             })}
@@ -242,7 +260,7 @@ export function MetricsDash({
                 className="rounded-xl border border-white/10 bg-white/[0.05] px-3.5 py-3 backdrop-blur"
                 style={{ animation: `dash-in 0.5s ${0.12 * i}s both` }}
               >
-                <p className="truncate text-[10.5px] font-bold uppercase tracking-[0.12em] text-white/45">{k.label}</p>
+                <p className="text-[10.5px] font-bold uppercase leading-tight tracking-[0.12em] text-white/45">{k.label}</p>
                 <p className="mt-1 font-display text-[20px] font-bold tabular-nums text-white">
                   {k.value}
                   {k.delta && (
@@ -265,7 +283,7 @@ export function MetricsDash({
               <div className="mt-3 space-y-2.5">
                 {gates.map((g, i) => (
                   <div key={g.name} className="flex items-center gap-3">
-                    <span className="w-36 shrink-0 truncate text-[11px] font-medium text-white/70">{g.name}</span>
+                    <span className="w-36 shrink-0 text-[11px] font-medium leading-tight text-white/70">{g.name}</span>
                     <span className="h-2 flex-1 overflow-hidden rounded-full bg-white/10">
                       <span
                         className="block h-full rounded-full"
@@ -316,14 +334,742 @@ export function MetricsDash({
   );
 }
 
+/* ── ChartPanel — data charts (line / bar / radar) fed from page JSON ───────
+   Every series comes from the page's own content spec, so two pages never
+   render the same chart. Pure SVG + CSS, static-export safe, reduced-motion
+   aware. Values are engineering targets / reference bands, clearly captioned
+   as such — never client-owned figures. */
+
+export type ChartSeries = { name: string; points: number[] };
+
+export function ChartPanel({
+  title,
+  variant = "line",
+  cats,
+  series,
+  unit,
+  yMax,
+  nodes,
+  links,
+  note,
+  caption,
+}: {
+  title: string;
+  variant?:
+    | "line"
+    | "bar"
+    | "radar"
+    | "area"
+    | "donut"
+    | "funnel"
+    | "heatmap"
+    | "gauge"
+    | "network";
+  cats: string[];
+  series: ChartSeries[];
+  unit?: string;
+  yMax?: number;
+  nodes?: { id: string; x: number; y: number; hub?: boolean; label: string }[];
+  links?: [number, number][];
+  note?: string;
+  caption?: string;
+}) {
+  const maxV = yMax ?? Math.max(...series.flatMap((s) => s.points)) * 1.12;
+  const colors = ["#FE5722", "rgba(255,255,255,0.85)", "rgba(254,87,34,0.55)", "rgba(255,255,255,0.45)"];
+  const legend = (
+    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+      {series.map((s, i) => (
+        <span key={s.name} className="inline-flex items-center gap-1.5 text-[10.5px] font-medium text-white/65">
+          <span className="inline-block h-[3px] w-4 rounded-full" style={{ background: colors[i % colors.length] }} />
+          {s.name}
+          {unit && !s.name.includes(unit) ? ` (${unit})` : ""}
+        </span>
+      ))}
+    </div>
+  );
+
+  return (
+    <Reveal className="mt-6">
+      <figure className="overflow-hidden rounded-2xl border border-white/10 grad-navy-field shadow-3">
+        {/* header */}
+        <div className="flex items-center justify-between border-b border-white/10 px-5 py-3">
+          <div className="flex items-center gap-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+            <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+            <span className="h-2.5 w-2.5 rounded-full bg-brand/70" />
+            <p className="ml-2 text-[12.5px] font-semibold text-white">{title}</p>
+          </div>
+          <span className="rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.14em] text-white/60">
+            {{
+              line: "Trend view",
+              area: "Trajectory",
+              bar: "Breakdown",
+              radar: "Profile",
+              donut: "Composition",
+              funnel: "Stage conversion",
+              heatmap: "Intensity matrix",
+              gauge: "Live indicator",
+              network: "Topology",
+            }[variant]}
+          </span>
+        </div>
+
+        <div className="px-5 py-4">
+          {variant === "line" && <LineChart cats={cats} series={series} maxV={maxV} colors={colors} />}
+          {variant === "bar" && <BarChart cats={cats} series={series} maxV={maxV} colors={colors} />}
+          {variant === "radar" && <RadarChart cats={cats} series={series} maxV={maxV} colors={colors} />}
+          {variant === "area" && <AreaChart cats={cats} series={series} maxV={maxV} colors={colors} unit={unit} />}
+          {variant === "donut" && <DonutChart cats={cats} series={series} unit={unit} center={note} />}
+          {variant === "funnel" && <FunnelChart cats={cats} series={series} unit={unit} />}
+          {variant === "heatmap" && <HeatmapChart cats={cats} series={series} unit={unit} />}
+          {variant === "gauge" && <GaugeChart series={series} maxV={maxV} unit={unit} label={cats[0] ?? series[0]?.name ?? ""} />}
+          {variant === "network" && <NetworkChart nodes={nodes} links={links} />}
+          {variant !== "donut" && variant !== "gauge" && variant !== "network" && legend}
+          {note && variant !== "gauge" && variant !== "network" && (
+            <p className="mt-2 text-[11px] leading-relaxed text-white/45">{note}</p>
+          )}
+        </div>
+        {caption && (
+          <figcaption className="border-t border-white/10 px-5 py-2.5 text-[11.5px] leading-relaxed text-white/55">
+            {caption}
+          </figcaption>
+        )}
+      </figure>
+    </Reveal>
+  );
+}
+
+function LineChart({
+  cats,
+  series,
+  maxV,
+  colors,
+}: {
+  cats: string[];
+  series: ChartSeries[];
+  maxV: number;
+  colors: string[];
+}) {
+  const W = 640;
+  const H = 210;
+  const PL = 44;
+  const PR = 14;
+  const PT = 14;
+  const PB = 34;
+  const iw = W - PL - PR;
+  const ih = H - PT - PB;
+  const n = Math.max(cats.length - 1, 1);
+  const x = (i: number) => PL + (i * iw) / n;
+  const y = (v: number) => PT + ih - (Math.min(v, maxV) / maxV) * ih;
+  const ticks = [0, 0.25, 0.5, 0.75, 1];
+  return (
+    <div>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={series.map((s) => s.name).join(", ")}>
+        {/* horizontal grid + y labels */}
+        {ticks.map((tv, i) => {
+          const yy = PT + (i * ih) / (ticks.length - 1);
+          const val = Math.round(maxV * (1 - tv));
+          return (
+            <g key={i}>
+              <line x1={PL} y1={yy} x2={W - PR} y2={yy} stroke="rgba(255,255,255,0.08)" />
+              <text x={PL - 6} y={yy + 3} textAnchor="end" fontSize="9" fill="rgba(255,255,255,0.4)">
+                {val.toLocaleString()}
+              </text>
+            </g>
+          );
+        })}
+        {/* x labels (spread) */}
+        {cats.map((c, i) => {
+          const show = cats.length <= 8 || i % Math.ceil(cats.length / 8) === 0 || i === cats.length - 1;
+          return show ? (
+            <text key={i} x={x(i)} y={H - 12} textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.5)">
+              {c}
+            </text>
+          ) : null;
+        })}
+        {/* series */}
+        {series.map((s, si) => {
+          const d = s.points.map((v, i) => `${i === 0 ? "M" : "L"} ${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
+          const area = `${d} L ${x(s.points.length - 1).toFixed(1)},${(PT + ih).toFixed(1)} L ${PL},${PT + ih} Z`;
+          return (
+            <g key={s.name}>
+              {si === 0 && <path d={area} fill="rgba(254,87,34,0.10)" stroke="none" />}
+              <path
+                d={d}
+                fill="none"
+                stroke={colors[si % colors.length]}
+                strokeWidth={si === 0 ? 2.2 : 1.6}
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                pathLength={1}
+                strokeDasharray={si === 0 ? "1" : undefined}
+                style={si === 0 ? { animation: "dash-draw 1.4s 0.2s var(--ease-out, ease-out) both" } : undefined}
+              />
+              {s.points.map((v, i) => (
+                <circle key={i} cx={x(i)} cy={y(v)} r={si === 0 ? 2.6 : 1.8} fill={colors[si % colors.length]}
+                  style={{ animation: `dash-in 0.4s ${0.3 + i * 0.05}s both` }} />
+              ))}
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
+function BarChart({
+  cats,
+  series,
+  maxV,
+  colors,
+}: {
+  cats: string[];
+  series: ChartSeries[];
+  maxV: number;
+  colors: string[];
+}) {
+  const W = 640;
+  const H = 210;
+  const PL = 44;
+  const PR = 14;
+  const PT = 14;
+  const PB = 36;
+  const iw = W - PL - PR;
+  const ih = H - PT - PB;
+  const groups = cats.length;
+  const gw = iw / Math.max(groups, 1);
+  const bw = Math.min(26, (gw - 10) / Math.max(series.length, 1));
+  const ticks = [0, 0.5, 1];
+  return (
+    <div>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={series.map((s) => s.name).join(", ")}>
+        {ticks.map((tv, i) => {
+          const yy = PT + (i * ih) / (ticks.length - 1);
+          return (
+            <g key={i}>
+              <line x1={PL} y1={yy} x2={W - PR} y2={yy} stroke="rgba(255,255,255,0.08)" />
+              <text x={PL - 6} y={yy + 3} textAnchor="end" fontSize="9" fill="rgba(255,255,255,0.4)">
+                {Math.round(maxV * (1 - tv)).toLocaleString()}
+              </text>
+            </g>
+          );
+        })}
+        {cats.map((c, gi) => {
+          const cx = PL + gi * gw + gw / 2;
+          const total = series.length * (bw + 4);
+          return (
+            <g key={gi}>
+              {series.map((s, si) => {
+                const v = s.points[gi] ?? 0;
+                const bh = Math.max(2, (Math.min(v, maxV) / maxV) * ih);
+                const bx = cx - total / 2 + si * (bw + 4);
+                return (
+                  <g key={si}>
+                    <rect
+                      x={bx}
+                      y={PT + ih - bh}
+                      width={bw}
+                      height={bh}
+                      rx={3}
+                      fill={colors[si % colors.length]}
+                      opacity={si === 0 ? 0.95 : 0.75}
+                      style={{ animation: `dash-col 0.7s ${0.15 + (gi * series.length + si) * 0.05}s both`, transformBox: "fill-box", transformOrigin: "bottom" }}
+                    />
+                    <text x={bx + bw / 2} y={PT + ih - bh - 4} textAnchor="middle" fontSize="8.5" fill="rgba(255,255,255,0.6)">
+                      {v >= 1000 ? `${Math.round(v / 100) / 10}k` : v}
+                    </text>
+                  </g>
+                );
+              })}
+              <text x={cx} y={H - 14} textAnchor="middle" fontSize="9.5" fill="rgba(255,255,255,0.65)">
+                {c}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
+function RadarChart({
+  cats,
+  series,
+  maxV,
+  colors,
+}: {
+  cats: string[];
+  series: ChartSeries[];
+  maxV: number;
+  colors: string[];
+}) {
+  const CX = 320;
+  const CY = 112;
+  const R = 86;
+  const N = Math.max(cats.length, 3);
+  const ang = (i: number) => (2 * Math.PI * i) / N - Math.PI / 2;
+  const pt = (i: number, v: number) => {
+    const r = (Math.min(v, maxV) / maxV) * R;
+    return `${(CX + r * Math.cos(ang(i))).toFixed(1)},${(CY + r * Math.sin(ang(i))).toFixed(1)}`;
+  };
+  const rings = [0.33, 0.66, 1];
+  return (
+    <div className="flex flex-col items-center">
+      <svg viewBox="0 0 640 224" className="w-full max-w-[560px]" role="img" aria-label={series.map((s) => s.name).join(", ")}>
+        {rings.map((rv, i) => (
+          <polygon
+            key={i}
+            points={cats.map((_, j) => pt(j, maxV * rv)).join(" ")}
+            fill="none"
+            stroke={i === rings.length - 1 ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.09)"}
+          />
+        ))}
+        {cats.map((c, i) => {
+          const lx = CX + (R + 16) * Math.cos(ang(i));
+          const ly = CY + (R + 14) * Math.sin(ang(i));
+          const anchor = Math.abs(Math.cos(ang(i))) < 0.3 ? "middle" : Math.cos(ang(i)) > 0 ? "start" : "end";
+          return (
+            <g key={i}>
+              <line x1={CX} y1={CY} x2={CX + R * Math.cos(ang(i))} y2={CY + R * Math.sin(ang(i))} stroke="rgba(255,255,255,0.10)" />
+              <text x={lx} y={ly} textAnchor={anchor} fontSize="9.5" fill="rgba(255,255,255,0.6)">
+                {c.length > 26 ? `${c.slice(0, 24)}…` : c}
+              </text>
+            </g>
+          );
+        })}
+        {series.map((s, si) => (
+          <g key={s.name}>
+            <polygon
+              points={s.points.map((v, i) => pt(i, v)).join(" ")}
+              fill={si === 0 ? "rgba(254,87,34,0.16)" : "rgba(255,255,255,0.07)"}
+              stroke={colors[si % colors.length]}
+              strokeWidth={si === 0 ? 2 : 1.4}
+              style={{ animation: `dash-in 0.8s ${0.2 + si * 0.2}s both`, transformBox: "fill-box", transformOrigin: "center" }}
+            />
+            {s.points.map((v, i) => {
+              const [px, py] = pt(i, v).split(",").map(Number);
+              return <circle key={i} cx={px} cy={py} r={2.2} fill={colors[si % colors.length]} />;
+            })}
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+}
+
+/* ── Area chart — smooth cumulative/trajectory band ─────────────────────── */
+function AreaChart({
+  cats,
+  series,
+  maxV,
+  colors,
+  unit,
+}: {
+  cats: string[];
+  series: ChartSeries[];
+  maxV: number;
+  colors: string[];
+  unit?: string;
+}) {
+  const W = 640;
+  const H = 220;
+  const PL = 46;
+  const PR = 16;
+  const PT = 16;
+  const PB = 36;
+  const iw = W - PL - PR;
+  const ih = H - PT - PB;
+  const n = Math.max(cats.length - 1, 1);
+  const x = (i: number) => PL + (i * iw) / n;
+  const y = (v: number) => PT + ih - (Math.min(v, maxV) / maxV) * ih;
+  const ticks = [0, 0.25, 0.5, 0.75, 1];
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={series.map((s) => s.name).join(", ")}>
+      <defs>
+        <linearGradient id="dv-area-fill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(254,87,34,0.38)" />
+          <stop offset="100%" stopColor="rgba(254,87,34,0.04)" />
+        </linearGradient>
+      </defs>
+      {ticks.map((tv, i) => {
+        const yy = PT + (i * ih) / (ticks.length - 1);
+        return (
+          <g key={i}>
+            <line x1={PL} y1={yy} x2={W - PR} y2={yy} stroke="rgba(255,255,255,0.08)" />
+            <text x={PL - 6} y={yy + 3} textAnchor="end" fontSize="9" fill="rgba(255,255,255,0.4)">
+              {Math.round(maxV * (1 - tv)).toLocaleString()}
+              {i === ticks.length - 1 && unit ? ` ${unit}` : ""}
+            </text>
+          </g>
+        );
+      })}
+      {series.map((s, si) => {
+        // smooth curve through points
+        const pts = s.points.map((v, i) => [x(i), y(v)] as const);
+        let d = `M ${pts[0][0]},${pts[0][1]}`;
+        for (let i = 1; i < pts.length; i++) {
+          const [x0, y0] = pts[i - 1];
+          const [x1, y1] = pts[i];
+          const mx = (x0 + x1) / 2;
+          d += ` C ${mx},${y0} ${mx},${y1} ${x1},${y1}`;
+        }
+        const area = `${d} L ${pts[pts.length - 1][0]},${PT + ih} L ${pts[0][0]},${PT + ih} Z`;
+        return (
+          <g key={s.name}>
+            {si === 0 && <path d={area} fill="url(#dv-area-fill)" stroke="none" />}
+            <path
+              d={d}
+              fill="none"
+              stroke={colors[si % colors.length]}
+              strokeWidth={si === 0 ? 2.4 : 1.6}
+              strokeLinecap="round"
+              pathLength={1}
+              strokeDasharray={si === 0 ? "1" : undefined}
+              style={si === 0 ? { animation: "dash-draw 1.6s 0.2s var(--ease-out, ease-out) both" } : undefined}
+            />
+            {s.points.map((v, i) => (
+              <circle key={i} cx={x(i)} cy={y(v)} r={si === 0 ? 3 : 2} fill={colors[si % colors.length]}
+                style={{ animation: `dash-in 0.4s ${0.3 + i * 0.06}s both` }} />
+            ))}
+          </g>
+        );
+      })}
+      {cats.map((c, i) => {
+        const show = cats.length <= 10 || i % Math.ceil(cats.length / 10) === 0 || i === cats.length - 1;
+        return show ? (
+          <text key={i} x={x(i)} y={H - 12} textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.5)">
+            {c}
+          </text>
+        ) : null;
+      })}
+    </svg>
+  );
+}
+
+/* ── Donut — composition share ──────────────────────────────────────────── */
+function DonutChart({
+  cats,
+  series,
+  unit,
+  center,
+}: {
+  cats: string[];
+  series: ChartSeries[];
+  unit?: string;
+  center?: string;
+}) {
+  const vals = series[0]?.points ?? [];
+  const total = vals.reduce((a, b) => a + b, 0) || 1;
+  const centerText =
+    center && center.length <= 16 ? center : unit ? `${total} ${unit}` : String(total);
+  const PALETTE = ["#FE5722", "rgba(254,135,80,0.92)", "#7C6FF0", "rgba(255,255,255,0.75)", "rgba(254,87,34,0.5)", "#3ECFB2", "rgba(255,255,255,0.4)", "#F0B429"];
+  const CX = 150;
+  const CY = 110;
+  const R = 72;
+  const SW = 26;
+  let acc = -Math.PI / 2;
+  const segs = vals.map((v, i) => {
+    const a0 = acc;
+    const a1 = acc + (v / total) * Math.PI * 2;
+    acc = a1;
+    const large = a1 - a0 > Math.PI ? 1 : 0;
+    const p0 = [CX + R * Math.cos(a0), CY + R * Math.sin(a0)];
+    const p1 = [CX + R * Math.cos(a1), CY + R * Math.sin(a1)];
+    return {
+      d: `M ${p0[0].toFixed(1)},${p0[1].toFixed(1)} A ${R},${R} 0 ${large} 1 ${p1[0].toFixed(1)},${p1[1].toFixed(1)}`,
+      color: PALETTE[i % PALETTE.length],
+      pct: Math.round((v / total) * 100),
+      name: cats[i] ?? `#${i}`,
+      v,
+      delay: i * 0.12,
+    };
+  });
+  return (
+    <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-center sm:gap-8">
+      <svg viewBox="0 0 300 220" className="w-full max-w-[300px]" role="img" aria-label={cats.join(", ")}>
+        {segs.map((s) => (
+          <path
+            key={s.name}
+            d={s.d}
+            fill="none"
+            stroke={s.color}
+            strokeWidth={SW}
+            strokeLinecap="butt"
+            pathLength={1}
+            style={{ animation: "dash-draw 0.9s both", animationDelay: `${s.delay}s`, opacity: 0.92 }}
+          />
+        ))}
+        <text x={CX} y={CY - 4} textAnchor="middle" fontSize="22" fontWeight="800" fill="rgba(255,255,255,0.95)">
+          {centerText}
+        </text>
+        <text x={CX} y={CY + 16} textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.5)" letterSpacing="0.12em">
+          TOTAL
+        </text>
+      </svg>
+      <ul className="grid w-full max-w-[320px] gap-1.5">
+        {segs.map((s) => (
+          <li key={s.name} className="flex items-center gap-2 text-[11.5px]" style={{ animation: `dash-in 0.5s ${s.delay}s both` }}>
+            <span className="h-2.5 w-2.5 shrink-0 rounded-sm" style={{ background: s.color }} />
+            <span className="flex-1 truncate text-white/75">{s.name}</span>
+            <span className="font-semibold tabular-nums text-white/90">{s.pct}%</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/* ── Funnel — stage conversion ──────────────────────────────────────────── */
+function FunnelChart({
+  cats,
+  series,
+  unit,
+}: {
+  cats: string[];
+  series: ChartSeries[];
+  unit?: string;
+}) {
+  const vals = series[0]?.points ?? [];
+  const top = Math.max(...vals, 1);
+  const W = 640;
+  const ROW = Math.min(44, 200 / Math.max(vals.length, 1));
+  const H = vals.length * (ROW + 8) + 16;
+  const CXm = W / 2;
+  const halfTop = 250;
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={cats.join(", ")}>
+      {vals.map((v, i) => {
+        const half = halfTop * Math.max(0.16, Math.sqrt(v / top));
+        const yTop = 10 + i * (ROW + 8);
+        const nextHalf = i < vals.length - 1 ? halfTop * Math.max(0.16, Math.sqrt(vals[i + 1] / top)) : half;
+        const yBot = yTop + ROW;
+        const poly = `${CXm - half},${yTop} ${CXm + half},${yTop} ${CXm + nextHalf},${yBot} ${CXm - nextHalf},${yBot}`;
+        const fill = i === 0 ? "rgba(254,87,34,0.85)" : `rgba(254,87,34,${Math.max(0.28, 0.7 - i * 0.09)})`;
+        return (
+          <g key={cats[i] ?? i}>
+            <polygon points={poly} fill={fill} style={{ animation: `dash-in 0.5s ${0.15 + i * 0.12}s both` }} />
+            <text x={CXm - half - 12} y={yTop + ROW / 2 + 3.5} textAnchor="end" fontSize="10.5" fill="rgba(255,255,255,0.72)" fontWeight="600">
+              {cats[i]}
+            </text>
+            <text x={CXm} y={yTop + ROW / 2 + 4} textAnchor="middle" fontSize="12" fontWeight="800" fill="white">
+              {v.toLocaleString()}
+              {unit ? ` ${unit}` : ""}
+            </text>
+            {i < vals.length - 1 && vals[i] > 0 && (
+              <text x={CXm + half + 10} y={yBot + 2} fontSize="9.5" fill="rgba(255,255,255,0.45)">
+                {Math.round((vals[i + 1] / vals[i]) * 100)}% carry
+              </text>
+            )}
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+/* ── Heatmap — intensity matrix (rows = cats, cols = series) ────────────── */
+function HeatmapChart({
+  cats,
+  series,
+  unit,
+}: {
+  cats: string[];
+  series: ChartSeries[];
+  unit?: string;
+}) {
+  const all = series.flatMap((s) => s.points);
+  const lo = Math.min(...all);
+  const hi = Math.max(...all);
+  const CW = 92;
+  const RH = 30;
+  const LBW = 148;
+  const W = LBW + series.length * CW + 60;
+  const H = 34 + cats.length * RH + 16;
+  const shade = (v: number) => {
+    if (hi === lo) return 0.55;
+    return 0.1 + 0.8 * ((v - lo) / (hi - lo));
+  };
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={cats.join(", ")}>
+      {series.map((s, ci) => (
+        <text
+          key={s.name}
+          x={LBW + ci * CW + CW / 2}
+          y={20}
+          textAnchor="middle"
+          fontSize="9.5"
+          fontWeight="700"
+          fill="rgba(254,135,80,0.95)"
+        >
+          {s.name.length > 14 ? `${s.name.slice(0, 12)}…` : s.name}
+        </text>
+      ))}
+      {cats.map((r, ri) => {
+        const y = 34 + ri * RH;
+        return (
+          <g key={r}>
+            <text x={LBW - 10} y={y + RH / 2 + 3.5} textAnchor="end" fontSize="10" fill="rgba(255,255,255,0.7)">
+              {r.length > 24 ? `${r.slice(0, 22)}…` : r}
+            </text>
+            {series.map((s, ci) => {
+              const v = s.points[ri] ?? 0;
+              return (
+                <g key={ci}>
+                  <rect
+                    x={LBW + ci * CW + 3}
+                    y={y + 3}
+                    width={CW - 6}
+                    height={RH - 6}
+                    rx={5}
+                    fill={`rgba(254,87,34,${shade(v)})`}
+                    stroke="rgba(255,255,255,0.10)"
+                    style={{ animation: `dash-in 0.4s ${(ri * series.length + ci) * 0.02}s both` }}
+                  />
+                  <text
+                    x={LBW + ci * CW + CW / 2}
+                    y={y + RH / 2 + 3.5}
+                    textAnchor="middle"
+                    fontSize="9.5"
+                    fontWeight="700"
+                    fill={shade(v) > 0.55 ? "rgba(255,255,255,0.96)" : "rgba(255,255,255,0.62)"}
+                  >
+                    {v}
+                    {unit && !Number.isNaN(Number(v)) ? "" : ""}
+                  </text>
+                </g>
+              );
+            })}
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+/* ── Gauge — single live indicator with threshold band ──────────────────── */
+function GaugeChart({
+  series,
+  maxV,
+  unit,
+  label,
+}: {
+  series: ChartSeries[];
+  maxV: number;
+  unit?: string;
+  label: string;
+}) {
+  const v = series[0]?.points[0] ?? 0;
+  const frac = Math.max(0, Math.min(1, v / maxV));
+  const CX = 160;
+  const CY = 120;
+  const R = 88;
+  const a0 = Math.PI * 0.75;
+  const a1 = Math.PI * 2.25;
+  const arc = (from: number, to: number) => {
+    const p0 = [CX + R * Math.cos(from), CY + R * Math.sin(from)];
+    const p1 = [CX + R * Math.cos(to), CY + R * Math.sin(to)];
+    return `M ${p0[0].toFixed(1)},${p0[1].toFixed(1)} A ${R},${R} 0 ${to - from > Math.PI ? 1 : 0} 1 ${p1[0].toFixed(1)},${p1[1].toFixed(1)}`;
+  };
+  const av = a0 + (a1 - a0) * frac;
+  const needle = [CX + (R - 14) * Math.cos(av), CY + (R - 14) * Math.sin(av)];
+  return (
+    <div className="flex flex-col items-center sm:flex-row sm:justify-center sm:gap-10">
+      <svg viewBox="0 0 320 190" className="w-full max-w-[320px]" role="img" aria-label={label}>
+        <path d={arc(a0, a1)} fill="none" stroke="rgba(255,255,255,0.10)" strokeWidth={20} strokeLinecap="round" />
+        <path
+          d={arc(a0, av)}
+          fill="none"
+          stroke="#FE5722"
+          strokeWidth={20}
+          strokeLinecap="round"
+          pathLength={1}
+          style={{ animation: "dash-draw 1.3s 0.2s var(--ease-out, ease-out) both" }}
+        />
+        <line x1={CX} y1={CY} x2={needle[0]} y2={needle[1]} stroke="rgba(255,255,255,0.9)" strokeWidth={2.5} strokeLinecap="round"
+          style={{ animation: "dash-in 0.6s 1.3s both", transformOrigin: `${CX}px ${CY}px` }} />
+        <circle cx={CX} cy={CY} r={5.5} fill="#FE5722" />
+        <text x={CX} y={CY - 26} textAnchor="middle" fontSize="26" fontWeight="800" fill="white">
+          {v.toLocaleString()}
+          <tspan fontSize="12" fill="rgba(255,255,255,0.55)">{unit ? ` ${unit}` : ""}</tspan>
+        </text>
+        <text x={CX} y={CY + 34} textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.55)">
+          scale 0 – {maxV.toLocaleString()}
+        </text>
+      </svg>
+      <div className="max-w-[300px] text-center sm:text-left">
+        <p className="text-[12.5px] font-semibold text-white/90">{label}</p>
+        <p className="mt-1 text-[11.5px] leading-relaxed text-white/55">
+          Reference indicator for this practice — pinned against the signed baseline and re-scored at every gate review.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ── Network — topology graph from JSON node coordinates ────────────────── */
+function NetworkChart({
+  nodes,
+  links,
+}: {
+  nodes?: { id: string; x: number; y: number; hub?: boolean; label: string }[];
+  links?: [number, number][];
+}) {
+  const ns = (nodes ?? []).slice(0, 22);
+  const ls = (links ?? []).filter(([a, b]) => a < ns.length && b < ns.length);
+  const W = 640;
+  const H = 240;
+  const px = (f: number) => 40 + f * (W - 80);
+  const py = (f: number) => 22 + f * (H - 44);
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={ns.map((n) => n.label).join(", ")}>
+      {ls.map(([a, b], i) => {
+        const A = ns[a];
+        const B = ns[b];
+        if (!A || !B) return null;
+        const mx = (px(A.x) + px(B.x)) / 2;
+        const my = (py(A.y) + py(B.y)) / 2;
+        return (
+          <path
+            key={i}
+            d={`M ${px(A.x)},${py(A.y)} Q ${mx},${my} ${px(B.x)},${py(B.y)}`}
+            fill="none"
+            stroke="rgba(255,255,255,0.18)"
+            strokeWidth={1.2}
+          />
+        );
+      })}
+      {ns.map((n, i) => {
+        const r = n.hub ? 22 : 14;
+        return (
+          <g key={n.id} style={{ animation: `dash-in 0.5s ${0.1 + i * 0.04}s both` }}>
+            <circle
+              cx={px(n.x)}
+              cy={py(n.y)}
+              r={r}
+              fill={n.hub ? "rgba(254,87,34,0.22)" : "rgba(255,255,255,0.06)"}
+              stroke={n.hub ? "rgba(254,87,34,0.85)" : "rgba(255,255,255,0.4)"}
+              strokeWidth={n.hub ? 1.8 : 1.1}
+            />
+            <text x={px(n.x)} y={py(n.y) + 3} textAnchor="middle" fontSize={n.hub ? 10 : 8.5} fontWeight="700" fill="rgba(255,255,255,0.9)">
+              {n.label.length > 12 ? `${n.label.slice(0, 10)}…` : n.label}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
 /* keyframes injected once (used by tiles/bars/log rows) */
 export function DashStyles() {
   return (
     <style>{`
       @keyframes dash-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
       @keyframes dash-bar { from { width: 4% !important; } }
+      @keyframes dash-col { from { transform: scaleY(0.04); } to { transform: scaleY(1); } }
+      @keyframes dash-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
       @media (prefers-reduced-motion: reduce) {
-        [style*="dash-in"], [style*="dash-bar"] { animation: none !important; }
+        [style*="dash-in"], [style*="dash-bar"], [style*="dash-col"], [style*="dash-draw"] { animation: none !important; }
       }
     `}</style>
   );

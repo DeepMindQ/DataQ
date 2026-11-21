@@ -9,254 +9,1204 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Where most programs improvise, connected products & smart devices as we deliver it is sequenced: Your product becomes a service — device fleets, OTA and telemetry products with revenue attached. The sequence matters more than the stack — both are documented here."
+   "x": "Product fleets in the field managed as products: OTA updates that never brick, telemetry that earns its bandwidth, support APIs your service desk can actually use — and firmware attack surfaces treated with the same gates as your cloud."
   },
   {
    "t": "h2",
-   "x": "The job this service does"
+   "x": "A connected product is a promise your support org has to keep"
   },
   {
    "t": "p",
-   "x": "Connected products turn equipment vendors into service businesses — but only with fleet-grade engineering: secure provisioning and identity per device, OTA update infrastructure with staged rollout and rollback, telemetry pipelines into your data platform, and the product layer — usage analytics, predictive service, customer portals, usage-based billing. We build the device-to-revenue stack with security designed in: hardware roots of trust, signed firmware, vulnerability-management SLAs and disclosure processes aligned to cyber-resilience regulation (EU Cyber Resilience Act)."
+   "x": "A connected product is a fleet you promised to keep working: the coffee machine in 40,000 kitchens, the charger in 200 supermarkets, the pump at 900 sites. The engineering is fleet product management — OTA with staged waves and rollback, telemetry budgets that earn their bandwidth, and diagnostics deep enough that support resolves cases before the customer finishes the call."
   },
   {
    "t": "p",
-   "x": "The commercial side is engineered with the technical: service-product design (uptime guarantees, consumables models, outcome contracts), pricing instrumentation from telemetry, and CRM/ERP integration so a sensor reading becomes a service ticket or a billing line. Clients launch connected service lines with real margin instead of free telematics portals that only cost money."
+   "x": "Security arrives by design: device identity, signed firmware, and the update path as the most-defended surface, because OTA is also the attack path."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that turn product fleets into liabilities, the reference architecture of fleet management, and the console that keeps firmware current safely."
   },
   {
    "t": "h2",
-   "x": "The stakes, stated plainly"
+   "x": "Four failure modes that turn product fleets into liabilities"
   },
   {
    "t": "p",
-   "x": "Connected Products & Smart Devices delivery today concentrates in Manufacturing & Industrial, Retail & Consumer Goods, Energy & Utilities, Healthcare & Life Sciences. The metric is chosen with your finance lead, and the baseline is signed before any build begins."
+   "x": "Each of these surfaces as a support crisis or a security headline — the countermeasures make updates safe by design and telemetry earn its keep."
   },
   {
-   "t": "h2",
-   "x": "The build, in plain terms"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Connected Products & Smart Devices: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Device fleet platform",
-     "provisioning, identity, OTA with staged rollout and rollback"
+     "Brick risk",
+     "One bad update strands the fleet",
+     "A/B partitions with automatic revert; staged waves with health gates"
     ],
     [
-     "Fleet security",
-     "hardware roots of trust, signed firmware, EU CRA-aligned processes"
+     "Telemetry bloat",
+     "Everything reported; bandwidth and cost explode",
+     "Telemetry budget per SKU; sampling policies with value review"
     ],
     [
-     "Telemetry productization",
-     "usage analytics, predictive service and customer portals"
+     "Support blindness",
+     "Support asks the customer to power-cycle",
+     "Diagnostics API with remote read; case-time telemetry attached"
     ],
     [
-     "Commercial instrumentation",
-     "usage-based billing hooks and CRM/ERP integration"
-    ],
-    [
-     "Service design",
-     "uptime guarantees, consumables and outcome-based offerings"
+     "Firmware attack surface",
+     "Unsigned updates, exposed debug ports",
+     "Signed OTA, secure boot chain, debug lockdown in production"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — OTA to support, fleet as one system"
+  },
+  {
+   "t": "p",
+   "x": "Updates deploy in waves with signed images and auto-revert on health regression, telemetry is sampled against bandwidth budgets with value per byte measured, and the support surface exposes device state that answers customer calls without escalation."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Connected Products & Smart Devices",
+   "title": "Reference architecture — connected product fleet plane",
    "lanes": [
-    "Sites",
-    "Connectivity",
-    "Fleet services",
-    "Simulation",
-    "What-if",
-    "Planners"
+    "Devices in field",
+    "Update plane",
+    "Telemetry plane",
+    "Support plane",
+    "Security",
+    "Product ops"
    ],
    "nodes": [
     {
-     "id": "st0",
+     "id": "fleet",
      "lane": 0,
-     "label": "MES & line historians",
-     "hot": false
-    },
-    {
-     "id": "st1",
-     "lane": 0,
-     "label": "SCADA / OT telemetry",
-     "hot": false
-    },
-    {
-     "id": "cn2",
-     "lane": 1,
-     "label": "LTE/5G backhaul",
-     "hot": false
-    },
-    {
-     "id": "cn3",
-     "lane": 1,
-     "label": "Store & forward",
-     "hot": false
-    },
-    {
-     "id": "fs4",
-     "lane": 2,
-     "label": "Connected Products & Smart Devices",
+     "label": "Product fleet",
      "hot": true
     },
     {
-     "id": "fs5",
-     "lane": 2,
-     "label": "OTA updates",
-     "hot": false
+     "id": "hw",
+     "lane": 0,
+     "label": "Hardware variants"
     },
     {
-     "id": "sm6",
-     "lane": 3,
-     "label": "Physics + ML simulation",
+     "id": "retro",
+     "lane": 0,
+     "label": "Installed base"
+    },
+    {
+     "id": "ota",
+     "lane": 1,
+     "label": "OTA service",
      "hot": true
     },
     {
-     "id": "sm7",
+     "id": "ab",
+     "lane": 1,
+     "label": "A/B partitioning"
+    },
+    {
+     "id": "wave",
+     "lane": 1,
+     "label": "Staged waves"
+    },
+    {
+     "id": "tel",
+     "lane": 2,
+     "label": "Telemetry pipeline"
+    },
+    {
+     "id": "budget",
+     "lane": 2,
+     "label": "Telemetry budget",
+     "hot": true
+    },
+    {
+     "id": "samp",
+     "lane": 2,
+     "label": "Sampling policy"
+    },
+    {
+     "id": "diag",
      "lane": 3,
-     "label": "Scenario engine",
-     "hot": false
+     "label": "Diagnostics API",
+     "hot": true
     },
     {
-     "id": "wi8",
+     "id": "case",
+     "lane": 3,
+     "label": "Support case attach"
+    },
+    {
+     "id": "remote",
+     "lane": 3,
+     "label": "Remote actions"
+    },
+    {
+     "id": "ident",
      "lane": 4,
-     "label": "What-if console",
-     "hot": false
+     "label": "Device identity",
+     "hot": true
     },
     {
-     "id": "wi9",
+     "id": "sign",
      "lane": 4,
-     "label": "Sensitivity runs",
-     "hot": false
+     "label": "Signed firmware"
     },
     {
-     "id": "pl10",
-     "lane": 5,
-     "label": "Production scheduling",
-     "hot": false
+     "id": "boot",
+     "lane": 4,
+     "label": "Secure boot chain"
     },
     {
-     "id": "pl11",
+     "id": "road",
      "lane": 5,
-     "label": "Maintenance planner",
-     "hot": false
+     "label": "Product roadmap"
+    },
+    {
+     "id": "kpi",
+     "lane": 5,
+     "label": "Fleet health KPIs"
+    },
+    {
+     "id": "end",
+     "lane": 5,
+     "label": "End-of-life program"
     }
    ],
    "edges": [
     {
-     "a": "st0",
-     "b": "cn2"
+     "a": "fleet",
+     "b": "ota",
+     "label": "target"
     },
     {
-     "a": "st1",
-     "b": "cn3"
+     "a": "hw",
+     "b": "ota",
+     "label": "variants"
     },
     {
-     "a": "cn2",
-     "b": "fs4"
+     "a": "retro",
+     "b": "ota",
+     "label": "legacy"
     },
     {
-     "a": "cn3",
-     "b": "fs5"
+     "a": "ota",
+     "b": "ab",
+     "label": "swap"
     },
     {
-     "a": "fs4",
-     "b": "sm6"
+     "a": "ota",
+     "b": "wave",
+     "label": "stage"
     },
     {
-     "a": "fs5",
-     "b": "sm7"
+     "a": "ab",
+     "b": "wave",
+     "label": "revert"
     },
     {
-     "a": "sm6",
-     "b": "wi8"
+     "a": "fleet",
+     "b": "tel",
+     "label": "report"
     },
     {
-     "a": "sm7",
-     "b": "wi9"
+     "a": "tel",
+     "b": "budget",
+     "label": "within"
     },
     {
-     "a": "wi8",
-     "b": "pl10"
+     "a": "samp",
+     "b": "tel",
+     "label": "throttle"
     },
     {
-     "a": "wi9",
-     "b": "pl11"
+     "a": "fleet",
+     "b": "diag",
+     "label": "expose"
+    },
+    {
+     "a": "diag",
+     "b": "case",
+     "label": "attach"
+    },
+    {
+     "a": "diag",
+     "b": "remote",
+     "label": "act"
+    },
+    {
+     "a": "ident",
+     "b": "ota",
+     "label": "authorize"
+    },
+    {
+     "a": "sign",
+     "b": "ota",
+     "label": "verify"
+    },
+    {
+     "a": "boot",
+     "b": "sign",
+     "label": "chain"
+    },
+    {
+     "a": "kpi",
+     "b": "road",
+     "label": "inform"
+    },
+    {
+     "a": "tel",
+     "b": "kpi",
+     "label": "feed"
+    },
+    {
+     "a": "road",
+     "b": "end",
+     "label": "plan"
     }
    ],
-   "note": "Topology inherited from the IoT, Twin & Robotics tower; the highlighted core is this service's build."
+   "note": "The A/B partition with automatic revert is the brick insurance: the device swaps, tests health, and reverts without human help if the new image fails."
   },
   {
    "t": "h2",
-   "x": "What changes hands"
+   "x": "One firmware wave, from signing to auto-revert"
   },
   {
    "t": "p",
-   "x": "Named artifacts, handed to named owners — Connected Products & Smart Devices edition:"
+   "x": "From image signing through staged rollout, health monitoring and the auto-revert decision — including the cohort analysis that decides whether the next wave ships."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "delivery-cadence",
+   "title": "Fleet update flow — build, sign, stage, wave, verify, revert-if-needed",
+   "labels": [
+    "Firmware build",
+    "Sign & pin",
+    "Canary cohort",
+    "Wave rollout",
+    "Health gates",
+    "Auto-revert on fail",
+    "Fleet KPI review"
+   ],
+   "note": "Waves are cohorts, not percentages: device classes with shared risk profile move together, and a failed cohort freezes the train."
+  },
+  {
+   "t": "h2",
+   "x": "The fleet console — currency as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Fleet firmware currency, update success rate and auto-revert events — the three numbers that decide whether the connected product is an asset or an apology pipeline."
+  },
+  {
+   "t": "idash",
+   "title": "Connected products — fleet console",
+   "kpis": [
+    {
+     "label": "Devices in fleet",
+     "value": "48.2k",
+     "delta": "14 SKUs, 9 countries",
+     "dir": "up",
+     "spark": [
+      12,
+      18,
+      25,
+      31,
+      37,
+      43,
+      48
+     ]
+    },
+    {
+     "label": "OTA success",
+     "value": "99.7%",
+     "delta": "with auto-rollback proof",
+     "dir": "up",
+     "spark": [
+      94,
+      96,
+      97.5,
+      98.5,
+      99.2,
+      99.5,
+      99.7
+     ]
+    },
+    {
+     "label": "Health (green share)",
+     "value": "96.4%",
+     "delta": "7-day window",
+     "dir": "up",
+     "spark": [
+      82,
+      87,
+      90,
+      93,
+      95,
+      96,
+      96.4
+     ]
+    },
+    {
+     "label": "Entitlement attach",
+     "value": "38.2%",
+     "delta": "paid features per device",
+     "dir": "up",
+     "spark": [
+      12,
+      17,
+      22,
+      27,
+      32,
+      35,
+      38
+     ]
+    },
+    {
+     "label": "Update campaign time",
+     "value": "9 d",
+     "delta": "full fleet, staged cohorts",
+     "dir": "down",
+     "spark": [
+      45,
+      30,
+      21,
+      15,
+      12,
+      10,
+      9
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "OTA campaign",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Firmware v4.2 rollout — cohort health through the campaign",
+       "cats": [
+        "Day 1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+       ],
+       "series": [
+        {
+         "name": "Green share %",
+         "points": [
+          96.1,
+          95.8,
+          96.3,
+          96.6,
+          96.8,
+          97.0,
+          96.9,
+          96.6,
+          96.4
+         ]
+        },
+        {
+         "name": "Rollbacks",
+         "points": [
+          0,
+          4,
+          2,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+         ]
+        },
+        {
+         "name": "Canary gate",
+         "points": [
+          95,
+          95,
+          95,
+          95,
+          95,
+          95,
+          95,
+          95,
+          95
+         ]
+        }
+       ],
+       "unit": "%",
+       "note": "Click to isolate. Day-2 rollbacks (4 units, watchdog timeouts on a specific radio module) auto-halted the cohort — the campaign resumed after the offset fix, and the gate never dropped below green."
+      }
+     ]
+    },
+    {
+     "name": "Fleet what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "OTA campaign what-if — cohort size, soak time, rollback risk",
+       "params": [
+        {
+         "name": "Cohort size",
+         "min": 100,
+         "max": 20000,
+         "step": 100,
+         "value": 4000,
+         "unit": "devices"
+        },
+        {
+         "name": "Soak time",
+         "min": 1,
+         "max": 14,
+         "step": 1,
+         "value": 4,
+         "unit": "days"
+        },
+        {
+         "name": "Fleet age mix",
+         "min": 1,
+         "max": 10,
+         "step": 1,
+         "value": 6,
+         "unit": "HW gens"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Campaign duration",
+         "unit": "days",
+         "formula": "(48000/p0)*max(1,p1)*(1+p2*0.06)",
+         "good": "10",
+         "bad": "30"
+        },
+        {
+         "name": "Blast radius / rollback",
+         "unit": "devices",
+         "formula": "p0*0.4",
+         "good": "400",
+         "bad": "4000"
+        },
+        {
+         "name": "Brick risk (est)",
+         "unit": "%",
+         "formula": "max(0.01, (p2-4)*0.012*(14-max(1,p1))*0.4)",
+         "good": "0.05",
+         "bad": "0.3"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 2,
+        "label": "Soak time vs brick risk"
+       },
+       "note": "Soak time is the insurance against hardware-generation surprises: old gens fail differently — the brick-risk curve is why campaigns slow down on mixed fleets instead of pushing through."
+      }
+     ]
+    },
+    {
+     "name": "Device architecture",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The device platform — click nodes for the fleet contract",
+       "lanes": [
+        "Device",
+        "Fleet plane",
+        "Business plane"
+       ],
+       "nodes": [
+        {
+         "id": "se",
+         "lane": 0,
+         "label": "Secure element",
+         "detail": "Root identity in hardware — device keys generated in the SE, certificates chained to the fleet CA; an identity that cannot be cloned is the platform's floor.",
+         "hot": true
+        },
+        {
+         "id": "fw",
+         "lane": 0,
+         "label": "Firmware & A/B slots",
+         "detail": "Signed updates staged to the inactive slot, health-checked, switched on proof — rollback is automatic on watchdog failure."
+        },
+        {
+         "id": "shadow",
+         "lane": 1,
+         "label": "Desired-state shadow",
+         "detail": "Each device holds its desired state offline; the fleet plane reconciles on connect — connectivity gaps never corrupt configuration."
+        },
+        {
+         "id": "ota",
+         "lane": 1,
+         "label": "OTA orchestration",
+         "detail": "Cohort campaigns with canary gates, soak clocks and automatic halt on health regression — 48k devices update in nine days without heroics."
+        },
+        {
+         "id": "ent",
+         "lane": 2,
+         "label": "Entitlement engine",
+         "detail": "Feature flags per device per contract tier, synced to billing — the fleet is monetizable because the entitlements are machine-readable."
+        },
+        {
+         "id": "telem",
+         "lane": 2,
+         "label": "Product telemetry",
+         "detail": "Usage and health streams feeding the roadmap — churn signals, feature adoption and failure modes, aggregated with consent."
+        },
+        {
+         "id": "sec",
+         "lane": 2,
+         "label": "Fleet security",
+         "detail": "Anomaly detection on device behavior (unexpected egress, credential anomalies), revocation at the CA — a compromised device is one certificate away from contained."
+        }
+       ],
+       "edges": [
+        {
+         "a": "se",
+         "b": "fw",
+         "label": "signs"
+        },
+        {
+         "a": "fw",
+         "b": "shadow",
+         "label": "reports"
+        },
+        {
+         "a": "shadow",
+         "b": "ota",
+         "label": "reconciles"
+        },
+        {
+         "a": "ota",
+         "b": "ent",
+         "label": "unlocks"
+        },
+        {
+         "a": "telem",
+         "b": "ota",
+         "label": "informs"
+        },
+        {
+         "a": "sec",
+         "b": "se",
+         "label": "revokes"
+        }
+       ],
+       "note": "Click nodes for the contract each layer carries. The secure element is where trust starts — everything else inherits from it."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · OTA model",
+   "note": "Reference program model: OTA bands and fleet health targets from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Update success across hardware generations"
+  },
+  {
+   "t": "p",
+   "x": "Success and revert rates per hardware generation and firmware version — the shape that shows which cohorts tolerate change and where the fleet needs a different update strategy."
+  },
+  {
+   "t": "chart",
+   "title": "Fleet health and support metrics by product line — design targets",
+   "variant": "bar",
+   "cats": [
+    "Product line A",
+    "Product line B",
+    "Product line C",
+    "Legacy line D"
+   ],
+   "series": [
+    {
+     "name": "Fleet uptime target %",
+     "points": [
+      99.5,
+      99.2,
+      98.8,
+      97.5
+     ]
+    },
+    {
+     "name": "Support resolution target (min)",
+     "points": [
+      9,
+      12,
+      15,
+      25
+     ]
+    },
+    {
+     "name": "Firmware currency target %",
+     "points": [
+      94,
+      92,
+      90,
+      80
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Connected Products & Smart Devices across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Connected Products & Smart Devices",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the work spans the stack: devices and gateways in the field, perception models in the middle, actuation plans on the board.",
+     "plays": [
+      "Signed OTA waves with health-gated rollout and auto-revert",
+      "Telemetry sampled against bandwidth budgets — every signal earns its keep",
+      "Support APIs that resolve device issues without engineering escalation"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet on current firmware",
+       "value": "91%"
+      },
+      {
+       "label": "Update success rate",
+       "value": "99.2%"
+      },
+      {
+       "label": "Auto-revert events",
+       "value": "3"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Signed OTA waves with health-gated rollout and auto-revert",
+      "Telemetry sampled against bandwidth budgets — every signal earns its keep",
+      "Support APIs that resolve device issues without engineering escalation"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet on current firmware",
+       "value": "91%"
+      },
+      {
+       "label": "Update success rate",
+       "value": "99.2%"
+      },
+      {
+       "label": "Auto-revert events",
+       "value": "3"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": true,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Signed OTA waves with health-gated rollout and auto-revert",
+      "Telemetry sampled against bandwidth budgets — every signal earns its keep",
+      "Support APIs that resolve device issues without engineering escalation"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet on current firmware",
+       "value": "91%"
+      },
+      {
+       "label": "Update success rate",
+       "value": "99.2%"
+      },
+      {
+       "label": "Auto-revert events",
+       "value": "3"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "Ask what quality escapes and manual inspection costs Manufacturing & Industrial firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Signed OTA waves with health-gated rollout and auto-revert",
+      "Telemetry sampled against bandwidth budgets — every signal earns its keep",
+      "Support APIs that resolve device issues without engineering escalation"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet on current firmware",
+       "value": "91%"
+      },
+      {
+       "label": "Update success rate",
+       "value": "99.2%"
+      },
+      {
+       "label": "Auto-revert events",
+       "value": "3"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Retail & Consumer Goods operators recognize the pattern: shelf truth unknown, quarter after quarter.",
+     "plays": [
+      "Signed OTA waves with health-gated rollout and auto-revert",
+      "Telemetry sampled against bandwidth budgets — every signal earns its keep",
+      "Support APIs that resolve device issues without engineering escalation"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet on current firmware",
+       "value": "91%"
+      },
+      {
+       "label": "Update success rate",
+       "value": "99.2%"
+      },
+      {
+       "label": "Auto-revert events",
+       "value": "3"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Ask what network telemetry underused costs Telecom, Media & Entertainment firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Signed OTA waves with health-gated rollout and auto-revert",
+      "Telemetry sampled against bandwidth budgets — every signal earns its keep",
+      "Support APIs that resolve device issues without engineering escalation"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet on current firmware",
+       "value": "91%"
+      },
+      {
+       "label": "Update success rate",
+       "value": "99.2%"
+      },
+      {
+       "label": "Auto-revert events",
+       "value": "3"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what asset fleets uninstrumented costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Signed OTA waves with health-gated rollout and auto-revert",
+      "Telemetry sampled against bandwidth budgets — every signal earns its keep",
+      "Support APIs that resolve device issues without engineering escalation"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet on current firmware",
+       "value": "91%"
+      },
+      {
+       "label": "Update success rate",
+       "value": "99.2%"
+      },
+      {
+       "label": "Auto-revert events",
+       "value": "3"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: fleet and yard telemetry gaps, quarter after quarter.",
+     "plays": [
+      "Signed OTA waves with health-gated rollout and auto-revert",
+      "Telemetry sampled against bandwidth budgets — every signal earns its keep",
+      "Support APIs that resolve device issues without engineering escalation"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet on current firmware",
+       "value": "91%"
+      },
+      {
+       "label": "Update success rate",
+       "value": "99.2%"
+      },
+      {
+       "label": "Auto-revert events",
+       "value": "3"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "Public Sector & Government operators recognize the pattern: urban assets unmanaged, quarter after quarter.",
+     "plays": [
+      "Signed OTA waves with health-gated rollout and auto-revert",
+      "Telemetry sampled against bandwidth budgets — every signal earns its keep",
+      "Support APIs that resolve device issues without engineering escalation"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet on current firmware",
+       "value": "91%"
+      },
+      {
+       "label": "Update success rate",
+       "value": "99.2%"
+      },
+      {
+       "label": "Auto-revert events",
+       "value": "3"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — estates flying blind included — and prove it moved.",
+     "plays": [
+      "Signed OTA waves with health-gated rollout and auto-revert",
+      "Telemetry sampled against bandwidth budgets — every signal earns its keep",
+      "Support APIs that resolve device issues without engineering escalation"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet on current firmware",
+       "value": "91%"
+      },
+      {
+       "label": "Update success rate",
+       "value": "99.2%"
+      },
+      {
+       "label": "Auto-revert events",
+       "value": "3"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": true,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we connect machines, fleets and facilities into one operational picture, then close the loop into maintenance, scheduling and control.",
+     "plays": [
+      "Signed OTA waves with health-gated rollout and auto-revert",
+      "Telemetry sampled against bandwidth budgets — every signal earns its keep",
+      "Support APIs that resolve device issues without engineering escalation"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet on current firmware",
+       "value": "91%"
+      },
+      {
+       "label": "Update success rate",
+       "value": "99.2%"
+      },
+      {
+       "label": "Auto-revert events",
+       "value": "3"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — field data gap included — and prove it moved.",
+     "plays": [
+      "Signed OTA waves with health-gated rollout and auto-revert",
+      "Telemetry sampled against bandwidth budgets — every signal earns its keep",
+      "Support APIs that resolve device issues without engineering escalation"
+     ],
+     "kpis": [
+      {
+       "label": "Fleet on current firmware",
+       "value": "91%"
+      },
+      {
+       "label": "Update success rate",
+       "value": "99.2%"
+      },
+      {
+       "label": "Auto-revert events",
+       "value": "3"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/iot-digital-twin-robotics/"
+    }
+   ],
+   "practiceNote": "Connected Products & Smart Devices view: product fleets in the field — OTA that never bricks, telemetry that earns its bandwidth, and support APIs that let service diagnose before the customer calls."
+  },
+  {
+   "t": "h2",
+   "x": "Fleet defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor signed images, staged waves and auto-revert over big-bang updates; deviation triggers are written because each one trades brick-risk discipline for schedule speed."
+  },
+  {
+   "t": "table",
+   "caption": "Connected Products & Smart Devices: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Connected-device platform from provisioning to billing",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "OTA",
+     "A/B partitions, signed, staged",
+     "Full-image pushes with pray — bricking is when, not if"
     ],
     [
-     "Fleet security and vulnerability-management regime",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Telemetry",
+     "Budgeted with value review",
+     "Log-everything — bandwidth and cost drown you"
     ],
     [
-     "Connected service product with pricing and CRM integration",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Support",
+     "Remote diagnostics attached to cases",
+     "Phone-script support — resolution time never drops"
     ],
     [
-     "Customer portal and usage analytics",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Security",
+     "Secure boot + signed OTA",
+     "Debug ports left open — the fleet is the attack surface"
+    ],
+    [
+     "EOL",
+     "Planned end-of-life with migration",
+     "Abandoned fleets — they become someone's liability"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The stack, chosen for operability"
+   "x": "Fleet release gates — evidence before a wave"
   },
   {
-   "t": "p",
-   "x": "The engineering baseline for Connected Products & Smart Devices: device registries, MQTT/LwM2M, signing infrastructure, billing hooks, CRM/ERP adapters. The justifications are written, versioned and handed over — the decisions are yours to own after the engagement."
+   "t": "table",
+   "caption": "Release gates for Connected Products & Smart Devices — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "OTA gate",
+     "Can updates never brick?",
+     "A/B revert evidence; wave health gates"
+    ],
+    [
+     "Signing gate",
+     "Is every update verifiable?",
+     "Signing chain evidence"
+    ],
+    [
+     "Diagnostics gate",
+     "Can support diagnose remotely?",
+     "Case-attach telemetry evidence"
+    ],
+    [
+     "Budget gate",
+     "Does telemetry earn its cost?",
+     "Budget review with KPI mapping"
+    ],
+    [
+     "EOL gate",
+     "Is end-of-life planned?",
+     "EOL program with migration path"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "The delivery rhythm"
+   "x": "What the product operations team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Connected Products & Smart Devices starts with the measurement: the metric, the owner, the current number, signed."
+     "OTA pipeline",
+     "Signed, staged, revertible fleet updates"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, device fleet platform first, gates written with your team."
+     "Telemetry budget",
+     "Per-SKU sampling with value reviews"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "The Connected Products & Smart Devices gate review: baseline versus slice, in the metric's own units, plus a scale recommendation your board can audit."
+     "Diagnostics API",
+     "Remote read and safe actions"
+    ],
+    [
+     "Secure boot chain",
+     "Device identity to signed firmware"
+    ],
+    [
+     "Fleet health KPIs",
+     "Per-line dashboards with trends"
+    ],
+    [
+     "EOL program",
+     "Planned retirement with migration offers"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Waves in order, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — fleet census",
+     "Variants, firmware estate, telemetry audit"
+    ],
+    [
+     "Weeks 3–4 — OTA core",
+     "A/B design, signing chain, first waves"
+    ],
+    [
+     "Weeks 5–6 — telemetry",
+     "Budget design, sampling policies, cost dashboard"
+    ],
+    [
+     "Weeks 7–8 — support plane",
+     "Diagnostics API, case attach, remote actions"
+    ],
+    [
+     "Weeks 9–10 — security hardening",
+     "Secure boot, debug lockdown, pen-test"
+    ],
+    [
+     "Ongoing — product ops",
+     "Monthly waves; quarterly budget review; annual pen-test"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — devices, mobile apps and the support desk"
+  },
+  {
+   "t": "p",
+   "x": "The fleet touches devices, companion apps and the support desk; these contracts define what state each surface sees and how support resolves device issues without engineering escalation."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Product engineering",
+     "Firmware release contracts"
+    ],
+    [
+     "Support desk",
+     "Case-system integration"
+    ],
+    [
+     "Cloud services",
+     "Telemetry landing"
+    ],
+    [
+     "Security domain",
+     "Identity and signing"
+    ],
+    [
+     "Retail/install partners",
+     "Field update coordination"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Firmware-security governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Signing keys, secure boot and vulnerability response run on the same gates as the cloud: CVE response waves ship within the signed SLA, and the firmware SBOM is maintained as a product artifact."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Signed-everything",
+     "Unsigned firmware cannot reach a device"
+    ],
+    [
+     "Revert-by-default",
+     "Failed health checks undo themselves"
+    ],
+    [
+     "Budget discipline",
+     "Telemetry earns its bandwidth quarterly"
+    ],
+    [
+     "Remote-action safety",
+     "Actions are scoped, logged and revocable"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Telemetry earns its bandwidth by review: each signal is re-justified quarterly against the decisions it informs — signals without decisions are dropped, and the savings are real money at fleet scale."
   },
   {
    "t": "cta",
-   "x": "A value assessment prices the delta in your estate before anything is signed: Connected Products & Smart Devices, measured against your baseline, in two weeks."
+   "x": "Ask what percentage of your fleet runs current firmware — and what updating the rest would risk. The diagnostic will wire signed waves with auto-revert and make currency boring."
   }
  ],
- "words": 499,
+ "words": 1009,
  "section": "Services",
  "l1": "Services",
  "l2": "IoT, Digital Twin & Robotics",
@@ -278,7 +1228,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — IoT, Digital Twin & Robotics",
+   "title": "Domain overview — IoT, Digital Twin & Robotics",
    "url": "/services/iot-digital-twin-robotics/",
    "desc": "Sensing, simulating, acting — the operations stack that turns physical assets into self-monitoring systems."
   },
@@ -330,33 +1280,51 @@
   {
    "title": "Data & Lakehouse for Manufacturing & Industrial",
    "url": "/industries/manufacturing/capabilities/data-analytics-lakehouse/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Industrial IoT & sensor network",
+   "title": "Industrial IoT & Sensor Fabric",
    "url": "/services/iot-digital-twin-robotics/industrial-iot-sensor-fabric/",
-   "tag": "Same tower",
-   "desc": "Sense everything that matters — retrofit-friendly sensor network with governed telemetry."
-  },
-  {
-   "title": "Digital Twin Platform Engineering",
-   "url": "/services/iot-digital-twin-robotics/digital-twin-platforms/",
-   "tag": "Same tower",
-   "desc": "Simulate before you cut steel — plant, fleet and product twins with governed physics and data."
-  },
-  {
-   "title": "Computer Vision & Edge AI",
-   "url": "/services/iot-digital-twin-robotics/computer-vision-edge-ai/",
-   "tag": "Same tower",
-   "desc": "Cameras into instruments — inspection, safety and counting at the edge, inside policy."
+   "tag": "Same domain",
+   "desc": "instrumentation as infrastructure — versioned schemas per device class, store-and-forward resilience, and a device lifecycle that retires zombies."
   },
   {
    "title": "Predictive Maintenance & Asset Intelligence",
    "url": "/services/iot-digital-twin-robotics/predictive-asset-intelligence/",
-   "tag": "Same tower",
-   "desc": "Fix it before it fails — RUL models wired into planning, spare parts and work orders."
+   "tag": "Same domain",
+   "desc": "maintenance scheduled by evidence — failure-mode-driven models, work-order integration, and the honesty to retire predictions that never came true."
+  },
+  {
+   "title": "Robotics & Autonomous Systems Integration",
+   "url": "/services/iot-digital-twin-robotics/robotics-autonomous-systems/",
+   "tag": "Same domain",
+   "desc": "robot fleets with safety cases — bounded autonomy, incident-ready telemetry, and utilization measured honestly against safety-critical discipline."
+  },
+  {
+   "title": "FinOps & Sustainable Computing",
+   "url": "/services/cloud-edge-platform-engineering/finops-sustainable-computing/",
+   "tag": "Pairs with",
+   "desc": "cost and carbon as engineering inputs — unit economics per workload, rightsizing with teeth, and sustainability reported like any SLO."
+  },
+  {
+   "title": "Enterprise BI & Executive Analytics",
+   "url": "/services/data-analytics-lakehouse/enterprise-bi-executive-analytics/",
+   "tag": "Pairs with",
+   "desc": "decision-grade reporting with one truth per metric — certified datasets, metric contracts and an executive layer that does not argue with itself."
+  },
+  {
+   "title": "Hyperautomation & Systems Integration",
+   "url": "/services/agentic-ai-hyperautomation/hyperautomation-integration/",
+   "tag": "Pairs with",
+   "desc": "the contracted seams — ERP, CRM, ITSM, comms and queues — with typed contracts, replayable failures and monitors that catch drift before business users do."
+  },
+  {
+   "title": "A national water utility",
+   "url": "/case-studies/en-03/",
+   "tag": "Evidence",
+   "desc": "Non-revenue water down 21% — district metering to decision loop."
   }
  ]
 }

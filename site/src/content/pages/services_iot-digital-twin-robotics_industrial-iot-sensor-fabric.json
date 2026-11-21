@@ -9,254 +9,1186 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Sense everything that matters — retrofit-friendly sensor fabric with governed telemetry. That is the contract Industrial IoT & Sensor Fabric signs. Below: what we build, in what order, and what your team holds at every gate."
+   "x": "Instrumentation as infrastructure: versioned schemas per device class, store-and-forward capture that survives partitions, heartbeat monitoring that catches zombie devices — wired into brownfield PLCs and protocols that were never meant to interoperate."
   },
   {
    "t": "h2",
-   "x": "What this service is"
+   "x": "Every downstream promise rests on capture fidelity"
   },
   {
    "t": "p",
-   "x": "Brownfield plants cannot gut-and-replace; sensor fabric must retrofit. We engineer the sensing layer for real environments: environment-rated devices (IP-rated, Ex-certified where needed), retrofit mounting on existing assets, protocol translation from fieldbuses (Modbus, PROFINET, CAN) and raw sensors into OPC UA / MQTT Sparkplug B, and a governed telemetry pipeline with device registry, provisioning and OTA updates. Power and connectivity constraints get engineered answers: LoRaWAN/NB-IoT for wide-area, private 5G for dense mobile, edge gateways aggregating at the line."
+   "x": "Sensor fabric is the difference between an IoT program and a box of dashboards: every device class speaks a versioned schema, every gateway survives disconnection, and every device has an owner, a firmware version and an end-of-life date. The unglamorous parts — provisioning, OTA, schema registries — are the program."
   },
   {
    "t": "p",
-   "x": "The governance layer is what separates a sensor deployment from a sensor fabric: device lifecycle ownership, data contracts per signal, calibration schedules, and quality gates on ingestion. Clients get telemetry they can build twins, models and control loops on — because the timestamps are trustworthy, the units are consistent and the lineage is known."
+   "x": "The practice covers brownfield retrofit (a factory in 1998 speaks Modbus, and that is fine), greenfield instrumentation, gateway design, and the fleet operations that keep thousands of devices observable and updatable."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that corrupt sensor estates, the reference architecture of the fabric, and the console that keeps fidelity honest."
   },
   {
    "t": "h2",
-   "x": "Why this matters here"
+   "x": "Four failure modes that corrupt sensor estates"
   },
   {
    "t": "p",
-   "x": "The sectors where Industrial IoT & Sensor Fabric currently runs: Manufacturing & Industrial, Energy & Utilities, Logistics & Supply Chain, Agriculture & Food Systems. Each engagement anchors to one named metric in that sector's own language."
+   "x": "Each of these silently poisons everything downstream — analytics, twins and predictions all inherit the rot — which is why the countermeasures live at the capture layer."
   },
   {
-   "t": "h2",
-   "x": "The build, in plain terms"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Industrial IoT & Sensor Fabric: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Retrofit engineering",
-     "environment-rated devices, Ex compliance and non-invasive mounting"
+     "Schema soup",
+     "Every device invents its own payload",
+     "Schema registry with versioning; conformance tests in OTA pipeline"
     ],
     [
-     "Protocol translation",
-     "fieldbus/IO to OPC UA / Sparkplug B with edge gateways"
+     "Partition data loss",
+     "Sites go offline; telemetry vanishes",
+     "Store-and-forward with dedup and clock discipline"
     ],
     [
-     "Connectivity design",
-     "LoRaWAN/NB-IoT/private-5G per zone with capacity planning"
+     "Zombie devices",
+     "Ten thousand sensors, half silently dead",
+     "Heartbeat SLOs per device class; graveyard process"
     ],
     [
-     "Device lifecycle",
-     "registry, provisioning, OTA, calibration and decommissioning"
-    ],
-    [
-     "Telemetry governance",
-     "data contracts, quality gates and lineage per signal"
+     "Brownfield impedance",
+     "Legacy protocols resist modern pipelines",
+     "Protocol translation tier with per-protocol conformance"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the sensor fabric from field to broker"
+  },
+  {
+   "t": "p",
+   "x": "Device classes carry versioned schemas, gateways buffer through partitions with store-and-forward guarantees, the broker normalizes without losing provenance, and heartbeat monitors treat a silent device as an incident — fidelity is enforced at the layer where it is won or lost."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Industrial IoT & Sensor Fabric",
+   "title": "Reference architecture — sensor fabric with resilience",
    "lanes": [
-    "Robots & sensors",
-    "Real-time layer",
-    "Perception stack",
-    "Orchestration",
-    "Safety",
-    "Floor"
+    "Devices",
+    "Edge gateways",
+    "Schema plane",
+    "Transport",
+    "Fleet ops",
+    "Health"
    ],
    "nodes": [
     {
-     "id": "rs0",
+     "id": "mod",
      "lane": 0,
-     "label": "MES & line historians",
-     "hot": false
+     "label": "Modbus/legacy PLCs"
     },
     {
-     "id": "rs1",
+     "id": "sens",
      "lane": 0,
-     "label": "AMR / robot fleets",
-     "hot": false
+     "label": "Modern sensors"
     },
     {
-     "id": "rtl2",
+     "id": "meters",
+     "lane": 0,
+     "label": "Meters & gauges"
+    },
+    {
+     "id": "gw",
      "lane": 1,
-     "label": "Industrial IoT & Sensor Fabric",
+     "label": "Edge gateways",
      "hot": true
     },
     {
-     "id": "rtl3",
+     "id": "proto",
      "lane": 1,
-     "label": "Time sync",
-     "hot": false
-    },
-    {
-     "id": "pst4",
-     "lane": 2,
-     "label": "Vision inspection",
-     "hot": false
-    },
-    {
-     "id": "pst5",
-     "lane": 2,
-     "label": "Localization",
-     "hot": false
-    },
-    {
-     "id": "orc6",
-     "lane": 3,
-     "label": "Task orchestration",
+     "label": "Protocol translators",
      "hot": true
     },
     {
-     "id": "orc7",
+     "id": "buffer",
+     "lane": 1,
+     "label": "Store-and-forward",
+     "hot": true
+    },
+    {
+     "id": "reg",
+     "lane": 2,
+     "label": "Schema registry",
+     "hot": true
+    },
+    {
+     "id": "ver",
+     "lane": 2,
+     "label": "Version pinning"
+    },
+    {
+     "id": "conf",
+     "lane": 2,
+     "label": "Conformance tests"
+    },
+    {
+     "id": "bus",
      "lane": 3,
-     "label": "Fleet scheduler",
-     "hot": false
+     "label": "Event bus"
     },
     {
-     "id": "sf8",
+     "id": "batch",
+     "lane": 3,
+     "label": "Batch uplink"
+    },
+    {
+     "id": "qos",
+     "lane": 3,
+     "label": "QoS classes"
+    },
+    {
+     "id": "prov",
      "lane": 4,
-     "label": "Human-in-the-loop stops",
-     "hot": false
+     "label": "Provisioning"
     },
     {
-     "id": "sf9",
+     "id": "ota",
      "lane": 4,
-     "label": "Safety cases",
-     "hot": false
+     "label": "OTA pipeline",
+     "hot": true
     },
     {
-     "id": "fl10",
-     "lane": 5,
-     "label": "Production scheduling",
-     "hot": false
+     "id": "grave",
+     "lane": 4,
+     "label": "Retirement process"
     },
     {
-     "id": "fl11",
+     "id": "beat",
      "lane": 5,
-     "label": "Maintenance planner",
-     "hot": false
+     "label": "Heartbeat SLOs",
+     "hot": true
+    },
+    {
+     "id": "diag",
+     "lane": 5,
+     "label": "Diagnostics"
+    },
+    {
+     "id": "kpi",
+     "lane": 5,
+     "label": "Fabric KPIs"
     }
    ],
    "edges": [
     {
-     "a": "rs0",
-     "b": "rtl2"
+     "a": "mod",
+     "b": "proto",
+     "label": "translate"
     },
     {
-     "a": "rs1",
-     "b": "rtl3"
+     "a": "sens",
+     "b": "gw",
+     "label": "native"
     },
     {
-     "a": "rtl2",
-     "b": "pst4"
+     "a": "meters",
+     "b": "proto",
+     "label": "read"
     },
     {
-     "a": "rtl3",
-     "b": "pst5"
+     "a": "gw",
+     "b": "buffer",
+     "label": "queue"
     },
     {
-     "a": "pst4",
-     "b": "orc6"
+     "a": "proto",
+     "b": "reg",
+     "label": "validate"
     },
     {
-     "a": "pst5",
-     "b": "orc7"
+     "a": "reg",
+     "b": "ver",
+     "label": "pin"
     },
     {
-     "a": "orc6",
-     "b": "sf8"
+     "a": "ver",
+     "b": "conf",
+     "label": "test"
     },
     {
-     "a": "sf8",
-     "b": "sf9"
+     "a": "buffer",
+     "b": "bus",
+     "label": "forward"
     },
     {
-     "a": "orc7",
-     "b": "fl10"
+     "a": "buffer",
+     "b": "batch",
+     "label": "on restore"
     },
     {
-     "a": "sf9",
-     "b": "fl11"
+     "a": "qos",
+     "b": "bus",
+     "label": "class"
+    },
+    {
+     "a": "gw",
+     "b": "prov",
+     "label": "enroll"
+    },
+    {
+     "a": "ota",
+     "b": "gw",
+     "label": "update"
+    },
+    {
+     "a": "ota",
+     "b": "grave",
+     "label": "retire"
+    },
+    {
+     "a": "gw",
+     "b": "beat",
+     "label": "report"
+    },
+    {
+     "a": "beat",
+     "b": "diag",
+     "label": "flag"
+    },
+    {
+     "a": "diag",
+     "b": "kpi",
+     "label": "score"
     }
    ],
-   "note": "Topology inherited from the IoT, Twin & Robotics tower; the highlighted core is this service's build."
+   "note": "Store-and-forward with clock discipline is the fabric's warranty: a partitioned site keeps measuring, and its history reconciles losslessly when the link returns."
   },
   {
    "t": "h2",
-   "x": "What you hold at the end"
+   "x": "One sensor reading, field to decision-ready"
   },
   {
    "t": "p",
-   "x": "What your team holds at the end — Industrial IoT & Sensor Fabric edition:"
+   "x": "From the transducer through the gateway buffer, schema validation, normalization and the downstream broker — including the partition path and what reconciliation looks like when the link returns."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "edge-topology",
+   "title": "Telemetry path — translate, validate, buffer, forward, monitor",
+   "labels": [
+    "Device read",
+    "Protocol translate",
+    "Schema validate",
+    "Local buffer",
+    "Forward & dedup",
+    "Heartbeat report",
+    "Health score"
+   ],
+   "note": "Validation happens at the gateway: a schema-breaking payload is quarantined at the edge with the reason attached — not discovered downstream in the lake."
+  },
+  {
+   "t": "h2",
+   "x": "The fabric console — fidelity as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Capture fidelity, heartbeat pass rate and forward loss — the three numbers that decide whether everything downstream is built on truth."
+  },
+  {
+   "t": "idash",
+   "title": "Industrial IoT — sensor fabric console",
+   "kpis": [
+    {
+     "label": "Assets instrumented",
+     "value": "1,842",
+     "delta": "of 2,240 mapped",
+     "dir": "up",
+     "spark": [
+      210,
+      420,
+      700,
+      1000,
+      1300,
+      1600,
+      1842
+     ]
+    },
+    {
+     "label": "Data quality pass",
+     "value": "97.8%",
+     "delta": "unit + calibration contracts",
+     "dir": "up",
+     "spark": [
+      61,
+      72,
+      80,
+      87,
+      92,
+      95,
+      97.8
+     ]
+    },
+    {
+     "label": "Gateway uptime",
+     "value": "99.95%",
+     "delta": "edge gateways, all zones",
+     "dir": "up",
+     "spark": [
+      97,
+      98.2,
+      98.9,
+      99.3,
+      99.6,
+      99.8,
+      99.95
+     ]
+    },
+    {
+     "label": "Segmentation coverage",
+     "value": "89%",
+     "delta": "Purdue zones with conduits",
+     "dir": "up",
+     "spark": [
+      20,
+      35,
+      50,
+      62,
+      74,
+      82,
+      89
+     ]
+    },
+    {
+     "label": "Historian backfill",
+     "value": "6.2 yr",
+     "delta": "migrated with provenance",
+     "dir": "up",
+     "spark": [
+      0.5,
+      1.5,
+      2.8,
+      4.0,
+      5.1,
+      5.8,
+      6.2
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Coverage",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Instrumentation by asset class × priority tier",
+       "rows": [
+        "Rotating equip",
+        "Process lines",
+        "Utilities",
+        "Logistics",
+        "Environment"
+       ],
+       "cats": [
+        "P1 critical",
+        "P2 production",
+        "P3 support",
+        "P4 monitoring",
+        "P5 optional"
+       ],
+       "matrix": [
+        [
+         96,
+         88,
+         62,
+         40,
+         22
+        ],
+        [
+         92,
+         84,
+         58,
+         38,
+         18
+        ],
+        [
+         85,
+         76,
+         52,
+         30,
+         14
+        ],
+        [
+         78,
+         68,
+         45,
+         26,
+         12
+        ],
+        [
+         70,
+         60,
+         40,
+         22,
+         10
+        ]
+       ],
+       "unit": "% instrumented",
+       "note": "Hover cells for coverage. P1 rotating equipment is nearly complete — vibration and temperature contracts there feed the predictive-maintenance practice directly."
+      }
+     ]
+    },
+    {
+     "name": "Segmentation",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The Purdue-aligned fabric — click zones for the conduit contract",
+       "lanes": [
+        "Field (L0-1)",
+        "Control (L2)",
+        "Operations (L3)",
+        "Enterprise (L4-5)"
+       ],
+       "nodes": [
+        {
+         "id": "plc",
+         "lane": 0,
+         "label": "PLCs & RTUs",
+         "detail": "Control-layer devices on isolated field buses; the fabric reads via protocol adapters — never writes without a signed change window.",
+         "hot": true
+        },
+        {
+         "id": "hist",
+         "lane": 0,
+         "label": "Historians",
+         "detail": "Existing process historians joined as first-class sources — their archives migrate with provenance and unit contracts."
+        },
+        {
+         "id": "edge",
+         "lane": 1,
+         "label": "Edge gateways",
+         "detail": "Protocol translation (Modbus, OPC-UA, proprietary) with unit normalization and local buffering — gateways hold their line offline."
+        },
+        {
+         "id": "dmz",
+         "lane": 2,
+         "label": "OT/IT DMZ",
+         "detail": "Controlled conduits between zones — brokers with allow-lists, unidirectional paths where the risk profile demands them."
+        },
+        {
+         "id": "inv",
+         "lane": 2,
+         "label": "Asset inventory",
+         "detail": "Passive-discovery asset inventory with per-device identity — the estate knows what is on its networks, including what was never registered."
+        },
+        {
+         "id": "tsdb",
+         "lane": 3,
+         "label": "Time-series core",
+         "detail": "Industrial time-series store with retention tiers and downsampling — the analytics practices read from contracts, not from raw dumps."
+        },
+        {
+         "id": "patch",
+         "lane": 3,
+         "label": "Patch planning",
+         "detail": "Firmware and PLC patching scheduled against process windows — the shutdown calendar is the patch calendar, by joint agreement with OT."
+        }
+       ],
+       "edges": [
+        {
+         "a": "plc",
+         "b": "edge",
+         "label": "translate"
+        },
+        {
+         "a": "hist",
+         "b": "edge",
+         "label": "join"
+        },
+        {
+         "a": "edge",
+         "b": "dmz",
+         "label": "conduit"
+        },
+        {
+         "a": "dmz",
+         "b": "tsdb",
+         "label": "egress"
+        },
+        {
+         "a": "inv",
+         "b": "dmz",
+         "label": "monitors"
+        },
+        {
+         "a": "patch",
+         "b": "plc",
+         "label": "windows"
+        }
+       ],
+       "note": "Click zones for the conduit contract each boundary carries. The read-only default at the PLC boundary is the OT team's non-negotiable — and ours."
+      }
+     ]
+    },
+    {
+     "name": "Quality what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Instrumentation what-if — coverage, quality gates, cost",
+       "params": [
+        {
+         "name": "Sensor coverage",
+         "min": 40,
+         "max": 100,
+         "step": 5,
+         "value": 82,
+         "unit": "% of assets"
+        },
+        {
+         "name": "Quality-gate strictness",
+         "min": 0,
+         "max": 100,
+         "step": 10,
+         "value": 75,
+         "unit": "%"
+        },
+        {
+         "name": "Estate size",
+         "min": 200,
+         "max": 5000,
+         "step": 100,
+         "value": 2200,
+         "unit": "assets"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Data quality pass",
+         "unit": "%",
+         "formula": "min(99, p0*0.75+p1*0.28)",
+         "good": "95",
+         "bad": "80"
+        },
+        {
+         "name": "Fabric cost / yr",
+         "unit": "$k",
+         "formula": "p2*0.55*(p0/100)*(1+p1/200)",
+         "good": "450",
+         "bad": "1200"
+        },
+        {
+         "name": "Quarantine share",
+         "unit": "%",
+         "formula": "max(1, (100-p1)*0.35)",
+         "good": "6",
+         "bad": "20"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 2,
+        "label": "Coverage vs annual fabric cost"
+       },
+       "note": "The cost curve argues for instrumenting by priority tier: P1 coverage buys the analytics value; P5 coverage buys the invoice. The quality gates quarantine rather than average — noise stays visible."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · coverage model",
+   "note": "Reference program model: coverage bands and segmentation targets from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Capture fidelity across device classes"
+  },
+  {
+   "t": "p",
+   "x": "Fidelity per device class and quarter — the shape that shows which brownfield protocols need gateway work and which device fleets are drifting toward zombie-hood."
+  },
+  {
+   "t": "chart",
+   "title": "Capture fidelity by device class — design targets",
+   "variant": "bar",
+   "cats": [
+    "Vibration",
+    "Temperature",
+    "Power meters",
+    "Flow",
+    "Legacy PLC registers"
+   ],
+   "series": [
+    {
+     "name": "Fidelity target %",
+     "points": [
+      99,
+      99,
+      98,
+      96,
+      93
+     ]
+    },
+    {
+     "name": "Buffer autonomy target (h)",
+     "points": [
+      24,
+      24,
+      72,
+      48,
+      8
+     ]
+    }
+   ],
+   "yMax": 105,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Industrial IoT & Sensor Fabric across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Industrial IoT & Sensor Fabric",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the work spans the stack: devices and gateways in the field, perception models in the middle, actuation plans on the board.",
+     "plays": [
+      "Versioned schemas per device class, enforced at the gateway",
+      "Store-and-forward capture with partition reconciliation guarantees",
+      "Heartbeat and zombie sweeps — silence is an incident, flatlines get field checks"
+     ],
+     "kpis": [
+      {
+       "label": "Capture fidelity",
+       "value": "97.4%"
+      },
+      {
+       "label": "Heartbeat pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Forward loss",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Versioned schemas per device class, enforced at the gateway",
+      "Store-and-forward capture with partition reconciliation guarantees",
+      "Heartbeat and zombie sweeps — silence is an incident, flatlines get field checks"
+     ],
+     "kpis": [
+      {
+       "label": "Capture fidelity",
+       "value": "97.4%"
+      },
+      {
+       "label": "Heartbeat pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Forward loss",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Versioned schemas per device class, enforced at the gateway",
+      "Store-and-forward capture with partition reconciliation guarantees",
+      "Heartbeat and zombie sweeps — silence is an incident, flatlines get field checks"
+     ],
+     "kpis": [
+      {
+       "label": "Capture fidelity",
+       "value": "97.4%"
+      },
+      {
+       "label": "Heartbeat pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Forward loss",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "Ask what quality escapes and manual inspection costs Manufacturing & Industrial firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Versioned schemas per device class, enforced at the gateway",
+      "Store-and-forward capture with partition reconciliation guarantees",
+      "Heartbeat and zombie sweeps — silence is an incident, flatlines get field checks"
+     ],
+     "kpis": [
+      {
+       "label": "Capture fidelity",
+       "value": "97.4%"
+      },
+      {
+       "label": "Heartbeat pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Forward loss",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Retail & Consumer Goods operators recognize the pattern: shelf truth unknown, quarter after quarter.",
+     "plays": [
+      "Versioned schemas per device class, enforced at the gateway",
+      "Store-and-forward capture with partition reconciliation guarantees",
+      "Heartbeat and zombie sweeps — silence is an incident, flatlines get field checks"
+     ],
+     "kpis": [
+      {
+       "label": "Capture fidelity",
+       "value": "97.4%"
+      },
+      {
+       "label": "Heartbeat pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Forward loss",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Ask what network telemetry underused costs Telecom, Media & Entertainment firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Versioned schemas per device class, enforced at the gateway",
+      "Store-and-forward capture with partition reconciliation guarantees",
+      "Heartbeat and zombie sweeps — silence is an incident, flatlines get field checks"
+     ],
+     "kpis": [
+      {
+       "label": "Capture fidelity",
+       "value": "97.4%"
+      },
+      {
+       "label": "Heartbeat pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Forward loss",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": true,
+     "hook": "Ask what asset fleets uninstrumented costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Versioned schemas per device class, enforced at the gateway",
+      "Store-and-forward capture with partition reconciliation guarantees",
+      "Heartbeat and zombie sweeps — silence is an incident, flatlines get field checks"
+     ],
+     "kpis": [
+      {
+       "label": "Capture fidelity",
+       "value": "97.4%"
+      },
+      {
+       "label": "Heartbeat pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Forward loss",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": true,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: fleet and yard telemetry gaps, quarter after quarter.",
+     "plays": [
+      "Versioned schemas per device class, enforced at the gateway",
+      "Store-and-forward capture with partition reconciliation guarantees",
+      "Heartbeat and zombie sweeps — silence is an incident, flatlines get field checks"
+     ],
+     "kpis": [
+      {
+       "label": "Capture fidelity",
+       "value": "97.4%"
+      },
+      {
+       "label": "Heartbeat pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Forward loss",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "Public Sector & Government operators recognize the pattern: urban assets unmanaged, quarter after quarter.",
+     "plays": [
+      "Versioned schemas per device class, enforced at the gateway",
+      "Store-and-forward capture with partition reconciliation guarantees",
+      "Heartbeat and zombie sweeps — silence is an incident, flatlines get field checks"
+     ],
+     "kpis": [
+      {
+       "label": "Capture fidelity",
+       "value": "97.4%"
+      },
+      {
+       "label": "Heartbeat pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Forward loss",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — estates flying blind included — and prove it moved.",
+     "plays": [
+      "Versioned schemas per device class, enforced at the gateway",
+      "Store-and-forward capture with partition reconciliation guarantees",
+      "Heartbeat and zombie sweeps — silence is an incident, flatlines get field checks"
+     ],
+     "kpis": [
+      {
+       "label": "Capture fidelity",
+       "value": "97.4%"
+      },
+      {
+       "label": "Heartbeat pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Forward loss",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we connect machines, fleets and facilities into one operational picture, then close the loop into maintenance, scheduling and control.",
+     "plays": [
+      "Versioned schemas per device class, enforced at the gateway",
+      "Store-and-forward capture with partition reconciliation guarantees",
+      "Heartbeat and zombie sweeps — silence is an incident, flatlines get field checks"
+     ],
+     "kpis": [
+      {
+       "label": "Capture fidelity",
+       "value": "97.4%"
+      },
+      {
+       "label": "Heartbeat pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Forward loss",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — field data gap included — and prove it moved.",
+     "plays": [
+      "Versioned schemas per device class, enforced at the gateway",
+      "Store-and-forward capture with partition reconciliation guarantees",
+      "Heartbeat and zombie sweeps — silence is an incident, flatlines get field checks"
+     ],
+     "kpis": [
+      {
+       "label": "Capture fidelity",
+       "value": "97.4%"
+      },
+      {
+       "label": "Heartbeat pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Forward loss",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/iot-digital-twin-robotics/"
+    }
+   ],
+   "practiceNote": "Industrial IoT & Sensor Fabric view: instrumentation as infrastructure — versioned schemas per device class, store-and-forward resilience, and a device lifecycle that retires zombies."
+  },
+  {
+   "t": "h2",
+   "x": "Fabric defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor schema-versioned capture with store-and-forward over fire-and-forget telemetry; deviation triggers are written because each one trades fidelity for integration convenience."
+  },
+  {
+   "t": "table",
+   "caption": "Industrial IoT & Sensor Fabric: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production sensor fabric across target assets and zones",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Gateway",
+     "Industrial gateways with dual-path uplink",
+     "Consumer-grade hubs — they die silently"
     ],
     [
-     "Connectivity and gateway architecture per site",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Schemas",
+     "Registry with versioned pinning",
+     "JSON-by-convention — the swamp begins"
     ],
     [
-     "Device lifecycle and calibration runbook",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Transport",
+     "QoS classes: alarm vs telemetry vs bulk",
+     "One-size MQTT QoS — alarms drop with telemetry"
     ],
     [
-     "Governed telemetry streams with data contracts",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Brownfield",
+     "Protocol translation tier with conformance",
+     "Skipping legacy — it is where the machines are"
+    ],
+    [
+     "Lifecycle",
+     "OTA + graveyard process",
+     "Set-and-forget fleets — zombies compound"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Standards and components"
+   "x": "Fabric release gates — evidence before downstream reliance"
   },
   {
-   "t": "p",
-   "x": "The engineering baseline for Industrial IoT & Sensor Fabric: OPC UA, MQTT Sparkplug B, LoRaWAN, NB-IoT, private 5G, edge gateways. The justifications are written, versioned and handed over — the decisions are yours to own after the engagement."
+   "t": "table",
+   "caption": "Release gates for Industrial IoT & Sensor Fabric — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Registry gate",
+     "Does every class pin a schema?",
+     "Registry coverage; conformance evidence"
+    ],
+    [
+     "Partition gate",
+     "Do buffers survive disconnection?",
+     "Lossless forward drill"
+    ],
+    [
+     "Heartbeat gate",
+     "Would a dead device page?",
+     "Heartbeat SLO evidence"
+    ],
+    [
+     "OTA gate",
+     "Are updates health-gated?",
+     "Staged rollout evidence; rollback drill"
+    ],
+    [
+     "Brownfield gate",
+     "Are legacy protocols covered?",
+     "Translator conformance per protocol"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "From baseline to working slice"
+   "x": "What the operations technology team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Industrial IoT & Sensor Fabric starts with the measurement: the metric, the owner, the current number, signed."
+     "Schema registry",
+     "Versioned device classes with tests"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, retrofit engineering first, gates written with your team."
+     "Gateway fleet",
+     "Provisioned, monitored, updatable"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Industrial IoT & Sensor Fabric are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Store-and-forward fabric",
+     "Dedup and clock discipline"
+    ],
+    [
+     "OTA pipeline",
+     "Health-gated waves with rollback"
+    ],
+    [
+     "Heartbeat SLO pack",
+     "Per-class liveness evidence"
+    ],
+    [
+     "Retirement process",
+     "The graveyard, done with dignity"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Device classes in order, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — device census",
+     "Device classes, protocol inventory, schema design"
+    ],
+    [
+     "Weeks 3–4 — gateway tier",
+     "Gateway standard, translators, buffer design"
+    ],
+    [
+     "Weeks 5–6 — schema plane",
+     "Registry, conformance tests, version pinning"
+    ],
+    [
+     "Weeks 7–8 — fleet ops",
+     "Provisioning, OTA waves, heartbeat SLOs"
+    ],
+    [
+     "Weeks 9–10 — resilience",
+     "Partition drills, zombie sweep, KPI dashboards"
+    ],
+    [
+     "Ongoing — fabric ops",
+     "Weekly heartbeat review; monthly OTA waves; quarterly drills"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — PLCs, gateways and the historians"
+  },
+  {
+   "t": "p",
+   "x": "The fabric wraps brownfield reality: PLCs, legacy protocols and historians are the integration scope, and the contracts define what each device class must emit and how brownfield impedance is handled."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "PLC vendors",
+     "Protocol adapters"
+    ],
+    [
+     "Time-series store",
+     "Forwarding targets"
+    ],
+    [
+     "Twin platform",
+     "State feeds"
+    ],
+    [
+     "MES systems",
+     "Context enrichment"
+    ],
+    [
+     "Security domain",
+     "Device identity and attestation"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Data-integrity governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Provenance survives the pipeline: every reading carries device identity, schema version and gateway path — so a suspect reading can be traced to hardware, firmware or transport in one query."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Zero-loss buffering",
+     "Partitions lose no data, provably"
+    ],
+    [
+     "Schema-or-nothing",
+     "Unversioned payloads quarantine at the edge"
+    ],
+    [
+     "Safety-class QoS",
+     "Alarm paths never compete with bulk"
+    ],
+    [
+     "Owned devices",
+     "Every device has an owner and an end-of-life"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Zombie sweeps run monthly: devices that heartbeat but emit flat-lined or physically implausible values are flagged for field verification — silent failure is the fabric's most expensive failure mode."
   },
   {
    "t": "cta",
-   "x": "The next step is small and real: one working session on Industrial IoT & Sensor Fabric, your data, and a written feasibility read you can circulate."
+   "x": "Bring the production line whose data nobody fully trusts. The diagnostic will baseline capture fidelity by device class — and price what honest instrumentation costs on your brownfield estate."
   }
  ],
- "words": 514,
+ "words": 949,
  "section": "Services",
  "l1": "Services",
  "l2": "IoT, Digital Twin & Robotics",
@@ -278,7 +1210,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — IoT, Digital Twin & Robotics",
+   "title": "Domain overview — IoT, Digital Twin & Robotics",
    "url": "/services/iot-digital-twin-robotics/",
    "desc": "Sensing, simulating, acting — the operations stack that turns physical assets into self-monitoring systems."
   },
@@ -330,33 +1262,51 @@
   {
    "title": "Cyber & Zero-Trust for Retail & Consumer Goods",
    "url": "/industries/retail-consumer-goods/capabilities/cybersecurity-zero-trust/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Digital Twin Platform Engineering",
-   "url": "/services/iot-digital-twin-robotics/digital-twin-platforms/",
-   "tag": "Same tower",
-   "desc": "Simulate before you cut steel — plant, fleet and product twins with governed physics and data."
-  },
-  {
    "title": "Computer Vision & Edge AI",
    "url": "/services/iot-digital-twin-robotics/computer-vision-edge-ai/",
-   "tag": "Same tower",
-   "desc": "Cameras into instruments — inspection, safety and counting at the edge, inside policy."
+   "tag": "Same domain",
+   "desc": "inference at the edge with model ops — constrained-hardware deployment, drift monitors on live feeds, and a hard rule that models never bypass interlocks."
   },
   {
-   "title": "Predictive Maintenance & Asset Intelligence",
-   "url": "/services/iot-digital-twin-robotics/predictive-asset-intelligence/",
-   "tag": "Same tower",
-   "desc": "Fix it before it fails — RUL models wired into planning, spare parts and work orders."
+   "title": "Connected Products & Smart Devices",
+   "url": "/services/iot-digital-twin-robotics/connected-products-devices/",
+   "tag": "Same domain",
+   "desc": "product fleets in the field — OTA that never bricks, telemetry that earns its bandwidth, and support APIs that let service diagnose before the customer calls."
   },
   {
-   "title": "Robotics & Autonomous Systems Integration",
-   "url": "/services/iot-digital-twin-robotics/robotics-autonomous-systems/",
-   "tag": "Same tower",
-   "desc": "Robots into workflows — AMRs, cobots and autonomous vehicles integrated with safety and orchestration."
+   "title": "Digital Twin Platform Engineering",
+   "url": "/services/iot-digital-twin-robotics/digital-twin-platforms/",
+   "tag": "Same domain",
+   "desc": "twins that stay honest — state synchronization with fidelity metrics, simulation tiers for what-ifs, and governance for who may change what."
+  },
+  {
+   "title": "Cloud-Native & Legacy Modernization",
+   "url": "/services/cloud-edge-platform-engineering/cloud-native-modernization/",
+   "tag": "Pairs with",
+   "desc": "workloads rebuilt for cloud-native operations — containerized, observable, resilient by default, with a strangler path that retires VMs on evidence."
+  },
+  {
+   "title": "Data Engineering & Pipeline Modernization",
+   "url": "/services/data-analytics-lakehouse/data-engineering-modernization/",
+   "tag": "Pairs with",
+   "desc": "legacy pipelines rebuilt as typed, contract-gated, observable jobs — with a strangler pattern that retires the old estate without a big-bang cutover."
+  },
+  {
+   "title": "Decision Intelligence Systems",
+   "url": "/services/agentic-ai-hyperautomation/decision-intelligence-systems/",
+   "tag": "Pairs with",
+   "desc": "decision models wrapped in policy bounds, challenger benchmarks and explainable outputs — decisions you can defend to a regulator, not just scores in a dashboard."
+  },
+  {
+   "title": "A European agri-cooperative (4,200 farms)",
+   "url": "/case-studies/agr-01/",
+   "tag": "Evidence",
+   "desc": "Input cost per hectare down 14% — precision agronomy at cooperative scale."
   }
  ]
 }

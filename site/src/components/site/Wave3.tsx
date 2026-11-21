@@ -142,7 +142,7 @@ export function SearchOverlay({ close }: { close: () => void }) {
               setQ(e.target.value);
               run(e.target.value);
             }}
-            placeholder="Search 639 pages — services, industries, insights…"
+            placeholder="Search services, industries, insights, case studies…"
             className="w-full bg-transparent text-[14px] text-navy-800 outline-none placeholder:text-slate-body/45"
             aria-label="Search query"
           />

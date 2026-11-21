@@ -116,10 +116,7 @@ export default function SiteFooter({ brand, footer }: { brand: Brand; footer: Fo
               <Link href="/html-sitemap/" className="hover:text-brand-300">
                 Sitemap
               </Link>
-              <Link href="/status/" className="hover:text-brand-300">
-                Status
-              </Link>
-            </nav>
+</nav>
           </div>
           <div className="flex flex-col gap-3 md:items-end">
             {/* Social row (CHG-077): wire hrefs to the real profiles when public */}

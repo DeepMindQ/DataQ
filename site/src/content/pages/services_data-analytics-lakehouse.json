@@ -9,233 +9,1025 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Data, Analytics & Lakehouse is the substrate tower: pipeline modernization, lakehouse architecture on Databricks and Snowflake, streaming and event-driven decisioning, executive BI, master data and cataloging, predictive analytics, and data products that generate revenue. We build for observability and lineage from day one, because intelligence is only as defensible as the data estate beneath it."
-  },
-  {
-   "t": "h2",
-   "x": "Why the timing matters"
+   "x": "Data is the substrate every other domain stands on. Data, Analytics & Lakehouse runs seven practices built on contract-first engineering: schemas are versioned agreements with owners, SLAs are typed and measured, and every table, metric and model carries the governance that makes it usable in front of an auditor."
   },
   {
    "t": "p",
-   "x": "Analytics debt is the silent killer of AI programs: duplicated pipelines, uncatalogued datasets, and batch-only refresh cycles make every model suspect. Regulators now ask where a number came from; customers ask why an app is stale; CFOs ask why the warehouse bill tripled. A governed lakehouse answers all three."
-  },
-  {
-   "t": "h2",
-   "x": "What gets built first"
+   "x": "The data domain is the substrate every other domain stands on. Its discipline is contract-first engineering: schemas are versioned agreements with owners, SLAs are typed and monitored, and the layers — bronze, silver, gold — are promotion paths with quality gates rather than folders on a disk."
   },
   {
    "t": "p",
-   "x": "Named services for Data & Lakehouse — each page documents the build as delivered:"
+   "x": "Seven practices cover the ground: modernization of legacy estates, the lakehouse core itself, streaming for decisions that cannot wait, governance that makes data findable and trustworthy, risk analytics, BI that executives actually use, and monetization for data that leaves the building — where the controls have to be stronger, not looser."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "h2",
+   "x": "Seven practices from bronze to billed product"
+  },
+  {
+   "t": "table",
+   "caption": "The seven practices — scope and the metric each one is judged on",
+   "headers": [
+    "Practice",
+    "Scope in one line",
+    "Metric it moves"
+   ],
+   "rows": [
     [
-     "Data Engineering & Pipeline Modernization",
-     "Resilient, observable pipelines — trusted data from source to decision at SLA."
+     "Data Engineering Modernization",
+     "Legacy pipelines rebuilt on typed, contract-gated foundations",
+     "Pipeline failure rate, run cost"
     ],
     [
-     "Lakehouse Architecture & Migration",
-     "Lakehouse the right way — Unity Catalog governance, cost-aware design and AI-ready foundations."
+     "Lakehouse Architecture",
+     "Bronze→silver→gold with quality gates and open formats",
+     "Freshness SLA adherence"
     ],
     [
-     "Real-Time Streaming & Event-Driven Decisioning",
-     "Decisions at event speed — sub-second pipelines from sensor, click or transaction to action."
+     "Real-Time Streaming & Decisioning",
+     "Sub-second decision paths with replay semantics",
+     "Decision latency p99"
     ],
     [
-     "Enterprise BI & Executive Analytics",
-     "Metrics into management — one governed semantic layer, decision cadence built in."
-    ],
-    [
-     "Master Data, Governance & Cataloging",
-     "One customer, one product, one truth — MDM and catalog discipline that regulators can read."
+     "Master Data & Governance",
+     "Golden records, ownership, catalog that people trust",
+     "Duplicate rate, catalog coverage"
     ],
     [
      "Advanced Risk & Predictive Analytics",
-     "Forward-looking risk on governed data — credit, insurance, operational and market models that explain themselves."
+     "Model-backed risk and forecasting with governance",
+     "Forecast accuracy vs signed baseline"
     ],
     [
-     "Data Monetization & Analytics Products",
-     "Turn the data estate into revenue — embedded analytics, data sharing and insight products with real P&L."
+     "Enterprise BI & Executive Analytics",
+     "Decision-grade reporting with one truth per metric",
+     "Metric dispute rate"
+    ],
+    [
+     "Data Monetization & Products",
+     "Data products for external consumption under contract",
+     "Product SLA adherence"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Contracts, not culture: what makes data governed"
+  },
+  {
+   "t": "p",
+   "x": "The discipline that separates a data platform from a data swamp is contracts: every pipeline consumes and produces typed agreements with named owners, freshness SLAs and quarantine behavior. When something breaks, the contract tells you who is paged and what downstream is safe — before anyone opens a dashboard to guess."
+  },
+  {
+   "t": "p",
+   "x": "The economics matter as much as the engineering: storage growth, compute per query and duplicate estates are signed line items, reviewed quarterly with finance. A platform that cannot state its unit cost per workload is not governed; it is merely hosted."
+  },
+  {
+   "t": "h2",
+   "x": "The domain reference architecture — ingest to decision"
+  },
+  {
+   "t": "p",
+   "x": "The spine below is the shape every engagement converges on: contract-gated ingest, a lakehouse with promotion gates between bronze, silver and gold, serving layers keyed to decision latency, and governance woven through rather than bolted on the end."
+  },
+  {
    "t": "arch",
-   "title": "Data & Lakehouse — reference topology",
+   "title": "Data, Analytics & Lakehouse — domain reference architecture",
    "lanes": [
-    "Events",
-    "Real-time core",
-    "Analytics store",
-    "Decision surfaces",
-    "Observability",
-    "Business"
+    "Sources",
+    "Ingest & contracts",
+    "Lakehouse",
+    "Serving",
+    "Consumption",
+    "Governance"
    ],
    "nodes": [
     {
-     "id": "ev0",
+     "id": "ops",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Operational systems"
     },
     {
-     "id": "ev1",
+     "id": "saas",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "SaaS platforms"
     },
     {
-     "id": "rt2",
+     "id": "ext",
+     "lane": 0,
+     "label": "External feeds"
+    },
+    {
+     "id": "cdc",
      "lane": 1,
-     "label": "Data Engineering & Pipeline Modernization",
+     "label": "CDC streams"
+    },
+    {
+     "id": "batch",
+     "lane": 1,
+     "label": "Batch pipelines"
+    },
+    {
+     "id": "contract",
+     "lane": 1,
+     "label": "Schema contracts",
      "hot": true
     },
     {
-     "id": "rt3",
-     "lane": 1,
-     "label": "Stream processors",
-     "hot": false
-    },
-    {
-     "id": "an4",
+     "id": "bronze",
      "lane": 2,
-     "label": "Lakehouse tables",
-     "hot": false
+     "label": "Bronze (raw)"
     },
     {
-     "id": "an5",
+     "id": "silver",
      "lane": 2,
-     "label": "Online store",
-     "hot": false
-    },
-    {
-     "id": "ds6",
-     "lane": 3,
-     "label": "Executive BI",
-     "hot": false
-    },
-    {
-     "id": "ds7",
-     "lane": 3,
-     "label": "Lakehouse Architecture & Migration",
+     "label": "Silver (conformed)",
      "hot": true
     },
     {
-     "id": "ob8",
+     "id": "gold",
+     "lane": 2,
+     "label": "Gold (business)",
+     "hot": true
+    },
+    {
+     "id": "lineage",
+     "lane": 2,
+     "label": "Lineage capture"
+    },
+    {
+     "id": "wh",
+     "lane": 3,
+     "label": "Warehouse serving"
+    },
+    {
+     "id": "feat",
+     "lane": 3,
+     "label": "Feature serving"
+    },
+    {
+     "id": "api",
+     "lane": 3,
+     "label": "Data APIs"
+    },
+    {
+     "id": "bi",
      "lane": 4,
-     "label": "Freshness SLOs",
-     "hot": false
+     "label": "BI & executive"
     },
     {
-     "id": "ob9",
+     "id": "ds",
      "lane": 4,
-     "label": "Lineage alerts",
-     "hot": false
+     "label": "Data science"
     },
     {
-     "id": "bs10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "apps",
+     "lane": 4,
+     "label": "Decision apps"
     },
     {
-     "id": "bs11",
+     "id": "cat",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Business glossary",
+     "hot": true
+    },
+    {
+     "id": "qual",
+     "lane": 5,
+     "label": "Quality SLAs",
+     "hot": true
+    },
+    {
+     "id": "owner",
+     "lane": 5,
+     "label": "Data owners"
     }
    ],
    "edges": [
     {
-     "a": "ev0",
-     "b": "rt2"
+     "a": "ops",
+     "b": "cdc"
     },
     {
-     "a": "ev1",
-     "b": "rt3"
+     "a": "saas",
+     "b": "batch"
     },
     {
-     "a": "rt2",
-     "b": "an4"
+     "a": "ext",
+     "b": "batch"
     },
     {
-     "a": "rt3",
-     "b": "an5"
+     "a": "cdc",
+     "b": "bronze"
     },
     {
-     "a": "an4",
-     "b": "ds6"
+     "a": "batch",
+     "b": "bronze"
     },
     {
-     "a": "an5",
-     "b": "ds7"
+     "a": "contract",
+     "b": "cdc",
+     "label": "validate"
     },
     {
-     "a": "rt2",
-     "b": "ob8"
+     "a": "bronze",
+     "b": "silver",
+     "label": "conform"
     },
     {
-     "a": "ob8",
-     "b": "ob9"
+     "a": "silver",
+     "b": "gold",
+     "label": "model"
     },
     {
-     "a": "ds6",
-     "b": "bs10"
+     "a": "lineage",
+     "b": "silver",
+     "label": "capture"
     },
     {
-     "a": "ds7",
-     "b": "bs11"
+     "a": "gold",
+     "b": "wh",
+     "label": "serve"
+    },
+    {
+     "a": "silver",
+     "b": "feat",
+     "label": "serve"
+    },
+    {
+     "a": "gold",
+     "b": "api",
+     "label": "expose"
+    },
+    {
+     "a": "wh",
+     "b": "bi"
+    },
+    {
+     "a": "feat",
+     "b": "ds"
+    },
+    {
+     "a": "api",
+     "b": "apps",
+     "label": "contracted"
+    },
+    {
+     "a": "cat",
+     "b": "gold",
+     "label": "defines"
+    },
+    {
+     "a": "qual",
+     "b": "silver",
+     "label": "gates"
+    },
+    {
+     "a": "owner",
+     "b": "qual",
+     "label": "signs"
     }
    ],
-   "note": "Highlighted nodes are the tower's named services in their architectural position."
+   "note": "Contracts gate ingestion, quality SLAs gate promotion between layers, and every table answers 'who owns this and what SLA did I promise' from the catalog."
   },
   {
    "t": "h2",
-   "x": "From baseline to working slice"
+   "x": "The platform on one screen — freshness, quarantine, cost"
   },
   {
    "t": "p",
-   "x": "What a Data & Lakehouse engagement shares across services: the baseline is signed, the slice is bounded, and the gates can stop the program — that last part is a feature. In Data & Lakehouse programs the same rule applies: every artifact ships with its evidence — who signed the baseline, what the gate measured, where the number lives."
+   "x": "Freshness SLA adherence, quarantine dwell, compaction lag and storage growth — the four tiles the platform steering reads weekly, rendered as they appear in the review."
+  },
+  {
+   "t": "idash",
+   "title": "Data portfolio — the seven practices on one console",
+   "kpis": [
+    {
+     "label": "Practices live",
+     "value": "7",
+     "delta": "contracts signed per practice",
+     "dir": "flat",
+     "spark": [
+      3,
+      4,
+      5,
+      6,
+      6,
+      7,
+      7
+     ]
+    },
+    {
+     "label": "SLA adherence",
+     "value": "99.4%",
+     "delta": "freshness budgets per table",
+     "dir": "up",
+     "spark": [
+      82,
+      88,
+      92,
+      95,
+      97,
+      98,
+      99
+     ]
+    },
+    {
+     "label": "Metric disputes",
+     "value": "0",
+     "delta": "certified semantic layer",
+     "dir": "down",
+     "spark": [
+      14,
+      10,
+      7,
+      4,
+      2,
+      1,
+      0
+     ]
+    },
+    {
+     "label": "Reconciliation deltas",
+     "value": "0",
+     "delta": "across migration waves",
+     "dir": "flat",
+     "spark": [
+      12,
+      6,
+      3,
+      1,
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "label": "Duplicate rate",
+     "value": "1.4%",
+     "delta": "customer master, was 18%",
+     "dir": "down",
+     "spark": [
+      18,
+      14,
+      10,
+      7,
+      4,
+      2,
+      1.4
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Estate health",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Data estate health — reliability, semantics, migration",
+       "cats": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8"
+       ],
+       "series": [
+        {
+         "name": "Pipeline SLA %",
+         "points": [
+          82,
+          88,
+          92,
+          95,
+          97,
+          98,
+          99,
+          99.4
+         ]
+        },
+        {
+         "name": "Certified usage %",
+         "points": [
+          34,
+          46,
+          58,
+          68,
+          76,
+          82,
+          87,
+          90
+         ]
+        },
+        {
+         "name": "Legacy footprint %",
+         "points": [
+          100,
+          88,
+          76,
+          66,
+          57,
+          50,
+          44,
+          38
+         ]
+        }
+       ],
+       "unit": "%",
+       "note": "Click to isolate. Reliability fixes first (contracts at ingestion), semantics follow (the layer needs trusted foundations), migration runs as the ratchet underneath."
+      }
+     ]
+    },
+    {
+     "name": "Sector depth",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Practice depth by sector — where data work runs deepest",
+       "rows": [
+        "Risk",
+        "Engineering",
+        "Products",
+        "BI",
+        "Migration",
+        "MDM",
+        "Streaming"
+       ],
+       "cats": [
+        "Banking",
+        "Insurance",
+        "Retail",
+        "Manufacturing",
+        "Healthcare"
+       ],
+       "matrix": [
+        [
+         92,
+         84,
+         78,
+         86,
+         80,
+         82,
+         88
+        ],
+        [
+         90,
+         78,
+         74,
+         82,
+         76,
+         86,
+         72
+        ],
+        [
+         70,
+         80,
+         88,
+         84,
+         78,
+         76,
+         90
+        ],
+        [
+         68,
+         88,
+         72,
+         70,
+         84,
+         88,
+         86
+        ],
+        [
+         82,
+         76,
+         70,
+         78,
+         74,
+         92,
+         74
+        ]
+       ],
+       "unit": "depth index",
+       "note": "Hover cells for depth. Risk carries banking's flagship; MDM carries healthcare's; streaming carries retail's — pick your sector cell and the practice page below."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · portfolio model",
+   "note": "Reference portfolio model: health bands and depth indices from delivery, not client telemetry."
   },
   {
    "t": "h2",
-   "x": "Engagements that used this pattern"
+   "x": "Freshness by tier — the maturing platform curve"
   },
   {
    "t": "p",
-   "x": "Anonymized engagements in Data, Analytics & Lakehouse: identities withheld, measurement methods available under NDA."
+   "x": "Radar profile across six axes we are gated on: the gap between posture and target band is the funded work program, re-scored at every quarterly gate review."
+  },
+  {
+   "t": "chart",
+   "title": "Freshness SLA adherence by tier — quarterly trajectory, design bands",
+   "variant": "area",
+   "cats": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6"
+   ],
+   "series": [
+    {
+     "name": "Gold tier (executive)",
+     "points": [
+      93.0,
+      94.6,
+      95.8,
+      96.7,
+      97.2,
+      97.6
+     ]
+    },
+    {
+     "name": "Silver tier (operational)",
+     "points": [
+      88.5,
+      90.8,
+      92.4,
+      93.9,
+      94.8,
+      95.3
+     ]
+    },
+    {
+     "name": "Bronze tier (exploration)",
+     "points": [
+      82.0,
+      84.9,
+      86.8,
+      88.6,
+      89.7,
+      90.4
+     ]
+    }
+   ],
+   "unit": "%",
+   "yMax": 100,
+   "note": "",
+   "caption": "Reference trajectory for a platform maturing under contract discipline — tiers improve in order of business criticality."
+  },
+  {
+   "t": "h2",
+   "x": "Sector depth — where the data practice runs deepest today"
+  },
+  {
+   "t": "p",
+   "x": "Every sector thinks its data is uniquely messy; the contracts that fix it are sector-specific anyway. The bars count published sub-industry briefs on this site — where sector-calibrated data playbooks already exist."
+  },
+  {
+   "t": "chart",
+   "title": "Data, Analytics & Lakehouse — published sub-industry briefs by sector",
+   "variant": "bar",
+   "cats": [
+    "Banking & Financial Services",
+    "Insurance & Risk",
+    "Healthcare & Life Sciences",
+    "Manufacturing & Industrial",
+    "Retail & Consumer Goods",
+    "Telecom, Media & Entertainment",
+    "Energy & Utilities",
+    "Logistics & Supply Chain",
+    "Public Sector & Government",
+    "Education & Research",
+    "Technology & SaaS",
+    "Agriculture & Food Systems"
+   ],
+   "series": [
+    {
+     "name": "Published sub-industry briefs",
+     "points": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+     ]
+    }
+   ],
+   "unit": "briefs",
+   "yMax": 5,
+   "note": "",
+   "caption": "Counts are live pages on this site. Taller bars mean deeper published sector coverage; every cell also has the domain-level sector brief."
+  },
+  {
+   "t": "explorer",
+   "title": "Your data estate, your sector — pick the industry and see the plan",
+   "intro": "Regulated banks, national grids and retail chains buy different data discipline. Select yours: the panel shows the entry problem, the deliverables, the targets we sign and the sector brief behind them.",
+   "service": "Data, Analytics & Lakehouse",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Ask what fraud and AML decisions too slow costs Banking & Financial Services firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Contract-gated pipelines with typed SLAs and named owners",
+      "Lakehouse promotion paths with quality gates and honest storage economics",
+      "Governance that survives audit — lineage, catalogs, purpose limits"
+     ],
+     "kpis": [
+      {
+       "label": "Freshness SLA adherence",
+       "value": "97.2%"
+      },
+      {
+       "label": "Contract test pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Pipeline p95 (hourly)",
+       "value": "8.4m"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Insurance & Risk operators recognize the pattern: claims, policy and exposure data fragmented, quarter after quarter.",
+     "plays": [
+      "Contract-gated pipelines with typed SLAs and named owners",
+      "Lakehouse promotion paths with quality gates and honest storage economics",
+      "Governance that survives audit — lineage, catalogs, purpose limits"
+     ],
+     "kpis": [
+      {
+       "label": "Freshness SLA adherence",
+       "value": "97.2%"
+      },
+      {
+       "label": "Contract test pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Pipeline p95 (hourly)",
+       "value": "8.4m"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": true,
+     "hook": "Healthcare & Life Sciences operators recognize the pattern: trial recruitment and RWE pipelines manual, quarter after quarter.",
+     "plays": [
+      "Contract-gated pipelines with typed SLAs and named owners",
+      "Lakehouse promotion paths with quality gates and honest storage economics",
+      "Governance that survives audit — lineage, catalogs, purpose limits"
+     ],
+     "kpis": [
+      {
+       "label": "Freshness SLA adherence",
+       "value": "97.2%"
+      },
+      {
+       "label": "Contract test pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Pipeline p95 (hourly)",
+       "value": "8.4m"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Contract-gated pipelines with typed SLAs and named owners",
+      "Lakehouse promotion paths with quality gates and honest storage economics",
+      "Governance that survives audit — lineage, catalogs, purpose limits",
+      "Sector working pattern: plant data backbone — OPC UA/Sparkplug telemetry, MES and quality records unified with lineage. Root cause in hours, not weeks is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Freshness SLA adherence",
+       "value": "97.2%"
+      },
+      {
+       "label": "Contract test pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Pipeline p95 (hourly)",
+       "value": "8.4m"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the work is pipeline and lakehouse engineering — modeled once, certified once, reused everywhere the decision appears.",
+     "plays": [
+      "Contract-gated pipelines with typed SLAs and named owners",
+      "Lakehouse promotion paths with quality gates and honest storage economics",
+      "Governance that survives audit — lineage, catalogs, purpose limits"
+     ],
+     "kpis": [
+      {
+       "label": "Freshness SLA adherence",
+       "value": "97.2%"
+      },
+      {
+       "label": "Contract test pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Pipeline p95 (hourly)",
+       "value": "8.4m"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": true,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: network telemetry underused, quarter after quarter.",
+     "plays": [
+      "Contract-gated pipelines with typed SLAs and named owners",
+      "Lakehouse promotion paths with quality gates and honest storage economics",
+      "Governance that survives audit — lineage, catalogs, purpose limits"
+     ],
+     "kpis": [
+      {
+       "label": "Freshness SLA adherence",
+       "value": "97.2%"
+      },
+      {
+       "label": "Contract test pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Pipeline p95 (hourly)",
+       "value": "8.4m"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Energy & Utilities operators recognize the pattern: forecasting under intermittency, quarter after quarter.",
+     "plays": [
+      "Contract-gated pipelines with typed SLAs and named owners",
+      "Lakehouse promotion paths with quality gates and honest storage economics",
+      "Governance that survives audit — lineage, catalogs, purpose limits"
+     ],
+     "kpis": [
+      {
+       "label": "Freshness SLA adherence",
+       "value": "97.2%"
+      },
+      {
+       "label": "Contract test pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Pipeline p95 (hourly)",
+       "value": "8.4m"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: visibility stitched from portals, quarter after quarter.",
+     "plays": [
+      "Contract-gated pipelines with typed SLAs and named owners",
+      "Lakehouse promotion paths with quality gates and honest storage economics",
+      "Governance that survives audit — lineage, catalogs, purpose limits",
+      "Sector working pattern: control-tower event spine in Logistics & Supply Chain, where TMS/WMS/telematics/carrier events streamed into one governed estate. Network truth in seconds is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Freshness SLA adherence",
+       "value": "97.2%"
+      },
+      {
+       "label": "Contract test pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Pipeline p95 (hourly)",
+       "value": "8.4m"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "Public Sector & Government operators recognize the pattern: agency data islands, quarter after quarter.",
+     "plays": [
+      "Contract-gated pipelines with typed SLAs and named owners",
+      "Lakehouse promotion paths with quality gates and honest storage economics",
+      "Governance that survives audit — lineage, catalogs, purpose limits"
+     ],
+     "kpis": [
+      {
+       "label": "Freshness SLA adherence",
+       "value": "97.2%"
+      },
+      {
+       "label": "Contract test pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Pipeline p95 (hourly)",
+       "value": "8.4m"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we make the source systems agree: one governed definition per metric, streaming where the decision is time-critical, batch where it is not.",
+     "plays": [
+      "Contract-gated pipelines with typed SLAs and named owners",
+      "Lakehouse promotion paths with quality gates and honest storage economics",
+      "Governance that survives audit — lineage, catalogs, purpose limits",
+      "Sector working pattern: student success platform: SIS/LMS/support data unified with outcome lineage. Intervention targeting measurable is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Freshness SLA adherence",
+       "value": "97.2%"
+      },
+      {
+       "label": "Contract test pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Pipeline p95 (hourly)",
+       "value": "8.4m"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Technology & SaaS operators recognize the pattern: data moat unrealized, quarter after quarter.",
+     "plays": [
+      "Contract-gated pipelines with typed SLAs and named owners",
+      "Lakehouse promotion paths with quality gates and honest storage economics",
+      "Governance that survives audit — lineage, catalogs, purpose limits"
+     ],
+     "kpis": [
+      {
+       "label": "Freshness SLA adherence",
+       "value": "97.2%"
+      },
+      {
+       "label": "Contract test pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Pipeline p95 (hourly)",
+       "value": "8.4m"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Agriculture & Food Systems operators recognize the pattern: chain data broken at every handoff, quarter after quarter.",
+     "plays": [
+      "Contract-gated pipelines with typed SLAs and named owners",
+      "Lakehouse promotion paths with quality gates and honest storage economics",
+      "Governance that survives audit — lineage, catalogs, purpose limits"
+     ],
+     "kpis": [
+      {
+       "label": "Freshness SLA adherence",
+       "value": "97.2%"
+      },
+      {
+       "label": "Contract test pass",
+       "value": "99.1%"
+      },
+      {
+       "label": "Pipeline p95 (hourly)",
+       "value": "8.4m"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/"
+    }
+   ],
+   "practiceNote": "Domain-level view — pick a practice above for the practice-specific sector plan and console."
+  },
+  {
+   "t": "h2",
+   "x": "How data platform engagements run"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "A top-10 European retail bank",
-     "Real-time fraud decisioning on instant rails — 38% lower fraud losses at a higher approval rate"
+     "Diagnostic — two weeks",
+     "Estate mapped, SLAs scored, the gate model filled in against your estate — with the dual-run cost of any migration priced before you commit."
     ],
     [
-     "A multinational corporate bank",
-     "KYC refresh backlog cleared — 70% faster cycles with agentic file assembly"
+     "Provability sprint — four weeks",
+     "One pipeline or one metric runs a fund-or-kill slice: contract coverage, freshness and cost per query on your real data."
     ],
     [
-     "A top-5 global P&C insurer",
-     "Claims triage in minutes — 55% faster cycle times with document intelligence"
+     "Build — ten to fourteen weeks",
+     "The lakehouse spine, contracts and serving layers built to the reference architecture, with the console live from week two."
+    ],
+    [
+     "Industrialize — ongoing",
+     "Quarterly re-baselines, contract reviews with data owners, and the storage/compute economics review that keeps the platform honest with finance."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Standards and components"
+   "x": "Platform release gates — the domain contract in evidence"
   },
   {
-   "t": "p",
-   "x": "The tower runs on Dataq Forge, Dataq Nexus — platforms with documented controls, so the governance story is part of the product rather than an annex."
+   "t": "table",
+   "caption": "Domain-level release gates — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Contract gate",
+     "Do producers and consumers agree on the schema?",
+     "Versioned schema contracts; CI contract tests green"
+    ],
+    [
+     "Quality gate",
+     "Does the data clear its typed SLAs?",
+     "Null/range/duplication checks at promotion; quarantine evidence"
+    ],
+    [
+     "Lineage gate",
+     "Can any metric be traced to source columns?",
+     "End-to-end lineage walk for sampled metrics"
+    ],
+    [
+     "Cost gate",
+     "Is the compute honest?",
+     "Cost per query/run plan at target volume with the storage layout"
+    ],
+    [
+     "Access gate",
+     "Is entitlement correct and auditable?",
+     "Entitlement matrix vs source-of-trust groups; access review log"
+    ],
+    [
+     "Recovery gate",
+     "Can you rebuild from raw?",
+     "Backfill drill: rebuild a gold table from bronze within budget"
+    ]
+   ]
   },
   {
    "t": "cta",
-   "x": "Talk to the team that runs Data, Analytics & Lakehouse in production — the briefing is technical by design, and the first one costs nothing but the hour."
+   "x": "Bring the metric nobody trusts and the pipeline nobody owns. The two-week diagnostic will score your estate's contracts — and show which gates you would fail today, in front of your own auditors."
   }
  ],
- "words": 452,
+ "words": 896,
  "section": "Services",
  "l1": "Services",
  "l2": "Data, Analytics & Lakehouse",

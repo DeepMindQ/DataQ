@@ -9,254 +9,1178 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Where most programs improvise, enterprise ai strategy & roadmapping as we deliver it is sequenced: Align AI to P&L lines and risk mandates — a sequenced portfolio, not a pile of pilots. The sequence matters more than the stack — both are documented here."
+   "x": "Portfolio management under uncertainty: provability screens that kill weak ideas cheaply, risk-tiered gates that match your regulatory reality, one platform decision made before the seventh pilot, and a stop-loss discipline that actually holds."
   },
   {
    "t": "h2",
-   "x": "What we deliver under this name"
+   "x": "Why AI strategy is a portfolio problem, not a roadmap"
   },
   {
    "t": "p",
-   "x": "Most AI strategies fail at portfolio level: hundreds of use-case ideas, no value discipline, no owner for the controls. We run a six-week Value Mapping Sprint that scores candidate use cases on value density, data readiness, regulatory exposure and operational absorption, then sequences a 24-month roadmap with funding gates tied to measured outcomes rather than delivery milestones."
+   "x": "AI strategy that works looks like portfolio management under uncertainty: a small number of funded bets with provable metrics, a platform decision made before the third rebuild, and a governance model that lets teams move without an approval queue eating the quarter."
   },
   {
    "t": "p",
-   "x": "The output is an operating blueprint: named executive owner per use case, named control owner per model, an architecture baseline, a build-buy-partner decision per layer, and a value case per initiative stated in the CFO's units — contribution margin, loss rate, working capital, or headcount redeployment."
+   "x": "The deliverable is not a deck. It is a funded first slice with a signed baseline, an architecture direction your engineers respect, a gate model your risk team accepts, and a portfolio triage that killed the weak ideas on evidence rather than politics."
+  },
+  {
+   "t": "p",
+   "x": "Below is the operating machinery of the portfolio: failure modes, the reference architecture for the decision system itself, and the console the steering committee reads."
   },
   {
    "t": "h2",
-   "x": "Why the timing matters"
+   "x": "Four ways AI portfolios stall at the board level"
   },
   {
    "t": "p",
-   "x": "Programs of Enterprise AI Strategy & Roadmapping run in Banking & Financial Services, Insurance & Risk, Healthcare & Life Sciences, Manufacturing & Industrial — always against one named number, always with the baseline signed first."
+   "x": "These are the governance and incentive failures, not the modeling ones — each countermeasure is a structural change to how the portfolio is funded and judged."
   },
   {
-   "t": "h2",
-   "x": "What goes live, and in what order"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Enterprise AI Strategy & Roadmapping: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Value Mapping Sprint",
-     "scores the use-case portfolio on value, feasibility, risk and absorption in six weeks"
+     "Pilot graveyard",
+     "Twenty pilots, zero production, roadmap credibility spent",
+     "Provability screen at intake: no use case enters without a metric and an owner"
     ],
     [
-     "Operating model design",
-     "AI CoE vs. federated pods, platform team, model risk function and control ownership mapped"
+     "Platform indecision",
+     "Every use case rebuilds plumbing; costs triple",
+     "Platform-first decision memo in the first month, with a migration path for pilots"
     ],
     [
-     "Capability-gap analysis",
-     "data, talent, tooling and governance gaps priced into the roadmap"
+     "Governance theater",
+     "Committee reviews everything; nothing ships",
+     "Risk-tiered gates: low-risk self-serve, high-risk evidence-reviewed, everything auditable"
     ],
     [
-     "Regulatory posture paper",
-     "EU AI Act, NIST AI RMF and sector regimes mapped to your obligations"
-    ],
-    [
-     "Board-ready roadmap",
-     "24-month sequence with funding gates, dependencies and kill criteria"
+     "Talent mismatch",
+     "Strategy assumes capabilities the org cannot hire",
+     "Capability map paired to the roadmap; buy/partner/hire call per capability"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the decision system behind the portfolio"
+  },
+  {
+   "t": "p",
+   "x": "The architecture below is deliberately boring: intake with provability screens, a risk-tiered gate ladder, a single platform decision point, and the evidence store that lets the steering committee audit its own choices a year later."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Enterprise AI Strategy & Roadmapping",
+   "title": "Reference architecture — AI program operating model",
    "lanes": [
-    "Systems of record",
-    "Contracted inputs",
-    "Retrieval core",
-    "Guarded generation",
-    "Controls",
-    "Surfaces"
+    "Portfolio intake",
+    "Provability & risk",
+    "Platform decision",
+    "Delivery lanes",
+    "Adoption & change",
+    "Board reporting"
    ],
    "nodes": [
     {
-     "id": "src0",
+     "id": "ideas",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Use-case intake"
     },
     {
-     "id": "src1",
+     "id": "audit",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "Existing estate review"
     },
     {
-     "id": "ct2",
+     "id": "value",
+     "lane": 0,
+     "label": "Value hypotheses"
+    },
+    {
+     "id": "prov",
      "lane": 1,
-     "label": "Schema contracts",
-     "hot": false
-    },
-    {
-     "id": "ct3",
-     "lane": 1,
-     "label": "Freshness SLAs",
-     "hot": false
-    },
-    {
-     "id": "rc4",
-     "lane": 2,
-     "label": "Enterprise AI Strategy & Roadmapping",
+     "label": "Provability screen",
      "hot": true
     },
     {
-     "id": "rc5",
-     "lane": 2,
-     "label": "Embedding pipeline",
-     "hot": false
-    },
-    {
-     "id": "gg6",
-     "lane": 3,
-     "label": "Grounded answering",
+     "id": "risk",
+     "lane": 1,
+     "label": "Risk tiering",
      "hot": true
     },
     {
-     "id": "gg7",
+     "id": "buy",
+     "lane": 1,
+     "label": "Buy/build/partner"
+    },
+    {
+     "id": "plat",
+     "lane": 2,
+     "label": "Platform direction memo",
+     "hot": true
+    },
+    {
+     "id": "vendor",
+     "lane": 2,
+     "label": "Vendor posture"
+    },
+    {
+     "id": "res",
+     "lane": 2,
+     "label": "Residency & policy"
+    },
+    {
+     "id": "lanes",
      "lane": 3,
-     "label": "Prompt & cost router",
-     "hot": false
+     "label": "Funded delivery slices",
+     "hot": true
     },
     {
-     "id": "co8",
+     "id": "std",
+     "lane": 3,
+     "label": "Standards & gates"
+    },
+    {
+     "id": "talent",
+     "lane": 3,
+     "label": "Team topology"
+    },
+    {
+     "id": "adopt",
      "lane": 4,
-     "label": "Eval harness",
-     "hot": false
+     "label": "Change management"
     },
     {
-     "id": "co9",
+     "id": "train",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Enablement tracks"
     },
     {
-     "id": "su10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "comms",
+     "lane": 4,
+     "label": "Comms plan"
     },
     {
-     "id": "su11",
+     "id": "kpi",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "KPI ledger",
+     "hot": true
+    },
+    {
+     "id": "board",
+     "lane": 5,
+     "label": "Quarterly board pack"
+    },
+    {
+     "id": "kill",
+     "lane": 5,
+     "label": "Stop-loss review"
     }
    ],
    "edges": [
     {
-     "a": "src0",
-     "b": "ct2"
+     "a": "ideas",
+     "b": "prov"
     },
     {
-     "a": "src1",
-     "b": "ct2"
+     "a": "audit",
+     "b": "prov",
+     "label": "baseline"
     },
     {
-     "a": "ct2",
-     "b": "rc4"
+     "a": "value",
+     "b": "prov",
+     "label": "hypothesis"
     },
     {
-     "a": "ct3",
-     "b": "rc5"
+     "a": "prov",
+     "b": "risk"
     },
     {
-     "a": "rc4",
-     "b": "gg6"
+     "a": "risk",
+     "b": "buy",
+     "label": "tier"
     },
     {
-     "a": "rc5",
-     "b": "gg7"
+     "a": "prov",
+     "b": "lanes",
+     "label": "fund"
     },
     {
-     "a": "gg6",
-     "b": "co8"
+     "a": "plat",
+     "b": "lanes",
+     "label": "direction"
     },
     {
-     "a": "co8",
-     "b": "co9"
+     "a": "vendor",
+     "b": "plat",
+     "label": "input"
     },
     {
-     "a": "gg6",
-     "b": "su10"
+     "a": "res",
+     "b": "plat",
+     "label": "constraint"
     },
     {
-     "a": "gg7",
-     "b": "su11"
+     "a": "std",
+     "b": "lanes",
+     "label": "gates"
+    },
+    {
+     "a": "talent",
+     "b": "lanes",
+     "label": "staffing"
+    },
+    {
+     "a": "lanes",
+     "b": "adopt",
+     "label": "shippable"
+    },
+    {
+     "a": "adopt",
+     "b": "train"
+    },
+    {
+     "a": "adopt",
+     "b": "comms"
+    },
+    {
+     "a": "lanes",
+     "b": "kpi",
+     "label": "evidence"
+    },
+    {
+     "a": "kpi",
+     "b": "board",
+     "label": "quarterly"
+    },
+    {
+     "a": "kpi",
+     "b": "kill",
+     "label": "thresholds"
     }
    ],
-   "note": "Topology inherited from the Applied AI & GenAI tower; the highlighted core is this service's build."
+   "note": "The stop-loss review is the most valuable meeting in the model: ideas die on evidence at the KPI ledger, not in hallway politics."
   },
   {
    "t": "h2",
-   "x": "The artifacts, named"
+   "x": "From idea intake to funded slice"
   },
   {
    "t": "p",
-   "x": "the artifacts, each with a walkthrough when it lands, Enterprise AI Strategy & Roadmapping edition:"
+   "x": "How an idea moves through screening, baseline definition, gate scoring and the fund-or-kill verdict — with the exit paths where most ideas correctly die."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "optimization-funnel",
+   "title": "Portfolio funnel — from intake to funded, gated slices",
+   "labels": [
+    "Intake",
+    "Provability screen",
+    "Risk tier",
+    "Platform fit",
+    "Funded slice",
+    "Gate reviews",
+    "Scale or stop"
+   ],
+   "note": "Each funnel stage has a kill criterion; the screen exists to spend real money only where a metric can actually move."
+  },
+  {
+   "t": "h2",
+   "x": "The portfolio console the steering committee reads"
+  },
+  {
+   "t": "p",
+   "x": "Funded slices, baselines signed, median time to first gate, ideas stopped on evidence and platform reuse — the five numbers that show whether strategy is compounding or performing."
+  },
+  {
+   "t": "idash",
+   "title": "Enterprise AI strategy — portfolio & capability console",
+   "kpis": [
+    {
+     "label": "Use cases scored",
+     "value": "64",
+     "delta": "3-axis rubric, owners signed",
+     "dir": "up",
+     "spark": [
+      0,
+      12,
+      28,
+      40,
+      52,
+      60,
+      64
+     ]
+    },
+    {
+     "label": "Funded slate",
+     "value": "11",
+     "delta": "year-1 portfolio",
+     "dir": "flat",
+     "spark": [
+      0,
+      2,
+      5,
+      7,
+      9,
+      10,
+      11
+     ]
+    },
+    {
+     "label": "Value at stake",
+     "value": "34.2",
+     "delta": "$M annualized, measured baselines",
+     "dir": "up",
+     "spark": [
+      8,
+      14,
+      20,
+      25,
+      29,
+      32,
+      34
+     ]
+    },
+    {
+     "label": "Capability gaps",
+     "value": "6",
+     "delta": "funded in dependency order",
+     "dir": "down",
+     "spark": [
+      14,
+      12,
+      10,
+      9,
+      8,
+      7,
+      6
+     ]
+    },
+    {
+     "label": "Risk tiers defined",
+     "value": "3",
+     "delta": "controls mapped per tier",
+     "dir": "flat",
+     "spark": [
+      0,
+      1,
+      2,
+      3,
+      3,
+      3,
+      3
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Portfolio map",
+     "widgets": [
+      {
+       "kind": "scatter",
+       "title": "The scored estate — value vs readiness, bubble = risk",
+       "points": [
+        {
+         "x": 78,
+         "y": 66,
+         "label": "Claims triage",
+         "group": "Tier-1"
+        },
+        {
+         "x": 64,
+         "y": 48,
+         "label": "Quality inspection",
+         "group": "Tier-2"
+        },
+        {
+         "x": 88,
+         "y": 24,
+         "label": "Underwriting assist",
+         "group": "Tier-1"
+        },
+        {
+         "x": 52,
+         "y": 72,
+         "label": "Service summaries",
+         "group": "Tier-3"
+        },
+        {
+         "x": 44,
+         "y": 35,
+         "label": "Demand forecast",
+         "group": "Tier-2"
+        },
+        {
+         "x": 70,
+         "y": 30,
+         "label": "Contract intel",
+         "group": "Tier-2"
+        },
+        {
+         "x": 35,
+         "y": 55,
+         "label": "HR self-serve",
+         "group": "Tier-3"
+        },
+        {
+         "x": 58,
+         "y": 18,
+         "label": " Fraud graph",
+         "group": "Tier-1"
+        },
+        {
+         "x": 30,
+         "y": 68,
+         "label": "Meeting ops",
+         "group": "Tier-3"
+        },
+        {
+         "x": 82,
+         "y": 12,
+         "label": "Dynamic pricing",
+         "group": "Tier-1"
+        }
+       ],
+       "groups": [
+        "Tier-1",
+        "Tier-2",
+        "Tier-3"
+       ],
+       "xLabel": "Value (0-100)",
+       "yLabel": "Readiness (0-100)",
+       "note": "Hover for names and risk tier. High-value low-readiness candidates become data-engineering line items; the funded slate comes from the upper-right, tiered controls attached."
+      }
+     ]
+    },
+    {
+     "name": "Capability heat",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Capability maturity × domain — where the estate actually stands",
+       "rows": [
+        "Data foundations",
+        "Eval infra",
+        "Model ops",
+        "Integration",
+        "Governance",
+        "Talent"
+       ],
+       "cats": [
+        "Data",
+        "Applications",
+        "Operations",
+        "Front office"
+       ],
+       "matrix": [
+        [
+         62,
+         41,
+         38,
+         55,
+         30,
+         48
+        ],
+        [
+         54,
+         22,
+         25,
+         61,
+         28,
+         40
+        ],
+        [
+         70,
+         35,
+         30,
+         66,
+         34,
+         45
+        ],
+        [
+         48,
+         18,
+         20,
+         58,
+         26,
+         36
+        ]
+       ],
+       "unit": "maturity 0-100",
+       "note": "Hover cells to read maturity. Eval infrastructure is the dark row everywhere — which is why portfolio execution stalls at gate 3. The roadmap funds eval before platform, always."
+      }
+     ]
+    },
+    {
+     "name": "Roadmap what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Roadmap pacing what-if — delivery pods vs portfolio throughput",
+       "params": [
+        {
+         "name": "Delivery pods",
+         "min": 1,
+         "max": 12,
+         "step": 1,
+         "value": 5,
+         "unit": "pods"
+        },
+        {
+         "name": "Platform investment",
+         "min": 0,
+         "max": 10,
+         "step": 1,
+         "value": 6,
+         "unit": "$M/yr"
+        },
+        {
+         "name": "Use-case volume",
+         "min": 10,
+         "max": 100,
+         "step": 5,
+         "value": 45,
+         "unit": "cases/yr"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Throughput",
+         "unit": "cases/yr delivered",
+         "formula": "p0*4.2*(1+p1*0.09)*(p2/45)*0.8",
+         "good": "30",
+         "bad": "12"
+        },
+        {
+         "name": "Cost per delivered case",
+         "unit": "$k",
+         "formula": "p0*0.9*12/ max(1,p0*4.2*(1+p1*0.09)*(p2/45)*0.8) *10",
+         "good": "3",
+         "bad": "7"
+        },
+        {
+         "name": "Platform coverage",
+         "unit": "%",
+         "formula": "min(92, 30+p1*7)",
+         "good": "75",
+         "bad": "45"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 0,
+        "label": "Pods vs annual throughput"
+       },
+       "note": "Throughput scales sublinearly in pods — platform investment buys the second wave of the curve. The cost-per-case readout is the CFO's argument for funding the platform once instead of forty times."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · portfolio model",
+   "note": "Reference program model: scoring rubric bands and maturity indices from delivery, not client data."
+  },
+  {
+   "t": "h2",
+   "x": "Portfolio shape across quarters"
+  },
+  {
+   "t": "p",
+   "x": "Allocation bands across four quarters: discovery, provability, build and industrialize. The healthy signature is a portfolio that shifts weight right as evidence accumulates — not one that stays in discovery forever."
+  },
+  {
+   "t": "chart",
+   "title": "Portfolio shape across quarters — reference allocation bands",
+   "variant": "bar",
+   "cats": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4"
+   ],
+   "series": [
+    {
+     "name": "Provable slices funded",
+     "points": [
+      2,
+      4,
+      5,
+      6
+     ]
+    },
+    {
+     "name": "Stopped on evidence",
+     "points": [
+      1,
+      3,
+      5,
+      9
+     ]
+    },
+    {
+     "name": "Platform reuse %",
+     "points": [
+      30,
+      45,
+      60,
+      71
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Enterprise AI Strategy & Roadmapping across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Enterprise AI Strategy & Roadmapping",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Provability screens and risk-tiered gates calibrated to your regulator",
+      "One platform decision, made once, before the seventh pilot",
+      "A stop-loss discipline signed at funding time and actually enforced"
+     ],
+     "kpis": [
+      {
+       "label": "Funded slices",
+       "value": "6"
+      },
+      {
+       "label": "Baselines signed",
+       "value": "6/6"
+      },
+      {
+       "label": "Median time to first gate",
+       "value": "5 wks"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": true,
+     "hook": "Ask what pricing sophistication outrunning governance costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Provability screens and risk-tiered gates calibrated to your regulator",
+      "One platform decision, made once, before the seventh pilot",
+      "A stop-loss discipline signed at funding time and actually enforced"
+     ],
+     "kpis": [
+      {
+       "label": "Funded slices",
+       "value": "6"
+      },
+      {
+       "label": "Baselines signed",
+       "value": "6/6"
+      },
+      {
+       "label": "Median time to first gate",
+       "value": "5 wks"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Provability screens and risk-tiered gates calibrated to your regulator",
+      "One platform decision, made once, before the seventh pilot",
+      "A stop-loss discipline signed at funding time and actually enforced",
+      "Sector working pattern: ambient clinical documentation: visit audio to structured draft notes in EHR templates with clinician sign-off. Documentation time down 25%+ is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Funded slices",
+       "value": "6"
+      },
+      {
+       "label": "Baselines signed",
+       "value": "6/6"
+      },
+      {
+       "label": "Median time to first gate",
+       "value": "5 wks"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "Manufacturing & Industrial operators recognize the pattern: quality escapes and manual inspection, quarter after quarter.",
+     "plays": [
+      "Provability screens and risk-tiered gates calibrated to your regulator",
+      "One platform decision, made once, before the seventh pilot",
+      "A stop-loss discipline signed at funding time and actually enforced"
+     ],
+     "kpis": [
+      {
+       "label": "Funded slices",
+       "value": "6"
+      },
+      {
+       "label": "Baselines signed",
+       "value": "6/6"
+      },
+      {
+       "label": "Median time to first gate",
+       "value": "5 wks"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Provability screens and risk-tiered gates calibrated to your regulator",
+      "One platform decision, made once, before the seventh pilot",
+      "A stop-loss discipline signed at funding time and actually enforced"
+     ],
+     "kpis": [
+      {
+       "label": "Funded slices",
+       "value": "6"
+      },
+      {
+       "label": "Baselines signed",
+       "value": "6/6"
+      },
+      {
+       "label": "Median time to first gate",
+       "value": "5 wks"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Provability screens and risk-tiered gates calibrated to your regulator",
+      "One platform decision, made once, before the seventh pilot",
+      "A stop-loss discipline signed at funding time and actually enforced",
+      "Sector working pattern: resolution-first voice care — grounded voice agents resolving top intents with telephony integration and escalation context. Care cost per contact down 30% is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Funded slices",
+       "value": "6"
+      },
+      {
+       "label": "Baselines signed",
+       "value": "6/6"
+      },
+      {
+       "label": "Median time to first gate",
+       "value": "5 wks"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Provability screens and risk-tiered gates calibrated to your regulator",
+      "One platform decision, made once, before the seventh pilot",
+      "A stop-loss discipline signed at funding time and actually enforced"
+     ],
+     "kpis": [
+      {
+       "label": "Funded slices",
+       "value": "6"
+      },
+      {
+       "label": "Baselines signed",
+       "value": "6/6"
+      },
+      {
+       "label": "Median time to first gate",
+       "value": "5 wks"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: demand and capacity planning stale, quarter after quarter.",
+     "plays": [
+      "Provability screens and risk-tiered gates calibrated to your regulator",
+      "One platform decision, made once, before the seventh pilot",
+      "A stop-loss discipline signed at funding time and actually enforced",
+      "Sector working pattern: eta prediction in Logistics & Supply Chain, where traffic, weather and history-driven ETA models per lane and mode. Promise accuracy up; penalties down is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Funded slices",
+       "value": "6"
+      },
+      {
+       "label": "Baselines signed",
+       "value": "6/6"
+      },
+      {
+       "label": "Median time to first gate",
+       "value": "5 wks"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": true,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use.",
+     "plays": [
+      "Provability screens and risk-tiered gates calibrated to your regulator",
+      "One platform decision, made once, before the seventh pilot",
+      "A stop-loss discipline signed at funding time and actually enforced"
+     ],
+     "kpis": [
+      {
+       "label": "Funded slices",
+       "value": "6"
+      },
+      {
+       "label": "Baselines signed",
+       "value": "6/6"
+      },
+      {
+       "label": "Median time to first gate",
+       "value": "5 wks"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Provability screens and risk-tiered gates calibrated to your regulator",
+      "One platform decision, made once, before the seventh pilot",
+      "A stop-loss discipline signed at funding time and actually enforced"
+     ],
+     "kpis": [
+      {
+       "label": "Funded slices",
+       "value": "6"
+      },
+      {
+       "label": "Baselines signed",
+       "value": "6/6"
+      },
+      {
+       "label": "Median time to first gate",
+       "value": "5 wks"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Provability screens and risk-tiered gates calibrated to your regulator",
+      "One platform decision, made once, before the seventh pilot",
+      "A stop-loss discipline signed at funding time and actually enforced"
+     ],
+     "kpis": [
+      {
+       "label": "Funded slices",
+       "value": "6"
+      },
+      {
+       "label": "Baselines signed",
+       "value": "6/6"
+      },
+      {
+       "label": "Median time to first gate",
+       "value": "5 wks"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Provability screens and risk-tiered gates calibrated to your regulator",
+      "One platform decision, made once, before the seventh pilot",
+      "A stop-loss discipline signed at funding time and actually enforced"
+     ],
+     "kpis": [
+      {
+       "label": "Funded slices",
+       "value": "6"
+      },
+      {
+       "label": "Baselines signed",
+       "value": "6/6"
+      },
+      {
+       "label": "Median time to first gate",
+       "value": "5 wks"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/"
+    }
+   ],
+   "practiceNote": "Enterprise AI Strategy & Roadmapping view: portfolio management under uncertainty: provability screens, risk-tiered gates, a platform decision made once, and a stop-loss that holds."
+  },
+  {
+   "t": "h2",
+   "x": "Standards the portfolio runs on — and where we deviate"
+  },
+  {
+   "t": "p",
+   "x": "The strategy layer standardizes decisions, not tools: gate definitions, evidence formats and re-baseline cadence. Where an enterprise standard already exists, it wins; the conditions are explicit."
+  },
+  {
+   "t": "table",
+   "caption": "Enterprise AI Strategy & Roadmapping: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "AI value and feasibility scorecard for the full use-case portfolio",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Intake instrument",
+     "One-page provability canvas: metric, owner, data path, kill criterion",
+     "Two-hundred-line business cases — nobody reads them and they hide weak math"
     ],
     [
-     "Target operating model with RACI for build, run and control",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Risk tiering",
+     "Three tiers mapped to gates and evidence depth",
+     "Single committee for everything — the queue is the program's coffin"
     ],
     [
-     "24-month investment-sequenced roadmap with stage gates",
-     "Handed to a named owner on your side, with a working session included."
+     "Platform call",
+     "Gateway-first with registry and eval spine before the third build",
+     "Waiting for 'the vendor landscape to settle' — it does not"
     ],
     [
-     "AI policy baseline aligned to NIST AI RMF and EU AI Act",
-     "Handed to a named owner on your side, with a working session included."
+     "Team topology",
+     "Platform team + 2–4 product-aligned slices",
+     "One central 'AI team' doing everything — it becomes the bottleneck"
+    ],
+    [
+     "Board reporting",
+     "KPI ledger with spend, deltas and stop-loss record",
+     "Activity updates — they reward motion instead of value"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Under the hood"
+   "x": "Portfolio gates — the evidence each rung demands"
   },
   {
-   "t": "p",
-   "x": "Enterprise AI Strategy & Roadmapping is built against defined standards: NIST AI RMF, EU AI Act, ISO/IEC 42001, TOGAF, MCDA scoring models, Monte Carlo value simulation. Each choice is justified in writing as part of the architecture baseline, so your team can defend it without us in the room."
+   "t": "table",
+   "caption": "Release gates for Enterprise AI Strategy & Roadmapping — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Screen gate",
+     "Is the use case provable and owned?",
+     "Metric, owner, data path, kill criterion — all named"
+    ],
+    [
+     "Platform gate",
+     "Does it ride shared rails?",
+     "Reuse plan or written exception with migration date"
+    ],
+    [
+     "Gate 1",
+     "Did the baseline get signed?",
+     "Baseline doc with owner and collection method"
+    ],
+    [
+     "Gate 2",
+     "Did the build clear the eval bar?",
+     "Eval report at pinned version with thresholds"
+    ],
+    [
+     "Stop-loss",
+     "Is the evidence still worth the spend?",
+     "KPI ledger delta vs forecast; decision recorded"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "Sequencing, honestly"
+   "x": "What the executive team owns at the end"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Enterprise AI Strategy & Roadmapping starts with the measurement: the metric, the owner, the current number, signed."
+     "Portfolio ledger",
+     "Every use case with metric, tier, status, spend and evidence link"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, value mapping sprint first, gates written with your team."
+     "Platform decision memo",
+     "Direction, constraints, migration path — signed by engineering leadership"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Enterprise AI Strategy & Roadmapping are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Gate model",
+     "Risk-tiered gates with evidence checklists your risk team accepts"
+    ],
+    [
+     "Roadmap with slices",
+     "Funded slices with owners, baselines and gate dates"
+    ],
+    [
+     "Capability map",
+     "Team topology, hiring plan, buy/partner calls per capability"
+    ],
+    [
+     "Board pack template",
+     "KPI ledger, spend-vs-value, stop-loss record — quarterly cadence"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "How the strategy engagement runs"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — estate & portfolio audit",
+     "Existing models, spend, orphans; intake review; value hypothesis workshop"
+    ],
+    [
+     "Weeks 3–4 — provability & risk model",
+     "Screen all candidates; risk tiers; kill list published with reasons"
+    ],
+    [
+     "Weeks 5–6 — platform decision",
+     "Direction memo, residency map, vendor posture, migration path for pilots"
+    ],
+    [
+     "Weeks 7–8 — first funded slice",
+     "Baseline signed, team staffed, gate dates set — delivery starts, not planning"
+    ],
+    [
+     "Weeks 9–10 — operating model live",
+     "Gate reviews scheduled, stop-loss rules, board pack v1"
+    ],
+    [
+     "Ongoing — quarterly rhythm",
+     "Portfolio review, platform reuse audit, capability re-plan"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — finance, risk and the PMO"
+  },
+  {
+   "t": "p",
+   "x": "Strategy lives in your existing governance machinery; these are the working agreements that make the portfolio auditable inside it."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "PMO & finance",
+     "Ledger integration for spend and value tracking"
+    ],
+    [
+     "Risk & compliance",
+     "Gate model mapped to existing control frameworks"
+    ],
+    [
+     "Enterprise architecture",
+     "Platform memo feeds the architecture review board"
+    ],
+    [
+     "HR & L&D",
+     "Enablement tracks tied to the roadmap"
+    ],
+    [
+     "Vendor management",
+     "Procurement posture for model and tooling vendors"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Decision governance — the audit trail of funded and killed ideas"
+  },
+  {
+   "t": "p",
+   "x": "Decision lineage is the deliverable: every funded and killed idea carries its screen, baseline and verdict — the record that makes the next audit a reading exercise instead of an archaeology project."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Stop-loss rule",
+     "Pre-agreed thresholds that stop spend without a political fight"
+    ],
+    [
+     "Decision log",
+     "Every gate decision recorded with evidence and dissents"
+    ],
+    [
+     "Baseline integrity",
+     "Signed baselines cannot be edited post hoc; revisions are new documents"
+    ],
+    [
+     "Conflict-of-interest screen",
+     "Buy/build calls record who benefits from each option"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "The stop-loss is signed at funding time: the conditions under which a funded slice is stopped are written before the first sprint, so the argument never happens after the money is spent."
   },
   {
    "t": "cta",
-   "x": "Start with the diagnostic, not the contract: Enterprise AI Strategy & Roadmapping baselined in two weeks, and a scoped proposal only if the delta justifies it."
+   "x": "Bring the pilot inventory — including the dead ones. The two-week diagnostic will tell you which of them were killable on evidence, and what the funded portfolio should have looked like instead."
   }
  ],
- "words": 540,
+ "words": 1176,
  "section": "Services",
  "l1": "Services",
  "l2": "Applied AI & Generative AI",
@@ -278,7 +1202,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Applied AI & Generative AI",
+   "title": "Domain overview — Applied AI & Generative AI",
    "url": "/services/applied-ai-generative-ai/",
    "desc": "From enterprise strategy to production models — AI measured on the P&L."
   },
@@ -330,33 +1254,51 @@
   {
    "title": "Cyber & Zero-Trust for Healthcare & Life Sciences",
    "url": "/industries/healthcare-life-sciences/capabilities/cybersecurity-zero-trust/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Generative AI Platform Engineering",
-   "url": "/services/applied-ai-generative-ai/genai-platform-engineering/",
-   "tag": "Same tower",
-   "desc": "One governed platform, many GenAI products — retrieval, guardrails and cost control as shared services."
-  },
-  {
-   "title": "LLM Fine-Tuning & Model Operations",
-   "url": "/services/applied-ai-generative-ai/llm-fine-tuning-ops/",
-   "tag": "Same tower",
-   "desc": "Own your models — tune, distill and operate LLMs with measurable quality, controlled cost and enforceable policy."
-  },
-  {
    "title": "RAG & Enterprise Knowledge Systems",
    "url": "/services/applied-ai-generative-ai/rag-knowledge-systems/",
-   "tag": "Same tower",
-   "desc": "Answers with citations, not vibes — permission-aware retrieval over your regulated document estate."
+   "tag": "Same domain",
+   "desc": "permission-aware retrieval over your regulated document estate, with answers that cite their sources and refuse when the ground is thin."
   },
   {
-   "title": "Multimodal AI & Vision-Language Systems",
-   "url": "/services/applied-ai-generative-ai/multimodal-vision-systems/",
-   "tag": "Same tower",
-   "desc": "Models that read scans, scenes and schematics — multimodal intelligence wired into operations."
+   "title": "AI Proof-of-Concept & Value Validation",
+   "url": "/services/applied-ai-generative-ai/ai-poc-value-validation/",
+   "tag": "Same domain",
+   "desc": "the four-week sprint that ends in a fund-or-kill verdict with auditable numbers — baseline first, real data path, no demo-ware."
+  },
+  {
+   "title": "Conversational AI & Digital Humans",
+   "url": "/services/applied-ai-generative-ai/conversational-ai-digital-humans/",
+   "tag": "Same domain",
+   "desc": "grounded chat and voice agents that contain more without trust loss — dignified handoffs, streaming voice budgets, dialog eval nightly."
+  },
+  {
+   "title": "Intelligent Document Processing",
+   "url": "/services/agentic-ai-hyperautomation/intelligent-document-processing/",
+   "tag": "Pairs with",
+   "desc": "extraction and adjudication inside the process — documents become decisions with confidence gates, evidence and a human queue that shrinks on measurement."
+  },
+  {
+   "title": "Real-Time Streaming & Event-Driven Decisioning",
+   "url": "/services/data-analytics-lakehouse/realtime-streaming-decisioning/",
+   "tag": "Pairs with",
+   "desc": "sub-second decision paths on streams — exactly-once state, replay semantics and latency budgets that are measured, not asserted."
+  },
+  {
+   "title": "AI Security & Model Protection",
+   "url": "/services/cybersecurity-zero-trust/ai-security-model-protection/",
+   "tag": "Pairs with",
+   "desc": "security for the models themselves — prompt-injection defense, abuse containment, model theft resistance and eval-based red teams wired into the platform."
+  },
+  {
+   "title": "A specialty chemicals producer",
+   "url": "/case-studies/mfg-02/",
+   "tag": "Evidence",
+   "desc": "Yield +3.4 points and energy per tonne down 17% — APC augmentation program."
   }
  ]
 }

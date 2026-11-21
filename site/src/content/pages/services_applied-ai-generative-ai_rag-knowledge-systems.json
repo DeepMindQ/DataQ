@@ -9,264 +9,1218 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "There is a plain version of rag & enterprise knowledge systems: Answers with citations, not vibes — permission-aware retrieval over your regulated document estate. We run it with named gates, signed baselines and a weekly evidence cadence — the details are below, in the order they happen."
+   "x": "Retrieval that cites or refuses: permission-aware RAG over your regulated document estate, where every answer carries its sources, its freshness and its permission lineage — and where the corpus contracts that make that possible are built first, not last."
   },
   {
    "t": "h2",
-   "x": "The job this service does"
+   "x": "Why corpus engineering decides the answer quality"
   },
   {
    "t": "p",
-   "x": "The workhorse of enterprise GenAI is retrieval-augmented generation done properly: hybrid lexical-plus-semantic search, structure-aware chunking for contracts, filings, SOPs and clinical protocols, permission propagation from the source system, and reranking that respects both relevance and freshness. We build retrieval platforms where every answer carries citations back to the source document and paragraph."
+   "x": "Retrieval-augmented generation done properly is corpus engineering wearing a chat interface. The model is the easy ten percent; the ninety percent is deciding what counts as truth in your estate, who may see it, how fresh it must be, and how an answer proves where it came from."
   },
   {
    "t": "p",
-   "x": "The hard parts are organizational as much as technical: document estates are duplicated, stale and inconsistently access-controlled. Our delivery includes a knowledge inventory and remediation plan, connector framework for SharePoint, Confluence, DMS and file shares, and freshness SLAs so the corpus does not rot — the failure mode that kills user trust in month three."
+   "x": "The organizational parts bite harder than the technical ones: document estates duplicate across portals, the authoritative copy is rarely the most recent one, and permission models live in systems the search team has never been allowed to read. We build the contracts that fix that first, because every grounded answer downstream inherits their quality."
+  },
+  {
+   "t": "p",
+   "x": "Everything below is build-order material: the failure modes we design against, the architecture that fixes them, and the gates a release clears before a user sees an answer."
   },
   {
    "t": "h2",
-   "x": "The stakes, stated plainly"
+   "x": "Four failure modes that quietly kill enterprise RAG"
   },
   {
    "t": "p",
-   "x": "Programs of RAG & Enterprise Knowledge Systems run in Banking & Financial Services, Insurance & Risk, Healthcare & Life Sciences, Public Sector & Government — always against one named number, always with the baseline signed first."
+   "x": "Each failure below has shipped in production somewhere; each has a countermeasure that lands with the build, not in a later phase."
   },
   {
-   "t": "h2",
-   "x": "The working system, described"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "RAG & Enterprise Knowledge Systems: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Corpus engineering",
-     "knowledge inventory, deduplication, versioning strategy and freshness SLAs"
+     "Stale authoritative sources",
+     "Answers cite a version of truth the owning team retired months ago",
+     "Freshness SLAs per source with owner paging at breach; answer carries source timestamp"
     ],
     [
-     "Hybrid retrieval stack",
-     "BM25 + dense embeddings + reranking, tuned per document genre"
+     "Permission leakage",
+     "Retrieval returns documents the asker was never entitled to see",
+     "Query-time permission filter compiled from the source-of-trust ACL, tested in the eval suite"
     ],
     [
-     "Permission-aware serving",
-     "ACL propagation so answers respect source-system entitlements"
+     "Duplicate and conflicting content",
+     "Six portals host three variants of the same policy; retrieval ranks the wrong one",
+     "Corpus dedup pass with canonical-source registry; conflicting pairs quarantined for review"
     ],
     [
-     "Citation & provenance",
-     "paragraph-level citations with answer-grounding verification"
-    ],
-    [
-     "Connector framework",
-     "certified connectors for SharePoint, Confluence, S3, DMS and legacy stores"
+     "Unmeasurable quality",
+     "Nobody can say whether last week's model change helped or hurt",
+     "Versioned eval suite with groundedness and citation precision thresholds blocking promotion"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — permission-aware retrieval with citations"
+  },
+  {
+   "t": "p",
+   "x": "Two properties matter more than model choice here: nothing reaches the answer layer without passing the permission map, and every generated claim traces to a span in a source the asker was allowed to read. The lanes below show how those properties are enforced structurally rather than by prompt goodwill."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — RAG & Enterprise Knowledge Systems",
+   "title": "Reference architecture — permission-aware RAG with citations",
    "lanes": [
     "Estate",
-    "Ingest",
+    "Ingest & contracts",
     "Knowledge spine",
-    "Task services",
-    "Governance",
-    "Users"
+    "Answer services",
+    "Evaluation",
+    "Surfaces"
    ],
    "nodes": [
     {
-     "id": "src0",
+     "id": "shares",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "SharePoint & drives"
     },
     {
-     "id": "src1",
+     "id": "wiki",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "Confluence & wikis"
     },
     {
-     "id": "src2",
+     "id": "dms",
      "lane": 0,
-     "label": "KYC / AML case manager",
-     "hot": false
+     "label": "DMS & records"
     },
     {
-     "id": "in3",
+     "id": "conn",
      "lane": 1,
-     "label": "Event & batch intake",
-     "hot": false
+     "label": "Connectors"
     },
     {
-     "id": "in4",
+     "id": "dedup",
      "lane": 1,
-     "label": "PII minimization",
-     "hot": false
-    },
-    {
-     "id": "ks5",
-     "lane": 2,
-     "label": "RAG & Enterprise Knowledge Systems",
+     "label": "Canonical registry",
      "hot": true
     },
     {
-     "id": "ks6",
+     "id": "pii",
+     "lane": 1,
+     "label": "PII scan"
+    },
+    {
+     "id": "idx",
      "lane": 2,
-     "label": "Citations & provenance",
-     "hot": false
+     "label": "Hybrid index (BM25+dense)",
+     "hot": true
     },
     {
-     "id": "ts7",
+     "id": "kg",
+     "lane": 2,
+     "label": "Entity graph"
+    },
+    {
+     "id": "acl",
+     "lane": 2,
+     "label": "Permission map",
+     "hot": true
+    },
+    {
+     "id": "tsla",
+     "lane": 2,
+     "label": "Freshness SLA"
+    },
+    {
+     "id": "ret",
      "lane": 3,
-     "label": "Classify & extract",
-     "hot": false
+     "label": "Retrieval planner",
+     "hot": true
     },
     {
-     "id": "ts8",
+     "id": "rerank",
      "lane": 3,
-     "label": "Summarize & draft",
-     "hot": false
+     "label": "Cross-encoder rerank"
     },
     {
-     "id": "gv9",
+     "id": "gen",
+     "lane": 3,
+     "label": "Grounded generation",
+     "hot": true
+    },
+    {
+     "id": "eval",
      "lane": 4,
-     "label": "Eval gates",
-     "hot": false
+     "label": "Eval harness"
     },
     {
-     "id": "gv10",
+     "id": "redteam",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Red-team probes"
     },
     {
-     "id": "us11",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "meter",
+     "lane": 4,
+     "label": "Cost meter"
     },
     {
-     "id": "us12",
+     "id": "chat",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Assistant in tools"
+    },
+    {
+     "id": "api",
+     "lane": 5,
+     "label": "Answer API"
+    },
+    {
+     "id": "cite",
+     "lane": 5,
+     "label": "Citation viewer"
     }
    ],
    "edges": [
     {
-     "a": "src0",
-     "b": "in3"
+     "a": "shares",
+     "b": "conn"
     },
     {
-     "a": "src1",
-     "b": "in3"
+     "a": "wiki",
+     "b": "conn"
     },
     {
-     "a": "src2",
-     "b": "in4"
+     "a": "dms",
+     "b": "conn",
+     "label": "API"
     },
     {
-     "a": "in3",
-     "b": "ks5"
+     "a": "conn",
+     "b": "dedup",
+     "label": "register"
     },
     {
-     "a": "in4",
-     "b": "ks5"
+     "a": "conn",
+     "b": "pii",
+     "label": "scan"
     },
     {
-     "a": "ks5",
-     "b": "ts7"
+     "a": "dedup",
+     "b": "idx",
+     "label": "canonical"
     },
     {
-     "a": "ks5",
-     "b": "ts8"
+     "a": "pii",
+     "b": "idx",
+     "label": "clean"
     },
     {
-     "a": "ts7",
-     "b": "gv9"
+     "a": "idx",
+     "b": "kg",
+     "label": "entities"
     },
     {
-     "a": "gv9",
-     "b": "gv10"
+     "a": "acl",
+     "b": "ret",
+     "label": "filter"
     },
     {
-     "a": "ts7",
-     "b": "us11"
+     "a": "tsla",
+     "b": "ret",
+     "label": "guard"
     },
     {
-     "a": "ts8",
-     "b": "us12"
+     "a": "ret",
+     "b": "rerank",
+     "label": "top-k"
+    },
+    {
+     "a": "rerank",
+     "b": "gen",
+     "label": "context"
+    },
+    {
+     "a": "gen",
+     "b": "cite",
+     "label": "sources"
+    },
+    {
+     "a": "gen",
+     "b": "eval",
+     "label": "sample"
+    },
+    {
+     "a": "ret",
+     "b": "eval",
+     "label": "recall set"
+    },
+    {
+     "a": "eval",
+     "b": "redteam",
+     "label": "adversarial"
+    },
+    {
+     "a": "gen",
+     "b": "chat",
+     "label": "stream"
+    },
+    {
+     "a": "gen",
+     "b": "api",
+     "label": "serve"
+    },
+    {
+     "a": "meter",
+     "b": "api",
+     "label": "budget"
     }
    ],
-   "note": "Topology inherited from the Applied AI & GenAI tower; the highlighted core is this service's build."
+   "note": "The permission map filters at query time, not index time — index-time filtering rots the moment an ACL changes. Denied retrieval is logged with the reason code."
   },
   {
    "t": "h2",
-   "x": "What you hold at the end"
+   "x": "The answer path, question by question"
   },
   {
    "t": "p",
-   "x": "In RAG & Enterprise Knowledge Systems, the artifacts, each with a walkthrough when it lands:"
+   "x": "Follow one question through the pipeline: rewrite, permission-filtered retrieval, grounding assembly, guarded generation, citation check — and what happens when any stage fails."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Answer path — from question to cited, permission-checked response",
+   "labels": [
+    "Ask",
+    "Rewrite & plan",
+    "Permission filter",
+    "Hybrid retrieve",
+    "Rerank",
+    "Ground & generate",
+    "Cite & verify",
+    "Serve & log"
+   ],
+   "note": "Plan failure falls back to lexical-only retrieval; generation without sufficient grounded context is refused rather than answered — the refusal is itself logged as evidence."
+  },
+  {
+   "t": "h2",
+   "x": "The operating console for a retrieval estate"
+  },
+  {
+   "t": "p",
+   "x": "Five numbers summarize whether a RAG system is healthy: grounded rate, citation precision, cohort recall, latency budget and the refusal rate that proves the system knows what it does not know."
+  },
+  {
+   "t": "idash",
+   "title": "RAG & enterprise knowledge — retrieval console",
+   "kpis": [
+    {
+     "label": "Grounded answers",
+     "value": "93.8%",
+     "delta": "sentence-verified",
+     "dir": "up",
+     "spark": [
+      58,
+      66,
+      74,
+      81,
+      87,
+      91,
+      94
+     ]
+    },
+    {
+     "label": "Retrieval recall@10",
+     "value": "0.891",
+     "delta": "golden questions",
+     "dir": "up",
+     "spark": [
+      0.52,
+      0.61,
+      0.7,
+      0.78,
+      0.84,
+      0.87,
+      0.891
+     ]
+    },
+    {
+     "label": "Refusal precision",
+     "value": "96.4%",
+     "delta": "declines with absent evidence",
+     "dir": "up",
+     "spark": [
+      71,
+      78,
+      84,
+      89,
+      92,
+      95,
+      96
+     ]
+    },
+    {
+     "label": "p95 answer latency",
+     "value": "2.1 s",
+     "delta": "retrieval + rerank + gen",
+     "dir": "down",
+     "spark": [
+      4.8,
+      3.9,
+      3.2,
+      2.8,
+      2.4,
+      2.2,
+      2.1
+     ]
+    },
+    {
+     "label": "Stale-chunk rate",
+     "value": "0.4%",
+     "delta": "freshness SLA enforced",
+     "dir": "down",
+     "spark": [
+      6.2,
+      4.1,
+      2.6,
+      1.5,
+      0.9,
+      0.6,
+      0.4
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Retrieval quality",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Retrieval stack progression — each stage's contribution measured",
+       "cats": [
+        "BM25 only",
+        "Dense only",
+        "Hybrid RRF",
+        "+ Rerank",
+        "+ Metadata",
+        "+ Freshness"
+       ],
+       "series": [
+        {
+         "name": "Recall@10",
+         "points": [
+          52,
+          61,
+          74,
+          82,
+          86,
+          89
+         ]
+        },
+        {
+         "name": "Precision@5",
+         "points": [
+          41,
+          55,
+          63,
+          78,
+          85,
+          89
+         ]
+        },
+        {
+         "name": "Latency p95 (s)",
+         "points": [
+          0.8,
+          1.1,
+          1.3,
+          1.9,
+          2.0,
+          2.1
+         ]
+        }
+       ],
+       "note": "Click to isolate. Reranking buys 9 precision points for 600 ms — the latency budget decision is explicit and reviewed per feature class, not felt as a vague slowdown."
+      }
+     ]
+    },
+    {
+     "name": "Chunking what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Chunk strategy what-if — size, overlap, top-k",
+       "params": [
+        {
+         "name": "Chunk size",
+         "min": 200,
+         "max": 2000,
+         "step": 100,
+         "value": 800,
+         "unit": "tokens"
+        },
+        {
+         "name": "Overlap",
+         "min": 0,
+         "max": 40,
+         "step": 5,
+         "value": 20,
+         "unit": "%"
+        },
+        {
+         "name": "Top-k to rerank",
+         "min": 10,
+         "max": 100,
+         "step": 10,
+         "value": 40,
+         "unit": "chunks"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Recall@10",
+         "unit": "0-1",
+         "formula": "min(0.95, p0*0.00028+p1*0.002+p2*0.0028+0.35)",
+         "good": "0.85",
+         "bad": "0.65"
+        },
+        {
+         "name": "Precision@5",
+         "unit": "0-1",
+         "formula": "max(0.35, 0.95-p0*0.00019-p2*0.0018)",
+         "good": "0.8",
+         "bad": "0.6"
+        },
+        {
+         "name": "Index cost",
+         "unit": "×",
+         "formula": "p0*(1+p1/100)*0.0016",
+         "good": "2",
+         "bad": "5"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 1,
+        "label": "Chunk size vs precision"
+       },
+       "note": "The precision curve falls as chunks grow — big chunks retrieve the neighborhood, not the passage. Small chunks retrieve precisely but lose the argument. The overlap dial buys recall back at index cost."
+      }
+     ]
+    },
+    {
+     "name": "Retrieval stack",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The retrieval fabric — click nodes for their contract",
+       "lanes": [
+        "Sources",
+        "Index",
+        "Retrieve",
+        "Generate",
+        "Evidence"
+       ],
+       "nodes": [
+        {
+         "id": "docs",
+         "lane": 0,
+         "label": "Source estates",
+         "detail": "SharePoint, Confluence, ticketing and document stores ingested with ownership metadata — every chunk carries who owns it and when it governs.",
+         "hot": true
+        },
+        {
+         "id": "chunk",
+         "lane": 1,
+         "label": "Chunking pipeline",
+         "detail": "Semantic chunking with parent-document mapping; metadata enrichment (version, effective date, section) turns chunks into records."
+        },
+        {
+         "id": "hybrid",
+         "lane": 2,
+         "label": "Hybrid search",
+         "detail": "BM25 + dense in RRF fusion; lexical catches identifiers, dense catches paraphrase — the fusion is measured, not faith-based."
+        },
+        {
+         "id": "rerank",
+         "lane": 2,
+         "label": "Cross-encoder rerank",
+         "detail": "Top-k reranked per query class; latency budget per class decides rerank depth — interactive and batch run different depths."
+        },
+        {
+         "id": "acl",
+         "lane": 2,
+         "label": "Scope filter",
+         "detail": "Access control at retrieval time per query scope; the permissions model is the corpus model, enforced before generation sees anything."
+        },
+        {
+         "id": "gen",
+         "lane": 3,
+         "label": "Grounded generation",
+         "detail": "Cited generation with refusal when evidence is absent; the persona never answers past its sources."
+        },
+        {
+         "id": "harness",
+         "lane": 4,
+         "label": "Groundedness harness",
+         "detail": "Claim decomposition nightly: every sentence checked supported/unsupported/contradicted against retrieved evidence; scores published."
+        },
+        {
+         "id": "cite",
+         "lane": 4,
+         "label": "Citation store",
+         "detail": "Answer citations with chunk lineage — the audit artifact that proves which document version answered the question."
+        }
+       ],
+       "edges": [
+        {
+         "a": "docs",
+         "b": "chunk"
+        },
+        {
+         "a": "chunk",
+         "b": "hybrid"
+        },
+        {
+         "a": "hybrid",
+         "b": "rerank"
+        },
+        {
+         "a": "rerank",
+         "b": "acl",
+         "label": "scope"
+        },
+        {
+         "a": "acl",
+         "b": "gen"
+        },
+        {
+         "a": "gen",
+         "b": "cite",
+         "label": "citations"
+        },
+        {
+         "a": "cite",
+         "b": "harness",
+         "label": "verified"
+        }
+       ],
+       "note": "Click nodes to read each contract. The scope filter sits before generation on purpose — permissions are enforced where the corpus is read, not where the answer is written."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · retrieval model",
+   "note": "Reference program model: retrieval bands and latency budgets from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Retrieval quality across eval suite generations"
+  },
+  {
+   "t": "p",
+   "x": "Three quality series tracked across four quarterly eval-suite versions: recall improves as the corpus contracts mature, groundedness and citation precision ride along, and the suite itself is versioned so any change is attributable."
+  },
+  {
+   "t": "chart",
+   "title": "Retrieval quality by eval cohort — design targets across four quarterly suite versions",
+   "variant": "line",
+   "cats": [
+    "Suite v1",
+    "Suite v2",
+    "Suite v3",
+    "Suite v4"
+   ],
+   "series": [
+    {
+     "name": "Recall@5 target %",
+     "points": [
+      78,
+      82,
+      85,
+      88
+     ]
+    },
+    {
+     "name": "Groundedness target %",
+     "points": [
+      86,
+      89,
+      92,
+      94
+     ]
+    },
+    {
+     "name": "Citation precision target %",
+     "points": [
+      84,
+      88,
+      90,
+      93
+     ]
+    }
+   ],
+   "unit": "%",
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "RAG & Enterprise Knowledge Systems across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "RAG & Enterprise Knowledge Systems",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Corpus contracts: canonical registry, freshness SLAs, permission scans",
+      "Hybrid retrieval with reranking and span-level citations",
+      "Eval suite vN that blocks promotion on groundedness or permission regressions"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "Recall@5 (legal cohort)",
+       "value": "0.91"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": true,
+     "hook": "Ask what pricing sophistication outrunning governance costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Corpus contracts: canonical registry, freshness SLAs, permission scans",
+      "Hybrid retrieval with reranking and span-level citations",
+      "Eval suite vN that blocks promotion on groundedness or permission regressions"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "Recall@5 (legal cohort)",
+       "value": "0.91"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Corpus contracts: canonical registry, freshness SLAs, permission scans",
+      "Hybrid retrieval with reranking and span-level citations",
+      "Eval suite vN that blocks promotion on groundedness or permission regressions",
+      "Sector working pattern: ambient clinical documentation: visit audio to structured draft notes in EHR templates with clinician sign-off. Documentation time down 25%+ is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "Recall@5 (legal cohort)",
+       "value": "0.91"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "Manufacturing & Industrial operators recognize the pattern: quality escapes and manual inspection, quarter after quarter.",
+     "plays": [
+      "Corpus contracts: canonical registry, freshness SLAs, permission scans",
+      "Hybrid retrieval with reranking and span-level citations",
+      "Eval suite vN that blocks promotion on groundedness or permission regressions"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "Recall@5 (legal cohort)",
+       "value": "0.91"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Corpus contracts: canonical registry, freshness SLAs, permission scans",
+      "Hybrid retrieval with reranking and span-level citations",
+      "Eval suite vN that blocks promotion on groundedness or permission regressions"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "Recall@5 (legal cohort)",
+       "value": "0.91"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Corpus contracts: canonical registry, freshness SLAs, permission scans",
+      "Hybrid retrieval with reranking and span-level citations",
+      "Eval suite vN that blocks promotion on groundedness or permission regressions",
+      "Sector working pattern: resolution-first voice care — grounded voice agents resolving top intents with telephony integration and escalation context. Care cost per contact down 30% is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "Recall@5 (legal cohort)",
+       "value": "0.91"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Corpus contracts: canonical registry, freshness SLAs, permission scans",
+      "Hybrid retrieval with reranking and span-level citations",
+      "Eval suite vN that blocks promotion on groundedness or permission regressions"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "Recall@5 (legal cohort)",
+       "value": "0.91"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: demand and capacity planning stale, quarter after quarter.",
+     "plays": [
+      "Corpus contracts: canonical registry, freshness SLAs, permission scans",
+      "Hybrid retrieval with reranking and span-level citations",
+      "Eval suite vN that blocks promotion on groundedness or permission regressions",
+      "Sector working pattern: eta prediction in Logistics & Supply Chain, where traffic, weather and history-driven ETA models per lane and mode. Promise accuracy up; penalties down is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "Recall@5 (legal cohort)",
+       "value": "0.91"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": true,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use.",
+     "plays": [
+      "Corpus contracts: canonical registry, freshness SLAs, permission scans",
+      "Hybrid retrieval with reranking and span-level citations",
+      "Eval suite vN that blocks promotion on groundedness or permission regressions"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "Recall@5 (legal cohort)",
+       "value": "0.91"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Corpus contracts: canonical registry, freshness SLAs, permission scans",
+      "Hybrid retrieval with reranking and span-level citations",
+      "Eval suite vN that blocks promotion on groundedness or permission regressions"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "Recall@5 (legal cohort)",
+       "value": "0.91"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Corpus contracts: canonical registry, freshness SLAs, permission scans",
+      "Hybrid retrieval with reranking and span-level citations",
+      "Eval suite vN that blocks promotion on groundedness or permission regressions"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "Recall@5 (legal cohort)",
+       "value": "0.91"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Corpus contracts: canonical registry, freshness SLAs, permission scans",
+      "Hybrid retrieval with reranking and span-level citations",
+      "Eval suite vN that blocks promotion on groundedness or permission regressions"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "Recall@5 (legal cohort)",
+       "value": "0.91"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/"
+    }
+   ],
+   "practiceNote": "RAG & Enterprise Knowledge Systems view: permission-aware retrieval over your regulated document estate, with answers that cite their sources and refuse when the ground is thin."
+  },
+  {
+   "t": "h2",
+   "x": "The stack we default to — and when we deliberately leave it"
+  },
+  {
+   "t": "p",
+   "x": "Defaults exist so the first sprint spends its time on your corpus, not on bikeshedding components. Deviations are allowed where your estate argues for them; the conditions are written down so the deviation is a decision, not a drift."
+  },
+  {
+   "t": "table",
+   "caption": "RAG & Enterprise Knowledge Systems: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production RAG service with permission-aware retrieval and citations",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Hybrid retrieval",
+     "OpenSearch / Elasticsearch BM25 + bge/gte dense vectors",
+     "Single-stage dense when corpus is clean and small; lexical is never dropped entirely"
     ],
     [
-     "Knowledge estate inventory and remediation backlog",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Reranking",
+     "Cross-encoder reranker (bge-reranker class) on top-50",
+     "LLM-as-reranker only when the corpus is multilingual and the budget tolerates it"
     ],
     [
-     "Retrieval quality dashboard (recall@k, grounding score, freshness)",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Vector store",
+     "pgvector when Postgres is already the system of record",
+     "Dedicated store (Milvus/Qdrant) only past ~50M chunks or sustained p99 pressure"
     ],
     [
-     "Connector library and onboarding runbook for new sources",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Generation",
+     "Frontier API model, temperature pinned, JSON-constrained output",
+     "Self-hosted 8B–14B class when data residency forbids egress"
+    ],
+    [
+     "Orchestration",
+     "LangGraph-class stateful runtime with typed state",
+     "Plain service code when the flow is a straight line — no framework tax"
+    ],
+    [
+     "Citations",
+     "Span-level citation binding verified before render",
+     "Document-level citations only for regulatory narrative outputs"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Engineering standards we hold"
+   "x": "What a release must prove before promotion"
   },
   {
-   "t": "p",
-   "x": "RAG & Enterprise Knowledge Systems ships against Elasticsearch / OpenSearch, Milvus, Databricks Vector Search, pgvector, Cohere Rerank, LangGraph. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for RAG & Enterprise Knowledge Systems — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Corpus gate",
+     "Is the estate retrievable and truthful?",
+     "Source inventory, freshness SLAs, dedup results, permission scan"
+    ],
+    [
+     "Eval gate",
+     "Does the answer quality clear the bar?",
+     "Pinned suite version; recall@5, groundedness, citation precision at target"
+    ],
+    [
+     "Permission gate",
+     "Does authz hold under adversarial probes?",
+     "Leakage probe suite zero-hit; ACL delta re-filter log"
+    ],
+    [
+     "Load gate",
+     "Does it hold at peak with a degraded index?",
+     "k6 load at 2× peak; failover drill with lexical-only fallback"
+    ],
+    [
+     "Cost gate",
+     "Is the unit economics honest?",
+     "Cost per 1k answers at target load with cache on"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "How we run the build"
+   "x": "What your team owns at handover"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "RAG & Enterprise Knowledge Systems starts with the measurement: the metric, the owner, the current number, signed."
+     "Production answer API with citations",
+     "Typed endpoints, span-level citations, permission-aware, refusal-by-default on thin context"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, corpus engineering first, gates written with your team."
+     "Versioned eval suite",
+     "Cohorts per business line, regression thresholds that block promotion, run history"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "RAG & Enterprise Knowledge Systems closes its first quarter at the gate: the working slice is measured against the baseline your team signed, and the scale decision is written down with the evidence attached."
+     "Canonical source registry",
+     "The map of what counts as truth, with owners and freshness SLAs"
+    ],
+    [
+     "Permission integration",
+     "Query-time filter compiled from source ACLs with delta re-filtering"
+    ],
+    [
+     "Cost and cache model",
+     "Per-cohort cost per 1k answers with the caching strategy that keeps it there"
+    ],
+    [
+     "Runbook and on-call shape",
+     "The alerts, thresholds and first responses, rehearsed before handover"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "How the build runs, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — baseline & estate audit",
+     "Signed metric definition, source inventory, permission model review, eval cohort selection with business reviewers"
+    ],
+    [
+     "Weeks 3–4 — spine build",
+     "Connectors, canonical registry, hybrid index, permission map — all behind contracts"
+    ],
+    [
+     "Weeks 5–6 — answer services",
+     "Retrieval planner, reranker, grounded generation with refusals; eval harness online"
+    ],
+    [
+     "Weeks 7–8 — hardening",
+     "Red-team probes, load to 2× peak, failover drills, cost model at target load"
+    ],
+    [
+     "Weeks 9–10 — surfaces & cutover",
+     "Assistant embeds, API consumers, citation viewer; shadow traffic then cutover with rollback pinned"
+    ],
+    [
+     "Ongoing — freshness & drift",
+     "Nightly eval, weekly corpus review, quarterly suite re-baseline with the business owners"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where this service plugs into your estate"
+  },
+  {
+   "t": "p",
+   "x": "RAG is an integration-heavy service: the value lives in your existing estate, so the connector contracts below are the real scope, not an afterthought."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "SharePoint / Confluence / DMS",
+     "Connector contracts: change streams, ACLs, delete propagation"
+    ],
+    [
+     "Identity provider",
+     "Group-to-permission mapping; query-time principal resolution"
+    ],
+    [
+     "ITSM & knowledge portals",
+     "Embedded assistant with existing SSO and telemetry"
+    ],
+    [
+     "Data warehouse",
+     "Structured context joins for entity-grounded answers"
+    ],
+    [
+     "Observability stack",
+     "OpenTelemetry traces per answer with retrieval and generation spans"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The control surface — permission fidelity, trace discipline, egress policy"
+  },
+  {
+   "t": "p",
+   "x": "Controls that make the system auditable in regulated sectors: permission probing, egress scanning, trace retention and the evidence pack that ties each answer to a reviewable decision path."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Permission fidelity probe",
+     "Synthetic principals query known-denied content on a schedule; any hit pages security"
+    ],
+    [
+     "PII guard",
+     "Egress scan on generated answers; block-and-flag on pattern hit with reviewer queue"
+    ],
+    [
+     "Answer trace retention",
+     "Full trace with citations and prompt version, retained to the regulatory clock"
+    ],
+    [
+     "Prompt change control",
+     "Prompt diffs reviewed and signed like code; unsigned prompts cannot deploy"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Permission fidelity probes run continuously in staging and nightly in production shadows — any synthetic principal reading denied content pages security before a user could ever see it."
   },
   {
    "t": "cta",
-   "x": "Talk to the team that runs RAG & Enterprise Knowledge Systems in production — the briefing is technical by design, and the first one costs nothing but the hour."
+   "x": "Bring your worst document estate — the duplicated portals, the stale wikis, the ACLs nobody trusts. The two-week diagnostic will tell you exactly what grounded answers would cost there, and which gates you would fail today."
   }
  ],
- "words": 509,
+ "words": 1325,
  "section": "Services",
  "l1": "Services",
  "l2": "Applied AI & Generative AI",
@@ -288,7 +1242,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Applied AI & Generative AI",
+   "title": "Domain overview — Applied AI & Generative AI",
    "url": "/services/applied-ai-generative-ai/",
    "desc": "From enterprise strategy to production models — AI measured on the P&L."
   },
@@ -340,33 +1294,51 @@
   {
    "title": "Blockchain & Digital Trust for Banking & Financial Services",
    "url": "/industries/banking-financial-services/capabilities/blockchain-digital-trust/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
+   "title": "AI Proof-of-Concept & Value Validation",
+   "url": "/services/applied-ai-generative-ai/ai-poc-value-validation/",
+   "tag": "Same domain",
+   "desc": "the four-week sprint that ends in a fund-or-kill verdict with auditable numbers — baseline first, real data path, no demo-ware."
+  },
+  {
+   "title": "Conversational AI & Digital Humans",
+   "url": "/services/applied-ai-generative-ai/conversational-ai-digital-humans/",
+   "tag": "Same domain",
+   "desc": "grounded chat and voice agents that contain more without trust loss — dignified handoffs, streaming voice budgets, dialog eval nightly."
+  },
+  {
    "title": "Enterprise AI Strategy & Roadmapping",
    "url": "/services/applied-ai-generative-ai/enterprise-ai-strategy/",
-   "tag": "Same tower",
-   "desc": "Align AI to P&L lines and risk mandates — a sequenced portfolio, not a pile of pilots."
+   "tag": "Same domain",
+   "desc": "portfolio management under uncertainty: provability screens, risk-tiered gates, a platform decision made once, and a stop-loss that holds."
   },
   {
-   "title": "Generative AI Platform Engineering",
-   "url": "/services/applied-ai-generative-ai/genai-platform-engineering/",
-   "tag": "Same tower",
-   "desc": "One governed platform, many GenAI products — retrieval, guardrails and cost control as shared services."
+   "title": "Agentic Process Automation",
+   "url": "/services/agentic-ai-hyperautomation/agentic-process-automation/",
+   "tag": "Pairs with",
+   "desc": "role-scoped agents that execute process steps under policy bounds, with human checkpoints placed by risk and replay for every action taken."
   },
   {
-   "title": "LLM Fine-Tuning & Model Operations",
-   "url": "/services/applied-ai-generative-ai/llm-fine-tuning-ops/",
-   "tag": "Same tower",
-   "desc": "Own your models — tune, distill and operate LLMs with measurable quality, controlled cost and enforceable policy."
+   "title": "Data Engineering & Pipeline Modernization",
+   "url": "/services/data-analytics-lakehouse/data-engineering-modernization/",
+   "tag": "Pairs with",
+   "desc": "legacy pipelines rebuilt as typed, contract-gated, observable jobs — with a strangler pattern that retires the old estate without a big-bang cutover."
   },
   {
-   "title": "Multimodal AI & Vision-Language Systems",
-   "url": "/services/applied-ai-generative-ai/multimodal-vision-systems/",
-   "tag": "Same tower",
-   "desc": "Models that read scans, scenes and schematics — multimodal intelligence wired into operations."
+   "title": "Compliance, Audit & Digital Trust",
+   "url": "/services/cybersecurity-zero-trust/compliance-audit-digital-trust/",
+   "tag": "Pairs with",
+   "desc": "evidence-grade compliance without theater — controls mapped once, evidence generated continuously, audits that pass first time."
+  },
+  {
+   "title": "A European agri-cooperative (4,200 farms)",
+   "url": "/case-studies/agr-01/",
+   "tag": "Evidence",
+   "desc": "Input cost per hectare down 14% — precision agronomy at cooperative scale."
   }
  ]
 }

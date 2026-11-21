@@ -9,254 +9,1168 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Asset Tokenization & Digital Assets sits in the Blockchain & Digital Trust tower, and it earns that place by being specific: Instruments as tokens — issuance, custody and lifecycle under securities-law discipline. The build pattern, the artifacts and the guardrails follow."
+   "x": "Regulated token designs: legal-wrapper-first architecture, transfer controls that enforce restrictions in code, ledger and cap-table reconciliation at zero delta — and every lifecycle event from issuance to redemption designed before the token exists."
   },
   {
    "t": "h2",
-   "x": "The working definition"
+   "x": "The token is the easy part; the legal wrapper is the product"
   },
   {
    "t": "p",
-   "x": "Tokenization turns assets into programmable instruments — private credit, funds, trade assets, receivables, real assets — but the hard problems are legal and operational, not cryptographic. We deliver tokenization programs with securities-law discipline: instrument structuring with counsel, permissioned transfer controls (whitelists, locks, transfer restrictions), investor onboarding with KYC/AML gating, qualified custody arrangements, and lifecycle automation — coupons, redemptions, corporate actions — executed by smart contracts with human override paths."
+   "x": "Tokenization succeeds or fails on the legal design: what is the token legally, who may hold it, how do transfers respect securities law, and what happens in a default? The engineering implements the lawyers' decisions as transfer controls — allow-lists, lockups, jurisdiction checks — enforced in code, not in prospectus fine print."
   },
   {
    "t": "p",
-   "x": "The stack is institution-grade: compliant issuance platforms, transfer-agent integration, primary and secondary venues where regulation permits, and reporting pipelines that produce regulator-readable records. We build pilots that produce evidence for supervisory dialogue — the path tier-one institutions actually follow to production."
+   "x": "The practice covers wrapper selection, token standards with compliant behavior, issuer and transfer-agent integration, and settlement workflows that shorten cycles where the law permits and document where it does not."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that strand tokenized assets, the reference architecture of wrapper-first design, and the console that keeps the ledger reconciled to reality."
   },
   {
    "t": "h2",
-   "x": "Why this matters here"
+   "x": "Four failure modes that strand tokenized assets"
   },
   {
    "t": "p",
-   "x": "Asset Tokenization & Digital Assets delivery today concentrates in Banking & Financial Services, Insurance & Risk, Energy & Utilities, Agriculture & Food Systems. The metric is chosen with your finance lead, and the baseline is signed before any build begins."
+   "x": "Each of these turns a token launch into a legal incident — the countermeasures design the wrapper, the restrictions and the lifecycle before the first mint."
   },
   {
-   "t": "h2",
-   "x": "What goes live, and in what order"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Asset Tokenization & Digital Assets: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Instrument structuring",
-     "legal wrapper, transfer restrictions and investor rights modeled on-chain"
+     "Token-first fallacy",
+     "Tech picks the standard; lawyers react later",
+     "Legal-wrapper design before the token standard choice"
     ],
     [
-     "Permissioned transfer controls",
-     "whitelists, locks and compliance-aware transfer logic"
+     "Transfer-control gaps",
+     "Restricted shares transfer freely",
+     "Compliance-aware transfer hooks tested adversarially"
     ],
     [
-     "Custody & onboarding",
-     "qualified custody, KYC/AML gating and investor lifecycle"
+     "Off-chain reality",
+     "Cap table and ledger disagree",
+     "Reconciliation service as a gate, not a report"
     ],
     [
-     "Lifecycle automation",
-     "coupons, redemptions and corporate actions as audited contracts"
-    ],
-    [
-     "Reporting pipeline",
-     "regulator-readable records and reconciliation to books"
+     "Lifecycle blanks",
+     "No plan for defaults, redemptions, forks",
+     "Lifecycle playbooks written with counsel before launch"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — wrapper-first tokenization"
+  },
+  {
+   "t": "p",
+   "x": "The legal wrapper defines what the token is; transfer controls enforce eligibility, lockups and jurisdiction rules in code; the off-chain registry reconciles to the ledger at zero delta; and every lifecycle event — corporate actions, redemptions, wind-downs — has a designed path."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Asset Tokenization & Digital Assets",
+   "title": "Reference architecture — regulated tokenization stack",
    "lanes": [
-    "Counterparties",
-    "Contracts",
-    "Ledger",
+    "Legal design",
+    "Token layer",
+    "Controls",
+    "Participants",
     "Settlement",
-    "Audit",
-    "Networks"
+    "Assurance"
    ],
    "nodes": [
     {
-     "id": "cp0",
+     "id": "wrap",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
-    },
-    {
-     "id": "cp1",
-     "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
-    },
-    {
-     "id": "ct2",
-     "lane": 1,
-     "label": "Asset Tokenization & Digital Assets",
+     "label": "Legal wrapper",
      "hot": true
     },
     {
-     "id": "ct3",
-     "lane": 1,
-     "label": "Contract testing",
-     "hot": false
+     "id": "counsel",
+     "lane": 0,
+     "label": "Counsel decisions"
     },
     {
-     "id": "lg4",
-     "lane": 2,
-     "label": "Immutable event log",
+     "id": "juris",
+     "lane": 0,
+     "label": "Jurisdiction matrix"
+    },
+    {
+     "id": "std",
+     "lane": 1,
+     "label": "Token standard",
      "hot": true
     },
     {
-     "id": "lg5",
+     "id": "cap",
+     "lane": 1,
+     "label": "Cap-table mirror"
+    },
+    {
+     "id": "meta",
+     "lane": 1,
+     "label": "Token metadata"
+    },
+    {
+     "id": "ctrl",
      "lane": 2,
-     "label": "Byzantine tolerance",
-     "hot": false
+     "label": "Transfer controls",
+     "hot": true
     },
     {
-     "id": "st6",
+     "id": "allow",
+     "lane": 2,
+     "label": "Allow-list registry"
+    },
+    {
+     "id": "lock",
+     "lane": 2,
+     "label": "Lockup rules"
+    },
+    {
+     "id": "iss",
      "lane": 3,
-     "label": "Atomic settlement",
-     "hot": false
+     "label": "Issuer services"
     },
     {
-     "id": "st7",
+     "id": "ta",
      "lane": 3,
-     "label": "Netting engines",
-     "hot": false
+     "label": "Transfer agent",
+     "hot": true
     },
     {
-     "id": "au8",
+     "id": "cust",
+     "lane": 3,
+     "label": "Qualified custody"
+    },
+    {
+     "id": "settle",
      "lane": 4,
-     "label": "Shared audit views",
-     "hot": false
+     "label": "Settlement workflow",
+     "hot": true
     },
     {
-     "id": "au9",
+     "id": "cash",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Cash leg"
     },
     {
-     "id": "nw10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "rec",
+     "lane": 4,
+     "label": "Reconciliation gate"
     },
     {
-     "id": "nw11",
+     "id": "audit",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Audit evidence"
+    },
+    {
+     "id": "drill",
+     "lane": 5,
+     "label": "Lifecycle drills",
+     "hot": true
+    },
+    {
+     "id": "reg",
+     "lane": 5,
+     "label": "Regulatory reporting"
     }
    ],
    "edges": [
     {
-     "a": "cp0",
-     "b": "ct2"
+     "a": "counsel",
+     "b": "wrap",
+     "label": "decide"
     },
     {
-     "a": "cp1",
-     "b": "ct3"
+     "a": "juris",
+     "b": "wrap",
+     "label": "bound"
     },
     {
-     "a": "ct2",
-     "b": "lg4"
+     "a": "wrap",
+     "b": "std",
+     "label": "informs"
     },
     {
-     "a": "ct3",
-     "b": "lg5"
+     "a": "std",
+     "b": "cap",
+     "label": "mirror"
     },
     {
-     "a": "lg4",
-     "b": "st6"
+     "a": "std",
+     "b": "meta",
+     "label": "describe"
     },
     {
-     "a": "lg5",
-     "b": "st7"
+     "a": "allow",
+     "b": "ctrl",
+     "label": "feed"
     },
     {
-     "a": "st6",
-     "b": "au8"
+     "a": "lock",
+     "b": "ctrl",
+     "label": "bind"
     },
     {
-     "a": "au8",
-     "b": "au9"
+     "a": "ctrl",
+     "b": "std",
+     "label": "enforce"
     },
     {
-     "a": "st7",
-     "b": "nw10"
+     "a": "iss",
+     "b": "std",
+     "label": "mint"
     },
     {
-     "a": "au9",
-     "b": "nw11"
+     "a": "ta",
+     "b": "ctrl",
+     "label": "operate"
+    },
+    {
+     "a": "cust",
+     "b": "std",
+     "label": "hold"
+    },
+    {
+     "a": "ctrl",
+     "b": "settle",
+     "label": "gate"
+    },
+    {
+     "a": "cash",
+     "b": "settle",
+     "label": "pair"
+    },
+    {
+     "a": "rec",
+     "b": "settle",
+     "label": "verify"
+    },
+    {
+     "a": "settle",
+     "b": "audit",
+     "label": "evidence"
+    },
+    {
+     "a": "rec",
+     "b": "drill",
+     "label": "test"
+    },
+    {
+     "a": "settle",
+     "b": "reg",
+     "label": "report"
     }
    ],
-   "note": "Topology inherited from the Blockchain & Digital Trust tower; the highlighted core is this service's build."
+   "note": "The transfer agent sits inside the architecture, not beside it: every restricted transfer executes through controls the TA operates — the ledger and the cap table agree because the gate demands it."
   },
   {
    "t": "h2",
-   "x": "What your team actually receives"
+   "x": "One restricted transfer, controlled end to end"
   },
   {
    "t": "p",
-   "x": "Asset Tokenization & Digital Assets: deliverables, without dressing them up,"
+   "x": "From the transfer request through eligibility verification, restriction checks, settlement and the cap-table reconciliation — including the block events that prove the controls work by refusing."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Token lifecycle — wrap, issue, control, settle, reconcile, report",
+   "labels": [
+    "Legal wrapper",
+    "Standard & mint",
+    "Allow-list check",
+    "Lockup enforcement",
+    "Settlement pairing",
+    "Reconcile gate",
+    "Regulatory report"
+   ],
+   "note": "Lifecycle drills cover the unglamorous branches — default, redemption, forced transfer — because those are the events that end up in court."
+  },
+  {
+   "t": "h2",
+   "x": "The tokenization console — reconciliation as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Settlement cycle, restricted-transfer blocks and the ledger-to-cap-table delta — the three numbers that decide whether the token is a security operation or a liability."
+  },
+  {
+   "t": "idash",
+   "title": "Asset tokenization — lifecycle & custody console",
+   "kpis": [
+    {
+     "label": "Assets in lifecycle",
+     "value": "27",
+     "delta": "3 classes, 4 jurisdictions",
+     "dir": "up",
+     "spark": [
+      8,
+      12,
+      15,
+      19,
+      22,
+      25,
+      27
+     ]
+    },
+    {
+     "label": "Ledger↔registrar delta",
+     "value": "0",
+     "delta": "reconciliation, daily",
+     "dir": "flat",
+     "spark": [
+      2,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "label": "Distribution accuracy",
+     "value": "100%",
+     "delta": "coupons + redemptions YTD",
+     "dir": "flat",
+     "spark": [
+      99.2,
+      99.5,
+      99.7,
+      99.8,
+      99.9,
+      100,
+      100
+     ]
+    },
+    {
+     "label": "Frozen holdings",
+     "value": "0.8%",
+     "delta": "regulatory orders, active",
+     "dir": "flat",
+     "spark": [
+      0,
+      0.4,
+      0.6,
+      0.8,
+      0.8,
+      0.8,
+      0.8
+     ]
+    },
+    {
+     "label": "Custody quorum health",
+     "value": "4/4",
+     "delta": "MPC policies, drills passed",
+     "dir": "flat",
+     "spark": [
+      2,
+      2,
+      3,
+      3,
+      4,
+      4,
+      4
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Lifecycle view",
+     "widgets": [
+      {
+       "kind": "flow",
+       "title": "Corporate-action workflow — click each stage for its duty",
+       "stages": [
+        {
+         "name": "Event intake",
+         "role": "Typed action object",
+         "detail": "Corporate actions arrive as typed objects (coupon, redemption, split, freeze) with legal references attached; an action without its instrument reference cannot enter the workflow.",
+         "metrics": [
+          {
+           "label": "Action types",
+           "value": "6"
+          },
+          {
+           "label": "Instrument ref",
+           "value": "required"
+          }
+         ]
+        },
+        {
+         "name": "Eligibility",
+         "role": "Holder snapshot",
+         "detail": "Snapshot at record date from the ledger-of-record with jurisdiction fences applied; eligibility disputes resolve against the snapshot, not against memory.",
+         "metrics": [
+          {
+           "label": "Snapshot",
+           "value": "immutable"
+          },
+          {
+           "label": "Fences",
+           "value": "enforced"
+          }
+         ]
+        },
+        {
+         "name": "Computation",
+         "role": "Per-holder amounts",
+         "detail": "Amounts computed per holding with rounding policy explicit; the computation artifact is retained — a holder query in year 5 gets the exact numbers from the run.",
+         "metrics": [
+          {
+           "label": "Rounding policy",
+           "value": "documented"
+          },
+          {
+           "label": "Retention",
+           "value": "7 yr+"
+          }
+         ]
+        },
+        {
+         "name": "Execution",
+         "role": "Quorum-signed payouts",
+         "detail": "Payouts execute under custody quorum with dual-control review; frozen holdings are excluded and reported, never silently skipped.",
+         "metrics": [
+          {
+           "label": "Quorum",
+           "value": "2-of-3 MPC"
+          },
+          {
+           "label": "Review",
+           "value": "dual-control"
+          }
+         ]
+        },
+        {
+         "name": "Reconcile",
+         "role": "Ledger ↔ registrar",
+         "detail": "Post-execution reconciliation against the registrar of record; a delta of any size blocks the next lifecycle event until explained.",
+         "metrics": [
+          {
+           "label": "Delta tolerance",
+           "value": "zero"
+          },
+          {
+           "label": "Block on mismatch",
+           "value": "yes"
+          }
+         ]
+        }
+       ],
+       "note": "The five stages are the duty chain — notification, computation, execution and reconciliation each leave evidence a regulator can read."
+      }
+     ]
+    },
+    {
+     "name": "Custody posture",
+     "widgets": [
+      {
+       "kind": "gauge",
+       "title": "Custody control bands — quorum, cold share, recovery readiness",
+       "items": [
+        {
+         "name": "Quorum policies tested",
+         "value": 4,
+         "max": 4,
+         "unit": "policies",
+         "warn": 3,
+         "crit": 2
+        },
+        {
+         "name": "Cold reserve share",
+         "value": 72,
+         "max": 100,
+         "unit": "%",
+         "warn": 85,
+         "crit": 95
+        },
+        {
+         "name": "Recovery drill recency",
+         "value": 41,
+         "max": 90,
+         "unit": "days",
+         "warn": 60,
+         "crit": 85
+        },
+        {
+         "name": "Signing latency p99",
+         "value": 3.8,
+         "max": 15,
+         "unit": "s",
+         "warn": 8,
+         "crit": 12
+        }
+       ],
+       "note": "Gauges show each custody control against its band. Recovery drill recency is the one that slips in every program — the band turns it into a scheduled obligation."
+      }
+     ]
+    },
+    {
+     "name": "Restriction what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Transfer-restriction what-if — fences, lockups and liquidity",
+       "params": [
+        {
+         "name": "Jurisdiction fences",
+         "min": 1,
+         "max": 8,
+         "step": 1,
+         "value": 4,
+         "unit": "zones"
+        },
+        {
+         "name": "Lockup share",
+         "min": 0,
+         "max": 80,
+         "step": 5,
+         "value": 30,
+         "unit": "%"
+        },
+        {
+         "name": "Holder count",
+         "min": 20,
+         "max": 5000,
+         "step": 20,
+         "value": 850,
+         "unit": "holders"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Transferable float",
+         "unit": "%",
+         "formula": "100-p1-min(35,p2*0.012*(p0-1))",
+         "good": "55",
+         "bad": "30"
+        },
+        {
+         "name": "Compliance events / mo",
+         "unit": "cnt",
+         "formula": "p0*3.2+p2*0.06",
+         "good": "60",
+         "bad": "150"
+        },
+        {
+         "name": "Secondary depth (est)",
+         "unit": "0-100",
+         "formula": "max(8, 95-p0*6-p1*0.8)",
+         "good": "50",
+         "bad": "25"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 2,
+        "label": "Jurisdiction fences vs secondary depth"
+       },
+       "note": "Fences fragment liquidity: each added jurisdiction thins the order book — the curve is the argument for choosing the wrapper's jurisdiction set before marketing promises liquidity."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · compliance model",
+   "note": "Reference program model: reconciliation and custody bands from delivery, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Restriction enforcement across transfer attempts"
+  },
+  {
+   "t": "p",
+   "x": "Transfer attempts, eligibility blocks and settled transfers across quarters — the shape that shows the controls refusing what the prospectus promises they would."
+  },
+  {
+   "t": "chart",
+   "title": "Settlement cycle time by asset class — design targets",
+   "variant": "bar",
+   "cats": [
+    "Fund units",
+    "Private debt",
+    "Real estate shares",
+    "Trade receivables",
+    "Carbon credits"
+   ],
+   "series": [
+    {
+     "name": "Cycle target (days)",
+     "points": [
+      1,
+      1,
+      2,
+      1,
+      2
+     ]
+    },
+    {
+     "name": "Previous cycle (days)",
+     "points": [
+      3,
+      3,
+      5,
+      4,
+      30
+     ]
+    }
+   ],
+   "yMax": 32,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Asset Tokenization & Digital Assets across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Asset Tokenization & Digital Assets",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "plays": [
+      "Legal-wrapper-first architecture — the token designed after the wrapper",
+      "Transfer restrictions enforced in code, with block events as evidence",
+      "Ledger-to-cap-table reconciliation at zero delta, lifecycle paths pre-designed"
+     ],
+     "kpis": [
+      {
+       "label": "Settlement cycle",
+       "value": "T+1"
+      },
+      {
+       "label": "Restricted-transfer blocks",
+       "value": "11"
+      },
+      {
+       "label": "Ledger-cap-table delta",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": true,
+     "hook": "The work here has one job: move a named number — claims, policy and exposure data fragmented included — and prove it moved.",
+     "plays": [
+      "Legal-wrapper-first architecture — the token designed after the wrapper",
+      "Transfer restrictions enforced in code, with block events as evidence",
+      "Ledger-to-cap-table reconciliation at zero delta, lifecycle paths pre-designed"
+     ],
+     "kpis": [
+      {
+       "label": "Settlement cycle",
+       "value": "T+1"
+      },
+      {
+       "label": "Restricted-transfer blocks",
+       "value": "11"
+      },
+      {
+       "label": "Ledger-cap-table delta",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Legal-wrapper-first architecture — the token designed after the wrapper",
+      "Transfer restrictions enforced in code, with block events as evidence",
+      "Ledger-to-cap-table reconciliation at zero delta, lifecycle paths pre-designed"
+     ],
+     "kpis": [
+      {
+       "label": "Settlement cycle",
+       "value": "T+1"
+      },
+      {
+       "label": "Restricted-transfer blocks",
+       "value": "11"
+      },
+      {
+       "label": "Ledger-cap-table delta",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "plays": [
+      "Legal-wrapper-first architecture — the token designed after the wrapper",
+      "Transfer restrictions enforced in code, with block events as evidence",
+      "Ledger-to-cap-table reconciliation at zero delta, lifecycle paths pre-designed"
+     ],
+     "kpis": [
+      {
+       "label": "Settlement cycle",
+       "value": "T+1"
+      },
+      {
+       "label": "Restricted-transfer blocks",
+       "value": "11"
+      },
+      {
+       "label": "Ledger-cap-table delta",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Retail & Consumer Goods operators recognize the pattern: provenance claims unverifiable, quarter after quarter.",
+     "plays": [
+      "Legal-wrapper-first architecture — the token designed after the wrapper",
+      "Transfer restrictions enforced in code, with block events as evidence",
+      "Ledger-to-cap-table reconciliation at zero delta, lifecycle paths pre-designed",
+      "Sector working pattern: provenance verification — EUDR/DPP-grade chain-of-custody for claim-bearing products. Claims verified, greenwashing risk down is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Settlement cycle",
+       "value": "T+1"
+      },
+      {
+       "label": "Restricted-transfer blocks",
+       "value": "11"
+      },
+      {
+       "label": "Ledger-cap-table delta",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: interconnect and roaming reconciliation, quarter after quarter.",
+     "plays": [
+      "Legal-wrapper-first architecture — the token designed after the wrapper",
+      "Transfer restrictions enforced in code, with block events as evidence",
+      "Ledger-to-cap-table reconciliation at zero delta, lifecycle paths pre-designed"
+     ],
+     "kpis": [
+      {
+       "label": "Settlement cycle",
+       "value": "T+1"
+      },
+      {
+       "label": "Restricted-transfer blocks",
+       "value": "11"
+      },
+      {
+       "label": "Ledger-cap-table delta",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what GO/REC certificate integrity costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Legal-wrapper-first architecture — the token designed after the wrapper",
+      "Transfer restrictions enforced in code, with block events as evidence",
+      "Ledger-to-cap-table reconciliation at zero delta, lifecycle paths pre-designed"
+     ],
+     "kpis": [
+      {
+       "label": "Settlement cycle",
+       "value": "T+1"
+      },
+      {
+       "label": "Restricted-transfer blocks",
+       "value": "11"
+      },
+      {
+       "label": "Ledger-cap-table delta",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — compliance-grade provenance missing included — and prove it moved.",
+     "plays": [
+      "Legal-wrapper-first architecture — the token designed after the wrapper",
+      "Transfer restrictions enforced in code, with block events as evidence",
+      "Ledger-to-cap-table reconciliation at zero delta, lifecycle paths pre-designed"
+     ],
+     "kpis": [
+      {
+       "label": "Settlement cycle",
+       "value": "T+1"
+      },
+      {
+       "label": "Restricted-transfer blocks",
+       "value": "11"
+      },
+      {
+       "label": "Ledger-cap-table delta",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — records integrity under dispute included — and prove it moved.",
+     "plays": [
+      "Legal-wrapper-first architecture — the token designed after the wrapper",
+      "Transfer restrictions enforced in code, with block events as evidence",
+      "Ledger-to-cap-table reconciliation at zero delta, lifecycle paths pre-designed"
+     ],
+     "kpis": [
+      {
+       "label": "Settlement cycle",
+       "value": "T+1"
+      },
+      {
+       "label": "Restricted-transfer blocks",
+       "value": "11"
+      },
+      {
+       "label": "Ledger-cap-table delta",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Legal-wrapper-first architecture — the token designed after the wrapper",
+      "Transfer restrictions enforced in code, with block events as evidence",
+      "Ledger-to-cap-table reconciliation at zero delta, lifecycle paths pre-designed"
+     ],
+     "kpis": [
+      {
+       "label": "Settlement cycle",
+       "value": "T+1"
+      },
+      {
+       "label": "Restricted-transfer blocks",
+       "value": "11"
+      },
+      {
+       "label": "Ledger-cap-table delta",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": true,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the trust layer is engineered, not asserted: signed events, permissioned consensus, and a provenance graph every participant can verify.",
+     "plays": [
+      "Legal-wrapper-first architecture — the token designed after the wrapper",
+      "Transfer restrictions enforced in code, with block events as evidence",
+      "Ledger-to-cap-table reconciliation at zero delta, lifecycle paths pre-designed"
+     ],
+     "kpis": [
+      {
+       "label": "Settlement cycle",
+       "value": "T+1"
+      },
+      {
+       "label": "Restricted-transfer blocks",
+       "value": "11"
+      },
+      {
+       "label": "Ledger-cap-table delta",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what provenance claims unverifiable costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Legal-wrapper-first architecture — the token designed after the wrapper",
+      "Transfer restrictions enforced in code, with block events as evidence",
+      "Ledger-to-cap-table reconciliation at zero delta, lifecycle paths pre-designed"
+     ],
+     "kpis": [
+      {
+       "label": "Settlement cycle",
+       "value": "T+1"
+      },
+      {
+       "label": "Restricted-transfer blocks",
+       "value": "11"
+      },
+      {
+       "label": "Ledger-cap-table delta",
+       "value": "0"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/blockchain-digital-trust/"
+    }
+   ],
+   "practiceNote": "Asset Tokenization & Digital Assets view: regulated token designs — legal-wrapper-first architecture, transfer controls that enforce restrictions in code, and settlement that shortens cycles honestly."
+  },
+  {
+   "t": "h2",
+   "x": "Tokenization defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor wrapper-first design and code-enforced restrictions over token-first enthusiasm; deviation triggers are written because each one moves a legal promise into a policy PDF nobody can enforce."
+  },
+  {
+   "t": "table",
+   "caption": "Asset Tokenization & Digital Assets: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Tokenization pilot with legal structure and working issuance",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Wrapper",
+     "Legal-design-first with jurisdiction matrix",
+     "Standard-first design — counsel becomes a rubber stamp"
     ],
     [
-     "Custody and transfer-control architecture",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Controls",
+     "Transfer hooks with adversarial tests",
+     "Front-end-only restrictions — they get bypassed"
     ],
     [
-     "Lifecycle automation contracts with override paths",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Participants",
+     "Transfer agent + qualified custody in-loop",
+     "DIY issuer operations — regulated duties drift"
     ],
     [
-     "Regulator engagement pack with pilot evidence",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Settlement",
+     "Paired legs with reconciliation gate",
+     "Atomic-swap enthusiasm — cash leg rarely cooperates"
+    ],
+    [
+     "Lifecycle",
+     "Drilled default/redemption playbooks",
+     "Happy-path-only planning — defaults surprise everyone"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Under the hood"
+   "x": "Token release gates — evidence before issuance"
   },
   {
-   "t": "p",
-   "x": "The engineering baseline for Asset Tokenization & Digital Assets: permissioned EVM (Besu), compliance token standards (ERC-3643-class), qualified custodians, transfer-agent integration. The justifications are written, versioned and handed over — the decisions are yours to own after the engagement."
+   "t": "table",
+   "caption": "Release gates for Asset Tokenization & Digital Assets — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Wrapper gate",
+     "Is the legal design before the tech?",
+     "Counsel decisions documented first"
+    ],
+    [
+     "Control gate",
+     "Do restrictions hold under attack?",
+     "Adversarial transfer test evidence"
+    ],
+    [
+     "Reconciliation gate",
+     "Does ledger match the cap table?",
+     "Zero-delta evidence at cadence"
+    ],
+    [
+     "Custody gate",
+     "Is custody qualified and attested?",
+     "Attestation reports"
+    ],
+    [
+     "Drill gate",
+     "Are lifecycle branches rehearsed?",
+     "Drill evidence per scenario"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "Delivery, without the theater"
+   "x": "What the asset operations team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Asset Tokenization & Digital Assets starts with the measurement: the metric, the owner, the current number, signed."
+     "Legal wrapper dossier",
+     "Counsel decisions with jurisdiction matrix"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, instrument structuring first, gates written with your team."
+     "Compliant token layer",
+     "Standards with enforced controls"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Asset Tokenization & Digital Assets closes its first quarter at the gate: the working slice is measured against the baseline your team signed, and the scale decision is written down with the evidence attached."
+     "Transfer-control suite",
+     "Allow-lists, lockups, adversarial tests"
+    ],
+    [
+     "Settlement workflow",
+     "Paired legs with reconciliation gate"
+    ],
+    [
+     "Lifecycle playbooks",
+     "Default, redemption, forced-transfer paths"
+    ],
+    [
+     "Regulatory reporting kit",
+     "Cadence reports with evidence links"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Wrapper to lifecycle, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — legal design",
+     "Wrapper selection, jurisdiction matrix, counsel sign-off"
+    ],
+    [
+     "Weeks 3–4 — token layer",
+     "Standard implementation, metadata, cap-table mirror"
+    ],
+    [
+     "Weeks 5–6 — controls",
+     "Transfer hooks, allow-lists, adversarial testing"
+    ],
+    [
+     "Weeks 7–8 — participants",
+     "TA integration, custody, issuer services"
+    ],
+    [
+     "Weeks 9–10 — settlement & drills",
+     "Paired legs, reconciliation, lifecycle drills"
+    ],
+    [
+     "Ongoing — token ops",
+     "Weekly reconciliation; monthly drills; quarterly reports"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — registries, transfer agents and settlement rails"
+  },
+  {
+   "t": "p",
+   "x": "Tokenized assets live across registries, transfer agents and settlement rails; these contracts define the reconciliation and the event flows that keep the ledger legally meaningful."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Transfer agents",
+     "Control operation contracts"
+    ],
+    [
+     "Qualified custodians",
+     "Custody attestations"
+    ],
+    [
+     "Payment rails",
+     "Cash-leg pairing"
+    ],
+    [
+     "Cap-table systems",
+     "Mirror reconciliation"
+    ],
+    [
+     "Regulators",
+     "Report delivery"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Lifecycle-governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Corporate actions, redemptions and wind-down paths are designed and rehearsed before issuance — the lifecycle blanks that strand tokenized assets are filled in the design, not discovered in the incident."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Law-as-code",
+     "Restrictions execute in the transfer path"
+    ],
+    [
+     "Zero-delta rule",
+     "Ledger and cap table must reconcile to zero"
+    ],
+    [
+     "Drilled branches",
+     "Default scenarios are rehearsed with counsel"
+    ],
+    [
+     "Custody attestation",
+     "Holdings evidenced by qualified parties"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Off-chain reality is tracked as a first-class risk: court orders, probate events and registry corrections are modeled as ledger operations with legal sign-off — the reconciliation stays zero because reality has a designated path back into the ledger."
   },
   {
    "t": "cta",
-   "x": "Talk to the team that runs Asset Tokenization & Digital Assets in production — the briefing is technical by design, and the first one costs nothing but the hour."
+   "x": "Bring the asset your firm wants to tokenize. The design sprint will architect the legal wrapper, the transfer controls and the lifecycle — before anyone mentions a token standard."
   }
  ],
- "words": 493,
+ "words": 969,
  "section": "Services",
  "l1": "Services",
  "l2": "Blockchain & Digital Trust",
@@ -278,7 +1192,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Blockchain & Digital Trust",
+   "title": "Domain overview — Blockchain & Digital Trust",
    "url": "/services/blockchain-digital-trust/",
    "desc": "DLT networks, tokenization and verifiable credentials — a shared, verifiable record with controls regulators accept."
   },
@@ -330,33 +1244,51 @@
   {
    "title": "Cyber & Zero-Trust for Logistics & Supply Chain",
    "url": "/industries/logistics-supply-chain/capabilities/cybersecurity-zero-trust/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Enterprise DLT Network Engineering",
-   "url": "/services/blockchain-digital-trust/enterprise-dlt-networks/",
-   "tag": "Same tower",
-   "desc": "Permissioned networks for multi-party truth — governance, consensus and integration done institutionally."
-  },
-  {
-   "title": "Smart Contract Engineering & Audit",
-   "url": "/services/blockchain-digital-trust/smart-contract-engineering/",
-   "tag": "Same tower",
-   "desc": "Contracts as production software — specification, formal verification and audit before value moves."
-  },
-  {
-   "title": "Provenance, Traceability & Supply Chain Trust",
-   "url": "/services/blockchain-digital-trust/provenance-traceability/",
-   "tag": "Same tower",
-   "desc": "Proof, not paperwork — EUDR, DPP and chain-of-custody systems regulators and customers can verify."
+   "title": "Blockchain Analytics & Regulatory Compliance",
+   "url": "/services/blockchain-digital-trust/blockchain-analytics-compliance/",
+   "tag": "Same domain",
+   "desc": "ledger intelligence mapped to regulatory duties — transaction risk scoring, travel-rule workflows, and audit-ready case files built automatically."
   },
   {
    "title": "Decentralized Identity & Verifiable Credentials",
    "url": "/services/blockchain-digital-trust/decentralized-identity/",
-   "tag": "Same tower",
-   "desc": "Credentials users carry — portable, privacy-preserving verification for workforce and customers."
+   "tag": "Same domain",
+   "desc": "DIDs and verifiable credentials that work offline — issuer governance, holder wallets, selective disclosure, and verification at 200ms without a phone-home."
+  },
+  {
+   "title": "Enterprise DLT Network Engineering",
+   "url": "/services/blockchain-digital-trust/enterprise-dlt-networks/",
+   "tag": "Same domain",
+   "desc": "permissioned networks with real governance — membership charters, privacy domains, boring consensus, and operations that treat nodes like production systems."
+  },
+  {
+   "title": "Master Data, Governance & Cataloging",
+   "url": "/services/data-analytics-lakehouse/master-data-governance/",
+   "tag": "Pairs with",
+   "desc": "golden records with owners, survivorship rules and a catalog people actually trust — governance as engineering, not committee minutes."
+  },
+  {
+   "title": "Smart Infrastructure, Buildings & Cities",
+   "url": "/services/iot-digital-twin-robotics/smart-infrastructure/",
+   "tag": "Pairs with",
+   "desc": "city and utility scale on the same disciplines — segmented SCADA-safe architectures, service-continuity SLOs, and privacy-first public data."
+  },
+  {
+   "title": "AI Security & Model Protection",
+   "url": "/services/cybersecurity-zero-trust/ai-security-model-protection/",
+   "tag": "Pairs with",
+   "desc": "security for the models themselves — prompt-injection defense, abuse containment, model theft resistance and eval-based red teams wired into the platform."
+  },
+  {
+   "title": "A European specialty reinsurer",
+   "url": "/case-studies/ins-03/",
+   "tag": "Evidence",
+   "desc": "Bordereaux automation and settlement evidence — reconciliation effort down 74%."
   }
  ]
 }

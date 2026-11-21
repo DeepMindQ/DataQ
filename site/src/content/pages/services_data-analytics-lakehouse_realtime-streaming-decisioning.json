@@ -9,254 +9,1278 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The honest pitch for real-time streaming & event-driven decisioning fits in a sentence — Decisions at event speed — sub-second pipelines from sensor, click or transaction to action. — and the rest of this page is the how: measured baseline, bounded build, evidence in flight."
+   "x": "Sub-second decision paths on streams: exactly-once state, replay semantics and latency budgets measured hop by hop — because a decision path that cannot state its own latency is guessing, and a guess is not a control."
   },
   {
    "t": "h2",
-   "x": "The job this service does"
+   "x": "Real-time is a budget, not a marketing adjective"
   },
   {
    "t": "p",
-   "x": "Batch thinking caps business performance: fraud caught after settlement, stockouts discovered at replenishment, churn addressed after the customer calls to leave. We build streaming backbones — Kafka or managed equivalents, Flink/Spark Structured Streaming processing, exactly-once semantics where money moves — feeding online feature stores and decision APIs that act within the customer moment, the machine cycle or the fraud window."
+   "x": "Streaming decisioning is where data stops being a report and becomes a reflex: fraud holds in milliseconds, personalization on the next request, pricing that adapts mid-session. The engineering is stateful stream processing with honest semantics — exactly-once state, replayable events, and latency budgets per hop that are measured in production, not hoped for in the design doc."
   },
   {
    "t": "p",
-   "x": "Engineering discipline makes it trustworthy: schema-first topics, watermark handling for late events, back-pressure design, and chaos drills that prove recovery. We pair the stack with event-storming workshops so the topics and events reflect how the business actually works — the difference between a streaming platform and a streaming mess."
+   "x": "The decision path is held to the same gate discipline as everything here: a policy change re-runs the replay suite before it touches live traffic, because a bad decision rule at 50k events per second is an incident, not a tweak."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that make streaming paths lie, the reference architecture that budgets latency honestly, and the console that shows decision health under real load."
   },
   {
    "t": "h2",
-   "x": "Why this matters here"
+   "x": "Four ways streaming paths lie about themselves"
   },
   {
    "t": "p",
-   "x": "Programs of Real-Time Streaming & Event-Driven Decisioning run in Banking & Financial Services, Retail & Consumer Goods, Telecom, Media & Entertainment, Logistics & Supply Chain — always against one named number, always with the baseline signed first."
+   "x": "Every one of these produces a demo that works and a production incident that surprises nobody who measured — the countermeasures make the path's own behavior observable and bounded."
   },
   {
-   "t": "h2",
-   "x": "The system, piece by piece"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Real-Time Streaming & Event-Driven Decisioning: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Streaming backbone",
-     "Kafka-class ingestion with schema registry, replay and topic governance"
+     "Latency lies",
+     "The dashboard shows p50; customers feel p99",
+     "Per-hop latency histograms with p99 budgets; alert on tail, not mean"
     ],
     [
-     "Stream processing",
-     "Flink/Spark streaming with exactly-once semantics and watermark design"
+     "State loss",
+     "Rebalance wipes the window; decisions reset mid-session",
+     "Durable state with changelog; rebalance drills with state restore proof"
     ],
     [
-     "Online feature store",
-     "point-in-time-correct features serving decision APIs at p99 under 150 ms"
+     "Replay fiction",
+     "Nobody can re-run yesterday's decisions with today's rules",
+     "Event sourcing with schema-pinned replay harness"
     ],
     [
-     "Event-storming alignment",
-     "domain-derived event models with business ownership"
-    ],
-    [
-     "Resilience drills",
-     "chaos testing for broker loss, late data and consumer lag"
+     "Out-of-order rot",
+     "Late events corrupt windowed aggregates",
+     "Watermark policy per source with late-drop accounting"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the decision path and its budget"
+  },
+  {
+   "t": "p",
+   "x": "The budget is designed before the code: hop-by-hop allocations, exactly-once state with checkpointed replay, and shadow lanes that compare decisions against the previous engine — disagreement is measured, not assumed away."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Real-Time Streaming & Event-Driven Decisioning",
+   "title": "Reference architecture — streaming decision fabric",
    "lanes": [
-    "Estates",
-    "Contracts",
-    "Lakehouse",
-    "Governance",
-    "Consumers",
-    "Actions"
+    "Producers",
+    "Transport",
+    "Stream processing",
+    "Decision core",
+    "Actions",
+    "Replay & audit"
    ],
    "nodes": [
     {
-     "id": "es0",
+     "id": "click",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Clickstream"
     },
     {
-     "id": "es1",
+     "id": "txn",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "Transaction feeds"
     },
     {
-     "id": "ct2",
+     "id": "iot",
+     "lane": 0,
+     "label": "Device telemetry"
+    },
+    {
+     "id": "bus",
      "lane": 1,
-     "label": "Schema registry",
-     "hot": false
-    },
-    {
-     "id": "ct3",
-     "lane": 1,
-     "label": "Quality gates",
-     "hot": false
-    },
-    {
-     "id": "lh4",
-     "lane": 2,
-     "label": "Real-Time Streaming & Event-Driven Decisioning",
+     "label": "Kafka-class bus",
      "hot": true
     },
     {
-     "id": "lh5",
+     "id": "schema",
+     "lane": 1,
+     "label": "Schema pinning"
+    },
+    {
+     "id": "wm",
+     "lane": 1,
+     "label": "Watermark policy"
+    },
+    {
+     "id": "state",
      "lane": 2,
-     "label": "Cost-aware storage",
-     "hot": false
+     "label": "Durable state store",
+     "hot": true
     },
     {
-     "id": "gv6",
+     "id": "window",
+     "lane": 2,
+     "label": "Windowed aggregates"
+    },
+    {
+     "id": "join",
+     "lane": 2,
+     "label": "Stream joins"
+    },
+    {
+     "id": "policy",
      "lane": 3,
-     "label": "Lineage & catalog",
-     "hot": false
+     "label": "Decision rules + models",
+     "hot": true
     },
     {
-     "id": "gv7",
+     "id": "gate",
      "lane": 3,
-     "label": "Access policies",
-     "hot": false
+     "label": "Latency budget check",
+     "hot": true
     },
     {
-     "id": "cs8",
+     "id": "exp",
+     "lane": 3,
+     "label": "Explanation hooks"
+    },
+    {
+     "id": "act",
      "lane": 4,
-     "label": "Origination & servicing",
-     "hot": false
+     "label": "Action APIs"
     },
     {
-     "id": "cs9",
+     "id": "hold",
      "lane": 4,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Hold & review"
     },
     {
-     "id": "ac10",
-     "lane": 5,
-     "label": "Owned decisions",
-     "hot": false
+     "id": "notify",
+     "lane": 4,
+     "label": "Downstream notify"
     },
     {
-     "id": "ac11",
+     "id": "replay",
      "lane": 5,
-     "label": "Metric disputes closed",
-     "hot": false
+     "label": "Replay harness",
+     "hot": true
+    },
+    {
+     "id": "sim",
+     "lane": 5,
+     "label": "Shadow deployment"
+    },
+    {
+     "id": "audit",
+     "lane": 5,
+     "label": "Decision log"
     }
    ],
    "edges": [
     {
-     "a": "es0",
-     "b": "ct2"
+     "a": "click",
+     "b": "bus"
     },
     {
-     "a": "es1",
-     "b": "ct3"
+     "a": "txn",
+     "b": "bus"
     },
     {
-     "a": "ct2",
-     "b": "lh4"
+     "a": "iot",
+     "b": "bus"
     },
     {
-     "a": "ct3",
-     "b": "lh5"
+     "a": "schema",
+     "b": "bus",
+     "label": "validate"
     },
     {
-     "a": "lh4",
-     "b": "gv6"
+     "a": "wm",
+     "b": "bus",
+     "label": "order"
     },
     {
-     "a": "lh5",
-     "b": "gv7"
+     "a": "bus",
+     "b": "state",
+     "label": "exactly-once"
     },
     {
-     "a": "gv6",
-     "b": "cs8"
+     "a": "state",
+     "b": "window"
     },
     {
-     "a": "gv7",
-     "b": "cs9"
+     "a": "state",
+     "b": "join",
+     "label": "enrich"
     },
     {
-     "a": "cs8",
-     "b": "ac10"
+     "a": "window",
+     "b": "policy",
+     "label": "features"
     },
     {
-     "a": "cs9",
-     "b": "ac11"
+     "a": "join",
+     "b": "policy",
+     "label": "context"
+    },
+    {
+     "a": "policy",
+     "b": "gate",
+     "label": "budget"
+    },
+    {
+     "a": "policy",
+     "b": "act",
+     "label": "fire"
+    },
+    {
+     "a": "policy",
+     "b": "hold",
+     "label": "defer"
+    },
+    {
+     "a": "act",
+     "b": "notify"
+    },
+    {
+     "a": "bus",
+     "b": "replay",
+     "label": "archive"
+    },
+    {
+     "a": "policy",
+     "b": "sim",
+     "label": "shadow"
+    },
+    {
+     "a": "replay",
+     "b": "audit",
+     "label": "compare"
     }
    ],
-   "note": "Topology inherited from the Data & Lakehouse tower; the highlighted core is this service's build."
+   "note": "Shadow deployment scores every rule change against live traffic silently; replay compares decisions before and after — the promotion evidence is the diff."
   },
   {
    "t": "h2",
-   "x": "Deliverables, without dressing them up"
+   "x": "One event, 150 milliseconds, six hops"
   },
   {
    "t": "p",
-   "x": "Named artifacts, handed to named owners — Real-Time Streaming & Event-Driven Decisioning edition:"
+   "x": "From ingress through state lookup, scoring and the action write — with the late-event handling, out-of-order tolerance and replay path marked where they actually trigger."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "decision-fabric",
+   "title": "Event path — consume, enrich, decide, act, replay",
+   "labels": [
+    "Event in",
+    "Validate & pin",
+    "State update",
+    "Feature build",
+    "Decide in budget",
+    "Act / hold",
+    "Log & replay"
+   ],
+   "note": "Holds are decisions: a deferred case re-enters with full context, and the deferral itself is logged like an action."
+  },
+  {
+   "t": "h2",
+   "x": "The streaming console — p99 and exactly-once as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Decision p99, exactly-once violations, late-event drops and shadow disagreement — the four numbers that decide whether the path is a control or a liability."
+  },
+  {
+   "t": "idash",
+   "title": "Streaming decisioning — reference operating console",
+   "kpis": [
+    {
+     "label": "Decision p99",
+     "value": "142",
+     "delta": "target <150 ms",
+     "dir": "flat",
+     "spark": [
+      161,
+      155,
+      158,
+      150,
+      146,
+      149,
+      143
+     ]
+    },
+    {
+     "label": "Ingest rate",
+     "value": "38.4k",
+     "delta": "events/s sustained",
+     "dir": "up",
+     "spark": [
+      28,
+      30,
+      31,
+      33,
+      34,
+      36,
+      38
+     ]
+    },
+    {
+     "label": "Exactly-once violations",
+     "value": "0.000%",
+     "delta": "checkpointed state",
+     "dir": "down",
+     "spark": [
+      0.1,
+      0.1,
+      0.05,
+      0,
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "label": "Late-event recovery",
+     "value": "99.7%",
+     "delta": "watermark +600 s",
+     "dir": "up",
+     "spark": [
+      98.1,
+      98.4,
+      99,
+      99.2,
+      99.5,
+      99.6,
+      99.7
+     ]
+    },
+    {
+     "label": "Shadow disagreement",
+     "value": "0.42%",
+     "delta": "engine v4 vs v3",
+     "dir": "flat",
+     "spark": [
+      1.8,
+      1.5,
+      1.1,
+      0.9,
+      0.6,
+      0.5,
+      0.42
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Decision p99 by hop",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Hop-by-hop latency at design load — 38k events/s",
+       "cats": [
+        "Ingress",
+        "Enrich",
+        "State",
+        "Score",
+        "Policy",
+        "Act",
+        "Egress"
+       ],
+       "series": [
+        {
+         "name": "p50",
+         "points": [
+          4,
+          6,
+          9,
+          12,
+          8,
+          5,
+          3
+         ]
+        },
+        {
+         "name": "p95",
+         "points": [
+          7,
+          11,
+          16,
+          21,
+          14,
+          9,
+          5
+         ]
+        },
+        {
+         "name": "p99",
+         "points": [
+          11,
+          17,
+          24,
+          38,
+          22,
+          14,
+          8
+         ]
+        }
+       ],
+       "unit": "ms",
+       "note": "Hover the chart for exact values; click a series name to isolate it. Scoring is the first hop to break a 150 ms p99 budget under burst — that is where optimization starts."
+      },
+      {
+       "kind": "slo",
+       "title": "Decision-availability error budget — 99.95% over 30 days",
+       "target": 99.95,
+       "windowDays": 30,
+       "traffic": 38000,
+       "errPct": 0.04,
+       "note": "Drag both sliders. Below 1× the budget recovers and feature work proceeds; above 6× we investigate the same day; above 14.4× pages the on-call."
+      }
+     ]
+    },
+    {
+     "name": "Backpressure what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Burst what-if — consumers, partitions and lag",
+       "params": [
+        {
+         "name": "Producer rate",
+         "min": 5000,
+         "max": 120000,
+         "step": 5000,
+         "value": 40000,
+         "unit": "ev/s"
+        },
+        {
+         "name": "Consumer groups",
+         "min": 2,
+         "max": 12,
+         "step": 1,
+         "value": 6,
+         "unit": "grp"
+        },
+        {
+         "name": "State TTL",
+         "min": 5,
+         "max": 60,
+         "step": 5,
+         "value": 15,
+         "unit": "min"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Steady-state lag",
+         "unit": "ms",
+         "formula": "pow(p0/1000,1.6)/(p1*2.2)",
+         "good": "250",
+         "bad": "600"
+        },
+        {
+         "name": "State store GB",
+         "unit": "GB",
+         "formula": "p0*p2*0.000042",
+         "good": "30",
+         "bad": "80"
+        },
+        {
+         "name": "Recovery replay (est)",
+         "unit": "s",
+         "formula": "p0*p2/(p1*1200)",
+         "good": "20",
+         "bad": "60"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 0,
+        "label": "Producer rate vs lag"
+       },
+       "note": "The lag curve is the admission-control argument: below the knee consumers drain as fast as producers push; past it, checkpoint intervals stretch and exactly-once replays get expensive."
+      },
+      {
+       "kind": "heat",
+       "title": "Late-arrival intensity — hour of day × event class",
+       "rows": [
+        "Trading",
+        "Fraud",
+        "Pricing",
+        "Ops telemetry"
+       ],
+       "cats": [
+        "00–04",
+        "04–08",
+        "08–12",
+        "12–16",
+        "16–20",
+        "20–24"
+       ],
+       "matrix": [
+        [
+         2,
+         3,
+         9,
+         14,
+         22,
+         11
+        ],
+        [
+         5,
+         6,
+         18,
+         26,
+         31,
+         14
+        ],
+        [
+         1,
+         2,
+         7,
+         9,
+         12,
+         6
+        ],
+        [
+         9,
+         8,
+         12,
+         13,
+         15,
+         10
+        ]
+       ],
+       "unit": "k late ev/h",
+       "note": "Hover cells to read exact late-event volumes. Trading and fraud classes dominate the 16–20 window — the watermark tolerance is tuned per class, not globally, or the tail eats the budget."
+      }
+     ]
+    },
+    {
+     "name": "Fabric topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The decision fabric — click any node for its contract",
+       "lanes": [
+        "Producers",
+        "Transport",
+        "Stream core",
+        "Decision",
+        "Actions"
+       ],
+       "nodes": [
+        {
+         "id": "src1",
+         "lane": 0,
+         "label": "Market / fraud feeds",
+         "detail": "Idempotent producers with event-time timestamps stamped at source — the fabric refuses processing-time ordering because it cannot replay.",
+         "hot": true
+        },
+        {
+         "id": "src2",
+         "lane": 0,
+         "label": "POS & edge events",
+         "detail": "Batched with 50 ms linger; late joiners backfill through a dead-letter lane that replays into the same contracts."
+        },
+        {
+         "id": "bus",
+         "lane": 1,
+         "label": "Kafka log",
+         "detail": "Keyed by decision subject to guarantee per-subject order; 7-day retention makes every decision replayable from the log itself."
+        },
+        {
+         "id": "schema",
+         "lane": 1,
+         "label": "Schema registry",
+         "detail": "Compatibility enforced BACKWARD_TRANSITIVE — a producer cannot ship a payload that yesterday's decision core cannot parse."
+        },
+        {
+         "id": "proc",
+         "lane": 2,
+         "label": "Checkpointed state",
+         "detail": "Exactly-once via two-phase commit between the stream operator and sinks; checkpoint interval is the recovery-time dial."
+        },
+        {
+         "id": "wm",
+         "lane": 2,
+         "label": "Watermark engine",
+         "detail": "Per-class watermark tolerance; late events route to a correction stream instead of being dropped — the correction path is tested with chaos drills."
+        },
+        {
+         "id": "score",
+         "lane": 3,
+         "label": "Scoring models",
+         "detail": "Versioned feature lookups pinned per release; shadow lane scores every event on the new model before promotion."
+        },
+        {
+         "id": "policy",
+         "lane": 3,
+         "label": "Decision policies",
+         "detail": "Policies are code-reviewed artifacts; a change re-runs the replay suite against recorded traffic before it touches live decisions."
+        },
+        {
+         "id": "act",
+         "lane": 4,
+         "label": "Action writers",
+         "detail": "Idempotent sinks keyed by decision ID — a replayed decision overwrites rather than duplicates."
+        },
+        {
+         "id": "case",
+         "lane": 4,
+         "label": "Case & hold queue",
+         "detail": "Holds carry the decision evidence packet: inputs, model version, budget state — the artifact an incident review reads first."
+        }
+       ],
+       "edges": [
+        {
+         "a": "src1",
+         "b": "bus",
+         "label": "event-time"
+        },
+        {
+         "a": "src2",
+         "b": "bus"
+        },
+        {
+         "a": "bus",
+         "b": "proc"
+        },
+        {
+         "a": "schema",
+         "b": "bus",
+         "label": "govern"
+        },
+        {
+         "a": "proc",
+         "b": "wm"
+        },
+        {
+         "a": "proc",
+         "b": "score"
+        },
+        {
+         "a": "score",
+         "b": "policy"
+        },
+        {
+         "a": "policy",
+         "b": "act"
+        },
+        {
+         "a": "policy",
+         "b": "case",
+         "label": "hold"
+        }
+       ],
+       "note": "Every node carries a written contract — ordering, idempotency, replay semantics. Click nodes to read them; the edges show where a failure propagates."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · drag the sliders",
+   "note": "Console values are the reference program model: engineering targets and gate thresholds from delivery, not a client's live metrics."
+  },
+  {
+   "t": "h2",
+   "x": "Where the latency budget actually goes"
+  },
+  {
+   "t": "p",
+   "x": "Allocation per hop at design load — ingress, state, scoring, policy, action, egress. The chart decides optimization order and shows which hop breaks the p99 promise first under stress."
+  },
+  {
+   "t": "chart",
+   "title": "Latency budget per hop at design load — where the 150ms goes",
+   "variant": "bar",
+   "cats": [
+    "Consume",
+    "Validate",
+    "State update",
+    "Join/enrich",
+    "Decide",
+    "Act"
+   ],
+   "series": [
+    {
+     "name": "p99 budget (ms)",
+     "points": [
+      15,
+      8,
+      25,
+      32,
+      40,
+      30
+     ]
+    },
+    {
+     "name": "p99 current (ms)",
+     "points": [
+      11,
+      6,
+      19,
+      27,
+      33,
+      22
+     ]
+    }
+   ],
+   "yMax": 50,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Real-Time Streaming & Event-Driven Decisioning across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Real-Time Streaming & Event-Driven Decisioning",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Ask what fraud and AML decisions too slow costs Banking & Financial Services firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Hop-by-hop latency budgets, measured and signed per decision class",
+      "Exactly-once state with checkpointed replay after any failure",
+      "Shadow lanes that score disagreement before traffic shifts"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99",
+       "value": "118ms"
+      },
+      {
+       "label": "Exactly-once violations",
+       "value": "0"
+      },
+      {
+       "label": "Late-event drop rate",
+       "value": "0.4%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Insurance & Risk operators recognize the pattern: claims, policy and exposure data fragmented, quarter after quarter.",
+     "plays": [
+      "Hop-by-hop latency budgets, measured and signed per decision class",
+      "Exactly-once state with checkpointed replay after any failure",
+      "Shadow lanes that score disagreement before traffic shifts"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99",
+       "value": "118ms"
+      },
+      {
+       "label": "Exactly-once violations",
+       "value": "0"
+      },
+      {
+       "label": "Late-event drop rate",
+       "value": "0.4%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "Healthcare & Life Sciences operators recognize the pattern: trial recruitment and RWE pipelines manual, quarter after quarter.",
+     "plays": [
+      "Hop-by-hop latency budgets, measured and signed per decision class",
+      "Exactly-once state with checkpointed replay after any failure",
+      "Shadow lanes that score disagreement before traffic shifts"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99",
+       "value": "118ms"
+      },
+      {
+       "label": "Exactly-once violations",
+       "value": "0"
+      },
+      {
+       "label": "Late-event drop rate",
+       "value": "0.4%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Hop-by-hop latency budgets, measured and signed per decision class",
+      "Exactly-once state with checkpointed replay after any failure",
+      "Shadow lanes that score disagreement before traffic shifts",
+      "Sector working pattern: plant data backbone — OPC UA/Sparkplug telemetry, MES and quality records unified with lineage. Root cause in hours, not weeks is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99",
+       "value": "118ms"
+      },
+      {
+       "label": "Exactly-once violations",
+       "value": "0"
+      },
+      {
+       "label": "Late-event drop rate",
+       "value": "0.4%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the work is pipeline and lakehouse engineering — modeled once, certified once, reused everywhere the decision appears.",
+     "plays": [
+      "Hop-by-hop latency budgets, measured and signed per decision class",
+      "Exactly-once state with checkpointed replay after any failure",
+      "Shadow lanes that score disagreement before traffic shifts"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99",
+       "value": "118ms"
+      },
+      {
+       "label": "Exactly-once violations",
+       "value": "0"
+      },
+      {
+       "label": "Late-event drop rate",
+       "value": "0.4%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": true,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: network telemetry underused, quarter after quarter.",
+     "plays": [
+      "Hop-by-hop latency budgets, measured and signed per decision class",
+      "Exactly-once state with checkpointed replay after any failure",
+      "Shadow lanes that score disagreement before traffic shifts"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99",
+       "value": "118ms"
+      },
+      {
+       "label": "Exactly-once violations",
+       "value": "0"
+      },
+      {
+       "label": "Late-event drop rate",
+       "value": "0.4%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Energy & Utilities operators recognize the pattern: forecasting under intermittency, quarter after quarter.",
+     "plays": [
+      "Hop-by-hop latency budgets, measured and signed per decision class",
+      "Exactly-once state with checkpointed replay after any failure",
+      "Shadow lanes that score disagreement before traffic shifts"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99",
+       "value": "118ms"
+      },
+      {
+       "label": "Exactly-once violations",
+       "value": "0"
+      },
+      {
+       "label": "Late-event drop rate",
+       "value": "0.4%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": true,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: visibility stitched from portals, quarter after quarter.",
+     "plays": [
+      "Hop-by-hop latency budgets, measured and signed per decision class",
+      "Exactly-once state with checkpointed replay after any failure",
+      "Shadow lanes that score disagreement before traffic shifts",
+      "Sector working pattern: control-tower event spine in Logistics & Supply Chain, where TMS/WMS/telematics/carrier events streamed into one governed estate. Network truth in seconds is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99",
+       "value": "118ms"
+      },
+      {
+       "label": "Exactly-once violations",
+       "value": "0"
+      },
+      {
+       "label": "Late-event drop rate",
+       "value": "0.4%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "Public Sector & Government operators recognize the pattern: agency data islands, quarter after quarter.",
+     "plays": [
+      "Hop-by-hop latency budgets, measured and signed per decision class",
+      "Exactly-once state with checkpointed replay after any failure",
+      "Shadow lanes that score disagreement before traffic shifts"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99",
+       "value": "118ms"
+      },
+      {
+       "label": "Exactly-once violations",
+       "value": "0"
+      },
+      {
+       "label": "Late-event drop rate",
+       "value": "0.4%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we make the source systems agree: one governed definition per metric, streaming where the decision is time-critical, batch where it is not.",
+     "plays": [
+      "Hop-by-hop latency budgets, measured and signed per decision class",
+      "Exactly-once state with checkpointed replay after any failure",
+      "Shadow lanes that score disagreement before traffic shifts",
+      "Sector working pattern: student success platform: SIS/LMS/support data unified with outcome lineage. Intervention targeting measurable is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99",
+       "value": "118ms"
+      },
+      {
+       "label": "Exactly-once violations",
+       "value": "0"
+      },
+      {
+       "label": "Late-event drop rate",
+       "value": "0.4%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Technology & SaaS operators recognize the pattern: data moat unrealized, quarter after quarter.",
+     "plays": [
+      "Hop-by-hop latency budgets, measured and signed per decision class",
+      "Exactly-once state with checkpointed replay after any failure",
+      "Shadow lanes that score disagreement before traffic shifts"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99",
+       "value": "118ms"
+      },
+      {
+       "label": "Exactly-once violations",
+       "value": "0"
+      },
+      {
+       "label": "Late-event drop rate",
+       "value": "0.4%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Agriculture & Food Systems operators recognize the pattern: chain data broken at every handoff, quarter after quarter.",
+     "plays": [
+      "Hop-by-hop latency budgets, measured and signed per decision class",
+      "Exactly-once state with checkpointed replay after any failure",
+      "Shadow lanes that score disagreement before traffic shifts"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99",
+       "value": "118ms"
+      },
+      {
+       "label": "Exactly-once violations",
+       "value": "0"
+      },
+      {
+       "label": "Late-event drop rate",
+       "value": "0.4%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/"
+    }
+   ],
+   "practiceNote": "Real-Time Streaming & Event-Driven Decisioning view: sub-second decision paths on streams — exactly-once state, replay semantics and latency budgets that are measured, not asserted."
+  },
+  {
+   "t": "h2",
+   "x": "Streaming defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor checkpointed state stores with idempotent sinks over at-least-once shortcuts; deviation triggers are written because each one changes what a replay means after an incident."
+  },
+  {
+   "t": "table",
+   "caption": "Real-Time Streaming & Event-Driven Decisioning: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production streaming backbone with governed topics and SLAs",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Transport",
+     "Kafka-class log with schema registry",
+     "Direct HTTP into processors — replay dies instantly"
     ],
     [
-     "Real-time decision path from event to action with latency budget",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Processing",
+     "Flink-class stateful engine with exactly-once",
+     "Micro-batch for decisions under 200ms — it cannot"
     ],
     [
-     "Online/offline feature parity for model serving",
-     "Handed to a named owner on your side, with a working session included."
+     "State",
+     "RocksDB-class durable state with changelog",
+     "In-memory state — rebalances reset customer sessions"
     ],
     [
-     "Operational dashboards: lag, throughput, decision latency",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Decisions",
+     "Rules + models behind a policy gate",
+     "Model calls on every event — budget it or batch features"
+    ],
+    [
+     "Replay",
+     "Pinned-schema archive with harness",
+     "Sampling archives — replay must cover 100% of events"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The stack, chosen for operability"
+   "x": "Streaming release gates — evidence before live decisions"
   },
   {
-   "t": "p",
-   "x": "Real-Time Streaming & Event-Driven Decisioning is built against defined standards: Kafka, Flink, Spark Structured Streaming, Redis, Feast, Kubernetes. Each choice is justified in writing as part of the architecture baseline, so your team can defend it without us in the room."
+   "t": "table",
+   "caption": "Release gates for Real-Time Streaming & Event-Driven Decisioning — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Latency gate",
+     "Does p99 hold per hop at design load?",
+     "Histogram evidence at 2× peak; budget table signed"
+    ],
+    [
+     "Semantics gate",
+     "Is exactly-once real?",
+     "Chaos drill: broker loss with state restore proof"
+    ],
+    [
+     "Replay gate",
+     "Can rules be re-run on history?",
+     "Replay diff report for a pinned rule change"
+    ],
+    [
+     "Watermark gate",
+     "Are late events handled honestly?",
+     "Late-drop accounting per source"
+    ],
+    [
+     "Shadow gate",
+     "Do changes soak before promotion?",
+     "Shadow disagreement report; soak duration"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "How we run the build"
+   "x": "What the platform and decision teams inherit"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Real-Time Streaming & Event-Driven Decisioning starts with the measurement: the metric, the owner, the current number, signed."
+     "Decision fabric",
+     "Stateful streaming with policy-gated decisions"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, streaming backbone first, gates written with your team."
+     "Latency budget table",
+     "Per-hop budgets signed and monitored in production"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "The Real-Time Streaming & Event-Driven Decisioning gate review: baseline versus slice, in the metric's own units, plus a scale recommendation your board can audit."
+     "Replay harness",
+     "Pinned-schema re-runs with decision diffs"
+    ],
+    [
+     "Shadow deployment rig",
+     "Challenger scoring on live traffic, silently"
+    ],
+    [
+     "Chaos drill pack",
+     "Broker loss, rebalance, flood and lag-spike evidence"
+    ],
+    [
+     "Decision log",
+     "Every decision with inputs, versions and latency"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Budget first, then hops, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — sources & budgets",
+     "Event census, schema pinning, per-hop budget design"
+    ],
+    [
+     "Weeks 3–4 — transport & state",
+     "Bus topology, watermark policy, durable state drills"
+    ],
+    [
+     "Weeks 5–6 — decision core",
+     "Rules/models behind policy gate; explanation hooks"
+    ],
+    [
+     "Weeks 7–8 — actions & holds",
+     "Action APIs with idempotency; hold & review paths"
+    ],
+    [
+     "Weeks 9–10 — replay & shadow",
+     "Harness live; shadow rig; first rule promotion via replay"
+    ],
+    [
+     "Ongoing — fabric health",
+     "Budget audits, chaos drills quarterly, replay on every change"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — streams, state and the action systems"
+  },
+  {
+   "t": "p",
+   "x": "The path touches streams, state stores and the systems that receive decisions; these contracts carry the idempotency and replay semantics that keep actions safe."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Producer apps",
+     "Event contracts with schema pinning"
+    ],
+    [
+     "Action systems",
+     "Idempotent decision APIs"
+    ],
+    [
+     "Case management",
+     "Hold queues with context"
+    ],
+    [
+     "ML registry",
+     "Model versions pulled with pinning"
+    ],
+    [
+     "Observability",
+     "Per-hop histograms wired to budget alerts"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Governance overlay — decisions that survive an incident review"
+  },
+  {
+   "t": "p",
+   "x": "Every decision records its inputs, model version and budget state at decision time — the incident review question 'what did the system know when it acted' has a definitive answer."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Budget enforcement",
+     "Decisions that miss budget are logged as degraded, never silent"
+    ],
+    [
+     "Policy change control",
+     "Rule changes replay before promotion; diffs signed"
+    ],
+    [
+     "PII minimization",
+     "Feature payloads stripped at the bus for regulated fields"
+    ],
+    [
+     "Replay access",
+     "Replay rights restricted; archives immutable"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Shadow lanes run through every release: the new engine decides in parallel with the old, disagreements are scored before any traffic shifts, and the shift itself is gated on the disagreement curve."
   },
   {
    "t": "cta",
-   "x": "Talk to the team that runs Real-Time Streaming & Event-Driven Decisioning in production — the briefing is technical by design, and the first one costs nothing but the hour."
+   "x": "Bring the decision your traders or operators say is too slow. The diagnostic will budget your path hop by hop — and show exactly where the p99 promise breaks."
   }
  ],
- "words": 507,
+ "words": 1081,
  "section": "Services",
  "l1": "Services",
  "l2": "Data, Analytics & Lakehouse",
@@ -278,7 +1302,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Data, Analytics & Lakehouse",
+   "title": "Domain overview — Data, Analytics & Lakehouse",
    "url": "/services/data-analytics-lakehouse/",
    "desc": "Trusted data, delivered in near real time — pipelines, lakehouse and governance that holds up under audit."
   },
@@ -330,33 +1354,51 @@
   {
    "title": "Blockchain & Digital Trust for Agriculture & Food Systems",
    "url": "/industries/agriculture-food/capabilities/blockchain-digital-trust/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Data Engineering & Pipeline Modernization",
-   "url": "/services/data-analytics-lakehouse/data-engineering-modernization/",
-   "tag": "Same tower",
-   "desc": "Resilient, observable pipelines — trusted data from source to decision at SLA."
-  },
-  {
-   "title": "Lakehouse Architecture & Migration",
-   "url": "/services/data-analytics-lakehouse/lakehouse-architecture/",
-   "tag": "Same tower",
-   "desc": "Lakehouse the right way — Unity Catalog governance, cost-aware design and AI-ready foundations."
+   "title": "Data Monetization & Analytics Products",
+   "url": "/services/data-analytics-lakehouse/data-monetization-products/",
+   "tag": "Same domain",
+   "desc": "data as a product for external consumption — contracts, SLAs, purpose limits and billing, with controls that get stronger the moment data leaves the building."
   },
   {
    "title": "Enterprise BI & Executive Analytics",
    "url": "/services/data-analytics-lakehouse/enterprise-bi-executive-analytics/",
-   "tag": "Same tower",
-   "desc": "Metrics into management — one governed semantic layer, decision cadence built in."
+   "tag": "Same domain",
+   "desc": "decision-grade reporting with one truth per metric — certified datasets, metric contracts and an executive layer that does not argue with itself."
   },
   {
-   "title": "Master Data, Governance & Cataloging",
-   "url": "/services/data-analytics-lakehouse/master-data-governance/",
-   "tag": "Same tower",
-   "desc": "One customer, one product, one truth — MDM and catalog discipline that regulators can read."
+   "title": "Lakehouse Architecture & Migration",
+   "url": "/services/data-analytics-lakehouse/lakehouse-architecture/",
+   "tag": "Same domain",
+   "desc": "bronze→silver→gold on open table formats — a promotion path with quality gates, time travel and honest storage economics instead of a data swamp."
+  },
+  {
+   "title": "Enterprise AI Strategy & Roadmapping",
+   "url": "/services/applied-ai-generative-ai/enterprise-ai-strategy/",
+   "tag": "Pairs with",
+   "desc": "portfolio management under uncertainty: provability screens, risk-tiered gates, a platform decision made once, and a stop-loss that holds."
+  },
+  {
+   "title": "Digital Workforce & Multi-Agent Orchestration",
+   "url": "/services/agentic-ai-hyperautomation/digital-workforce-orchestration/",
+   "tag": "Pairs with",
+   "desc": "agent-fleet management as workforce management — capacity, shifts, versioning, retirement and utilization, with SLAs that hold while the fleet scales."
+  },
+  {
+   "title": "Hybrid & Multicloud Architecture",
+   "url": "/services/cloud-edge-platform-engineering/hybrid-multicloud-architecture/",
+   "tag": "Pairs with",
+   "desc": "one operating model across clouds and on-prem — workload placement by policy, portable patterns, and drift that is measured in one place."
+  },
+  {
+   "title": "A multinational corporate bank",
+   "url": "/case-studies/bank-02/",
+   "tag": "Evidence",
+   "desc": "KYC refresh backlog cleared — 70% faster cycles with agentic file assembly."
   }
  ]
 }

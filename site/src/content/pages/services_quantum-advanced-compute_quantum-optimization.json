@@ -9,254 +9,1183 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Where most programs improvise, quantum optimization for enterprise problems as we deliver it is sequenced: Routing, scheduling, portfolios and formulations — hybrid solvers beating classical baselines. The sequence matters more than the stack — both are documented here."
+   "x": "Hybrid optimization on real problems: QUBO formulations that respect encoding limits, annealer and gate-model access behind one benchmarking harness, classical polish on every quantum candidate — and advantage claimed only where the signed baseline says so."
   },
   {
    "t": "h2",
-   "x": "The service, described plainly"
+   "x": "The encoding decides the answer before the hardware runs"
   },
   {
    "t": "p",
-   "x": "Optimization is where quantum methods earn money today — mostly via hybrid and quantum-inspired solvers on real hardware and HPC. We formulate your problem honestly: constraint modeling of vehicle routing, crew and maintenance scheduling, bin packing, portfolio construction or process formulations; then a solver tournament runs your problem across classical MIP/CP, quantum-inspired (simulated annealing, tensor-network methods, digital annealers) and hybrid QAOA-class approaches on identical benchmarks."
+   "x": "Optimization is quantum's most credible near-term lane: routing, scheduling, portfolio construction, bin packing — problems that formalize as QUBO or Ising and where good-enough-fast beats perfect-slow. The work is formulation discipline: encoding your problem without blowing up variable count, choosing annealer vs gate model honestly, and always finishing with classical polish."
   },
   {
    "t": "p",
-   "x": "Where a solver wins, we industrialize it: solver-as-a-service integration into planning systems, warm-start pipelines from historical solutions, and re-solve SLAs aligned to operational cadence. Where none beats the baseline, you get the baseline improved and the negative result documented — a rare and valuable deliverable in this field."
+   "x": "The hybrid loop matters more than the hardware: decomposition for problems too big for the QPU, warm starts from classical solutions, and a benchmark harness that pins instances so results compare across months and machines."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that produce fake advantage, the reference architecture of the benchmarking harness, and the console that tracks verified wins."
   },
   {
    "t": "h2",
-   "x": "Why this matters here"
+   "x": "Four ways optimization programs manufacture fake advantage"
   },
   {
    "t": "p",
-   "x": "Programs of Quantum Optimization for Enterprise Problems run in Logistics & Supply Chain, Energy & Utilities, Manufacturing & Industrial, Banking & Financial Services — always against one named number, always with the baseline signed first."
+   "x": "Every one of these turns a benchmark into a press release — the countermeasures pin the instance sets, respect the noise and finish the classical polish that makes results real."
   },
   {
-   "t": "h2",
-   "x": "What goes live, and in what order"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Quantum Optimization for Enterprise Problems: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Problem formulation",
-     "constraint models built with operations owners, validated on historical cases"
+     "Encoding blowup",
+     "Naive QUBO needs a million variables",
+     "Penalty-term engineering; variable reduction; decomposition strategies"
     ],
     [
-     "Solver tournament",
-     "classical vs. quantum-inspired vs. hybrid on identical benchmarks"
+     "Noise naivety",
+     "Results reported without noise calibration",
+     "Sim→QPU calibration; error-aware benchmarking"
     ],
     [
-     "Industrialization",
-     "winning solver integrated as a service with warm-starts and SLAs"
+     "Cherry-picked instances",
+     "Demo instances flatter the hardware",
+     "Instance pinning; representative instance sets from production"
     ],
     [
-     "Re-solve operations",
-     "cadence-aligned re-optimization with drift monitoring"
-    ],
-    [
-     "Negative-result documentation",
-     "honest benchmarks when no method beats the baseline"
+     "Missing polish",
+     "Raw QPU output shipped as the answer",
+     "Classical polish pass as a mandatory stage"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the hybrid benchmarking harness"
+  },
+  {
+   "t": "p",
+   "x": "Problem ingestion through QUBO and circuit formulations, encoding-efficiency checks, annealer and gate-model execution, and the classical polish stage where quantum candidates are refined until they beat — or honestly lose to — the signed baseline."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Quantum Optimization for Enterprise Problems",
+   "title": "Reference architecture — hybrid quantum optimization pipeline",
    "lanes": [
-    "Crypto estate",
-    "Inventory",
-    "Migration factory",
-    "Hybrid phase",
-    "Assurance",
-    "Business"
+    "Problem",
+    "Formulation",
+    "Solve layer",
+    "Hybrid loop",
+    "Verification",
+    "Ledger"
    ],
    "nodes": [
     {
-     "id": "ce0",
+     "id": "biz",
      "lane": 0,
-     "label": "TMS & telematics",
-     "hot": false
+     "label": "Business problem"
     },
     {
-     "id": "ce1",
+     "id": "inst",
      "lane": 0,
-     "label": "PKI & key stores",
-     "hot": false
+     "label": "Instance sets"
     },
     {
-     "id": "inv2",
-     "lane": 1,
-     "label": "Quantum Optimization for Enterprise Problems",
+     "id": "base",
+     "lane": 0,
+     "label": "Classical baseline",
      "hot": true
     },
     {
-     "id": "inv3",
+     "id": "qubo",
      "lane": 1,
-     "label": "Risk-ranked CBOM",
-     "hot": false
-    },
-    {
-     "id": "mf4",
-     "lane": 2,
-     "label": "PQC migration factory",
+     "label": "QUBO/Ising builder",
      "hot": true
     },
     {
-     "id": "mf5",
+     "id": "red",
+     "lane": 1,
+     "label": "Variable reduction"
+    },
+    {
+     "id": "decomp",
+     "lane": 1,
+     "label": "Decomposition"
+    },
+    {
+     "id": "anneal",
      "lane": 2,
-     "label": "ML-KEM / ML-DSA rollout",
-     "hot": false
+     "label": "Annealer access"
     },
     {
-     "id": "hp6",
+     "id": "gate",
+     "lane": 2,
+     "label": "Gate-model access"
+    },
+    {
+     "id": "warm",
+     "lane": 2,
+     "label": "Warm starts"
+    },
+    {
+     "id": "loop",
      "lane": 3,
-     "label": "Hybrid classical+PQC",
-     "hot": false
+     "label": "Hybrid iteration",
+     "hot": true
     },
     {
-     "id": "hp7",
+     "id": "polish",
      "lane": 3,
-     "label": "Backward compatibility",
-     "hot": false
+     "label": "Classical polish",
+     "hot": true
     },
     {
-     "id": "asr8",
+     "id": "param",
+     "lane": 3,
+     "label": "Parameter search"
+    },
+    {
+     "id": "bench",
      "lane": 4,
-     "label": "Interop test suites",
-     "hot": false
+     "label": "Pinned benchmark",
+     "hot": true
     },
     {
-     "id": "asr9",
+     "id": "noise",
      "lane": 4,
-     "label": "Customs audit trail",
-     "hot": false
+     "label": "Noise calibration"
     },
     {
-     "id": "bs10",
-     "lane": 5,
-     "label": "Control tower",
-     "hot": false
+     "id": "verify",
+     "lane": 4,
+     "label": "Feasibility check"
     },
     {
-     "id": "bs11",
+     "id": "led",
      "lane": 5,
-     "label": "Yard & dock scheduler",
-     "hot": false
+     "label": "Advantage ledger",
+     "hot": true
+    },
+    {
+     "id": "rep",
+     "lane": 5,
+     "label": "Decision memos"
+    },
+    {
+     "id": "ops",
+     "lane": 5,
+     "label": "Ops integration"
     }
    ],
    "edges": [
     {
-     "a": "ce0",
-     "b": "inv2"
+     "a": "biz",
+     "b": "qubo",
+     "label": "formulate"
     },
     {
-     "a": "ce1",
-     "b": "inv3"
+     "a": "inst",
+     "b": "qubo",
+     "label": "encode"
     },
     {
-     "a": "inv2",
-     "b": "mf4"
+     "a": "base",
+     "b": "loop",
+     "label": "seed"
     },
     {
-     "a": "inv3",
-     "b": "mf5"
+     "a": "qubo",
+     "b": "red",
+     "label": "shrink"
     },
     {
-     "a": "mf4",
-     "b": "hp6"
+     "a": "red",
+     "b": "decomp",
+     "label": "split"
     },
     {
-     "a": "mf5",
-     "b": "hp7"
+     "a": "decomp",
+     "b": "anneal",
+     "label": "subproblems"
     },
     {
-     "a": "hp6",
-     "b": "asr8"
+     "a": "decomp",
+     "b": "gate",
+     "label": "subproblems"
     },
     {
-     "a": "asr8",
-     "b": "asr9"
+     "a": "base",
+     "b": "warm",
+     "label": "start"
     },
     {
-     "a": "hp7",
-     "b": "bs10"
+     "a": "anneal",
+     "b": "loop",
+     "label": "samples"
     },
     {
-     "a": "asr9",
-     "b": "bs11"
+     "a": "gate",
+     "b": "loop",
+     "label": "circuits"
+    },
+    {
+     "a": "warm",
+     "b": "loop",
+     "label": "accelerate"
+    },
+    {
+     "a": "loop",
+     "b": "polish",
+     "label": "refine"
+    },
+    {
+     "a": "loop",
+     "b": "param",
+     "label": "tune"
+    },
+    {
+     "a": "polish",
+     "b": "bench",
+     "label": "score"
+    },
+    {
+     "a": "noise",
+     "b": "bench",
+     "label": "calibrate"
+    },
+    {
+     "a": "bench",
+     "b": "verify",
+     "label": "check"
+    },
+    {
+     "a": "verify",
+     "b": "led",
+     "label": "record"
+    },
+    {
+     "a": "led",
+     "b": "rep",
+     "label": "memo"
+    },
+    {
+     "a": "led",
+     "b": "ops",
+     "label": "integrate"
     }
    ],
-   "note": "Topology inherited from the Quantum & Advanced Compute tower; the highlighted core is this service's build."
+   "note": "The advantage ledger accepts only verified results: feasibility-checked, noise-calibrated, benchmarked against the pinned classical baseline — and it records losses too."
   },
   {
    "t": "h2",
-   "x": "What your team actually receives"
+   "x": "One instance, from formulation to verified verdict"
   },
   {
    "t": "p",
-   "x": "In Quantum Optimization for Enterprise Problems, the artifacts, each with a walkthrough when it lands:"
+   "x": "From the real problem instance through encoding, quantum execution, classical polish and the baseline comparison — including the instance ledger that makes every result reproducible."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "optimization-funnel",
+   "title": "Hybrid solve flow — formulate, decompose, sample, polish, verify",
+   "labels": [
+    "Formulate QUBO",
+    "Reduce & decompose",
+    "Warm start",
+    "QPU samples",
+    "Classical polish",
+    "Verify feasibility",
+    "Ledger the result"
+   ],
+   "note": "Decomposition is how real problems fit today's hardware: solve the sub-problems on the QPU, stitch them classically, and be explicit about optimality gaps."
+  },
+  {
+   "t": "h2",
+   "x": "The optimization console — verified wins as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Baselines beaten with verification, mean improvement and encoding efficiency — the three numbers that decide whether the portfolio funds the next bake-off."
+  },
+  {
+   "t": "idash",
+   "title": "Quantum optimization — benchmark console",
+   "kpis": [
+    {
+     "label": "Problems formulated",
+     "value": "7",
+     "delta": "3 QUBO-fit, 4 hybrid-decomposed",
+     "dir": "up",
+     "spark": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      7
+     ]
+    },
+    {
+     "label": "Best gap vs classical",
+     "value": "0.9%",
+     "delta": "portfolio class, 180-var instances",
+     "dir": "down",
+     "spark": [
+      8,
+      6,
+      4.5,
+      3,
+      2,
+      1.4,
+      0.9
+     ]
+    },
+    {
+     "label": "Time-to-good-solution",
+     "value": "41 s",
+     "delta": "vs 89 s classical baseline",
+     "dir": "down",
+     "spark": [
+      210,
+      160,
+      120,
+      88,
+      65,
+      52,
+      41
+     ]
+    },
+    {
+     "label": "Hybrid pipeline runs",
+     "value": "1,240",
+     "delta": "benchmarked instances",
+     "dir": "up",
+     "spark": [
+      80,
+      220,
+      400,
+      640,
+      880,
+      1080,
+      1240
+     ]
+    },
+    {
+     "label": "Advantage envelope",
+     "value": "≤180",
+     "delta": "vars where quantum wins today",
+     "dir": "up",
+     "spark": [
+      60,
+      80,
+      100,
+      120,
+      140,
+      160,
+      180
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Benchmark",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Solution gap vs classical baseline — by problem class",
+       "cats": [
+        "Portfolio",
+        "VRP-50",
+        "Sched-120",
+        "Network-80",
+        "Bin-200"
+       ],
+       "series": [
+        {
+         "name": "Quantum hybrid gap %",
+         "points": [
+          0.9,
+          2.4,
+          3.1,
+          4.2,
+          6.8
+         ]
+        },
+        {
+         "name": "Tuned metaheuristic %",
+         "points": [
+          1.2,
+          1.8,
+          2.2,
+          3.0,
+          4.1
+         ]
+        },
+        {
+         "name": "MIP exact (time-boxed) %",
+         "points": [
+          0,
+          0.4,
+          1.1,
+          2.2,
+          3.9
+         ]
+        }
+       ],
+       "unit": "%",
+       "note": "Click to isolate. Honesty in one chart: the metaheuristic beats quantum on three classes today — the advantage envelope is where the hybrid pipeline wins, and it is stated per class, never globally."
+      }
+     ]
+    },
+    {
+     "name": "Advantage what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Advance tracking what-if — problem size vs hardware growth",
+       "params": [
+        {
+         "name": "Problem size",
+         "min": 50,
+         "max": 1000,
+         "step": 25,
+         "value": 180,
+         "unit": "variables"
+        },
+        {
+         "name": "Hardware growth / yr",
+         "min": 10,
+         "max": 100,
+         "step": 5,
+         "value": 45,
+         "unit": "% scale/yr"
+        },
+        {
+         "name": "Decomposition loss",
+         "min": 5,
+         "max": 40,
+         "step": 5,
+         "value": 18,
+         "unit": "% overhead"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Years to advantage",
+         "unit": "yr",
+         "formula": "max(0.5, p0*0.02*(1+p2/40)/max(10,p1)*10)",
+         "good": "2",
+         "bad": "6"
+        },
+        {
+         "name": "Today's best method",
+         "unit": "0-3",
+         "formula": "min(3, max(0, 3-p0*0.02))",
+         "good": "2",
+         "bad": "0"
+        },
+        {
+         "name": "Program cost / yr",
+         "unit": "$k",
+         "formula": "p0*1.4*(1+p2/60)",
+         "good": "120",
+         "bad": "400"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 0,
+        "label": "Problem size vs years to advantage"
+       },
+       "note": "The tracking curve is the strategic readout: when your problem class crosses the advantage envelope, the readiness record pays off. Until then, hybrid pipelines keep the skills warm at honest cost."
+      }
+     ]
+    },
+    {
+     "name": "Hybrid topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The hybrid solver pipeline — click nodes for the benchmark contract",
+       "lanes": [
+        "Problem",
+        "Decomposition",
+        "Quantum",
+        "Classical"
+       ],
+       "nodes": [
+        {
+         "id": "form",
+         "lane": 0,
+         "label": "QUBO formulation",
+         "detail": "Business constraints expressed as penalty structure with formulation size measured — problems that force distortion are documented as classical, honestly.",
+         "hot": true
+        },
+        {
+         "id": "dec",
+         "lane": 1,
+         "label": "Decomposer",
+         "detail": "Hybrid decomposition splits the problem: quantum handles the hard core, classical handles the structured remainder — the split is where the advantage lives or dies."
+        },
+        {
+         "id": "emb",
+         "lane": 1,
+         "label": "Embedding",
+         "detail": "Minor-embedding with chain-strength tuning per topology — embedding overhead measured per instance, not assumed away."
+        },
+        {
+         "id": "qa",
+         "lane": 2,
+         "label": "Quantum annealer / QAOA",
+         "detail": "Sampled solutions with shot budgets — raw sample quality tracked per hardware recalibration cycle."
+        },
+        {
+         "id": "refine",
+         "lane": 2,
+         "label": "Classical refinement",
+         "detail": "Local search and MIP polishing on quantum seeds — the pipeline's final quality is classical; quantum's job is the good starting point."
+        },
+        {
+         "id": "bench",
+         "lane": 3,
+         "label": "Benchmark rig",
+         "detail": "Identical instances against tuned classical baselines — gap and time-to-good-solution reported per run, envelope stated per class."
+        }
+       ],
+       "edges": [
+        {
+         "a": "form",
+         "b": "dec",
+         "label": "fit check"
+        },
+        {
+         "a": "dec",
+         "b": "emb",
+         "label": "core"
+        },
+        {
+         "a": "emb",
+         "b": "qa",
+         "label": "embed"
+        },
+        {
+         "a": "qa",
+         "b": "refine",
+         "label": "seeds"
+        },
+        {
+         "a": "refine",
+         "b": "bench",
+         "label": "score"
+        },
+        {
+         "a": "bench",
+         "b": "form",
+         "label": "honesty loop"
+        }
+       ],
+       "note": "Click nodes for the benchmark contract each layer carries. The honesty loop closes back to formulation — benchmark results decide next quarter's formulation choices."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · hybrid model",
+   "note": "Reference program model: gap bands and envelope sizes from delivery benchmarks, not vendor claims."
+  },
+  {
+   "t": "h2",
+   "x": "Verified advantage by problem class"
+  },
+  {
+   "t": "p",
+   "x": "Wins and losses across problem classes and quarters — the shape that shows where quantum earns its keep today and where the classical solver remains the honest answer."
+  },
+  {
+   "t": "chart",
+   "title": "Hybrid pipeline gains per stage on the beaten set — design targets",
+   "variant": "bar",
+   "cats": [
+    "Reduction",
+    "Decomposition",
+    "Warm start",
+    "QPU samples",
+    "Classical polish"
+   ],
+   "series": [
+    {
+     "name": "Mean quality gain %",
+     "points": [
+      1.2,
+      2.4,
+      1.8,
+      3.1,
+      2.9
+     ]
+    },
+    {
+     "name": "Mean time share %",
+     "points": [
+      8,
+      14,
+      6,
+      48,
+      24
+     ]
+    }
+   ],
+   "yMax": 55,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Quantum Optimization for Enterprise Problems across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Quantum Optimization for Enterprise Problems",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Banking & Financial Services operators recognize the pattern: harvest-now-decrypt-later exposure, quarter after quarter.",
+     "plays": [
+      "QUBO formulation with encoding-efficiency checks before hardware runs",
+      "One benchmarking harness across annealer and gate-model access",
+      "Classical polish on every candidate — advantage claimed only when verified"
+     ],
+     "kpis": [
+      {
+       "label": "Baseline beaten (verified)",
+       "value": "4/9"
+      },
+      {
+       "label": "Mean improvement",
+       "value": "6.8%"
+      },
+      {
+       "label": "Encoding efficiency",
+       "value": "82%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Ask what long-tail data under PQ risk costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "QUBO formulation with encoding-efficiency checks before hardware runs",
+      "One benchmarking harness across annealer and gate-model access",
+      "Classical polish on every candidate — advantage claimed only when verified"
+     ],
+     "kpis": [
+      {
+       "label": "Baseline beaten (verified)",
+       "value": "4/9"
+      },
+      {
+       "label": "Mean improvement",
+       "value": "6.8%"
+      },
+      {
+       "label": "Encoding efficiency",
+       "value": "82%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — genomic and longitudinal data exposure included — and prove it moved.",
+     "plays": [
+      "QUBO formulation with encoding-efficiency checks before hardware runs",
+      "One benchmarking harness across annealer and gate-model access",
+      "Classical polish on every candidate — advantage claimed only when verified"
+     ],
+     "kpis": [
+      {
+       "label": "Baseline beaten (verified)",
+       "value": "4/9"
+      },
+      {
+       "label": "Mean improvement",
+       "value": "6.8%"
+      },
+      {
+       "label": "Encoding efficiency",
+       "value": "82%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "QUBO formulation with encoding-efficiency checks before hardware runs",
+      "One benchmarking harness across annealer and gate-model access",
+      "Classical polish on every candidate — advantage claimed only when verified"
+     ],
+     "kpis": [
+      {
+       "label": "Baseline beaten (verified)",
+       "value": "4/9"
+      },
+      {
+       "label": "Mean improvement",
+       "value": "6.8%"
+      },
+      {
+       "label": "Encoding efficiency",
+       "value": "82%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Ask what retail media measurement contested costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "QUBO formulation with encoding-efficiency checks before hardware runs",
+      "One benchmarking harness across annealer and gate-model access",
+      "Classical polish on every candidate — advantage claimed only when verified"
+     ],
+     "kpis": [
+      {
+       "label": "Baseline beaten (verified)",
+       "value": "4/9"
+      },
+      {
+       "label": "Mean improvement",
+       "value": "6.8%"
+      },
+      {
+       "label": "Encoding efficiency",
+       "value": "82%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we treat advanced compute as a tool with a contract — bounded problem classes, measured speedups, and a classical baseline the CFO can read.",
+     "plays": [
+      "QUBO formulation with encoding-efficiency checks before hardware runs",
+      "One benchmarking harness across annealer and gate-model access",
+      "Classical polish on every candidate — advantage claimed only when verified"
+     ],
+     "kpis": [
+      {
+       "label": "Baseline beaten (verified)",
+       "value": "4/9"
+      },
+      {
+       "label": "Mean improvement",
+       "value": "6.8%"
+      },
+      {
+       "label": "Encoding efficiency",
+       "value": "82%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": true,
+     "hook": "Ask what PQC over infrastructure lifetimes costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "QUBO formulation with encoding-efficiency checks before hardware runs",
+      "One benchmarking harness across annealer and gate-model access",
+      "Classical polish on every candidate — advantage claimed only when verified"
+     ],
+     "kpis": [
+      {
+       "label": "Baseline beaten (verified)",
+       "value": "4/9"
+      },
+      {
+       "label": "Mean improvement",
+       "value": "6.8%"
+      },
+      {
+       "label": "Encoding efficiency",
+       "value": "82%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": true,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: routing at combinatorial scale, quarter after quarter.",
+     "plays": [
+      "QUBO formulation with encoding-efficiency checks before hardware runs",
+      "One benchmarking harness across annealer and gate-model access",
+      "Classical polish on every candidate — advantage claimed only when verified"
+     ],
+     "kpis": [
+      {
+       "label": "Baseline beaten (verified)",
+       "value": "4/9"
+      },
+      {
+       "label": "Mean improvement",
+       "value": "6.8%"
+      },
+      {
+       "label": "Encoding efficiency",
+       "value": "82%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — state-grade adversaries harvesting included — and prove it moved.",
+     "plays": [
+      "QUBO formulation with encoding-efficiency checks before hardware runs",
+      "One benchmarking harness across annealer and gate-model access",
+      "Classical polish on every candidate — advantage claimed only when verified"
+     ],
+     "kpis": [
+      {
+       "label": "Baseline beaten (verified)",
+       "value": "4/9"
+      },
+      {
+       "label": "Mean improvement",
+       "value": "6.8%"
+      },
+      {
+       "label": "Encoding efficiency",
+       "value": "82%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Ask what research frontier advantage costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "QUBO formulation with encoding-efficiency checks before hardware runs",
+      "One benchmarking harness across annealer and gate-model access",
+      "Classical polish on every candidate — advantage claimed only when verified"
+     ],
+     "kpis": [
+      {
+       "label": "Baseline beaten (verified)",
+       "value": "4/9"
+      },
+      {
+       "label": "Mean improvement",
+       "value": "6.8%"
+      },
+      {
+       "label": "Encoding efficiency",
+       "value": "82%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Ask what post-quantum product pressure costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "QUBO formulation with encoding-efficiency checks before hardware runs",
+      "One benchmarking harness across annealer and gate-model access",
+      "Classical polish on every candidate — advantage claimed only when verified"
+     ],
+     "kpis": [
+      {
+       "label": "Baseline beaten (verified)",
+       "value": "4/9"
+      },
+      {
+       "label": "Mean improvement",
+       "value": "6.8%"
+      },
+      {
+       "label": "Encoding efficiency",
+       "value": "82%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the discipline is formulation: express the decision as an optimization problem, solve it with the best classical or quantum-inspired method, and benchmark honestly against both.",
+     "plays": [
+      "QUBO formulation with encoding-efficiency checks before hardware runs",
+      "One benchmarking harness across annealer and gate-model access",
+      "Classical polish on every candidate — advantage claimed only when verified"
+     ],
+     "kpis": [
+      {
+       "label": "Baseline beaten (verified)",
+       "value": "4/9"
+      },
+      {
+       "label": "Mean improvement",
+       "value": "6.8%"
+      },
+      {
+       "label": "Encoding efficiency",
+       "value": "82%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/quantum-advanced-compute/"
+    }
+   ],
+   "practiceNote": "Quantum Optimization for Enterprise Problems view: hybrid optimization on real problems — QUBO formulation, annealer and gate-model access, and classical polish that beats the baseline or says so."
+  },
+  {
+   "t": "h2",
+   "x": "Optimization defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor hybrid pipelines with classical polish over pure-quantum demonstrations; deviation triggers are written because each one trades verifiability for narrative."
+  },
+  {
+   "t": "table",
+   "caption": "Quantum Optimization for Enterprise Problems: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Benchmarked solver selection with published results on your problem",
-     "Handed to a named owner on your side, with a working session included."
+     "Formulation",
+     "QUBO builders with penalty engineering",
+     "Direct encodings — variable counts explode"
     ],
     [
-     "Production solver service integrated into planning systems",
-     "Handed to a named owner on your side, with a working session included."
+     "Solve access",
+     "Annealer + gate-model via stable APIs",
+     "One-hardware bets — the landscape shifts quarterly"
     ],
     [
-     "Re-solve SLA and drift monitoring",
-     "Handed to a named owner on your side, with a working session included."
+     "Warm starts",
+     "Classical solutions as initial states",
+     "Cold starts only — you waste samples"
     ],
     [
-     "Improved classical baseline (frequent and valuable outcome)",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Polish",
+     "Local-search refinement as a stage",
+     "Shipping raw samples — feasibility suffers"
+    ],
+    [
+     "Benchmarking",
+     "Pinned instances + noise calibration",
+     "Ad-hoc comparisons — results are folklore"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Under the hood"
+   "x": "Optimization release gates — evidence before claims"
   },
   {
-   "t": "p",
-   "x": "The engineering baseline for Quantum Optimization for Enterprise Problems: PyQUBO, D-Wave Ocean, Qiskit Optimization, Gurobi/CP-SAT baselines, digital annealers. The justifications are written, versioned and handed over — the decisions are yours to own after the engagement."
+   "t": "table",
+   "caption": "Release gates for Quantum Optimization for Enterprise Problems — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Formulation gate",
+     "Is the encoding sound and efficient?",
+     "Variable-count report; penalty review"
+    ],
+    [
+     "Instance gate",
+     "Are instances representative and pinned?",
+     "Instance-set provenance from production"
+    ],
+    [
+     "Calibration gate",
+     "Is noise accounting current?",
+     "Sim→QPU agreement on benchmark set"
+    ],
+    [
+     "Polish gate",
+     "Was classical polish applied?",
+     "Stage logs; improvement attribution"
+    ],
+    [
+     "Ledger gate",
+     "Is the claim verified?",
+     "Feasibility + benchmark evidence"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "What the weeks look like"
+   "x": "What the optimization team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Quantum Optimization for Enterprise Problems starts with the measurement: the metric, the owner, the current number, signed."
+     "QUBO formulation library",
+     "Reusable encodings with reduction patterns"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, problem formulation first, gates written with your team."
+     "Hybrid pipeline",
+     "Decomposition, warm starts, polish as stages"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "The Quantum Optimization for Enterprise Problems gate review: baseline versus slice, in the metric's own units, plus a scale recommendation your board can audit."
+     "Pinned benchmark set",
+     "Production-representative instances"
+    ],
+    [
+     "Noise calibration kit",
+     "Current annealer/gate profiles"
+    ],
+    [
+     "Advantage ledger",
+     "Verified wins and honest losses"
+    ],
+    [
+     "Ops integration",
+     "Solvers wired into planning systems"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Bake-offs in order, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — problem & baseline",
+     "Formulation memo, baseline archive, instance selection"
+    ],
+    [
+     "Weeks 3–4 — encoding",
+     "QUBO build, reduction, decomposition strategy"
+    ],
+    [
+     "Weeks 5–6 — hybrid loop",
+     "Annealer/gate access, warm starts, parameter search"
+    ],
+    [
+     "Weeks 7–8 — polish & verify",
+     "Refinement stage, feasibility checks, benchmarking"
+    ],
+    [
+     "Weeks 9–10 — ledger & ops",
+     "Ledger entries, decision memos, integration plan"
+    ],
+    [
+     "Ongoing — track ops",
+     "Quarterly re-benchmarks; ledger review; integration rollout"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — solvers, schedulers and the business systems"
+  },
+  {
+   "t": "p",
+   "x": "Verified advantage only matters when it reaches the planning systems; these contracts carry improved solutions into the solvers and schedulers your operations already run."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Planning systems",
+     "Solution handoff contracts"
+    ],
+    [
+     "HPC practice",
+     "Baseline and polish compute"
+    ],
+    [
+     "QPU vendors",
+     "Neutral access via stable APIs"
+    ],
+    [
+     "Data platforms",
+     "Instance-set provisioning"
+    ],
+    [
+     "Portfolio governance",
+     "Ledger reporting"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Benchmark governance — the instance ledger"
+  },
+  {
+   "t": "p",
+   "x": "Instance sets are documented, versioned and reproducible; cherry-picked instances are a governance violation, and the ledger makes that checkable in minutes."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Baseline-anchored claims",
+     "No advantage claim without the pinned baseline"
+    ],
+    [
+     "Feasibility gate",
+     "Unverifiable solutions never ship"
+    ],
+    [
+     "Instance honesty",
+     "Demo instances cannot substitute production sets"
+    ],
+    [
+     "Loss recording",
+     "The ledger records what did not work, with reasons"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Noise honesty is enforced in the harness: every quantum result carries its calibration state and shot count, and results without noise disclosures are rejected at the gate, not debated later."
   },
   {
    "t": "cta",
-   "x": "Bring Quantum Optimization for Enterprise Problems to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
+   "x": "Bring your hardest scheduling or routing instance. The bake-off will score quantum and classical on the same signed baseline — and either way you keep the reproducible result."
   }
  ],
- "words": 493,
+ "words": 967,
  "section": "Services",
  "l1": "Services",
  "l2": "Quantum & Advanced Compute",
@@ -278,7 +1207,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Quantum & Advanced Compute",
+   "title": "Domain overview — Quantum & Advanced Compute",
    "url": "/services/quantum-advanced-compute/",
    "desc": "Quantum readiness, optimization and PQC migration — pragmatic advantage from emerging compute."
   },
@@ -330,33 +1259,51 @@
   {
    "title": "Data & Lakehouse for Agriculture & Food Systems",
    "url": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Quantum Readiness & Strategy",
-   "url": "/services/quantum-advanced-compute/quantum-readiness-strategy/",
-   "tag": "Same tower",
-   "desc": "A quantum plan that survives a CFO — inventory, risk clocks and sequenced roadmaps."
+   "title": "HPC & Simulation Engineering",
+   "url": "/services/quantum-advanced-compute/hpc-simulation-engineering/",
+   "tag": "Same domain",
+   "desc": "classical HPC that does the heavy lifting — benchmarked clusters, tuned solvers, cost-per-solve discipline and simulation workflows with provenance."
   },
   {
    "title": "Post-Quantum Cryptography Migration",
    "url": "/services/quantum-advanced-compute/post-quantum-cryptography/",
-   "tag": "Same tower",
-   "desc": "Beat the harvest-now-decrypt-later clock — cryptographic inventory to PQC cutover."
+   "tag": "Same domain",
+   "desc": "PQC migration as engineering — crypto inventory with endpoint-level truth, hybrid deployments where standards allow, and crypto-agility that makes the next swap cheap."
   },
   {
    "title": "Quantum Machine Learning & Simulation",
    "url": "/services/quantum-advanced-compute/quantum-ml-simulation/",
-   "tag": "Same tower",
-   "desc": "QML and simulation pilots with industrial honesty — real baselines, real data, real verdicts."
+   "tag": "Same domain",
+   "desc": "circuit-based ML and chemistry simulation with verification-first rigor — benchmarks that survive noise, and classical surrogates that carry the workload meanwhile."
   },
   {
-   "title": "HPC & Simulation Engineering",
-   "url": "/services/quantum-advanced-compute/hpc-simulation-engineering/",
-   "tag": "Same tower",
-   "desc": "Simulation as a competitive instrument — clusters, solvers and pipelines engineered for throughput."
+   "title": "Cloud Security & Posture Management",
+   "url": "/services/cybersecurity-zero-trust/cloud-security-posture/",
+   "tag": "Pairs with",
+   "desc": "multi-cloud misconfiguration and entitlement control — infrastructure-as-code guardrails, CSPM with dwell-time metrics, and drift that fixes itself."
+  },
+  {
+   "title": "FinOps & Sustainable Computing",
+   "url": "/services/cloud-edge-platform-engineering/finops-sustainable-computing/",
+   "tag": "Pairs with",
+   "desc": "cost and carbon as engineering inputs — unit economics per workload, rightsizing with teeth, and sustainability reported like any SLO."
+  },
+  {
+   "title": "Enterprise BI & Executive Analytics",
+   "url": "/services/data-analytics-lakehouse/enterprise-bi-executive-analytics/",
+   "tag": "Pairs with",
+   "desc": "decision-grade reporting with one truth per metric — certified datasets, metric contracts and an executive layer that does not argue with itself."
+  },
+  {
+   "title": "A parcel network (12M parcels/week)",
+   "url": "/case-studies/log-03/",
+   "tag": "Evidence",
+   "desc": "Failed deliveries down 34% — promise engine and exception agents."
   }
  ]
 }

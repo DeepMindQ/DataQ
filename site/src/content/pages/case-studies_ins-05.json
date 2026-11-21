@@ -1,0 +1,262 @@
+{
+ "id": "CASE-ins-05",
+ "title": "A health insurer",
+ "url": "/case-studies/ins-05/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Insurance & Risk > A health insurer",
+ "seo_title": "A health insurer | Case Study | Dataq Software",
+ "meta_description": "Claims-fraud network analytics on a governed lakehouse — improper-payment recovery up 34% and investigator false-positive burden down 41%",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Claims-fraud network analytics on a governed lakehouse — improper-payment recovery up 34% and investigator false-positive burden down 41%"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a health insurer whose special-investigations unit worked referral lists that aged out before the schemes did. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline quarter measured the hunt: SIU caseload built from rule hits, 71% of which cleared on first review, while the schemes that cost the most — provider rings billing across aliases — never triggered a single rule."
+  },
+  {
+   "t": "p",
+   "x": "Claims, provider registry and member data lived in three systems with different identifiers, so no analyst could see one provider's behavior across entities without a week of manual stitching."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We built the network layer first: one governed entity model resolving providers, facilities and billers across systems, graph analytics surfacing rings as structures — shared addresses, tax IDs, device usage patterns — and a case system where evidence assembles itself for each referral. Investigators start with the network in view, not a spreadsheet of hits."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — A health insurer",
+   "lanes": [
+    "Claims streams",
+    "Entity resolution",
+    "Network analytics",
+    "SIU casework"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "Adjudicated claims feed",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Provider & member registries"
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Governed entity model",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Cross-system identifier graph",
+     "hot": true
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Ring-detection analytics",
+     "hot": true
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Billing-anomaly scoring"
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Auto-assembled case files",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Recovery tracking"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A health insurer",
+   "kpis": [
+    {
+     "label": "Improper-payment recovery",
+     "value": "+34%",
+     "delta": "year over year",
+     "dir": "up"
+    },
+    {
+     "label": "Investigator false positives",
+     "value": "-41%",
+     "delta": "network evidence beats rule hits",
+     "dir": "down"
+    },
+    {
+     "label": "Ring cases surfaced",
+     "value": "23",
+     "delta": "first year, none rule-detectable",
+     "dir": "up"
+    },
+    {
+     "label": "Case assembly time",
+     "value": "days → minutes",
+     "delta": "evidence auto-assembled",
+     "dir": "down"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed with the SIU director",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 08",
+     "msg": "Entity model live across three systems",
+     "tag": "build"
+    },
+    {
+     "t": "wk 13",
+     "msg": "Gate review — first ring case through recovery",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Scoring monthly; entity model under named steward",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Recovery and false-positive baselines signed with SIU"
+    ],
+    [
+     "Build gate",
+     "No analytics promoted until it beat the rule-hit baseline on known cases"
+    ],
+    [
+     "Run gate",
+     "Quarterly recovery review against the signed baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The entity-model-first pattern transfers everywhere fraud hides across identifiers. The ring signatures were trained on this book's schemes; another insurer starts from its own confirmed cases, which is why the diagnostic counts them first."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "14 months",
+     "13-person blended team",
+     "US",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "Run the two-week diagnostic on your estate first; the numbers decide whether this pattern earns a build on yours."
+  }
+ ],
+ "words": 434,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Insurance & Risk",
+ "l3": "A health insurer",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Insurance & Risk",
+   "url": "/industries/insurance/"
+  },
+  {
+   "name": "A health insurer",
+   "url": "/case-studies/ins-05/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Insurance & Risk — industry hub",
+   "url": "/industries/insurance/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Data, Analytics & Lakehouse",
+   "url": "/services/data-analytics-lakehouse/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A top-5 global P&C insurer",
+   "url": "/case-studies/ins-01/",
+   "desc": "Claims triage in minutes — 55% faster cycle times with document intelligence"
+  },
+  {
+   "title": "A leading life insurer (North America)",
+   "url": "/case-studies/ins-02/",
+   "desc": "Underwriting evidence assembled in hours — case cycle time down 44%"
+  },
+  {
+   "title": "A European specialty reinsurer",
+   "url": "/case-studies/ins-03/",
+   "desc": "Bordereaux automation and settlement evidence — reconciliation effort down 74%"
+  }
+ ],
+ "cards": []
+}

@@ -9,264 +9,1182 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Multimodal AI & Vision-Language Systems sits in the Applied AI & GenAI tower, and it earns that place by being specific: Models that read scans, scenes and schematics — multimodal intelligence wired into operations. The build pattern, the artifacts and the guardrails follow."
+   "x": "Document and scene understanding wired into the systems of record: extraction with per-field confidence, ledger reconciliation that catches what models miss, and evidence trails that let auditors verify every posted value without leaving the console."
   },
   {
    "t": "h2",
-   "x": "The working definition"
+   "x": "Vision in the enterprise is a bookkeeping problem wearing a camera"
   },
   {
    "t": "p",
-   "x": "Enterprise reality is not text-only: radiology sequences, claim photos, weld seams, shop-floor gauges, satellite plots and engineering drawings carry the signal. We build multimodal systems that combine vision-language models with domain encoders, run them where the data lives (edge, on-prem GPU or cloud), and route their outputs into the operational workflow — a work order, a claim decision, a radiologist's queue — not into a demo dashboard."
+   "x": "Vision in the enterprise is document understanding first, scene understanding second: extraction that feeds a system of record, QA that catches what humans miss, and safety monitoring that has to work at 2am without a person watching."
   },
   {
    "t": "p",
-   "x": "Delivery discipline matters more here than model choice: annotation pipelines with inter-rater quality control, class-imbalance handling for rare defects, out-of-distribution monitoring, and clinical or industrial validation protocols. We ship with shadow-mode operation and human-in-the-loop thresholds agreed with the operating function, then tighten autonomy as measured error falls."
+   "x": "The engineering center of gravity is the handshake between perception and process. A great detector that cannot write to the workflow, reconcile against the ledger and explain its confidence to an auditor is a demo. We build the reconciliation and explanation layers with the same seriousness as the models."
+  },
+  {
+   "t": "p",
+   "x": "The sections below cover the failure modes that erode trust in extraction, the reference architecture that keeps humans in the loop where it matters, and the gates that decide what posts straight through."
   },
   {
    "t": "h2",
-   "x": "Why this matters here"
+   "x": "Four failure modes that turn extraction into re-work"
   },
   {
    "t": "p",
-   "x": "Programs of Multimodal AI & Vision-Language Systems run in Healthcare & Life Sciences, Manufacturing & Industrial, Insurance & Risk, Logistics & Supply Chain — always against one named number, always with the baseline signed first."
+   "x": "Every one of these shows up as a review backlog rather than an error report — which is why the countermeasures target the review queue, not just the model."
   },
   {
-   "t": "h2",
-   "x": "How the capability takes shape"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Multimodal AI & Vision-Language Systems: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Vision-language pipelines",
-     "document, scene and image understanding fused with domain-specific encoders"
+     "Layout drift",
+     "A supplier changes an invoice template; extraction silently degrades",
+     "Layout fingerprinting with per-template monitors and quarantine on drift"
     ],
     [
-     "Edge deployment",
-     "GPU/accelerator inference on plant, vehicle and device hardware with OTA updates"
+     "Silent misextraction",
+     "Fields are extracted confidently and wrongly; downstream ledger trusts them",
+     "Dual-path extraction with reconciliation checks; confidence gating into review queues"
     ],
     [
-     "Annotation operations",
-     "labeling pipelines, QA loops and active-learning selection"
+     "Edge conditions",
+     "Folds, stamps, skew and low light break naive pipelines",
+     "Augmented training sets built from your worst 5% scans; preproc tuning per capture rig"
     ],
     [
-     "Validation protocols",
-     "shadow mode, human-in-the-loop thresholds and acceptance criteria per function"
-    ],
-    [
-     "Drift & OOD monitoring",
-     "distribution shift alarms with fallback-to-human policy"
+     "Unexplainable output",
+     "Auditors ask why a field was read as it was",
+     "Evidence capture: crop, model rationale and confidence stored per field"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — confidence-gated extraction into systems of record"
+  },
+  {
+   "t": "p",
+   "x": "The architecture's central decision is the confidence gate: fields above threshold post straight through, fields below route to a review surface that trains the loop. Reconciliation runs on the ledger side, so misposting is caught where the money lives."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Multimodal AI & Vision-Language Systems",
+   "title": "Reference architecture — document and scene understanding in production",
    "lanes": [
-    "Estate",
-    "Ingest",
-    "Knowledge spine",
-    "Task services",
-    "Governance",
-    "Users"
+    "Capture",
+    "Perception",
+    "Understanding",
+    "Reconciliation",
+    "Process systems",
+    "Evidence"
    ],
    "nodes": [
     {
-     "id": "src0",
+     "id": "scan",
      "lane": 0,
-     "label": "EHR / EMR records",
-     "hot": false
+     "label": "Scanners & MFPs"
     },
     {
-     "id": "src1",
+     "id": "cam",
      "lane": 0,
-     "label": "Claims & remittance feeds",
-     "hot": false
+     "label": "Camera fleet"
     },
     {
-     "id": "src2",
+     "id": "mob",
      "lane": 0,
-     "label": "Lab & imaging systems",
-     "hot": false
+     "label": "Mobile capture"
     },
     {
-     "id": "in3",
+     "id": "pre",
      "lane": 1,
-     "label": "Event & batch intake",
-     "hot": false
+     "label": "Preproc & dewarp"
     },
     {
-     "id": "in4",
+     "id": "det",
      "lane": 1,
-     "label": "PII minimization",
-     "hot": false
-    },
-    {
-     "id": "ks5",
-     "lane": 2,
-     "label": "Multimodal AI & Vision-Language Systems",
+     "label": "Layout & object detection",
      "hot": true
     },
     {
-     "id": "ks6",
+     "id": "ocr",
+     "lane": 1,
+     "label": "OCR ensemble"
+    },
+    {
+     "id": "extr",
      "lane": 2,
-     "label": "Citations & provenance",
-     "hot": false
+     "label": "Field extraction",
+     "hot": true
     },
     {
-     "id": "ts7",
+     "id": "vlm",
+     "lane": 2,
+     "label": "VLM reasoning"
+    },
+    {
+     "id": "class",
+     "lane": 2,
+     "label": "Doc/scene classify"
+    },
+    {
+     "id": "recon",
      "lane": 3,
-     "label": "Classify & extract",
-     "hot": false
+     "label": "Ledger reconciliation",
+     "hot": true
     },
     {
-     "id": "ts8",
+     "id": "conf",
      "lane": 3,
-     "label": "Summarize & draft",
-     "hot": false
+     "label": "Confidence gating",
+     "hot": true
     },
     {
-     "id": "gv9",
+     "id": "human",
+     "lane": 3,
+     "label": "Review queues"
+    },
+    {
+     "id": "erp",
      "lane": 4,
-     "label": "Eval gates",
-     "hot": false
+     "label": "ERP / ledger write"
     },
     {
-     "id": "gv10",
+     "id": "wf",
      "lane": 4,
-     "label": "HIPAA control plane",
-     "hot": false
+     "label": "Workflow triggers"
     },
     {
-     "id": "us11",
-     "lane": 5,
-     "label": "Care-management console",
-     "hot": false
+     "id": "ops",
+     "lane": 4,
+     "label": "Ops alerting"
     },
     {
-     "id": "us12",
+     "id": "ev",
      "lane": 5,
-     "label": "Prior-auth queue",
-     "hot": false
+     "label": "Evidence store",
+     "hot": true
+    },
+    {
+     "id": "mon",
+     "lane": 5,
+     "label": "Drift monitors"
+    },
+    {
+     "id": "rep",
+     "lane": 5,
+     "label": "Accuracy reports"
     }
    ],
    "edges": [
     {
-     "a": "src0",
-     "b": "in3"
+     "a": "scan",
+     "b": "pre"
     },
     {
-     "a": "src1",
-     "b": "in3"
+     "a": "cam",
+     "b": "pre"
     },
     {
-     "a": "src2",
-     "b": "in4"
+     "a": "mob",
+     "b": "pre"
     },
     {
-     "a": "in3",
-     "b": "ks5"
+     "a": "pre",
+     "b": "det"
     },
     {
-     "a": "in4",
-     "b": "ks5"
+     "a": "det",
+     "b": "ocr",
+     "label": "regions"
     },
     {
-     "a": "ks5",
-     "b": "ts7"
+     "a": "det",
+     "b": "class"
     },
     {
-     "a": "ks5",
-     "b": "ts8"
+     "a": "ocr",
+     "b": "extr",
+     "label": "tokens"
     },
     {
-     "a": "ts7",
-     "b": "gv9"
+     "a": "det",
+     "b": "extr",
+     "label": "layout"
     },
     {
-     "a": "gv9",
-     "b": "gv10"
+     "a": "vlm",
+     "b": "extr",
+     "label": "complex pages"
     },
     {
-     "a": "ts7",
-     "b": "us11"
+     "a": "extr",
+     "b": "conf",
+     "label": "scores"
     },
     {
-     "a": "ts8",
-     "b": "us12"
+     "a": "conf",
+     "b": "recon",
+     "label": "above bar"
+    },
+    {
+     "a": "conf",
+     "b": "human",
+     "label": "below bar"
+    },
+    {
+     "a": "recon",
+     "b": "erp",
+     "label": "matched"
+    },
+    {
+     "a": "recon",
+     "b": "wf",
+     "label": "events"
+    },
+    {
+     "a": "extr",
+     "b": "ops",
+     "label": "anomaly"
+    },
+    {
+     "a": "extr",
+     "b": "ev",
+     "label": "crops+rationale"
+    },
+    {
+     "a": "ev",
+     "b": "rep",
+     "label": "sampled"
+    },
+    {
+     "a": "mon",
+     "b": "extr",
+     "label": "drift"
     }
    ],
-   "note": "Topology inherited from the Applied AI & GenAI tower; the highlighted core is this service's build."
+   "note": "Confidence gating is the honest heart of the system: below-bar fields go to humans with the evidence attached, and the threshold is tuned per field class, not globally."
   },
   {
    "t": "h2",
-   "x": "The artifacts, named"
+   "x": "A document's path — pixels to posted entries"
   },
   {
    "t": "p",
-   "x": "deliverables, without dressing them up, Multimodal AI & Vision-Language Systems edition:"
+   "x": "From capture through layout parsing, field extraction and validation, to the posting decision and the review loop — including what happens when layout drift breaks an extractor mid-week."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Document path — capture to system-of-record with evidence",
+   "labels": [
+    "Capture",
+    "Normalize",
+    "Detect layout",
+    "Extract fields",
+    "Gate confidence",
+    "Reconcile",
+    "Write to record",
+    "Store evidence"
+   ],
+   "note": "Reconciliation failures loop back to review with both interpretations attached — the disagreement is the training signal."
+  },
+  {
+   "t": "h2",
+   "x": "The vision-ops console operations and finance share"
+  },
+  {
+   "t": "p",
+   "x": "Field accuracy, straight-through rate, review queue depth, drift alerts and page latency — the numbers that decide whether extraction is compounding or quietly generating re-work."
+  },
+  {
+   "t": "idash",
+   "title": "Multimodal & vision-language — task console",
+   "kpis": [
+    {
+     "label": "Task eval coverage",
+     "value": "94%",
+     "delta": "of prod vision flows",
+     "dir": "up",
+     "spark": [
+      40,
+      55,
+      68,
+      78,
+      86,
+      91,
+      94
+     ]
+    },
+    {
+     "label": "Detection mAP",
+     "value": "0.912",
+     "delta": "line-defect classes",
+     "dir": "up",
+     "spark": [
+      0.72,
+      0.78,
+      0.82,
+      0.86,
+      0.89,
+      0.9,
+      0.912
+     ]
+    },
+    {
+     "label": "Doc field F1",
+     "value": "0.947",
+     "delta": "across 214 layouts",
+     "dir": "up",
+     "spark": [
+      0.81,
+      0.85,
+      0.88,
+      0.91,
+      0.93,
+      0.94,
+      0.947
+     ]
+    },
+    {
+     "label": "Edge latency p95",
+     "value": "86 ms",
+     "delta": "INT8, Jetson-class",
+     "dir": "down",
+     "spark": [
+      240,
+      180,
+      140,
+      112,
+      96,
+      90,
+      86
+     ]
+    },
+    {
+     "label": "Grounded-answer share",
+     "value": "97.2%",
+     "delta": "claims with evidence",
+     "dir": "up",
+     "spark": [
+      61,
+      72,
+      80,
+      88,
+      92,
+      95,
+      97
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Task benchmarks",
+     "widgets": [
+      {
+       "kind": "bar",
+       "title": "Per-task accuracy — candidates vs the specialized bar",
+       "cats": [
+        "Defect detect",
+        "Doc extract",
+        "Video retrieve",
+        "Count/measure",
+        "Scene QA",
+        "OCR sweep"
+       ],
+       "series": [
+        {
+         "name": "General VLM",
+         "points": [
+          74,
+          82,
+          66,
+          61,
+          78,
+          87
+         ]
+        },
+        {
+         "name": "Specialized stack",
+         "points": [
+          91,
+          95,
+          78,
+          72,
+          80,
+          93
+         ]
+        },
+        {
+         "name": "Signed bar",
+         "points": [
+          85,
+          90,
+          75,
+          70,
+          75,
+          90
+         ]
+        }
+       ],
+       "unit": "%",
+       "note": "Click a series to isolate. The general VLM clears scene QA and OCR; the specialized stack clears defect detection by 17 points — the routing policy sends each task to the stack that clears its bar."
+      }
+     ]
+    },
+    {
+     "name": "Edge what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Edge deployment what-if — quantization, resolution, batch",
+       "params": [
+        {
+         "name": "Quantization",
+         "min": 16,
+         "max": 8,
+         "step": 8,
+         "value": 8,
+         "unit": "bit"
+        },
+        {
+         "name": "Input resolution",
+         "min": 640,
+         "max": 1920,
+         "step": 320,
+         "value": 1280,
+         "unit": "px"
+        },
+        {
+         "name": "Batch size",
+         "min": 1,
+         "max": 8,
+         "step": 1,
+         "value": 4,
+         "unit": "frames"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Edge p95 latency",
+         "unit": "ms",
+         "formula": "p0*0.006*p1*0.09*p2*12",
+         "good": "120",
+         "bad": "300"
+        },
+        {
+         "name": "Accuracy cost",
+         "unit": "pts",
+         "formula": "max(0,(16-p0))*0.9+max(0,(p1-960))*0.006",
+         "good": "2",
+         "bad": "5"
+        },
+        {
+         "name": "Throughput",
+         "unit": "fps",
+         "formula": "1000/(p0*0.006*p1*0.09*p2*12/1000*p2)",
+         "good": "25",
+         "bad": "8"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 0,
+        "label": "Resolution vs edge latency"
+       },
+       "note": "The latency curve rises steeply past 1280 px — the accuracy cost of downscaling is usually cheaper than the latency cost of full resolution. Drag quantization to see where INT8's accuracy tax lands."
+      }
+     ]
+    },
+    {
+     "name": "Vision pipeline",
+     "widgets": [
+      {
+       "kind": "flow",
+       "title": "From pixels to grounded decision — click each stage",
+       "stages": [
+        {
+         "name": "Capture",
+         "role": "Sensor contract",
+         "detail": "Cameras and scanners expose calibration state, lighting conditions and frame rate; a sensor that drifts flags itself before its data poisons the eval.",
+         "metrics": [
+          {
+           "label": "Sensors",
+           "value": "212"
+          },
+          {
+           "label": "Auto-recal",
+           "value": "weekly"
+          }
+         ]
+        },
+        {
+         "name": "Preprocess",
+         "role": "Normalization",
+         "detail": "Resolution normalization, lens correction and class-specific augmentation — the same transforms recorded for training so inference never drifts from training assumptions.",
+         "metrics": [
+          {
+           "label": "Transform set",
+           "value": "9"
+          },
+          {
+           "label": "Versioned",
+           "value": "yes"
+          }
+         ]
+        },
+        {
+         "name": "Detect",
+         "role": "Task models",
+         "detail": "Specialized detectors per task class (defects, presence, geometry) run at the edge; uncertain frames escalate with crops attached rather than guessing centrally.",
+         "metrics": [
+          {
+           "label": "Edge models",
+           "value": "7"
+          },
+          {
+           "label": "Escalation rate",
+           "value": "4.2%"
+          }
+         ]
+        },
+        {
+         "name": "Reason",
+         "role": "VLM layer",
+         "detail": "The VLM reasons over crops and metadata for the tasks that need language: scene QA, incident summaries, doc understanding — always grounded to the regions it was given.",
+         "metrics": [
+          {
+           "label": "Grounding",
+           "value": "bbox-level"
+          },
+          {
+           "label": "Hallucination catch",
+           "value": "QA harness"
+          }
+         ]
+        },
+        {
+         "name": "Act & audit",
+         "role": "Evidence trail",
+         "detail": "Decisions carry their evidence: crops, OCR strings, model versions, confidence — the artifact a quality audit or incident review reads first.",
+         "metrics": [
+          {
+           "label": "Evidence / decision",
+           "value": "complete"
+          },
+          {
+           "label": "Retention",
+           "value": "per policy"
+          }
+         ]
+        }
+       ],
+       "note": "Edge detects, central reasons, everything grounds — the split is an economics decision the panel above makes explicit."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · per-task eval model",
+   "note": "Reference program model: per-task bars and edge bands from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Straight-through economics by document class"
+  },
+  {
+   "t": "p",
+   "x": "Two series per document class: the straight-through share and the review load it leaves behind. The classes are ordered by the volume your operation actually processes, so the capacity plan falls out of the chart."
+  },
+  {
+   "t": "chart",
+   "title": "Straight-through rate and review load by document class — design targets",
+   "variant": "bar",
+   "cats": [
+    "Invoices",
+    "Contracts",
+    "Claims forms",
+    "ID documents"
+   ],
+   "series": [
+    {
+     "name": "Straight-through target %",
+     "points": [
+      82,
+      68,
+      74,
+      91
+     ]
+    },
+    {
+     "name": "Review load target (pages/day)",
+     "points": [
+      120,
+      210,
+      160,
+      40
+     ]
+    }
+   ],
+   "yMax": 250,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Multimodal AI & Vision-Language Systems across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Multimodal AI & Vision-Language Systems",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Confidence-gated extraction wired to your systems of record",
+      "Ledger-side reconciliation with per-field evidence for auditors",
+      "Review surfaces that train the loop instead of growing a back-office tax"
+     ],
+     "kpis": [
+      {
+       "label": "Field-level accuracy",
+       "value": "98.4%"
+      },
+      {
+       "label": "Straight-through rate",
+       "value": "81%"
+      },
+      {
+       "label": "Review queue depth",
+       "value": "312"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": true,
+     "hook": "Ask what pricing sophistication outrunning governance costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Confidence-gated extraction wired to your systems of record",
+      "Ledger-side reconciliation with per-field evidence for auditors",
+      "Review surfaces that train the loop instead of growing a back-office tax"
+     ],
+     "kpis": [
+      {
+       "label": "Field-level accuracy",
+       "value": "98.4%"
+      },
+      {
+       "label": "Straight-through rate",
+       "value": "81%"
+      },
+      {
+       "label": "Review queue depth",
+       "value": "312"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": true,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Confidence-gated extraction wired to your systems of record",
+      "Ledger-side reconciliation with per-field evidence for auditors",
+      "Review surfaces that train the loop instead of growing a back-office tax",
+      "Sector working pattern: ambient clinical documentation: visit audio to structured draft notes in EHR templates with clinician sign-off. Documentation time down 25%+ is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Field-level accuracy",
+       "value": "98.4%"
+      },
+      {
+       "label": "Straight-through rate",
+       "value": "81%"
+      },
+      {
+       "label": "Review queue depth",
+       "value": "312"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "Manufacturing & Industrial operators recognize the pattern: quality escapes and manual inspection, quarter after quarter.",
+     "plays": [
+      "Confidence-gated extraction wired to your systems of record",
+      "Ledger-side reconciliation with per-field evidence for auditors",
+      "Review surfaces that train the loop instead of growing a back-office tax"
+     ],
+     "kpis": [
+      {
+       "label": "Field-level accuracy",
+       "value": "98.4%"
+      },
+      {
+       "label": "Straight-through rate",
+       "value": "81%"
+      },
+      {
+       "label": "Review queue depth",
+       "value": "312"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Confidence-gated extraction wired to your systems of record",
+      "Ledger-side reconciliation with per-field evidence for auditors",
+      "Review surfaces that train the loop instead of growing a back-office tax"
+     ],
+     "kpis": [
+      {
+       "label": "Field-level accuracy",
+       "value": "98.4%"
+      },
+      {
+       "label": "Straight-through rate",
+       "value": "81%"
+      },
+      {
+       "label": "Review queue depth",
+       "value": "312"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Confidence-gated extraction wired to your systems of record",
+      "Ledger-side reconciliation with per-field evidence for auditors",
+      "Review surfaces that train the loop instead of growing a back-office tax",
+      "Sector working pattern: resolution-first voice care — grounded voice agents resolving top intents with telephony integration and escalation context. Care cost per contact down 30% is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Field-level accuracy",
+       "value": "98.4%"
+      },
+      {
+       "label": "Straight-through rate",
+       "value": "81%"
+      },
+      {
+       "label": "Review queue depth",
+       "value": "312"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Confidence-gated extraction wired to your systems of record",
+      "Ledger-side reconciliation with per-field evidence for auditors",
+      "Review surfaces that train the loop instead of growing a back-office tax"
+     ],
+     "kpis": [
+      {
+       "label": "Field-level accuracy",
+       "value": "98.4%"
+      },
+      {
+       "label": "Straight-through rate",
+       "value": "81%"
+      },
+      {
+       "label": "Review queue depth",
+       "value": "312"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": true,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: demand and capacity planning stale, quarter after quarter.",
+     "plays": [
+      "Confidence-gated extraction wired to your systems of record",
+      "Ledger-side reconciliation with per-field evidence for auditors",
+      "Review surfaces that train the loop instead of growing a back-office tax",
+      "Sector working pattern: eta prediction in Logistics & Supply Chain, where traffic, weather and history-driven ETA models per lane and mode. Promise accuracy up; penalties down is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Field-level accuracy",
+       "value": "98.4%"
+      },
+      {
+       "label": "Straight-through rate",
+       "value": "81%"
+      },
+      {
+       "label": "Review queue depth",
+       "value": "312"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use.",
+     "plays": [
+      "Confidence-gated extraction wired to your systems of record",
+      "Ledger-side reconciliation with per-field evidence for auditors",
+      "Review surfaces that train the loop instead of growing a back-office tax"
+     ],
+     "kpis": [
+      {
+       "label": "Field-level accuracy",
+       "value": "98.4%"
+      },
+      {
+       "label": "Straight-through rate",
+       "value": "81%"
+      },
+      {
+       "label": "Review queue depth",
+       "value": "312"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Confidence-gated extraction wired to your systems of record",
+      "Ledger-side reconciliation with per-field evidence for auditors",
+      "Review surfaces that train the loop instead of growing a back-office tax"
+     ],
+     "kpis": [
+      {
+       "label": "Field-level accuracy",
+       "value": "98.4%"
+      },
+      {
+       "label": "Straight-through rate",
+       "value": "81%"
+      },
+      {
+       "label": "Review queue depth",
+       "value": "312"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Confidence-gated extraction wired to your systems of record",
+      "Ledger-side reconciliation with per-field evidence for auditors",
+      "Review surfaces that train the loop instead of growing a back-office tax"
+     ],
+     "kpis": [
+      {
+       "label": "Field-level accuracy",
+       "value": "98.4%"
+      },
+      {
+       "label": "Straight-through rate",
+       "value": "81%"
+      },
+      {
+       "label": "Review queue depth",
+       "value": "312"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Confidence-gated extraction wired to your systems of record",
+      "Ledger-side reconciliation with per-field evidence for auditors",
+      "Review surfaces that train the loop instead of growing a back-office tax"
+     ],
+     "kpis": [
+      {
+       "label": "Field-level accuracy",
+       "value": "98.4%"
+      },
+      {
+       "label": "Straight-through rate",
+       "value": "81%"
+      },
+      {
+       "label": "Review queue depth",
+       "value": "312"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/"
+    }
+   ],
+   "practiceNote": "Multimodal AI & Vision-Language Systems view: document and scene understanding wired into systems of record, with confidence gating, ledger reconciliation and per-field evidence for auditors."
+  },
+  {
+   "t": "h2",
+   "x": "Extraction stack defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults bias toward per-field evidence and reconciliation over raw model scores; deviations are permitted where document classes argue for them, with the trigger conditions written alongside."
+  },
+  {
+   "t": "table",
+   "caption": "Multimodal AI & Vision-Language Systems: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Multimodal inference service integrated into the operational workflow",
-     "Handed to a named owner on your side, with a working session included."
+     "Detection",
+     "Layout detectors (DiT/RT-DETR class) fine-tuned on your templates",
+     "Generic off-the-shelf detection only for cold-start, always retrained"
     ],
     [
-     "Annotation pipeline and dataset operations manual",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "OCR",
+     "Ensemble: classic engine + VLM OCR for degraded captures",
+     "Single engine only when capture quality is controlled end to end"
     ],
     [
-     "Validation and acceptance protocol signed with the operating function",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Reasoning",
+     "VLM for complex tables, stamps and cross-page logic",
+     "Deterministic extractors wherever a rule beats a model — cheaper and auditable"
     ],
     [
-     "Edge rollout kit (hardware reference, OTA, fleet monitoring)",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Reconciliation",
+     "Typed matching against ledger with tolerance bands",
+     "Free-text matching — it hides errors the ledger will not"
+    ],
+    [
+     "Serving",
+     "Batch for archive backlogs; streaming API for live capture",
+     "One path for both — the batch is 90% of volume and needs its own cost curve"
+    ],
+    [
+     "Evidence",
+     "Crop + rationale + confidence per field, immutable store",
+     "End-result-only logging — fails the first serious audit"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The stack, chosen for operability"
+   "x": "Extraction release gates — what blocks a go-live"
   },
   {
-   "t": "p",
-   "x": "The engineering baseline for Multimodal AI & Vision-Language Systems: PyTorch, OpenCV, NVIDIA TensorRT, YOLO/RT-DETR families, open-weight VLMs, Kubernetes + KubeEdge. The justifications are written, versioned and handed over — the decisions are yours to own after the engagement."
+   "t": "table",
+   "caption": "Release gates for Multimodal AI & Vision-Language Systems — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Coverage gate",
+     "Do templates and scenes cover the real intake mix?",
+     "Coverage census against 90 days of capture; long-tail plan"
+    ],
+    [
+     "Accuracy gate",
+     "Does field accuracy clear the per-class bar?",
+     "Human-adjudicated eval set; per-field confusion report"
+    ],
+    [
+     "Reconciliation gate",
+     "Do extracted values survive ledger matching?",
+     "Mismatch rate below class bar with adjudication samples"
+    ],
+    [
+     "Evidence gate",
+     "Can any field be explained after the fact?",
+     "Audit sample pull with crops, rationale and model versions"
+    ],
+    [
+     "Drift gate",
+     "Are template monitors armed?",
+     "Fingerprint monitors live; drift drill with quarantine"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "From baseline to working slice"
+   "x": "The handover package for operations and finance"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Multimodal AI & Vision-Language Systems starts with the measurement: the metric, the owner, the current number, signed."
+     "Production extraction service",
+     "Streaming and batch paths with per-field confidence gating"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, vision-language pipelines first, gates written with your team."
+     "Reconciliation layer",
+     "Typed ledger matching with adjudication loop feeding retraining"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Multimodal AI & Vision-Language Systems are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Evidence store",
+     "Immutable per-field provenance: crop, rationale, model version"
+    ],
+    [
+     "Template fleet monitors",
+     "Layout fingerprinting with drift quarantine and owner paging"
+    ],
+    [
+     "Adjudicated eval set",
+     "Human-labeled baseline per document class, refreshed quarterly"
+    ],
+    [
+     "Ops runbook",
+     "Queue management, threshold tuning SOP, capture-rig tuning guide"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "From capture to straight-through, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — intake census",
+     "90-day capture audit, class taxonomy, accuracy bars per class, signed baseline"
+    ],
+    [
+     "Weeks 3–5 — perception core",
+     "Detection and OCR ensemble on your worst 5% scans; layout fingerprints"
+    ],
+    [
+     "Weeks 6–7 — extraction & gating",
+     "Field extractors, confidence thresholds, review queue design"
+    ],
+    [
+     "Weeks 8–9 — reconciliation",
+     "Ledger matching, adjudication loop, ERP write path"
+    ],
+    [
+     "Weeks 10–11 — evidence & monitors",
+     "Evidence store, audit sample tooling, drift monitors armed"
+    ],
+    [
+     "Ongoing — retrain cadence",
+     "Monthly hard-case retraining; quarterly eval refresh"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — capture, records and the review bench"
+  },
+  {
+   "t": "p",
+   "x": "Vision systems live or die on the systems of record they feed; these integration contracts are the real scope of the service."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "ERP / ledger",
+     "Typed write API with tolerance-band matching"
+    ],
+    [
+     "Workflow engine",
+     "Event contract for process triggers and SLAs"
+    ],
+    [
+     "Capture hardware",
+     "Driver-level config for scanner rigs and cameras"
+    ],
+    [
+     "Review tooling",
+     "Queue UI with evidence rendered beside the document"
+    ],
+    [
+     "Observability",
+     "Per-class accuracy and drift metrics on dashboards"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Audit-ready extraction — evidence on every posted field"
+  },
+  {
+   "t": "p",
+   "x": "Every posted field carries extraction evidence — source region, model version, confidence and reviewer identity — so an auditor can verify a posting without leaving the console."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "PII surface control",
+     "Face and identifier redaction on scene paths; retention keyed to purpose"
+    ],
+    [
+     "Human-in-command",
+     "Below-bar fields never auto-commit; override is logged with reason"
+    ],
+    [
+     "Evidence immutability",
+     "Write-once store with hash-chained audit extracts"
+    ],
+    [
+     "Model change control",
+     "Perception model changes rerun the adjudicated eval set before deploy"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Layout drift alerts are wired to the capture pipeline: a changed template pages the owner before extraction quality degrades, not after the misposting is reconciled."
   },
   {
    "t": "cta",
-   "x": "Start with the diagnostic, not the contract: Multimodal AI & Vision-Language Systems baselined in two weeks, and a scoped proposal only if the delta justifies it."
+   "x": "Bring the document class your back office dreads most. The four-week provability sprint will show you the straight-through rate it can honestly reach, with the review load priced in."
   }
  ],
- "words": 511,
+ "words": 1201,
  "section": "Services",
  "l1": "Services",
  "l2": "Applied AI & Generative AI",
@@ -288,7 +1206,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Applied AI & Generative AI",
+   "title": "Domain overview — Applied AI & Generative AI",
    "url": "/services/applied-ai-generative-ai/",
    "desc": "From enterprise strategy to production models — AI measured on the P&L."
   },
@@ -340,33 +1258,51 @@
   {
    "title": "Quantum & Advanced Compute for Logistics & Supply Chain",
    "url": "/industries/logistics-supply-chain/capabilities/quantum-advanced-compute/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Enterprise AI Strategy & Roadmapping",
-   "url": "/services/applied-ai-generative-ai/enterprise-ai-strategy/",
-   "tag": "Same tower",
-   "desc": "Align AI to P&L lines and risk mandates — a sequenced portfolio, not a pile of pilots."
-  },
-  {
    "title": "Generative AI Platform Engineering",
    "url": "/services/applied-ai-generative-ai/genai-platform-engineering/",
-   "tag": "Same tower",
-   "desc": "One governed platform, many GenAI products — retrieval, guardrails and cost control as shared services."
+   "tag": "Same domain",
+   "desc": "one governed door for every model call — authz, budgets, caching, guardrails and traces — so fifty use cases stay operable and affordable."
   },
   {
    "title": "LLM Fine-Tuning & Model Operations",
    "url": "/services/applied-ai-generative-ai/llm-fine-tuning-ops/",
-   "tag": "Same tower",
-   "desc": "Own your models — tune, distill and operate LLMs with measurable quality, controlled cost and enforceable policy."
+   "tag": "Same domain",
+   "desc": "a tuning factory with decontaminated datasets, a multi-task eval gate that blocks silent regressions, and canary rollout with rehearsed rollback."
   },
   {
    "title": "RAG & Enterprise Knowledge Systems",
    "url": "/services/applied-ai-generative-ai/rag-knowledge-systems/",
-   "tag": "Same tower",
-   "desc": "Answers with citations, not vibes — permission-aware retrieval over your regulated document estate."
+   "tag": "Same domain",
+   "desc": "permission-aware retrieval over your regulated document estate, with answers that cite their sources and refuse when the ground is thin."
+  },
+  {
+   "title": "Digital Workforce & Multi-Agent Orchestration",
+   "url": "/services/agentic-ai-hyperautomation/digital-workforce-orchestration/",
+   "tag": "Pairs with",
+   "desc": "agent-fleet management as workforce management — capacity, shifts, versioning, retirement and utilization, with SLAs that hold while the fleet scales."
+  },
+  {
+   "title": "Lakehouse Architecture & Migration",
+   "url": "/services/data-analytics-lakehouse/lakehouse-architecture/",
+   "tag": "Pairs with",
+   "desc": "bronze→silver→gold on open table formats — a promotion path with quality gates, time travel and honest storage economics instead of a data swamp."
+  },
+  {
+   "title": "Threat Intelligence & Managed SOC",
+   "url": "/services/cybersecurity-zero-trust/threat-intelligence-managed-soc/",
+   "tag": "Pairs with",
+   "desc": "detection engineering with measured coverage — threat-informed, purple-teamed, and run by a SOC whose speed is measured from detect to contain."
+  },
+  {
+   "title": "A 12-hospital US health system",
+   "url": "/case-studies/hc-01/",
+   "tag": "Evidence",
+   "desc": "Clinicians get 90 minutes a day back — ambient documentation inside the EHR."
   }
  ]
 }

@@ -1,0 +1,263 @@
+{
+ "id": "CASE-log-05",
+ "title": "A container shipping line",
+ "url": "/case-studies/log-05/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Logistics & Supply Chain > A container shipping line",
+ "seo_title": "A container shipping line | Case Study | Dataq Software",
+ "meta_description": "Voyage ETA on a vessel-performance spine — schedule reliability up 8 points and buffer fuel down 6% without slipping promises",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Voyage ETA on a vessel-performance spine — schedule reliability up 8 points and buffer fuel down 6% without slipping promises"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a container line whose schedule was a promise its fleet kept by carrying fuel for the worst case. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline quarter weighed the worst case: schedule reliability 64%, 6% of bunker spend covering schedule risk, and customers' planning teams building their own delays around the line's variance."
+  },
+  {
+   "t": "p",
+   "x": "ETA models used generic vessel curves; actual hull conditions, trim and weather routing lived with captains. The network's planners and the bridge never shared a number."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We built the vessel spine: per-hull performance curves learned from voyage data, weather-routed ETA predictions produced per leg and shared to network planning in one model, slow-steaming opportunities flagged where the schedule allowed, and the customer-facing promise computed from the same spine operations trusts. Captains reviewed the curves; the sea kept its vote."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — A container shipping line",
+   "lanes": [
+    "Voyage data",
+    "Performance spine",
+    "ETA & routing",
+    "Promise layer"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "Onboard & AIS feeds",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Weather routing service",
+     "hot": true
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Per-hull performance curves",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Leg-level ETA prediction",
+     "hot": true
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Slow-steaming advisor",
+     "hot": true
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Network planning view"
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Customer promise engine",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Reliability ledger"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A container shipping line",
+   "kpis": [
+    {
+     "label": "Schedule reliability",
+     "value": "64% → 72%",
+     "delta": "+8 points",
+     "dir": "up"
+    },
+    {
+     "label": "Buffer fuel",
+     "value": "-6%",
+     "delta": "curves replaced worst case",
+     "dir": "down"
+    },
+    {
+     "label": "ETA accuracy (±12h)",
+     "value": "-0",
+     "delta": "held steady while promising more",
+     "dir": "flat"
+    },
+    {
+     "label": "Customer re-planning complaints",
+     "value": "-33%",
+     "delta": "promises computed honestly",
+     "dir": "down"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed with network and marine ops",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 08",
+     "msg": "Curves live on 40 vessels",
+     "tag": "build"
+    },
+    {
+     "t": "wk 14",
+     "msg": "Gate review — captains' council accepted the curves",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Fleet rollout; curve updates under marine owner",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Reliability and bunker baselines signed with network ops"
+    ],
+    [
+     "Build gate",
+     "No hull curve adopted until captains reviewed its fit"
+    ],
+    [
+     "Run gate",
+     "Monthly reliability review against the signed baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The per-hull curve pattern transfers to any fleet; the captain-council review was this line's marine culture and the reason it worked. Another line starts from its voyage data — the diagnostic reads a season of it before promising reliability."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "13 months",
+     "14-person blended team",
+     "Global",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "Bring your own baseline. The two-week diagnostic is how this engagement started, and it is how we find out whether your estate can carry the same delta."
+  }
+ ],
+ "words": 438,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Logistics & Supply Chain",
+ "l3": "A container shipping line",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Logistics & Supply Chain",
+   "url": "/industries/logistics-supply-chain/"
+  },
+  {
+   "name": "A container shipping line",
+   "url": "/case-studies/log-05/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Logistics & Supply Chain — industry hub",
+   "url": "/industries/logistics-supply-chain/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Data, Analytics & Lakehouse",
+   "url": "/services/data-analytics-lakehouse/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A global 3PL (40+ countries)",
+   "url": "/case-studies/log-01/",
+   "desc": "Exceptions auto-resolved at 74% — control tower to agentic remediation"
+  },
+  {
+   "title": "A container-terminal operator",
+   "url": "/case-studies/log-02/",
+   "desc": "Berth productivity +16% — planning platform and crane health sensing"
+  },
+  {
+   "title": "A parcel network (12M parcels/week)",
+   "url": "/case-studies/log-03/",
+   "desc": "Failed deliveries down 34% — promise engine and exception agents"
+  }
+ ],
+ "cards": []
+}

@@ -1,0 +1,262 @@
+{
+ "id": "CASE-ins-07",
+ "title": "A life insurer",
+ "url": "/case-studies/ins-07/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Insurance & Risk > A life insurer",
+ "seo_title": "A life insurer | Case Study | Dataq Software",
+ "meta_description": "Underwriting copilot with cited evidence — medical-evidence reading time down 65% and risk density up 23% at flat mortality assumptions",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Underwriting copilot with cited evidence — medical-evidence reading time down 65% and risk density up 23% at flat mortality assumptions"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a life insurer whose underwriters spent most of a case's life reading — attending-physician statements, lab reports, MIB hits — and the remainder deciding. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline month measured the reading: 71% of case handling time was evidence extraction, and two underwriters given the same file produced different debits 19% of the time."
+  },
+  {
+   "t": "p",
+   "x": "Evidence arrived unstructured and unlinked; the underwriting system recorded the decision but not the reading. Audit reviewed outcomes and hoped the reasoning was consistent."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We built the copilot on the retrieval layer with evaluation gates: every document parsed into structured evidence with each finding cited to its page, debits proposed against the codified manual, and an evaluation harness scoring extraction quality against senior-underwriter reads before the copilot saw live cases. The underwriter decides with the citations attached; the file carries both."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — A life insurer",
+   "lanes": [
+    "Evidence intake",
+    "Structured extraction",
+    "Debit proposal",
+    "Decision record"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "APS & lab feeds",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "MIB & prescription histories"
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Page-cited evidence parser",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Evaluation harness",
+     "hot": true
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Manual-mapped debit proposals",
+     "hot": true
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Impairment library links"
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Underwriter decision + citations",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Audit-ready case file"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A life insurer",
+   "kpis": [
+    {
+     "label": "Evidence reading time",
+     "value": "-65%",
+     "delta": "extraction now machine-first",
+     "dir": "down"
+    },
+    {
+     "label": "Risk density",
+     "value": "+23%",
+     "delta": "per underwriter hour",
+     "dir": "up"
+    },
+    {
+     "label": "Debit consistency",
+     "value": "19% → 4%",
+     "delta": "divergence on twin files",
+     "dir": "down"
+    },
+    {
+     "label": "Mortality assumptions",
+     "value": "flat",
+     "delta": "re-underwrite audit clean",
+     "dir": "flat"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed — reading time locked with chief underwriter",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 06",
+     "msg": "Copilot shadowing senior reads",
+     "tag": "build"
+    },
+    {
+     "t": "wk 12",
+     "msg": "Gate review — re-underwrite audit passed",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Rollout by product line; manual mapping under named owner",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Reading-time and consistency baselines signed with underwriting"
+    ],
+    [
+     "Build gate",
+     "No impairment class proposed until extraction cleared senior-read comparison"
+    ],
+    [
+     "Run gate",
+     "Quarterly re-underwrite audit against mortality assumptions"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The cited-evidence pattern transfers to any expert-reading workflow; the impairment mapping is a mirror of this insurer's manual and was the real work. Another carrier starts by codifying its own manual, which the diagnostic schedules honestly."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "11 months",
+     "12-person blended team",
+     "APAC",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "Run the two-week diagnostic on your estate first; the numbers decide whether this pattern earns a build on yours."
+  }
+ ],
+ "words": 431,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Insurance & Risk",
+ "l3": "A life insurer",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Insurance & Risk",
+   "url": "/industries/insurance/"
+  },
+  {
+   "name": "A life insurer",
+   "url": "/case-studies/ins-07/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Insurance & Risk — industry hub",
+   "url": "/industries/insurance/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Applied AI & Generative AI",
+   "url": "/services/applied-ai-generative-ai/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A top-5 global P&C insurer",
+   "url": "/case-studies/ins-01/",
+   "desc": "Claims triage in minutes — 55% faster cycle times with document intelligence"
+  },
+  {
+   "title": "A leading life insurer (North America)",
+   "url": "/case-studies/ins-02/",
+   "desc": "Underwriting evidence assembled in hours — case cycle time down 44%"
+  },
+  {
+   "title": "A European specialty reinsurer",
+   "url": "/case-studies/ins-03/",
+   "desc": "Bordereaux automation and settlement evidence — reconciliation effort down 74%"
+  }
+ ],
+ "cards": []
+}

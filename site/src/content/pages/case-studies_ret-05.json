@@ -1,0 +1,262 @@
+{
+ "id": "CASE-ret-05",
+ "title": "A fashion retailer",
+ "url": "/case-studies/ret-05/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Retail & Consumer Goods > A fashion retailer",
+ "seo_title": "A fashion retailer | Case Study | Dataq Software",
+ "meta_description": "Size-curve allocation rebuilt on sensing — sell-through up 9 points and transfer volume between stores down 24%",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Size-curve allocation rebuilt on sensing — sell-through up 9 points and transfer volume between stores down 24%"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a fashion retailer that bought sizes for the average store and shipped the difference between stores all season. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline season measured the churn: 71% full-price sell-through on core lines but 52% on new drops, inter-store transfers running 31% of volume, and the allocation team defending a one-size-fits-many curve."
+  },
+  {
+   "t": "p",
+   "x": "Local demand signals existed in POS history but allocation ran on chain-level curves. Size availability failures at the fitting room never surfaced to the people buying the sizes."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We rebuilt allocation on sensing: store-cluster size curves learned from POS and returns, drops allocated to store-cluster demand with fit-signal feedback, transfer recommendations only when curves genuinely diverged from stock, and the buying team reviewing curve accuracy each season. The fitting-room failure became a measurable, managed event."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — A fashion retailer",
+   "lanes": [
+    "Demand signals",
+    "Size-curve model",
+    "Allocation engine",
+    "Buying feedback"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "POS, returns & fit signals",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Store cluster definitions",
+     "hot": true
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Cluster size curves",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Season-learning loop"
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Demand-matched allocation",
+     "hot": true
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Divergence-only transfers"
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Curve accuracy review",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Buy planning feed"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A fashion retailer",
+   "kpis": [
+    {
+     "label": "New-drop sell-through",
+     "value": "52% → 61%",
+     "delta": "+9 points full price",
+     "dir": "up"
+    },
+    {
+     "label": "Inter-store transfers",
+     "value": "-24%",
+     "delta": "curves matched to demand",
+     "dir": "down"
+    },
+    {
+     "label": "Fitting-room availability failures",
+     "value": "-31%",
+     "delta": "size signals surfaced",
+     "dir": "down"
+    },
+    {
+     "label": "Season curve accuracy review",
+     "value": "quarterly",
+     "delta": "buying owns the curve",
+     "dir": "up"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed with trading and buying jointly",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 05",
+     "msg": "Curves live for two clusters",
+     "tag": "build"
+    },
+    {
+     "t": "wk 11",
+     "msg": "Gate review — season review against the signed baseline",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Chain rollout; cluster definitions under trading owner",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Sell-through and transfer baselines signed with trading"
+    ],
+    [
+     "Build gate",
+     "No cluster live until its curve beat the chain average on backtest"
+    ],
+    [
+     "Run gate",
+     "Seasonal curve-accuracy review owned by buying"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The cluster-curve pattern travels across fashion and general merchandise; the fit-signal capture was this retailer's store hardware. Replication starts from its own returns data — the diagnostic mines it before promising curves."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "9 months",
+     "11-person blended team",
+     "Global",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "If this case sits close to your operation, the briefing is the right next step: 45 minutes with the practice lead who ran it, your metric against the pattern that moved here."
+  }
+ ],
+ "words": 432,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Retail & Consumer Goods",
+ "l3": "A fashion retailer",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Retail & Consumer Goods",
+   "url": "/industries/retail-consumer-goods/"
+  },
+  {
+   "name": "A fashion retailer",
+   "url": "/case-studies/ret-05/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Retail & Consumer Goods — industry hub",
+   "url": "/industries/retail-consumer-goods/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Data, Analytics & Lakehouse",
+   "url": "/services/data-analytics-lakehouse/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A top-3 grocery retailer (800+ stores)",
+   "url": "/case-studies/ret-01/",
+   "desc": "Fresh waste down 28%, OOS down 31% — day-part demand and ordering agents"
+  },
+  {
+   "title": "A global fashion group",
+   "url": "/case-studies/ret-02/",
+   "desc": "Sell-through +8 points and hero-SKU availability +24% — assortment intelligence"
+  },
+  {
+   "title": "A national consumer-electronics chain",
+   "url": "/case-studies/ret-03/",
+   "desc": "Retail media incrementality proven — clean-room measurement adopted by every major brand"
+  }
+ ],
+ "cards": []
+}

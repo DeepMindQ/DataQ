@@ -9,254 +9,1200 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Computer Vision & Edge AI is the IoT, Twin & Robotics answer to a specific job: Cameras into instruments — inspection, safety and counting at the edge, inside policy.. This page is the build as we actually run it — sequencing, artifacts and the parts most vendors leave out."
+   "x": "Inference at the edge with model ops: quantized models deployed on constrained hardware, drift monitors on live feeds, thermal budgets respected — and decision p99 measured at the line, because a quality gate that misses its deadline is a scrap event."
   },
   {
    "t": "h2",
-   "x": "What we deliver under this name"
+   "x": "Edge AI is a hardware contract wearing a model costume"
   },
   {
    "t": "p",
-   "x": "Cameras are already everywhere; intelligence makes them instruments. We deliver vision systems for quality inspection (surface defects, welds, assembly completeness), safety compliance (PPE, zone intrusion, lockout-tagout verification), process reading (gauges, levels, counters) and logistics flows (damage, load verification) — engineered for the edge: GPU/accelerator inference on plant hardware, sub-second loop closure into PLCs and andon systems, and store-and-forward retraining pipelines for the rare classes."
+   "x": "Edge AI is model engineering under hardware tyranny: 15 watts, no cloud, and a decision deadline. The practice covers model selection and optimization for the target silicon, the deployment pipeline (canary, rollback, fleet), and the operational loop — drift monitors on live feeds, hard-case capture for retraining, and the interlock rule that keeps model outputs advisory to safety systems."
   },
   {
    "t": "p",
-   "x": "Deployment discipline covers the unglamorous failure causes: lighting and lens design for the actual environment, camera calibration schedules, class-imbalance handling for rare defects, out-of-distribution monitoring, and privacy governance — face blurring, retention policy and works-council alignment where personnel are in frame. Autonomy tightens gradually: shadow mode first, human-verified second, closed-loop actuation only after measured error earns it."
+   "x": "The discipline mirrors the vision domain's standards but adds the edge: quantization-aware evaluation, thermal and power budgets as release gates, and fleet heterogeneity treated as a release-train problem."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that make edge inference flaky, the reference architecture of the model-ops loop, and the console that tracks deadline honesty."
   },
   {
    "t": "h2",
-   "x": "The stakes, stated plainly"
+   "x": "Four failure modes that make edge inference flaky"
   },
   {
    "t": "p",
-   "x": "Computer Vision & Edge AI delivery today concentrates in Manufacturing & Industrial, Logistics & Supply Chain, Retail & Consumer Goods, Energy & Utilities. The metric is chosen with your finance lead, and the baseline is signed before any build begins."
+   "x": "Every one of these appears only on real hardware under real thermal load — the countermeasures test quantization on-device and monitor drift on the live feed, not in the notebook."
   },
   {
-   "t": "h2",
-   "x": "What we put in place"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Computer Vision & Edge AI: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Inspection systems",
-     "defect detection and completeness checks tuned to your process"
+     "Quantization surprise",
+     "INT8 model loses accuracy the eval missed",
+     "Quantization-aware eval sets; per-hardware accuracy gates"
     ],
     [
-     "Safety analytics",
-     "PPE, zone-intrusion and LOTO verification with alerting discipline"
+     "Thermal throttling",
+     "Model slows in summer; decisions miss deadlines",
+     "Thermal/power budgets as gates; load tests at worst case"
     ],
     [
-     "Edge inference",
-     "on-site GPU/accelerator deployment with loop closure to PLC/andon"
+     "Silent drift",
+     "Lighting changes; accuracy decays unnoticed",
+     "Live-feed drift monitors; hard-case capture loops"
     ],
     [
-     "Environment engineering",
-     "lighting, lenses, calibration schedules for real conditions"
-    ],
-    [
-     "Privacy governance",
-     "face blurring, retention policy and works-council alignment"
+     "Fleet diversity",
+     "Three SKUs, three behaviors",
+     "Per-SKU release trains with health gates"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — model ops from lab to line"
+  },
+  {
+   "t": "p",
+   "x": "Models ship through quantization with on-device validation, deploy across the hardware fleet in waves, run inside thermal and latency budgets, and drift monitors watch the live feed — with the retraining loop fed by the edge's own discordant frames."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Computer Vision & Edge AI",
+   "title": "Reference architecture — edge AI deployment loop",
    "lanes": [
-    "Sites",
-    "Connectivity",
-    "Fleet services",
-    "Simulation",
-    "What-if",
-    "Planners"
+    "Capture",
+    "Inference",
+    "Decision path",
+    "Model ops",
+    "Fleet",
+    "Safety"
    ],
    "nodes": [
     {
-     "id": "st0",
+     "id": "cam",
      "lane": 0,
-     "label": "MES & line historians",
-     "hot": false
+     "label": "Camera streams"
     },
     {
-     "id": "st1",
+     "id": "sensor",
      "lane": 0,
-     "label": "SCADA / OT telemetry",
-     "hot": false
+     "label": "Sensor fusion"
     },
     {
-     "id": "cn2",
+     "id": "store",
+     "lane": 0,
+     "label": "Hard-case store"
+    },
+    {
+     "id": "accel",
      "lane": 1,
-     "label": "LTE/5G backhaul",
-     "hot": false
-    },
-    {
-     "id": "cn3",
-     "lane": 1,
-     "label": "Store & forward",
-     "hot": false
-    },
-    {
-     "id": "fs4",
-     "lane": 2,
-     "label": "Computer Vision & Edge AI",
+     "label": "Edge accelerators",
      "hot": true
     },
     {
-     "id": "fs5",
-     "lane": 2,
-     "label": "OTA updates",
-     "hot": false
+     "id": "quant",
+     "lane": 1,
+     "label": "Quantized models"
     },
     {
-     "id": "sm6",
-     "lane": 3,
-     "label": "Physics + ML simulation",
+     "id": "thermal",
+     "lane": 1,
+     "label": "Thermal governor"
+    },
+    {
+     "id": "fuse",
+     "lane": 2,
+     "label": "Multi-signal fusion"
+    },
+    {
+     "id": "lat",
+     "lane": 2,
+     "label": "Deadline check",
      "hot": true
     },
     {
-     "id": "sm7",
+     "id": "local",
+     "lane": 2,
+     "label": "Local decision"
+    },
+    {
+     "id": "drift",
      "lane": 3,
-     "label": "Scenario engine",
-     "hot": false
+     "label": "Drift monitors",
+     "hot": true
     },
     {
-     "id": "wi8",
+     "id": "eval",
+     "lane": 3,
+     "label": "Eval sets per SKU"
+    },
+    {
+     "id": "retrain",
+     "lane": 3,
+     "label": "Retrain loop"
+    },
+    {
+     "id": "train",
      "lane": 4,
-     "label": "What-if console",
-     "hot": false
+     "label": "Release trains",
+     "hot": true
     },
     {
-     "id": "wi9",
+     "id": "canary",
      "lane": 4,
-     "label": "Sensitivity runs",
-     "hot": false
+     "label": "Canary per fleet"
     },
     {
-     "id": "pl10",
-     "lane": 5,
-     "label": "Production scheduling",
-     "hot": false
+     "id": "roll",
+     "lane": 4,
+     "label": "Rollback"
     },
     {
-     "id": "pl11",
+     "id": "inter",
      "lane": 5,
-     "label": "Maintenance planner",
-     "hot": false
+     "label": "Safety interlock",
+     "hot": true
+    },
+    {
+     "id": "esc",
+     "lane": 5,
+     "label": "Human escalation"
+    },
+    {
+     "id": "audit",
+     "lane": 5,
+     "label": "Decision audit"
     }
    ],
    "edges": [
     {
-     "a": "st0",
-     "b": "cn2"
+     "a": "cam",
+     "b": "accel",
+     "label": "frames"
     },
     {
-     "a": "st1",
-     "b": "cn3"
+     "a": "sensor",
+     "b": "fuse",
+     "label": "signals"
     },
     {
-     "a": "cn2",
-     "b": "fs4"
+     "a": "cam",
+     "b": "store",
+     "label": "hard cases"
     },
     {
-     "a": "cn3",
-     "b": "fs5"
+     "a": "accel",
+     "b": "quant",
+     "label": "runs"
     },
     {
-     "a": "fs4",
-     "b": "sm6"
+     "a": "quant",
+     "b": "thermal",
+     "label": "budget"
     },
     {
-     "a": "fs5",
-     "b": "sm7"
+     "a": "thermal",
+     "b": "accel",
+     "label": "govern"
     },
     {
-     "a": "sm6",
-     "b": "wi8"
+     "a": "quant",
+     "b": "fuse",
+     "label": "outputs"
     },
     {
-     "a": "sm7",
-     "b": "wi9"
+     "a": "fuse",
+     "b": "lat",
+     "label": "deadline"
     },
     {
-     "a": "wi8",
-     "b": "pl10"
+     "a": "lat",
+     "b": "local",
+     "label": "act"
     },
     {
-     "a": "wi9",
-     "b": "pl11"
+     "a": "local",
+     "b": "drift",
+     "label": "scored"
+    },
+    {
+     "a": "drift",
+     "b": "store",
+     "label": "capture"
+    },
+    {
+     "a": "store",
+     "b": "eval",
+     "label": "grow"
+    },
+    {
+     "a": "eval",
+     "b": "retrain",
+     "label": "gate"
+    },
+    {
+     "a": "retrain",
+     "b": "train",
+     "label": "release"
+    },
+    {
+     "a": "train",
+     "b": "canary",
+     "label": "stage"
+    },
+    {
+     "a": "canary",
+     "b": "roll",
+     "label": "guard"
+    },
+    {
+     "a": "local",
+     "b": "inter",
+     "label": "advisory"
+    },
+    {
+     "a": "inter",
+     "b": "esc",
+     "label": "on doubt"
+    },
+    {
+     "a": "local",
+     "b": "audit",
+     "label": "log"
     }
    ],
-   "note": "Topology inherited from the IoT, Twin & Robotics tower; the highlighted core is this service's build."
+   "note": "The interlock rule is absolute: model outputs are advisory to the safety system — when the deadline is missed or confidence is low, the interlock and a human decide."
   },
   {
    "t": "h2",
-   "x": "The artifacts, named"
+   "x": "One frame, capture to decision inside the deadline"
   },
   {
    "t": "p",
-   "x": "Computer Vision & Edge AI: what your team holds at the end,"
+   "x": "From sensor capture through preprocessing, quantized inference, decision gating and the actuation call — including the deadline-miss path and what the line does when inference is late."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Edge inference path — capture, infer within deadline, act, audit",
+   "labels": [
+    "Frame in",
+    "Preprocess on-device",
+    "Quantized inference",
+    "Deadline check",
+    "Fuse & decide",
+    "Interlock gate",
+    "Audit & capture"
+   ],
+   "note": "Missing the deadline is a decision: the path degrades to a safe default and the case is captured — silence at the edge is a bug."
+  },
+  {
+   "t": "h2",
+   "x": "The edge-AI console — deadlines as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Decision p99 at the line, deadline miss rate and thermal throttling events — the three numbers that decide whether the quality gate is engineering or demonstration."
+  },
+  {
+   "t": "idash",
+   "title": "Computer vision & edge AI — fleet console",
+   "kpis": [
+    {
+     "label": "Cameras managed",
+     "value": "204",
+     "delta": "6 stations, 3 silicon classes",
+     "dir": "up",
+     "spark": [
+      60,
+      90,
+      120,
+      150,
+      175,
+      190,
+      204
+     ]
+    },
+    {
+     "label": "Detection mAP (INT8)",
+     "value": "0.908",
+     "delta": "−1.1 pts vs FP16, accepted",
+     "dir": "flat",
+     "spark": [
+      71,
+      78,
+      83,
+      86,
+      89,
+      90,
+      90.8
+     ]
+    },
+    {
+     "label": "Edge p95 latency",
+     "value": "74 ms",
+     "delta": "Jetson Orin NX",
+     "dir": "down",
+     "spark": [
+      180,
+      140,
+      110,
+      92,
+      82,
+      78,
+      74
+     ]
+    },
+    {
+     "label": "Drift-flagged cameras",
+     "value": "3",
+     "delta": "active-learning queue",
+     "dir": "flat",
+     "spark": [
+      12,
+      9,
+      7,
+      5,
+      4,
+      3,
+      3
+     ]
+    },
+    {
+     "label": "Review-loop precision",
+     "value": "91%",
+     "delta": "uncertain-frame triage",
+     "dir": "up",
+     "spark": [
+      62,
+      70,
+      76,
+      81,
+      85,
+      88,
+      91
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Fleet health",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Camera fleet by station × health signal",
+       "rows": [
+        "Assembly",
+        "Welding",
+        "Paint",
+        "Packaging",
+        "Dispatch"
+       ],
+       "cats": [
+        "FPS stability",
+        "Focus",
+        "Illumination",
+        "Occlusion",
+        "Drift"
+       ],
+       "matrix": [
+        [
+         99.1,
+         98.8,
+         96.4,
+         97.2,
+         98.5
+        ],
+        [
+         98.6,
+         97.9,
+         92.1,
+         95.4,
+         96.8
+        ],
+        [
+         99.0,
+         98.4,
+         94.6,
+         96.1,
+         97.9
+        ],
+        [
+         98.2,
+         96.8,
+         90.3,
+         94.2,
+         95.1
+        ],
+        [
+         97.5,
+         97.1,
+         93.8,
+         92.6,
+         94.4
+        ]
+       ],
+       "unit": "% health",
+       "note": "Hover cells to read health. Packaging illumination is the pattern: shift-change lighting — the fix is a lighting profile per hour, not another model retrain."
+      }
+     ]
+    },
+    {
+     "name": "Edge what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Edge deployment what-if — quantization, resolution, batch",
+       "params": [
+        {
+         "name": "Quantization",
+         "min": 16,
+         "max": 8,
+         "step": 8,
+         "value": 8,
+         "unit": "bit"
+        },
+        {
+         "name": "Input resolution",
+         "min": 640,
+         "max": 1920,
+         "step": 320,
+         "value": 1280,
+         "unit": "px"
+        },
+        {
+         "name": "Batch",
+         "min": 1,
+         "max": 8,
+         "step": 1,
+         "value": 3,
+         "unit": "frames"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Edge p95",
+         "unit": "ms",
+         "formula": "p0*0.006*p1*0.085*p2*14",
+         "good": "120",
+         "bad": "300"
+        },
+        {
+         "name": "Accuracy cost",
+         "unit": "pts",
+         "formula": "max(0,(16-p0))*0.85+max(0,(p1-960))*0.006",
+         "good": "2",
+         "bad": "5"
+        },
+        {
+         "name": "Power draw",
+         "unit": "W",
+         "formula": "8+p0*0.4*p1*0.004*p2*2.1",
+         "good": "18",
+         "bad": "40"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 0,
+        "label": "Resolution vs edge latency"
+       },
+       "note": "The latency curve rises steeply past 1280 px while accuracy costs little below it — downscaling is usually the cheaper trade. Power matters at the station: 40 W is a thermal conversation."
+      }
+     ]
+    },
+    {
+     "name": "Vision pipeline",
+     "widgets": [
+      {
+       "kind": "flow",
+       "title": "Frame to decision — click stages for the fleet contract",
+       "stages": [
+        {
+         "name": "Capture",
+         "role": "Camera contracts",
+         "detail": "Per-camera health telemetry (fps, focus, illumination) with auto-flagging; a drifting camera quarantines its frames rather than poisoning the eval.",
+         "metrics": [
+          {
+           "label": "Health signals",
+           "value": "5"
+          },
+          {
+           "label": "Quarantine",
+           "value": "auto"
+          }
+         ]
+        },
+        {
+         "name": "Preprocess",
+         "role": "Station profiles",
+         "detail": "Resolution normalization and per-hour lighting profiles — transforms recorded for training so inference never drifts from training assumptions.",
+         "metrics": [
+          {
+           "label": "Profiles",
+           "value": "per station"
+          },
+          {
+           "label": "Versioned",
+           "value": "yes"
+          }
+         ]
+        },
+        {
+         "name": "Infer",
+         "role": "Quantized models",
+         "detail": "INT8 models per hardware class with measured accuracy deltas; uncertain frames (low confidence, disagreement) escalate with crops attached.",
+         "metrics": [
+          {
+           "label": "HW classes",
+           "value": "3"
+          },
+          {
+           "label": "Escalation",
+           "value": "4.1%"
+          }
+         ]
+        },
+        {
+         "name": "Decide",
+         "role": "Task verdicts",
+         "detail": "Task-level decisions (defect class, presence, count) with grounding evidence — bounding boxes and crops stored for the audit trail.",
+         "metrics": [
+          {
+           "label": "Grounding",
+           "value": "bbox-level"
+          },
+          {
+           "label": "Evidence",
+           "value": "stored"
+          }
+         ]
+        },
+        {
+         "name": "Learn",
+         "role": "Active learning",
+         "detail": "Uncertain frames route to labeling with provenance; the retraining loop runs monthly with fleet-drift fixes staged per hardware class.",
+         "metrics": [
+          {
+           "label": "Label queue",
+           "value": "instrumented"
+          },
+          {
+           "label": "Retrain cadence",
+           "value": "monthly"
+          }
+         ]
+        }
+       ],
+       "note": "The learn stage is what keeps the fleet honest — production frames are the training set, and drift feeds the next version rather than the incident report."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · deployment model",
+   "note": "Reference program model: mAP bands and latency curves from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Deadline performance across hardware generations"
+  },
+  {
+   "t": "p",
+   "x": "Decision p99 and miss rate per hardware generation and model version — the shape that shows which fleet segments can carry the next model and which need their own windows."
+  },
+  {
+   "t": "chart",
+   "title": "Model performance by SKU under thermal worst case — design targets",
+   "variant": "bar",
+   "cats": [
+    "SKU-A (line)",
+    "SKU-B (yard)",
+    "SKU-C (mobile)",
+    "SKU-D (gateway)"
+   ],
+   "series": [
+    {
+     "name": "Accuracy target %",
+     "points": [
+      96,
+      94,
+      92,
+      95
+     ]
+    },
+    {
+     "name": "p99 latency target (ms)",
+     "points": [
+      84,
+      120,
+      150,
+      90
+     ]
+    },
+    {
+     "name": "Power budget (W)",
+     "points": [
+      12,
+      10,
+      7,
+      15
+     ]
+    }
+   ],
+   "yMax": 160,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Computer Vision & Edge AI across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Computer Vision & Edge AI",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the work spans the stack: devices and gateways in the field, perception models in the middle, actuation plans on the board.",
+     "plays": [
+      "Quantized models validated on-device before any line deployment",
+      "Drift monitors on the live feed, retraining fed by discordant frames",
+      "Thermal and latency budgets enforced by the scheduler — silent throttling is an incident"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99 (line A)",
+       "value": "84ms"
+      },
+      {
+       "label": "Deadline misses",
+       "value": "0.3%"
+      },
+      {
+       "label": "Thermal throttling events",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Quantized models validated on-device before any line deployment",
+      "Drift monitors on the live feed, retraining fed by discordant frames",
+      "Thermal and latency budgets enforced by the scheduler — silent throttling is an incident"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99 (line A)",
+       "value": "84ms"
+      },
+      {
+       "label": "Deadline misses",
+       "value": "0.3%"
+      },
+      {
+       "label": "Thermal throttling events",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Quantized models validated on-device before any line deployment",
+      "Drift monitors on the live feed, retraining fed by discordant frames",
+      "Thermal and latency budgets enforced by the scheduler — silent throttling is an incident"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99 (line A)",
+       "value": "84ms"
+      },
+      {
+       "label": "Deadline misses",
+       "value": "0.3%"
+      },
+      {
+       "label": "Thermal throttling events",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "Ask what quality escapes and manual inspection costs Manufacturing & Industrial firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Quantized models validated on-device before any line deployment",
+      "Drift monitors on the live feed, retraining fed by discordant frames",
+      "Thermal and latency budgets enforced by the scheduler — silent throttling is an incident"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99 (line A)",
+       "value": "84ms"
+      },
+      {
+       "label": "Deadline misses",
+       "value": "0.3%"
+      },
+      {
+       "label": "Thermal throttling events",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": true,
+     "hook": "Retail & Consumer Goods operators recognize the pattern: shelf truth unknown, quarter after quarter.",
+     "plays": [
+      "Quantized models validated on-device before any line deployment",
+      "Drift monitors on the live feed, retraining fed by discordant frames",
+      "Thermal and latency budgets enforced by the scheduler — silent throttling is an incident"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99 (line A)",
+       "value": "84ms"
+      },
+      {
+       "label": "Deadline misses",
+       "value": "0.3%"
+      },
+      {
+       "label": "Thermal throttling events",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Ask what network telemetry underused costs Telecom, Media & Entertainment firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Quantized models validated on-device before any line deployment",
+      "Drift monitors on the live feed, retraining fed by discordant frames",
+      "Thermal and latency budgets enforced by the scheduler — silent throttling is an incident"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99 (line A)",
+       "value": "84ms"
+      },
+      {
+       "label": "Deadline misses",
+       "value": "0.3%"
+      },
+      {
+       "label": "Thermal throttling events",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what asset fleets uninstrumented costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Quantized models validated on-device before any line deployment",
+      "Drift monitors on the live feed, retraining fed by discordant frames",
+      "Thermal and latency budgets enforced by the scheduler — silent throttling is an incident"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99 (line A)",
+       "value": "84ms"
+      },
+      {
+       "label": "Deadline misses",
+       "value": "0.3%"
+      },
+      {
+       "label": "Thermal throttling events",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: fleet and yard telemetry gaps, quarter after quarter.",
+     "plays": [
+      "Quantized models validated on-device before any line deployment",
+      "Drift monitors on the live feed, retraining fed by discordant frames",
+      "Thermal and latency budgets enforced by the scheduler — silent throttling is an incident"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99 (line A)",
+       "value": "84ms"
+      },
+      {
+       "label": "Deadline misses",
+       "value": "0.3%"
+      },
+      {
+       "label": "Thermal throttling events",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "Public Sector & Government operators recognize the pattern: urban assets unmanaged, quarter after quarter.",
+     "plays": [
+      "Quantized models validated on-device before any line deployment",
+      "Drift monitors on the live feed, retraining fed by discordant frames",
+      "Thermal and latency budgets enforced by the scheduler — silent throttling is an incident"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99 (line A)",
+       "value": "84ms"
+      },
+      {
+       "label": "Deadline misses",
+       "value": "0.3%"
+      },
+      {
+       "label": "Thermal throttling events",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — estates flying blind included — and prove it moved.",
+     "plays": [
+      "Quantized models validated on-device before any line deployment",
+      "Drift monitors on the live feed, retraining fed by discordant frames",
+      "Thermal and latency budgets enforced by the scheduler — silent throttling is an incident"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99 (line A)",
+       "value": "84ms"
+      },
+      {
+       "label": "Deadline misses",
+       "value": "0.3%"
+      },
+      {
+       "label": "Thermal throttling events",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we connect machines, fleets and facilities into one operational picture, then close the loop into maintenance, scheduling and control.",
+     "plays": [
+      "Quantized models validated on-device before any line deployment",
+      "Drift monitors on the live feed, retraining fed by discordant frames",
+      "Thermal and latency budgets enforced by the scheduler — silent throttling is an incident"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99 (line A)",
+       "value": "84ms"
+      },
+      {
+       "label": "Deadline misses",
+       "value": "0.3%"
+      },
+      {
+       "label": "Thermal throttling events",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/iot-digital-twin-robotics/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": true,
+     "hook": "The work here has one job: move a named number — field data gap included — and prove it moved.",
+     "plays": [
+      "Quantized models validated on-device before any line deployment",
+      "Drift monitors on the live feed, retraining fed by discordant frames",
+      "Thermal and latency budgets enforced by the scheduler — silent throttling is an incident"
+     ],
+     "kpis": [
+      {
+       "label": "Decision p99 (line A)",
+       "value": "84ms"
+      },
+      {
+       "label": "Deadline misses",
+       "value": "0.3%"
+      },
+      {
+       "label": "Thermal throttling events",
+       "value": "2"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/iot-digital-twin-robotics/"
+    }
+   ],
+   "practiceNote": "Computer Vision & Edge AI view: inference at the edge with model ops — constrained-hardware deployment, drift monitors on live feeds, and a hard rule that models never bypass interlocks."
+  },
+  {
+   "t": "h2",
+   "x": "Edge-AI defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor quantization with on-device validation and wave deploys over lab-to-line leaps; deviation triggers are written because each one moves risk onto the production line."
+  },
+  {
+   "t": "table",
+   "caption": "Computer Vision & Edge AI: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production vision systems integrated into line/ops workflows",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Optimization",
+     "Quantization-aware training and eval",
+     "Post-training quantize-and-pray — accuracy surprises"
     ],
     [
-     "Edge deployment fleet with OTA model updates",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Hardware",
+     "Certified SKU list per release train",
+     "Any-accelerator-will-do — drivers become incidents"
     ],
     [
-     "Validation protocol with autonomy-threshold ladder",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Deployment",
+     "Canary per fleet with health gates",
+     "Fleet-wide push — one bad model everywhere"
     ],
     [
-     "Privacy and retention governance pack",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Drift",
+     "Live-feed monitors with capture",
+     "Quarterly spot checks — drift wins"
+    ],
+    [
+     "Safety",
+     "Interlock-first architecture",
+     "Model-as-safety — it fails differently than rated systems"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The technology choices, justified"
+   "x": "Edge-AI release gates — evidence before line deployment"
   },
   {
-   "t": "p",
-   "x": "Computer Vision & Edge AI ships against YOLO/RT-DETR families, NVIDIA Jetson / industrial GPUs, TensorRT, OPC UA/PLC integration, OpenTelemetry. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for Computer Vision & Edge AI — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Quant gate",
+     "Does the quantized model hold accuracy?",
+     "Per-SKU eval evidence"
+    ],
+    [
+     "Thermal gate",
+     "Does it hold at worst case?",
+     "Load tests at max temperature"
+    ],
+    [
+     "Deadline gate",
+     "Are misses below alarm?",
+     "p99 and miss-rate telemetry"
+    ],
+    [
+     "Canary gate",
+     "Do rollouts health-gate?",
+     "Wave evidence; rollback drill"
+    ],
+    [
+     "Interlock gate",
+     "Is the safety rule intact?",
+     "Interlock drill; override-at-zero"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "How the work actually runs"
+   "x": "What the operations and quality teams inherit"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Computer Vision & Edge AI starts with the measurement: the metric, the owner, the current number, signed."
+     "Quantized model fleet",
+     "Per-SKU models with eval evidence"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, inspection systems first, gates written with your team."
+     "Release train system",
+     "Canary waves with health gates"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "The Computer Vision & Edge AI gate review: baseline versus slice, in the metric's own units, plus a scale recommendation your board can audit."
+     "Drift monitor pack",
+     "Live-feed scoring with capture loops"
+    ],
+    [
+     "Hard-case store",
+     "The growing retraining corpus"
+    ],
+    [
+     "Thermal/power budget",
+     "Worst-case gates per SKU"
+    ],
+    [
+     "Decision audit",
+     "Every edge decision logged with frames"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Lab to line, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — SKU & workload census",
+     "Hardware classes, decision deadlines, accuracy bars"
+    ],
+    [
+     "Weeks 3–4 — model optimization",
+     "Quantization-aware builds, per-SKU evals"
+    ],
+    [
+     "Weeks 5–6 — deployment",
+     "Release trains, canary waves, rollback drills"
+    ],
+    [
+     "Weeks 7–8 — operational loop",
+     "Drift monitors, capture pipeline, retrain gates"
+    ],
+    [
+     "Weeks 9–10 — safety integration",
+     "Interlock wiring, escalation drills, audit"
+    ],
+    [
+     "Ongoing — edge ops",
+     "Weekly drift review; monthly trains; quarterly thermal tests"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — cameras, PLCs and the quality systems"
+  },
+  {
+   "t": "p",
+   "x": "Edge inference serves quality and safety systems; these contracts define camera and PLC integration, actuation calls and the interlocks that keep the line safe when models disagree."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Sensor fabric",
+     "Fused signal contracts"
+    ],
+    [
+     "Vision domain stack",
+     "Shared model ops standards"
+    ],
+    [
+     "Safety systems",
+     "Interlock interfaces"
+    ],
+    [
+     "MES / line systems",
+     "Decision consumption"
+    ],
+    [
+     "Security domain",
+     "Edge device identity"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Model-drift governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Drift monitors watch confidence distributions and discordant-frame rates on the live feed; the retraining loop is fed from the line, so the model tracks reality instead of the dataset it was born on."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Advisory-only models",
+     "Safety interlocks outrank model outputs"
+    ],
+    [
+     "Deadline honesty",
+     "Missed deadlines degrade to safe defaults"
+    ],
+    [
+     "SKU-gated releases",
+     "No fleet-wide model pushes"
+    ],
+    [
+     "Capture everything",
+     "Hard cases become the next training set"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Thermal budgets are enforced by the scheduler, not hoped for: sustained load beyond the signed envelope triggers model down-shift with an incident record — silent throttling is treated as a quality escape."
   },
   {
    "t": "cta",
-   "x": "If Computer Vision & Edge AI is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
+   "x": "Bring the inspection your line does by eye because the model kept missing deadlines. The lab-to-line sprint will quantize, validate on-device and prove the p99 — before the first scrap event."
   }
  ],
- "words": 507,
+ "words": 1017,
  "section": "Services",
  "l1": "Services",
  "l2": "IoT, Digital Twin & Robotics",
@@ -278,7 +1224,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — IoT, Digital Twin & Robotics",
+   "title": "Domain overview — IoT, Digital Twin & Robotics",
    "url": "/services/iot-digital-twin-robotics/",
    "desc": "Sensing, simulating, acting — the operations stack that turns physical assets into self-monitoring systems."
   },
@@ -330,33 +1276,51 @@
   {
    "title": "Data & Lakehouse for Banking & Financial Services",
    "url": "/industries/banking-financial-services/capabilities/data-analytics-lakehouse/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Industrial IoT & sensor network",
-   "url": "/services/iot-digital-twin-robotics/industrial-iot-sensor-fabric/",
-   "tag": "Same tower",
-   "desc": "Sense everything that matters — retrofit-friendly sensor network with governed telemetry."
-  },
-  {
    "title": "Digital Twin Platform Engineering",
    "url": "/services/iot-digital-twin-robotics/digital-twin-platforms/",
-   "tag": "Same tower",
-   "desc": "Simulate before you cut steel — plant, fleet and product twins with governed physics and data."
+   "tag": "Same domain",
+   "desc": "twins that stay honest — state synchronization with fidelity metrics, simulation tiers for what-ifs, and governance for who may change what."
+  },
+  {
+   "title": "Industrial IoT & Sensor Fabric",
+   "url": "/services/iot-digital-twin-robotics/industrial-iot-sensor-fabric/",
+   "tag": "Same domain",
+   "desc": "instrumentation as infrastructure — versioned schemas per device class, store-and-forward resilience, and a device lifecycle that retires zombies."
   },
   {
    "title": "Predictive Maintenance & Asset Intelligence",
    "url": "/services/iot-digital-twin-robotics/predictive-asset-intelligence/",
-   "tag": "Same tower",
-   "desc": "Fix it before it fails — RUL models wired into planning, spare parts and work orders."
+   "tag": "Same domain",
+   "desc": "maintenance scheduled by evidence — failure-mode-driven models, work-order integration, and the honesty to retire predictions that never came true."
   },
   {
-   "title": "Robotics & Autonomous Systems Integration",
-   "url": "/services/iot-digital-twin-robotics/robotics-autonomous-systems/",
-   "tag": "Same tower",
-   "desc": "Robots into workflows — AMRs, cobots and autonomous vehicles integrated with safety and orchestration."
+   "title": "Edge Computing & Distributed Infrastructure",
+   "url": "/services/cloud-edge-platform-engineering/edge-computing-infrastructure/",
+   "tag": "Pairs with",
+   "desc": "compute and delivery close to users and devices — regional clusters with store-and-forward resilience, fleet ops at scale and honest latency budgets."
+  },
+  {
+   "title": "Data Monetization & Analytics Products",
+   "url": "/services/data-analytics-lakehouse/data-monetization-products/",
+   "tag": "Pairs with",
+   "desc": "data as a product for external consumption — contracts, SLAs, purpose limits and billing, with controls that get stronger the moment data leaves the building."
+  },
+  {
+   "title": "Digital Workforce & Multi-Agent Orchestration",
+   "url": "/services/agentic-ai-hyperautomation/digital-workforce-orchestration/",
+   "tag": "Pairs with",
+   "desc": "agent-fleet management as workforce management — capacity, shifts, versioning, retirement and utilization, with SLAs that hold while the fleet scales."
+  },
+  {
+   "title": "A global coffee trader",
+   "url": "/case-studies/agr-02/",
+   "tag": "Evidence",
+   "desc": "EUDR due-diligence automated — compliance evidence in hours, premium channels opened."
   }
  ]
 }

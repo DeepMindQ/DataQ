@@ -9,254 +9,1195 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Buyers rarely need another definition of post-quantum cryptography migration. They need to know what ships first, what it touches and how value is proven. That is what this page carries: Beat the harvest-now-decrypt-later clock — cryptographic inventory to PQC cutover."
+   "x": "PQC migration as engineering: crypto inventory with endpoint-level truth instead of questionnaire guesses, hybrid deployments where standards allow, migration waves sequenced by harvest-risk — and embedded orphans hunted until the inventory is honest."
   },
   {
    "t": "h2",
-   "x": "The job this service does"
+   "x": "The migration deadline is real; the inventory is where programs die"
   },
   {
    "t": "p",
-   "x": "PQC migration is a decade-long program compressed into this decade: NIST standards (ML-KEM, ML-DSA, SLH-DSA) are published, regulators are turning attention to long-lived secrets, and adversaries are already harvesting. We run the full program: cryptographic discovery (code, libraries, appliances, certificates, protocols — including the shadow crypto nobody documented), risk ranking by exposure horizon, remediation sequencing, and crypto-agility architecture so the next migration is a config change, not another decade."
+   "x": "The one quantum deadline that is real is cryptographic: adversaries harvest encrypted traffic today to decrypt when quantum computers mature. PQC migration is not a research topic — it is an estate-wide engineering program: find every use of cryptography, classify it, and migrate the long-lived secrets first."
   },
   {
    "t": "p",
-   "x": "Cutover is engineering, not memo: hybrid key establishment during transition periods, protocol and library upgrades with performance testing, HSM and smartcard lifecycle, vendor attestation tracking, and certificate authority planning. For financial-sector clients we align with emerging supervisory expectations; for long-lived-data holders (health, government, defense-adjacent) we prioritize by data sensitivity and retention horizon."
+   "x": "The practice delivers inventory (endpoint-level, not sample-based), risk-ranked migration waves, hybrid TLS where sensible, and crypto-agility architecture so the next algorithm swap is a config change, not a decade."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that stall PQC migrations, the reference architecture of the migration pipeline, and the console that tracks coverage truthfully."
   },
   {
    "t": "h2",
-   "x": "The stakes, stated plainly"
+   "x": "Four failure modes that stall PQC migrations"
   },
   {
    "t": "p",
-   "x": "The sectors where Post-Quantum Cryptography Migration currently runs: Banking & Financial Services, Public Sector & Government, Healthcare & Life Sciences, Energy & Utilities. Each engagement anchors to one named metric in that sector's own language."
+   "x": "Each of these leaves the estate quietly exposed while the program looks active — the countermeasures make inventory truthful and migration continuous."
   },
   {
-   "t": "h2",
-   "x": "The build, in plain terms"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Post-Quantum Cryptography Migration: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Cryptographic discovery",
-     "CBOM-grade inventory across code, libraries, hardware and certificates"
+     "Inventory guesses",
+     "Estimates instead of endpoint truth",
+     "Automated scanning + build-time detection; coverage reported honestly"
     ],
     [
-     "Exposure ranking",
-     "assets prioritized by HNDL risk, data retention and system lifetime"
+     "Migration freeze",
+     "Performance fear stalls everything",
+     "Per-protocol performance budgets; hybrid mode benchmarks"
     ],
     [
-     "Crypto-agility architecture",
-     "abstraction layers making algorithm swaps a configuration event"
+     "Embedded orphans",
+     "Firmware and third-party code invisible",
+     "SBOM-driven discovery; vendor evidence requirements"
     ],
     [
-     "Transition engineering",
-     "hybrid key establishment, protocol upgrades and performance testing"
-    ],
-    [
-     "Lifecycle management",
-     "HSMs, certificates and vendor attestation tracked to closure"
+     "One-shot mindset",
+     "Migrate once, done forever",
+     "Crypto-agility design; algorithm registry with version pinning"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — inventory to migration waves"
+  },
+  {
+   "t": "p",
+   "x": "The pipeline starts with cryptographic discovery at endpoint level — code scanning, protocol inspection, certificate analysis — then sequences migration waves by harvest risk, with hybrid deployments where standards allow and vendor dependencies tracked as first-class risks."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Post-Quantum Cryptography Migration",
+   "title": "Reference architecture — PQC migration plane",
    "lanes": [
-    "Domains",
-    "Encodings",
-    "Compute",
-    "Validation",
-    "Explanation",
-    "Decisions"
+    "Discovery",
+    "Inventory",
+    "Risk ranking",
+    "Migration",
+    "Verification",
+    "Agility"
    ],
    "nodes": [
     {
-     "id": "dm0",
+     "id": "scan",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Network scanning"
     },
     {
-     "id": "dm1",
+     "id": "build",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "Build-time detection"
     },
     {
-     "id": "en2",
-     "lane": 1,
-     "label": "Hilbert-space encodings",
-     "hot": false
+     "id": "sbom",
+     "lane": 0,
+     "label": "SBOM analysis"
     },
     {
-     "id": "en3",
+     "id": "inv",
      "lane": 1,
-     "label": "Post-Quantum Cryptography Migration",
+     "label": "Crypto inventory",
      "hot": true
     },
     {
-     "id": "cp4",
+     "id": "cls",
+     "lane": 1,
+     "label": "Algorithm classification"
+    },
+    {
+     "id": "owner",
+     "lane": 1,
+     "label": "Owner mapping"
+    },
+    {
+     "id": "risk",
      "lane": 2,
-     "label": "CPU/GPU/accelerator mix",
+     "label": "Harvest-risk model",
      "hot": true
     },
     {
-     "id": "cp5",
+     "id": "wave",
      "lane": 2,
-     "label": "Quantum services (managed)",
-     "hot": false
+     "label": "Migration waves"
     },
     {
-     "id": "vl6",
+     "id": "exp",
+     "lane": 2,
+     "label": "Exposure scoring"
+    },
+    {
+     "id": "hybrid",
      "lane": 3,
-     "label": "Statistical validation",
-     "hot": false
+     "label": "Hybrid TLS deploys"
     },
     {
-     "id": "vl7",
+     "id": "pqc",
      "lane": 3,
-     "label": "Cross-method comparison",
-     "hot": false
+     "label": "PQC algorithm rollout",
+     "hot": true
     },
     {
-     "id": "ex8",
+     "id": "perf",
+     "lane": 3,
+     "label": "Performance budgets"
+    },
+    {
+     "id": "test",
      "lane": 4,
-     "label": "Explain reports",
-     "hot": false
+     "label": "Interoperability tests",
+     "hot": true
     },
     {
-     "id": "ex9",
+     "id": "bench",
      "lane": 4,
-     "label": "Sensitivity analysis",
-     "hot": false
+     "label": "Handshake benchmarks"
     },
     {
-     "id": "dc10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "evid",
+     "lane": 4,
+     "label": "Migration evidence"
     },
     {
-     "id": "dc11",
+     "id": "reg",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Algorithm registry",
+     "hot": true
+    },
+    {
+     "id": "pin",
+     "lane": 5,
+     "label": "Version pinning"
+    },
+    {
+     "id": "drill",
+     "lane": 5,
+     "label": "Swap drills"
     }
    ],
    "edges": [
     {
-     "a": "dm0",
-     "b": "en2"
+     "a": "scan",
+     "b": "inv",
+     "label": "feed"
     },
     {
-     "a": "dm1",
-     "b": "en3"
+     "a": "build",
+     "b": "inv",
+     "label": "feed"
     },
     {
-     "a": "en2",
-     "b": "cp4"
+     "a": "sbom",
+     "b": "inv",
+     "label": "feed"
     },
     {
-     "a": "en3",
-     "b": "cp5"
+     "a": "inv",
+     "b": "cls",
+     "label": "classify"
     },
     {
-     "a": "cp4",
-     "b": "vl6"
+     "a": "cls",
+     "b": "owner",
+     "label": "map"
     },
     {
-     "a": "cp5",
-     "b": "vl7"
+     "a": "cls",
+     "b": "risk",
+     "label": "score"
     },
     {
-     "a": "vl6",
-     "b": "ex8"
+     "a": "risk",
+     "b": "wave",
+     "label": "sequence"
     },
     {
-     "a": "vl7",
-     "b": "ex9"
+     "a": "risk",
+     "b": "exp",
+     "label": "rank"
     },
     {
-     "a": "ex8",
-     "b": "dc10"
+     "a": "wave",
+     "b": "hybrid",
+     "label": "deploy"
     },
     {
-     "a": "ex9",
-     "b": "dc11"
+     "a": "wave",
+     "b": "pqc",
+     "label": "rollout"
+    },
+    {
+     "a": "perf",
+     "b": "pqc",
+     "label": "bound"
+    },
+    {
+     "a": "pqc",
+     "b": "test",
+     "label": "interop"
+    },
+    {
+     "a": "pqc",
+     "b": "bench",
+     "label": "timing"
+    },
+    {
+     "a": "test",
+     "b": "evid",
+     "label": "pack"
+    },
+    {
+     "a": "evid",
+     "b": "reg",
+     "label": "update"
+    },
+    {
+     "a": "reg",
+     "b": "pin",
+     "label": "versions"
+    },
+    {
+     "a": "reg",
+     "b": "drill",
+     "label": "rehearse"
     }
    ],
-   "note": "Topology inherited from the Quantum & Advanced Compute tower; the highlighted core is this service's build."
+   "note": "Crypto-agility is the end state: the algorithm registry and version pinning make the next migration a scheduled rollout, not another decade-long archaeology dig."
   },
   {
    "t": "h2",
-   "x": "Deliverables, without dressing them up"
+   "x": "One endpoint, from discovery to migrated"
   },
   {
    "t": "p",
-   "x": "The artifacts, each with a walkthrough when it lands — Post-Quantum Cryptography Migration edition:"
+   "x": "From cryptographic discovery through inventory classification, wave assignment, hybrid deployment and verification — including the orphan path for embedded crypto nobody remembered."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Migration flow — discover, classify, rank, migrate, verify, pin",
+   "labels": [
+    "Scan estate",
+    "Classify algorithms",
+    "Score harvest risk",
+    "Sequence waves",
+    "Deploy hybrid/PQC",
+    "Verify interop",
+    "Pin & drill"
+   ],
+   "note": "Long-lived secrets go first — anything that must stay confidential into the 2030s cannot wait for standards comfort."
+  },
+  {
+   "t": "h2",
+   "x": "The PQC console — exposure as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Inventory coverage, PQC-ready endpoints and harvest-risk exposure — the three numbers that tell the board where the estate actually stands."
+  },
+  {
+   "t": "idash",
+   "title": "PQC migration — CBOM console",
+   "kpis": [
+    {
+     "label": "Crypto assets found",
+     "value": "2,840",
+     "delta": "code, runtime, infra, vendor",
+     "dir": "up",
+     "spark": [
+      400,
+      900,
+      1400,
+      1900,
+      2300,
+      2600,
+      2840
+     ]
+    },
+    {
+     "label": "HNDL-exposed flows",
+     "value": "38",
+     "delta": "long-lifetime secrets, classical only",
+     "dir": "down",
+     "spark": [
+      38,
+      32,
+      26,
+      20,
+      14,
+      9,
+      6
+     ]
+    },
+    {
+     "label": "Hybrid TLS coverage",
+     "value": "64%",
+     "delta": "external endpoints, X25519+ML-KEM",
+     "dir": "up",
+     "spark": [
+      8,
+      20,
+      32,
+      44,
+      52,
+      58,
+      64
+     ]
+    },
+    {
+     "label": "Handshake overhead",
+     "value": "+2.1%",
+     "delta": "p99, hybrid vs classical",
+     "dir": "down",
+     "spark": [
+      18,
+      12,
+      8,
+      5,
+      3.5,
+      2.6,
+      2.1
+     ]
+    },
+    {
+     "label": "Vendor attestations verified",
+     "value": "71%",
+     "delta": "of claimed-PQC products tested",
+     "dir": "up",
+     "spark": [
+      0,
+      18,
+      34,
+      48,
+      58,
+      66,
+      71
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Exposure map",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "HNDL exposure by data class × protection state",
+       "rows": [
+        "State records",
+        "Health data",
+        "Strategic IP",
+        "Financials",
+        "Operational"
+       ],
+       "cats": [
+        "Classical only",
+        "Hybrid deployed",
+        "PQC deployed",
+        "Not crypto",
+        "Unknown"
+       ],
+       "matrix": [
+        [
+         34,
+         12,
+         8,
+         4,
+         2
+        ],
+        [
+         22,
+         9,
+         6,
+         3,
+         1
+        ],
+        [
+         18,
+         7,
+         5,
+         2,
+         1
+        ],
+        [
+         11,
+         4,
+         3,
+         2,
+         1
+        ],
+        [
+         6,
+         2,
+         2,
+         1,
+         1
+        ]
+       ],
+       "unit": "protected flows",
+       "note": "Hover cells for counts. The classical-only row is the harvest-now clock: state records and health data with 15-year secrecy lifetimes are migrating first — the arithmetic says so."
+      }
+     ]
+    },
+    {
+     "name": "Migration what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Migration sequencing what-if — risk, effort, performance",
+       "params": [
+        {
+         "name": "Flows in scope",
+         "min": 10,
+         "max": 300,
+         "step": 10,
+         "value": 84,
+         "unit": "flows"
+        },
+        {
+         "name": "Vendor readiness",
+         "min": 0,
+         "max": 100,
+         "step": 10,
+         "value": 55,
+         "unit": "% roadmap-solid"
+        },
+        {
+         "name": "Perf tolerance",
+         "min": 1,
+         "max": 15,
+         "step": 1,
+         "value": 6,
+         "unit": "% overhead cap"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Migration duration",
+         "unit": "mo",
+         "formula": "p0*0.35*(1+(100-p1)/130)",
+         "good": "9",
+         "bad": "24"
+        },
+        {
+         "name": "HNDL residual risk",
+         "unit": "0-100",
+         "formula": "max(4, 90-p1*0.7-p0*0.35)",
+         "good": "25",
+         "bad": "60"
+        },
+        {
+         "name": "Perf breaches",
+         "unit": "cnt",
+         "formula": "max(0, p0*0.18*(1-p2*0.06))",
+         "good": "2",
+         "bad": "12"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 1,
+        "label": "Flows vs HNDL residual risk"
+       },
+       "note": "The risk curve is the sequencing argument: vendor readiness gates the clock — flows whose vendors have no roadmap need the exit plan before the algorithm."
+      }
+     ]
+    },
+    {
+     "name": "Migration fabric",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The migration program — click nodes for the evidence contract",
+       "lanes": [
+        "Discover",
+        "Design",
+        "Deploy",
+        "Verify"
+       ],
+       "nodes": [
+        {
+         "id": "cbom",
+         "lane": 0,
+         "label": "CBOM builder",
+         "detail": "Code call graphs, runtime handshakes, infra configs and vendor claims reconciled into one inventory — every crypto asset with its protection triple.",
+         "hot": true
+        },
+        {
+         "id": "risk",
+         "lane": 1,
+         "label": "HNDL pricer",
+         "detail": "Data lifetimes × protection state → the harvest clock per flow — prioritization is arithmetic, not fear."
+        },
+        {
+         "id": "design",
+         "lane": 1,
+         "label": "Hybrid designs",
+         "detail": "X25519+ML-KEM for key establishment, ML-DSA/SLH-DSA track for signatures — hybrid beats premature trust in one primitive."
+        },
+        {
+         "id": "perf",
+         "lane": 2,
+         "label": "Performance lab",
+         "detail": "Handshake and throughput measured under production shapes — overhead caps signed before any rollout."
+        },
+        {
+         "id": "roll",
+         "lane": 2,
+         "label": "Staged rollout",
+         "detail": "External endpoints first (attacker-controlled traffic lands there), then internal — hybrid deployed where transition risk beats quantum risk."
+        },
+        {
+         "id": "vendor",
+         "lane": 2,
+         "label": "Vendor verification",
+         "detail": "Claimed-PQC products tested against known-answer vectors — attestation verified, not trusted."
+        },
+        {
+         "id": "cert",
+         "lane": 3,
+         "label": "Migration certificates",
+         "detail": "Per-flow closure: CBOM updated, handshake verified, HNDL clock cleared — the estate's crypto state stays queryable."
+        }
+       ],
+       "edges": [
+        {
+         "a": "cbom",
+         "b": "risk",
+         "label": "feeds"
+        },
+        {
+         "a": "risk",
+         "b": "design",
+         "label": "prioritizes"
+        },
+        {
+         "a": "design",
+         "b": "perf",
+         "label": "tested"
+        },
+        {
+         "a": "perf",
+         "b": "roll",
+         "label": "gated"
+        },
+        {
+         "a": "vendor",
+         "b": "roll",
+         "label": "verified"
+        },
+        {
+         "a": "roll",
+         "b": "cert",
+         "label": "closes"
+        },
+        {
+         "a": "cert",
+         "b": "cbom",
+         "label": "updates"
+        }
+       ],
+       "note": "Click nodes for the evidence contract each layer carries. The CBOM is a living artifact — every migration certificate updates it, and the next audit reads current truth."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · migration model",
+   "note": "Reference program model: exposure counts and overhead bands from delivery benchmarks, not vendor claims."
+  },
+  {
+   "t": "h2",
+   "x": "Migration coverage by estate segment"
+  },
+  {
+   "t": "p",
+   "x": "Coverage across estate segments and migration waves — the shape that shows where the long tail lives and which waves are honestly done versus claimed."
+  },
+  {
+   "t": "chart",
+   "title": "Migration progress by exposure class — design targets",
+   "variant": "bar",
+   "cats": [
+    "Long-lived secrets",
+    "Partner/TLS external",
+    "Internal TLS",
+    "Code signing",
+    "Embedded/firmware"
+   ],
+   "series": [
+    {
+     "name": "PQC-ready target %",
+     "points": [
+      78,
+      46,
+      24,
+      38,
+      12
+     ]
+    },
+    {
+     "name": "Harvest-risk score",
+     "points": [
+      92,
+      74,
+      41,
+      66,
+      58
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Post-Quantum Cryptography Migration across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Post-Quantum Cryptography Migration",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Banking & Financial Services operators recognize the pattern: harvest-now-decrypt-later exposure, quarter after quarter.",
+     "plays": [
+      "Endpoint-level crypto discovery — code, protocols, certificates",
+      "Hybrid deployments where standards allow, waves sequenced by harvest risk",
+      "Vendor attestation tracking and embedded-orphan hunts on schedule"
+     ],
+     "kpis": [
+      {
+       "label": "Inventory coverage",
+       "value": "87%"
+      },
+      {
+       "label": "PQC-ready endpoints",
+       "value": "23%"
+      },
+      {
+       "label": "Harvest-risk exposure",
+       "value": "high: 41"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": true,
+     "hook": "Ask what long-tail data under PQ risk costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Endpoint-level crypto discovery — code, protocols, certificates",
+      "Hybrid deployments where standards allow, waves sequenced by harvest risk",
+      "Vendor attestation tracking and embedded-orphan hunts on schedule"
+     ],
+     "kpis": [
+      {
+       "label": "Inventory coverage",
+       "value": "87%"
+      },
+      {
+       "label": "PQC-ready endpoints",
+       "value": "23%"
+      },
+      {
+       "label": "Harvest-risk exposure",
+       "value": "high: 41"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — genomic and longitudinal data exposure included — and prove it moved.",
+     "plays": [
+      "Endpoint-level crypto discovery — code, protocols, certificates",
+      "Hybrid deployments where standards allow, waves sequenced by harvest risk",
+      "Vendor attestation tracking and embedded-orphan hunts on schedule"
+     ],
+     "kpis": [
+      {
+       "label": "Inventory coverage",
+       "value": "87%"
+      },
+      {
+       "label": "PQC-ready endpoints",
+       "value": "23%"
+      },
+      {
+       "label": "Harvest-risk exposure",
+       "value": "high: 41"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Endpoint-level crypto discovery — code, protocols, certificates",
+      "Hybrid deployments where standards allow, waves sequenced by harvest risk",
+      "Vendor attestation tracking and embedded-orphan hunts on schedule"
+     ],
+     "kpis": [
+      {
+       "label": "Inventory coverage",
+       "value": "87%"
+      },
+      {
+       "label": "PQC-ready endpoints",
+       "value": "23%"
+      },
+      {
+       "label": "Harvest-risk exposure",
+       "value": "high: 41"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Ask what retail media measurement contested costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Endpoint-level crypto discovery — code, protocols, certificates",
+      "Hybrid deployments where standards allow, waves sequenced by harvest risk",
+      "Vendor attestation tracking and embedded-orphan hunts on schedule"
+     ],
+     "kpis": [
+      {
+       "label": "Inventory coverage",
+       "value": "87%"
+      },
+      {
+       "label": "PQC-ready endpoints",
+       "value": "23%"
+      },
+      {
+       "label": "Harvest-risk exposure",
+       "value": "high: 41"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we treat advanced compute as a tool with a contract — bounded problem classes, measured speedups, and a classical baseline the CFO can read.",
+     "plays": [
+      "Endpoint-level crypto discovery — code, protocols, certificates",
+      "Hybrid deployments where standards allow, waves sequenced by harvest risk",
+      "Vendor attestation tracking and embedded-orphan hunts on schedule"
+     ],
+     "kpis": [
+      {
+       "label": "Inventory coverage",
+       "value": "87%"
+      },
+      {
+       "label": "PQC-ready endpoints",
+       "value": "23%"
+      },
+      {
+       "label": "Harvest-risk exposure",
+       "value": "high: 41"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what PQC over infrastructure lifetimes costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Endpoint-level crypto discovery — code, protocols, certificates",
+      "Hybrid deployments where standards allow, waves sequenced by harvest risk",
+      "Vendor attestation tracking and embedded-orphan hunts on schedule"
+     ],
+     "kpis": [
+      {
+       "label": "Inventory coverage",
+       "value": "87%"
+      },
+      {
+       "label": "PQC-ready endpoints",
+       "value": "23%"
+      },
+      {
+       "label": "Harvest-risk exposure",
+       "value": "high: 41"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: routing at combinatorial scale, quarter after quarter.",
+     "plays": [
+      "Endpoint-level crypto discovery — code, protocols, certificates",
+      "Hybrid deployments where standards allow, waves sequenced by harvest risk",
+      "Vendor attestation tracking and embedded-orphan hunts on schedule"
+     ],
+     "kpis": [
+      {
+       "label": "Inventory coverage",
+       "value": "87%"
+      },
+      {
+       "label": "PQC-ready endpoints",
+       "value": "23%"
+      },
+      {
+       "label": "Harvest-risk exposure",
+       "value": "high: 41"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": true,
+     "hook": "The work here has one job: move a named number — state-grade adversaries harvesting included — and prove it moved.",
+     "plays": [
+      "Endpoint-level crypto discovery — code, protocols, certificates",
+      "Hybrid deployments where standards allow, waves sequenced by harvest risk",
+      "Vendor attestation tracking and embedded-orphan hunts on schedule"
+     ],
+     "kpis": [
+      {
+       "label": "Inventory coverage",
+       "value": "87%"
+      },
+      {
+       "label": "PQC-ready endpoints",
+       "value": "23%"
+      },
+      {
+       "label": "Harvest-risk exposure",
+       "value": "high: 41"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Ask what research frontier advantage costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Endpoint-level crypto discovery — code, protocols, certificates",
+      "Hybrid deployments where standards allow, waves sequenced by harvest risk",
+      "Vendor attestation tracking and embedded-orphan hunts on schedule"
+     ],
+     "kpis": [
+      {
+       "label": "Inventory coverage",
+       "value": "87%"
+      },
+      {
+       "label": "PQC-ready endpoints",
+       "value": "23%"
+      },
+      {
+       "label": "Harvest-risk exposure",
+       "value": "high: 41"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Ask what post-quantum product pressure costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Endpoint-level crypto discovery — code, protocols, certificates",
+      "Hybrid deployments where standards allow, waves sequenced by harvest risk",
+      "Vendor attestation tracking and embedded-orphan hunts on schedule"
+     ],
+     "kpis": [
+      {
+       "label": "Inventory coverage",
+       "value": "87%"
+      },
+      {
+       "label": "PQC-ready endpoints",
+       "value": "23%"
+      },
+      {
+       "label": "Harvest-risk exposure",
+       "value": "high: 41"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/quantum-advanced-compute/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the discipline is formulation: express the decision as an optimization problem, solve it with the best classical or quantum-inspired method, and benchmark honestly against both.",
+     "plays": [
+      "Endpoint-level crypto discovery — code, protocols, certificates",
+      "Hybrid deployments where standards allow, waves sequenced by harvest risk",
+      "Vendor attestation tracking and embedded-orphan hunts on schedule"
+     ],
+     "kpis": [
+      {
+       "label": "Inventory coverage",
+       "value": "87%"
+      },
+      {
+       "label": "PQC-ready endpoints",
+       "value": "23%"
+      },
+      {
+       "label": "Harvest-risk exposure",
+       "value": "high: 41"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/quantum-advanced-compute/"
+    }
+   ],
+   "practiceNote": "Post-Quantum Cryptography Migration view: PQC migration as engineering — crypto inventory with endpoint-level truth, hybrid deployments where standards allow, and crypto-agility that makes the next swap cheap."
+  },
+  {
+   "t": "h2",
+   "x": "Migration defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor hybrid deployment and continuous waves over freeze-and-swap programs; deviation triggers are written because each one extends exposure or breaks a compatibility contract."
+  },
+  {
+   "t": "table",
+   "caption": "Post-Quantum Cryptography Migration: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Cryptographic bill of materials (CBOM) with risk-ranked register",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Discovery",
+     "Network scan + build-time detection + SBOM",
+     "Vendor attestations only — embedded crypto hides"
     ],
     [
-     "PQC migration roadmap with sequenced remediation waves",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Hybrid modes",
+     "X25519+ML-KEM class hybrids where supported",
+     "Waiting for pure-PQC everywhere — interoperability stalls"
     ],
     [
-     "Crypto-agility reference architecture",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Performance",
+     "Per-protocol handshake budgets",
+     "Global perf veto — migration freezes for a decade"
     ],
     [
-     "Transition-period engineering and testing evidence",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Registry",
+     "Central algorithm registry with pinning",
+     "Algorithm sprawl per repo — agility never arrives"
+    ],
+    [
+     "Sequencing",
+     "Harvest-risk-ranked waves",
+     "First-found-first-migrated — riskiest stay longest"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The stack, chosen for operability"
+   "x": "Migration release gates — evidence before each wave"
   },
   {
-   "t": "p",
-   "x": "The engineering baseline for Post-Quantum Cryptography Migration: NIST FIPS 203/204/205 (ML-KEM/ML-DSA/SLH-DSA), liboqs, HSM fleets, CBOM tooling. The justifications are written, versioned and handed over — the decisions are yours to own after the engagement."
+   "t": "table",
+   "caption": "Release gates for Post-Quantum Cryptography Migration — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Coverage gate",
+     "Is the inventory endpoint-true?",
+     "Scan coverage report; sampling audits"
+    ],
+    [
+     "Ranking gate",
+     "Does risk drive sequencing?",
+     "Exposure scoring evidence"
+    ],
+    [
+     "Interop gate",
+     "Do hybrids interoperate?",
+     "Test-suite evidence per endpoint class"
+    ],
+    [
+     "Performance gate",
+     "Are budgets met?",
+     "Handshake benchmark reports"
+    ],
+    [
+     "Agility gate",
+     "Can algorithms swap on schedule?",
+     "Swap-drill evidence with timing"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "What the weeks look like"
+   "x": "What the crypto migration team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Post-Quantum Cryptography Migration starts with the measurement: the metric, the owner, the current number, signed."
+     "Crypto inventory",
+     "Endpoint-level truth with owners"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, cryptographic discovery first, gates written with your team."
+     "Harvest-risk register",
+     "Long-lived-secret exposure ranked"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Post-Quantum Cryptography Migration are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Migration wave plan",
+     "Sequenced, budgeted, evidence-driven"
+    ],
+    [
+     "Hybrid deployment kit",
+     "Configs and rollout SOPs per protocol"
+    ],
+    [
+     "Interop test suite",
+     "Per-endpoint-class compatibility evidence"
+    ],
+    [
+     "Algorithm registry",
+     "Pinned versions with swap drills"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Waves sequenced, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — discovery",
+     "Scan design, build-time hooks, SBOM integration"
+    ],
+    [
+     "Weeks 3–4 — inventory & ranking",
+     "Classification, owner mapping, exposure scores"
+    ],
+    [
+     "Weeks 5–6 — wave 1",
+     "Long-lived secrets migrated; evidence packs"
+    ],
+    [
+     "Weeks 7–8 — hybrid rollout",
+     "Gateway classes, perf budgets, interop suite"
+    ],
+    [
+     "Weeks 9–10 — agility",
+     "Registry, pinning, first swap drill"
+    ],
+    [
+     "Ongoing — migration ops",
+     "Quarterly scans; wave reviews; annual drills"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — code estates, vendor products and PKI"
+  },
+  {
+   "t": "p",
+   "x": "Crypto lives in code, vendors and PKI; these contracts cover discovery access, vendor attestation tracking and the certificate lifecycle the waves depend on."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Network scanning",
+     "Estate-wide discovery"
+    ],
+    [
+     "Build systems",
+     "Compile-time crypto detection"
+    ],
+    [
+     "Vendor management",
+     "SBOM and roadmap evidence"
+    ],
+    [
+     "Security domain",
+     "Control register integration"
+    ],
+    [
+     "Compliance",
+     "Audit evidence for crypto posture"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Vendor-dependency governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Vendor crypto is tracked with attestation deadlines — a supplier shipping RSA-only firmware is a named risk with an owner and a date, not a footnote in the inventory."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Long-lived first",
+     "Sequencing follows harvest risk, not convenience"
+    ],
+    [
+     "Budget-bound perf",
+     "Performance fear cannot veto the program"
+    ],
+    [
+     "Registry-only crypto",
+     "New code pulls algorithms from the registry"
+    ],
+    [
+     "Drilled swaps",
+     "Agility proven by timing evidence"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Embedded orphans get their own hunt: firmware blobs, IoT devices and retired-but-powered systems are scanned on schedule, because the crypto you forgot about is the crypto an adversary remembers."
   },
   {
    "t": "cta",
-   "x": "The next step is small and real: one working session on Post-Quantum Cryptography Migration, your data, and a written feasibility read you can circulate."
+   "x": "Ask what percentage of your estate's crypto you can actually name today. The discovery sprint will produce the honest inventory — and sequence the waves that close your harvest risk first."
   }
  ],
- "words": 506,
+ "words": 925,
  "section": "Services",
  "l1": "Services",
  "l2": "Quantum & Advanced Compute",
@@ -278,7 +1219,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Quantum & Advanced Compute",
+   "title": "Domain overview — Quantum & Advanced Compute",
    "url": "/services/quantum-advanced-compute/",
    "desc": "Quantum readiness, optimization and PQC migration — pragmatic advantage from emerging compute."
   },
@@ -330,33 +1271,51 @@
   {
    "title": "Agentic AI & Hyperautomation for Healthcare & Life Sciences",
    "url": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
    "title": "Quantum Readiness & Strategy",
    "url": "/services/quantum-advanced-compute/quantum-readiness-strategy/",
-   "tag": "Same tower",
-   "desc": "A quantum plan that survives a CFO — inventory, risk clocks and sequenced roadmaps."
+   "tag": "Same domain",
+   "desc": "honest quantum strategy — use-case triage on verifiable criteria, vendor-neutral posture, and a roadmap that survives contact with real hardware limits."
   },
   {
-   "title": "Quantum Optimization for Enterprise Problems",
-   "url": "/services/quantum-advanced-compute/quantum-optimization/",
-   "tag": "Same tower",
-   "desc": "Routing, scheduling, portfolios and formulations — hybrid solvers beating classical baselines."
-  },
-  {
-   "title": "Quantum Machine Learning & Simulation",
-   "url": "/services/quantum-advanced-compute/quantum-ml-simulation/",
-   "tag": "Same tower",
-   "desc": "QML and simulation pilots with industrial honesty — real baselines, real data, real verdicts."
+   "title": "Neuromorphic & Emerging Compute Advisory",
+   "url": "/services/quantum-advanced-compute/emerging-compute-advisory/",
+   "tag": "Same domain",
+   "desc": "neutral horizon scanning — photonic, neuromorphic, in-memory and beyond, with evidence memos that translate vendor noise into engineering decisions."
   },
   {
    "title": "HPC & Simulation Engineering",
    "url": "/services/quantum-advanced-compute/hpc-simulation-engineering/",
-   "tag": "Same tower",
-   "desc": "Simulation as a competitive instrument — clusters, solvers and pipelines engineered for throughput."
+   "tag": "Same domain",
+   "desc": "classical HPC that does the heavy lifting — benchmarked clusters, tuned solvers, cost-per-solve discipline and simulation workflows with provenance."
+  },
+  {
+   "title": "Identity & Access Modernization",
+   "url": "/services/cybersecurity-zero-trust/identity-access-modernization/",
+   "tag": "Pairs with",
+   "desc": "workforce and machine identity lifecycle done properly — joiner-mover-leaver automation, privileged access vaulting and credential hygiene that is measured weekly."
+  },
+  {
+   "title": "Platform Engineering & Developer Experience",
+   "url": "/services/cloud-edge-platform-engineering/platform-engineering-devex/",
+   "tag": "Pairs with",
+   "desc": "the platform as product — golden paths as versioned APIs, scaffolds that carry SLOs and budgets by default, and a developer experience measured like a funnel."
+  },
+  {
+   "title": "Real-Time Streaming & Event-Driven Decisioning",
+   "url": "/services/data-analytics-lakehouse/realtime-streaming-decisioning/",
+   "tag": "Pairs with",
+   "desc": "sub-second decision paths on streams — exactly-once state, replay semantics and latency budgets that are measured, not asserted."
+  },
+  {
+   "title": "A global integrated energy major",
+   "url": "/case-studies/en-02/",
+   "tag": "Evidence",
+   "desc": "Turnaround duration down 14% — scheduling optimization at refinery scale."
   }
  ]
 }

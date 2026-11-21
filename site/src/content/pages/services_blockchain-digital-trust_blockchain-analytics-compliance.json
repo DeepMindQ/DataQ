@@ -9,254 +9,1156 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The honest pitch for blockchain analytics & regulatory compliance fits in a sentence — On-chain transparency, operationalized — analytics, Travel Rule and MiCA-aligned controls. — and the rest of this page is the how: measured baseline, bounded build, evidence in flight."
+   "x": "Ledger intelligence mapped to regulatory duties: transaction risk scoring with measured precision, travel-rule workflows that cover your counterparties, and case management that turns investigations from archaeology into a query — built for the auditor who arrives unannounced."
   },
   {
    "t": "h2",
-   "x": "The service, described plainly"
+   "x": "Screening precision is a compliance outcome, not a vendor spec sheet"
   },
   {
    "t": "p",
-   "x": "Regulated entities touching digital assets inherit on-chain complexity: transaction monitoring, counterparty risk, sanctions screening and the Travel Rule's information-sharing duties. We build the compliance stack — attribution analytics classifying addresses and flows, risk scoring integrated into decisioning, Travel Rule messaging between VASPs and institutions, and audit-ready reporting. Controls align to MiCA where EU entities operate, alongside AML/CTF frameworks (FATF guidance) and internal model-risk governance for the scoring itself."
+   "x": "When value moves on ledgers, compliance duties follow: sanctions screening, travel-rule information transfer, AML case management. The practice builds the intelligence layer — address clustering, risk scoring on flows, and case files that assemble themselves from ledger evidence instead of analyst archaeology."
   },
   {
    "t": "p",
-   "x": "For institutions evaluating exposure rather than operating VASP services, we deliver the assessment side: portfolio and counterparty exposure analytics, treasury policy design for digital-asset holdings, and evidence packs for supervisors asking 'how would you know'. The outcome is digital-asset engagement your risk committee can approve and your auditor can test."
+   "x": "The design principle: every regulatory duty maps to a pipeline stage with evidence. A case file that a regulator can read — transaction graph, screening results, decisions, timestamps — is the deliverable, not a dashboard."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that flood compliance teams with noise, the reference architecture of the analytics pipeline, and the console that keeps case SLAs honest."
   },
   {
    "t": "h2",
-   "x": "What makes this urgent now"
+   "x": "Four failure modes that drown compliance teams in noise"
   },
   {
    "t": "p",
-   "x": "Programs of Blockchain Analytics & Regulatory Compliance run in Banking & Financial Services, Insurance & Risk, Public Sector & Government, Technology & SaaS — always against one named number, always with the baseline signed first."
+   "x": "Every one of these converts a regulator's question into a week of work — the countermeasures measure precision, close travel-rule gaps and keep cases queryable from day one."
   },
   {
-   "t": "h2",
-   "x": "The system, piece by piece"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Blockchain Analytics & Regulatory Compliance: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Attribution analytics",
-     "address clustering, flow classification and exposure scoring"
+     "Address blindness",
+     "Clustering wrong; cases built on bad attribution",
+     "Multi-source attribution with confidence scores; disputed-cluster review"
     ],
     [
-     "Transaction monitoring",
-     "AML/CTF-aligned monitoring with case workflows"
+     "Travel-rule gaps",
+     "VASP counterparty data missing or wrong",
+     "Inter-VASP protocol integration; counterparty directory with SLAs"
     ],
     [
-     "Travel Rule operations",
-     "information sharing between institutions/VASPs with protocol integration"
+     "Case archaeology",
+     "Analysts rebuild context per audit",
+     "Auto-assembled case files with ledger-linked evidence"
     ],
     [
-     "Regime alignment",
-     "MiCA, FATF guidance and internal model-risk governance"
-    ],
-    [
-     "Exposure assessment",
-     "counterparty/treasury analytics with supervisor-ready evidence"
+     "Screening noise",
+     "False positives bury real risk",
+     "Precision-tuned scoring with feedback loops from dispositions"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — from ledger events to case files"
+  },
+  {
+   "t": "p",
+   "x": "Address attribution runs continuously against known-entity registries, risk scoring is calibrated against closed-case ground truth, travel-rule workflows exchange originator and beneficiary data where required, and every case lands in a queryable store with its evidence attached."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Blockchain Analytics & Regulatory Compliance",
+   "title": "Reference architecture — ledger compliance plane",
    "lanes": [
-    "Claims",
-    "Verifiable records",
-    "Trust fabric",
-    "Verification",
-    "Portals",
-    "Ecosystem"
+    "Ledger data",
+    "Attribution",
+    "Risk engine",
+    "Duties",
+    "Case management",
+    "Regulator surface"
    ],
    "nodes": [
     {
-     "id": "cl0",
+     "id": "ing",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Multi-chain ingest"
     },
     {
-     "id": "cl1",
+     "id": "norm",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "Normalization"
     },
     {
-     "id": "vr2",
+     "id": "idx",
+     "lane": 0,
+     "label": "Graph index"
+    },
+    {
+     "id": "clus",
      "lane": 1,
-     "label": "Blockchain Analytics & Regulatory Compliance",
+     "label": "Address clustering",
      "hot": true
     },
     {
-     "id": "vr3",
+     "id": "attr",
      "lane": 1,
-     "label": "Hash anchoring",
-     "hot": false
+     "label": "Attribution sources"
     },
     {
-     "id": "tf4",
+     "id": "conf",
+     "lane": 1,
+     "label": "Confidence scoring"
+    },
+    {
+     "id": "score",
      "lane": 2,
-     "label": "Governed ledger fabric",
+     "label": "Flow risk scoring",
      "hot": true
     },
     {
-     "id": "tf5",
+     "id": "rules",
      "lane": 2,
-     "label": "Consent scopes",
-     "hot": false
+     "label": "Duty rules engine"
     },
     {
-     "id": "vf6",
+     "id": "ml",
+     "lane": 2,
+     "label": "Pattern models"
+    },
+    {
+     "id": "sanct",
      "lane": 3,
-     "label": "Zero-knowledge checks",
-     "hot": false
+     "label": "Sanctions screening",
+     "hot": true
     },
     {
-     "id": "vf7",
+     "id": "travel",
      "lane": 3,
-     "label": "Attestation service",
-     "hot": false
+     "label": "Travel-rule transfer"
     },
     {
-     "id": "po8",
+     "id": "rep",
+     "lane": 3,
+     "label": "Regulatory reports"
+    },
+    {
+     "id": "case",
      "lane": 4,
-     "label": "Counterparty portals",
-     "hot": false
+     "label": "Case assembly",
+     "hot": true
     },
     {
-     "id": "po9",
+     "id": "disp",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Disposition workflow"
     },
     {
-     "id": "ec10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "sla",
+     "lane": 4,
+     "label": "Case SLAs"
     },
     {
-     "id": "ec11",
+     "id": "pack",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Evidence pack builder",
+     "hot": true
+    },
+    {
+     "id": "graph",
+     "lane": 5,
+     "label": "Transaction graph render"
+    },
+    {
+     "id": "audit",
+     "lane": 5,
+     "label": "Audit interface"
     }
    ],
    "edges": [
     {
-     "a": "cl0",
-     "b": "vr2"
+     "a": "ing",
+     "b": "norm",
+     "label": "clean"
     },
     {
-     "a": "cl1",
-     "b": "vr3"
+     "a": "norm",
+     "b": "idx",
+     "label": "index"
     },
     {
-     "a": "vr2",
-     "b": "tf4"
+     "a": "idx",
+     "b": "clus",
+     "label": "cluster"
     },
     {
-     "a": "vr3",
-     "b": "tf5"
+     "a": "attr",
+     "b": "clus",
+     "label": " enrich"
     },
     {
-     "a": "tf4",
-     "b": "vf6"
+     "a": "clus",
+     "b": "conf",
+     "label": "score"
     },
     {
-     "a": "tf5",
-     "b": "vf7"
+     "a": "idx",
+     "b": "score",
+     "label": "flows"
     },
     {
-     "a": "vf6",
-     "b": "po8"
+     "a": "conf",
+     "b": "score",
+     "label": "weight"
     },
     {
-     "a": "po8",
-     "b": "po9"
+     "a": "rules",
+     "b": "score",
+     "label": "bind"
     },
     {
-     "a": "vf7",
-     "b": "ec10"
+     "a": "ml",
+     "b": "score",
+     "label": "patterns"
     },
     {
-     "a": "tf5",
-     "b": "ec11"
+     "a": "score",
+     "b": "sanct",
+     "label": "screen"
+    },
+    {
+     "a": "score",
+     "b": "travel",
+     "label": "trigger"
+    },
+    {
+     "a": "score",
+     "b": "rep",
+     "label": "file"
+    },
+    {
+     "a": "sanct",
+     "b": "case",
+     "label": "open"
+    },
+    {
+     "a": "travel",
+     "b": "case",
+     "label": "attach"
+    },
+    {
+     "a": "case",
+     "b": "disp",
+     "label": "decide"
+    },
+    {
+     "a": "disp",
+     "b": "sla",
+     "label": "clock"
+    },
+    {
+     "a": "case",
+     "b": "pack",
+     "label": "assemble"
+    },
+    {
+     "a": "idx",
+     "b": "graph",
+     "label": "render"
+    },
+    {
+     "a": "pack",
+     "b": "audit",
+     "label": "serve"
     }
    ],
-   "note": "Topology inherited from the Blockchain & Digital Trust tower; the highlighted core is this service's build."
+   "note": "Confidence scoring on attribution is what makes cases defensible: every cluster claim carries a score and sources, and disputed clusters go to review instead of into filings."
   },
   {
    "t": "h2",
-   "x": "What changes hands"
+   "x": "One flagged transaction, from screen to case closure"
   },
   {
    "t": "p",
-   "x": "Blockchain Analytics & Regulatory Compliance: the artifacts, each with a walkthrough when it lands,"
+   "x": "From the screening hit through attribution, risk scoring, the travel-rule exchange where triggered and case disposition — including the false-positive feedback that tunes precision."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Case flow — ingest, attribute, score, discharge duties, file",
+   "labels": [
+    "Ledger ingest",
+    "Cluster & attribute",
+    "Score flows",
+    "Screen & transfer",
+    "Open & decide cases",
+    "Assemble pack",
+    "Serve audit"
+   ],
+   "note": "Disposition feedback tunes the scoring: every false positive closed by an analyst makes the next screen quieter — precision is a managed metric."
+  },
+  {
+   "t": "h2",
+   "x": "The analytics console — precision as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Screening precision, travel-rule coverage and case SLA adherence — the three numbers that decide whether the compliance function scales with volume or drowns under it."
+  },
+  {
+   "t": "idash",
+   "title": "Blockchain analytics & compliance — screening console",
+   "kpis": [
+    {
+     "label": "Alerts / week",
+     "value": "214",
+     "delta": "after entity-resolution fix",
+     "dir": "down",
+     "spark": [
+      1980,
+      1420,
+      960,
+      620,
+      410,
+      260,
+      214
+     ]
+    },
+    {
+     "label": "False-positive rate",
+     "value": "18.2%",
+     "delta": "target < 25%",
+     "dir": "down",
+     "spark": [
+      72,
+      58,
+      44,
+      33,
+      25,
+      21,
+      18
+     ]
+    },
+    {
+     "label": "Screening latency p99",
+     "value": "1.4 s",
+     "delta": "deposit-path budget",
+     "dir": "flat",
+     "spark": [
+      4.1,
+      3.2,
+      2.6,
+      2.0,
+      1.7,
+      1.5,
+      1.4
+     ]
+    },
+    {
+     "label": "Evidence completeness",
+     "value": "100%",
+     "delta": "derivations stored per case",
+     "dir": "up",
+     "spark": [
+      41,
+      58,
+      72,
+      85,
+      92,
+      97,
+      100
+     ]
+    },
+    {
+     "label": "Travel Rule coverage",
+     "value": "82%",
+     "delta": "corridors auto-exchanged",
+     "dir": "up",
+     "spark": [
+      30,
+      42,
+      55,
+      63,
+      71,
+      77,
+      82
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Alert quality",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Screening funnel by week — from raw alerts to filed narratives",
+       "cats": [
+        "Wk 1",
+        "Wk 2",
+        "Wk 3",
+        "Wk 4",
+        "Wk 5",
+        "Wk 6",
+        "Wk 7",
+        "Wk 8"
+       ],
+       "series": [
+        {
+         "name": "Raw alerts",
+         "points": [
+          1980,
+          1420,
+          960,
+          620,
+          410,
+          260,
+          214,
+          190
+         ]
+        },
+        {
+         "name": "After entity resolution",
+         "points": [
+          1640,
+          1120,
+          720,
+          450,
+          290,
+          190,
+          160,
+          142
+         ]
+        },
+        {
+         "name": "Filed SAR narratives",
+         "points": [
+          86,
+          64,
+          51,
+          44,
+          38,
+          34,
+          31,
+          29
+         ]
+        }
+       ],
+       "note": "Click to isolate. Entity resolution removes noise; narrative count falls because duplicates merge — the reviewer's week is measured in cases, and the funnel shows where the hours go."
+      }
+     ]
+    },
+    {
+     "name": "Corridor matrix",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Travel Rule corridor health — counterparty exchange quality",
+       "rows": [
+        "EU corridor",
+        "US corridor",
+        "APAC corridor",
+        "GCC corridor"
+       ],
+       "cats": [
+        "Auto-exchange",
+        "Partial",
+        "Manual",
+        "Unhosted"
+       ],
+       "matrix": [
+        [
+         82,
+         14,
+         3,
+         1
+        ],
+        [
+         74,
+         18,
+         6,
+         2
+        ],
+        [
+         45,
+         24,
+         22,
+         9
+        ],
+        [
+         28,
+         31,
+         30,
+         11
+        ]
+       ],
+       "unit": "% of counterparties",
+       "note": "Hover cells to read shares. The APAC and GCC manual columns are the operational budget — each manual corridor costs review hours per transfer, which is the argument for counterparty onboarding investment."
+      }
+     ]
+    },
+    {
+     "name": "Screening what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Screening sensitivity what-if — thresholds vs team load",
+       "params": [
+        {
+         "name": "Deposit volume",
+         "min": 1000,
+         "max": 100000,
+         "step": 1000,
+         "value": 24000,
+         "unit": "tx/day"
+        },
+        {
+         "name": "Match threshold",
+         "min": 60,
+         "max": 100,
+         "step": 1,
+         "value": 88,
+         "unit": "%"
+        },
+        {
+         "name": "Analyst capacity",
+         "min": 1,
+         "max": 20,
+         "step": 1,
+         "value": 6,
+         "unit": "FTE"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Alerts / day",
+         "unit": "cnt",
+         "formula": "p0*0.0032*(110-p1)/30",
+         "good": "150",
+         "bad": "500"
+        },
+        {
+         "name": "Backlog days",
+         "unit": "d",
+         "formula": "p0*0.0032*(110-p1)/30/p2/8",
+         "good": "1",
+         "bad": "5"
+        },
+        {
+         "name": "Miss risk (est)",
+         "unit": "0-100",
+         "formula": "max(4, (p1-70)*2.4)",
+         "good": "20",
+         "bad": "45"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 0,
+        "label": "Threshold vs daily alerts"
+       },
+       "note": "The threshold dial is a risk dial: every point of sensitivity multiplies analyst load — the backlog equation is what the headcount argument reads from."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · alert model",
+   "note": "Reference program model: funnel and corridor shares from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Precision and coverage across screening cycles"
+  },
+  {
+   "t": "p",
+   "x": "Screening precision and travel-rule coverage across quarterly cycles — the paired curve that shows the noise problem shrinking as coverage grows."
+  },
+  {
+   "t": "chart",
+   "title": "Screening precision by flow type — design targets",
+   "variant": "bar",
+   "cats": [
+    "Exchange inflow",
+    "Merchant payments",
+    "P2P transfers",
+    "Bridge flows",
+    "Mixers (proximity)"
+   ],
+   "series": [
+    {
+     "name": "Precision target %",
+     "points": [
+      92,
+      88,
+      84,
+      79,
+      72
+     ]
+    },
+    {
+     "name": "Case rate target %",
+     "points": [
+      1.2,
+      0.6,
+      2.1,
+      3.4,
+      18
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Blockchain Analytics & Regulatory Compliance across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Blockchain Analytics & Regulatory Compliance",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "plays": [
+      "Continuous address attribution against known-entity registries",
+      "Risk scoring calibrated to closed-case ground truth — precision measured",
+      "Travel-rule workflows and case files an unannounced examiner can query"
+     ],
+     "kpis": [
+      {
+       "label": "Screening precision",
+       "value": "87%"
+      },
+      {
+       "label": "Travel-rule coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Case SLA adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": true,
+     "hook": "The work here has one job: move a named number — claims, policy and exposure data fragmented included — and prove it moved.",
+     "plays": [
+      "Continuous address attribution against known-entity registries",
+      "Risk scoring calibrated to closed-case ground truth — precision measured",
+      "Travel-rule workflows and case files an unannounced examiner can query"
+     ],
+     "kpis": [
+      {
+       "label": "Screening precision",
+       "value": "87%"
+      },
+      {
+       "label": "Travel-rule coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Case SLA adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Continuous address attribution against known-entity registries",
+      "Risk scoring calibrated to closed-case ground truth — precision measured",
+      "Travel-rule workflows and case files an unannounced examiner can query"
+     ],
+     "kpis": [
+      {
+       "label": "Screening precision",
+       "value": "87%"
+      },
+      {
+       "label": "Travel-rule coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Case SLA adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "plays": [
+      "Continuous address attribution against known-entity registries",
+      "Risk scoring calibrated to closed-case ground truth — precision measured",
+      "Travel-rule workflows and case files an unannounced examiner can query"
+     ],
+     "kpis": [
+      {
+       "label": "Screening precision",
+       "value": "87%"
+      },
+      {
+       "label": "Travel-rule coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Case SLA adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Retail & Consumer Goods operators recognize the pattern: provenance claims unverifiable, quarter after quarter.",
+     "plays": [
+      "Continuous address attribution against known-entity registries",
+      "Risk scoring calibrated to closed-case ground truth — precision measured",
+      "Travel-rule workflows and case files an unannounced examiner can query",
+      "Sector working pattern: provenance verification — EUDR/DPP-grade chain-of-custody for claim-bearing products. Claims verified, greenwashing risk down is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Screening precision",
+       "value": "87%"
+      },
+      {
+       "label": "Travel-rule coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Case SLA adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: interconnect and roaming reconciliation, quarter after quarter.",
+     "plays": [
+      "Continuous address attribution against known-entity registries",
+      "Risk scoring calibrated to closed-case ground truth — precision measured",
+      "Travel-rule workflows and case files an unannounced examiner can query"
+     ],
+     "kpis": [
+      {
+       "label": "Screening precision",
+       "value": "87%"
+      },
+      {
+       "label": "Travel-rule coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Case SLA adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what GO/REC certificate integrity costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Continuous address attribution against known-entity registries",
+      "Risk scoring calibrated to closed-case ground truth — precision measured",
+      "Travel-rule workflows and case files an unannounced examiner can query"
+     ],
+     "kpis": [
+      {
+       "label": "Screening precision",
+       "value": "87%"
+      },
+      {
+       "label": "Travel-rule coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Case SLA adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — compliance-grade provenance missing included — and prove it moved.",
+     "plays": [
+      "Continuous address attribution against known-entity registries",
+      "Risk scoring calibrated to closed-case ground truth — precision measured",
+      "Travel-rule workflows and case files an unannounced examiner can query"
+     ],
+     "kpis": [
+      {
+       "label": "Screening precision",
+       "value": "87%"
+      },
+      {
+       "label": "Travel-rule coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Case SLA adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — records integrity under dispute included — and prove it moved.",
+     "plays": [
+      "Continuous address attribution against known-entity registries",
+      "Risk scoring calibrated to closed-case ground truth — precision measured",
+      "Travel-rule workflows and case files an unannounced examiner can query"
+     ],
+     "kpis": [
+      {
+       "label": "Screening precision",
+       "value": "87%"
+      },
+      {
+       "label": "Travel-rule coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Case SLA adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Continuous address attribution against known-entity registries",
+      "Risk scoring calibrated to closed-case ground truth — precision measured",
+      "Travel-rule workflows and case files an unannounced examiner can query"
+     ],
+     "kpis": [
+      {
+       "label": "Screening precision",
+       "value": "87%"
+      },
+      {
+       "label": "Travel-rule coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Case SLA adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": true,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the trust layer is engineered, not asserted: signed events, permissioned consensus, and a provenance graph every participant can verify.",
+     "plays": [
+      "Continuous address attribution against known-entity registries",
+      "Risk scoring calibrated to closed-case ground truth — precision measured",
+      "Travel-rule workflows and case files an unannounced examiner can query"
+     ],
+     "kpis": [
+      {
+       "label": "Screening precision",
+       "value": "87%"
+      },
+      {
+       "label": "Travel-rule coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Case SLA adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what provenance claims unverifiable costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Continuous address attribution against known-entity registries",
+      "Risk scoring calibrated to closed-case ground truth — precision measured",
+      "Travel-rule workflows and case files an unannounced examiner can query"
+     ],
+     "kpis": [
+      {
+       "label": "Screening precision",
+       "value": "87%"
+      },
+      {
+       "label": "Travel-rule coverage",
+       "value": "94%"
+      },
+      {
+       "label": "Case SLA adherence",
+       "value": "96%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/blockchain-digital-trust/"
+    }
+   ],
+   "practiceNote": "Blockchain Analytics & Regulatory Compliance view: ledger intelligence mapped to regulatory duties — transaction risk scoring, travel-rule workflows, and audit-ready case files built automatically."
+  },
+  {
+   "t": "h2",
+   "x": "Analytics defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor measured attribution and calibrated scoring over black-box risk feeds; deviation triggers are written because each one moves the audit defense from evidence to assertion."
+  },
+  {
+   "t": "table",
+   "caption": "Blockchain Analytics & Regulatory Compliance: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production compliance stack for digital-asset operations or exposure",
-     "Handed to a named owner on your side, with a working session included."
+     "Attribution",
+     "Multi-source with confidence scores",
+     "Single-vendor labels — black-box clusters"
     ],
     [
-     "Attribution and risk-scoring models with governance docs",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Scoring",
+     "Rules + models with feedback loops",
+     "Static rules — precision never improves"
     ],
     [
-     "Travel Rule integration and case-management workflows",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Travel rule",
+     "Protocol integration with directories",
+     "Manual counterparty emails — SLA fiction"
     ],
     [
-     "Supervisor/auditor evidence packs",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Cases",
+     "Auto-assembled evidence files",
+     "Analyst-built folders — audit archaeology"
+    ],
+    [
+     "Packs",
+     "Regulator-format rendering",
+     "Screenshots — provenance never survives"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Engineering standards we hold"
+   "x": "Analytics release gates — evidence before deployment"
   },
   {
-   "t": "p",
-   "x": "The engineering baseline for Blockchain Analytics & Regulatory Compliance: attribution analytics engines, Travel Rule protocols (IVMS 101), case management, GRC integration. The justifications are written, versioned and handed over — the decisions are yours to own after the engagement."
+   "t": "table",
+   "caption": "Release gates for Blockchain Analytics & Regulatory Compliance — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Attribution gate",
+     "Are clusters defensible?",
+     "Confidence scores; disputed-cluster review"
+    ],
+    [
+     "Duty gate",
+     "Are duties mapped to pipelines?",
+     "Duty-to-stage traceability"
+    ],
+    [
+     "Precision gate",
+     "Is screening improving?",
+     "Precision trend with feedback evidence"
+    ],
+    [
+     "SLA gate",
+     "Do cases clear on time?",
+     "SLA adherence by case class"
+    ],
+    [
+     "Pack gate",
+     "Would the regulator accept it?",
+     "Pack format validation"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "What the weeks look like"
+   "x": "What the compliance function inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Blockchain Analytics & Regulatory Compliance starts with the measurement: the metric, the owner, the current number, signed."
+     "Attribution engine",
+     "Clustering with confidence and sources"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, attribution analytics first, gates written with your team."
+     "Duty rules engine",
+     "Regulatory duties as pipeline stages"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Blockchain Analytics & Regulatory Compliance are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Travel-rule integration",
+     "Counterparty exchange with SLAs"
+    ],
+    [
+     "Case management",
+     "Auto-assembled files with SLA clocks"
+    ],
+    [
+     "Evidence pack builder",
+     "Regulator-format rendering"
+    ],
+    [
+     "Precision program",
+     "Feedback loops with trend reporting"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Attribution to cases, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — duties & attribution",
+     "Duty mapping, attribution source review, confidence model"
+    ],
+    [
+     "Weeks 3–4 — intelligence",
+     "Clustering, graph index, risk scoring v1"
+    ],
+    [
+     "Weeks 5–6 — duties live",
+     "Screening, travel-rule integration, report generation"
+    ],
+    [
+     "Weeks 7–8 — case flow",
+     "Auto-assembly, dispositions, SLA clocks"
+    ],
+    [
+     "Weeks 9–10 — packs & precision",
+     "Pack builder, feedback loops, precision program"
+    ],
+    [
+     "Ongoing — compliance ops",
+     "Weekly case reviews; quarterly duty audit; model retraining"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — ledgers, registries and the case systems"
+  },
+  {
+   "t": "p",
+   "x": "The pipeline spans ledgers, attribution registries and your case systems; these contracts carry flagged events into investigations with evidence attached from the first minute."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Ledger networks",
+     "Ingest from permissioned chains"
+    ],
+    [
+     "Sanctions lists",
+     "Screening feeds with versioning"
+    ],
+    [
+     "VASP counterparties",
+     "Travel-rule protocols"
+    ],
+    [
+     "Case tooling",
+     "Analyst workflow integration"
+    ],
+    [
+     "Regulators",
+     "Pack delivery channels"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Regulatory-examination overlay"
+  },
+  {
+   "t": "p",
+   "x": "Examination readiness is a systems property: case files, model cards and screening calibrations are queryable — the unannounced examiner meets a portal, not a panic."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Confidence-gated filings",
+     "Low-confidence attribution goes to review"
+    ],
+    [
+     "Duty traceability",
+     "Every duty maps to pipeline evidence"
+    ],
+    [
+     "Feedback discipline",
+     "Analyst dispositions feed the models"
+    ],
+    [
+     "Pack immutability",
+     "Case files are hash-chained once filed"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Address blindness is hunted monthly: new protocol deployments and mixing services are added to attribution within a published SLA — the coverage ledger records when each new pattern became visible."
   },
   {
    "t": "cta",
-   "x": "Talk to the team that runs Blockchain Analytics & Regulatory Compliance in production — the briefing is technical by design, and the first one costs nothing but the hour."
+   "x": "Ask what percentage of last month's screening hits your team closed as actionable. The diagnostic will calibrate precision against your closed cases — and price what a quieter, defensible compliance stack costs."
   }
  ],
- "words": 499,
+ "words": 954,
  "section": "Services",
  "l1": "Services",
  "l2": "Blockchain & Digital Trust",
@@ -278,7 +1180,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Blockchain & Digital Trust",
+   "title": "Domain overview — Blockchain & Digital Trust",
    "url": "/services/blockchain-digital-trust/",
    "desc": "DLT networks, tokenization and verifiable credentials — a shared, verifiable record with controls regulators accept."
   },
@@ -330,33 +1232,51 @@
   {
    "title": "Blockchain & Digital Trust for Education & Research",
    "url": "/industries/education-research/capabilities/blockchain-digital-trust/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Enterprise DLT Network Engineering",
-   "url": "/services/blockchain-digital-trust/enterprise-dlt-networks/",
-   "tag": "Same tower",
-   "desc": "Permissioned networks for multi-party truth — governance, consensus and integration done institutionally."
+   "title": "Smart Contract Engineering & Audit",
+   "url": "/services/blockchain-digital-trust/smart-contract-engineering/",
+   "tag": "Same domain",
+   "desc": "audited contracts with upgrade discipline — formal-verified cores, independent audits at zero highs, and upgrade paths that cannot surprise the network."
   },
   {
    "title": "Asset Tokenization & Digital Assets",
    "url": "/services/blockchain-digital-trust/asset-tokenization/",
-   "tag": "Same tower",
-   "desc": "Instruments as tokens — issuance, custody and lifecycle under securities-law discipline."
+   "tag": "Same domain",
+   "desc": "regulated token designs — legal-wrapper-first architecture, transfer controls that enforce restrictions in code, and settlement that shortens cycles honestly."
   },
   {
-   "title": "Smart Contract Engineering & Audit",
-   "url": "/services/blockchain-digital-trust/smart-contract-engineering/",
-   "tag": "Same tower",
-   "desc": "Contracts as production software — specification, formal verification and audit before value moves."
+   "title": "Decentralized Identity & Verifiable Credentials",
+   "url": "/services/blockchain-digital-trust/decentralized-identity/",
+   "tag": "Same domain",
+   "desc": "DIDs and verifiable credentials that work offline — issuer governance, holder wallets, selective disclosure, and verification at 200ms without a phone-home."
   },
   {
-   "title": "Provenance, Traceability & Supply Chain Trust",
-   "url": "/services/blockchain-digital-trust/provenance-traceability/",
-   "tag": "Same tower",
-   "desc": "Proof, not paperwork — EUDR, DPP and chain-of-custody systems regulators and customers can verify."
+   "title": "Lakehouse Architecture & Migration",
+   "url": "/services/data-analytics-lakehouse/lakehouse-architecture/",
+   "tag": "Pairs with",
+   "desc": "bronze→silver→gold on open table formats — a promotion path with quality gates, time travel and honest storage economics instead of a data swamp."
+  },
+  {
+   "title": "Robotics & Autonomous Systems Integration",
+   "url": "/services/iot-digital-twin-robotics/robotics-autonomous-systems/",
+   "tag": "Pairs with",
+   "desc": "robot fleets with safety cases — bounded autonomy, incident-ready telemetry, and utilization measured honestly against safety-critical discipline."
+  },
+  {
+   "title": "Zero-Trust Architecture & Implementation",
+   "url": "/services/cybersecurity-zero-trust/zero-trust-architecture/",
+   "tag": "Pairs with",
+   "desc": "per-request policy decisions on identity, device and context — network location stops being a privilege, and coverage is measured on the paths that matter."
+  },
+  {
+   "title": "A global coffee trader",
+   "url": "/case-studies/agr-02/",
+   "tag": "Evidence",
+   "desc": "EUDR due-diligence automated — compliance evidence in hours, premium channels opened."
   }
  ]
 }

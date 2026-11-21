@@ -9,254 +9,1231 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Data Engineering & Pipeline Modernization sits in the Data & Lakehouse tower, and it earns that place by being specific: Resilient, observable pipelines — trusted data from source to decision at SLA. The build pattern, the artifacts and the guardrails follow."
+   "x": "Legacy pipelines rebuilt as typed, contract-gated, observable jobs — moved on a strangler pattern that retires the old estate in waves, with dual-run diffs proving parity before every retirement."
   },
   {
    "t": "h2",
-   "x": "The job this service does"
+   "x": "Modernization is consumer management, not code migration"
   },
   {
    "t": "p",
-   "x": "Aging pipelines fail quietly: silent nulls, schema drift, duplicated truth. We modernize the estate onto a medallion architecture — bronze ingestion with schema contracts, silver governed conformance, gold decision-grade marts — implemented on Databricks, Snowflake or dbt-based stacks. Every pipeline ships with data contracts, expectations testing, lineage and freshness SLAs, so consumers see reliability as a measured property, not a promise."
+   "x": "Legacy data estates fail the same way: undocumented transformations, silent schema drift, weekend crashes with tribal fixes. Modernization is not lifting jobs into the cloud; it is re-contracting them — typed inputs, tested transforms, observable runs, and an owner per pipeline — while the old estate keeps serving under a strangler plan."
   },
   {
    "t": "p",
-   "x": "The program includes the unglamorous debt: source-system inventory, duplicate-pipeline consolidation, backfill strategy, and cost-per-pipeline telemetry. Clients typically consolidate 30-50% of pipelines, cut batch windows by more than half, and establish incident classes with named owners — the operational maturity that AI programs silently depend on."
+   "x": "The strangler discipline matters more than the target stack: dual-run with output comparison, traffic shifting per consumer, and retirement gates that require evidence, not enthusiasm."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that stall migration programs, the reference architecture of the strangler pattern, and the console that tracks parity and retirement honestly."
   },
   {
    "t": "h2",
-   "x": "Why the timing matters"
+   "x": "Four failure modes that stall migration programs"
   },
   {
    "t": "p",
-   "x": "The sectors where Data Engineering & Pipeline Modernization currently runs: Banking & Financial Services, Insurance & Risk, Retail & Consumer Goods, Manufacturing & Industrial. Each engagement anchors to one named metric in that sector's own language."
+   "x": "Each of these is organizational gravity — the countermeasures make parity provable and retirement contractual, so the old estate cannot quietly survive."
   },
   {
-   "t": "h2",
-   "x": "What gets built first"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Data Engineering & Pipeline Modernization: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Medallion architecture",
-     "bronze/silver/gold layering with schema contracts at every boundary"
+     "Undocumented logic",
+     "Twenty years of COBOL/SQL nobody can explain",
+     "Behavior-capture tests: pair the old job, diff outputs, document the differences"
     ],
     [
-     "Data contracts & expectations",
-     "enforced tests on schema, ranges and completeness with failure alerts"
+     "Big-bang temptation",
+     "Everything switches on one weekend; one thing breaks",
+     "Strangler per consumer; traffic shifting with rollback at every step"
     ],
     [
-     "Lineage & observability",
-     "column-level lineage, freshness SLAs and pipeline cost telemetry"
+     "Hidden consumers",
+     "A report nobody knew depends on the pipeline",
+     "Lineage-driven consumer census before any retirement"
     ],
     [
-     "Consolidation program",
-     "duplicate and zombie pipeline retirement with consumer migration"
-    ],
-    [
-     "Operational run model",
-     "incident classes, on-call design and SLA reporting"
+     "Dual-run cost",
+     "Running both estates forever",
+     "Retirement gates with dated criteria; cost curve visible to the sponsor"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the strangler pattern for pipeline estates"
+  },
+  {
+   "t": "p",
+   "x": "Dual-run is the spine: new pipelines run beside old ones with automated diffs, consumers shift by contract, and retirement happens only when diffs are clean and consumers are moved — never on a calendar promise."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Data Engineering & Pipeline Modernization",
+   "title": "Reference architecture — strangler modernization plane",
    "lanes": [
-    "Events",
-    "Real-time core",
-    "Analytics store",
-    "Decision surfaces",
-    "Observability",
-    "Business"
+    "Legacy estate",
+    "Capture",
+    "Modern plane",
+    "Comparison",
+    "Consumer shift",
+    "Retirement"
    ],
    "nodes": [
     {
-     "id": "ev0",
+     "id": "old",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Legacy pipelines"
     },
     {
-     "id": "ev1",
+     "id": "sched",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "Legacy scheduler"
     },
     {
-     "id": "rt2",
+     "id": "db",
+     "lane": 0,
+     "label": "Legacy stores"
+    },
+    {
+     "id": "tap",
      "lane": 1,
-     "label": "Data Engineering & Pipeline Modernization",
+     "label": "Output taps",
      "hot": true
     },
     {
-     "id": "rt3",
+     "id": "cdc",
      "lane": 1,
-     "label": "Stream processors",
-     "hot": false
+     "label": "Change capture"
     },
     {
-     "id": "an4",
-     "lane": 2,
-     "label": "Lakehouse tables",
-     "hot": false
-    },
-    {
-     "id": "an5",
-     "lane": 2,
-     "label": "Online store",
-     "hot": false
-    },
-    {
-     "id": "ds6",
-     "lane": 3,
-     "label": "Executive BI",
-     "hot": false
-    },
-    {
-     "id": "ds7",
-     "lane": 3,
-     "label": "Embedded analytics",
+     "id": "docs",
+     "lane": 1,
+     "label": "Behavior capture",
      "hot": true
     },
     {
-     "id": "ob8",
+     "id": "new",
+     "lane": 2,
+     "label": "Typed pipelines",
+     "hot": true
+    },
+    {
+     "id": "orch",
+     "lane": 2,
+     "label": "Modern orchestrator"
+    },
+    {
+     "id": "store",
+     "lane": 2,
+     "label": "Lakehouse layers"
+    },
+    {
+     "id": "diff",
+     "lane": 3,
+     "label": "Output comparator",
+     "hot": true
+    },
+    {
+     "id": "probe",
+     "lane": 3,
+     "label": "Anomaly probes"
+    },
+    {
+     "id": "sign",
+     "lane": 3,
+     "label": "Owner sign-off"
+    },
+    {
+     "id": "route",
      "lane": 4,
-     "label": "Freshness SLOs",
-     "hot": false
+     "label": "Traffic shifter",
+     "hot": true
     },
     {
-     "id": "ob9",
+     "id": "cons",
      "lane": 4,
-     "label": "Lineage alerts",
-     "hot": false
+     "label": "Consumer inventory"
     },
     {
-     "id": "bs10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "feed",
+     "lane": 4,
+     "label": "Dual-feed phase"
     },
     {
-     "id": "bs11",
+     "id": "gate",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Retirement gate",
+     "hot": true
+    },
+    {
+     "id": "arch",
+     "lane": 5,
+     "label": "Archive & index"
+    },
+    {
+     "id": "cost",
+     "lane": 5,
+     "label": "Cost ledger"
     }
    ],
    "edges": [
     {
-     "a": "ev0",
-     "b": "rt2"
+     "a": "old",
+     "b": "tap",
+     "label": "outputs"
     },
     {
-     "a": "ev1",
-     "b": "rt3"
+     "a": "old",
+     "b": "cdc"
     },
     {
-     "a": "rt2",
-     "b": "an4"
+     "a": "tap",
+     "b": "docs",
+     "label": "pairs"
     },
     {
-     "a": "rt3",
-     "b": "an5"
+     "a": "cdc",
+     "b": "new",
+     "label": "inputs"
     },
     {
-     "a": "an4",
-     "b": "ds6"
+     "a": "docs",
+     "b": "new",
+     "label": "specs"
     },
     {
-     "a": "an5",
-     "b": "ds7"
+     "a": "new",
+     "b": "diff",
+     "label": "compare"
     },
     {
-     "a": "rt2",
-     "b": "ob8"
+     "a": "tap",
+     "b": "diff",
+     "label": "legacy"
     },
     {
-     "a": "ob8",
-     "b": "ob9"
+     "a": "diff",
+     "b": "probe",
+     "label": "deltas"
     },
     {
-     "a": "ds6",
-     "b": "bs10"
+     "a": "diff",
+     "b": "sign",
+     "label": "report"
     },
     {
-     "a": "ds7",
-     "b": "bs11"
+     "a": "sign",
+     "b": "route",
+     "label": "approve"
+    },
+    {
+     "a": "route",
+     "b": "cons",
+     "label": "shift"
+    },
+    {
+     "a": "cons",
+     "b": "feed",
+     "label": "during"
+    },
+    {
+     "a": "route",
+     "b": "gate",
+     "label": "when green"
+    },
+    {
+     "a": "gate",
+     "b": "arch",
+     "label": "decommission"
+    },
+    {
+     "a": "arch",
+     "b": "cost",
+     "label": "savings"
     }
    ],
-   "note": "Topology inherited from the Data & Lakehouse tower; the highlighted core is this service's build."
+   "note": "Every retirement carries a diff report and an owner sign-off; the cost ledger shows the dual-run shrinking as consumers shift, which is what keeps the program funded."
   },
   {
    "t": "h2",
-   "x": "What your team actually receives"
+   "x": "One pipeline's move, from undocumented logic to retirement"
   },
   {
    "t": "p",
-   "x": "In Data Engineering & Pipeline Modernization, named artifacts, handed to named owners:"
+   "x": "From logic archaeology through contract extraction, dual-run with diffs, consumer shift and the retirement checklist — including where hidden consumers are caught before they break."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Modernization flow — capture behavior, rebuild, compare, shift, retire",
+   "labels": [
+    "Tap legacy outputs",
+    "Capture behavior",
+    "Rebuild typed",
+    "Dual-run diff",
+    "Sign off",
+    "Shift consumers",
+    "Retire legacy"
+   ],
+   "note": "The comparator is the program's conscience: differences are either bugs to fix or undocumented features to document — both are progress."
+  },
+  {
+   "t": "h2",
+   "x": "The migration console — parity as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Pipelines migrated, diff mismatches, consumers shifted and legacy retirements — four numbers that show whether the program is moving work or moving PowerPoints."
+  },
+  {
+   "t": "idash",
+   "title": "Data engineering — pipeline console",
+   "kpis": [
+    {
+     "label": "SLA adherence",
+     "value": "99.4%",
+     "delta": "freshness budgets per table",
+     "dir": "up",
+     "spark": [
+      82,
+      88,
+      92,
+      95,
+      97,
+      98,
+      99
+     ]
+    },
+    {
+     "label": "Silent failures",
+     "value": "0",
+     "delta": "anomaly detection covers all",
+     "dir": "down",
+     "spark": [
+      31,
+      22,
+      14,
+      8,
+      4,
+      1,
+      0
+     ]
+    },
+    {
+     "label": "Source→trusted time",
+     "value": "2.6 d",
+     "delta": "was 3 weeks",
+     "dir": "down",
+     "spark": [
+      21,
+      14,
+      9,
+      6,
+      4,
+      3,
+      2.6
+     ]
+    },
+    {
+     "label": "Backfill success",
+     "value": "100%",
+     "delta": "tested procedures, last 12",
+     "dir": "up",
+     "spark": [
+      60,
+      70,
+      80,
+      88,
+      94,
+      98,
+      100
+     ]
+    },
+    {
+     "label": "Cost / TB processed",
+     "value": "12.4",
+     "delta": "after compile + spot",
+     "dir": "down",
+     "spark": [
+      34,
+      28,
+      22,
+      18,
+      15,
+      13,
+      12.4
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Reliability",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Pipeline SLA burn by domain — where freshness actually slips",
+       "cats": [
+        "W1",
+        "W2",
+        "W3",
+        "W4",
+        "W5",
+        "W6",
+        "W7",
+        "W8"
+       ],
+       "series": [
+        {
+         "name": "Finance domain",
+         "points": [
+          0.4,
+          0.3,
+          0.6,
+          0.2,
+          0.3,
+          0.2,
+          0.2,
+          0.1
+         ]
+        },
+        {
+         "name": "Operations domain",
+         "points": [
+          1.8,
+          1.2,
+          0.9,
+          0.7,
+          0.5,
+          0.4,
+          0.3,
+          0.2
+         ]
+        },
+        {
+         "name": "Marketing domain",
+         "points": [
+          3.2,
+          2.4,
+          1.6,
+          1.1,
+          0.8,
+          0.6,
+          0.4,
+          0.3
+         ]
+        },
+        {
+         "name": "Budget line",
+         "points": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+         ]
+        }
+       ],
+       "unit": "× budget",
+       "note": "Click to isolate. Marketing starts above the freshness budget — noisy partner sources — and the anomaly contracts pull it under the line within six weeks."
+      }
+     ]
+    },
+    {
+     "name": "Cost what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Pipeline cost what-if — compile, spot share, partition shape",
+       "params": [
+        {
+         "name": "Daily compute hours",
+         "min": 100,
+         "max": 20000,
+         "step": 500,
+         "value": 4800,
+         "unit": "core-h"
+        },
+        {
+         "name": "Spot/preemptible share",
+         "min": 0,
+         "max": 90,
+         "step": 10,
+         "value": 55,
+         "unit": "%"
+        },
+        {
+         "name": "Partition prune factor",
+         "min": 1,
+         "max": 20,
+         "step": 1,
+         "value": 8,
+         "unit": "× read cut"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Cost / TB",
+         "unit": "$",
+         "formula": "p0*0.9/max(1,p2)*(1-p1*0.4)",
+         "good": "15",
+         "bad": "40"
+        },
+        {
+         "name": "Rerun cost / incident",
+         "unit": "$",
+         "formula": "p0*0.12/max(1,p2)*(1-p1*0.4)",
+         "good": "30",
+         "bad": "120"
+        },
+        {
+         "name": "Waste share",
+         "unit": "%",
+         "formula": "max(3, 40-p1*0.3-p2*1.8)",
+         "good": "10",
+         "bad": "25"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 0,
+        "label": "Spot share vs cost per TB"
+       },
+       "note": "Spot share is the cheapest lever until rerun economics bite: past ~70%, restart storms on preemption cost more than they save. The prune factor is the honest second lever."
+      }
+     ]
+    },
+    {
+     "name": "Medallion topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The lakehouse fabric — click nodes for the contract",
+       "lanes": [
+        "Sources",
+        "Bronze",
+        "Silver",
+        "Gold",
+        "Consumers"
+       ],
+       "nodes": [
+        {
+         "id": "src",
+         "lane": 0,
+         "label": "Source estates",
+         "detail": "Operational DBs, SaaS APIs, event streams — each source carries an ingestion contract: schema, freshness expectation, ownership, PII classification.",
+         "hot": true
+        },
+        {
+         "id": "bronze",
+         "lane": 1,
+         "label": "Bronze — raw",
+         "detail": "Immutable append-only landing with metadata envelopes; reprocessing always possible because nothing is mutated in place."
+        },
+        {
+         "id": "contract",
+         "lane": 1,
+         "label": "Schema contracts",
+         "detail": "Breaking-change detection at ingestion with producer notification — a source that ships a breaking change learns within minutes."
+        },
+        {
+         "id": "silver",
+         "lane": 2,
+         "label": "Silver — conformed",
+         "detail": "Validated, deduplicated, typed models with quality gates; the transformation layer is a tested codebase, not a notebook sprawl."
+        },
+        {
+         "id": "quality",
+         "lane": 2,
+         "label": "Quality gates",
+         "detail": "Row-count anomalies, nullability expectations, referential checks — failures quarantine data with reasons rather than passing silently."
+        },
+        {
+         "id": "gold",
+         "lane": 3,
+         "label": "Gold — business",
+         "detail": "Dimensional marts and feature tables with documented semantics; the semantic layer from the BI practice reads from here."
+        },
+        {
+         "id": "lineage",
+         "lane": 3,
+         "label": "Lineage & catalog",
+         "detail": "Column-level lineage across the medallion layers — the impact question ('what breaks if this shifts') is answerable from the catalog."
+        },
+        {
+         "id": "cons",
+         "lane": 4,
+         "label": "Consumers",
+         "detail": "BI, ML features, reverse-ETL and API products — each consumer's SLA inherits from the gold layer's freshness budget."
+        }
+       ],
+       "edges": [
+        {
+         "a": "src",
+         "b": "bronze",
+         "label": "contracts"
+        },
+        {
+         "a": "bronze",
+         "b": "contract",
+         "label": "validate"
+        },
+        {
+         "a": "bronze",
+         "b": "silver",
+         "label": "transform"
+        },
+        {
+         "a": "silver",
+         "b": "quality",
+         "label": "gate"
+        },
+        {
+         "a": "silver",
+         "b": "gold",
+         "label": "conform"
+        },
+        {
+         "a": "gold",
+         "b": "lineage",
+         "label": "trace"
+        },
+        {
+         "a": "gold",
+         "b": "cons",
+         "label": "serve"
+        }
+       ],
+       "note": "Click nodes to read the contract each layer carries. The schema contract at ingestion is where reliability is actually won."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · reliability model",
+   "note": "Reference program model: SLA bands and cost curves from delivery benchmarks, not client telemetry."
+  },
+  {
+   "t": "h2",
+   "x": "Dual-run economics across the program"
+  },
+  {
+   "t": "p",
+   "x": "Cost of running both estates across the migration — the honest curve that shows the temporary premium, where it peaks, and the retirement milestones that bring it down."
+  },
+  {
+   "t": "chart",
+   "title": "Dual-run economics across the program — design targets",
+   "variant": "line",
+   "cats": [
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M5",
+    "M6",
+    "M7",
+    "M8"
+   ],
+   "series": [
+    {
+     "name": "Modern run cost index",
+     "points": [
+      42,
+      55,
+      68,
+      78,
+      86,
+      92,
+      96,
+      98
+     ]
+    },
+    {
+     "name": "Legacy run cost index",
+     "points": [
+      100,
+      100,
+      94,
+      82,
+      68,
+      52,
+      34,
+      18
+     ]
+    },
+    {
+     "name": "Total (dual) cost index",
+     "points": [
+      142,
+      155,
+      162,
+      160,
+      154,
+      144,
+      130,
+      116
+     ]
+    }
+   ],
+   "unit": "index",
+   "yMax": 170,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Data Engineering & Pipeline Modernization across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Data Engineering & Pipeline Modernization",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Ask what fraud and AML decisions too slow costs Banking & Financial Services firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Strangler-pattern waves with automated dual-run diffs",
+      "Consumer shift by contract — no reader left behind undocumented",
+      "Retirement milestones with signed evidence, not calendar promises"
+     ],
+     "kpis": [
+      {
+       "label": "Pipelines migrated",
+       "value": "34/61"
+      },
+      {
+       "label": "Diff mismatches",
+       "value": "0.3%"
+      },
+      {
+       "label": "Consumers shifted",
+       "value": "28/40"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": true,
+     "hook": "Insurance & Risk operators recognize the pattern: claims, policy and exposure data fragmented, quarter after quarter.",
+     "plays": [
+      "Strangler-pattern waves with automated dual-run diffs",
+      "Consumer shift by contract — no reader left behind undocumented",
+      "Retirement milestones with signed evidence, not calendar promises"
+     ],
+     "kpis": [
+      {
+       "label": "Pipelines migrated",
+       "value": "34/61"
+      },
+      {
+       "label": "Diff mismatches",
+       "value": "0.3%"
+      },
+      {
+       "label": "Consumers shifted",
+       "value": "28/40"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "Healthcare & Life Sciences operators recognize the pattern: trial recruitment and RWE pipelines manual, quarter after quarter.",
+     "plays": [
+      "Strangler-pattern waves with automated dual-run diffs",
+      "Consumer shift by contract — no reader left behind undocumented",
+      "Retirement milestones with signed evidence, not calendar promises"
+     ],
+     "kpis": [
+      {
+       "label": "Pipelines migrated",
+       "value": "34/61"
+      },
+      {
+       "label": "Diff mismatches",
+       "value": "0.3%"
+      },
+      {
+       "label": "Consumers shifted",
+       "value": "28/40"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Strangler-pattern waves with automated dual-run diffs",
+      "Consumer shift by contract — no reader left behind undocumented",
+      "Retirement milestones with signed evidence, not calendar promises",
+      "Sector working pattern: plant data backbone — OPC UA/Sparkplug telemetry, MES and quality records unified with lineage. Root cause in hours, not weeks is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Pipelines migrated",
+       "value": "34/61"
+      },
+      {
+       "label": "Diff mismatches",
+       "value": "0.3%"
+      },
+      {
+       "label": "Consumers shifted",
+       "value": "28/40"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the work is pipeline and lakehouse engineering — modeled once, certified once, reused everywhere the decision appears.",
+     "plays": [
+      "Strangler-pattern waves with automated dual-run diffs",
+      "Consumer shift by contract — no reader left behind undocumented",
+      "Retirement milestones with signed evidence, not calendar promises"
+     ],
+     "kpis": [
+      {
+       "label": "Pipelines migrated",
+       "value": "34/61"
+      },
+      {
+       "label": "Diff mismatches",
+       "value": "0.3%"
+      },
+      {
+       "label": "Consumers shifted",
+       "value": "28/40"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: network telemetry underused, quarter after quarter.",
+     "plays": [
+      "Strangler-pattern waves with automated dual-run diffs",
+      "Consumer shift by contract — no reader left behind undocumented",
+      "Retirement milestones with signed evidence, not calendar promises"
+     ],
+     "kpis": [
+      {
+       "label": "Pipelines migrated",
+       "value": "34/61"
+      },
+      {
+       "label": "Diff mismatches",
+       "value": "0.3%"
+      },
+      {
+       "label": "Consumers shifted",
+       "value": "28/40"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Energy & Utilities operators recognize the pattern: forecasting under intermittency, quarter after quarter.",
+     "plays": [
+      "Strangler-pattern waves with automated dual-run diffs",
+      "Consumer shift by contract — no reader left behind undocumented",
+      "Retirement milestones with signed evidence, not calendar promises"
+     ],
+     "kpis": [
+      {
+       "label": "Pipelines migrated",
+       "value": "34/61"
+      },
+      {
+       "label": "Diff mismatches",
+       "value": "0.3%"
+      },
+      {
+       "label": "Consumers shifted",
+       "value": "28/40"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: visibility stitched from portals, quarter after quarter.",
+     "plays": [
+      "Strangler-pattern waves with automated dual-run diffs",
+      "Consumer shift by contract — no reader left behind undocumented",
+      "Retirement milestones with signed evidence, not calendar promises",
+      "Sector working pattern: control-tower event spine in Logistics & Supply Chain, where TMS/WMS/telematics/carrier events streamed into one governed estate. Network truth in seconds is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Pipelines migrated",
+       "value": "34/61"
+      },
+      {
+       "label": "Diff mismatches",
+       "value": "0.3%"
+      },
+      {
+       "label": "Consumers shifted",
+       "value": "28/40"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": true,
+     "hook": "Public Sector & Government operators recognize the pattern: agency data islands, quarter after quarter.",
+     "plays": [
+      "Strangler-pattern waves with automated dual-run diffs",
+      "Consumer shift by contract — no reader left behind undocumented",
+      "Retirement milestones with signed evidence, not calendar promises"
+     ],
+     "kpis": [
+      {
+       "label": "Pipelines migrated",
+       "value": "34/61"
+      },
+      {
+       "label": "Diff mismatches",
+       "value": "0.3%"
+      },
+      {
+       "label": "Consumers shifted",
+       "value": "28/40"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we make the source systems agree: one governed definition per metric, streaming where the decision is time-critical, batch where it is not.",
+     "plays": [
+      "Strangler-pattern waves with automated dual-run diffs",
+      "Consumer shift by contract — no reader left behind undocumented",
+      "Retirement milestones with signed evidence, not calendar promises",
+      "Sector working pattern: student success platform: SIS/LMS/support data unified with outcome lineage. Intervention targeting measurable is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Pipelines migrated",
+       "value": "34/61"
+      },
+      {
+       "label": "Diff mismatches",
+       "value": "0.3%"
+      },
+      {
+       "label": "Consumers shifted",
+       "value": "28/40"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Technology & SaaS operators recognize the pattern: data moat unrealized, quarter after quarter.",
+     "plays": [
+      "Strangler-pattern waves with automated dual-run diffs",
+      "Consumer shift by contract — no reader left behind undocumented",
+      "Retirement milestones with signed evidence, not calendar promises"
+     ],
+     "kpis": [
+      {
+       "label": "Pipelines migrated",
+       "value": "34/61"
+      },
+      {
+       "label": "Diff mismatches",
+       "value": "0.3%"
+      },
+      {
+       "label": "Consumers shifted",
+       "value": "28/40"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Agriculture & Food Systems operators recognize the pattern: chain data broken at every handoff, quarter after quarter.",
+     "plays": [
+      "Strangler-pattern waves with automated dual-run diffs",
+      "Consumer shift by contract — no reader left behind undocumented",
+      "Retirement milestones with signed evidence, not calendar promises"
+     ],
+     "kpis": [
+      {
+       "label": "Pipelines migrated",
+       "value": "34/61"
+      },
+      {
+       "label": "Diff mismatches",
+       "value": "0.3%"
+      },
+      {
+       "label": "Consumers shifted",
+       "value": "28/40"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/"
+    }
+   ],
+   "practiceNote": "Data Engineering & Pipeline Modernization view: legacy pipelines rebuilt as typed, contract-gated, observable jobs — with a strangler pattern that retires the old estate without a big-bang cutover."
+  },
+  {
+   "t": "h2",
+   "x": "Modernization defaults — and when we deviate"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor typed orchestration with contract gates over wholesale re-platforming; deviation triggers are written because each one changes the retirement math."
+  },
+  {
+   "t": "table",
+   "caption": "Data Engineering & Pipeline Modernization: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Modernized pipeline estate on target architecture with contracts and lineage",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Orchestration",
+     "Typed DAG orchestrator with data-quality gates",
+     "Keeping the legacy scheduler — it is the failure surface being replaced"
     ],
     [
-     "Source-system inventory and consolidation report",
-     "Handed to a named owner on your side, with a working session included."
+     "Behavior capture",
+     "Pair-tap with automated output diffing",
+     "Rewriting from memory — the silent features get lost"
     ],
     [
-     "Pipeline SLO catalog with freshness and completeness SLAs",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Transforms",
+     "Versioned SQL/Spark with unit tests",
+     "Copy-paste legacy logic — it carries the bugs forward"
     ],
     [
-     "Run-model documentation and on-call playbook",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Consumer shift",
+     "Traffic shifter per consumer with rollback",
+     "All-at-once cutover per domain — one bad weekend defines the program"
+    ],
+    [
+     "Retirement",
+     "Evidence-gated decommission with cost ledger",
+     "Legacy-left-running 'temporarily' — it runs forever at full cost"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Engineering standards we hold"
+   "x": "Migration gates — evidence before each retirement"
   },
   {
-   "t": "p",
-   "x": "Data Engineering & Pipeline Modernization ships against Databricks, Snowflake, dbt, Airflow, Delta Lake, Great Expectations. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for Data Engineering & Pipeline Modernization — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Capture gate",
+     "Is legacy behavior documented before rebuild?",
+     "Pair-tap reports; diffed-output archive"
+    ],
+    [
+     "Parity gate",
+     "Does the modern output match?",
+     "Diff mismatch under bar; explanations for every delta"
+    ],
+    [
+     "Consumer gate",
+     "Is every consumer known and shifted?",
+     "Lineage census; per-consumer shift record"
+    ],
+    [
+     "Cost gate",
+     "Is the dual-run shrinking?",
+     "Cost ledger trend on sponsor dashboard"
+    ],
+    [
+     "Retirement gate",
+     "Is legacy fully retired with evidence?",
+     "Decommission pack: consumers migrated, archives indexed"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "What the weeks look like"
+   "x": "What the data platform team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Data Engineering & Pipeline Modernization starts with the measurement: the metric, the owner, the current number, signed."
+     "Modern pipeline estate",
+     "Typed, tested, observable pipelines with owners"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, medallion architecture first, gates written with your team."
+     "Behavior capture archive",
+     "The legacy system's truth, diffed and documented"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "The Data Engineering & Pipeline Modernization gate review: baseline versus slice, in the metric's own units, plus a scale recommendation your board can audit."
+     "Consumer census",
+     "Lineage-driven inventory with shift status"
+    ],
+    [
+     "Traffic shifter",
+     "Per-consumer cutover with rehearsed rollback"
+    ],
+    [
+     "Retirement packs",
+     "Evidence for every decommissioned legacy job"
+    ],
+    [
+     "Cost ledger",
+     "Dual-run economics visible to the sponsor monthly"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Waves and retirements, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — census & pairing",
+     "Pipeline inventory, consumer census, tap design, priority ranking"
+    ],
+    [
+     "Weeks 3–4 — first wave",
+     "Behavior capture, typed rebuild of pilot pipelines, diff rig live"
+    ],
+    [
+     "Weeks 5–8 — strangler waves",
+     "Parallel waves: capture → rebuild → diff → shift per consumer group"
+    ],
+    [
+     "Weeks 9–10 — retirements",
+     "First legacy retirements with evidence packs; cost curve review"
+    ],
+    [
+     "Wave N — steady state",
+     "Rolling waves with monthly sponsor reviews"
+    ],
+    [
+     "Ongoing — platform ops",
+     "Modern estate SLAs; quarterly architecture review"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — schedulers, catalogs and the old estate"
+  },
+  {
+   "t": "p",
+   "x": "The program lives between two estates; these contracts cover schedulers, catalogs and the legacy systems whose quirks are the real migration scope."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Legacy schedulers",
+     "Tap and trigger contracts during transition"
+    ],
+    [
+     "Consumer apps",
+     "Dual-feed window with shifter control"
+    ],
+    [
+     "Lakehouse core",
+     "Layer contracts for rebuilt pipelines"
+    ],
+    [
+     "BI tools",
+     "Dataset repointing with regression tests"
+    ],
+    [
+     "Finance",
+     "Cost ledger export for sponsor reporting"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Governance overlay — auditability across two estates"
+  },
+  {
+   "t": "p",
+   "x": "Every wave carries its diff evidence, consumer sign-offs and retirement records — the program's audit trail is built as it runs, not reconstructed at the end."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "No silent cutover",
+     "Every consumer shift has a signed diff and a rollback plan"
+    ],
+    [
+     "Diff evidence retention",
+     "Mismatch reports retained per pipeline forever"
+    ],
+    [
+     "Ownership transfer",
+     "Every rebuilt pipeline names its owner before shift"
+    ],
+    [
+     "Legacy lock",
+     "Legacy jobs freeze after retirement vote — no emergency edits"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Hidden-consumer sweeps run before every retirement: access logs, scheduler exports and network flows are diffed against the declared consumer list, and unexplained readers block the wave."
   },
   {
    "t": "cta",
-   "x": "A value assessment prices the delta in your estate before anything is signed: Data Engineering & Pipeline Modernization, measured against your baseline, in two weeks."
+   "x": "Bring the pipeline nobody dares touch. The diagnostic will price its move with dual-run diffs included — and tell you what retirement would actually require."
   }
  ],
- "words": 489,
+ "words": 1036,
  "section": "Services",
  "l1": "Services",
  "l2": "Data, Analytics & Lakehouse",
@@ -278,7 +1255,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Data, Analytics & Lakehouse",
+   "title": "Domain overview — Data, Analytics & Lakehouse",
    "url": "/services/data-analytics-lakehouse/",
    "desc": "Trusted data, delivered in near real time — pipelines, lakehouse and governance that holds up under audit."
   },
@@ -330,33 +1307,51 @@
   {
    "title": "Blockchain & Digital Trust for Logistics & Supply Chain",
    "url": "/industries/logistics-supply-chain/capabilities/blockchain-digital-trust/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Lakehouse Architecture & Migration",
-   "url": "/services/data-analytics-lakehouse/lakehouse-architecture/",
-   "tag": "Same tower",
-   "desc": "Lakehouse the right way — Unity Catalog governance, cost-aware design and AI-ready foundations."
-  },
-  {
-   "title": "Real-Time Streaming & Event-Driven Decisioning",
-   "url": "/services/data-analytics-lakehouse/realtime-streaming-decisioning/",
-   "tag": "Same tower",
-   "desc": "Decisions at event speed — sub-second pipelines from sensor, click or transaction to action."
+   "title": "Data Monetization & Analytics Products",
+   "url": "/services/data-analytics-lakehouse/data-monetization-products/",
+   "tag": "Same domain",
+   "desc": "data as a product for external consumption — contracts, SLAs, purpose limits and billing, with controls that get stronger the moment data leaves the building."
   },
   {
    "title": "Enterprise BI & Executive Analytics",
    "url": "/services/data-analytics-lakehouse/enterprise-bi-executive-analytics/",
-   "tag": "Same tower",
-   "desc": "Metrics into management — one governed semantic layer, decision cadence built in."
+   "tag": "Same domain",
+   "desc": "decision-grade reporting with one truth per metric — certified datasets, metric contracts and an executive layer that does not argue with itself."
   },
   {
-   "title": "Master Data, Governance & Cataloging",
-   "url": "/services/data-analytics-lakehouse/master-data-governance/",
-   "tag": "Same tower",
-   "desc": "One customer, one product, one truth — MDM and catalog discipline that regulators can read."
+   "title": "Lakehouse Architecture & Migration",
+   "url": "/services/data-analytics-lakehouse/lakehouse-architecture/",
+   "tag": "Same domain",
+   "desc": "bronze→silver→gold on open table formats — a promotion path with quality gates, time travel and honest storage economics instead of a data swamp."
+  },
+  {
+   "title": "Conversational AI & Digital Humans",
+   "url": "/services/applied-ai-generative-ai/conversational-ai-digital-humans/",
+   "tag": "Pairs with",
+   "desc": "grounded chat and voice agents that contain more without trust loss — dignified handoffs, streaming voice budgets, dialog eval nightly."
+  },
+  {
+   "title": "Decision Intelligence Systems",
+   "url": "/services/agentic-ai-hyperautomation/decision-intelligence-systems/",
+   "tag": "Pairs with",
+   "desc": "decision models wrapped in policy bounds, challenger benchmarks and explainable outputs — decisions you can defend to a regulator, not just scores in a dashboard."
+  },
+  {
+   "title": "High-Performance & Mission-Critical Systems",
+   "url": "/services/cloud-edge-platform-engineering/high-performance-mission-critical/",
+   "tag": "Pairs with",
+   "desc": "low-latency, high-availability tiers with proofs — latency budgets engineered down the stack and availability demonstrated, not asserted."
+  },
+  {
+   "title": "A top-10 European retail bank",
+   "url": "/case-studies/bank-01/",
+   "tag": "Evidence",
+   "desc": "Real-time fraud decisioning on instant rails — 38% lower fraud losses at a higher approval rate."
   }
  ]
 }

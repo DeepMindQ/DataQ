@@ -9,264 +9,1202 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Where most programs improvise, master data, governance & cataloging as we deliver it is sequenced: One customer, one product, one truth — MDM and catalog discipline that regulators can read. The sequence matters more than the stack — both are documented here."
+   "x": "Golden records with owners, survivorship rules and a catalog people actually trust: master data as engineering — match logic that is measurable, stewardship with SLAs, and duplicate rates that fall on a schedule instead of in a slide deck."
   },
   {
    "t": "h2",
-   "x": "The service, described plainly"
+   "x": "Every metric argument is secretly a master-data argument"
   },
   {
    "t": "p",
-   "x": "Every intelligence program inherits the estate's master data sins: duplicate customers, orphan products, supplier records with three tax IDs. We run MDM programs that establish golden records with survivorship rules, stewardship workflows and source-system feedback — for customer, product, supplier, location and employee domains — integrated with the catalog so every dataset references governed entities rather than local interpretations."
+   "x": "Master data is the part of the estate everyone depends on and nobody owns: the customer that exists seven times, the product with three SKUs, the supplier with two bank accounts. The fix is unglamorous — matching rules with survivorship, stewardship workflows with SLAs, and a catalog that records ownership and lineage so people trust what they find."
   },
   {
    "t": "p",
-   "x": "Cataloging makes the estate legible: automated metadata harvesting, business glossary curation, classification tags driving access control, and a data product registry with owners and SLAs. Privacy obligations (GDPR/CCPA) become executable: subject data maps, retention policies and DSAR automation tied to the same tags. Governance turns from committee theater into system behavior."
+   "x": "Governance succeeds when it is wired into pipelines: dedup and survivorship run where data lands, quality SLAs gate promotion, and the catalog is the system of record for 'who owns this and can I use it for X'."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that keep master data contested, the reference architecture that makes golden records defensible, and the console that tracks trust as an engineering metric."
   },
   {
    "t": "h2",
-   "x": "The stakes, stated plainly"
+   "x": "Four failure modes that keep master data contested"
   },
   {
    "t": "p",
-   "x": "Programs of Master Data, Governance & Cataloging run in Banking & Financial Services, Insurance & Risk, Healthcare & Life Sciences, Retail & Consumer Goods — always against one named number, always with the baseline signed first."
+   "x": "Each of these survives a committee and dies in reconciliation — the countermeasures make matching measurable and stewardship contractual."
   },
   {
-   "t": "h2",
-   "x": "The system, piece by piece"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Master Data, Governance & Cataloging: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Golden record engine",
-     "survivorship, matching and stewardship workflows per master domain"
+     "Matching myths",
+     "Fuzzy matching feels right until the false merges hit real customers",
+     "Match precision/recall eval sets; survivorship rules reviewed by stewards"
     ],
     [
-     "Catalog implementation",
-     "automated harvesting, glossary, classification tags and lineage"
+     "Governance theater",
+     "Policies exist; nothing enforces them",
+     "Enforcement in pipelines: quality gates and access checks at runtime"
     ],
     [
-     "Tag-driven access control",
-     "sensitivity tags enforcing policy in queries and pipelines"
+     "Catalog rot",
+     "The catalog is a graveyard of stale tables",
+     "Ownership expiry: unowned datasets quarantine; freshness badges live"
     ],
     [
-     "Privacy operations",
-     "data maps, retention execution and DSAR automation (GDPR/CCPA)"
-    ],
-    [
-     "Data product registry",
-     "owned, SLA'd data products with consumer contracts"
+     "Steward overload",
+     "One team reviews all exceptions forever",
+     "Federated stewardship with domain owners and measured SLAs"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — golden records with survivorship and ownership"
+  },
+  {
+   "t": "p",
+   "x": "Match precision is designed, not hoped for: deterministic and fuzzy matchers with measured precision, survivorship rules signed by data owners, and a catalog where every golden record carries its steward and its lineage."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Master Data, Governance & Cataloging",
+   "title": "Reference architecture — master data & governance plane",
    "lanes": [
-    "Source estates",
-    "Streaming ingest",
-    "Lakehouse core",
-    "Certified products",
-    "Serving",
-    "Decisions"
+    "Sources",
+    "Matching core",
+    "Golden records",
+    "Stewardship",
+    "Catalog",
+    "Enforcement"
    ],
    "nodes": [
     {
-     "id": "se0",
+     "id": "crm",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "CRM records"
     },
     {
-     "id": "se1",
+     "id": "erp",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "ERP masters"
     },
     {
-     "id": "se2",
+     "id": "web",
      "lane": 0,
-     "label": "KYC / AML case manager",
-     "hot": false
+     "label": "Web/app accounts"
     },
     {
-     "id": "si3",
+     "id": "prof",
      "lane": 1,
-     "label": "Master Data, Governance & Cataloging",
+     "label": "Profiling & stats"
+    },
+    {
+     "id": "match",
+     "lane": 1,
+     "label": "Match engine",
      "hot": true
     },
     {
-     "id": "si4",
+     "id": "surv",
      "lane": 1,
-     "label": "Batch pipelines",
-     "hot": false
-    },
-    {
-     "id": "lc5",
-     "lane": 2,
-     "label": "Bronze → silver → gold",
+     "label": "Survivorship rules",
      "hot": true
     },
     {
-     "id": "lc6",
+     "id": "gold",
      "lane": 2,
-     "label": "Data contracts",
-     "hot": false
+     "label": "Golden records",
+     "hot": true
     },
     {
-     "id": "cp7",
+     "id": "xref",
+     "lane": 2,
+     "label": "Cross-reference map"
+    },
+    {
+     "id": "hist",
+     "lane": 2,
+     "label": "Merge history"
+    },
+    {
+     "id": "queue",
      "lane": 3,
-     "label": "Metric definitions",
-     "hot": false
+     "label": "Steward queue"
     },
     {
-     "id": "cp8",
+     "id": "sla",
      "lane": 3,
-     "label": "Data products",
-     "hot": false
+     "label": "Review SLAs"
     },
     {
-     "id": "sv9",
+     "id": "dom",
+     "lane": 3,
+     "label": "Domain owners"
+    },
+    {
+     "id": "cat",
      "lane": 4,
-     "label": "BI & semantic layer",
-     "hot": false
+     "label": "Catalog & lineage",
+     "hot": true
     },
     {
-     "id": "sv10",
+     "id": "gloss",
      "lane": 4,
-     "label": "Feature serving",
-     "hot": false
+     "label": "Business glossary"
     },
     {
-     "id": "de11",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "badge",
+     "lane": 4,
+     "label": "Freshness badges"
     },
     {
-     "id": "de12",
+     "id": "qual",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Pipeline quality gates",
+     "hot": true
+    },
+    {
+     "id": "acc",
+     "lane": 5,
+     "label": "Access policies"
+    },
+    {
+     "id": "exp",
+     "lane": 5,
+     "label": "Purpose limits"
     }
    ],
    "edges": [
     {
-     "a": "se0",
-     "b": "si3"
+     "a": "crm",
+     "b": "match"
     },
     {
-     "a": "se1",
-     "b": "si3"
+     "a": "erp",
+     "b": "match"
     },
     {
-     "a": "se2",
-     "b": "si4"
+     "a": "web",
+     "b": "match"
     },
     {
-     "a": "si3",
-     "b": "lc5"
+     "a": "prof",
+     "b": "match",
+     "label": "tuning"
     },
     {
-     "a": "si4",
-     "b": "lc5"
+     "a": "match",
+     "b": "surv",
+     "label": "candidates"
     },
     {
-     "a": "lc5",
-     "b": "cp7"
+     "a": "surv",
+     "b": "gold",
+     "label": "merge"
     },
     {
-     "a": "lc6",
-     "b": "cp8"
+     "a": "gold",
+     "b": "xref",
+     "label": "map"
     },
     {
-     "a": "cp7",
-     "b": "sv9"
+     "a": "match",
+     "b": "hist",
+     "label": "audit"
     },
     {
-     "a": "cp8",
-     "b": "sv10"
+     "a": "gold",
+     "b": "queue",
+     "label": "conflicts"
     },
     {
-     "a": "sv9",
-     "b": "de11"
+     "a": "queue",
+     "b": "sla"
     },
     {
-     "a": "sv10",
-     "b": "de12"
+     "a": "dom",
+     "b": "queue",
+     "label": "route"
+    },
+    {
+     "a": "gold",
+     "b": "cat",
+     "label": "publish"
+    },
+    {
+     "a": "hist",
+     "b": "cat",
+     "label": "lineage"
+    },
+    {
+     "a": "cat",
+     "b": "gloss",
+     "label": "terms"
+    },
+    {
+     "a": "cat",
+     "b": "badge",
+     "label": "live"
+    },
+    {
+     "a": "gold",
+     "b": "qual",
+     "label": "gates"
+    },
+    {
+     "a": "cat",
+     "b": "acc",
+     "label": "policy"
+    },
+    {
+     "a": "exp",
+     "b": "acc",
+     "label": "limits"
     }
    ],
-   "note": "Topology inherited from the Data & Lakehouse tower; the highlighted core is this service's build."
+   "note": "Merge history is the safety net: every automated merge can be un-merged with evidence, and steward queues exist precisely where match confidence is not good enough to act alone."
   },
   {
    "t": "h2",
-   "x": "What you hold at the end"
+   "x": "One customer record, resolved and defended"
   },
   {
    "t": "p",
-   "x": "In Master Data, Governance & Cataloging, the artifacts, each with a walkthrough when it lands:"
+   "x": "From source contributions through match scoring, survivorship application and the steward queue — including the merge audit trail that answers 'who decided these were the same customer'."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Golden-record flow — profile, match, survive, steward, publish",
+   "labels": [
+    "Record in",
+    "Profile & normalize",
+    "Match (eval'd)",
+    "Survive & merge",
+    "Steward review",
+    "Publish golden",
+    "Catalog & enforce"
+   ],
+   "note": "The match engine ships with an eval set: precision/recall on labeled pairs, re-run on every rule change — feel-good matching does not pass."
+  },
+  {
+   "t": "h2",
+   "x": "The governance console — trust as a number"
+  },
+  {
+   "t": "p",
+   "x": "Duplicate rate, match precision, steward SLA adherence and catalog coverage — the four numbers that decide whether the catalog is trusted or quietly bypassed by spreadsheet shadows."
+  },
+  {
+   "t": "idash",
+   "title": "Master data & governance — resolution console",
+   "kpis": [
+    {
+     "label": "Match precision",
+     "value": "98.9%",
+     "delta": "vs adjudicated samples",
+     "dir": "up",
+     "spark": [
+      82,
+      88,
+      92,
+      95,
+      97,
+      98,
+      98.9
+     ]
+    },
+    {
+     "label": "Duplicate rate",
+     "value": "1.4%",
+     "delta": "customer master, was 18%",
+     "dir": "down",
+     "spark": [
+      18,
+      14,
+      10,
+      7,
+      4,
+      2,
+      1.4
+     ]
+    },
+    {
+     "label": "Golden-record coverage",
+     "value": "93%",
+     "delta": "of active customers",
+     "dir": "up",
+     "spark": [
+      40,
+      55,
+      68,
+      78,
+      85,
+      90,
+      93
+     ]
+    },
+    {
+     "label": "Review queue",
+     "value": "312",
+     "delta": "pending, SLA 5 days",
+     "dir": "flat",
+     "spark": [
+      2400,
+      1800,
+      1200,
+      800,
+      500,
+      380,
+      312
+     ]
+    },
+    {
+     "label": "Catalog coverage",
+     "value": "88%",
+     "delta": "of estate, ownership filled",
+     "dir": "up",
+     "spark": [
+      22,
+      35,
+      50,
+      63,
+      75,
+      82,
+      88
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Match quality",
+     "widgets": [
+      {
+       "kind": "line",
+       "title": "Match engine versions — precision against adjudicated truth",
+       "cats": [
+        "v1 rules",
+        "v2 blocked",
+        "v3 scored",
+        "v4 + behavior",
+        "v5 tuned",
+        "v6 current"
+       ],
+       "series": [
+        {
+         "name": "Precision",
+         "points": [
+          72,
+          84,
+          90,
+          94,
+          97,
+          98.9
+         ]
+        },
+        {
+         "name": "Recall",
+         "points": [
+          44,
+          58,
+          67,
+          74,
+          79,
+          83
+         ]
+        },
+        {
+         "name": "Review share",
+         "points": [
+          31,
+          22,
+          16,
+          11,
+          8,
+          6
+         ]
+        }
+       ],
+       "unit": "%",
+       "note": "Click to isolate. The precision/recall tension is managed by the review queue — precision climbs while review share falls, which is what makes the queue affordable."
+      }
+     ]
+    },
+    {
+     "name": "Threshold what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Match threshold what-if — merge risk vs queue load",
+       "params": [
+        {
+         "name": "Auto-merge threshold",
+         "min": 0.8,
+         "max": 0.99,
+         "step": 0.01,
+         "value": 0.94,
+         "unit": "score"
+        },
+        {
+         "name": "Monthly records",
+         "min": 10,
+         "max": 500,
+         "step": 10,
+         "value": 120,
+         "unit": "k records"
+        },
+        {
+         "name": "Reviewer pool",
+         "min": 1,
+         "max": 12,
+         "step": 1,
+         "value": 4,
+         "unit": "FTE"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Wrong merges / mo",
+         "unit": "cnt",
+         "formula": "p0*3.4*(1.05-p0)*10",
+         "good": "20",
+         "bad": "120"
+        },
+        {
+         "name": "Queue wait",
+         "unit": "days",
+         "formula": "p1*0.012*(1.05-p0)*10/p2/2",
+         "good": "3",
+         "bad": "12"
+        },
+        {
+         "name": "Duplicate regrowth",
+         "unit": "%/mo",
+         "formula": "max(0.4, (1.05-p0)*9)",
+         "good": "1",
+         "bad": "4"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 0,
+        "label": "Threshold vs wrong merges"
+       },
+       "note": "The wrong-merge curve is why the bar leans conservative: every wrong merge corrupts downstream records and costs more to unwind than a review costs. Drag the threshold against queue capacity."
+      }
+     ]
+    },
+    {
+     "name": "Governance topology",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The governance fabric — click nodes for the stewardship contract",
+       "lanes": [
+        "Sources",
+        "Resolution",
+        "Golden",
+        "Governance"
+       ],
+       "nodes": [
+        {
+         "id": "crm",
+         "lane": 0,
+         "label": "CRM estate",
+         "detail": "Customer-facing truth with behavioral signals — feeds match scoring, never authoritative for legal identity alone.",
+         "hot": true
+        },
+        {
+         "id": "erp",
+         "lane": 0,
+         "label": "ERP estate",
+         "detail": "Transactional truth — authoritative for financial identity, terms and history."
+        },
+        {
+         "id": "match",
+         "lane": 1,
+         "label": "Match engine",
+         "detail": "Blocking, scoring and decision policy as versioned code with regression tests — precision measured against adjudicated samples."
+        },
+        {
+         "id": "queue",
+         "lane": 1,
+         "label": "Review queue",
+         "detail": "The uncertainty band with SLA and adjudication capture — every human decision becomes a training example for the next version."
+        },
+        {
+         "id": "golden",
+         "lane": 2,
+         "label": "Golden records",
+         "detail": "Survivorship per attribute with documented policy — authoritative sources named, conflicts resolved by rule or review."
+        },
+        {
+         "id": "sync",
+         "lane": 2,
+         "label": "Distribution",
+         "detail": "Golden records distributed back to consuming systems with versioning — the estate converges instead of diverging."
+        },
+        {
+         "id": "catalog",
+         "lane": 3,
+         "label": "Data catalog",
+         "detail": "The living map: datasets, ownership, classification, lineage, glossary — governance that is enforceable because it is visible."
+        },
+        {
+         "id": "policy",
+         "lane": 3,
+         "label": "Stewardship council",
+         "detail": "Data owners and stewards with decision cadence — policy changes versioned, survivorship disputes resolved with precedent."
+        }
+       ],
+       "edges": [
+        {
+         "a": "crm",
+         "b": "match",
+         "label": "candidates"
+        },
+        {
+         "a": "erp",
+         "b": "match",
+         "label": "candidates"
+        },
+        {
+         "a": "match",
+         "b": "queue",
+         "label": "uncertain"
+        },
+        {
+         "a": "queue",
+         "b": "match",
+         "label": "trains"
+        },
+        {
+         "a": "match",
+         "b": "golden",
+         "label": "merge"
+        },
+        {
+         "a": "golden",
+         "b": "sync",
+         "label": "distribute"
+        },
+        {
+         "a": "golden",
+         "b": "catalog",
+         "label": "registered"
+        },
+        {
+         "a": "policy",
+         "b": "catalog",
+         "label": "governs"
+        }
+       ],
+       "note": "Click nodes for the contract each layer carries. The review queue trains the engine — human judgment compounds into match-rule versions."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · match model",
+   "note": "Reference program model: precision bands and duplicate curves from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Duplicate and trust metrics across domains"
+  },
+  {
+   "t": "p",
+   "x": "Duplicate rate and steward SLA adherence per master-data domain — the shape that decides where the next matching investment lands and which domains are trustworthy enough to serve executive metrics."
+  },
+  {
+   "t": "chart",
+   "title": "Duplicate rate and trust metrics across domains — design targets",
+   "variant": "bar",
+   "cats": [
+    "Customer",
+    "Product",
+    "Supplier",
+    "Employee",
+    "Location"
+   ],
+   "series": [
+    {
+     "name": "Duplicate rate target %",
+     "points": [
+      1.8,
+      0.9,
+      2.2,
+      0.4,
+      1.1
+     ]
+    },
+    {
+     "name": "Catalog coverage target %",
+     "points": [
+      94,
+      98,
+      91,
+      96,
+      89
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Master Data, Governance & Cataloging across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Master Data, Governance & Cataloging",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Ask what fraud and AML decisions too slow costs Banking & Financial Services firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Measured match pipelines with precision you can defend in reconciliation",
+      "Survivorship rules signed by owners, applied as gated releases",
+      "A catalog with stewards, lineage and SLAs people actually trust"
+     ],
+     "kpis": [
+      {
+       "label": "Customer duplicate rate",
+       "value": "1.8%"
+      },
+      {
+       "label": "Match precision",
+       "value": "97.5%"
+      },
+      {
+       "label": "Steward SLA adherence",
+       "value": "94%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Insurance & Risk operators recognize the pattern: claims, policy and exposure data fragmented, quarter after quarter.",
+     "plays": [
+      "Measured match pipelines with precision you can defend in reconciliation",
+      "Survivorship rules signed by owners, applied as gated releases",
+      "A catalog with stewards, lineage and SLAs people actually trust"
+     ],
+     "kpis": [
+      {
+       "label": "Customer duplicate rate",
+       "value": "1.8%"
+      },
+      {
+       "label": "Match precision",
+       "value": "97.5%"
+      },
+      {
+       "label": "Steward SLA adherence",
+       "value": "94%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": true,
+     "hook": "Healthcare & Life Sciences operators recognize the pattern: trial recruitment and RWE pipelines manual, quarter after quarter.",
+     "plays": [
+      "Measured match pipelines with precision you can defend in reconciliation",
+      "Survivorship rules signed by owners, applied as gated releases",
+      "A catalog with stewards, lineage and SLAs people actually trust"
+     ],
+     "kpis": [
+      {
+       "label": "Customer duplicate rate",
+       "value": "1.8%"
+      },
+      {
+       "label": "Match precision",
+       "value": "97.5%"
+      },
+      {
+       "label": "Steward SLA adherence",
+       "value": "94%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Measured match pipelines with precision you can defend in reconciliation",
+      "Survivorship rules signed by owners, applied as gated releases",
+      "A catalog with stewards, lineage and SLAs people actually trust",
+      "Sector working pattern: plant data backbone — OPC UA/Sparkplug telemetry, MES and quality records unified with lineage. Root cause in hours, not weeks is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Customer duplicate rate",
+       "value": "1.8%"
+      },
+      {
+       "label": "Match precision",
+       "value": "97.5%"
+      },
+      {
+       "label": "Steward SLA adherence",
+       "value": "94%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": true,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the work is pipeline and lakehouse engineering — modeled once, certified once, reused everywhere the decision appears.",
+     "plays": [
+      "Measured match pipelines with precision you can defend in reconciliation",
+      "Survivorship rules signed by owners, applied as gated releases",
+      "A catalog with stewards, lineage and SLAs people actually trust"
+     ],
+     "kpis": [
+      {
+       "label": "Customer duplicate rate",
+       "value": "1.8%"
+      },
+      {
+       "label": "Match precision",
+       "value": "97.5%"
+      },
+      {
+       "label": "Steward SLA adherence",
+       "value": "94%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: network telemetry underused, quarter after quarter.",
+     "plays": [
+      "Measured match pipelines with precision you can defend in reconciliation",
+      "Survivorship rules signed by owners, applied as gated releases",
+      "A catalog with stewards, lineage and SLAs people actually trust"
+     ],
+     "kpis": [
+      {
+       "label": "Customer duplicate rate",
+       "value": "1.8%"
+      },
+      {
+       "label": "Match precision",
+       "value": "97.5%"
+      },
+      {
+       "label": "Steward SLA adherence",
+       "value": "94%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Energy & Utilities operators recognize the pattern: forecasting under intermittency, quarter after quarter.",
+     "plays": [
+      "Measured match pipelines with precision you can defend in reconciliation",
+      "Survivorship rules signed by owners, applied as gated releases",
+      "A catalog with stewards, lineage and SLAs people actually trust"
+     ],
+     "kpis": [
+      {
+       "label": "Customer duplicate rate",
+       "value": "1.8%"
+      },
+      {
+       "label": "Match precision",
+       "value": "97.5%"
+      },
+      {
+       "label": "Steward SLA adherence",
+       "value": "94%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: visibility stitched from portals, quarter after quarter.",
+     "plays": [
+      "Measured match pipelines with precision you can defend in reconciliation",
+      "Survivorship rules signed by owners, applied as gated releases",
+      "A catalog with stewards, lineage and SLAs people actually trust",
+      "Sector working pattern: control-tower event spine in Logistics & Supply Chain, where TMS/WMS/telematics/carrier events streamed into one governed estate. Network truth in seconds is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Customer duplicate rate",
+       "value": "1.8%"
+      },
+      {
+       "label": "Match precision",
+       "value": "97.5%"
+      },
+      {
+       "label": "Steward SLA adherence",
+       "value": "94%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "Public Sector & Government operators recognize the pattern: agency data islands, quarter after quarter.",
+     "plays": [
+      "Measured match pipelines with precision you can defend in reconciliation",
+      "Survivorship rules signed by owners, applied as gated releases",
+      "A catalog with stewards, lineage and SLAs people actually trust"
+     ],
+     "kpis": [
+      {
+       "label": "Customer duplicate rate",
+       "value": "1.8%"
+      },
+      {
+       "label": "Match precision",
+       "value": "97.5%"
+      },
+      {
+       "label": "Steward SLA adherence",
+       "value": "94%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we make the source systems agree: one governed definition per metric, streaming where the decision is time-critical, batch where it is not.",
+     "plays": [
+      "Measured match pipelines with precision you can defend in reconciliation",
+      "Survivorship rules signed by owners, applied as gated releases",
+      "A catalog with stewards, lineage and SLAs people actually trust",
+      "Sector working pattern: student success platform: SIS/LMS/support data unified with outcome lineage. Intervention targeting measurable is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Customer duplicate rate",
+       "value": "1.8%"
+      },
+      {
+       "label": "Match precision",
+       "value": "97.5%"
+      },
+      {
+       "label": "Steward SLA adherence",
+       "value": "94%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Technology & SaaS operators recognize the pattern: data moat unrealized, quarter after quarter.",
+     "plays": [
+      "Measured match pipelines with precision you can defend in reconciliation",
+      "Survivorship rules signed by owners, applied as gated releases",
+      "A catalog with stewards, lineage and SLAs people actually trust"
+     ],
+     "kpis": [
+      {
+       "label": "Customer duplicate rate",
+       "value": "1.8%"
+      },
+      {
+       "label": "Match precision",
+       "value": "97.5%"
+      },
+      {
+       "label": "Steward SLA adherence",
+       "value": "94%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Agriculture & Food Systems operators recognize the pattern: chain data broken at every handoff, quarter after quarter.",
+     "plays": [
+      "Measured match pipelines with precision you can defend in reconciliation",
+      "Survivorship rules signed by owners, applied as gated releases",
+      "A catalog with stewards, lineage and SLAs people actually trust"
+     ],
+     "kpis": [
+      {
+       "label": "Customer duplicate rate",
+       "value": "1.8%"
+      },
+      {
+       "label": "Match precision",
+       "value": "97.5%"
+      },
+      {
+       "label": "Steward SLA adherence",
+       "value": "94%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/"
+    }
+   ],
+   "practiceNote": "Master Data, Governance & Cataloging view: golden records with owners, survivorship rules and a catalog people actually trust — governance as engineering, not committee minutes."
+  },
+  {
+   "t": "h2",
+   "x": "Matching stack defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor measured match pipelines with audit trails over black-box MDM suites; deviation triggers are written because each one changes what reconciliation can prove later."
+  },
+  {
+   "t": "table",
+   "caption": "Master Data, Governance & Cataloging: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "MDM implementation for priority domains with golden records in source systems",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Matching",
+     "Deterministic keys first; probabilistic with eval sets second",
+     "Fuzzy-everything — precision dies and stewards drown"
     ],
     [
-     "Enterprise catalog with glossary, classification and lineage",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Survivorship",
+     "Field-level rules with source precedence",
+     "Last-write-wins globally — it erases authoritative fields"
     ],
     [
-     "Privacy operations pack: data maps, retention, DSAR automation",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Stewardship",
+     "Domain-owned queues with SLAs",
+     "Central committee for all merges — it becomes the bottleneck"
     ],
     [
-     "Data product registry with ownership and SLAs",
-     "Handed to a named owner on your side, with a working session included."
+     "Catalog",
+     "Live-crawled catalog with freshness badges",
+     "Manual spreadsheet catalogs — rot is guaranteed"
+    ],
+    [
+     "Enforcement",
+     "Quality gates + purpose limits at runtime",
+     "PDF policies — nobody enforces a PDF"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The technology choices, justified"
+   "x": "Governance release gates — evidence before golden status"
   },
   {
-   "t": "p",
-   "x": "Master Data, Governance & Cataloging ships against Unity Catalog, Microsoft Purview, Collibra, Informatica MDM, Apache Atlas. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for Master Data, Governance & Cataloging — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Match gate",
+     "Do match rules hold on labeled truth?",
+     "Precision/recall on eval set; confusion samples"
+    ],
+    [
+     "Survivorship gate",
+     "Do merged records preserve authority?",
+     "Rule review; field-level provenance report"
+    ],
+    [
+     "Steward gate",
+     "Do reviews clear SLAs?",
+     "Queue metrics; escalation evidence"
+    ],
+    [
+     "Catalog gate",
+     "Is ownership live and complete?",
+     "Coverage scan; unowned-dataset quarantine proof"
+    ],
+    [
+     "Enforcement gate",
+     "Are policies enforced in runtime?",
+     "Gate logs; purpose-limit block evidence"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "How we run the build"
+   "x": "What the data governance office inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Master Data, Governance & Cataloging starts with the measurement: the metric, the owner, the current number, signed."
+     "Golden record store",
+     "Survived masters with field provenance"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, golden record engine first, gates written with your team."
+     "Match engine + eval set",
+     "Rules with measured precision/recall, re-run on change"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Master Data, Governance & Cataloging are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Stewardship workflow",
+     "Domain queues, SLAs, escalation paths"
+    ],
+    [
+     "Living catalog",
+     "Ownership, lineage and freshness badges, auto-crawled"
+    ],
+    [
+     "Enforcement layer",
+     "Pipeline quality gates and purpose-limit checks"
+    ],
+    [
+     "Merge history",
+     "Reversible merge audit with evidence"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Domain by domain, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — domain census",
+     "Master domains, source systems, stewardship map, eval set design"
+    ],
+    [
+     "Weeks 3–4 — matching core",
+     "Profiling, deterministic keys, probabilistic tier, eval baseline"
+    ],
+    [
+     "Weeks 5–6 — golden & survivorship",
+     "Survivorship rules, merge history, golden store"
+    ],
+    [
+     "Weeks 7–8 — stewardship",
+     "Queues, SLAs, domain owner onboarding"
+    ],
+    [
+     "Weeks 9–10 — catalog & enforcement",
+     "Live crawl, badges, pipeline gates, purpose limits"
+    ],
+    [
+     "Ongoing — stewardship rhythm",
+     "Weekly queues; quarterly eval refresh; unowned sweeps"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — source systems and the steward workflow"
+  },
+  {
+   "t": "p",
+   "x": "Golden records are assembled from source systems and maintained through steward queues; these contracts define the whole surface where duplicates are born or die."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Source systems",
+     "Record feeds with change events"
+    ],
+    [
+     "Lakehouse",
+     "Quality gates at promotion points"
+    ],
+    [
+     "Access management",
+     "Purpose limits tied to entitlement"
+    ],
+    [
+     "BI & apps",
+     "Golden-record serving APIs"
+    ],
+    [
+     "Audit",
+     "Merge history extracts"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Governance overlay — the merge audit trail"
+  },
+  {
+   "t": "p",
+   "x": "Every merge, survivorship decision and steward override is recorded with its evidence — the reconciliation dispute that used to take a meeting now resolves to a record."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Reversible merges",
+     "Every automated merge is un-mergeable with evidence"
+    ],
+    [
+     "Purpose limits",
+     "Use-case restrictions enforced at query time, not in policy PDFs"
+    ],
+    [
+     "Ownership expiry",
+     "Unowned datasets quarantine after notice"
+    ],
+    [
+     "Eval-bound matching",
+     "Rules ship only with precision/recall evidence"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Steward overload is monitored as a risk: when queue age or override rates exceed tolerance, the matching logic gets the investigation — not the steward's calendar."
   },
   {
    "t": "cta",
-   "x": "Bring Master Data, Governance & Cataloging to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
+   "x": "Bring the two systems that disagree about your customers. The diagnostic will measure match precision on your real records — and price what one trusted golden record would cost."
   }
  ],
- "words": 503,
+ "words": 1047,
  "section": "Services",
  "l1": "Services",
  "l2": "Data, Analytics & Lakehouse",
@@ -288,7 +1226,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Data, Analytics & Lakehouse",
+   "title": "Domain overview — Data, Analytics & Lakehouse",
    "url": "/services/data-analytics-lakehouse/",
    "desc": "Trusted data, delivered in near real time — pipelines, lakehouse and governance that holds up under audit."
   },
@@ -340,33 +1278,51 @@
   {
    "title": "Agentic AI & Hyperautomation for Energy & Utilities",
    "url": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Data Engineering & Pipeline Modernization",
-   "url": "/services/data-analytics-lakehouse/data-engineering-modernization/",
-   "tag": "Same tower",
-   "desc": "Resilient, observable pipelines — trusted data from source to decision at SLA."
+   "title": "Enterprise BI & Executive Analytics",
+   "url": "/services/data-analytics-lakehouse/enterprise-bi-executive-analytics/",
+   "tag": "Same domain",
+   "desc": "decision-grade reporting with one truth per metric — certified datasets, metric contracts and an executive layer that does not argue with itself."
   },
   {
    "title": "Lakehouse Architecture & Migration",
    "url": "/services/data-analytics-lakehouse/lakehouse-architecture/",
-   "tag": "Same tower",
-   "desc": "Lakehouse the right way — Unity Catalog governance, cost-aware design and AI-ready foundations."
+   "tag": "Same domain",
+   "desc": "bronze→silver→gold on open table formats — a promotion path with quality gates, time travel and honest storage economics instead of a data swamp."
   },
   {
    "title": "Real-Time Streaming & Event-Driven Decisioning",
    "url": "/services/data-analytics-lakehouse/realtime-streaming-decisioning/",
-   "tag": "Same tower",
-   "desc": "Decisions at event speed — sub-second pipelines from sensor, click or transaction to action."
+   "tag": "Same domain",
+   "desc": "sub-second decision paths on streams — exactly-once state, replay semantics and latency budgets that are measured, not asserted."
   },
   {
-   "title": "Enterprise BI & Executive Analytics",
-   "url": "/services/data-analytics-lakehouse/enterprise-bi-executive-analytics/",
-   "tag": "Same tower",
-   "desc": "Metrics into management — one governed semantic layer, decision cadence built in."
+   "title": "Generative AI Platform Engineering",
+   "url": "/services/applied-ai-generative-ai/genai-platform-engineering/",
+   "tag": "Pairs with",
+   "desc": "one governed door for every model call — authz, budgets, caching, guardrails and traces — so fifty use cases stay operable and affordable."
+  },
+  {
+   "title": "Hyperautomation & Systems Integration",
+   "url": "/services/agentic-ai-hyperautomation/hyperautomation-integration/",
+   "tag": "Pairs with",
+   "desc": "the contracted seams — ERP, CRM, ITSM, comms and queues — with typed contracts, replayable failures and monitors that catch drift before business users do."
+  },
+  {
+   "title": "Platform Engineering & Developer Experience",
+   "url": "/services/cloud-edge-platform-engineering/platform-engineering-devex/",
+   "tag": "Pairs with",
+   "desc": "the platform as product — golden paths as versioned APIs, scaffolds that carry SLOs and budgets by default, and a developer experience measured like a funnel."
+  },
+  {
+   "title": "A public research university (38,000 students)",
+   "url": "/case-studies/edu-01/",
+   "tag": "Evidence",
+   "desc": "Retention +4.1 points in target cohorts — early-warning to advising loop."
   }
  ]
 }

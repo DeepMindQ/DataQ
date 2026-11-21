@@ -9,254 +9,1194 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The honest pitch for decentralized identity & verifiable credentials fits in a sentence — Credentials users carry — portable, privacy-preserving verification for workforce and customers. — and the rest of this page is the how: measured baseline, bounded build, evidence in flight."
+   "x": "DIDs and verifiable credentials that work offline: issuers governed by charter, holder wallets people keep using, selective disclosure that shares less, and revocation that actually propagates in minutes — verification in 210ms, without a phone call."
   },
   {
    "t": "h2",
-   "x": "The service, described plainly"
+   "x": "Identity wallets live or die at the same intersection as consumer apps"
   },
   {
    "t": "p",
-   "x": "Identity verification is repeated everywhere and owned nowhere: employee onboarding repeats checks across systems, customers re-prove themselves to every subsidiary, supply-chain partners exchange documents by email. We implement decentralized identity with W3C Verifiable Credentials: issuers (HR, regulators, accredited bodies), wallets for holders, and verifiers checking cryptographic proofs — with selective disclosure so users prove 'over 18' or 'certified forklift operator' without exposing the whole document."
+   "x": "Decentralized identity earns its keep when verification works without calling home: a credential presented offline, checked against cryptographic proofs, with selective disclosure so the holder shares the attribute and not the whole file. The engineering is the trust triangle done properly — issuer governance, holder experience, verifier SDKs."
   },
   {
    "t": "p",
-   "x": "Institutional deployments need the trust layer: governance frameworks defining who may issue what, revocation infrastructure, biometric-binding where regulation requires it, and recovery paths for lost credentials. We deliver against eIDAS 2.0 / EUDI wallet expectations in the EU and comparable regimes elsewhere, integrating with existing IAM rather than replacing it — credentials augment your identity plane; they do not fork it."
+   "x": "The practice spans DID method selection, credential schemas, issuance workflows (with revocation that actually works), wallet integration, and the verifier side where latency and evidence matter."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that strand credential ecosystems, the reference architecture of the trust triangle, and the console that keeps verification fast and revocation real."
   },
   {
    "t": "h2",
-   "x": "Why the timing matters"
+   "x": "Four failure modes that strand credential ecosystems"
   },
   {
    "t": "p",
-   "x": "Decentralized Identity & Verifiable Credentials delivery today concentrates in Public Sector & Government, Banking & Financial Services, Healthcare & Life Sciences, Education & Research. The metric is chosen with your finance lead, and the baseline is signed before any build begins."
+   "x": "Each of these kills adoption quietly — the countermeasures treat issuer governance, wallet UX and revocation as engineering deliverables, not roadmap promises."
   },
   {
-   "t": "h2",
-   "x": "Inside the engagement"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Decentralized Identity & Verifiable Credentials: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Trust framework",
-     "issuer governance, credential schemas and revocation infrastructure"
+     "Issuer anarchy",
+     "Anyone issues anything; verifiers guess trust",
+     "Issuer governance registry with trust lists and audit trails"
     ],
     [
-     "Wallet & issuance",
-     "holder wallets, issuance flows and biometric binding where required"
+     "Revocation fiction",
+     "Revoked credentials still verify",
+     "Revocation registries with proof-of-status in the verification path"
     ],
     [
-     "Selective disclosure",
-     "zero-knowledge/predicate proofs minimizing data exposure"
+     "Wallet abandonment",
+     "Holders lose credentials and re-onboard forever",
+     "Recovery UX as a first-class feature; backup guidance"
     ],
     [
-     "IAM integration",
-     "credentials augmenting existing identity and access planes"
-    ],
-    [
-     "Regime alignment",
-     "eIDAS 2.0/EUDI wallet and sector trust frameworks"
+     "Verifier latency",
+     "Phone-home checks slow everything",
+     "Offline-capable proofs; caching with revocation windows"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the governed trust triangle"
+  },
+  {
+   "t": "p",
+   "x": "Issuers operate under a charter with accreditation rules, holders get wallets designed for retention, verifiers check credentials in milliseconds — offline where possible — and revocation registries propagate in minutes, because a credential that cannot be revoked is a liability, not a feature."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Decentralized Identity & Verifiable Credentials",
+   "title": "Reference architecture — verifiable credentials stack",
    "lanes": [
-    "Counterparties",
-    "Contracts",
-    "Ledger",
-    "Settlement",
-    "Audit",
-    "Networks"
+    "Trust registry",
+    "Issuers",
+    "Holders",
+    "Verifiers",
+    "Status & revocation",
+    "Assurance"
    ],
    "nodes": [
     {
-     "id": "cp0",
+     "id": "reg",
      "lane": 0,
-     "label": "Case & registry systems",
-     "hot": false
-    },
-    {
-     "id": "cp1",
-     "lane": 0,
-     "label": "Citizen service portals",
-     "hot": false
-    },
-    {
-     "id": "ct2",
-     "lane": 1,
-     "label": "Decentralized Identity & Verifiable Credentials",
+     "label": "Trust registry",
      "hot": true
     },
     {
-     "id": "ct3",
-     "lane": 1,
-     "label": "Contract testing",
-     "hot": false
+     "id": "gov",
+     "lane": 0,
+     "label": "Issuer governance"
     },
     {
-     "id": "lg4",
-     "lane": 2,
-     "label": "Immutable event log",
+     "id": "schema",
+     "lane": 0,
+     "label": "Credential schemas"
+    },
+    {
+     "id": "iss",
+     "lane": 1,
+     "label": "Issuer services",
      "hot": true
     },
     {
-     "id": "lg5",
+     "id": "kyc",
+     "lane": 1,
+     "label": "KYC issuer flow"
+    },
+    {
+     "id": "audit",
+     "lane": 1,
+     "label": "Issuer audit trail"
+    },
+    {
+     "id": "wallet",
      "lane": 2,
-     "label": "Byzantine tolerance",
-     "hot": false
+     "label": "Holder wallets",
+     "hot": true
     },
     {
-     "id": "st6",
+     "id": "backup",
+     "lane": 2,
+     "label": "Recovery & backup"
+    },
+    {
+     "id": "consent",
+     "lane": 2,
+     "label": "Consent UX"
+    },
+    {
+     "id": "sdk",
      "lane": 3,
-     "label": "Atomic settlement",
-     "hot": false
+     "label": "Verifier SDK",
+     "hot": true
     },
     {
-     "id": "st7",
+     "id": "offline",
      "lane": 3,
-     "label": "Netting engines",
-     "hot": false
+     "label": "Offline proof path"
     },
     {
-     "id": "au8",
+     "id": "log",
+     "lane": 3,
+     "label": "Verification logs"
+    },
+    {
+     "id": "status",
      "lane": 4,
-     "label": "Shared audit views",
-     "hot": false
+     "label": "Status registry",
+     "hot": true
     },
     {
-     "id": "au9",
+     "id": "rev",
      "lane": 4,
-     "label": "Algorithmic transparency log",
-     "hot": false
+     "label": "Revocation service"
     },
     {
-     "id": "nw10",
-     "lane": 5,
-     "label": "Caseworker console",
-     "hot": false
+     "id": "window",
+     "lane": 4,
+     "label": "Freshness windows"
     },
     {
-     "id": "nw11",
+     "id": "assur",
      "lane": 5,
-     "label": "Benefits adjudication",
-     "hot": false
+     "label": "Assurance packs"
+    },
+    {
+     "id": "probe",
+     "lane": 5,
+     "label": "Fraud probes"
+    },
+    {
+     "id": "metrics",
+     "lane": 5,
+     "label": "Trust metrics"
     }
    ],
    "edges": [
     {
-     "a": "cp0",
-     "b": "ct2"
+     "a": "gov",
+     "b": "reg",
+     "label": "publish"
     },
     {
-     "a": "cp1",
-     "b": "ct3"
+     "a": "reg",
+     "b": "schema",
+     "label": "bind"
     },
     {
-     "a": "ct2",
-     "b": "lg4"
+     "a": "schema",
+     "b": "iss",
+     "label": "template"
     },
     {
-     "a": "ct3",
-     "b": "lg5"
+     "a": "iss",
+     "b": "kyc",
+     "label": "run"
     },
     {
-     "a": "lg4",
-     "b": "st6"
+     "a": "iss",
+     "b": "wallet",
+     "label": "issue"
     },
     {
-     "a": "lg5",
-     "b": "st7"
+     "a": "iss",
+     "b": "audit",
+     "label": "record"
     },
     {
-     "a": "st6",
-     "b": "au8"
+     "a": "wallet",
+     "b": "consent",
+     "label": "ask"
     },
     {
-     "a": "au8",
-     "b": "au9"
+     "a": "wallet",
+     "b": "backup",
+     "label": "recover"
     },
     {
-     "a": "st7",
-     "b": "nw10"
+     "a": "wallet",
+     "b": "sdk",
+     "label": "present"
     },
     {
-     "a": "au9",
-     "b": "nw11"
+     "a": "sdk",
+     "b": "offline",
+     "label": "check"
+    },
+    {
+     "a": "sdk",
+     "b": "log",
+     "label": "record"
+    },
+    {
+     "a": "iss",
+     "b": "status",
+     "label": "publish"
+    },
+    {
+     "a": "rev",
+     "b": "status",
+     "label": "update"
+    },
+    {
+     "a": "window",
+     "b": "sdk",
+     "label": "freshen"
+    },
+    {
+     "a": "log",
+     "b": "assur",
+     "label": "evidence"
+    },
+    {
+     "a": "probe",
+     "b": "assur",
+     "label": "test"
+    },
+    {
+     "a": "assur",
+     "b": "metrics",
+     "label": "score"
     }
    ],
-   "note": "Topology inherited from the Blockchain & Digital Trust tower; the highlighted core is this service's build."
+   "note": "Revocation lives in the verification path: a credential proves its status cryptographically at check time — not by an honor-system phone call the verifier skips."
   },
   {
    "t": "h2",
-   "x": "Deliverables, without dressing them up"
+   "x": "One credential, issuance to offline verification"
   },
   {
    "t": "p",
-   "x": "deliverables, without dressing them up, Decentralized Identity & Verifiable Credentials edition:"
+   "x": "From issuance under charter rules through holder consent, selective disclosure and the offline verification path — including the revocation check that catches a cancelled credential at the door."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Credential lifecycle — issue, hold, present, verify, revoke",
+   "labels": [
+    "Issuer vetting",
+    "Credential issued",
+    "Holder stores & consents",
+    "Presentation (selective)",
+    "Verify offline",
+    "Status check",
+    "Evidence log"
+   ],
+   "note": "Selective disclosure is the privacy mechanism: the verifier learns 'over 18', not the birthdate — the schema design decides what is even possible."
+  },
+  {
+   "t": "h2",
+   "x": "The identity console — adoption and trust as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Verification latency, offline verification rate and revocation propagation — the three numbers that decide whether the ecosystem is trusted or merely launched."
+  },
+  {
+   "t": "idash",
+   "title": "Decentralized identity — ecosystem console",
+   "kpis": [
+    {
+     "label": "Credentials issued",
+     "value": "412k",
+     "delta": "9 credential types",
+     "dir": "up",
+     "spark": [
+      40,
+      90,
+      160,
+      240,
+      310,
+      370,
+      412
+     ]
+    },
+    {
+     "label": "Verification success",
+     "value": "98.7%",
+     "delta": "incl. offline checkpoints",
+     "dir": "up",
+     "spark": [
+      91,
+      94,
+      96,
+      97,
+      98,
+      98.5,
+      98.7
+     ]
+    },
+    {
+     "label": "Revocation latency",
+     "value": "< 1 h",
+     "delta": "worst-case status propagation",
+     "dir": "down",
+     "spark": [
+      24,
+      12,
+      6,
+      3,
+      1.5,
+      1,
+      0.9
+     ]
+    },
+    {
+     "label": "Issuance completion",
+     "value": "76.4%",
+     "delta": "funnel end-to-end",
+     "dir": "up",
+     "spark": [
+      41,
+      49,
+      57,
+      63,
+      69,
+      73,
+      76
+     ]
+    },
+    {
+     "label": "Recovery success",
+     "value": "99.2%",
+     "delta": "device-migration events",
+     "dir": "up",
+     "spark": [
+      82,
+      88,
+      92,
+      95,
+      97,
+      98.6,
+      99.2
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Ecosystem map",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The trust fabric — click nodes for their contract",
+       "lanes": [
+        "Governance",
+        "Issuers",
+        "Holders",
+        "Verifiers"
+       ],
+       "nodes": [
+        {
+         "id": "registry",
+         "lane": 0,
+         "label": "Trust registry",
+         "detail": "Lists accredited issuers per credential type with governance-framework references; verification checks the registry first, every time.",
+         "hot": true
+        },
+        {
+         "id": "schema",
+         "lane": 0,
+         "label": "Schema authority",
+         "detail": "Versioned credential schemas with compatibility rules; a breaking schema change requires a governance vote, not a deploy."
+        },
+        {
+         "id": "uni",
+         "lane": 1,
+         "label": "University issuer",
+         "detail": "Issues education credentials prefilled from the student record system; issuance is a byproduct of graduation, not a new form."
+        },
+        {
+         "id": "emp",
+         "lane": 1,
+         "label": "Employment issuer",
+         "detail": "Issues employment attestations with consent-gated disclosure sets; revocation on termination within the hour."
+        },
+        {
+         "id": "kyc",
+         "lane": 1,
+         "label": "KYC attester",
+         "detail": "Issues identity attestation credentials under regulated onboarding; sharing the credential replaces re-KYC with cryptographic proof."
+        },
+        {
+         "id": "wallet",
+         "lane": 2,
+         "label": "Holder wallets",
+         "detail": "Device-bound keys with documented recovery paths per population; offline verification bundle cached for network-dead checkpoints."
+        },
+        {
+         "id": "ver",
+         "lane": 3,
+         "label": "Verifier services",
+         "detail": "Check issuer accreditation, schema version, revocation status and disclosure policy — the four checks every verification runs."
+        },
+        {
+         "id": "log",
+         "lane": 3,
+         "label": "Selective disclosure",
+         "detail": "Zero-knowledge or selective-disclosure flows for claims where the verifier needs less than the credential holds."
+        }
+       ],
+       "edges": [
+        {
+         "a": "registry",
+         "b": "ver",
+         "label": "accreditation"
+        },
+        {
+         "a": "schema",
+         "b": "ver",
+         "label": "schemas"
+        },
+        {
+         "a": "uni",
+         "b": "wallet",
+         "label": "issue"
+        },
+        {
+         "a": "emp",
+         "b": "wallet",
+         "label": "issue"
+        },
+        {
+         "a": "kyc",
+         "b": "wallet",
+         "label": "issue"
+        },
+        {
+         "a": "wallet",
+         "b": "ver",
+         "label": "present"
+        },
+        {
+         "a": "ver",
+         "b": "log",
+         "label": "disclose"
+        }
+       ],
+       "note": "Click nodes to read each contract. The registry and schema lanes are governance artifacts — the technical rails execute what they decide."
+      }
+     ]
+    },
+    {
+     "name": "Funnel what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Issuance funnel what-if — steps, recovery mode, throughput",
+       "params": [
+        {
+         "name": "Funnel steps",
+         "min": 3,
+         "max": 12,
+         "step": 1,
+         "value": 6,
+         "unit": "steps"
+        },
+        {
+         "name": "Prefill coverage",
+         "min": 0,
+         "max": 100,
+         "step": 10,
+         "value": 80,
+         "unit": "%"
+        },
+        {
+         "name": "Custodial share",
+         "min": 0,
+         "max": 100,
+         "step": 10,
+         "value": 35,
+         "unit": "%"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Completion",
+         "unit": "%",
+         "formula": "min(92, 95-p0*4.2+p1*0.22)",
+         "good": "70",
+         "bad": "50"
+        },
+        {
+         "name": "Support tickets / k",
+         "unit": "cnt",
+         "formula": "max(6, 40-p1*0.3-p0*0.8+p0*0.12)",
+         "good": "15",
+         "bad": "35"
+        },
+        {
+         "name": "Recovery success",
+         "unit": "%",
+         "formula": "min(99.5, 80+p0*0.4+p1*0.12)",
+         "good": "97",
+         "bad": "90"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 0,
+        "label": "Prefill coverage vs completion"
+       },
+       "note": "Every removed funnel step is worth ~4 completion points — prefill from systems of record is the single highest-leverage investment in the ecosystem."
+      }
+     ]
+    },
+    {
+     "name": "Privacy posture",
+     "widgets": [
+      {
+       "kind": "radar",
+       "title": "Privacy & compliance profile — what the DPIA reads",
+       "cats": [
+        "Unlinkability",
+        "Selective disclosure",
+        "Revocation privacy",
+        "Data minimization",
+        "Recovery sovereignty",
+        "Auditability"
+       ],
+       "series": [
+        {
+         "name": "Current design",
+         "points": [
+          78,
+          85,
+          62,
+          88,
+          70,
+          82
+         ]
+        },
+        {
+         "name": "Target band",
+         "points": [
+          80,
+          85,
+          75,
+          85,
+          80,
+          80
+         ]
+        },
+        {
+         "name": "Legacy phone-home",
+         "points": [
+          15,
+          10,
+          20,
+          40,
+          90,
+          95
+         ]
+        }
+       ],
+       "yMax": 100,
+       "note": "Toggle series. Revocation privacy is the gap accumulator schemes exist to close — the profile shows exactly where the design trades stand before the DPIA asks."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · trust model",
+   "note": "Reference program model: funnel and privacy bands from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Verification performance across issuer growth"
+  },
+  {
+   "t": "p",
+   "x": "Latency and offline success rates as issuers and credential types grow — the curve that shows whether the registry design scales past the pilot."
+  },
+  {
+   "t": "chart",
+   "title": "Verification performance by credential class — design targets",
+   "variant": "bar",
+   "cats": [
+    "Employee badge",
+    "Supplier credential",
+    "Product passport",
+    "Membership proof",
+    "Age predicate"
+   ],
+   "series": [
+    {
+     "name": "p95 verify target (ms)",
+     "points": [
+      180,
+      240,
+      260,
+      190,
+      150
+     ]
+    },
+    {
+     "name": "Offline-capable target %",
+     "points": [
+      85,
+      70,
+      78,
+      90,
+      100
+     ]
+    }
+   ],
+   "yMax": 300,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Decentralized Identity & Verifiable Credentials across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Decentralized Identity & Verifiable Credentials",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "plays": [
+      "Chartered issuers with accreditation rules — no issuer anarchy",
+      "Wallets designed for retention, selective disclosure built in",
+      "Revocation that propagates in minutes and is tested weekly"
+     ],
+     "kpis": [
+      {
+       "label": "Verification latency p95",
+       "value": "210ms"
+      },
+      {
+       "label": "Offline verification rate",
+       "value": "82%"
+      },
+      {
+       "label": "Revocation propagation",
+       "value": "4m"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — claims, policy and exposure data fragmented included — and prove it moved.",
+     "plays": [
+      "Chartered issuers with accreditation rules — no issuer anarchy",
+      "Wallets designed for retention, selective disclosure built in",
+      "Revocation that propagates in minutes and is tested weekly"
+     ],
+     "kpis": [
+      {
+       "label": "Verification latency p95",
+       "value": "210ms"
+      },
+      {
+       "label": "Offline verification rate",
+       "value": "82%"
+      },
+      {
+       "label": "Revocation propagation",
+       "value": "4m"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": true,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Chartered issuers with accreditation rules — no issuer anarchy",
+      "Wallets designed for retention, selective disclosure built in",
+      "Revocation that propagates in minutes and is tested weekly"
+     ],
+     "kpis": [
+      {
+       "label": "Verification latency p95",
+       "value": "210ms"
+      },
+      {
+       "label": "Offline verification rate",
+       "value": "82%"
+      },
+      {
+       "label": "Revocation propagation",
+       "value": "4m"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "plays": [
+      "Chartered issuers with accreditation rules — no issuer anarchy",
+      "Wallets designed for retention, selective disclosure built in",
+      "Revocation that propagates in minutes and is tested weekly"
+     ],
+     "kpis": [
+      {
+       "label": "Verification latency p95",
+       "value": "210ms"
+      },
+      {
+       "label": "Offline verification rate",
+       "value": "82%"
+      },
+      {
+       "label": "Revocation propagation",
+       "value": "4m"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "Retail & Consumer Goods operators recognize the pattern: provenance claims unverifiable, quarter after quarter.",
+     "plays": [
+      "Chartered issuers with accreditation rules — no issuer anarchy",
+      "Wallets designed for retention, selective disclosure built in",
+      "Revocation that propagates in minutes and is tested weekly",
+      "Sector working pattern: provenance verification — EUDR/DPP-grade chain-of-custody for claim-bearing products. Claims verified, greenwashing risk down is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Verification latency p95",
+       "value": "210ms"
+      },
+      {
+       "label": "Offline verification rate",
+       "value": "82%"
+      },
+      {
+       "label": "Revocation propagation",
+       "value": "4m"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: interconnect and roaming reconciliation, quarter after quarter.",
+     "plays": [
+      "Chartered issuers with accreditation rules — no issuer anarchy",
+      "Wallets designed for retention, selective disclosure built in",
+      "Revocation that propagates in minutes and is tested weekly"
+     ],
+     "kpis": [
+      {
+       "label": "Verification latency p95",
+       "value": "210ms"
+      },
+      {
+       "label": "Offline verification rate",
+       "value": "82%"
+      },
+      {
+       "label": "Revocation propagation",
+       "value": "4m"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what GO/REC certificate integrity costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Chartered issuers with accreditation rules — no issuer anarchy",
+      "Wallets designed for retention, selective disclosure built in",
+      "Revocation that propagates in minutes and is tested weekly"
+     ],
+     "kpis": [
+      {
+       "label": "Verification latency p95",
+       "value": "210ms"
+      },
+      {
+       "label": "Offline verification rate",
+       "value": "82%"
+      },
+      {
+       "label": "Revocation propagation",
+       "value": "4m"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — compliance-grade provenance missing included — and prove it moved.",
+     "plays": [
+      "Chartered issuers with accreditation rules — no issuer anarchy",
+      "Wallets designed for retention, selective disclosure built in",
+      "Revocation that propagates in minutes and is tested weekly"
+     ],
+     "kpis": [
+      {
+       "label": "Verification latency p95",
+       "value": "210ms"
+      },
+      {
+       "label": "Offline verification rate",
+       "value": "82%"
+      },
+      {
+       "label": "Revocation propagation",
+       "value": "4m"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": true,
+     "hook": "The work here has one job: move a named number — records integrity under dispute included — and prove it moved.",
+     "plays": [
+      "Chartered issuers with accreditation rules — no issuer anarchy",
+      "Wallets designed for retention, selective disclosure built in",
+      "Revocation that propagates in minutes and is tested weekly"
+     ],
+     "kpis": [
+      {
+       "label": "Verification latency p95",
+       "value": "210ms"
+      },
+      {
+       "label": "Offline verification rate",
+       "value": "82%"
+      },
+      {
+       "label": "Revocation propagation",
+       "value": "4m"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": true,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Chartered issuers with accreditation rules — no issuer anarchy",
+      "Wallets designed for retention, selective disclosure built in",
+      "Revocation that propagates in minutes and is tested weekly"
+     ],
+     "kpis": [
+      {
+       "label": "Verification latency p95",
+       "value": "210ms"
+      },
+      {
+       "label": "Offline verification rate",
+       "value": "82%"
+      },
+      {
+       "label": "Revocation propagation",
+       "value": "4m"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the trust layer is engineered, not asserted: signed events, permissioned consensus, and a provenance graph every participant can verify.",
+     "plays": [
+      "Chartered issuers with accreditation rules — no issuer anarchy",
+      "Wallets designed for retention, selective disclosure built in",
+      "Revocation that propagates in minutes and is tested weekly"
+     ],
+     "kpis": [
+      {
+       "label": "Verification latency p95",
+       "value": "210ms"
+      },
+      {
+       "label": "Offline verification rate",
+       "value": "82%"
+      },
+      {
+       "label": "Revocation propagation",
+       "value": "4m"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what provenance claims unverifiable costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Chartered issuers with accreditation rules — no issuer anarchy",
+      "Wallets designed for retention, selective disclosure built in",
+      "Revocation that propagates in minutes and is tested weekly"
+     ],
+     "kpis": [
+      {
+       "label": "Verification latency p95",
+       "value": "210ms"
+      },
+      {
+       "label": "Offline verification rate",
+       "value": "82%"
+      },
+      {
+       "label": "Revocation propagation",
+       "value": "4m"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/blockchain-digital-trust/"
+    }
+   ],
+   "practiceNote": "Decentralized Identity & Verifiable Credentials view: DIDs and verifiable credentials that work offline — issuer governance, holder wallets, selective disclosure, and verification at 200ms without a phone-home."
+  },
+  {
+   "t": "h2",
+   "x": "Identity defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor offline-capable verification and chartered issuers over phone-home designs; deviation triggers are written because each one creates a availability or governance gap."
+  },
+  {
+   "t": "table",
+   "caption": "Decentralized Identity & Verifiable Credentials: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production credential ecosystem: issuer, holder, verifier roles live",
-     "Handed to a named owner on your side, with a working session included."
+     "DID method",
+     "Ledger-anchored or did:web for enterprise",
+     "did:key everywhere — no revocation story"
     ],
     [
-     "Governance framework and schema registry",
-     "Handed to a named owner on your side, with a working session included."
+     "Schemas",
+     "Versioned credential schemas with predicates",
+     "Free-form JSON claims — selective disclosure dies"
     ],
     [
-     "IAM integration with existing access plane",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Status",
+     "Cryptographic status registries",
+     "Honor-system revocation lists"
     ],
     [
-     "Regime-conformance documentation",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Wallets",
+     "Recovery-first UX with consent logging",
+     "Seed-phrase-only wallets — holders lose everything"
+    ],
+    [
+     "Verifier SDK",
+     "Offline-capable with evidence logs",
+     "Phone-home API checks — latency and availability risk"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Under the hood"
+   "x": "Identity release gates — evidence before ecosystem launch"
   },
   {
-   "t": "p",
-   "x": "The engineering baseline for Decentralized Identity & Verifiable Credentials: W3C VC/DID, OID4VC family, eIDAS 2.0 references, IAM integration, revocation registries. The justifications are written, versioned and handed over — the decisions are yours to own after the engagement."
+   "t": "table",
+   "caption": "Release gates for Decentralized Identity & Verifiable Credentials — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Issuer gate",
+     "Are issuers vetted and governed?",
+     "Trust registry entries; audit trails"
+    ],
+    [
+     "Schema gate",
+     "Do schemas enable selective disclosure?",
+     "Schema review; predicate evidence"
+    ],
+    [
+     "Status gate",
+     "Does revocation propagate in minutes?",
+     "Propagation timing evidence"
+    ],
+    [
+     "Recovery gate",
+     "Can holders recover?",
+     "Recovery drill with success rates"
+    ],
+    [
+     "Evidence gate",
+     "Is every verification logged?",
+     "Log completeness; assurance packs"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "How we run the build"
+   "x": "What the trust-framework team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Decentralized Identity & Verifiable Credentials starts with the measurement: the metric, the owner, the current number, signed."
+     "Trust registry",
+     "Governed issuer list with schemas"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, trust framework first, gates written with your team."
+     "Issuer service kit",
+     "Issuance workflows with audit trails"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Decentralized Identity & Verifiable Credentials are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Wallet integration",
+     "Recovery-first holder experience"
+    ],
+    [
+     "Verifier SDK",
+     "Offline proofs with evidence logging"
+    ],
+    [
+     "Status infrastructure",
+     "Cryptographic revocation that propagates"
+    ],
+    [
+     "Fraud probe suite",
+     "Presentation-anomaly detection"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Charter to wallets, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — governance & schemas",
+     "Trust registry, schema design, issuer vetting"
+    ],
+    [
+     "Weeks 3–4 — issuance",
+     "Issuer services, wallet integration, consent UX"
+    ],
+    [
+     "Weeks 5–6 — verification",
+     "SDK build, offline path, evidence logs"
+    ],
+    [
+     "Weeks 7–8 — status & revocation",
+     "Registry, freshness windows, propagation drill"
+    ],
+    [
+     "Weeks 9–10 — assurance",
+     "Fraud probes, metrics, recovery drills"
+    ],
+    [
+     "Ongoing — trust ops",
+     "Monthly issuer review; quarterly schema and probe updates"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — issuer systems, wallets and verifier gates"
+  },
+  {
+   "t": "p",
+   "x": "The triangle spans issuer back-ends, mobile wallets and verifier infrastructure; these contracts define credential formats, consent flows and the revocation protocol."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "HR / workforce systems",
+     "Employee credential issuance"
+    ],
+    [
+     "Physical access",
+     "Badge verification bridges"
+    ],
+    [
+     "Partner portals",
+     "Supplier credential checks"
+    ],
+    [
+     "Ledger networks",
+     "DID anchoring"
+    ],
+    [
+     "SOC",
+     "Fraud probe escalation"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Privacy and governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Selective disclosure is structural — holders share claims, not documents — and the issuer charter caps what may be requested, so the ecystem minimizes data by design rather than by policy memo."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Governed issuance",
+     "Only registry-listed issuers can mint"
+    ],
+    [
+     "Status-in-path",
+     "Verification includes cryptographic status"
+    ],
+    [
+     "Selective disclosure",
+     "Verifiers get predicates, not documents"
+    ],
+    [
+     "Consent logging",
+     "Holder consent is recorded and auditable"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Revocation is tested like a control: synthetic cancelled credentials are presented to verifiers weekly, and any acceptance is a sev-1 — revocation fiction is the ecosystem's most dangerous failure."
   },
   {
    "t": "cta",
-   "x": "A value assessment prices the delta in your estate before anything is signed: Decentralized Identity & Verifiable Credentials, measured against your baseline, in two weeks."
+   "x": "Bring the credential your sector keeps reinventing on paper. The diagnostic will draft the issuer charter and price what offline-verifiable credentials cost on your trust framework."
   }
  ],
- "words": 504,
+ "words": 945,
  "section": "Services",
  "l1": "Services",
  "l2": "Blockchain & Digital Trust",
@@ -278,7 +1218,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Blockchain & Digital Trust",
+   "title": "Domain overview — Blockchain & Digital Trust",
    "url": "/services/blockchain-digital-trust/",
    "desc": "DLT networks, tokenization and verifiable credentials — a shared, verifiable record with controls regulators accept."
   },
@@ -330,33 +1270,51 @@
   {
    "title": "Agentic AI & Hyperautomation for Energy & Utilities",
    "url": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
    "title": "Enterprise DLT Network Engineering",
    "url": "/services/blockchain-digital-trust/enterprise-dlt-networks/",
-   "tag": "Same tower",
-   "desc": "Permissioned networks for multi-party truth — governance, consensus and integration done institutionally."
-  },
-  {
-   "title": "Asset Tokenization & Digital Assets",
-   "url": "/services/blockchain-digital-trust/asset-tokenization/",
-   "tag": "Same tower",
-   "desc": "Instruments as tokens — issuance, custody and lifecycle under securities-law discipline."
-  },
-  {
-   "title": "Smart Contract Engineering & Audit",
-   "url": "/services/blockchain-digital-trust/smart-contract-engineering/",
-   "tag": "Same tower",
-   "desc": "Contracts as production software — specification, formal verification and audit before value moves."
+   "tag": "Same domain",
+   "desc": "permissioned networks with real governance — membership charters, privacy domains, boring consensus, and operations that treat nodes like production systems."
   },
   {
    "title": "Provenance, Traceability & Supply Chain Trust",
    "url": "/services/blockchain-digital-trust/provenance-traceability/",
-   "tag": "Same tower",
-   "desc": "Proof, not paperwork — EUDR, DPP and chain-of-custody systems regulators and customers can verify."
+   "tag": "Same domain",
+   "desc": "end-to-end supply-chain evidence — anchored document hashes, event provenance at each handoff, and recall queries that finish in minutes, not weeks."
+  },
+  {
+   "title": "Smart Contract Engineering & Audit",
+   "url": "/services/blockchain-digital-trust/smart-contract-engineering/",
+   "tag": "Same domain",
+   "desc": "audited contracts with upgrade discipline — formal-verified cores, independent audits at zero highs, and upgrade paths that cannot surprise the network."
+  },
+  {
+   "title": "Data Monetization & Analytics Products",
+   "url": "/services/data-analytics-lakehouse/data-monetization-products/",
+   "tag": "Pairs with",
+   "desc": "data as a product for external consumption — contracts, SLAs, purpose limits and billing, with controls that get stronger the moment data leaves the building."
+  },
+  {
+   "title": "Industrial IoT & Sensor Fabric",
+   "url": "/services/iot-digital-twin-robotics/industrial-iot-sensor-fabric/",
+   "tag": "Pairs with",
+   "desc": "instrumentation as infrastructure — versioned schemas per device class, store-and-forward resilience, and a device lifecycle that retires zombies."
+  },
+  {
+   "title": "Identity & Access Modernization",
+   "url": "/services/cybersecurity-zero-trust/identity-access-modernization/",
+   "tag": "Pairs with",
+   "desc": "workforce and machine identity lifecycle done properly — joiner-mover-leaver automation, privileged access vaulting and credential hygiene that is measured weekly."
+  },
+  {
+   "title": "A global coffee trader",
+   "url": "/case-studies/agr-02/",
+   "tag": "Evidence",
+   "desc": "EUDR due-diligence automated — compliance evidence in hours, premium channels opened."
   }
  ]
 }

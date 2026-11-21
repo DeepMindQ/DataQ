@@ -9,254 +9,1203 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Buyers rarely need another definition of sre & reliability engineering. They need to know what ships first, what it touches and how value is proven. That is what this page carries: Reliability as product — SLOs, error budgets and incident discipline that engineers actually follow."
+   "x": "SLOs with teeth: error budgets that actually gate releases, chaos exercises that prove recovery instead of assuming it, and incident craft that turns every postmortem into a reliability deposit — not a lesson plan nobody reads."
   },
   {
    "t": "h2",
-   "x": "The working definition"
+   "x": "Reliability is a budget conversation, not an uptime aspiration"
   },
   {
    "t": "p",
-   "x": "Reliability is a negotiation, and SRE makes it explicit: user-journey SLOs instead of server vanity metrics, error budgets that gate feature velocity, and incident discipline (blameless review, action tracking, toil budgets) that converts failures into roadmap. We implement SRE on existing teams and platforms — SLO catalog construction, alert redesign from symptom-based paging, capacity planning, and chaos experiments that prove recovery paths."
+   "x": "Reliability is an engineering discipline with a currency: the error budget. SLOs are signed contracts with the business, budgets gate releases without politics, and chaos drills prove recovery paths work before reality tests them. When incidents happen, the response is a rehearsed system — roles, ladders and a decision log."
   },
   {
    "t": "p",
-   "x": "The measurable outcomes are cultural as much as technical: paging volume drops when alerts point at symptoms, release confidence rises when error budgets arbitrate, and incident duration falls when playbooks, roles and comms are rehearsed. We leave behind the operating rhythm — reviews, budgets, postmortems — because reliability that depends on heroics is not reliability."
+   "x": "The practice covers SLO design, alert quality (precision matters more than volume), toil elimination, and the incident-review loop that converts every failure into either a guardrail or a test."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that make SRE programs decorative, the reference architecture of budget-gated delivery, and the console that keeps the honest numbers."
   },
   {
    "t": "h2",
-   "x": "Why this matters here"
+   "x": "Four ways SRE programs become decorative"
   },
   {
    "t": "p",
-   "x": "The sectors where SRE & Reliability Engineering currently runs: Technology & SaaS, Banking & Financial Services, Retail & Consumer Goods, Telecom, Media & Entertainment. Each engagement anchors to one named metric in that sector's own language."
+   "x": "Every one of these ends with 'the SLO dashboard is green but the customer is angry' — the countermeasures bind budgets to release decisions and alerts to user pain."
   },
   {
-   "t": "h2",
-   "x": "What goes live, and in what order"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "SRE & Reliability Engineering: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "SLO catalog",
-     "user-journey service objectives with error budget policy"
+     "SLO sprawl",
+     "Two hundred SLOs nobody reads",
+     "Critical-path SLOs only; per-service SLO docs with owners"
     ],
     [
-     "Symptom-based alerting",
-     "page on user impact; everything else goes to tickets"
+     "Alert noise",
+     "Pager fatigue; real pages drown",
+     "Alert precision targets; symptom-based paging rules"
     ],
     [
-     "Incident command",
-     "roles, comms templates, blameless postmortems with tracked actions"
+     "Budget politics",
+     "Release freezes argued ad hoc",
+     "Budget policy signed in advance; freeze is automatic"
     ],
     [
-     "Capacity & chaos program",
-     "load modeling plus scheduled chaos experiments"
-    ],
-    [
-     "Toil reduction",
-     "toil measurement and automation targets per team"
+     "Heroic recovery",
+     "One engineer knows the fix",
+     "Runbooks rehearsed; recovery paths chaos-tested"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — error budgets from SLO to release gate"
+  },
+  {
+   "t": "p",
+   "x": "The machinery is a loop: SLOs measured from user experience, error budgets computed continuously, release gates that hard-stop when budgets exhaust, and chaos exercises that verify the recovery paths the runbooks promise."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — SRE & Reliability Engineering",
+   "title": "Reference architecture — reliability engineering loop",
    "lanes": [
-    "Workloads",
-    "Landing zones",
-    "Runtime fabric",
-    "Edge & capacity",
-    "SRE & FinOps",
-    "Teams"
+    "Signals",
+    "SLO engine",
+    "Budget control",
+    "Resilience",
+    "Incident flow",
+    "Learning"
    ],
    "nodes": [
     {
-     "id": "wl0",
+     "id": "met",
      "lane": 0,
-     "label": "Product telemetry",
-     "hot": false
+     "label": "SLI telemetry"
     },
     {
-     "id": "wl1",
+     "id": "logs",
      "lane": 0,
-     "label": "New services",
-     "hot": false
+     "label": "Structured logs"
     },
     {
-     "id": "lz2",
+     "id": "trace",
+     "lane": 0,
+     "label": "Traces"
+    },
+    {
+     "id": "slo",
      "lane": 1,
-     "label": "SRE & Reliability Engineering",
+     "label": "SLO documents",
      "hot": true
     },
     {
-     "id": "lz3",
+     "id": "calc",
      "lane": 1,
-     "label": "Policy-as-code",
-     "hot": false
-    },
-    {
-     "id": "rf4",
-     "lane": 2,
-     "label": "Kubernetes platforms",
+     "label": "Budget calculator",
      "hot": true
     },
     {
-     "id": "rf5",
+     "id": "alert",
+     "lane": 1,
+     "label": "Symptom alerts"
+    },
+    {
+     "id": "gate",
      "lane": 2,
-     "label": "Serverless runtimes",
-     "hot": false
+     "label": "Release gating",
+     "hot": true
     },
     {
-     "id": "ec6",
+     "id": "freeze",
+     "lane": 2,
+     "label": "Auto-freeze"
+    },
+    {
+     "id": "report",
+     "lane": 2,
+     "label": "Budget reports"
+    },
+    {
+     "id": "chaos",
      "lane": 3,
-     "label": "Edge compute & CDN",
-     "hot": false
+     "label": "Chaos program",
+     "hot": true
     },
     {
-     "id": "ec7",
+     "id": "dr",
      "lane": 3,
-     "label": "Capacity planners",
-     "hot": false
+     "label": "Recovery drills"
     },
     {
-     "id": "sf8",
+     "id": "toil",
+     "lane": 3,
+     "label": "Toil tracking"
+    },
+    {
+     "id": "oncall",
      "lane": 4,
-     "label": "SLO dashboards",
-     "hot": false
+     "label": "On-call system"
     },
     {
-     "id": "sf9",
+     "id": "cmd",
      "lane": 4,
-     "label": "Unit-cost telemetry",
-     "hot": false
+     "label": "Incident command",
+     "hot": true
     },
     {
-     "id": "tm10",
-     "lane": 5,
-     "label": "Growth & pricing console",
-     "hot": false
+     "id": "comms",
+     "lane": 4,
+     "label": "Comms templates"
     },
     {
-     "id": "tm11",
+     "id": "review",
      "lane": 5,
-     "label": "Customer-success cockpit",
-     "hot": false
+     "label": "Blameless review",
+     "hot": true
+    },
+    {
+     "id": "actions",
+     "lane": 5,
+     "label": "Action tracker"
+    },
+    {
+     "id": "guard",
+     "lane": 5,
+     "label": "Guardrail library"
     }
    ],
    "edges": [
     {
-     "a": "wl0",
-     "b": "lz2"
+     "a": "met",
+     "b": "calc"
     },
     {
-     "a": "wl1",
-     "b": "lz3"
+     "a": "logs",
+     "b": "alert"
     },
     {
-     "a": "lz2",
-     "b": "rf4"
+     "a": "trace",
+     "b": "alert",
+     "label": "slow"
     },
     {
-     "a": "lz3",
-     "b": "rf5"
+     "a": "slo",
+     "b": "calc",
+     "label": "targets"
     },
     {
-     "a": "rf4",
-     "b": "ec6"
+     "a": "calc",
+     "b": "gate",
+     "label": "budget"
     },
     {
-     "a": "rf5",
-     "b": "ec7"
+     "a": "calc",
+     "b": "freeze",
+     "label": "on burn"
     },
     {
-     "a": "rf4",
-     "b": "sf8"
+     "a": "calc",
+     "b": "report",
+     "label": "weekly"
     },
     {
-     "a": "rf5",
-     "b": "sf9"
+     "a": "chaos",
+     "b": "dr",
+     "label": "prove"
     },
     {
-     "a": "sf8",
-     "b": "tm10"
+     "a": "toil",
+     "b": "chaos",
+     "label": "candidates"
     },
     {
-     "a": "ec6",
-     "b": "tm11"
+     "a": "alert",
+     "b": "oncall",
+     "label": "page"
+    },
+    {
+     "a": "oncall",
+     "b": "cmd",
+     "label": "escalate"
+    },
+    {
+     "a": "cmd",
+     "b": "comms",
+     "label": "inform"
+    },
+    {
+     "a": "review",
+     "b": "actions",
+     "label": "raise"
+    },
+    {
+     "a": "actions",
+     "b": "guard",
+     "label": "ship"
+    },
+    {
+     "a": "actions",
+     "b": "chaos",
+     "label": "test"
     }
    ],
-   "note": "Topology inherited from the Cloud, Edge & Platform tower; the highlighted core is this service's build."
+   "note": "Every review action must land as either a guardrail (prevention) or a chaos test (proof) — reviews that produce neither are meetings, not engineering."
   },
   {
    "t": "h2",
-   "x": "The artifacts, named"
+   "x": "One budget burn, from spike to freeze"
   },
   {
    "t": "p",
-   "x": "In SRE & Reliability Engineering, what your team holds at the end:"
+   "x": "From the error-budget spike through gate thresholds, the release freeze, the reliability work that earns the budget back and the chaos drill that validates recovery — including where heroics are declined, on the record."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "orchestration-loop",
+   "title": "Reliability loop — measure, budget, gate, break, respond, learn",
+   "labels": [
+    "SLIs stream",
+    "Budget computes",
+    "Gate or freeze",
+    "Chaos injection",
+    "Respond by role",
+    "Blameless review",
+    "Guardrail ships"
+   ],
+   "note": "The loop is closed by design: what chaos breaks, the incident flow rehearses, and the review turns into the next guardrail."
+  },
+  {
+   "t": "h2",
+   "x": "The SRE console — the numbers the review reads"
+  },
+  {
+   "t": "p",
+   "x": "SLO adherence, change failure rate and MTTR — three numbers, one story: whether the estate is getting more reliable while shipping faster, or just shipping."
+  },
+  {
+   "t": "idash",
+   "title": "SRE & reliability — operations console",
+   "kpis": [
+    {
+     "label": "Journey SLOs live",
+     "value": "14",
+     "delta": "checkout, search, claims…",
+     "dir": "up",
+     "spark": [
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      14
+     ]
+    },
+    {
+     "label": "Budget consumed (30d)",
+     "value": "31%",
+     "delta": "healthy zone",
+     "dir": "flat",
+     "spark": [
+      68,
+      55,
+      48,
+      42,
+      37,
+      34,
+      31
+     ]
+    },
+    {
+     "label": "Pages / week",
+     "value": "2.1",
+     "delta": "was 41 — alert hygiene",
+     "dir": "down",
+     "spark": [
+      41,
+      28,
+      18,
+      11,
+      6,
+      3,
+      2
+     ]
+    },
+    {
+     "label": "MTTR",
+     "value": "31 min",
+     "delta": "detect→mitigate, median",
+     "dir": "down",
+     "spark": [
+      96,
+      72,
+      58,
+      46,
+      38,
+      34,
+      31
+     ]
+    },
+    {
+     "label": "Toil share",
+     "value": "9.8%",
+     "delta": "budget 15%, reducing",
+     "dir": "down",
+     "spark": [
+      34,
+      27,
+      21,
+      16,
+      13,
+      11,
+      10
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Budget health",
+     "widgets": [
+      {
+       "kind": "slo",
+       "title": "Checkout journey — 99.95% availability, 30-day window",
+       "target": 99.95,
+       "windowDays": 30,
+       "traffic": 9200,
+       "errPct": 0.03,
+       "note": "Drag request rate and error rate: the burn gauge shows which zone the journey sits in, the exhaustion clock shows what the current burn spends, and the bad-minutes arithmetic shows the budget in plain language."
+      },
+      {
+       "kind": "line",
+       "title": "Burn rate by journey — the weekly reliability picture",
+       "cats": [
+        "W1",
+        "W2",
+        "W3",
+        "W4",
+        "W5",
+        "W6",
+        "W7",
+        "W8"
+       ],
+       "series": [
+        {
+         "name": "Checkout",
+         "points": [
+          2.1,
+          1.4,
+          0.9,
+          1.2,
+          0.7,
+          0.8,
+          0.6,
+          0.5
+         ]
+        },
+        {
+         "name": "Search",
+         "points": [
+          0.9,
+          1.1,
+          1.6,
+          0.8,
+          0.9,
+          0.7,
+          0.6,
+          0.5
+         ]
+        },
+        {
+         "name": "Claims",
+         "points": [
+          1.2,
+          0.9,
+          0.7,
+          0.8,
+          0.6,
+          0.5,
+          0.4,
+          0.4
+         ]
+        },
+        {
+         "name": "Fast-burn line",
+         "points": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+         ]
+        }
+       ],
+       "unit": "× budget",
+       "note": "Click to isolate. Everything under the 1× line recovers budget; the spikes tell the week's story — and the fast-burn line is where paging begins."
+      }
+     ]
+    },
+    {
+     "name": "Toil what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Toil and automation what-if — where the hours go",
+       "params": [
+        {
+         "name": "Services on call",
+         "min": 10,
+         "max": 120,
+         "step": 5,
+         "value": 54,
+         "unit": "services"
+        },
+        {
+         "name": "Runbook automation",
+         "min": 0,
+         "max": 100,
+         "step": 10,
+         "value": 65,
+         "unit": "% automated"
+        },
+        {
+         "name": "Team size",
+         "min": 4,
+         "max": 24,
+         "step": 2,
+         "value": 12,
+         "unit": "engineers"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Toil share",
+         "unit": "%",
+         "formula": "min(80, p0*1.1*(100-p1)/100*0.9)",
+         "good": "15",
+         "bad": "35"
+        },
+        {
+         "name": "Pages / week",
+         "unit": "cnt",
+         "formula": "p0*0.7*(100-p1)/100",
+         "good": "5",
+         "bad": "25"
+        },
+        {
+         "name": "Innovation capacity",
+         "unit": "%",
+         "formula": "100-min(80,p0*1.1*(100-p1)/100*0.9)-8",
+         "good": "70",
+         "bad": "40"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 0,
+        "label": "Runbook automation vs toil share"
+       },
+       "note": "The toil curve is the automation argument: each 10% of runbook automation buys roughly 6 points of toil back at this fleet size — capacity that returns to engineering work."
+      }
+     ]
+    },
+    {
+     "name": "Incident anatomy",
+     "widgets": [
+      {
+       "kind": "flow",
+       "title": "Incident lifecycle — click stages for the rehearsal contract",
+       "stages": [
+        {
+         "name": "Detect",
+         "role": "Burn-rate arithmetic",
+         "detail": "Detection is a burn-rate breach on a journey SLO — pages carry the journey, the burn multiple and the dashboard link; symptom-only alerts were deleted with a ledger entry.",
+         "metrics": [
+          {
+           "label": "Detection SLO-tied",
+           "value": "100%"
+          },
+          {
+           "label": "Time to page",
+           "value": "2 min"
+          }
+         ]
+        },
+        {
+         "name": "Respond",
+         "role": "Rehearsed roles",
+         "detail": "Incident commander, ops lead, comms lead — roles rehearsed in game days; the on-call acts from the runbook, not from memory.",
+         "metrics": [
+          {
+           "label": "Roles filled",
+           "value": "≤ 5 min"
+          },
+          {
+           "label": "Game days",
+           "value": "quarterly"
+          }
+         ]
+        },
+        {
+         "name": "Mitigate",
+         "role": "Reversibility first",
+         "detail": "Mitigation prefers reversible actions (rollback, feature flag, shed) over heroic fixes; the timeline logs every action with its evidence.",
+         "metrics": [
+          {
+           "label": "Mitigation options",
+           "value": "pre-agreed"
+          },
+          {
+           "label": "Log",
+           "value": "automatic"
+          }
+         ]
+        },
+        {
+         "name": "Communicate",
+         "role": "Impact arithmetic",
+         "detail": "Customer-impact statements use the same arithmetic as the SLO (affected journeys × duration × volume) — no adjectives without numbers.",
+         "metrics": [
+          {
+           "label": "Templates",
+           "value": "3 audiences"
+          },
+          {
+           "label": "Cadence",
+           "value": "30 min"
+          }
+         ]
+        },
+        {
+         "name": "Learn",
+         "role": "Review with teeth",
+         "detail": "Blameless review within a week; remediation items with owners and deadlines verified by drill; repeat classes escalate to the governance backlog.",
+         "metrics": [
+          {
+           "label": "Review SLA",
+           "value": "7 d"
+          },
+          {
+           "label": "Repeat classes",
+           "value": "escalated"
+          }
+         ]
+        }
+       ],
+       "note": "The lifecycle is rehearsed quarterly in game days — the incident that surprises nobody is the one that costs least."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · budget model",
+   "note": "Reference program model: budget zones and toil bands from delivery benchmarks, not client telemetry."
+  },
+  {
+   "t": "h2",
+   "x": "SLO adherence and budget burn across the quarters"
+  },
+  {
+   "t": "p",
+   "x": "Adherence and burn rate per service tier across quarters — the shape that shows where reliability investment pays back and where the tiering itself is wrong."
+  },
+  {
+   "t": "chart",
+   "title": "Reliability trend across quarters — design targets",
+   "variant": "line",
+   "cats": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4"
+   ],
+   "series": [
+    {
+     "name": "Change failure rate target %",
+     "points": [
+      14,
+      11,
+      8,
+      6
+     ]
+    },
+    {
+     "name": "MTTR target (min)",
+     "points": [
+      58,
+      46,
+      38,
+      31
+     ]
+    },
+    {
+     "name": "SLO adherence target %",
+     "points": [
+      99.7,
+      99.8,
+      99.9,
+      99.94
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "SRE & Reliability Engineering across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "SRE & Reliability Engineering",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: infrastructure is treated as a product: versioned, observable, costed, and handed to your team with runbooks rather than folklore.",
+     "plays": [
+      "User-journey SLOs with error budgets that hard-stop releases",
+      "Chaos exercises that prove the recovery paths runbooks promise",
+      "Postmortems as reliability deposits — findings re-tested by the next drill",
+      "Sector working pattern: core-adjacent modernization in Banking & Financial Services, where strangler-pattern decomposition of monolith wrappers around core with parallel-run equivalence."
+     ],
+     "kpis": [
+      {
+       "label": "SLO adherence",
+       "value": "99.94%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "MTTR",
+       "value": "31m"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident.",
+     "plays": [
+      "User-journey SLOs with error budgets that hard-stop releases",
+      "Chaos exercises that prove the recovery paths runbooks promise",
+      "Postmortems as reliability deposits — findings re-tested by the next drill"
+     ],
+     "kpis": [
+      {
+       "label": "SLO adherence",
+       "value": "99.94%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "MTTR",
+       "value": "31m"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — validated-environment rigidity included — and prove it moved.",
+     "plays": [
+      "User-journey SLOs with error budgets that hard-stop releases",
+      "Chaos exercises that prove the recovery paths runbooks promise",
+      "Postmortems as reliability deposits — findings re-tested by the next drill"
+     ],
+     "kpis": [
+      {
+       "label": "SLO adherence",
+       "value": "99.94%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "MTTR",
+       "value": "31m"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": true,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident.",
+     "plays": [
+      "User-journey SLOs with error budgets that hard-stop releases",
+      "Chaos exercises that prove the recovery paths runbooks promise",
+      "Postmortems as reliability deposits — findings re-tested by the next drill"
+     ],
+     "kpis": [
+      {
+       "label": "SLO adherence",
+       "value": "99.94%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "MTTR",
+       "value": "31m"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "User-journey SLOs with error budgets that hard-stop releases",
+      "Chaos exercises that prove the recovery paths runbooks promise",
+      "Postmortems as reliability deposits — findings re-tested by the next drill"
+     ],
+     "kpis": [
+      {
+       "label": "SLO adherence",
+       "value": "99.94%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "MTTR",
+       "value": "31m"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": true,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: energy cost compounds, quarter after quarter.",
+     "plays": [
+      "User-journey SLOs with error budgets that hard-stop releases",
+      "Chaos exercises that prove the recovery paths runbooks promise",
+      "Postmortems as reliability deposits — findings re-tested by the next drill"
+     ],
+     "kpis": [
+      {
+       "label": "SLO adherence",
+       "value": "99.94%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "MTTR",
+       "value": "31m"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what customer and market platforms creak costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "User-journey SLOs with error budgets that hard-stop releases",
+      "Chaos exercises that prove the recovery paths runbooks promise",
+      "Postmortems as reliability deposits — findings re-tested by the next drill"
+     ],
+     "kpis": [
+      {
+       "label": "SLO adherence",
+       "value": "99.94%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "MTTR",
+       "value": "31m"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — peak surges break planning included — and prove it moved.",
+     "plays": [
+      "User-journey SLOs with error budgets that hard-stop releases",
+      "Chaos exercises that prove the recovery paths runbooks promise",
+      "Postmortems as reliability deposits — findings re-tested by the next drill",
+      "Sector working pattern: peak surge engineering: elastic capacity with load modeling for trading peaks. Peak absorbed at controlled unit cost is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "SLO adherence",
+       "value": "99.94%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "MTTR",
+       "value": "31m"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the platform work decides the unit economics: right-sized runtimes, automated environments, and FinOps telemetry from the first workload.",
+     "plays": [
+      "User-journey SLOs with error budgets that hard-stop releases",
+      "Chaos exercises that prove the recovery paths runbooks promise",
+      "Postmortems as reliability deposits — findings re-tested by the next drill"
+     ],
+     "kpis": [
+      {
+       "label": "SLO adherence",
+       "value": "99.94%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "MTTR",
+       "value": "31m"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Education & Research operators recognize the pattern: research computing fragmented, quarter after quarter.",
+     "plays": [
+      "User-journey SLOs with error budgets that hard-stop releases",
+      "Chaos exercises that prove the recovery paths runbooks promise",
+      "Postmortems as reliability deposits — findings re-tested by the next drill"
+     ],
+     "kpis": [
+      {
+       "label": "SLO adherence",
+       "value": "99.94%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "MTTR",
+       "value": "31m"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": true,
+     "hook": "Ask what cloud unit economics opaque costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "User-journey SLOs with error budgets that hard-stop releases",
+      "Chaos exercises that prove the recovery paths runbooks promise",
+      "Postmortems as reliability deposits — findings re-tested by the next drill"
+     ],
+     "kpis": [
+      {
+       "label": "SLO adherence",
+       "value": "99.94%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "MTTR",
+       "value": "31m"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/cloud-edge-platform-engineering/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Ask what season peaks break systems costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "User-journey SLOs with error budgets that hard-stop releases",
+      "Chaos exercises that prove the recovery paths runbooks promise",
+      "Postmortems as reliability deposits — findings re-tested by the next drill"
+     ],
+     "kpis": [
+      {
+       "label": "SLO adherence",
+       "value": "99.94%"
+      },
+      {
+       "label": "Change failure rate",
+       "value": "6.2%"
+      },
+      {
+       "label": "MTTR",
+       "value": "31m"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/cloud-edge-platform-engineering/"
+    }
+   ],
+   "practiceNote": "SRE & Reliability Engineering view: SLOs with teeth — error budgets that gate releases, chaos that proves recovery, and incident craft that turns 3am into a rehearsed system."
+  },
+  {
+   "t": "h2",
+   "x": "SRE defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor user-journey SLOs and budget-gated releases over machine-level SLAs; deviation triggers are written because each one disconnects the metric from the pain."
+  },
+  {
+   "t": "table",
+   "caption": "SRE & Reliability Engineering: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "SLO catalog with error-budget policy signed by product and ops",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "SLOs",
+     "Symptom-based SLIs on critical paths",
+     "CPU/memory SLOs — they measure infrastructure, not users"
     ],
     [
-     "Redesigned alerting with symptom-based paging",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Alerting",
+     "Precision-targeted symptom pages",
+     "Resource-threshold pages — noise trains people to ignore"
     ],
     [
-     "Incident command runbook and postmortem discipline",
-     "Handed to a named owner on your side, with a working session included."
+     "Chaos",
+     "Scheduled drills with blast-radius caps",
+     "One-off game days — coverage decays"
     ],
     [
-     "Chaos experiment calendar with recovery-path evidence",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Incidents",
+     "Rehearsed command with decision log",
+     "Status-doc theater — decisions need timestamps"
+    ],
+    [
+     "Reviews",
+     "Blameless with tracked actions",
+     "Review meetings without owners — nothing changes"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The technology choices, justified"
+   "x": "Reliability release gates — evidence before traffic"
   },
   {
-   "t": "p",
-   "x": "The engineering baseline for SRE & Reliability Engineering: OpenSLO, Prometheus/Grafana, OpenTelemetry, chaos tooling, on-call platforms. The justifications are written, versioned and handed over — the decisions are yours to own after the engagement."
+   "t": "table",
+   "caption": "Release gates for SRE & Reliability Engineering — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "SLO gate",
+     "Do critical paths have signed SLOs?",
+     "SLO docs with owner and budget policy"
+    ],
+    [
+     "Alert gate",
+     "Do pages meet precision targets?",
+     "Precision/recall per alert class"
+    ],
+    [
+     "Chaos gate",
+     "Are recovery paths proven?",
+     "Drill evidence against failure classes"
+    ],
+    [
+     "Incident gate",
+     "Is command rehearsed?",
+     "Drill logs; decision-log quality"
+    ],
+    [
+     "Review gate",
+     "Do actions ship?",
+     "Action tracker with ship-rate"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "From baseline to working slice"
+   "x": "What the reliability team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "SRE & Reliability Engineering starts with the measurement: the metric, the owner, the current number, signed."
+     "SLO library",
+     "Signed critical-path SLOs with budgets"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, slo catalog first, gates written with your team."
+     "Alert standard",
+     "Symptom-based pages with precision targets"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "The SRE & Reliability Engineering gate review: baseline versus slice, in the metric's own units, plus a scale recommendation your board can audit."
+     "Chaos program",
+     "Drill calendar with blast-radius caps"
+    ],
+    [
+     "Incident command kit",
+     "Roles, ladders, comms and log discipline"
+    ],
+    [
+     "Guardrail library",
+     "Preventions shipped from reviews"
+    ],
+    [
+     "Toil ledger",
+     "Measured automation candidates"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "SLOs in order, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — critical paths & SLOs",
+     "Path census, SLI design, budget policy signing"
+    ],
+    [
+     "Weeks 3–4 — alerting reform",
+     "Symptom alerts, precision targets, noise cull"
+    ],
+    [
+     "Weeks 5–6 — chaos program",
+     "First drills, blast caps, recovery proofs"
+    ],
+    [
+     "Weeks 7–8 — incident craft",
+     "Command rehearsal, comms templates, log discipline"
+    ],
+    [
+     "Weeks 9–10 — review loop",
+     "Blameless cadence, action tracker, guardrail pipeline"
+    ],
+    [
+     "Ongoing — reliability ops",
+     "Weekly budget review; monthly chaos; quarterly SLO audit"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — observability, CI and paging"
+  },
+  {
+   "t": "p",
+   "x": "The machinery spans observability, CI and the paging path; these contracts carry SLO state into release gates without manual interpretation."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Observability stack",
+     "SLI feeds with structured contracts"
+    ],
+    [
+     "Release trains",
+     "Budget gating hooks"
+    ],
+    [
+     "On-call tooling",
+     "Paging with receipts"
+    ],
+    [
+     "Status comms",
+     "Template-driven updates"
+    ],
+    [
+     "Platform paths",
+     "Guardrails shipped into scaffolds"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Incident-craft governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Postmortems carry owners, dates and re-test plans; chaos drills re-test the last round's findings first — the reliability program compounds by closing loops, not by accumulating documents."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Budget authority",
+     "Freeze is automatic when budget burns"
+    ],
+    [
+     "Rehearsed recovery",
+     "Untested recovery paths are assumptions"
+    ],
+    [
+     "Blameless discipline",
+     "Reviews target systems, never people"
+    ],
+    [
+     "Toil cap",
+     "Toil above target becomes a backlog item with an owner"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Heroic recovery is celebrated once and then engineered away: any fix that required a human with unusual context becomes a runbook entry, a detection or an automation in the next sprint — and the ledger proves it."
   },
   {
    "t": "cta",
-   "x": "Talk to the team that runs SRE & Reliability Engineering in production — the briefing is technical by design, and the first one costs nothing but the hour."
+   "x": "Ask which release was frozen by an error budget last quarter. If none, the gate is decorative — bring the SLO inventory to a briefing and we will wire the teeth."
   }
  ],
- "words": 496,
+ "words": 978,
  "section": "Services",
  "l1": "Services",
  "l2": "Cloud, Edge & Platform Engineering",
@@ -278,7 +1227,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Cloud, Edge & Platform Engineering",
+   "title": "Domain overview — Cloud, Edge & Platform Engineering",
    "url": "/services/cloud-edge-platform-engineering/",
    "desc": "Hybrid estates, edge estate and internal platforms — engineered for reliability and unit cost."
   },
@@ -330,33 +1279,51 @@
   {
    "title": "Applied AI & GenAI for Energy & Utilities",
    "url": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Hybrid & Multicloud Architecture",
-   "url": "/services/cloud-edge-platform-engineering/hybrid-multicloud-architecture/",
-   "tag": "Same tower",
-   "desc": "The estate as designed system — landing zones, network fabric and workload placement by economics."
-  },
-  {
-   "title": "Cloud-Native & Legacy Modernization",
-   "url": "/services/cloud-edge-platform-engineering/cloud-native-modernization/",
-   "tag": "Same tower",
-   "desc": "Retire the legacy tax — strangler-pattern modernization with measurable unit economics."
-  },
-  {
    "title": "Edge Computing & Distributed Infrastructure",
    "url": "/services/cloud-edge-platform-engineering/edge-computing-infrastructure/",
-   "tag": "Same tower",
-   "desc": "Compute where the physics is — edge estate for plants, stores, vehicles and grids."
+   "tag": "Same domain",
+   "desc": "compute and delivery close to users and devices — regional clusters with store-and-forward resilience, fleet ops at scale and honest latency budgets."
   },
   {
-   "title": "Platform Engineering & Developer Experience",
-   "url": "/services/cloud-edge-platform-engineering/platform-engineering-devex/",
-   "tag": "Same tower",
-   "desc": "Golden paths, paved roads — an internal platform that turns months into days."
+   "title": "FinOps & Sustainable Computing",
+   "url": "/services/cloud-edge-platform-engineering/finops-sustainable-computing/",
+   "tag": "Same domain",
+   "desc": "cost and carbon as engineering inputs — unit economics per workload, rightsizing with teeth, and sustainability reported like any SLO."
+  },
+  {
+   "title": "High-Performance & Mission-Critical Systems",
+   "url": "/services/cloud-edge-platform-engineering/high-performance-mission-critical/",
+   "tag": "Same domain",
+   "desc": "low-latency, high-availability tiers with proofs — latency budgets engineered down the stack and availability demonstrated, not asserted."
+  },
+  {
+   "title": "Cloud Security & Posture Management",
+   "url": "/services/cybersecurity-zero-trust/cloud-security-posture/",
+   "tag": "Pairs with",
+   "desc": "multi-cloud misconfiguration and entitlement control — infrastructure-as-code guardrails, CSPM with dwell-time metrics, and drift that fixes itself."
+  },
+  {
+   "title": "Digital Twin Platform Engineering",
+   "url": "/services/iot-digital-twin-robotics/digital-twin-platforms/",
+   "tag": "Pairs with",
+   "desc": "twins that stay honest — state synchronization with fidelity metrics, simulation tiers for what-ifs, and governance for who may change what."
+  },
+  {
+   "title": "Enterprise BI & Executive Analytics",
+   "url": "/services/data-analytics-lakehouse/enterprise-bi-executive-analytics/",
+   "tag": "Pairs with",
+   "desc": "decision-grade reporting with one truth per metric — certified datasets, metric contracts and an executive layer that does not argue with itself."
+  },
+  {
+   "title": "A multi-campus university group",
+   "url": "/case-studies/edu-03/",
+   "tag": "Evidence",
+   "desc": "Research throughput up 2.8x — governed HPC/cloud platform."
   }
  ]
 }

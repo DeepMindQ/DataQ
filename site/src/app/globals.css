@@ -345,6 +345,25 @@
 .nav-link {
   position: relative;
 }
+
+/* ── Laptop compact band (1024–1279px) ─────────────────────────────────
+   Hard rule: the full top navigation is visible from 1024px up — a
+   hamburger must never appear on a laptop-sized screen. Inside this band
+   the same top bar compresses deterministically (smaller type, tighter
+   padding, slimmer logo and CTA) so all seven primary items plus logo,
+   search and CTA fit with headroom. No JS mode switching. */
+@media (min-width: 1024px) and (max-width: 1279.98px) {
+  .container-dq .hdr-logo svg { height: 30px !important; width: auto !important; }
+  .container-dq nav[aria-label="Primary"] .nav-link {
+    font-size: 11.5px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .container-dq nav[aria-label="Primary"] .nav-link svg { width: 12px; height: 12px; }
+  .container-dq .hdr-cta { padding: 8px 12px !important; font-size: 12px !important; }
+  .container-dq .hdr-search { width: 32px; height: 32px; }
+}
+
 .nav-link::after {
   content: "";
   position: absolute;

@@ -9,244 +9,1205 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "There is a plain version of compliance, audit & digital trust: Evidence once, audit anywhere — compliance automation across SOC 2, ISO 27001, PCI DSS, DORA and privacy. We run it with named gates, signed baselines and a weekly evidence cadence — the details are below, in the order they happen."
+   "x": "Evidence-grade compliance without theater: controls mapped once across frameworks, evidence generated continuously by the systems themselves, and audits that start from a portal instead of a document hunt — with vendor blind spots named, not assumed away."
   },
   {
    "t": "h2",
-   "x": "The working definition"
+   "x": "Audit readiness is a systems property, not an annual project"
   },
   {
    "t": "p",
-   "x": "Compliance dies by spreadsheet: controls tracked in documents, evidence gathered in panic, audits consuming quarters. We implement compliance-as-code — controls expressed once in a framework-agnostic register, tested continuously against your systems, mapped automatically to SOC 2, ISO 27001, PCI DSS 4.0, DORA and GDPR/CCPA obligations. Evidence is collected by the platform, not by interns."
+   "x": "Compliance burns teams when it is a documentation sport: frameworks multiply, evidence is gathered by hand, and every audit becomes a fire drill. The fix is engineering — one control register mapped to many frameworks, evidence generated continuously from the systems themselves, and audits that read from the register instead of interrogating humans."
   },
   {
    "t": "p",
-   "x": "For financial-sector clients we extend into operational resilience regimes (DORA: ICT risk, incident reporting, third-party oversight; FCA/PRA operational resilience in the UK), and for anyone handling cards into PCI DSS 4.0 specifics — tokenization architecture, network segmentation evidence, and the new continuous-compliance expectations. The outcome is simple: audits become sampling exercises against a live control plane."
+   "x": "Digital trust extends this outward: customer due-diligence packs, vendor assurance, and the trust page that shows — with evidence — what you actually operate."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that turn compliance into archaeology, the reference architecture of continuous evidence, and the console that keeps first-time pass rates above target."
   },
   {
    "t": "h2",
-   "x": "What makes this urgent now"
+   "x": "Four failure modes that turn compliance into archaeology"
   },
   {
    "t": "p",
-   "x": "Compliance, Audit & Digital Trust delivery today concentrates in Banking & Financial Services, Insurance & Risk, Healthcare & Life Sciences, Technology & SaaS. The metric is chosen with your finance lead, and the baseline is signed before any build begins."
+   "x": "Every one of these costs the same audit twice — the countermeasures generate evidence where the control runs, so the artifact never goes stale."
   },
   {
-   "t": "h2",
-   "x": "Inside the engagement"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Compliance, Audit & Digital Trust: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Framework-unified control register",
-     "one control expressed once, mapped to many frameworks"
+     "Framework sprawl",
+     "SOC2 + ISO + GDPR + sector rules, each treated separately",
+     "One control register mapped to all frameworks; mapping automation"
     ],
     [
-     "Continuous control testing",
-     "automated checks with failing-control workflows"
+     "Evidence archaeology",
+     "Auditors ask for last quarter's proof; it takes weeks",
+     "Continuous evidence capture with immutable timestamping"
     ],
     [
-     "Evidence automation",
-     "artifact collection tied to systems, timestamps and owners"
+     "Audit theater",
+     "Controls exist on paper, not in behavior",
+     "Assertion testing: every control has a technical check"
     ],
     [
-     "DORA & resilience alignment",
-     "ICT risk, incident reporting and third-party oversight programs"
-    ],
-    [
-     "PCI DSS 4.0 program",
-     "tokenization, segmentation evidence and continuous compliance"
+     "Vendor blind spots",
+     "Third-party risk asserted, not verified",
+     "Vendor evidence packs; continuous monitoring on critical vendors"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — controls mapped once, evidence generated continuously"
+  },
+  {
+   "t": "p",
+   "x": "The architecture maps each control to every framework it satisfies, then wires evidence generation into the system of record: access reviews, change records, scan results and assertions land in the evidence store with freshness SLAs of their own."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Compliance, Audit & Digital Trust",
+   "title": "Reference architecture — compliance & trust plane",
    "lanes": [
-    "Users",
-    "Devices",
-    "Brokers",
-    "Workloads",
-    "Data",
-    "Auditors"
+    "Control register",
+    "Evidence engine",
+    "Frameworks",
+    "Audit flow",
+    "Trust surfaces",
+    "Vendor assurance"
    ],
    "nodes": [
     {
-     "id": "us0",
+     "id": "reg",
      "lane": 0,
-     "label": "Phishing-resistant MFA",
-     "hot": false
+     "label": "Control register",
+     "hot": true
     },
     {
-     "id": "us1",
+     "id": "own",
      "lane": 0,
-     "label": "SSO & lifecycle",
-     "hot": false
+     "label": "Control owners"
     },
     {
-     "id": "dv2",
+     "id": "assert",
+     "lane": 0,
+     "label": "Assertions",
+     "hot": true
+    },
+    {
+     "id": "ev",
      "lane": 1,
-     "label": "Posture-checked endpoints",
-     "hot": false
+     "label": "Evidence collector",
+     "hot": true
     },
     {
-     "id": "dv3",
+     "id": "immut",
      "lane": 1,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Timestamped store"
     },
     {
-     "id": "br4",
+     "id": "gap",
+     "lane": 1,
+     "label": "Gap detection"
+    },
+    {
+     "id": "soc2",
      "lane": 2,
-     "label": "Compliance, Audit & Digital Trust",
+     "label": "SOC 2 mapping"
+    },
+    {
+     "id": "iso",
+     "lane": 2,
+     "label": "ISO mapping"
+    },
+    {
+     "id": "gdpr",
+     "lane": 2,
+     "label": "Privacy mapping"
+    },
+    {
+     "id": "req",
+     "lane": 3,
+     "label": "Audit requests"
+    },
+    {
+     "id": "pack",
+     "lane": 3,
+     "label": "Evidence packs",
      "hot": true
     },
     {
-     "id": "wl5",
+     "id": "sample",
      "lane": 3,
-     "label": "Workload enforcement",
-     "hot": false
+     "label": "Sampling engine"
     },
     {
-     "id": "wl6",
-     "lane": 3,
-     "label": "Segmented access fabric",
-     "hot": false
-    },
-    {
-     "id": "dt7",
+     "id": "trust",
      "lane": 4,
-     "label": "Classification-aware DLP",
-     "hot": true
+     "label": "Trust page"
     },
     {
-     "id": "dt8",
+     "id": "cust",
      "lane": 4,
-     "label": "Field-level encryption",
-     "hot": false
+     "label": "Customer DD packs"
     },
     {
-     "id": "au9",
-     "lane": 5,
-     "label": "Continuous audit export",
-     "hot": false
+     "id": "badge",
+     "lane": 4,
+     "label": "Certification badges"
     },
     {
-     "id": "au10",
+     "id": "vend",
      "lane": 5,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Vendor register"
+    },
+    {
+     "id": "vmon",
+     "lane": 5,
+     "label": "Vendor monitoring"
+    },
+    {
+     "id": "vpack",
+     "lane": 5,
+     "label": "Vendor evidence"
     }
    ],
    "edges": [
     {
-     "a": "us0",
-     "b": "br4"
+     "a": "own",
+     "b": "reg",
+     "label": "sign"
     },
     {
-     "a": "dv2",
-     "b": "br4"
+     "a": "assert",
+     "b": "reg",
+     "label": "bind"
     },
     {
-     "a": "us1",
-     "b": "br4"
+     "a": "reg",
+     "b": "ev",
+     "label": "collect"
     },
     {
-     "a": "br4",
-     "b": "wl5"
+     "a": "ev",
+     "b": "immut",
+     "label": "store"
     },
     {
-     "a": "br4",
-     "b": "wl6"
+     "a": "assert",
+     "b": "gap",
+     "label": "test"
     },
     {
-     "a": "wl5",
-     "b": "dt7"
+     "a": "reg",
+     "b": "soc2",
+     "label": "map"
     },
     {
-     "a": "wl6",
-     "b": "dt8"
+     "a": "reg",
+     "b": "iso",
+     "label": "map"
     },
     {
-     "a": "dt7",
-     "b": "au9"
+     "a": "reg",
+     "b": "gdpr",
+     "label": "map"
     },
     {
-     "a": "dt8",
-     "b": "au10"
+     "a": "req",
+     "b": "sample",
+     "label": "ask"
+    },
+    {
+     "a": "sample",
+     "b": "pack",
+     "label": "generate"
+    },
+    {
+     "a": "pack",
+     "b": "req",
+     "label": "respond"
+    },
+    {
+     "a": "pack",
+     "b": "trust",
+     "label": "publish"
+    },
+    {
+     "a": "pack",
+     "b": "cust",
+     "label": "deliver"
+    },
+    {
+     "a": "badge",
+     "b": "trust",
+     "label": "display"
+    },
+    {
+     "a": "vend",
+     "b": "vmon",
+     "label": "watch"
+    },
+    {
+     "a": "vmon",
+     "b": "vpack",
+     "label": "collect"
+    },
+    {
+     "a": "vpack",
+     "b": "reg",
+     "label": "feed"
     }
    ],
-   "note": "Topology inherited from the Cyber & Zero-Trust tower; the highlighted core is this service's build."
+   "note": "Assertions are the honesty layer: a control without a technical assertion is a policy wish — the gap detector treats it as an open finding."
   },
   {
    "t": "h2",
-   "x": "What your team actually receives"
+   "x": "One audit request, answered from the portal"
   },
   {
    "t": "p",
-   "x": "In Compliance, Audit & Digital Trust, deliverables, without dressing them up:"
+   "x": "From auditor request through evidence lookup, freshness check, assertion rendering and the exception path — including what happens when evidence for a control is older than its SLA."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Evidence lifecycle — control, assertion, capture, pack, respond",
+   "labels": [
+    "Control defined",
+    "Assertion bound",
+    "Evidence collected",
+    "Gap detected",
+    "Framework mapped",
+    "Pack generated",
+    "Audit response"
+   ],
+   "note": "Audit requests become sampling queries against the evidence store — first-time pass rate is the program's KPI, not hours spent preparing."
+  },
+  {
+   "t": "h2",
+   "x": "The compliance console — readiness as a number"
+  },
+  {
+   "t": "p",
+   "x": "First-time pass rate, assertion coverage and evidence freshness — the three numbers that decide whether the next audit is a portal review or an emergency."
+  },
+  {
+   "t": "idash",
+   "title": "Compliance & audit — evidence console",
+   "kpis": [
+    {
+     "label": "Controls automated",
+     "value": "78%",
+     "delta": "evidence pipelines live",
+     "dir": "up",
+     "spark": [
+      22,
+      34,
+      45,
+      56,
+      65,
+      72,
+      78
+     ]
+    },
+    {
+     "label": "Evidence freshness",
+     "value": "97.4%",
+     "delta": "under staleness budget",
+     "dir": "up",
+     "spark": [
+      41,
+      55,
+      66,
+      76,
+      84,
+      91,
+      97
+     ]
+    },
+    {
+     "label": "Audit prep effort",
+     "value": "6 d",
+     "delta": "was 4 months of screenshots",
+     "dir": "down",
+     "spark": [
+      80,
+      52,
+      34,
+      22,
+      14,
+      9,
+      6
+     ]
+    },
+    {
+     "label": "Open findings",
+     "value": "4",
+     "delta": "all with owners + dates",
+     "dir": "down",
+     "spark": [
+      31,
+      24,
+      17,
+      12,
+      8,
+      5,
+      4
+     ]
+    },
+    {
+     "label": "Frameworks covered",
+     "value": "6",
+     "delta": "SOC2 · ISO27k · ISO9k · GDPR + 2",
+     "dir": "flat",
+     "spark": [
+      2,
+      3,
+      4,
+      5,
+      5,
+      6,
+      6
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Control coverage",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Control family health by framework — where evidence runs thin",
+       "rows": [
+        "Access mgmt",
+        "Change control",
+        "Encryption",
+        "Monitoring",
+        "Vendors",
+        "Resilience"
+       ],
+       "cats": [
+        "SOC 2",
+        "ISO 27001",
+        "ISO 9001",
+        "GDPR",
+        "PCI-adjacent",
+        "Internal policy"
+       ],
+       "matrix": [
+        [
+         95,
+         92,
+         88,
+         84,
+         90,
+         93
+        ],
+        [
+         91,
+         94,
+         86,
+         82,
+         88,
+         90
+        ],
+        [
+         84,
+         86,
+         96,
+         70,
+         82,
+         85
+        ],
+        [
+         88,
+         74,
+         68,
+         97,
+         72,
+         80
+        ],
+        [
+         79,
+         81,
+         84,
+         68,
+         91,
+         77
+        ],
+        [
+         86,
+         88,
+         85,
+         74,
+         83,
+         92
+        ]
+       ],
+       "unit": "% evidence health",
+       "note": "Hover cells to read health. GDPR × encryption and vendor columns are the classic thin spots — the map shows exactly which control's evidence pipeline needs the next sprint."
+      }
+     ]
+    },
+    {
+     "name": "Evidence what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Automation what-if — controls automated vs audit load",
+       "params": [
+        {
+         "name": "Controls in scope",
+         "min": 40,
+         "max": 300,
+         "step": 10,
+         "value": 142,
+         "unit": "controls"
+        },
+        {
+         "name": "Automation coverage",
+         "min": 0,
+         "max": 100,
+         "step": 10,
+         "value": 78,
+         "unit": "%"
+        },
+        {
+         "name": "Audits per year",
+         "min": 1,
+         "max": 12,
+         "step": 1,
+         "value": 5,
+         "unit": "audits"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Audit prep days",
+         "unit": "d",
+         "formula": "p0*0.06*p2*(100-p1)/100",
+         "good": "10",
+         "bad": "40"
+        },
+        {
+         "name": "Evidence staleness",
+         "unit": "%",
+         "formula": "max(2, (100-p1)*0.55)",
+         "good": "15",
+         "bad": "45"
+        },
+        {
+         "name": "Program cost / yr",
+         "unit": "$k",
+         "formula": "p0*2.1*(100-p1)/100 + p2*8*p1/100 + 40",
+         "good": "120",
+         "bad": "300"
+        }
+       ],
+       "curve": {
+        "param": 1,
+        "output": 2,
+        "label": "Automation vs annual program cost"
+       },
+       "note": "The cost curve crosses: manual evidence gets linearly more expensive per audit while automation amortizes — the crossover for a multi-framework estate sits near 60% coverage."
+      }
+     ]
+    },
+    {
+     "name": "Audit trail",
+     "widgets": [
+      {
+       "kind": "flow",
+       "title": "An audit as a system run — click stages for the evidence contract",
+       "stages": [
+        {
+         "name": "Scope",
+         "role": "Framework + period",
+         "detail": "Audit scope rendered from the control map: frameworks, periods, sampled controls — the auditor receives the map as data, not as a PDF.",
+         "metrics": [
+          {
+           "label": "Map export",
+           "value": "machine-readable"
+          },
+          {
+           "label": "Sampling",
+           "value": "risk-based"
+          }
+         ]
+        },
+        {
+         "name": "Evidence",
+         "role": "Pipelines, live",
+         "detail": "Each sampled control's evidence pipeline exports its artifacts with timestamps and lineage — screenshots are replaced by queries.",
+         "metrics": [
+          {
+           "label": "Freshness",
+           "value": "checked"
+          },
+          {
+           "label": "Lineage",
+           "value": "attached"
+          }
+         ]
+        },
+        {
+         "name": "Walkthrough",
+         "role": "Demo, not interview",
+         "detail": "Control walkthroughs run against the live system: show the access review job, the deploy gate, the encryption attestation — the demo is the walkthrough.",
+         "metrics": [
+          {
+           "label": "Prep",
+           "value": "1 h"
+          },
+          {
+           "label": "Queries",
+           "value": "ready"
+          }
+         ]
+        },
+        {
+         "name": "Findings",
+         "role": "Owned + dated",
+         "detail": "Findings route into the same backlog as security work with owners and deadlines — compliance findings are engineering work, not a separate universe.",
+         "metrics": [
+          {
+           "label": "Routing",
+           "value": "single backlog"
+          },
+          {
+           "label": "SLA",
+           "value": "by severity"
+          }
+         ]
+        },
+        {
+         "name": "Attest",
+         "role": "Report from data",
+         "detail": "The attestation report assembles from operating data; next audit starts from the same console — the compliance state is continuous.",
+         "metrics": [
+          {
+           "label": "Assembly",
+           "value": "automated"
+          },
+          {
+           "label": "Next audit",
+           "value": "delta-based"
+          }
+         ]
+        }
+       ],
+       "note": "Five stages, no archaeology: an audit is what the system already knows, sampled and demonstrated."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · control model",
+   "note": "Reference program model: coverage and prep-effort bands from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Assertion coverage and evidence freshness by framework"
+  },
+  {
+   "t": "p",
+   "x": "Coverage and freshness per framework across the audit year — the shape that shows which frameworks are genuinely covered and which are carried by overlapping claims."
+  },
+  {
+   "t": "chart",
+   "title": "Audit economics across frameworks — design targets",
+   "variant": "bar",
+   "cats": [
+    "SOC 2",
+    "ISO 27001",
+    "GDPR",
+    "Sector rules"
+   ],
+   "series": [
+    {
+     "name": "Mapped control coverage %",
+     "points": [
+      94,
+      92,
+      90,
+      88
+     ]
+    },
+    {
+     "name": "Prep hours per audit target",
+     "points": [
+      14,
+      16,
+      10,
+      18
+     ]
+    },
+    {
+     "name": "First-pass rate target %",
+     "points": [
+      96,
+      94,
+      95,
+      92
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Compliance, Audit & Digital Trust across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Compliance, Audit & Digital Trust",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Banking & Financial Services operators recognize the pattern: genAI stuck between pilot and policy, quarter after quarter.",
+     "plays": [
+      "Controls mapped once across every framework they satisfy",
+      "Evidence generated continuously in systems of record, with freshness SLAs",
+      "Vendor assertions collected, tracked and spot-tested — no blind spots"
+     ],
+     "kpis": [
+      {
+       "label": "First-time audit pass",
+       "value": "96%"
+      },
+      {
+       "label": "Assertion coverage",
+       "value": "89%"
+      },
+      {
+       "label": "Evidence freshness",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Insurance & Risk operators recognize the pattern: sensitive data estate under pressure, quarter after quarter.",
+     "plays": [
+      "Controls mapped once across every framework they satisfy",
+      "Evidence generated continuously in systems of record, with freshness SLAs",
+      "Vendor assertions collected, tracked and spot-tested — no blind spots"
+     ],
+     "kpis": [
+      {
+       "label": "First-time audit pass",
+       "value": "96%"
+      },
+      {
+       "label": "Assertion coverage",
+       "value": "89%"
+      },
+      {
+       "label": "Evidence freshness",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": true,
+     "hook": "Ask what PHI concentration and ransomware exposure costs Healthcare & Life Sciences firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Controls mapped once across every framework they satisfy",
+      "Evidence generated continuously in systems of record, with freshness SLAs",
+      "Vendor assertions collected, tracked and spot-tested — no blind spots"
+     ],
+     "kpis": [
+      {
+       "label": "First-time audit pass",
+       "value": "96%"
+      },
+      {
+       "label": "Assertion coverage",
+       "value": "89%"
+      },
+      {
+       "label": "Evidence freshness",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — IT/OT convergence exposure included — and prove it moved.",
+     "plays": [
+      "Controls mapped once across every framework they satisfy",
+      "Evidence generated continuously in systems of record, with freshness SLAs",
+      "Vendor assertions collected, tracked and spot-tested — no blind spots"
+     ],
+     "kpis": [
+      {
+       "label": "First-time audit pass",
+       "value": "96%"
+      },
+      {
+       "label": "Assertion coverage",
+       "value": "89%"
+      },
+      {
+       "label": "Evidence freshness",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone.",
+     "plays": [
+      "Controls mapped once across every framework they satisfy",
+      "Evidence generated continuously in systems of record, with freshness SLAs",
+      "Vendor assertions collected, tracked and spot-tested — no blind spots"
+     ],
+     "kpis": [
+      {
+       "label": "First-time audit pass",
+       "value": "96%"
+      },
+      {
+       "label": "Assertion coverage",
+       "value": "89%"
+      },
+      {
+       "label": "Evidence freshness",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the design assumes breach: blast radii contained, lateral movement priced, and detection tuned to the attacks your sector actually sees.",
+     "plays": [
+      "Controls mapped once across every framework they satisfy",
+      "Evidence generated continuously in systems of record, with freshness SLAs",
+      "Vendor assertions collected, tracked and spot-tested — no blind spots"
+     ],
+     "kpis": [
+      {
+       "label": "First-time audit pass",
+       "value": "96%"
+      },
+      {
+       "label": "Assertion coverage",
+       "value": "89%"
+      },
+      {
+       "label": "Evidence freshness",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — OT estate exposed by convergence included — and prove it moved.",
+     "plays": [
+      "Controls mapped once across every framework they satisfy",
+      "Evidence generated continuously in systems of record, with freshness SLAs",
+      "Vendor assertions collected, tracked and spot-tested — no blind spots"
+     ],
+     "kpis": [
+      {
+       "label": "First-time audit pass",
+       "value": "96%"
+      },
+      {
+       "label": "Assertion coverage",
+       "value": "89%"
+      },
+      {
+       "label": "Evidence freshness",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Controls mapped once across every framework they satisfy",
+      "Evidence generated continuously in systems of record, with freshness SLAs",
+      "Vendor assertions collected, tracked and spot-tested — no blind spots"
+     ],
+     "kpis": [
+      {
+       "label": "First-time audit pass",
+       "value": "96%"
+      },
+      {
+       "label": "Assertion coverage",
+       "value": "89%"
+      },
+      {
+       "label": "Evidence freshness",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": true,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Controls mapped once across every framework they satisfy",
+      "Evidence generated continuously in systems of record, with freshness SLAs",
+      "Vendor assertions collected, tracked and spot-tested — no blind spots"
+     ],
+     "kpis": [
+      {
+       "label": "First-time audit pass",
+       "value": "96%"
+      },
+      {
+       "label": "Assertion coverage",
+       "value": "89%"
+      },
+      {
+       "label": "Evidence freshness",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone.",
+     "plays": [
+      "Controls mapped once across every framework they satisfy",
+      "Evidence generated continuously in systems of record, with freshness SLAs",
+      "Vendor assertions collected, tracked and spot-tested — no blind spots",
+      "Sector working pattern: research ip protection: classification-aware controls for sensitive research programs. Export-control posture evidenced is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "First-time audit pass",
+       "value": "96%"
+      },
+      {
+       "label": "Assertion coverage",
+       "value": "89%"
+      },
+      {
+       "label": "Evidence freshness",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Controls mapped once across every framework they satisfy",
+      "Evidence generated continuously in systems of record, with freshness SLAs",
+      "Vendor assertions collected, tracked and spot-tested — no blind spots"
+     ],
+     "kpis": [
+      {
+       "label": "First-time audit pass",
+       "value": "96%"
+      },
+      {
+       "label": "Assertion coverage",
+       "value": "89%"
+      },
+      {
+       "label": "Evidence freshness",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means security here is architecture, not product sprawl — identity-first controls, segmented networks, and telemetry your SOC can act on the same hour.",
+     "plays": [
+      "Controls mapped once across every framework they satisfy",
+      "Evidence generated continuously in systems of record, with freshness SLAs",
+      "Vendor assertions collected, tracked and spot-tested — no blind spots"
+     ],
+     "kpis": [
+      {
+       "label": "First-time audit pass",
+       "value": "96%"
+      },
+      {
+       "label": "Assertion coverage",
+       "value": "89%"
+      },
+      {
+       "label": "Evidence freshness",
+       "value": "97%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/cybersecurity-zero-trust/"
+    }
+   ],
+   "practiceNote": "Compliance, Audit & Digital Trust view: evidence-grade compliance without theater — controls mapped once, evidence generated continuously, audits that pass first time."
+  },
+  {
+   "t": "h2",
+   "x": "Compliance stack defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor evidence automation in systems of record over GRC spreadsheets; deviation triggers are written because each one re-creates the archaeology problem."
+  },
+  {
+   "t": "table",
+   "caption": "Compliance, Audit & Digital Trust: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Compliance automation platform with unified control register",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Register",
+     "Single control register with assertions",
+     "Per-framework spreadsheets — mappings rot immediately"
     ],
     [
-     "Live evidence collection replacing manual audit preparation",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Evidence",
+     "Automated collectors with immutable timestamps",
+     "Screenshot folders — provenance never survives"
     ],
     [
-     "DORA / operational-resilience program pack where in scope",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Assertions",
+     "Technical tests bound to each control",
+     "Policy PDFs — nothing tests behavior"
     ],
     [
-     "PCI DSS 4.0 readiness and evidence architecture",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Audit",
+     "Sampling engine over the evidence store",
+     "Human-prepared binders — weeks per request"
+    ],
+    [
+     "Vendor",
+     "Continuous monitoring on critical vendors",
+     "Annual questionnaire — it measures paperwork"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The technology choices, justified"
+   "x": "Compliance release gates — evidence before assertion"
   },
   {
-   "t": "p",
-   "x": "Compliance, Audit & Digital Trust is built against defined standards: GRC platforms, OPA, SIEM evidence feeds, ticketing integration. Each choice is justified in writing as part of the architecture baseline, so your team can defend it without us in the room."
+   "t": "table",
+   "caption": "Release gates for Compliance, Audit & Digital Trust — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Register gate",
+     "Is every control owned and asserted?",
+     "Coverage scan; assertion density report"
+    ],
+    [
+     "Evidence gate",
+     "Is evidence continuous and fresh?",
+     "Freshness metrics; timestamp integrity"
+    ],
+    [
+     "Mapping gate",
+     "Do frameworks map from one register?",
+     "Mapping diffs; overlap analysis"
+    ],
+    [
+     "Audit gate",
+     "Do audits pass first time?",
+     "Pack response metrics; auditor feedback"
+    ],
+    [
+     "Vendor gate",
+     "Is vendor risk verified?",
+     "Critical-vendor evidence currency"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "The delivery rhythm"
+   "x": "What the compliance office inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Compliance, Audit & Digital Trust starts with the measurement: the metric, the owner, the current number, signed."
+     "Control register",
+     "Owned, asserted, framework-mapped"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, framework-unified control register first, gates written with your team."
+     "Evidence engine",
+     "Continuous collection with immutable timestamping"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Compliance, Audit & Digital Trust are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Gap detector",
+     "Un-asserted controls surfaced as findings"
+    ],
+    [
+     "Audit pack generator",
+     "Framework-templated responses in minutes"
+    ],
+    [
+     "Trust surfaces",
+     "Public trust page and customer DD packs"
+    ],
+    [
+     "Vendor assurance kit",
+     "Critical-vendor evidence and monitoring"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Frameworks in order, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — register design",
+     "Control inventory, owners, assertion candidates"
+    ],
+    [
+     "Weeks 3–4 — evidence engine",
+     "Collector wiring, immutable store, freshness SLOs"
+    ],
+    [
+     "Weeks 5–6 — framework mapping",
+     "SOC2/ISO/GDPR maps from one register"
+    ],
+    [
+     "Weeks 7–8 — audit flow",
+     "Sampling engine, pack generator, request handling"
+    ],
+    [
+     "Weeks 9–10 — trust & vendor",
+     "Trust page, DD packs, vendor register"
+    ],
+    [
+     "Ongoing — trust ops",
+     "Monthly gap review; quarterly pack refresh; vendor sweeps"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — systems of record and the audit portal"
+  },
+  {
+   "t": "p",
+   "x": "Evidence lives in your systems of record; these contracts carry it — with freshness metadata — into the portal auditors actually use."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Cloud & identity systems",
+     "Evidence sources with read contracts"
+    ],
+    [
+     "Audit firms",
+     "Pack format agreements"
+    ],
+    [
+     "Customer portals",
+     "DD pack delivery"
+    ],
+    [
+     "Vendor tools",
+     "Assessment integration"
+    ],
+    [
+     "Trust page CMS",
+     "Badges and evidence links"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Vendor and third-party governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Vendor controls are in scope until proven otherwise: third-party assertions are collected, freshness-tracked and spot-tested — the blind spot that fails audits is mapped, not discovered."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Assertion-or-it-does-not-exist",
+     "Controls without tests appear as findings"
+    ],
+    [
+     "Immutable evidence",
+     "Timestamped, hash-chained, retention-compliant"
+    ],
+    [
+     "Vendor currency",
+     "Critical vendors must hold fresh evidence"
+    ],
+    [
+     "One register",
+     "Framework questions resolve to the same control"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Assertion coverage counts vendor controls explicitly: a framework claim that leans on an unverified vendor assertion is flagged in the portal before the auditor finds it."
   },
   {
    "t": "cta",
-   "x": "Start with the diagnostic, not the contract: Compliance, Audit & Digital Trust baselined in two weeks, and a scoped proposal only if the delta justifies it."
+   "x": "Time your next audit's evidence hunt — then price never running it again. The diagnostic will score your evidence freshness per control family and show what portal-first audits would take."
   }
  ],
- "words": 501,
+ "words": 988,
  "section": "Services",
  "l1": "Services",
  "l2": "Cybersecurity & Zero-Trust",
@@ -268,7 +1229,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Cybersecurity & Zero-Trust",
+   "title": "Domain overview — Cybersecurity & Zero-Trust",
    "url": "/services/cybersecurity-zero-trust/",
    "desc": "Identity, detection, resilience and AI security in one program."
   },
@@ -320,33 +1281,51 @@
   {
    "title": "Agentic AI & Hyperautomation for Healthcare & Life Sciences",
    "url": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
    "title": "Zero-Trust Architecture & Implementation",
    "url": "/services/cybersecurity-zero-trust/zero-trust-architecture/",
-   "tag": "Same tower",
-   "desc": "Never trust, always verify — zero-trust as an executable architecture, not a slide."
+   "tag": "Same domain",
+   "desc": "per-request policy decisions on identity, device and context — network location stops being a privilege, and coverage is measured on the paths that matter."
   },
   {
-   "title": "Threat Intelligence & Managed SOC",
-   "url": "/services/cybersecurity-zero-trust/threat-intelligence-managed-soc/",
-   "tag": "Same tower",
-   "desc": "Detection that keeps pace — intelligence-driven SOC with the boring parts (tuning, coverage) done properly."
-  },
-  {
-   "title": "Identity & Access Modernization",
-   "url": "/services/cybersecurity-zero-trust/identity-access-modernization/",
-   "tag": "Same tower",
-   "desc": "Identity as the perimeter — workforce, customer and machine identities on one governed plane."
+   "title": "AI Security & Model Protection",
+   "url": "/services/cybersecurity-zero-trust/ai-security-model-protection/",
+   "tag": "Same domain",
+   "desc": "security for the models themselves — prompt-injection defense, abuse containment, model theft resistance and eval-based red teams wired into the platform."
   },
   {
    "title": "Cloud Security & Posture Management",
    "url": "/services/cybersecurity-zero-trust/cloud-security-posture/",
-   "tag": "Same tower",
-   "desc": "Secure at the control plane — posture, workload and data security engineered into the platform."
+   "tag": "Same domain",
+   "desc": "multi-cloud misconfiguration and entitlement control — infrastructure-as-code guardrails, CSPM with dwell-time metrics, and drift that fixes itself."
+  },
+  {
+   "title": "Platform Engineering & Developer Experience",
+   "url": "/services/cloud-edge-platform-engineering/platform-engineering-devex/",
+   "tag": "Pairs with",
+   "desc": "the platform as product — golden paths as versioned APIs, scaffolds that carry SLOs and budgets by default, and a developer experience measured like a funnel."
+  },
+  {
+   "title": "Neuromorphic & Emerging Compute Advisory",
+   "url": "/services/quantum-advanced-compute/emerging-compute-advisory/",
+   "tag": "Pairs with",
+   "desc": "neutral horizon scanning — photonic, neuromorphic, in-memory and beyond, with evidence memos that translate vendor noise into engineering decisions."
+  },
+  {
+   "title": "AI Proof-of-Concept & Value Validation",
+   "url": "/services/applied-ai-generative-ai/ai-poc-value-validation/",
+   "tag": "Pairs with",
+   "desc": "the four-week sprint that ends in a fund-or-kill verdict with auditable numbers — baseline first, real data path, no demo-ware."
+  },
+  {
+   "title": "A tier-1 US bank",
+   "url": "/case-studies/bank-03/",
+   "tag": "Evidence",
+   "desc": "DORA-grade resilience posture — third-party and incident evidence automated."
   }
  ]
 }

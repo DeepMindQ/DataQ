@@ -1,0 +1,263 @@
+{
+ "id": "CASE-hc-11",
+ "title": "An integrated payer-provider group",
+ "url": "/case-studies/hc-11/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Healthcare & Life Sciences > An integrated payer-provider group",
+ "seo_title": "An integrated payer-provider group | Case Study | Dataq Software",
+ "meta_description": "Denial prevention on a claims lakehouse — initial denial rate down 26% and net collection rate up 4.1 points",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Denial prevention on a claims lakehouse — initial denial rate down 26% and net collection rate up 4.1 points"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — an integrated payer-provider group that was, unusually, both sides of the claim: its hospitals denied its own plan's claims for reasons neither side could see end to end. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline quarter measured the absurdity: 11.8% initial denial rate, EUR — no, USD 34 million net under-collected, and the payer side and provider side reconciling each other's errors by email twice a year."
+  },
+  {
+   "t": "p",
+   "x": "Denial codes arrived as outcomes, not causes. Registration, coding and authorization failures all looked identical downstream, so prevention was impossible by design."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We built the claims spine both sides read: registration, authorization, coding and adjudication events in one lineage-complete model, denial causes attributed to their originating process, and prevention feeds running to the desks that can actually fix each cause — registration checklists, coding prompts, authorization gates. The denial rate became a managed process variable, not weather."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — An integrated payer-provider group",
+   "lanes": [
+    "Front-end events",
+    "Claims spine",
+    "Cause attribution",
+    "Prevention feeds"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "Registration & scheduling",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Authorization workflows",
+     "hot": true
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Lineage-complete claims model",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Payer-provider shared definitions",
+     "hot": true
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Denial cause attribution",
+     "hot": true
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Process-level dashboards"
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Registration / coding / auth feeds",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Net-collection tracking"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — An integrated payer-provider group",
+   "kpis": [
+    {
+     "label": "Initial denial rate",
+     "value": "-26%",
+     "delta": "11.8% → 8.7%",
+     "dir": "down"
+    },
+    {
+     "label": "Net collection rate",
+     "value": "+4.1pts",
+     "delta": "under-collection recovered",
+     "dir": "up"
+    },
+    {
+     "label": "Denial cause attribution",
+     "value": "100%",
+     "delta": "process-level, not code-level",
+     "dir": "up"
+    },
+    {
+     "label": "Cross-side reconciliation emails",
+     "value": "retired",
+     "delta": "shared spine",
+     "dir": "down"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed jointly by plan and hospital operations",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 08",
+     "msg": "Spine live for two service lines",
+     "tag": "build"
+    },
+    {
+     "t": "wk 14",
+     "msg": "Gate review — prevention feeds accepted by front-line owners",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Remaining lines onboarded; definitions under joint stewardship",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Denial and collection baselines signed by both sides"
+    ],
+    [
+     "Build gate",
+     "No line onboarded until its denial causes attributed at process level"
+    ],
+    [
+     "Run gate",
+     "Monthly denial-rate review as a managed variable"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The shared-spine pattern applies wherever one organization sits on both sides of a transaction; the process taxonomy was this group's operations. The diagnostic's first deliverable is the cause map — everything else sequences from it."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "14 months",
+     "17-person blended team",
+     "US",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "If this case sits close to your operation, the briefing is the right next step: 45 minutes with the practice lead who ran it, your metric against the pattern that moved here."
+  }
+ ],
+ "words": 452,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Healthcare & Life Sciences",
+ "l3": "An integrated payer-provider group",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Healthcare & Life Sciences",
+   "url": "/industries/healthcare-life-sciences/"
+  },
+  {
+   "name": "An integrated payer-provider group",
+   "url": "/case-studies/hc-11/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Healthcare & Life Sciences — industry hub",
+   "url": "/industries/healthcare-life-sciences/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Data, Analytics & Lakehouse",
+   "url": "/services/data-analytics-lakehouse/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A 12-hospital US health system",
+   "url": "/case-studies/hc-01/",
+   "desc": "Clinicians get 90 minutes a day back — ambient documentation inside the EHR"
+  },
+  {
+   "title": "A national health insurer",
+   "url": "/case-studies/hc-02/",
+   "desc": "Prior authorization turnaround down 62% — clinical evidence assembled automatically"
+  },
+  {
+   "title": "A European biopharma group",
+   "url": "/case-studies/hc-03/",
+   "desc": "Trial eligibility matching at 10x — enrollment windows met"
+  }
+ ],
+ "cards": []
+}

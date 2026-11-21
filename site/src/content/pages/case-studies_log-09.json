@@ -1,0 +1,263 @@
+{
+ "id": "CASE-log-09",
+ "title": "An e-commerce fulfillment group",
+ "url": "/case-studies/log-09/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Logistics & Supply Chain > An e-commerce fulfillment group",
+ "seo_title": "An e-commerce fulfillment group | Case Study | Dataq Software",
+ "meta_description": "Peak-ready fulfillment platform — throughput up 26% through peak and infrastructure cost per order down 21%",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Peak-ready fulfillment platform — throughput up 26% through peak and infrastructure cost per order down 21%"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a fulfillment group whose year was four weeks long and whose platform met those four weeks on hope and autoscaling bills. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline post-mortem priced the hope: peak-day throughput capped by order-orchestration hot paths, infrastructure spend tripling for a quarter, and one cascade failure that took two sites offline for six hours at the worst moment."
+  },
+  {
+   "t": "p",
+   "x": "Capacity planning ran on last year's peak plus 20%. This year's peak arrived plus 60%, and the platform discovered its real limits in production."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We rebuilt for the peak as an engineering standard: order orchestration decomposed with backpressure at every boundary, load models built from real order shapes and rehearsed in game days before peak, multi-site failover tested with actual traffic shadowing, and the cost ledger per order reported continuously so scale decisions trade money, not mystery. Peak became a rehearsal, not an exam."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — An e-commerce fulfillment group",
+   "lanes": [
+    "Order orchestration",
+    "Capacity model",
+    "Resilience drills",
+    "Cost ledger"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "Order intake & decomposition",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Backpressure boundaries",
+     "hot": true
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Real-shape load models",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Game-day rehearsal harness",
+     "hot": true
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Shadowed failover testing",
+     "hot": true
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Multi-site state model"
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Per-order cost ledger",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Peak readiness board"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — An e-commerce fulfillment group",
+   "kpis": [
+    {
+     "label": "Peak throughput",
+     "value": "+26%",
+     "delta": "on the same sites",
+     "dir": "up"
+    },
+    {
+     "label": "Infra cost per order",
+     "value": "-21%",
+     "delta": "ledger-driven decisions",
+     "dir": "down"
+    },
+    {
+     "label": "Peak incidents",
+     "value": "0",
+     "delta": "through the season",
+     "dir": "down"
+    },
+    {
+     "label": "Failover rehearsal coverage",
+     "value": "100%",
+     "delta": "shadowed real traffic",
+     "dir": "up"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed with engineering and operations",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 08",
+     "msg": "Orchestration refactor behind feature flags",
+     "tag": "build"
+    },
+    {
+     "t": "wk 14",
+     "msg": "Gate review — game day passed at 130% of forecast peak",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Peak executed on plan; ledger under platform owner",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Throughput and cost baselines signed with engineering"
+    ],
+    [
+     "Build gate",
+     "No peak gate passed without a game day at forecast plus margin"
+    ],
+    [
+     "Run gate",
+     "Weekly cost-per-order review through the peak"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The rehearsal-standard pattern transfers to any peak-driven platform; the load shapes were this group's order book. Another operation starts from its last post-mortem — the diagnostic turns it into the capacity model's first constraints."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "14 months",
+     "18-person blended team",
+     "Global",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "If this case sits close to your operation, the briefing is the right next step: 45 minutes with the practice lead who ran it, your metric against the pattern that moved here."
+  }
+ ],
+ "words": 449,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Logistics & Supply Chain",
+ "l3": "An e-commerce fulfillment group",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Logistics & Supply Chain",
+   "url": "/industries/logistics-supply-chain/"
+  },
+  {
+   "name": "An e-commerce fulfillment group",
+   "url": "/case-studies/log-09/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Logistics & Supply Chain — industry hub",
+   "url": "/industries/logistics-supply-chain/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Cloud, Edge & Platform Engineering",
+   "url": "/services/cloud-edge-platform-engineering/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A global 3PL (40+ countries)",
+   "url": "/case-studies/log-01/",
+   "desc": "Exceptions auto-resolved at 74% — control tower to agentic remediation"
+  },
+  {
+   "title": "A container-terminal operator",
+   "url": "/case-studies/log-02/",
+   "desc": "Berth productivity +16% — planning platform and crane health sensing"
+  },
+  {
+   "title": "A parcel network (12M parcels/week)",
+   "url": "/case-studies/log-03/",
+   "desc": "Failed deliveries down 34% — promise engine and exception agents"
+  }
+ ],
+ "cards": []
+}

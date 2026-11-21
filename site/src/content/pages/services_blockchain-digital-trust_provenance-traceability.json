@@ -9,254 +9,1178 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The honest pitch for provenance, traceability & supply chain trust fits in a sentence — Proof, not paperwork — EUDR, DPP and chain-of-custody systems regulators and customers can verify. — and the rest of this page is the how: measured baseline, bounded build, evidence in flight."
+   "x": "End-to-end supply-chain evidence: anchored document hashes, event provenance at every handoff, capture coverage that reaches your partners — and recall drills that resolve the affected batch in minutes, not days of spreadsheet archaeology."
   },
   {
    "t": "h2",
-   "x": "What we deliver under this name"
+   "x": "Provenance is a capture problem before it is a ledger problem"
   },
   {
    "t": "p",
-   "x": "Provenance is becoming a compliance requirement: EU Deforestation Regulation due diligence, Digital Product Passports, food-safety traceability, conflict-minerals reporting. We build traceability systems that survive audits: capture at source (mobile-first for farmers, scanners for factories), cryptographic anchoring of custody events, identity for participants (including decentralized ID where anonymous intermediaries exist), and verification interfaces for regulators, customers and auditors — each seeing only what their role permits."
+   "x": "Provenance is the practice of proving where a thing came from and what happened to it — across suppliers, plants, logistics and regulators. The engineering is evidence capture at handoffs (not storytelling after the fact), anchoring of document hashes to a ledger, and a query layer that reconstructs any item's history on demand."
   },
   {
    "t": "p",
-   "x": "The data engineering matters as much as the ledger: sensor and IoT feeds at critical custody points, master-data alignment across participants, and analytic layers for risk scoring (deforestation proximity, contamination windows, authenticity signals). The result is chain-of-custody that answers regulator queries in hours and powers premium positioning — verified provenance is a market, not just a control."
+   "x": "The measure that matters is the recall drill: given a batch, how fast can you enumerate everything that touched it — forward and backward — with evidence attached? Minutes is the target; weeks is the industry norm."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that make provenance decorative, the reference architecture of the capture chain, and the console that drills recalls."
   },
   {
    "t": "h2",
-   "x": "Why this matters here"
+   "x": "Four failure modes that make provenance decorative"
   },
   {
    "t": "p",
-   "x": "Programs of Provenance, Traceability & Supply Chain Trust run in Agriculture & Food Systems, Retail & Consumer Goods, Manufacturing & Industrial, Logistics & Supply Chain — always against one named number, always with the baseline signed first."
+   "x": "Every one of these survives a pilot and fails a recall — the countermeasures measure capture coverage at partner level and drill the recall path on schedule."
   },
   {
-   "t": "h2",
-   "x": "Engineering that moves the number"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Provenance, Traceability & Supply Chain Trust: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Capture at source",
-     "mobile/scanner/IoT capture designed for the actual workforce"
+     "Capture gaps",
+     "Handoffs happen outside systems; evidence is lost",
+     "Capture at the physical boundary: scanning, IoT signals, partner APIs"
     ],
     [
-     "Custody anchoring",
-     "cryptographic anchoring of transfer events with integrity proofs"
+     "Identifier chaos",
+     "Every party uses its own IDs",
+     "Identity mapping service with partner-key crosswalk"
     ],
     [
-     "Participant identity",
-     "DID/verifiable credentials for chain actors where needed"
+     "Paper analog",
+     "Certificates arrive as PDFs nobody can verify",
+     "Anchored hashes + credential checks on documents"
     ],
     [
-     "Role-based verification",
-     "regulator, customer and auditor interfaces with scoped visibility"
-    ],
-    [
-     "Risk analytics",
-     "deforestation proximity, contamination windows, authenticity scoring"
+     "Recall theater",
+     "Tracing depends on phone calls",
+     "Reconstruction service tested by scheduled drills"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the capture chain from field to ledger"
+  },
+  {
+   "t": "p",
+   "x": "Events are captured at each handoff under shared identifier standards, documents are anchored as hashes with the originals in your systems of record, and the ledger stitches the chain — so the recall query is a lookup, not an investigation."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Provenance, Traceability & Supply Chain Trust",
+   "title": "Reference architecture — provenance evidence plane",
    "lanes": [
-    "Counterparties",
-    "Contracts",
-    "Ledger",
-    "Settlement",
-    "Audit",
-    "Networks"
+    "Capture points",
+    "Identity mapping",
+    "Evidence store",
+    "Anchoring",
+    "Reconstruction",
+    "Assurance"
    ],
    "nodes": [
     {
-     "id": "cp0",
+     "id": "iot",
      "lane": 0,
-     "label": "Farm management records",
-     "hot": false
+     "label": "IoT signals"
     },
     {
-     "id": "cp1",
+     "id": "scan",
      "lane": 0,
-     "label": "Weather & soil feeds",
-     "hot": false
+     "label": "Scan & GS1 events"
     },
     {
-     "id": "ct2",
+     "id": "partner",
+     "lane": 0,
+     "label": "Partner APIs"
+    },
+    {
+     "id": "map",
      "lane": 1,
-     "label": "Provenance, Traceability & Supply Chain Trust",
+     "label": "Identity crosswalk",
      "hot": true
     },
     {
-     "id": "ct3",
+     "id": "gs1",
      "lane": 1,
-     "label": "Contract testing",
-     "hot": false
+     "label": "Standards (EPCIS)"
     },
     {
-     "id": "lg4",
+     "id": "dup",
+     "lane": 1,
+     "label": "Dedup & quality"
+    },
+    {
+     "id": "ev",
      "lane": 2,
-     "label": "Immutable event log",
+     "label": "Evidence store",
      "hot": true
     },
     {
-     "id": "lg5",
+     "id": "doc",
      "lane": 2,
-     "label": "Byzantine tolerance",
-     "hot": false
+     "label": "Document vault"
     },
     {
-     "id": "st6",
+     "id": "hash",
+     "lane": 2,
+     "label": "Hash pipeline"
+    },
+    {
+     "id": "anchor",
      "lane": 3,
-     "label": "Atomic settlement",
-     "hot": false
+     "label": "Ledger anchoring",
+     "hot": true
     },
     {
-     "id": "st7",
+     "id": "batch",
      "lane": 3,
-     "label": "Netting engines",
-     "hot": false
+     "label": "Batch merkle roots"
     },
     {
-     "id": "au8",
+     "id": "ts",
+     "lane": 3,
+     "label": "Trusted timestamps"
+    },
+    {
+     "id": "rec",
      "lane": 4,
-     "label": "Shared audit views",
-     "hot": false
+     "label": "Reconstruction service",
+     "hot": true
     },
     {
-     "id": "au9",
+     "id": "fwd",
      "lane": 4,
-     "label": "FSMA traceability log",
-     "hot": false
+     "label": "Forward trace"
     },
     {
-     "id": "nw10",
-     "lane": 5,
-     "label": "Agronomy console",
-     "hot": false
+     "id": "bwd",
+     "lane": 4,
+     "label": "Backward trace"
     },
     {
-     "id": "nw11",
+     "id": "drill",
      "lane": 5,
-     "label": "Procurement desk",
-     "hot": false
+     "label": "Recall drills",
+     "hot": true
+    },
+    {
+     "id": "assur",
+     "lane": 5,
+     "label": "Assurance packs"
+    },
+    {
+     "id": "kpi",
+     "lane": 5,
+     "label": "Completeness KPIs"
     }
    ],
    "edges": [
     {
-     "a": "cp0",
-     "b": "ct2"
+     "a": "iot",
+     "b": "map",
+     "label": "events"
     },
     {
-     "a": "cp1",
-     "b": "ct3"
+     "a": "scan",
+     "b": "map",
+     "label": "events"
     },
     {
-     "a": "ct2",
-     "b": "lg4"
+     "a": "partner",
+     "b": "map",
+     "label": "events"
     },
     {
-     "a": "ct3",
-     "b": "lg5"
+     "a": "map",
+     "b": "gs1",
+     "label": "normalize"
     },
     {
-     "a": "lg4",
-     "b": "st6"
+     "a": "map",
+     "b": "dup",
+     "label": "clean"
     },
     {
-     "a": "lg5",
-     "b": "st7"
+     "a": "gs1",
+     "b": "ev",
+     "label": "store"
     },
     {
-     "a": "st6",
-     "b": "au8"
+     "a": "dup",
+     "b": "ev",
+     "label": "clean"
     },
     {
-     "a": "au8",
-     "b": "au9"
+     "a": "doc",
+     "b": "hash",
+     "label": "digest"
     },
     {
-     "a": "st7",
-     "b": "nw10"
+     "a": "ev",
+     "b": "anchor",
+     "label": "root"
     },
     {
-     "a": "au9",
-     "b": "nw11"
+     "a": "hash",
+     "b": "batch",
+     "label": "merkle"
+    },
+    {
+     "a": "batch",
+     "b": "ts",
+     "label": "stamp"
+    },
+    {
+     "a": "ev",
+     "b": "rec",
+     "label": "query"
+    },
+    {
+     "a": "rec",
+     "b": "fwd",
+     "label": "trace"
+    },
+    {
+     "a": "rec",
+     "b": "bwd",
+     "label": "trace"
+    },
+    {
+     "a": "rec",
+     "b": "drill",
+     "label": "test"
+    },
+    {
+     "a": "drill",
+     "b": "assur",
+     "label": "pack"
+    },
+    {
+     "a": "anchor",
+     "b": "kpi",
+     "label": "evidence"
     }
    ],
-   "note": "Topology inherited from the Blockchain & Digital Trust tower; the highlighted core is this service's build."
+   "note": "Merkle-batch anchoring keeps cost sane: thousands of document hashes root to one ledger transaction, with per-document proofs reconstructable on demand."
   },
   {
    "t": "h2",
-   "x": "What you hold at the end"
+   "x": "One batch, from field event to recall drill"
   },
   {
    "t": "p",
-   "x": "In Provenance, Traceability & Supply Chain Trust, named artifacts, handed to named owners:"
+   "x": "From harvest or production events through partner handoffs, anchored documents and the ledger chain to the recall drill — including the gap analysis that runs when capture coverage drops."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Evidence flow — capture at handoff, normalize, anchor, reconstruct",
+   "labels": [
+    "Event at boundary",
+    "Normalize (EPCIS)",
+    "Dedup & map IDs",
+    "Hash & batch",
+    "Anchor to ledger",
+    "Reconstruct history",
+    "Assurance pack"
+   ],
+   "note": "The reconstruction drill is the acceptance test: pick a random batch monthly, trace it both directions, and time it — the KPI is minutes."
+  },
+  {
+   "t": "h2",
+   "x": "The provenance console — recall time as the headline"
+  },
+  {
+   "t": "p",
+   "x": "Recall drill time, provenance completeness and partner capture coverage — the three numbers that decide whether the chain is evidence or decoration."
+  },
+  {
+   "t": "idash",
+   "title": "Provenance & traceability — trail console",
+   "kpis": [
+    {
+     "label": "Trail completeness",
+     "value": "97.8%",
+     "delta": "events with device binding",
+     "dir": "up",
+     "spark": [
+      62,
+      71,
+      78,
+      84,
+      89,
+      93,
+      98
+     ]
+    },
+    {
+     "label": "Recall reconstruction",
+     "value": "11 min",
+     "delta": "lot → store level",
+     "dir": "down",
+     "spark": [
+      480,
+      240,
+      120,
+      60,
+      30,
+      18,
+      11
+     ]
+    },
+    {
+     "label": "Certified share",
+     "value": "84.2%",
+     "delta": "volume with full attestation",
+     "dir": "up",
+     "spark": [
+      40,
+      52,
+      61,
+      70,
+      76,
+      81,
+      84
+     ]
+    },
+    {
+     "label": "Anchor latency",
+     "value": "38 s",
+     "delta": "event → ledger anchor",
+     "dir": "down",
+     "spark": [
+      600,
+      300,
+      150,
+      90,
+      60,
+      45,
+      38
+     ]
+    },
+    {
+     "label": "Mass-balance audits",
+     "value": "2/2",
+     "delta": "certifier cycles passed",
+     "dir": "flat",
+     "spark": [
+      0,
+      0,
+      1,
+      1,
+      2,
+      2,
+      2
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Trail integrity",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Attestation strength by hop × actor class — find the weak links",
+       "rows": [
+        "Farm",
+        "Processor",
+        "Warehouse",
+        "Distributor",
+        "Retail"
+       ],
+       "cats": [
+        "Device-bound",
+        "Badge + device",
+        "Badge only",
+        "Manual entry",
+        "System-to-system"
+       ],
+       "matrix": [
+        [
+         96,
+         88,
+         62,
+         41,
+         95
+        ],
+        [
+         92,
+         84,
+         58,
+         38,
+         91
+        ],
+        [
+         89,
+         81,
+         55,
+         35,
+         88
+        ],
+        [
+         94,
+         86,
+         60,
+         40,
+         93
+        ]
+       ],
+       "unit": "% attestation strength",
+       "note": "Hover cells to read strength scores. The badge-only and manual columns are the audit findings in waiting — capture-device investment lands exactly where these cells sit."
+      }
+     ]
+    },
+    {
+     "name": "Recall drill",
+     "widgets": [
+      {
+       "kind": "flow",
+       "title": "Recall operation — click stages for the drill contract",
+       "stages": [
+        {
+         "name": "Trigger",
+         "role": "Detection → scope",
+         "detail": "The recall trigger classifies scope (lot, date range, facility) from the suspect event; scope proposal is generated from the trail, not from memory.",
+         "metrics": [
+          {
+           "label": "Scope proposal",
+           "value": "auto"
+          },
+          {
+           "label": "Time to scope",
+           "value": "90 s"
+          }
+         ]
+        },
+        {
+         "name": "Reconstruct",
+         "role": "Trail to shelf",
+         "detail": "Distribution reconstruction walks the anchored trail to store level with quantities; the reconstruction artifact is what the regulator receives.",
+         "metrics": [
+          {
+           "label": "Reconstruction",
+           "value": "11 min"
+          },
+          {
+           "label": "Depth",
+           "value": "store-level"
+          }
+         ]
+        },
+        {
+         "name": "Notify",
+         "role": "Duty chain",
+         "detail": "Notification duties execute by jurisdiction and contract; the duty chain is pre-mapped so notifications run in parallel, not in sequence.",
+         "metrics": [
+          {
+           "label": "Jurisdictions",
+           "value": "7"
+          },
+          {
+           "label": "Parallel",
+           "value": "yes"
+          }
+         ]
+        },
+        {
+         "name": "Disposition",
+         "role": "Per-unit state",
+         "detail": "Unit-level disposition (quarantine, return, destroy) recorded with actor binding; the ledger anchors the record so the disposition survives the dispute.",
+         "metrics": [
+          {
+           "label": "Unit-level",
+           "value": "yes"
+          },
+          {
+           "label": "Actor binding",
+           "value": "device"
+          }
+         ]
+        },
+        {
+         "name": "Debrief",
+         "role": "Trail fixes",
+         "detail": "Post-drill gaps feed the capture-investment list: weak-attestation hops get device binding next quarter — the drill is the roadmap's source.",
+         "metrics": [
+          {
+           "label": "Gaps → backlog",
+           "value": "auto"
+          },
+          {
+           "label": "Drill cadence",
+           "value": "quarterly"
+          }
+         ]
+        }
+       ],
+       "note": "Recalls are rehearsed quarterly with real scope generation — the drill results are the readiness evidence auditors ask for first."
+      }
+     ]
+    },
+    {
+     "name": "Capture what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Capture investment what-if — device coverage vs trail value",
+       "params": [
+        {
+         "name": "Device-bound coverage",
+         "min": 30,
+         "max": 100,
+         "step": 5,
+         "value": 85,
+         "unit": "%"
+        },
+        {
+         "name": "Instrument measurement share",
+         "min": 10,
+         "max": 90,
+         "step": 5,
+         "value": 60,
+         "unit": "%"
+        },
+        {
+         "name": "Anchor batch size",
+         "min": 1,
+         "max": 500,
+         "step": 25,
+         "value": 100,
+         "unit": "events"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Trail completeness",
+         "unit": "%",
+         "formula": "p0*0.9+p1*0.12",
+         "good": "95",
+         "bad": "75"
+        },
+        {
+         "name": "Anchor cost / k events",
+         "unit": "$",
+         "formula": "max(2, 60/p2*8-p0*0.1)",
+         "good": "15",
+         "bad": "40"
+        },
+        {
+         "name": "Certifier trust score",
+         "unit": "0-100",
+         "formula": "min(97, p0*0.7+p1*0.35)",
+         "good": "85",
+         "bad": "65"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 2,
+        "label": "Device coverage vs certifier trust"
+       },
+       "note": "The trust curve is the certification argument: attestation strength is what certifiers price, and device coverage is what moves it. Batch sizing buys anchor cost, not trust."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · recall model",
+   "note": "Reference program model: trail and recall bands from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Capture coverage across the partner network"
+  },
+  {
+   "t": "p",
+   "x": "Event capture coverage per partner tier and quarter — the shape that shows where the chain breaks and which partners need integration work, not reminders."
+  },
+  {
+   "t": "chart",
+   "title": "Trace depth and time by supply-chain tier — design targets",
+   "variant": "bar",
+   "cats": [
+    "Tier 1 suppliers",
+    "Manufacturing",
+    "Logistics",
+    "Distribution",
+    "Retail"
+   ],
+   "series": [
+    {
+     "name": "Capture coverage target %",
+     "points": [
+      88,
+      97,
+      84,
+      90,
+      93
+     ]
+    },
+    {
+     "name": "Trace segment time target (min)",
+     "points": [
+      1.1,
+      0.9,
+      1.6,
+      1.3,
+      1.5
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Provenance, Traceability & Supply Chain Trust across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Provenance, Traceability & Supply Chain Trust",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "plays": [
+      "Event provenance at every handoff under shared identifier standards",
+      "Document anchoring with originals in your systems of record",
+      "Recall drills on live data — batch traced in minutes, notifications generated"
+     ],
+     "kpis": [
+      {
+       "label": "Recall drill time",
+       "value": "6.4m"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Partner capture coverage",
+       "value": "88%"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — claims, policy and exposure data fragmented included — and prove it moved.",
+     "plays": [
+      "Event provenance at every handoff under shared identifier standards",
+      "Document anchoring with originals in your systems of record",
+      "Recall drills on live data — batch traced in minutes, notifications generated"
+     ],
+     "kpis": [
+      {
+       "label": "Recall drill time",
+       "value": "6.4m"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Partner capture coverage",
+       "value": "88%"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Event provenance at every handoff under shared identifier standards",
+      "Document anchoring with originals in your systems of record",
+      "Recall drills on live data — batch traced in minutes, notifications generated"
+     ],
+     "kpis": [
+      {
+       "label": "Recall drill time",
+       "value": "6.4m"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Partner capture coverage",
+       "value": "88%"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "plays": [
+      "Event provenance at every handoff under shared identifier standards",
+      "Document anchoring with originals in your systems of record",
+      "Recall drills on live data — batch traced in minutes, notifications generated"
+     ],
+     "kpis": [
+      {
+       "label": "Recall drill time",
+       "value": "6.4m"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Partner capture coverage",
+       "value": "88%"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": true,
+     "hook": "Retail & Consumer Goods operators recognize the pattern: provenance claims unverifiable, quarter after quarter.",
+     "plays": [
+      "Event provenance at every handoff under shared identifier standards",
+      "Document anchoring with originals in your systems of record",
+      "Recall drills on live data — batch traced in minutes, notifications generated",
+      "Sector working pattern: provenance verification — EUDR/DPP-grade chain-of-custody for claim-bearing products. Claims verified, greenwashing risk down is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Recall drill time",
+       "value": "6.4m"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Partner capture coverage",
+       "value": "88%"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: interconnect and roaming reconciliation, quarter after quarter.",
+     "plays": [
+      "Event provenance at every handoff under shared identifier standards",
+      "Document anchoring with originals in your systems of record",
+      "Recall drills on live data — batch traced in minutes, notifications generated"
+     ],
+     "kpis": [
+      {
+       "label": "Recall drill time",
+       "value": "6.4m"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Partner capture coverage",
+       "value": "88%"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Ask what GO/REC certificate integrity costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Event provenance at every handoff under shared identifier standards",
+      "Document anchoring with originals in your systems of record",
+      "Recall drills on live data — batch traced in minutes, notifications generated"
+     ],
+     "kpis": [
+      {
+       "label": "Recall drill time",
+       "value": "6.4m"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Partner capture coverage",
+       "value": "88%"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": true,
+     "hook": "The work here has one job: move a named number — compliance-grade provenance missing included — and prove it moved.",
+     "plays": [
+      "Event provenance at every handoff under shared identifier standards",
+      "Document anchoring with originals in your systems of record",
+      "Recall drills on live data — batch traced in minutes, notifications generated"
+     ],
+     "kpis": [
+      {
+       "label": "Recall drill time",
+       "value": "6.4m"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Partner capture coverage",
+       "value": "88%"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — records integrity under dispute included — and prove it moved.",
+     "plays": [
+      "Event provenance at every handoff under shared identifier standards",
+      "Document anchoring with originals in your systems of record",
+      "Recall drills on live data — batch traced in minutes, notifications generated"
+     ],
+     "kpis": [
+      {
+       "label": "Recall drill time",
+       "value": "6.4m"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Partner capture coverage",
+       "value": "88%"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Event provenance at every handoff under shared identifier standards",
+      "Document anchoring with originals in your systems of record",
+      "Recall drills on live data — batch traced in minutes, notifications generated"
+     ],
+     "kpis": [
+      {
+       "label": "Recall drill time",
+       "value": "6.4m"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Partner capture coverage",
+       "value": "88%"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the trust layer is engineered, not asserted: signed events, permissioned consensus, and a provenance graph every participant can verify.",
+     "plays": [
+      "Event provenance at every handoff under shared identifier standards",
+      "Document anchoring with originals in your systems of record",
+      "Recall drills on live data — batch traced in minutes, notifications generated"
+     ],
+     "kpis": [
+      {
+       "label": "Recall drill time",
+       "value": "6.4m"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Partner capture coverage",
+       "value": "88%"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/blockchain-digital-trust/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": true,
+     "hook": "Ask what provenance claims unverifiable costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Event provenance at every handoff under shared identifier standards",
+      "Document anchoring with originals in your systems of record",
+      "Recall drills on live data — batch traced in minutes, notifications generated"
+     ],
+     "kpis": [
+      {
+       "label": "Recall drill time",
+       "value": "6.4m"
+      },
+      {
+       "label": "Provenance completeness",
+       "value": "96%"
+      },
+      {
+       "label": "Partner capture coverage",
+       "value": "88%"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/blockchain-digital-trust/"
+    }
+   ],
+   "practiceNote": "Provenance, Traceability & Supply Chain Trust view: end-to-end supply-chain evidence — anchored document hashes, event provenance at each handoff, and recall queries that finish in minutes, not weeks."
+  },
+  {
+   "t": "h2",
+   "x": "Provenance defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor shared identifier standards and anchored documents over proprietary label schemes; deviation triggers are written because each one re-creates identifier chaos downstream."
+  },
+  {
+   "t": "table",
+   "caption": "Provenance, Traceability & Supply Chain Trust: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Production traceability system covering the regulated chain segment",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Event standards",
+     "EPCIS-class normalization",
+     "Proprietary JSON per partner — the crosswalk never converges"
     ],
     [
-     "Capture and onboarding kit for chain participants",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Anchoring",
+     "Merkle batches to a permissioned ledger",
+     "Per-document transactions — cost kills coverage"
     ],
     [
-     "Verification interfaces per stakeholder role",
-     "Named artifact, handed over with a walkthrough when it lands."
+     "Identity",
+     "Partner-key crosswalk service",
+     "String-matching partner names — recalls fail on typos"
     ],
     [
-     "Regulator submission and audit evidence pack",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Documents",
+     "Hash-anchored vault with credential checks",
+     "Scanned PDFs in email — nobody can verify them"
+    ],
+    [
+     "Reconstruction",
+     "Drilled bi-directional tracing",
+     "Best-effort queries — drills never happen"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Engineering standards we hold"
+   "x": "Provenance release gates — evidence before partner onboarding"
   },
   {
-   "t": "p",
-   "x": "Provenance, Traceability & Supply Chain Trust ships against Hyperledger/Besu anchoring, W3C Verifiable Credentials, IoT integration, GIS layers. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for Provenance, Traceability & Supply Chain Trust — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Capture gate",
+     "Are handoffs captured at the boundary?",
+     "Coverage census per tier"
+    ],
+    [
+     "Crosswalk gate",
+     "Do IDs resolve across partners?",
+     "Unmapped-rate alarms; resolution SLAs"
+    ],
+    [
+     "Anchor gate",
+     "Can proofs be reconstructed?",
+     "Per-document proof verification"
+    ],
+    [
+     "Drill gate",
+     "Do recalls finish in minutes?",
+     "Drill timing evidence"
+    ],
+    [
+     "Assurance gate",
+     "Would a regulator accept the pack?",
+     "Pack format review"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "From baseline to working slice"
+   "x": "What the supply-chain integrity team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Provenance, Traceability & Supply Chain Trust starts with the measurement: the metric, the owner, the current number, signed."
+     "Evidence store",
+     "Normalized event history per item"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, capture at source first, gates written with your team."
+     "Anchoring pipeline",
+     "Merkle batches with per-doc proofs"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Weeks nine through thirteen in Provenance, Traceability & Supply Chain Trust are the gate: the working slice is measured against the signed baseline, and the scale decision is written down with the evidence attached."
+     "Identity crosswalk",
+     "Partner-key mapping with SLAs"
+    ],
+    [
+     "Document vault",
+     "Hash-anchored certificates"
+    ],
+    [
+     "Reconstruction service",
+     "Bi-directional trace with timing"
+    ],
+    [
+     "Drill program",
+     "Scheduled recalls with evidence packs"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Partners in order, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — tier census",
+     "Capture-point map, partner inventory, standards choice"
+    ],
+    [
+     "Weeks 3–4 — capture layer",
+     "Boundary integrations, normalization, dedup"
+    ],
+    [
+     "Weeks 5–6 — anchoring",
+     "Hash pipeline, merkle batching, ledger anchoring"
+    ],
+    [
+     "Weeks 7–8 — reconstruction",
+     "Trace service, first drill, timing baseline"
+    ],
+    [
+     "Weeks 9–10 — assurance",
+     "Pack generator, KPI dashboards, partner onboarding"
+    ],
+    [
+     "Ongoing — provenance ops",
+     "Monthly drills; quarterly partner waves; annual census"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — partner systems, labels and the ledger"
+  },
+  {
+   "t": "p",
+   "x": "The chain is only as strong as its weakest partner integration; these contracts define identifier standards, event formats and the capture guarantees each handoff carries."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Partner APIs",
+     "Event contracts with schemas"
+    ],
+    [
+     "IoT platform",
+     "Sensor event feeds"
+    ],
+    [
+     "ERP / WMS",
+     "Handoff events"
+    ],
+    [
+     "Ledger networks",
+     "Anchoring target"
+    ],
+    [
+     "Regulators",
+     "Assurance pack delivery"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Recall-readiness governance overlay"
+  },
+  {
+   "t": "p",
+   "x": "Recall drills run on schedule with live data: the affected batch is traced, the affected downstream partners are enumerated and the notification pack is generated — recall theater dies in rehearsal."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Boundary capture",
+     "Evidence exists because the handoff happened, not after"
+    ],
+    [
+     "Hash integrity",
+     "Documents verify against ledger roots"
+    ],
+    [
+     "Drill honesty",
+     "Recall capability is tested, not asserted"
+    ],
+    [
+     "Partner accountability",
+     "Coverage gaps are named and owned"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Paper analogs are detected, not assumed away: when a partner's events arrive as week-late batch uploads, the drill treats that segment as unproven — coverage claims must match capture cadence."
   },
   {
    "t": "cta",
-   "x": "A value assessment prices the delta in your estate before anything is signed: Provenance, Traceability & Supply Chain Trust, measured against your baseline, in two weeks."
+   "x": "Time your last mock recall — or admit there wasn't one. The diagnostic will measure capture coverage across your partner network and drill the recall path until it resolves in minutes."
   }
  ],
- "words": 510,
+ "words": 986,
  "section": "Services",
  "l1": "Services",
  "l2": "Blockchain & Digital Trust",
@@ -278,7 +1202,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Blockchain & Digital Trust",
+   "title": "Domain overview — Blockchain & Digital Trust",
    "url": "/services/blockchain-digital-trust/",
    "desc": "DLT networks, tokenization and verifiable credentials — a shared, verifiable record with controls regulators accept."
   },
@@ -330,33 +1254,51 @@
   {
    "title": "Applied AI & GenAI for Manufacturing & Industrial",
    "url": "/industries/manufacturing/capabilities/applied-ai-generative-ai/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
    "title": "Enterprise DLT Network Engineering",
    "url": "/services/blockchain-digital-trust/enterprise-dlt-networks/",
-   "tag": "Same tower",
-   "desc": "Permissioned networks for multi-party truth — governance, consensus and integration done institutionally."
-  },
-  {
-   "title": "Asset Tokenization & Digital Assets",
-   "url": "/services/blockchain-digital-trust/asset-tokenization/",
-   "tag": "Same tower",
-   "desc": "Instruments as tokens — issuance, custody and lifecycle under securities-law discipline."
+   "tag": "Same domain",
+   "desc": "permissioned networks with real governance — membership charters, privacy domains, boring consensus, and operations that treat nodes like production systems."
   },
   {
    "title": "Smart Contract Engineering & Audit",
    "url": "/services/blockchain-digital-trust/smart-contract-engineering/",
-   "tag": "Same tower",
-   "desc": "Contracts as production software — specification, formal verification and audit before value moves."
+   "tag": "Same domain",
+   "desc": "audited contracts with upgrade discipline — formal-verified cores, independent audits at zero highs, and upgrade paths that cannot surprise the network."
   },
   {
-   "title": "Decentralized Identity & Verifiable Credentials",
-   "url": "/services/blockchain-digital-trust/decentralized-identity/",
-   "tag": "Same tower",
-   "desc": "Credentials users carry — portable, privacy-preserving verification for workforce and customers."
+   "title": "Asset Tokenization & Digital Assets",
+   "url": "/services/blockchain-digital-trust/asset-tokenization/",
+   "tag": "Same domain",
+   "desc": "regulated token designs — legal-wrapper-first architecture, transfer controls that enforce restrictions in code, and settlement that shortens cycles honestly."
+  },
+  {
+   "title": "Enterprise BI & Executive Analytics",
+   "url": "/services/data-analytics-lakehouse/enterprise-bi-executive-analytics/",
+   "tag": "Pairs with",
+   "desc": "decision-grade reporting with one truth per metric — certified datasets, metric contracts and an executive layer that does not argue with itself."
+  },
+  {
+   "title": "Predictive Maintenance & Asset Intelligence",
+   "url": "/services/iot-digital-twin-robotics/predictive-asset-intelligence/",
+   "tag": "Pairs with",
+   "desc": "maintenance scheduled by evidence — failure-mode-driven models, work-order integration, and the honesty to retire predictions that never came true."
+  },
+  {
+   "title": "Threat Intelligence & Managed SOC",
+   "url": "/services/cybersecurity-zero-trust/threat-intelligence-managed-soc/",
+   "tag": "Pairs with",
+   "desc": "detection engineering with measured coverage — threat-informed, purple-teamed, and run by a SOC whose speed is measured from detect to contain."
+  },
+  {
+   "title": "A European specialty reinsurer",
+   "url": "/case-studies/ins-03/",
+   "tag": "Evidence",
+   "desc": "Bordereaux automation and settlement evidence — reconciliation effort down 74%."
   }
  ]
 }

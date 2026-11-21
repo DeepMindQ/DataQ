@@ -9,233 +9,1065 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Applied AI & Generative AI at Dataq Software covers the full lifecycle of enterprise intelligence: strategy and value mapping, platform build-out, model adaptation, retrieval architectures, multimodal systems, and the governance fabric that keeps every model auditable. We do not run experiments for their own sake; every engagement is anchored to a named business metric, a named control owner, and a named risk budget."
-  },
-  {
-   "t": "h2",
-   "x": "Why the timing matters"
+   "x": "Language is now an engineering surface. Applied AI & Generative AI runs seven practices that turn models into governed production systems — retrieval that cites its sources, tuning that never regresses silently, vision that feeds systems of record, and one platform that keeps every model call observable, bounded and affordable."
   },
   {
    "t": "p",
-   "x": "Foundation-model capability is now a commodity; differentiated advantage has moved to the data layer, the retrieval layer, and the operating model around it. Enterprises that industrialize evaluation, guardrails, and cost control ship AI features in weeks and defend them in audit, while those that treat AI as a demo pipeline stall at pilot forty and lose credibility in the boardroom."
-  },
-  {
-   "t": "h2",
-   "x": "What we build, concretely"
+   "x": "The domain covers the full surface where language and prediction models carry enterprise work: strategy that survives procurement, platform engineering that holds under audit, retrieval that cites, tuning that does not regress, and vision and conversational systems wired into the tools staff already use."
   },
   {
    "t": "p",
-   "x": "Applied AI & GenAI decomposes into named services, each with its own page:"
+   "x": "Seven practices run under one evaluation discipline. A model change, a corpus change or a prompt change is the same event class — versioned, graded, and gated — because in production they are all just changes to the answer."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "h2",
+   "x": "Seven practices, one evaluation discipline"
+  },
+  {
+   "t": "table",
+   "caption": "The seven practices — scope and the metric each one is judged on",
+   "headers": [
+    "Practice",
+    "Scope in one line",
+    "Metric it moves"
+   ],
+   "rows": [
     [
      "Enterprise AI Strategy & Roadmapping",
-     "Align AI to P&L lines and risk mandates — a sequenced portfolio, not a pile of pilots."
+     "Portfolio triage, architecture direction, buy-vs-build and the first funded slice",
+     "Time to first signed baseline"
     ],
     [
-     "Generative AI Platform Engineering",
-     "One governed platform, many GenAI products — retrieval, guardrails and cost control as shared services."
-    ],
-    [
-     "LLM Fine-Tuning & Model Operations",
-     "Own your models — tune, distill and operate LLMs with measurable quality, controlled cost and enforceable policy."
+     "GenAI Platform Engineering",
+     "Inference gateway, model registry, prompt CI, guardrails, caching and spend controls",
+     "p95 latency and cost per 1k calls"
     ],
     [
      "RAG & Enterprise Knowledge Systems",
-     "Answers with citations, not vibes — permission-aware retrieval over your regulated document estate."
+     "Corpus engineering, hybrid retrieval, citations, permission-aware answers",
+     "Grounded answer rate"
     ],
     [
-     "Multimodal AI & Vision-Language Systems",
-     "Models that read scans, scenes and schematics — multimodal intelligence wired into operations."
+     "LLM Fine-Tuning & Model Ops",
+     "Distillation, adapter tuning, drift watch, rollback paths",
+     "Task accuracy vs base model"
+    ],
+    [
+     "Multimodal Vision Systems",
+     "Document and scene understanding wired into process systems of record",
+     "Straight-through processing rate"
     ],
     [
      "Conversational AI & Digital Humans",
-     "Voice and avatar interfaces that resolve, not deflect — with emotion-aware escalation and full auditability."
+     "Voice and chat agents with handoff design and containment measurement",
+     "Containment and CSAT pair"
     ],
     [
-     "AI Proof-of-Concept & Value Validation",
-     "Replace hype with evidence — feasibility, value and adoption risk proven on your data in 6-10 weeks."
+     "AI PoC & Value Validation",
+     "Four-week provability sprint that kills weak ideas before they reach a backlog",
+     "Validated metric delta at PoC exit"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "What separates a production program from a stalled pilot"
+  },
+  {
+   "t": "p",
+   "x": "Language models are commodity infrastructure now; what separates a working program from a stalled one is everything around the model — the corpus, the permissions, the evaluation, the cost line and the surface where staff actually meet the answer."
+  },
+  {
+   "t": "p",
+   "x": "This domain runs those seven practices as one system. Strategy picks the fights worth having, the platform makes every model call observable and bounded, retrieval and tuning make answers defensible, and vision and conversation put the work inside operational tools rather than another tab nobody opens."
+  },
+  {
+   "t": "p",
+   "x": "The disciplines are shared across practices: one eval harness, one model registry, one guardrail stack, one cost model. That is what lets a team move from pilot to production without re-earning trust for every new use case."
+  },
+  {
+   "t": "h2",
+   "x": "The domain reference architecture — from corpus to cited answer"
+  },
+  {
+   "t": "p",
+   "x": "The reference architecture below is the shape every engagement converges on, whatever the use case: contracts at ingest, a permission-aware knowledge spine, guarded reasoning services, an evaluation lane that can block any release, and experience surfaces that inherit the controls. The orange nodes are the ones auditors and CFOs both end up caring about."
+  },
+  {
    "t": "arch",
-   "title": "Applied AI & GenAI — reference topology",
+   "title": "Applied AI & Generative AI — domain reference architecture",
    "lanes": [
-    "Signals",
-    "Fabric",
-    "Models",
-    "Decision API",
-    "Audit",
-    "Products"
+    "Sources",
+    "Ingest & contracts",
+    "Knowledge spine",
+    "Reasoning services",
+    "Evaluation",
+    "Experience"
    ],
    "nodes": [
     {
-     "id": "sg0",
+     "id": "docs",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Document estates"
     },
     {
-     "id": "sg1",
+     "id": "apps",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "Transactional apps"
     },
     {
-     "id": "fb2",
+     "id": "streams",
+     "lane": 0,
+     "label": "Event streams"
+    },
+    {
+     "id": "cdc",
      "lane": 1,
-     "label": "Enterprise AI Strategy & Roadmapping",
+     "label": "CDC & batch ingest"
+    },
+    {
+     "id": "contract",
+     "lane": 1,
+     "label": "Schema contracts",
      "hot": true
     },
     {
-     "id": "fb3",
+     "id": "pii",
      "lane": 1,
-     "label": "Vector & graph indexes",
-     "hot": false
+     "label": "PII scan & redaction"
     },
     {
-     "id": "mo4",
+     "id": "vec",
      "lane": 2,
-     "label": "Domain models",
-     "hot": false
-    },
-    {
-     "id": "mo5",
-     "lane": 2,
-     "label": "Foundation adapters",
-     "hot": false
-    },
-    {
-     "id": "da6",
-     "lane": 3,
-     "label": "Generative AI Platform Engineering",
+     "label": "Vector + lexical index",
      "hot": true
     },
     {
-     "id": "da7",
+     "id": "kg",
+     "lane": 2,
+     "label": "Entity graph"
+    },
+    {
+     "id": "perm",
+     "lane": 2,
+     "label": "Permission map",
+     "hot": true
+    },
+    {
+     "id": "fresh",
+     "lane": 2,
+     "label": "Freshness SLAs"
+    },
+    {
+     "id": "rag",
      "lane": 3,
-     "label": "Champion / challenger",
-     "hot": false
+     "label": "Grounded RAG service",
+     "hot": true
     },
     {
-     "id": "au8",
+     "id": "cls",
+     "lane": 3,
+     "label": "Classifier fleet"
+    },
+    {
+     "id": "gen",
+     "lane": 3,
+     "label": "Guarded generation"
+    },
+    {
+     "id": "eval",
      "lane": 4,
-     "label": "Decision replay",
-     "hot": false
+     "label": "Eval harness",
+     "hot": true
     },
     {
-     "id": "au9",
+     "id": "judge",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Model judges"
     },
     {
-     "id": "pr10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "cost",
+     "lane": 4,
+     "label": "Cost per answer"
     },
     {
-     "id": "pr11",
+     "id": "assist",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "In-tool assistants"
+    },
+    {
+     "id": "api",
+     "lane": 5,
+     "label": "Answer API"
+    },
+    {
+     "id": "audit",
+     "lane": 5,
+     "label": "Citation UI"
     }
    ],
    "edges": [
     {
-     "a": "sg0",
-     "b": "fb2"
+     "a": "docs",
+     "b": "cdc"
     },
     {
-     "a": "sg1",
-     "b": "fb3"
+     "a": "apps",
+     "b": "cdc",
+     "label": "CDC"
     },
     {
-     "a": "fb2",
-     "b": "mo4"
+     "a": "streams",
+     "b": "cdc"
     },
     {
-     "a": "fb3",
-     "b": "mo5"
+     "a": "cdc",
+     "b": "contract",
+     "label": "schema"
     },
     {
-     "a": "mo4",
-     "b": "da6"
+     "a": "cdc",
+     "b": "pii",
+     "label": "redact"
     },
     {
-     "a": "mo5",
-     "b": "da7"
+     "a": "contract",
+     "b": "vec",
+     "label": "indexed"
     },
     {
-     "a": "da6",
-     "b": "au8"
+     "a": "pii",
+     "b": "vec",
+     "label": "clean"
     },
     {
-     "a": "da7",
-     "b": "au9"
+     "a": "vec",
+     "b": "kg",
+     "label": "link"
     },
     {
-     "a": "da6",
-     "b": "pr10"
+     "a": "perm",
+     "b": "vec",
+     "label": "filter"
     },
     {
-     "a": "da7",
-     "b": "pr11"
+     "a": "vec",
+     "b": "rag",
+     "label": "retrieve"
+    },
+    {
+     "a": "kg",
+     "b": "rag",
+     "label": "context"
+    },
+    {
+     "a": "rag",
+     "b": "gen",
+     "label": "draft"
+    },
+    {
+     "a": "perm",
+     "b": "rag",
+     "label": "authz"
+    },
+    {
+     "a": "rag",
+     "b": "eval",
+     "label": "sampled"
+    },
+    {
+     "a": "gen",
+     "b": "eval",
+     "label": "sampled"
+    },
+    {
+     "a": "eval",
+     "b": "judge",
+     "label": "grade"
+    },
+    {
+     "a": "eval",
+     "b": "cost",
+     "label": "metered"
+    },
+    {
+     "a": "rag",
+     "b": "api",
+     "label": "serve"
+    },
+    {
+     "a": "gen",
+     "b": "assist",
+     "label": "serve"
+    },
+    {
+     "a": "eval",
+     "b": "api",
+     "label": "block on fail"
     }
    ],
-   "note": "Highlighted nodes are the tower's named services in their architectural position."
+   "note": "Every production path passes the permission map and the evaluation lane before it reaches a user surface; blocked releases are normal and expected."
   },
   {
    "t": "h2",
-   "x": "Delivery, without the theater"
+   "x": "The domain on one screen — commitments, releases, decisions"
   },
   {
    "t": "p",
-   "x": "What a Applied AI & GenAI engagement shares across services: the baseline is signed, the slice is bounded, and the gates can stop the program — that last part is a feature. In Applied AI & GenAI programs the same rule applies: baselines are signed in the first two weeks, the working slice lands inside the quarter, and the value ledger stays open to your finance team."
+   "x": "This console is the operating contract rendered honestly: tiles are the numbers we sign for, bars show where each release stands gate by gate, and the log is a real decision feed whose shapes match the runbook your team receives at handover."
+  },
+  {
+   "t": "idash",
+   "title": "Applied AI portfolio — the seven practices on one console",
+   "kpis": [
+    {
+     "label": "Practices live",
+     "value": "7",
+     "delta": "gates signed per practice",
+     "dir": "flat",
+     "spark": [
+      2,
+      3,
+      5,
+      5,
+      6,
+      7,
+      7
+     ]
+    },
+    {
+     "label": "PoC kill rate",
+     "value": "68%",
+     "delta": "honest — graveyard published",
+     "dir": "flat",
+     "spark": [
+      50,
+      55,
+      60,
+      62,
+      65,
+      67,
+      68
+     ]
+    },
+    {
+     "label": "Eval coverage",
+     "value": "87%",
+     "delta": "of production gen-AI flows",
+     "dir": "up",
+     "spark": [
+      40,
+      52,
+      61,
+      70,
+      78,
+      84,
+      87
+     ]
+    },
+    {
+     "label": "Cost / 1k tokens",
+     "value": "0.0021",
+     "delta": "blended after routing",
+     "dir": "down",
+     "spark": [
+      0.008,
+      0.0065,
+      0.005,
+      0.0038,
+      0.0029,
+      0.0024,
+      0.0021
+     ]
+    },
+    {
+     "label": "Onboard → prod",
+     "value": "6.5 d",
+     "delta": "platform onboarding",
+     "dir": "down",
+     "spark": [
+      28,
+      22,
+      17,
+      13,
+      10,
+      8,
+      6.5
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Portfolio value",
+     "widgets": [
+      {
+       "kind": "scatter",
+       "title": "The AI estate by value and readiness — bubbles at risk tier",
+       "points": [
+        {
+         "x": 78,
+         "y": 66,
+         "label": "Claims triage",
+         "group": "Tier-1"
+        },
+        {
+         "x": 64,
+         "y": 48,
+         "label": "Quality vision",
+         "group": "Tier-2"
+        },
+        {
+         "x": 88,
+         "y": 24,
+         "label": "Underwriting assist",
+         "group": "Tier-1"
+        },
+        {
+         "x": 52,
+         "y": 72,
+         "label": "Service summaries",
+         "group": "Tier-3"
+        },
+        {
+         "x": 70,
+         "y": 30,
+         "label": "Contract intel",
+         "group": "Tier-2"
+        },
+        {
+         "x": 58,
+         "y": 76,
+         "label": "Invoice exception",
+         "group": "Tier-2"
+        },
+        {
+         "x": 44,
+         "y": 55,
+         "label": "Forecasting",
+         "group": "Tier-2"
+        },
+        {
+         "x": 82,
+         "y": 12,
+         "label": "Dynamic pricing",
+         "group": "Tier-1"
+        }
+       ],
+       "groups": [
+        "Tier-1",
+        "Tier-2",
+        "Tier-3"
+       ],
+       "xLabel": "Value (0-100)",
+       "yLabel": "Readiness (0-100)",
+       "note": "Hover for names. The funded slate comes from the upper band with tiered controls attached — the map is the strategy practice's working artifact."
+      },
+      {
+       "kind": "bar",
+       "title": "Gate outcomes by stage — where candidates die honestly",
+       "cats": [
+        "Gate 1",
+        "Gate 2",
+        "Gate 3",
+        "Gate 4",
+        "Funded"
+       ],
+       "series": [
+        {
+         "name": "Candidates reaching (n)",
+         "points": [
+          64,
+          38,
+          25,
+          15,
+          11
+         ]
+        },
+        {
+         "name": "Surviving (%)",
+         "points": [
+          59,
+          66,
+          60,
+          73,
+          73
+         ]
+        }
+       ],
+       "note": "Click to isolate. The funnel is the value-validation practice's honesty: two-thirds die, and the graveyard is published internally — that is what keeps hypotheses sharp."
+      }
+     ]
+    },
+    {
+     "name": "Capability heat",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Practice depth by sector — where applied AI runs deepest",
+       "rows": [
+        "PoC gates",
+        "Platform",
+        "Fine-tuning",
+        "RAG",
+        "Voice",
+        "Vision"
+       ],
+       "cats": [
+        "Banking",
+        "Healthcare",
+        "Retail",
+        "Manufacturing",
+        "Public sector"
+       ],
+       "matrix": [
+        [
+         90,
+         84,
+         78,
+         88,
+         74,
+         72
+        ],
+        [
+         82,
+         78,
+         70,
+         92,
+         68,
+         80
+        ],
+        [
+         84,
+         86,
+         76,
+         78,
+         82,
+         84
+        ],
+        [
+         78,
+         80,
+         84,
+         66,
+         70,
+         92
+        ],
+        [
+         80,
+         76,
+         68,
+         82,
+         76,
+         70
+        ]
+       ],
+       "unit": "depth index",
+       "note": "Hover cells for depth. RAG carries healthcare's flagship record; vision carries manufacturing's — pick your sector cell and the practice page below it."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · portfolio model",
+   "note": "Reference portfolio model: gate outcomes and depth indices from delivery, not client telemetry."
   },
   {
    "t": "h2",
-   "x": "Engagements that used this pattern"
+   "x": "Capability posture and where the bar sits"
   },
   {
    "t": "p",
-   "x": "Reference deliveries in Applied AI & Generative AI — identity withheld as standard, method notes available under NDA:"
+   "x": "Radar profile against six axes we are gated on. The gap between current build posture and target band is deliberate: it is the work program the next two quarters fund, and it is re-scored at every gate review."
+  },
+  {
+   "t": "chart",
+   "title": "Domain capability profile — current build posture vs target",
+   "variant": "radar",
+   "cats": [
+    "Groundedness",
+    "Retrieval recall",
+    "Latency discipline",
+    "Cost control",
+    "Eval coverage",
+    "Permission fidelity"
+   ],
+   "series": [
+    {
+     "name": "Current posture",
+     "points": [
+      88,
+      84,
+      79,
+      81,
+      92,
+      90
+     ]
+    },
+    {
+     "name": "Target band",
+     "points": [
+      94,
+      92,
+      88,
+      88,
+      96,
+      96
+     ]
+    }
+   ],
+   "unit": "score",
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "h2",
+   "x": "Sector depth — where Applied AI runs deepest today"
+  },
+  {
+   "t": "p",
+   "x": "Applied AI is bought differently in different sectors: banks buy grounded answers under supervisory review, hospitals buy documentation time back, software companies buy the platform. The bars below are live counts of sub-industry capability briefs published on this site — the honest map of where sector-calibrated depth already exists."
+  },
+  {
+   "t": "chart",
+   "title": "Applied AI & Generative AI — published sub-industry briefs by sector",
+   "variant": "bar",
+   "cats": [
+    "Banking & Financial Services",
+    "Insurance & Risk",
+    "Healthcare & Life Sciences",
+    "Manufacturing & Industrial",
+    "Retail & Consumer Goods",
+    "Telecom, Media & Entertainment",
+    "Energy & Utilities",
+    "Logistics & Supply Chain",
+    "Public Sector & Government",
+    "Education & Research",
+    "Technology & SaaS",
+    "Agriculture & Food Systems"
+   ],
+   "series": [
+    {
+     "name": "Published sub-industry briefs",
+     "points": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      1,
+      1,
+      3,
+      4,
+      3,
+      4
+     ]
+    }
+   ],
+   "unit": "briefs",
+   "yMax": 5,
+   "note": "",
+   "caption": "Counts are live pages on this site. Taller bars mean deeper published sector coverage; every cell also has the domain-level sector brief."
+  },
+  {
+   "t": "explorer",
+   "title": "Applied AI in your sector — pick the industry and see the delivery plan",
+   "intro": "Twelve sectors, twelve different regulatory and operating realities. Select yours: the panel shows the hook that usually starts the program, the deliverables we build, the targets we sign, and the sector brief behind it.",
+   "service": "Applied AI & Generative AI",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Governed retrieval and generation with citations and refusal-by-default",
+      "One platform door for every model call — authz, budgets, caching, traces",
+      "An eval harness that blocks silent regressions before users see them"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "p95 answer latency",
+       "value": "2.1s"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Ask what pricing sophistication outrunning governance costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Governed retrieval and generation with citations and refusal-by-default",
+      "One platform door for every model call — authz, budgets, caching, traces",
+      "An eval harness that blocks silent regressions before users see them"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "p95 answer latency",
+       "value": "2.1s"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": true,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Governed retrieval and generation with citations and refusal-by-default",
+      "One platform door for every model call — authz, budgets, caching, traces",
+      "An eval harness that blocks silent regressions before users see them",
+      "Sector working pattern: ambient clinical documentation: visit audio to structured draft notes in EHR templates with clinician sign-off. Documentation time down 25%+ is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "p95 answer latency",
+       "value": "2.1s"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "Manufacturing & Industrial operators recognize the pattern: quality escapes and manual inspection, quarter after quarter.",
+     "plays": [
+      "Governed retrieval and generation with citations and refusal-by-default",
+      "One platform door for every model call — authz, budgets, caching, traces",
+      "An eval harness that blocks silent regressions before users see them"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "p95 answer latency",
+       "value": "2.1s"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Governed retrieval and generation with citations and refusal-by-default",
+      "One platform door for every model call — authz, budgets, caching, traces",
+      "An eval harness that blocks silent regressions before users see them"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "p95 answer latency",
+       "value": "2.1s"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Governed retrieval and generation with citations and refusal-by-default",
+      "One platform door for every model call — authz, budgets, caching, traces",
+      "An eval harness that blocks silent regressions before users see them",
+      "Sector working pattern: resolution-first voice care — grounded voice agents resolving top intents with telephony integration and escalation context. Care cost per contact down 30% is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "p95 answer latency",
+       "value": "2.1s"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Governed retrieval and generation with citations and refusal-by-default",
+      "One platform door for every model call — authz, budgets, caching, traces",
+      "An eval harness that blocks silent regressions before users see them"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "p95 answer latency",
+       "value": "2.1s"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: demand and capacity planning stale, quarter after quarter.",
+     "plays": [
+      "Governed retrieval and generation with citations and refusal-by-default",
+      "One platform door for every model call — authz, budgets, caching, traces",
+      "An eval harness that blocks silent regressions before users see them",
+      "Sector working pattern: eta prediction in Logistics & Supply Chain, where traffic, weather and history-driven ETA models per lane and mode. Promise accuracy up; penalties down is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "p95 answer latency",
+       "value": "2.1s"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use.",
+     "plays": [
+      "Governed retrieval and generation with citations and refusal-by-default",
+      "One platform door for every model call — authz, budgets, caching, traces",
+      "An eval harness that blocks silent regressions before users see them"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "p95 answer latency",
+       "value": "2.1s"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Governed retrieval and generation with citations and refusal-by-default",
+      "One platform door for every model call — authz, budgets, caching, traces",
+      "An eval harness that blocks silent regressions before users see them"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "p95 answer latency",
+       "value": "2.1s"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": true,
+     "hook": ": the operating one and the regulatory one.",
+     "plays": [
+      "Governed retrieval and generation with citations and refusal-by-default",
+      "One platform door for every model call — authz, budgets, caching, traces",
+      "An eval harness that blocks silent regressions before users see them"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "p95 answer latency",
+       "value": "2.1s"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/applied-ai-generative-ai/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Governed retrieval and generation with citations and refusal-by-default",
+      "One platform door for every model call — authz, budgets, caching, traces",
+      "An eval harness that blocks silent regressions before users see them"
+     ],
+     "kpis": [
+      {
+       "label": "Grounded answer rate",
+       "value": "94%"
+      },
+      {
+       "label": "Citation precision",
+       "value": "96%"
+      },
+      {
+       "label": "p95 answer latency",
+       "value": "2.1s"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/"
+    }
+   ],
+   "practiceNote": "Domain-level view — pick a practice above for the practice-specific sector plan and console."
+  },
+  {
+   "t": "h2",
+   "x": "How engagements run in this domain"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "A top-10 European retail bank",
-     "Real-time fraud decisioning on instant rails — 38% lower fraud losses at a higher approval rate"
+     "Diagnostic — two weeks",
+     "The metric is signed, the corpus and platform estate are mapped, and the gate model is scored for your reality. You keep the gate map whoever builds."
     ],
     [
-     "A top-5 global P&C insurer",
-     "Claims triage in minutes — 55% faster cycle times with document intelligence"
+     "Provability sprint — four weeks",
+     "One practice runs a fund-or-kill slice on your real data path: auditable numbers at exit, or a clean kill with the reasons written down."
     ],
     [
-     "A 12-hospital US health system",
-     "Clinicians get 90 minutes a day back — ambient documentation inside the EHR"
+     "Build — ten to fourteen weeks",
+     "Architecture and gates from these pages applied to your estate, with the operating console live from week two and evidence packs accumulating per release."
+    ],
+    [
+     "Industrialize — ongoing",
+     "Quarterly re-baselines, domain-level gate reviews, and the platform-reuse review that keeps the next use case cheap instead of another first project."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Engineering standards we hold"
+   "x": "Domain-level release gates"
   },
   {
-   "t": "p",
-   "x": "The tower runs on Dataq Compass, Dataq Forge, Dataq Nexus — platforms with documented controls, so the governance story is part of the product rather than an annex."
+   "t": "table",
+   "caption": "Domain-level release gates — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Baseline gate",
+     "Is there a signed metric with an owner?",
+     "Baseline document signed by the metric owner; collection method attached"
+    ],
+    [
+     "Corpus gate",
+     "Is the knowledge estate ready to be retrieved?",
+     "Source inventory with freshness SLAs, dedup and permission scan results"
+    ],
+    [
+     "Eval gate",
+     "Does the system beat the bar on the eval suite?",
+     "Suite version pinned; groundedness, citation precision and regression count at or above target"
+    ],
+    [
+     "Guardrail gate",
+     "Does it refuse what it should refuse?",
+     "Red-team suite results; jailbreak and prompt-injection containment evidence"
+    ],
+    [
+     "Cost gate",
+     "Is the unit economics honest?",
+     "Cost per 1k calls at target load with caching on, plus a burn-down plan if over"
+    ],
+    [
+     "Audit gate",
+     "Would this survive a regulator's afternoon?",
+     "Trace samples with citations, permission decisions and prompt versions attached"
+    ]
+   ]
   },
   {
    "t": "cta",
-   "x": "A value assessment prices the delta in your estate before anything is signed: Applied AI & Generative AI, measured against your baseline, in two weeks."
+   "x": "Bring one metric you own to a briefing — we will show you which practice carries it, which gates you would fail today, and what the first funded slice would look like."
   }
  ],
- "words": 492,
+ "words": 1048,
  "section": "Services",
  "l1": "Services",
  "l2": "Applied AI & Generative AI",

@@ -1,0 +1,263 @@
+{
+ "id": "CASE-edu-04",
+ "title": "A research university",
+ "url": "/case-studies/edu-04/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Education & Research > A research university",
+ "seo_title": "A research university | Case Study | Dataq Software",
+ "meta_description": "HPC scheduling reformulated — cluster utilization up 19 points and the paper backlog from compute queues cut by two-thirds",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "HPC scheduling reformulated — cluster utilization up 19 points and the paper backlog from compute queues cut by two-thirds"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a research university whose cluster was world-class and whose queue was world-famous among its PhD students. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline semester measured the queue: 58% average utilization with usage spiking per deadline season, 400-job waitlists on the GPU partitions, and three published papers whose reviewers asked why results took nine months to produce."
+  },
+  {
+   "t": "p",
+   "x": "Scheduling ran on first-come-first-served with manual exceptions; fairness lived in the queue order, and priority negotiations happened in corridor conversations."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We reformulated the scheduler: job shapes profiled from real history, backfill and priority decomposition producing schedules reproducible seed-by-seed, burst capacity on cloud for deadline seasons with data locality respected, and the fairness policy written as code the community reviews openly. The corridor negotiation became a configuration change."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — A research university",
+   "lanes": [
+    "Job history",
+    "Scheduling core",
+    "Burst capacity",
+    "Fairness policy"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "Cluster telemetry & job shapes",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Deadline season signals",
+     "hot": true
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Reproducible schedule optimizer",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Backfill & priority decomposition",
+     "hot": true
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Cloud burst with data locality",
+     "hot": true
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Local-first placement"
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Open fairness policy (as code)",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Utilization ledger"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A research university",
+   "kpis": [
+    {
+     "label": "Cluster utilization",
+     "value": "58% → 77%",
+     "delta": "+19 points",
+     "dir": "up"
+    },
+    {
+     "label": "GPU partition waitlists",
+     "value": "-67%",
+     "delta": "bursts absorb seasons",
+     "dir": "down"
+    },
+    {
+     "label": "Paper-compute cycle time",
+     "value": "9 → 3 months",
+     "delta": "median for flagged projects",
+     "dir": "down"
+    },
+    {
+     "label": "Policy changes with community review",
+     "value": "100%",
+     "delta": "open process",
+     "dir": "up"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed with the computing committee",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 06",
+     "msg": "Reformulated scheduler live in shadow",
+     "tag": "build"
+    },
+    {
+     "t": "wk 12",
+     "msg": "Gate review — community vote on the fairness policy",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Bursts on the deadline calendar; policy under committee owner",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Utilization and waitlist baselines signed with the committee"
+    ],
+    [
+     "Build gate",
+     "No policy change without reproducible schedule evidence"
+    ],
+    [
+     "Run gate",
+     "Semester utilization review in open committee"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The open-fairness-as-code pattern transfers to any shared compute estate; the job shapes were this university's research mix. Another institution starts from its queue log — the diagnostic reads a semester of it first."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "10 months",
+     "9-person specialist team",
+     "EU",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "Bring your own baseline. The two-week diagnostic is how this engagement started, and it is how we find out whether your estate can carry the same delta."
+  }
+ ],
+ "words": 428,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Education & Research",
+ "l3": "A research university",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Education & Research",
+   "url": "/industries/education-research/"
+  },
+  {
+   "name": "A research university",
+   "url": "/case-studies/edu-04/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Education & Research — industry hub",
+   "url": "/industries/education-research/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Cloud, Edge & Platform Engineering",
+   "url": "/services/cloud-edge-platform-engineering/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A public research university (38,000 students)",
+   "url": "/case-studies/edu-01/",
+   "desc": "Retention +4.1 points in target cohorts — early-warning to advising loop"
+  },
+  {
+   "title": "A national EdTech platform (2M learners)",
+   "url": "/case-studies/edu-02/",
+   "desc": "Outcome evidence published — renewals secured with learning-gain pipelines"
+  },
+  {
+   "title": "A multi-campus university group",
+   "url": "/case-studies/edu-03/",
+   "desc": "Research throughput up 2.8x — governed HPC/cloud platform"
+  }
+ ],
+ "cards": []
+}

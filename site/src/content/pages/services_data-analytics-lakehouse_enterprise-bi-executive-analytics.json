@@ -9,264 +9,1179 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Most enterprise bi & executive analytics engagements stall between the deck and the deployment. Ours are built to cross that gap: Metrics into management — one governed semantic layer, decision cadence built in.. What follows is the working pattern, not the brochure."
+   "x": "Decision-grade reporting with one truth per metric: certified datasets, metric contracts with owners, and an executive layer fast enough that nobody rebuilds the number in a spreadsheet before the board meeting."
   },
   {
    "t": "h2",
-   "x": "What this service is"
+   "x": "The spreadsheet shadow is a product of slow truth"
   },
   {
    "t": "p",
-   "x": "Executive analytics fails through metric anarchy: five definitions of revenue, three churn rates, dashboards nobody trusts. We implement a governed semantic layer — certified metric definitions, ownership, refresh SLAs — delivered through Power BI, Tableau or Looker, and then go further: aligning reporting to the operating cadence (daily huddles, weekly trading, monthly close) so numbers drive meetings rather than decorate them."
+   "x": "Executive analytics fails as a numbers argument: three dashboards, five versions of revenue, a meeting spent reconciling spreadsheets. The cure is metric contracts — one definition, one certified dataset, one owner — and a semantic layer that makes the contract executable rather than a wiki page."
   },
   {
    "t": "p",
-   "x": "Self-service succeeds inside guardrails: certified datasets with promoted endorsement, sandbox zones for exploration, and a certification workflow that turns a popular sandbox report into a governed asset. We measure adoption by decision usage — who uses which metric in which meeting — because that, not dashboard count, is the point."
+   "x": "The build is unglamorous: certify the datasets behind the top metrics, wire the semantic layer, instrument the dispute rate, and retire the shadow spreadsheets on evidence. The payoff is meetings that start from the same number."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that multiply versions of the truth, the reference architecture that certifies metrics, and the console that tracks trust in the BI estate."
   },
   {
    "t": "h2",
-   "x": "Why the timing matters"
+   "x": "Four failure modes that multiply versions of the truth"
   },
   {
    "t": "p",
-   "x": "Programs of Enterprise BI & Executive Analytics run in Retail & Consumer Goods, Banking & Financial Services, Manufacturing & Industrial, Telecom, Media & Entertainment — always against one named number, always with the baseline signed first."
+   "x": "Each of these grows the spreadsheet shadow — the countermeasures make certified metrics faster and more trusted than the private rebuild."
   },
   {
-   "t": "h2",
-   "x": "What goes live, and in what order"
-  },
-  {
-   "t": "p",
-   "x": "The components, as they land:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Enterprise BI & Executive Analytics: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Semantic layer",
-     "certified metric definitions with owners, lineage and refresh SLAs"
+     "Metric anarchy",
+     "Revenue means three things in three rooms",
+     "Metric contracts with definitions, owners and certified sources"
     ],
     [
-     "Cadence-aligned reporting",
-     "dashboards designed for huddle/trade/close operating rhythms"
+     "Dashboard sprawl",
+     "400 dashboards, 40 used, all maintained",
+     "Usage-driven consolidation with retirement gates"
     ],
     [
-     "Self-service guardrails",
-     "sandbox zones, certification workflow and promotion path"
+     "Spreadsheet shadow",
+     "The truth lives in someone's offline workbook",
+     "Shadow census; certified replacements; retirement on adoption evidence"
     ],
     [
-     "Embedded analytics",
-     "decision support inside operational apps, not just portal BI"
-    ],
-    [
-     "Adoption instrumentation",
-     "decision-usage analytics tying reports to meetings and actions"
+     "Slow truth",
+     "Executives wait days for 'the number'",
+     "Certified semantic layer with sub-minute query paths"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — metric contracts to the executive layer"
+  },
+  {
+   "t": "p",
+   "x": "Metrics are contracts: definitions with owners, certified datasets underneath, change control on definitions, and an executive serving layer whose p95 is itself an SLA — speed is why the shadow exists, so speed is part of the governance."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Enterprise BI & Executive Analytics",
+   "title": "Reference architecture — governed BI & semantic layer",
    "lanes": [
-    "Source estates",
-    "Streaming ingest",
-    "Lakehouse core",
-    "Certified products",
-    "Serving",
-    "Decisions"
+    "Certified core",
+    "Semantic layer",
+    "Experiences",
+    "Democracy",
+    "Trust",
+    "Ops"
    ],
    "nodes": [
     {
-     "id": "se0",
+     "id": "gold",
      "lane": 0,
-     "label": "POS & loyalty streams",
-     "hot": false
+     "label": "Gold datasets"
     },
     {
-     "id": "se1",
+     "id": "cert",
      "lane": 0,
-     "label": "eCommerce event bus",
-     "hot": false
-    },
-    {
-     "id": "se2",
-     "lane": 0,
-     "label": "WMS & inventory",
-     "hot": false
-    },
-    {
-     "id": "si3",
-     "lane": 1,
-     "label": "Enterprise BI & Executive Analytics",
+     "label": "Certification board",
      "hot": true
     },
     {
-     "id": "si4",
-     "lane": 1,
-     "label": "Batch pipelines",
-     "hot": false
+     "id": "src",
+     "lane": 0,
+     "label": "Source systems"
     },
     {
-     "id": "lc5",
-     "lane": 2,
-     "label": "Bronze → silver → gold",
+     "id": "sem",
+     "lane": 1,
+     "label": "Semantic layer",
      "hot": true
     },
     {
-     "id": "lc6",
+     "id": "metr",
+     "lane": 1,
+     "label": "Metric contracts",
+     "hot": true
+    },
+    {
+     "id": "dims",
+     "lane": 1,
+     "label": "Shared dimensions"
+    },
+    {
+     "id": "exec",
      "lane": 2,
-     "label": "Data contracts",
-     "hot": false
+     "label": "Executive suite"
     },
     {
-     "id": "cp7",
+     "id": "ops",
+     "lane": 2,
+     "label": "Ops dashboards"
+    },
+    {
+     "id": "mobile",
+     "lane": 2,
+     "label": "Mobile briefings"
+    },
+    {
+     "id": "self",
      "lane": 3,
-     "label": "Metric definitions",
-     "hot": false
+     "label": "Self-serve workbench"
     },
     {
-     "id": "cp8",
+     "id": "edu",
      "lane": 3,
-     "label": "Data products",
-     "hot": false
+     "label": "Enablement tracks"
     },
     {
-     "id": "sv9",
+     "id": "tmp",
+     "lane": 3,
+     "label": "Sandbox tier"
+    },
+    {
+     "id": "usage",
      "lane": 4,
-     "label": "BI & semantic layer",
-     "hot": false
+     "label": "Usage telemetry"
     },
     {
-     "id": "sv10",
+     "id": "disp",
      "lane": 4,
-     "label": "Feature serving",
-     "hot": false
+     "label": "Dispute tracker",
+     "hot": true
     },
     {
-     "id": "de11",
-     "lane": 5,
-     "label": "Pricing & markdown console",
-     "hot": false
+     "id": "shadow",
+     "lane": 4,
+     "label": "Shadow census"
     },
     {
-     "id": "de12",
+     "id": "slo",
      "lane": 5,
-     "label": "Store ops app",
-     "hot": false
+     "label": "Query SLOs"
+    },
+    {
+     "id": "cost",
+     "lane": 5,
+     "label": "Cost per query"
+    },
+    {
+     "id": "acc",
+     "lane": 5,
+     "label": "Entitlement sync"
     }
    ],
    "edges": [
     {
-     "a": "se0",
-     "b": "si3"
+     "a": "gold",
+     "b": "sem",
+     "label": "certified"
     },
     {
-     "a": "se1",
-     "b": "si3"
+     "a": "cert",
+     "b": "metr",
+     "label": "sign"
     },
     {
-     "a": "se2",
-     "b": "si4"
+     "a": "metr",
+     "b": "sem",
+     "label": "bind"
     },
     {
-     "a": "si3",
-     "b": "lc5"
+     "a": "sem",
+     "b": "exec",
+     "label": "serve"
     },
     {
-     "a": "si4",
-     "b": "lc5"
+     "a": "sem",
+     "b": "ops",
+     "label": "serve"
     },
     {
-     "a": "lc5",
-     "b": "cp7"
+     "a": "sem",
+     "b": "mobile",
+     "label": "serve"
     },
     {
-     "a": "lc6",
-     "b": "cp8"
+     "a": "sem",
+     "b": "self",
+     "label": "governed"
     },
     {
-     "a": "cp7",
-     "b": "sv9"
+     "a": "edu",
+     "b": "self",
+     "label": "train"
     },
     {
-     "a": "cp8",
-     "b": "sv10"
+     "a": "self",
+     "b": "tmp",
+     "label": "sandbox"
     },
     {
-     "a": "sv9",
-     "b": "de11"
+     "a": "exec",
+     "b": "usage",
+     "label": "telemetry"
     },
     {
-     "a": "sv10",
-     "b": "de12"
+     "a": "disp",
+     "b": "metr",
+     "label": "fix"
+    },
+    {
+     "a": "shadow",
+     "b": "disp",
+     "label": "evidence"
+    },
+    {
+     "a": "sem",
+     "b": "slo",
+     "label": "bound"
+    },
+    {
+     "a": "slo",
+     "b": "cost",
+     "label": "plan"
+    },
+    {
+     "a": "acc",
+     "b": "sem",
+     "label": "gate"
     }
    ],
-   "note": "Topology inherited from the Data & Lakehouse tower; the highlighted core is this service's build."
+   "note": "The dispute tracker is the trust instrument: every metric argument is logged, resolved by editing the contract — never by building another dashboard."
   },
   {
    "t": "h2",
-   "x": "Deliverables, without dressing them up"
+   "x": "One metric, from dispute to certification"
   },
   {
    "t": "p",
-   "x": "What changes hands, in writing — Enterprise BI & Executive Analytics edition:"
+   "x": "From definition argument through contract drafting, certification, downstream adoption and the dispute ledger — including what happens when a definition change is requested mid-quarter."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Metric lifecycle — propose, contract, certify, serve, dispute, fix",
+   "labels": [
+    "Metric proposed",
+    "Definition drafted",
+    "Contract signed",
+    "Certified & bound",
+    "Served everywhere",
+    "Disputes logged",
+    "Contract amended"
+   ],
+   "note": "Certification is the gate: a metric does not reach an executive surface without a signed contract and a certified dataset behind it."
+  },
+  {
+   "t": "h2",
+   "x": "The BI console — trust, measured"
+  },
+  {
+   "t": "p",
+   "x": "Certified coverage, dispute rate, executive query p95 and the shrinking spreadsheet count — the four numbers that tell you whether the estate is gaining or losing the trust war."
+  },
+  {
+   "t": "idash",
+   "title": "Enterprise BI — semantic console",
+   "kpis": [
+    {
+     "label": "Certified metrics",
+     "value": "64",
+     "delta": "one definition each, owned",
+     "dir": "up",
+     "spark": [
+      12,
+      20,
+      30,
+      40,
+      50,
+      58,
+      64
+     ]
+    },
+    {
+     "label": "Metric disputes",
+     "value": "0",
+     "delta": "escalations this quarter",
+     "dir": "down",
+     "spark": [
+      14,
+      10,
+      7,
+      4,
+      2,
+      1,
+      0
+     ]
+    },
+    {
+     "label": "Certified usage share",
+     "value": "87%",
+     "delta": "of executive views",
+     "dir": "up",
+     "spark": [
+      34,
+      46,
+      58,
+      68,
+      76,
+      82,
+      87
+     ]
+    },
+    {
+     "label": "Dashboard sprawl",
+     "value": "−41%",
+     "delta": "retired since baseline",
+     "dir": "down",
+     "spark": [
+      0,
+      -6,
+      -14,
+      -22,
+      -30,
+      -36,
+      -41
+     ]
+    },
+    {
+     "label": "Exec review prep",
+     "value": "1.5 h",
+     "delta": "was 3 days of reconciliation",
+     "dir": "down",
+     "spark": [
+      24,
+      16,
+      10,
+      6,
+      4,
+      2.5,
+      1.5
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Metric health",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Metric estate by domain × health dimension",
+       "rows": [
+        "Revenue",
+        "Customers",
+        "Operations",
+        "Supply",
+        "People"
+       ],
+       "cats": [
+        "Definition",
+        "Freshness",
+        "Adoption",
+        "Lineage",
+        "Owner"
+       ],
+       "matrix": [
+        [
+         96,
+         98,
+         92,
+         94,
+         100
+        ],
+        [
+         94,
+         90,
+         88,
+         86,
+         96
+        ],
+        [
+         84,
+         80,
+         76,
+         72,
+         88
+        ],
+        [
+         78,
+         74,
+         68,
+         70,
+         82
+        ],
+        [
+         72,
+         76,
+         70,
+         64,
+         85
+        ]
+       ],
+       "unit": "% health",
+       "note": "Hover cells to read health. Revenue is the certified exemplar; People metrics are where definitions still hide in spreadsheets — that is next quarter's certification sprint."
+      }
+     ]
+    },
+    {
+     "name": "Governance what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Certification what-if — coverage vs decision confidence",
+       "params": [
+        {
+         "name": "Metrics certified",
+         "min": 10,
+         "max": 150,
+         "step": 10,
+         "value": 64,
+         "unit": "metrics"
+        },
+        {
+         "name": "Review cadence",
+         "min": 4,
+         "max": 26,
+         "step": 2,
+         "value": 13,
+         "unit": "weeks"
+        },
+        {
+         "name": "Self-serve users",
+         "min": 20,
+         "max": 2000,
+         "step": 20,
+         "value": 640,
+         "unit": "users"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Decision confidence",
+         "unit": "0-100",
+         "formula": "min(95, p0*0.6+p2*0.02)",
+         "good": "80",
+         "bad": "55"
+        },
+        {
+         "name": "Shadow-XML sprawl",
+         "unit": "sheets/qtr",
+         "formula": "max(2, 220-p0*1.3)",
+         "good": "40",
+         "bad": "150"
+        },
+        {
+         "name": "Governance load",
+         "unit": "h/mo",
+         "formula": "p0*0.4*13/max(4,p1)",
+         "good": "40",
+         "bad": "120"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 2,
+        "label": "Certified metrics vs governance load"
+       },
+       "note": "The governance-load curve argues for cadence: certifying more metrics at a stable review cadence flattens the load — certifying with ad-hoc reviews is how programs burn out."
+      }
+     ]
+    },
+    {
+     "name": "Semantic flow",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The BI semantic stack — click nodes for the governance contract",
+       "lanes": [
+        "Source",
+        "Semantic",
+        "Delivery",
+        "Governance"
+       ],
+       "nodes": [
+        {
+         "id": "gold",
+         "lane": 0,
+         "label": "Gold layer",
+         "detail": "Dimensional marts from the lakehouse with documented grain — the semantic layer sits on foundations, not on whatever query was fastest.",
+         "hot": true
+        },
+        {
+         "id": "sem",
+         "lane": 1,
+         "label": "Semantic layer",
+         "detail": "One definition per metric: formula, filters, grain, owner — versioned, tested against golden cases, consumed by every surface."
+        },
+        {
+         "id": "cert",
+         "lane": 1,
+         "label": "Certification tiers",
+         "detail": "Decision-grade surfaces (audited lineage, freshness SLA, review cadence) vs exploratory — executives read certified, analysts explore with lineage."
+        },
+        {
+         "id": "dash",
+         "lane": 2,
+         "label": "Executive surfaces",
+         "detail": "Review-ready dashboards rendered from certified metrics — the prep is 90 minutes because the numbers already agree."
+        },
+        {
+         "id": "self",
+         "lane": 2,
+         "label": "Self-serve library",
+         "detail": "Curated metric libraries and data products with row-level security from the identity fabric — governed breadth, not gated scarcity."
+        },
+        {
+         "id": "telem",
+         "lane": 3,
+         "label": "Adoption telemetry",
+         "detail": "Usage by certification tier, query cost by team, retirement rate — the estate's truth about what is actually used."
+        },
+        {
+         "id": "ret",
+         "lane": 3,
+         "label": "Retirement registry",
+         "detail": "Dashboards retired with usage evidence and owner sign-off — sprawl is pruned on cadence, not on crisis."
+        }
+       ],
+       "edges": [
+        {
+         "a": "gold",
+         "b": "sem",
+         "label": "foundations"
+        },
+        {
+         "a": "sem",
+         "b": "cert",
+         "label": "graded"
+        },
+        {
+         "a": "cert",
+         "b": "dash",
+         "label": "decision-grade"
+        },
+        {
+         "a": "cert",
+         "b": "self",
+         "label": "libraries"
+        },
+        {
+         "a": "dash",
+         "b": "telem",
+         "label": "usage"
+        },
+        {
+         "a": "telem",
+         "b": "ret",
+         "label": "flags"
+        }
+       ],
+       "note": "Click nodes for the contract each layer carries. The semantic layer is where the metric arguments go to be settled — permanently, as data."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · governance model",
+   "note": "Reference program model: certification bands from delivery benchmarks, not client telemetry."
+  },
+  {
+   "t": "h2",
+   "x": "Trust metrics across the BI estate"
+  },
+  {
+   "t": "p",
+   "x": "Certification coverage, dispute rates and query performance across domains — the shape that shows where the shadow spreads and where certification is winning."
+  },
+  {
+   "t": "chart",
+   "title": "Trust metrics across the BI estate — design targets",
+   "variant": "bar",
+   "cats": [
+    "Top-100 metrics",
+    "Exec suite",
+    "Ops dashboards",
+    "Self-serve"
+   ],
+   "series": [
+    {
+     "name": "Certified coverage target %",
+     "points": [
+      92,
+      100,
+      88,
+      74
+     ]
+    },
+    {
+     "name": "Dispute rate target (/mo)",
+     "points": [
+      1.1,
+      0.4,
+      1.6,
+      2.8
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Enterprise BI & Executive Analytics across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Enterprise BI & Executive Analytics",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": false,
+     "hook": "Ask what fraud and AML decisions too slow costs Banking & Financial Services firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Metric contracts with owners, certification and change control",
+      "An executive layer whose query p95 is itself an SLA",
+      "A dispute ledger and the shrinking spreadsheet shadow as the KPI"
+     ],
+     "kpis": [
+      {
+       "label": "Certified metric coverage",
+       "value": "86%"
+      },
+      {
+       "label": "Metric dispute rate",
+       "value": "1.1/mo"
+      },
+      {
+       "label": "Exec suite query p95",
+       "value": "1.9s"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Insurance & Risk operators recognize the pattern: claims, policy and exposure data fragmented, quarter after quarter.",
+     "plays": [
+      "Metric contracts with owners, certification and change control",
+      "An executive layer whose query p95 is itself an SLA",
+      "A dispute ledger and the shrinking spreadsheet shadow as the KPI"
+     ],
+     "kpis": [
+      {
+       "label": "Certified metric coverage",
+       "value": "86%"
+      },
+      {
+       "label": "Metric dispute rate",
+       "value": "1.1/mo"
+      },
+      {
+       "label": "Exec suite query p95",
+       "value": "1.9s"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": false,
+     "hook": "Healthcare & Life Sciences operators recognize the pattern: trial recruitment and RWE pipelines manual, quarter after quarter.",
+     "plays": [
+      "Metric contracts with owners, certification and change control",
+      "An executive layer whose query p95 is itself an SLA",
+      "A dispute ledger and the shrinking spreadsheet shadow as the KPI"
+     ],
+     "kpis": [
+      {
+       "label": "Certified metric coverage",
+       "value": "86%"
+      },
+      {
+       "label": "Metric dispute rate",
+       "value": "1.1/mo"
+      },
+      {
+       "label": "Exec suite query p95",
+       "value": "1.9s"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The structural pressure will not be solved by another dashboard.",
+     "plays": [
+      "Metric contracts with owners, certification and change control",
+      "An executive layer whose query p95 is itself an SLA",
+      "A dispute ledger and the shrinking spreadsheet shadow as the KPI",
+      "Sector working pattern: plant data backbone — OPC UA/Sparkplug telemetry, MES and quality records unified with lineage. Root cause in hours, not weeks is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Certified metric coverage",
+       "value": "86%"
+      },
+      {
+       "label": "Metric dispute rate",
+       "value": "1.1/mo"
+      },
+      {
+       "label": "Exec suite query p95",
+       "value": "1.9s"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": true,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the work is pipeline and lakehouse engineering — modeled once, certified once, reused everywhere the decision appears.",
+     "plays": [
+      "Metric contracts with owners, certification and change control",
+      "An executive layer whose query p95 is itself an SLA",
+      "A dispute ledger and the shrinking spreadsheet shadow as the KPI"
+     ],
+     "kpis": [
+      {
+       "label": "Certified metric coverage",
+       "value": "86%"
+      },
+      {
+       "label": "Metric dispute rate",
+       "value": "1.1/mo"
+      },
+      {
+       "label": "Exec suite query p95",
+       "value": "1.9s"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "Telecom, Media & Entertainment operators recognize the pattern: network telemetry underused, quarter after quarter.",
+     "plays": [
+      "Metric contracts with owners, certification and change control",
+      "An executive layer whose query p95 is itself an SLA",
+      "A dispute ledger and the shrinking spreadsheet shadow as the KPI"
+     ],
+     "kpis": [
+      {
+       "label": "Certified metric coverage",
+       "value": "86%"
+      },
+      {
+       "label": "Metric dispute rate",
+       "value": "1.1/mo"
+      },
+      {
+       "label": "Exec suite query p95",
+       "value": "1.9s"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "Energy & Utilities operators recognize the pattern: forecasting under intermittency, quarter after quarter.",
+     "plays": [
+      "Metric contracts with owners, certification and change control",
+      "An executive layer whose query p95 is itself an SLA",
+      "A dispute ledger and the shrinking spreadsheet shadow as the KPI"
+     ],
+     "kpis": [
+      {
+       "label": "Certified metric coverage",
+       "value": "86%"
+      },
+      {
+       "label": "Metric dispute rate",
+       "value": "1.1/mo"
+      },
+      {
+       "label": "Exec suite query p95",
+       "value": "1.9s"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "Logistics & Supply Chain operators recognize the pattern: visibility stitched from portals, quarter after quarter.",
+     "plays": [
+      "Metric contracts with owners, certification and change control",
+      "An executive layer whose query p95 is itself an SLA",
+      "A dispute ledger and the shrinking spreadsheet shadow as the KPI",
+      "Sector working pattern: control-tower event spine in Logistics & Supply Chain, where TMS/WMS/telematics/carrier events streamed into one governed estate. Network truth in seconds is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Certified metric coverage",
+       "value": "86%"
+      },
+      {
+       "label": "Metric dispute rate",
+       "value": "1.1/mo"
+      },
+      {
+       "label": "Exec suite query p95",
+       "value": "1.9s"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": true,
+     "hook": "Public Sector & Government operators recognize the pattern: agency data islands, quarter after quarter.",
+     "plays": [
+      "Metric contracts with owners, certification and change control",
+      "An executive layer whose query p95 is itself an SLA",
+      "A dispute ledger and the shrinking spreadsheet shadow as the KPI"
+     ],
+     "kpis": [
+      {
+       "label": "Certified metric coverage",
+       "value": "86%"
+      },
+      {
+       "label": "Metric dispute rate",
+       "value": "1.1/mo"
+      },
+      {
+       "label": "Exec suite query p95",
+       "value": "1.9s"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": true,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we make the source systems agree: one governed definition per metric, streaming where the decision is time-critical, batch where it is not.",
+     "plays": [
+      "Metric contracts with owners, certification and change control",
+      "An executive layer whose query p95 is itself an SLA",
+      "A dispute ledger and the shrinking spreadsheet shadow as the KPI",
+      "Sector working pattern: student success platform: SIS/LMS/support data unified with outcome lineage. Intervention targeting measurable is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Certified metric coverage",
+       "value": "86%"
+      },
+      {
+       "label": "Metric dispute rate",
+       "value": "1.1/mo"
+      },
+      {
+       "label": "Exec suite query p95",
+       "value": "1.9s"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "Technology & SaaS operators recognize the pattern: data moat unrealized, quarter after quarter.",
+     "plays": [
+      "Metric contracts with owners, certification and change control",
+      "An executive layer whose query p95 is itself an SLA",
+      "A dispute ledger and the shrinking spreadsheet shadow as the KPI"
+     ],
+     "kpis": [
+      {
+       "label": "Certified metric coverage",
+       "value": "86%"
+      },
+      {
+       "label": "Metric dispute rate",
+       "value": "1.1/mo"
+      },
+      {
+       "label": "Exec suite query p95",
+       "value": "1.9s"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/data-analytics-lakehouse/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "Agriculture & Food Systems operators recognize the pattern: chain data broken at every handoff, quarter after quarter.",
+     "plays": [
+      "Metric contracts with owners, certification and change control",
+      "An executive layer whose query p95 is itself an SLA",
+      "A dispute ledger and the shrinking spreadsheet shadow as the KPI"
+     ],
+     "kpis": [
+      {
+       "label": "Certified metric coverage",
+       "value": "86%"
+      },
+      {
+       "label": "Metric dispute rate",
+       "value": "1.1/mo"
+      },
+      {
+       "label": "Exec suite query p95",
+       "value": "1.9s"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/"
+    }
+   ],
+   "practiceNote": "Enterprise BI & Executive Analytics view: decision-grade reporting with one truth per metric — certified datasets, metric contracts and an executive layer that does not argue with itself."
+  },
+  {
+   "t": "h2",
+   "x": "BI stack defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor semantic layers with certified datasets over dashboard sprawl; deviation triggers are written because each one re-opens the door to private truth."
+  },
+  {
+   "t": "table",
+   "caption": "Enterprise BI & Executive Analytics: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Governed semantic layer with certified metrics and ownership",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Semantic layer",
+     "Versioned metric contracts bound to gold datasets",
+     "Definitions in docs — they drift from every dashboard"
     ],
     [
-     "Executive and operational dashboard suite aligned to cadence",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Certification",
+     "Board with evidence requirements",
+     "Self-certification — trust erodes within a quarter"
     ],
     [
-     "Self-service certification workflow and sandbox zones",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Exec experience",
+     "Curated suite with narrative annotations",
+     "Thirty executive dashboards — attention does not scale"
     ],
     [
-     "Adoption and decision-usage reporting",
-     "Produced as the build runs, not reconstructed afterwards."
+     "Self-serve",
+     "Governed workbench over certified sources",
+     "Raw database access for analysts — anarchy follows"
+    ],
+    [
+     "Consolidation",
+     "Usage-telemetry-driven retirement",
+     "Keeping everything 'just in case' — sprawl is a cost"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The stack, chosen for operability"
+   "x": "BI release gates — evidence before certification"
   },
   {
-   "t": "p",
-   "x": "Enterprise BI & Executive Analytics ships against Power BI, Tableau, Looker, dbt semantic layer, Databricks SQL. Every selection comes with a short written rationale — what it optimizes for, and what it deliberately gives up."
+   "t": "table",
+   "caption": "Release gates for Enterprise BI & Executive Analytics — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Contract gate",
+     "Is every executive metric contracted?",
+     "Contract coverage report; owner signatures"
+    ],
+    [
+     "Certification gate",
+     "Are datasets certified behind them?",
+     "Certification records; lineage to source"
+    ],
+    [
+     "SLO gate",
+     "Do queries meet their SLOs?",
+     "p95 evidence under load; cost per query"
+    ],
+    [
+     "Shadow gate",
+     "Are spreadsheets retiring on evidence?",
+     "Census trend; adoption parity proof"
+    ],
+    [
+     "Trust gate",
+     "Are disputes resolving via contracts?",
+     "Dispute tracker trend; amendment history"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "The delivery rhythm"
+   "x": "What the analytics office inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Enterprise BI & Executive Analytics starts with the measurement: the metric, the owner, the current number, signed."
+     "Metric contract library",
+     "One definition per metric, versioned, owned"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, semantic layer first, gates written with your team."
+     "Semantic layer",
+     "Executable contracts serving all experiences"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Enterprise BI & Executive Analytics closes its first quarter at the gate: the working slice is measured against the baseline your team signed, and the scale decision is written down with the evidence attached."
+     "Executive suite",
+     "Curated, narrative-annotated decision surfaces"
+    ],
+    [
+     "Governed workbench",
+     "Self-serve over certified sources with sandbox tier"
+    ],
+    [
+     "Shadow census",
+     "The retirement evidence trail for spreadsheets"
+    ],
+    [
+     "Dispute tracker",
+     "Every metric argument and its contract fix"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Metrics in order, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — metric census",
+     "Top-metric inventory, dispute history, shadow spreadsheet census"
+    ],
+    [
+     "Weeks 3–4 — contracts & certification",
+     "First 25 contracts signed; certification board stood up"
+    ],
+    [
+     "Weeks 5–6 — semantic layer",
+     "Bindings, shared dimensions, query SLOs"
+    ],
+    [
+     "Weeks 7–8 — experiences",
+     "Executive suite, ops dashboards, mobile briefings"
+    ],
+    [
+     "Weeks 9–10 — self-serve & retirement",
+     "Workbench live; shadow retirements on evidence"
+    ],
+    [
+     "Ongoing — trust ops",
+     "Monthly dispute review; quarterly certification audit"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — sources, semantic layer and the board pack"
+  },
+  {
+   "t": "p",
+   "x": "The estate serves the board pack, the ops reviews and the regulators; these contracts carry certified metrics into each without forks."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Gold datasets",
+     "Certification-bound serving contracts"
+    ],
+    [
+     "Identity provider",
+     "Entitlement sync for row-level access"
+    ],
+    [
+     "Meeting tooling",
+     "Briefing exports with narrative annotations"
+    ],
+    [
+     "Ops systems",
+     "Operational dashboard feeds with SLAs"
+    ],
+    [
+     "Finance close",
+     "Certified reconciliation points"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Governance overlay — the dispute ledger"
+  },
+  {
+   "t": "p",
+   "x": "Metric definitions are versioned with change control; the dispute ledger records every challenge and its resolution — the institutional memory that stops the same argument restarting each quarter."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Single truth",
+     "Executive surfaces serve only certified contracts"
+    ],
+    [
+     "Amendment control",
+     "Contract changes require board review; history retained"
+    ],
+    [
+     "Entitlement sync",
+     "Row-level access reconciles nightly with source of truth"
+    ],
+    [
+     "Usage honesty",
+     "Retirements cite usage telemetry, not politics"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Executive-layer p95 is an SLA, not an aspiration: when the suite slows past budget, the incident is real and the shadow spreads — so latency regressions are treated as trust regressions."
   },
   {
    "t": "cta",
-   "x": "Start with the diagnostic, not the contract: Enterprise BI & Executive Analytics baselined in two weeks, and a scoped proposal only if the delta justifies it."
+   "x": "Count the spreadsheets that rebuild the same metric. The diagnostic will score your estate's certified coverage — and price what one trusted number, served fast, would cost."
   }
  ],
- "words": 500,
+ "words": 1000,
  "section": "Services",
  "l1": "Services",
  "l2": "Data, Analytics & Lakehouse",
@@ -288,7 +1203,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Data, Analytics & Lakehouse",
+   "title": "Domain overview — Data, Analytics & Lakehouse",
    "url": "/services/data-analytics-lakehouse/",
    "desc": "Trusted data, delivered in near real time — pipelines, lakehouse and governance that holds up under audit."
   },
@@ -340,33 +1255,51 @@
   {
    "title": "Blockchain & Digital Trust for Agriculture & Food Systems",
    "url": "/industries/agriculture-food/capabilities/blockchain-digital-trust/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Data Engineering & Pipeline Modernization",
-   "url": "/services/data-analytics-lakehouse/data-engineering-modernization/",
-   "tag": "Same tower",
-   "desc": "Resilient, observable pipelines — trusted data from source to decision at SLA."
-  },
-  {
-   "title": "Lakehouse Architecture & Migration",
-   "url": "/services/data-analytics-lakehouse/lakehouse-architecture/",
-   "tag": "Same tower",
-   "desc": "Lakehouse the right way — Unity Catalog governance, cost-aware design and AI-ready foundations."
-  },
-  {
    "title": "Real-Time Streaming & Event-Driven Decisioning",
    "url": "/services/data-analytics-lakehouse/realtime-streaming-decisioning/",
-   "tag": "Same tower",
-   "desc": "Decisions at event speed — sub-second pipelines from sensor, click or transaction to action."
+   "tag": "Same domain",
+   "desc": "sub-second decision paths on streams — exactly-once state, replay semantics and latency budgets that are measured, not asserted."
   },
   {
-   "title": "Master Data, Governance & Cataloging",
-   "url": "/services/data-analytics-lakehouse/master-data-governance/",
-   "tag": "Same tower",
-   "desc": "One customer, one product, one truth — MDM and catalog discipline that regulators can read."
+   "title": "Advanced Risk & Predictive Analytics",
+   "url": "/services/data-analytics-lakehouse/advanced-risk-predictive-analytics/",
+   "tag": "Same domain",
+   "desc": "risk and forecasting models with signed baselines, time-based holdouts and governance — predictions that survive the quarter they were made in."
+  },
+  {
+   "title": "Data Engineering & Pipeline Modernization",
+   "url": "/services/data-analytics-lakehouse/data-engineering-modernization/",
+   "tag": "Same domain",
+   "desc": "legacy pipelines rebuilt as typed, contract-gated, observable jobs — with a strangler pattern that retires the old estate without a big-bang cutover."
+  },
+  {
+   "title": "Multimodal AI & Vision-Language Systems",
+   "url": "/services/applied-ai-generative-ai/multimodal-vision-systems/",
+   "tag": "Pairs with",
+   "desc": "document and scene understanding wired into systems of record, with confidence gating, ledger reconciliation and per-field evidence for auditors."
+  },
+  {
+   "title": "Process & Task Mining",
+   "url": "/services/agentic-ai-hyperautomation/process-task-mining/",
+   "tag": "Pairs with",
+   "desc": "event-log forensics that turns system footprints into a defensible automation pipeline — conformance-checked, variant-ranked and ROI-priced before anything is built."
+  },
+  {
+   "title": "Cloud-Native & Legacy Modernization",
+   "url": "/services/cloud-edge-platform-engineering/cloud-native-modernization/",
+   "tag": "Pairs with",
+   "desc": "workloads rebuilt for cloud-native operations — containerized, observable, resilient by default, with a strangler path that retires VMs on evidence."
+  },
+  {
+   "title": "A multi-campus university group",
+   "url": "/case-studies/edu-03/",
+   "tag": "Evidence",
+   "desc": "Research throughput up 2.8x — governed HPC/cloud platform."
   }
  ]
 }

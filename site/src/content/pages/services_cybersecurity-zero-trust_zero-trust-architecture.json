@@ -9,244 +9,1203 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Zero-Trust Architecture & Implementation is the Cyber & Zero-Trust answer to a specific job: Never trust, always verify — zero-trust as an executable architecture, not a slide.. This page is the build as we actually run it — sequencing, artifacts and the parts most vendors leave out."
+   "x": "Per-request policy decisions on identity, device and context: network location stops being a privilege, critical paths reach measured coverage, and the latency objection is answered with a p95 number instead of an argument."
   },
   {
    "t": "h2",
-   "x": "The job this service does"
+   "x": "Zero trust is a decision architecture, not a product purchase"
   },
   {
    "t": "p",
-   "x": "Zero-trust fails when it is bought as a product instead of designed as an architecture. We implement it against NIST SP 800-207: identity-centric access with strong MFA and device posture, microsegmentation for east-west traffic, software-defined perimeters for sensitive zones, and policy enforcement points (SPIFFE/SPIRE workload identity, service mesh mTLS) that make every call verify. The program maps your estate, sequences the migration in trust tiers, and measures residual implicit trust until it is zero."
+   "x": "Zero trust is an architecture of decisions, not a product purchase. Every request is evaluated against identity, device posture and context — and the engineering work is making that evaluation fast, consistent and universal on the paths that matter. Perimeter firewalls remain; they just stop being the security model."
   },
   {
    "t": "p",
-   "x": "The human architecture matters as much: access workflows that users can actually follow, break-glass procedures that are audited, and an exceptions register with expiry dates. We deliver with a controls evidence pack — mapped to ISO 27001, SOC 2 and sector regimes — so certification audits become evidence collection instead of archaeology."
+   "x": "The honest metric is coverage of critical paths: which access paths still rely on network location? We enumerate them, move them behind the policy decision point one by one, and validate with attack-path drills rather than architecture diagrams."
+  },
+  {
+   "t": "p",
+   "x": "Below: the failure modes that turn zero-trust programs into coverage theater, the reference architecture of per-request decisions, and the console that shows real coverage — including what still bypasses."
   },
   {
    "t": "h2",
-   "x": "Why the timing matters"
+   "x": "Four ways zero-trust programs become coverage theater"
   },
   {
    "t": "p",
-   "x": "Zero-Trust Architecture & Implementation delivery today concentrates in Banking & Financial Services, Insurance & Risk, Healthcare & Life Sciences, Public Sector & Government. The metric is chosen with your finance lead, and the baseline is signed before any build begins."
+   "x": "Each failure mode produces a diagram that looks complete and an estate that isn't — the countermeasures measure real coverage and force the bypasses into the open."
   },
   {
-   "t": "h2",
-   "x": "What we build, concretely"
-  },
-  {
-   "t": "p",
-   "x": "What ships, in the order it ships:"
-  },
-  {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "Zero-Trust Architecture & Implementation: failure modes we design against — and the countermeasure that ships with the build",
+   "headers": [
+    "Failure mode",
+    "What it looks like in production",
+    "Countermeasure we ship"
+   ],
+   "rows": [
     [
-     "Trust-tier migration plan",
-     "estate mapped into trust zones with sequenced migration"
+     "Coverage theater",
+     "Zero-trust declared; half the estate bypasses it",
+     "Critical-path enumeration; bypass detection via network flow analysis"
     ],
     [
-     "Identity & device posture",
-     "MFA, conditional access and device compliance as gate conditions"
+     "Latency objections",
+     "Policy checks 'slow things down'",
+     "PDP caching and regional decision points; latency budgets per app class"
     ],
     [
-     "Microsegmentation",
-     "east-west policy enforcement for workloads and data zones"
+     "Legacy orphans",
+     "One legacy app holds the perimeter together",
+     "Compensating controls with expiry; shim integration per app class"
     ],
     [
-     "Workload identity",
-     "SPIFFE/SPIRE-class identity with mTLS for service-to-service calls"
-    ],
-    [
-     "Evidence pack",
-     "controls mapped to ISO 27001 / SOC 2 / NIST 800-207 for audit reuse"
+     "Policy sprawl",
+     "Ten thousand rules nobody can reason about",
+     "Policy-as-code with inheritance; change review like code review"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Reference architecture — the policy decision surface"
+  },
+  {
+   "t": "p",
+   "x": "Every request meets the same decision point: identity, device posture and context evaluated per call, decisions served inside a latency budget, and legacy orphans carried by explicit exceptions with expiry dates — nothing grants itself access by being old."
+  },
+  {
    "t": "arch",
-   "title": "Reference architecture — Zero-Trust Architecture & Implementation",
+   "title": "Reference architecture — zero-trust decision fabric",
    "lanes": [
-    "Users",
-    "Devices",
-    "Brokers",
-    "Workloads",
-    "Data",
-    "Auditors"
+    "Requesters",
+    "Decision plane",
+    "Signals",
+    "Enforcement",
+    "Assets",
+    "Assurance"
    ],
    "nodes": [
     {
-     "id": "us0",
+     "id": "user",
      "lane": 0,
-     "label": "Phishing-resistant MFA",
-     "hot": false
+     "label": "Workforce users"
     },
     {
-     "id": "us1",
+     "id": "svc",
      "lane": 0,
-     "label": "SSO & lifecycle",
-     "hot": false
+     "label": "Service workloads"
     },
     {
-     "id": "dv2",
+     "id": "agent",
+     "lane": 0,
+     "label": "Agent fleet"
+    },
+    {
+     "id": "pep",
      "lane": 1,
-     "label": "Posture-checked endpoints",
-     "hot": false
+     "label": "Policy enforcement points",
+     "hot": true
     },
     {
-     "id": "dv3",
+     "id": "pdp",
      "lane": 1,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Policy decision point",
+     "hot": true
     },
     {
-     "id": "br4",
+     "id": "cache",
+     "lane": 1,
+     "label": "Decision cache"
+    },
+    {
+     "id": "idp",
      "lane": 2,
-     "label": "Zero-Trust Architecture & Implementation",
+     "label": "Identity & MFA"
+    },
+    {
+     "id": "mdm",
+     "lane": 2,
+     "label": "Device posture"
+    },
+    {
+     "id": "ctx",
+     "lane": 2,
+     "label": "Risk context"
+    },
+    {
+     "id": "seg",
+     "lane": 3,
+     "label": "Segmentation fabric"
+    },
+    {
+     "id": "proxy",
+     "lane": 3,
+     "label": "App proxies"
+    },
+    {
+     "id": "api",
+     "lane": 3,
+     "label": "API gateways"
+    },
+    {
+     "id": "data",
+     "lane": 4,
+     "label": "Data services"
+    },
+    {
+     "id": "apps",
+     "lane": 4,
+     "label": "Applications"
+    },
+    {
+     "id": "infra",
+     "lane": 4,
+     "label": "Infrastructure"
+    },
+    {
+     "id": "drill",
+     "lane": 5,
+     "label": "Attack-path drills",
      "hot": true
     },
     {
-     "id": "wl5",
-     "lane": 3,
-     "label": "Workload enforcement",
-     "hot": false
-    },
-    {
-     "id": "wl6",
-     "lane": 3,
-     "label": "Segmented access fabric",
-     "hot": false
-    },
-    {
-     "id": "dt7",
-     "lane": 4,
-     "label": "Classification-aware DLP",
-     "hot": true
-    },
-    {
-     "id": "dt8",
-     "lane": 4,
-     "label": "Field-level encryption",
-     "hot": false
-    },
-    {
-     "id": "au9",
+     "id": "bypass",
      "lane": 5,
-     "label": "Continuous audit export",
-     "hot": false
+     "label": "Bypass detection"
     },
     {
-     "id": "au10",
+     "id": "mon",
      "lane": 5,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Decision telemetry"
     }
    ],
    "edges": [
     {
-     "a": "us0",
-     "b": "br4"
+     "a": "user",
+     "b": "pep"
     },
     {
-     "a": "dv2",
-     "b": "br4"
+     "a": "svc",
+     "b": "pep"
     },
     {
-     "a": "us1",
-     "b": "br4"
+     "a": "agent",
+     "b": "pep"
     },
     {
-     "a": "br4",
-     "b": "wl5"
+     "a": "pep",
+     "b": "pdp",
+     "label": "query"
     },
     {
-     "a": "br4",
-     "b": "wl6"
+     "a": "pdp",
+     "b": "cache",
+     "label": "hot rules"
     },
     {
-     "a": "wl5",
-     "b": "dt7"
+     "a": "idp",
+     "b": "pdp",
+     "label": "identity"
     },
     {
-     "a": "wl6",
-     "b": "dt8"
+     "a": "mdm",
+     "b": "pdp",
+     "label": "posture"
     },
     {
-     "a": "dt7",
-     "b": "au9"
+     "a": "ctx",
+     "b": "pdp",
+     "label": "risk"
     },
     {
-     "a": "dt8",
-     "b": "au10"
+     "a": "pdp",
+     "b": "seg",
+     "label": "allow/deny"
+    },
+    {
+     "a": "pdp",
+     "b": "proxy",
+     "label": "tunnel"
+    },
+    {
+     "a": "pdp",
+     "b": "api",
+     "label": "token"
+    },
+    {
+     "a": "pep",
+     "b": "apps",
+     "label": "gated"
+    },
+    {
+     "a": "pep",
+     "b": "data",
+     "label": "gated"
+    },
+    {
+     "a": "pep",
+     "b": "infra",
+     "label": "gated"
+    },
+    {
+     "a": "drill",
+     "b": "pep",
+     "label": "validate"
+    },
+    {
+     "a": "mon",
+     "b": "pdp",
+     "label": "decisions"
+    },
+    {
+     "a": "bypass",
+     "b": "mon",
+     "label": "flagged"
     }
    ],
-   "note": "Topology inherited from the Cyber & Zero-Trust tower; the highlighted core is this service's build."
+   "note": "Bypass detection is continuous: network flow analysis looks for critical paths that skip the policy plane — coverage is earned, not asserted."
   },
   {
    "t": "h2",
-   "x": "Deliverables, without dressing them up"
+   "x": "One request, one decision, full trace"
   },
   {
    "t": "p",
-   "x": "Named artifacts, handed to named owners — Zero-Trust Architecture & Implementation edition:"
+   "x": "From request through device posture check, identity evaluation, policy decision and enforcement — including the break-glass path and the bypass detection that catches quiet exemptions."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "diagram",
+   "kind": "zero-trust-mesh",
+   "title": "Access decision path — signals, decision, enforcement, telemetry",
+   "labels": [
+    "Request",
+    "Identity verify",
+    "Device posture",
+    "Risk context",
+    "Policy decision",
+    "Scoped grant",
+    "Telemetry & drill"
+   ],
+   "note": "Grants are scoped and short-lived: a decision admits one session to one resource class — not the network."
+  },
+  {
+   "t": "h2",
+   "x": "The zero-trust console — coverage you can defend"
+  },
+  {
+   "t": "p",
+   "x": "Critical-path coverage, bypass detections and decision p95 — three numbers that decide whether the program is architecture or wallpaper in front of the auditor."
+  },
+  {
+   "t": "idash",
+   "title": "Zero-trust architecture — decision console",
+   "kpis": [
+    {
+     "label": "Requests behind PDP",
+     "value": "84%",
+     "delta": "all new paths + 3 estates",
+     "dir": "up",
+     "spark": [
+      22,
+      34,
+      45,
+      58,
+      68,
+      77,
+      84
+     ]
+    },
+    {
+     "label": "Decision latency p99",
+     "value": "14 ms",
+     "delta": "local PEP cache",
+     "dir": "flat",
+     "spark": [
+      45,
+      32,
+      24,
+      19,
+      16,
+      15,
+      14
+     ]
+    },
+    {
+     "label": "Segments enforcing",
+     "value": "31",
+     "delta": "of 38 mapped, rest monitor",
+     "dir": "up",
+     "spark": [
+      4,
+      9,
+      14,
+      19,
+      24,
+      28,
+      31
+     ]
+    },
+    {
+     "label": "Device posture checks",
+     "value": "97%",
+     "delta": "managed + attested",
+     "dir": "up",
+     "spark": [
+      41,
+      55,
+      66,
+      76,
+      85,
+      92,
+      97
+     ]
+    },
+    {
+     "label": "Decision log completeness",
+     "value": "100%",
+     "delta": "inputs recorded per access",
+     "dir": "flat",
+     "spark": [
+      60,
+      72,
+      82,
+      90,
+      95,
+      98,
+      100
+     ]
+    }
+   ],
+   "tabs": [
+    {
+     "name": "Policy what-if",
+     "widgets": [
+      {
+       "kind": "sim",
+       "title": "Access policy what-if — strictness vs friction vs risk",
+       "params": [
+        {
+         "name": "Context signals used",
+         "min": 1,
+         "max": 6,
+         "step": 1,
+         "value": 4,
+         "unit": "signals"
+        },
+        {
+         "name": "Posture requirement",
+         "min": 0,
+         "max": 100,
+         "step": 10,
+         "value": 70,
+         "unit": "% enforced"
+        },
+        {
+         "name": "Legacy population",
+         "min": 5,
+         "max": 60,
+         "step": 5,
+         "value": 22,
+         "unit": "% legacy devices"
+        }
+       ],
+       "outputs": [
+        {
+         "name": "Breach-path score",
+         "unit": "0-100",
+         "formula": "max(6, 95-p0*11-p1*0.4+p2*0.8)",
+         "good": "25",
+         "bad": "55"
+        },
+        {
+         "name": "User friction",
+         "unit": "0-100",
+         "formula": "p1*0.55+p2*0.6-p0*4",
+         "good": "30",
+         "bad": "60"
+        },
+        {
+         "name": "Helpdesk tickets / wk",
+         "unit": "cnt",
+         "formula": "p2*2.1+p1*0.35-p0*3",
+         "good": "25",
+         "bad": "90"
+        }
+       ],
+       "curve": {
+        "param": 0,
+        "output": 1,
+        "label": "Context signals vs friction"
+       },
+       "note": "Context richness buys risk reduction and charges friction — but posture enforcement without device investment (the legacy population dial) charges helpdesk tickets that dwarf the risk win."
+      }
+     ]
+    },
+    {
+     "name": "Segmentation",
+     "widgets": [
+      {
+       "kind": "heat",
+       "title": "Microsegmentation rollout by segment × phase",
+       "rows": [
+        "Payments",
+        "ERP core",
+        "Dev estate",
+        "Office IT",
+        "OT interface"
+       ],
+       "cats": [
+        "Mapped",
+        "Monitor",
+        "Enforce",
+        "Verified",
+        "Drilled"
+       ],
+       "matrix": [
+        [
+         100,
+         100,
+         100,
+         100,
+         92
+        ],
+        [
+         100,
+         92,
+         88,
+         100,
+         84
+        ],
+        [
+         88,
+         74,
+         66,
+         82,
+         58
+        ],
+        [
+         92,
+         80,
+         72,
+         88,
+         64
+        ],
+        [
+         100,
+         88,
+         78,
+         94,
+         70
+        ]
+       ],
+       "unit": "% complete",
+       "note": "Hover cells for completion. The OT-interface row is the honest one: industrial interfaces segment last and drill most — the monitor phase there is deliberately long."
+      }
+     ]
+    },
+    {
+     "name": "Decision fabric",
+     "widgets": [
+      {
+       "kind": "arch",
+       "title": "The zero-trust fabric — click nodes for the policy contract",
+       "lanes": [
+        "Identity",
+        "Context",
+        "Decision",
+        "Enforcement"
+       ],
+       "nodes": [
+        {
+         "id": "id",
+         "lane": 0,
+         "label": "Identity fabric",
+         "detail": "Humans on phishing-resistant auth, machines on workload federation — identity quality is the ceiling on every decision downstream.",
+         "hot": true
+        },
+        {
+         "id": "posture",
+         "lane": 1,
+         "label": "Device posture",
+         "detail": "Managed, attested, compliant — posture signals feed the decision with hardware-backed evidence where the device supports it."
+        },
+        {
+         "id": "ctx",
+         "lane": 1,
+         "label": "Context signals",
+         "detail": "Geography, network, time, sensitivity of target — signals weighted in policy, never alone sufficient, always logged as inputs."
+        },
+        {
+         "id": "pdp",
+         "lane": 2,
+         "label": "Policy decision point",
+         "detail": "Versioned policy with tests and shadow-mode rollout; decisions cached at PEPs with revocation propagation — the log is the audit story."
+        },
+        {
+         "id": "pep",
+         "lane": 2,
+         "label": "Enforcement points",
+         "detail": "PEPs at app front doors, service mesh, DB proxies and API gateways — decisions enforced closest to the resource, not at the VPN."
+        },
+        {
+         "id": "seg",
+         "lane": 2,
+         "label": "Microsegmentation",
+         "detail": "East-west default-deny per business-function segment; monitor-then-enforce per segment with rollback readiness."
+        },
+        {
+         "id": "log",
+         "lane": 3,
+         "label": "Decision ledger",
+         "detail": "Every decision's inputs and outcome recorded — 'why was this allowed' reconstructs from data, for audit and for incident response."
+        }
+       ],
+       "edges": [
+        {
+         "a": "id",
+         "b": "pdp"
+        },
+        {
+         "a": "posture",
+         "b": "pdp",
+         "label": "signals"
+        },
+        {
+         "a": "ctx",
+         "b": "pdp"
+        },
+        {
+         "a": "pdp",
+         "b": "pep",
+         "label": "decisions"
+        },
+        {
+         "a": "pep",
+         "b": "seg",
+         "label": "east-west"
+        },
+        {
+         "a": "pep",
+         "b": "log",
+         "label": "records"
+        },
+        {
+         "a": "seg",
+         "b": "log",
+         "label": "records"
+        }
+       ],
+       "note": "Click nodes for the contract each layer carries. The decision ledger is what makes zero trust auditable — the log is the architecture's receipt."
+      }
+     ]
+    }
+   ],
+   "badge": "Interactive · policy model",
+   "note": "Reference program model: rollout bands and friction scores from delivery benchmarks, not client results."
+  },
+  {
+   "t": "h2",
+   "x": "Coverage and decision latency across rollout waves"
+  },
+  {
+   "t": "p",
+   "x": "Critical-path coverage and decision p95 across rollout waves — the paired curve that shows coverage rising while latency stays inside the budget the business actually experiences."
+  },
+  {
+   "t": "chart",
+   "title": "Critical-path coverage migration — design targets",
+   "variant": "line",
+   "cats": [
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M5",
+    "M6"
+   ],
+   "series": [
+    {
+     "name": "Coverage target %",
+     "points": [
+      62,
+      71,
+      78,
+      83,
+      87,
+      90
+     ]
+    },
+    {
+     "name": "Bypass detections target",
+     "points": [
+      22,
+      16,
+      11,
+      8,
+      5,
+      3
+     ]
+    },
+    {
+     "name": "Exceptions (expiry-dated) target",
+     "points": [
+      31,
+      24,
+      18,
+      14,
+      11,
+      9
+     ]
+    }
+   ],
+   "yMax": 100,
+   "note": ""
+  },
+  {
+   "t": "explorer",
+   "title": "Zero-Trust Architecture & Implementation across the twelve industries we serve",
+   "intro": "Pick your sector — the panel shows what we deliver for it, the targets we sign against, and the sector brief with workflows, controls and reference cases.",
+   "service": "Zero-Trust Architecture & Implementation",
+   "industries": [
+    {
+     "slug": "banking-financial-services",
+     "name": "Banking & Financial Services",
+     "flagship": true,
+     "hook": "Banking & Financial Services operators recognize the pattern: genAI stuck between pilot and policy, quarter after quarter.",
+     "plays": [
+      "Per-request policy decisions with a signed latency budget",
+      "Critical-path coverage measured by simulation, bypasses triaged weekly",
+      "Exception ledger with owners and expiries — nothing grants itself access"
+     ],
+     "kpis": [
+      {
+       "label": "Critical-path coverage",
+       "value": "87%"
+      },
+      {
+       "label": "Bypass detections",
+       "value": "3"
+      },
+      {
+       "label": "Decision p95",
+       "value": "38ms"
+      }
+     ],
+     "capUrl": "/industries/banking-financial-services/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "insurance",
+     "name": "Insurance & Risk",
+     "flagship": false,
+     "hook": "Insurance & Risk operators recognize the pattern: sensitive data estate under pressure, quarter after quarter.",
+     "plays": [
+      "Per-request policy decisions with a signed latency budget",
+      "Critical-path coverage measured by simulation, bypasses triaged weekly",
+      "Exception ledger with owners and expiries — nothing grants itself access"
+     ],
+     "kpis": [
+      {
+       "label": "Critical-path coverage",
+       "value": "87%"
+      },
+      {
+       "label": "Bypass detections",
+       "value": "3"
+      },
+      {
+       "label": "Decision p95",
+       "value": "38ms"
+      }
+     ],
+     "capUrl": "/industries/insurance/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "healthcare-life-sciences",
+     "name": "Healthcare & Life Sciences",
+     "flagship": true,
+     "hook": "Ask what PHI concentration and ransomware exposure costs Healthcare & Life Sciences firms in a year and the honest answer is: more than anyone has measured.",
+     "plays": [
+      "Per-request policy decisions with a signed latency budget",
+      "Critical-path coverage measured by simulation, bypasses triaged weekly",
+      "Exception ledger with owners and expiries — nothing grants itself access"
+     ],
+     "kpis": [
+      {
+       "label": "Critical-path coverage",
+       "value": "87%"
+      },
+      {
+       "label": "Bypass detections",
+       "value": "3"
+      },
+      {
+       "label": "Decision p95",
+       "value": "38ms"
+      }
+     ],
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "manufacturing",
+     "name": "Manufacturing & Industrial",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — IT/OT convergence exposure included — and prove it moved.",
+     "plays": [
+      "Per-request policy decisions with a signed latency budget",
+      "Critical-path coverage measured by simulation, bypasses triaged weekly",
+      "Exception ledger with owners and expiries — nothing grants itself access"
+     ],
+     "kpis": [
+      {
+       "label": "Critical-path coverage",
+       "value": "87%"
+      },
+      {
+       "label": "Bypass detections",
+       "value": "3"
+      },
+      {
+       "label": "Decision p95",
+       "value": "38ms"
+      }
+     ],
+     "capUrl": "/industries/manufacturing/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "retail-consumer-goods",
+     "name": "Retail & Consumer Goods",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone.",
+     "plays": [
+      "Per-request policy decisions with a signed latency budget",
+      "Critical-path coverage measured by simulation, bypasses triaged weekly",
+      "Exception ledger with owners and expiries — nothing grants itself access"
+     ],
+     "kpis": [
+      {
+       "label": "Critical-path coverage",
+       "value": "87%"
+      },
+      {
+       "label": "Bypass detections",
+       "value": "3"
+      },
+      {
+       "label": "Decision p95",
+       "value": "38ms"
+      }
+     ],
+     "capUrl": "/industries/retail-consumer-goods/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "telecom-media",
+     "name": "Telecom, Media & Entertainment",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means the design assumes breach: blast radii contained, lateral movement priced, and detection tuned to the attacks your sector actually sees.",
+     "plays": [
+      "Per-request policy decisions with a signed latency budget",
+      "Critical-path coverage measured by simulation, bypasses triaged weekly",
+      "Exception ledger with owners and expiries — nothing grants itself access"
+     ],
+     "kpis": [
+      {
+       "label": "Critical-path coverage",
+       "value": "87%"
+      },
+      {
+       "label": "Bypass detections",
+       "value": "3"
+      },
+      {
+       "label": "Decision p95",
+       "value": "38ms"
+      }
+     ],
+     "capUrl": "/industries/telecom-media/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "energy-utilities",
+     "name": "Energy & Utilities",
+     "flagship": false,
+     "hook": "The work here has one job: move a named number — OT estate exposed by convergence included — and prove it moved.",
+     "plays": [
+      "Per-request policy decisions with a signed latency budget",
+      "Critical-path coverage measured by simulation, bypasses triaged weekly",
+      "Exception ledger with owners and expiries — nothing grants itself access"
+     ],
+     "kpis": [
+      {
+       "label": "Critical-path coverage",
+       "value": "87%"
+      },
+      {
+       "label": "Bypass detections",
+       "value": "3"
+      },
+      {
+       "label": "Decision p95",
+       "value": "38ms"
+      }
+     ],
+     "capUrl": "/industries/energy-utilities/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "logistics-supply-chain",
+     "name": "Logistics & Supply Chain",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Per-request policy decisions with a signed latency budget",
+      "Critical-path coverage measured by simulation, bypasses triaged weekly",
+      "Exception ledger with owners and expiries — nothing grants itself access"
+     ],
+     "kpis": [
+      {
+       "label": "Critical-path coverage",
+       "value": "87%"
+      },
+      {
+       "label": "Bypass detections",
+       "value": "3"
+      },
+      {
+       "label": "Decision p95",
+       "value": "38ms"
+      }
+     ],
+     "capUrl": "/industries/logistics-supply-chain/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "public-sector",
+     "name": "Public Sector & Government",
+     "flagship": true,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Per-request policy decisions with a signed latency budget",
+      "Critical-path coverage measured by simulation, bypasses triaged weekly",
+      "Exception ledger with owners and expiries — nothing grants itself access"
+     ],
+     "kpis": [
+      {
+       "label": "Critical-path coverage",
+       "value": "87%"
+      },
+      {
+       "label": "Bypass detections",
+       "value": "3"
+      },
+      {
+       "label": "Decision p95",
+       "value": "38ms"
+      }
+     ],
+     "capUrl": "/industries/public-sector/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "education-research",
+     "name": "Education & Research",
+     "flagship": false,
+     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone.",
+     "plays": [
+      "Per-request policy decisions with a signed latency budget",
+      "Critical-path coverage measured by simulation, bypasses triaged weekly",
+      "Exception ledger with owners and expiries — nothing grants itself access",
+      "Sector working pattern: research ip protection: classification-aware controls for sensitive research programs. Export-control posture evidenced is the measured outcome the gate checks."
+     ],
+     "kpis": [
+      {
+       "label": "Critical-path coverage",
+       "value": "87%"
+      },
+      {
+       "label": "Bypass detections",
+       "value": "3"
+      },
+      {
+       "label": "Decision p95",
+       "value": "38ms"
+      }
+     ],
+     "capUrl": "/industries/education-research/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "technology-saas",
+     "name": "Technology & SaaS",
+     "flagship": false,
+     "hook": "; competition sets the pace.",
+     "plays": [
+      "Per-request policy decisions with a signed latency budget",
+      "Critical-path coverage measured by simulation, bypasses triaged weekly",
+      "Exception ledger with owners and expiries — nothing grants itself access"
+     ],
+     "kpis": [
+      {
+       "label": "Critical-path coverage",
+       "value": "87%"
+      },
+      {
+       "label": "Bypass detections",
+       "value": "3"
+      },
+      {
+       "label": "Decision p95",
+       "value": "38ms"
+      }
+     ],
+     "capUrl": "/industries/technology-saas/capabilities/cybersecurity-zero-trust/"
+    },
+    {
+     "slug": "agriculture-food",
+     "name": "Agriculture & Food Systems",
+     "flagship": false,
+     "hook": "The work here does not chase announcements; it delivers audited change — which means security here is architecture, not product sprawl — identity-first controls, segmented networks, and telemetry your SOC can act on the same hour.",
+     "plays": [
+      "Per-request policy decisions with a signed latency budget",
+      "Critical-path coverage measured by simulation, bypasses triaged weekly",
+      "Exception ledger with owners and expiries — nothing grants itself access"
+     ],
+     "kpis": [
+      {
+       "label": "Critical-path coverage",
+       "value": "87%"
+      },
+      {
+       "label": "Bypass detections",
+       "value": "3"
+      },
+      {
+       "label": "Decision p95",
+       "value": "38ms"
+      }
+     ],
+     "capUrl": "/industries/agriculture-food/capabilities/cybersecurity-zero-trust/"
+    }
+   ],
+   "practiceNote": "Zero-Trust Architecture & Implementation view: per-request policy decisions on identity, device and context — network location stops being a privilege, and coverage is measured on the paths that matter."
+  },
+  {
+   "t": "h2",
+   "x": "Enforcement defaults — and documented deviations"
+  },
+  {
+   "t": "p",
+   "x": "Defaults favor policy-as-code with central decision points over per-app snowflakes; deviation triggers are written because each one creates a bypass class someone will eventually use."
+  },
+  {
+   "t": "table",
+   "caption": "Zero-Trust Architecture & Implementation: default stack and the conditions under which we deviate",
+   "headers": [
+    "Layer",
+    "Default choice",
+    "When we deviate — and why"
+   ],
+   "rows": [
     [
-     "Zero-trust reference architecture and migration roadmap",
-     "Handed to a named owner on your side, with a working session included."
+     "Decision point",
+     "Policy-as-code PDP with regional caches",
+     "Vendor console click-ops — policy needs CI like code"
     ],
     [
-     "Implemented enforcement points (identity, posture, segmentation, workload identity)",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Enforcement",
+     "Identity-aware proxies + segmentation fabric",
+     "ACL-only enforcement — it cannot carry context"
     ],
     [
-     "Exception register with expiry governance",
-     "Written to be used, not filed — your team owns it after the engagement."
+     "Signals",
+     "IdP + MDM + risk context in every decision",
+     "Identity-only decisions — device compromise walks in"
     ],
     [
-     "Audit evidence pack across frameworks",
-     "Versioned, signed, and formatted for the people who will audit it."
+     "Legacy handling",
+     "Shim proxies with compensating controls",
+     "Perpetual exceptions — every one needs an expiry"
+    ],
+    [
+     "Assurance",
+     "Continuous bypass detection on flows",
+     "Annual audit-only coverage checks — drift wins"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Under the hood"
+   "x": "Zero-trust release gates — evidence before enforcement"
   },
   {
-   "t": "p",
-   "x": "The engineering baseline for Zero-Trust Architecture & Implementation: NIST SP 800-207, SPIFFE/SPIRE, Istio service mesh, SDP controllers, EDR/XDR, SIEM. The justifications are written, versioned and handed over — the decisions are yours to own after the engagement."
+   "t": "table",
+   "caption": "Release gates for Zero-Trust Architecture & Implementation — the evidence each demands",
+   "headers": [
+    "Gate",
+    "Question it answers",
+    "Evidence required to pass"
+   ],
+   "rows": [
+    [
+     "Enumeration gate",
+     "Are critical paths fully enumerated?",
+     "Path inventory signed by owners"
+    ],
+    [
+     "Policy gate",
+     "Is policy code-reviewed and tested?",
+     "CI results; rule-change review log"
+    ],
+    [
+     "Latency gate",
+     "Do decisions fit app budgets?",
+     "p95 decision latency per app class"
+    ],
+    [
+     "Bypass gate",
+     "Would a bypass be detected?",
+     "Flow-analysis drill with injected bypass"
+    ],
+    [
+     "Drill gate",
+     "Do paths fail safely under attack?",
+     "Purple-team path evidence"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "How the work actually runs"
+   "x": "What the security architecture team inherits"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Weeks 1–2 — baseline",
-     "Zero-Trust Architecture & Implementation starts with the measurement: the metric, the owner, the current number, signed."
+     "Policy decision fabric",
+     "PDP with policy-as-code, caches and telemetry"
     ],
     [
-     "Weeks 3–8 — bounded build",
-     "One working slice on your estate, trust-tier migration plan first, gates written with your team."
+     "Critical-path inventory",
+     "Every access path with coverage status"
     ],
     [
-     "Weeks 9–13 — evidence and decision",
-     "Zero-Trust Architecture & Implementation closes its first quarter at the gate: the working slice is measured against the baseline your team signed, and the scale decision is written down with the evidence attached."
+     "Bypass detection",
+     "Continuous flow analysis with triage workflow"
+    ],
+    [
+     "Legacy shim kit",
+     "Compensating controls with expiry dates"
+    ],
+    [
+     "Drill pack",
+     "Attack-path evidence per critical path"
+    ],
+    [
+     "Decision telemetry",
+     "Every decision logged with signal context"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Critical paths first, week by week"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1–2 — path enumeration",
+     "Critical-path inventory, bypass scan, coverage baseline"
+    ],
+    [
+     "Weeks 3–4 — decision plane",
+     "PDP with policy-as-code, signal integrations, caches"
+    ],
+    [
+     "Weeks 5–6 — enforcement rollout",
+     "Proxies and segmentation on top paths first"
+    ],
+    [
+     "Weeks 7–8 — legacy shims",
+     "Compensating controls with expiry; shim deployment"
+    ],
+    [
+     "Weeks 9–10 — assurance",
+     "Bypass detection live; first drill cycle; telemetry"
+    ],
+    [
+     "Ongoing — coverage ops",
+     "Monthly coverage review; quarterly drills; policy CI"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface — identity, devices and the estate"
+  },
+  {
+   "t": "p",
+   "x": "The decision surface is only as good as its signals; these contracts carry identity, device posture and context into decisions reliably enough to enforce on."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Identity provider",
+     "SSO and MFA with step-up flows"
+    ],
+    [
+     "Device management",
+     "Posture signals at decision time"
+    ],
+    [
+     "Network fabric",
+     "Segmentation enforcement points"
+    ],
+    [
+     "App teams",
+     "Proxy onboarding with latency budgets"
+    ],
+    [
+     "SIEM",
+     "Decision telemetry export"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Control overlay — exceptions with expiries"
+  },
+  {
+   "t": "p",
+   "x": "Break-glass accounts, legacy protocols and vendor exemptions exist — the control is that each carries an owner, an expiry and a bypass alarm, so the exception list is an attack-surface inventory rather than a secret."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "No location privilege",
+     "Network position grants nothing by itself"
+    ],
+    [
+     "Expiry-bound exceptions",
+     "Every exception carries an owner and a date"
+    ],
+    [
+     "Policy CI",
+     "Rule changes ship only with tests and review"
+    ],
+    [
+     "Decision audit",
+     "Every deny/allow is reconstructible with signals"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Bypass detections are reviewed weekly with the architecture council: an unexplained bypass is treated as a live incident, and the exception ledger ships in every audit pack."
   },
   {
    "t": "cta",
-   "x": "Bring Zero-Trust Architecture & Implementation to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
+   "x": "Ask for the coverage number your current diagram can't prove. The diagnostic will measure critical-path coverage on real requests — bypasses, exceptions and latency included."
   }
  ],
- "words": 532,
+ "words": 1028,
  "section": "Services",
  "l1": "Services",
  "l2": "Cybersecurity & Zero-Trust",
@@ -268,7 +1227,7 @@
  ],
  "related": [
   {
-   "title": "Tower overview — Cybersecurity & Zero-Trust",
+   "title": "Domain overview — Cybersecurity & Zero-Trust",
    "url": "/services/cybersecurity-zero-trust/",
    "desc": "Identity, detection, resilience and AI security in one program."
   },
@@ -320,33 +1279,51 @@
   {
    "title": "Quantum & Advanced Compute for Telecom, Media & Entertainment",
    "url": "/industries/telecom-media/capabilities/quantum-advanced-compute/",
-   "desc": "A tower applied to this operating unit."
+   "desc": "A domain applied to this operating unit."
   }
  ],
  "cards": [
   {
-   "title": "Threat Intelligence & Managed SOC",
-   "url": "/services/cybersecurity-zero-trust/threat-intelligence-managed-soc/",
-   "tag": "Same tower",
-   "desc": "Detection that keeps pace — intelligence-driven SOC with the boring parts (tuning, coverage) done properly."
-  },
-  {
-   "title": "Identity & Access Modernization",
-   "url": "/services/cybersecurity-zero-trust/identity-access-modernization/",
-   "tag": "Same tower",
-   "desc": "Identity as the perimeter — workforce, customer and machine identities on one governed plane."
+   "title": "AI Security & Model Protection",
+   "url": "/services/cybersecurity-zero-trust/ai-security-model-protection/",
+   "tag": "Same domain",
+   "desc": "security for the models themselves — prompt-injection defense, abuse containment, model theft resistance and eval-based red teams wired into the platform."
   },
   {
    "title": "Cloud Security & Posture Management",
    "url": "/services/cybersecurity-zero-trust/cloud-security-posture/",
-   "tag": "Same tower",
-   "desc": "Secure at the control plane — posture, workload and data security engineered into the platform."
+   "tag": "Same domain",
+   "desc": "multi-cloud misconfiguration and entitlement control — infrastructure-as-code guardrails, CSPM with dwell-time metrics, and drift that fixes itself."
   },
   {
-   "title": "AI security & Model Protection",
-   "url": "/services/cybersecurity-zero-trust/ai-security-model-protection/",
-   "tag": "Same tower",
-   "desc": "Secure the models themselves — prompt-injection defense, agent containment and AI red-teaming."
+   "title": "Compliance, Audit & Digital Trust",
+   "url": "/services/cybersecurity-zero-trust/compliance-audit-digital-trust/",
+   "tag": "Same domain",
+   "desc": "evidence-grade compliance without theater — controls mapped once, evidence generated continuously, audits that pass first time."
+  },
+  {
+   "title": "Cloud-Native & Legacy Modernization",
+   "url": "/services/cloud-edge-platform-engineering/cloud-native-modernization/",
+   "tag": "Pairs with",
+   "desc": "workloads rebuilt for cloud-native operations — containerized, observable, resilient by default, with a strangler path that retires VMs on evidence."
+  },
+  {
+   "title": "HPC & Simulation Engineering",
+   "url": "/services/quantum-advanced-compute/hpc-simulation-engineering/",
+   "tag": "Pairs with",
+   "desc": "classical HPC that does the heavy lifting — benchmarked clusters, tuned solvers, cost-per-solve discipline and simulation workflows with provenance."
+  },
+  {
+   "title": "Enterprise AI Strategy & Roadmapping",
+   "url": "/services/applied-ai-generative-ai/enterprise-ai-strategy/",
+   "tag": "Pairs with",
+   "desc": "portfolio management under uncertainty: provability screens, risk-tiered gates, a platform decision made once, and a stop-loss that holds."
+  },
+  {
+   "title": "A tier-1 US bank",
+   "url": "/case-studies/bank-03/",
+   "tag": "Evidence",
+   "desc": "DORA-grade resilience posture — third-party and incident evidence automated."
   }
  ]
 }

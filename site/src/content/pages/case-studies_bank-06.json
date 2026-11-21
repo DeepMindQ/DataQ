@@ -1,0 +1,262 @@
+{
+ "id": "CASE-bank-06",
+ "title": "A consumer-finance lender",
+ "url": "/case-studies/bank-06/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Banking & Financial Services > A consumer-finance lender",
+ "seo_title": "A consumer-finance lender | Case Study | Dataq Software",
+ "meta_description": "Collections rebuilt around governed agents — right-party contact up 21% and promise-to-pay rate up 18% at the same staffing",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Collections rebuilt around governed agents — right-party contact up 21% and promise-to-pay rate up 18% at the same staffing"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a US consumer-finance lender whose collections floor had become a dialer factory: agents touched accounts in list order, not in order of recoverable value. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline fortnight counted what the list-order design cost: 11% right-party contact, and the accounts most likely to cure were reached last because they looked like everyone else in the queue."
+  },
+  {
+   "t": "p",
+   "x": "Compliance lived in a laminated card at each desk. Call scripts drifted from it within weeks of every policy update, and nobody could prove which version a specific call had used."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We moved collections to governed agents: each account ranked by recoverable value and channel preference, outreach sequenced SMS-voice-email within state rules, and every conversation ran on the current script version with the compliance state machine enforcing it. Agents handle what the machine cannot settle; the envelope is fixed, and nothing outside it ships."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — A consumer-finance lender",
+   "lanes": [
+    "Account signals",
+    "Orchestration",
+    "Conversation layer",
+    "Compliance spine"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "Delinquency & propensity feed",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Channel preference store"
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Value-ranked queue",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Sequence planner"
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "SMS / IVR / agent desktop",
+     "hot": true
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Settlement & hardship flows"
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Script state machine",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Call evidence store",
+     "hot": true
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A consumer-finance lender",
+   "kpis": [
+    {
+     "label": "Right-party contact",
+     "value": "+21%",
+     "delta": "value-ranked sequencing",
+     "dir": "up"
+    },
+    {
+     "label": "Promise-to-pay rate",
+     "value": "+18%",
+     "delta": "channel-matched outreach",
+     "dir": "up"
+    },
+    {
+     "label": "Compliance exceptions",
+     "value": "-83%",
+     "delta": "state-machine enforced",
+     "dir": "down"
+    },
+    {
+     "label": "Recovered value per agent hour",
+     "value": "+26%",
+     "delta": "same headcount",
+     "dir": "up"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed with the collections leadership council",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 05",
+     "msg": "Sequencer live on two states",
+     "tag": "build"
+    },
+    {
+     "t": "wk 11",
+     "msg": "Gate review — compliance audit of call evidence",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "National rollout; script updates now ship in hours",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Contact and cure baselines signed with collections leadership"
+    ],
+    [
+     "Build gate",
+     "No state rollout until its rulepack passed the compliance state machine"
+    ],
+    [
+     "Run gate",
+     "Monthly realized-recovery review against the signed baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The transferable assets are the compliance state machine and the value-ranked queue design. Both have run elsewhere with new rulepacks. The propensity models do not travel; they are trained on each book's own behavior, which is exactly why the diagnostic comes first."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "9 months",
+     "14-person blended team",
+     "US",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "Start with the diagnostic, not the contract: the same diagnostic that baselined this program takes two weeks, and a scoped proposal follows only if the delta justifies it."
+  }
+ ],
+ "words": 450,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Banking & Financial Services",
+ "l3": "A consumer-finance lender",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Banking & Financial Services",
+   "url": "/industries/banking-financial-services/"
+  },
+  {
+   "name": "A consumer-finance lender",
+   "url": "/case-studies/bank-06/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Banking & Financial Services — industry hub",
+   "url": "/industries/banking-financial-services/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Agentic AI & Hyperautomation",
+   "url": "/services/agentic-ai-hyperautomation/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A top-10 European retail bank",
+   "url": "/case-studies/bank-01/",
+   "desc": "Real-time fraud decisioning on instant rails — 38% lower fraud losses at a higher approval rate"
+  },
+  {
+   "title": "A multinational corporate bank",
+   "url": "/case-studies/bank-02/",
+   "desc": "KYC refresh backlog cleared — 70% faster cycles with agentic file assembly"
+  },
+  {
+   "title": "A tier-1 US bank",
+   "url": "/case-studies/bank-03/",
+   "desc": "DORA-grade resilience posture — third-party and incident evidence automated"
+  }
+ ],
+ "cards": []
+}

@@ -1,0 +1,263 @@
+{
+ "id": "CASE-tech-06",
+ "title": "A gaming company",
+ "url": "/case-studies/tech-06/",
+ "template": "case_study",
+ "breadcrumb": "Case Studies > Technology & SaaS > A gaming company",
+ "seo_title": "A gaming company | Case Study | Dataq Software",
+ "meta_description": "Live-service backend on capacity discipline — session infrastructure cost down 31% and launch-day concurrency 3.4x served without incident",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Live-service backend on capacity discipline — session infrastructure cost down 31% and launch-day concurrency 3.4x served without incident"
+  },
+  {
+   "t": "h2",
+   "x": "What we walked into"
+  },
+  {
+   "t": "p",
+   "x": "Identity withheld — a gaming company whose launches were cinematic and whose backends were improvised. Figures are the client's own, shared with permission."
+  },
+  {
+   "t": "h2",
+   "x": "What the baseline showed"
+  },
+  {
+   "t": "p",
+   "x": "The baseline launch post-mortem priced the improvisation: concurrency beyond 40% of forecast caused queue cascades, infrastructure spend doubled for a week and settled too late, and one matchmaking outage trended before the game did."
+  },
+  {
+   "t": "p",
+   "x": "Capacity planning used peak-of-peak folklore; the real session shape — joins, matches, store traffic — lived unmeasured in fleets of similar-but-not-identical services."
+  },
+  {
+   "t": "h2",
+   "x": "What went into production"
+  },
+  {
+   "t": "p",
+   "x": "We gave the live service a capacity spine: session-shape telemetry decomposed per service, load models built from real shapes, game-day rehearsals at 150% of forecast concurrency, adaptive scaling policies per service class with the cost ledger visible, and the launch readiness gate requiring a passed rehearsal. The next launch trended for the right reasons."
+  },
+  {
+   "t": "arch",
+   "title": "What went into production — A gaming company",
+   "lanes": [
+    "Session telemetry",
+    "Capacity spine",
+    "Rehearsal gates",
+    "Cost ledger"
+   ],
+   "nodes": [
+    {
+     "id": "n0",
+     "lane": 0,
+     "label": "Session & match telemetry",
+     "hot": true
+    },
+    {
+     "id": "n1",
+     "lane": 0,
+     "label": "Store & social services",
+     "hot": true
+    },
+    {
+     "id": "n2",
+     "lane": 1,
+     "label": "Per-service load models",
+     "hot": true
+    },
+    {
+     "id": "n3",
+     "lane": 1,
+     "label": "Adaptive scaling policies",
+     "hot": true
+    },
+    {
+     "id": "n4",
+     "lane": 2,
+     "label": "Game-day harness at 150%",
+     "hot": true
+    },
+    {
+     "id": "n5",
+     "lane": 2,
+     "label": "Launch readiness gate"
+    },
+    {
+     "id": "n6",
+     "lane": 3,
+     "label": "Per-session cost ledger",
+     "hot": true
+    },
+    {
+     "id": "n7",
+     "lane": 3,
+     "label": "Live-ops dashboard"
+    }
+   ],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
+   "t": "h2",
+   "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A gaming company",
+   "kpis": [
+    {
+     "label": "Launch concurrency served",
+     "value": "3.4x",
+     "delta": "previous tested limit",
+     "dir": "up"
+    },
+    {
+     "label": "Session infra cost",
+     "value": "-31%",
+     "delta": "ledger-driven policies",
+     "dir": "down"
+    },
+    {
+     "label": "Launch-day incidents",
+     "value": "0",
+     "delta": "rehearsal-gated",
+     "dir": "down"
+    },
+    {
+     "label": "Queue cascades",
+     "value": "eliminated",
+     "delta": "backpressure by class",
+     "dir": "down"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed with the live-ops and platform leads",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 08",
+     "msg": "Scaling policies live for match services",
+     "tag": "build"
+    },
+    {
+     "t": "wk 13",
+     "msg": "Gate review — launch rehearsal at 150% passed",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Launch executed on plan; policies under live-ops owner",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
+  },
+  {
+   "t": "table",
+   "caption": "Gates that governed the build",
+   "headers": [
+    "Gate",
+    "What it enforced"
+   ],
+   "rows": [
+    [
+     "Diagnostic gate",
+     "Concurrency and cost baselines signed with live-ops"
+    ],
+    [
+     "Build gate",
+     "No launch gate without a passed 150% rehearsal"
+    ],
+    [
+     "Run gate",
+     "Weekly cost-per-session review through events"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Transfer notes"
+  },
+  {
+   "t": "p",
+   "x": "The rehearsal-gate pattern transfers to any live-service launch; the session shapes were this game's community. Another studio starts from its last outage thread — the diagnostic turns the thread into the first load model."
+  },
+  {
+   "t": "table",
+   "caption": "Engagement facts",
+   "headers": [
+    "Duration",
+    "Team",
+    "Region",
+    "Model"
+   ],
+   "rows": [
+    [
+     "11 months",
+     "14-person blended team",
+     "Global",
+     "Outcome-linked build-run"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "x": "Figures on this page are the client's, reproduced with permission. Method notes and measurement designs are available under NDA."
+  },
+  {
+   "t": "cta",
+   "x": "Run the two-week diagnostic on your estate first; the numbers decide whether this pattern earns a build on yours."
+  }
+ ],
+ "words": 411,
+ "section": "Case Studies",
+ "l1": "Case Studies",
+ "l2": "Technology & SaaS",
+ "l3": "A gaming company",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Case Studies",
+   "url": "/case-studies/"
+  },
+  {
+   "name": "Technology & SaaS",
+   "url": "/industries/technology-saas/"
+  },
+  {
+   "name": "A gaming company",
+   "url": "/case-studies/tech-06/"
+  }
+ ],
+ "related": [
+  {
+   "title": "Technology & SaaS — industry hub",
+   "url": "/industries/technology-saas/",
+   "desc": "The industry hub maps this sector's regulatory reality to the domains, with named workflows and systems of record."
+  },
+  {
+   "title": "Service area — Cloud, Edge & Platform Engineering",
+   "url": "/services/cloud-edge-platform-engineering/",
+   "desc": "The domain behind this engagement: services, architecture gates and the method map."
+  },
+  {
+   "title": "A B2B SaaS platform (Series D)",
+   "url": "/case-studies/tech-01/",
+   "desc": "Lead time down 58%, AI margin protected — platform engineering plus AI factory"
+  },
+  {
+   "title": "A consumer fintech (8M users)",
+   "url": "/case-studies/tech-02/",
+   "desc": "Fraud bps down 31% at +1.5pt approval — real-time decision hub"
+  },
+  {
+   "title": "A global gaming studio (live-service title, 15M MAU)",
+   "url": "/case-studies/tech-03/",
+   "desc": "D30 retention +4.7 points — player intelligence and live-ops automation"
+  }
+ ],
+ "cards": []
+}
