@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Power Generation & Grid: the operating units, priority programs and the five capability towers that matter most here."
+   "x": "A no-theater description of Power Generation & Grid: what ships first, what it touches at meter data platforms, how it is verified, and the per feeder metric we commit to moving against baseline."
   },
   {
    "t": "h2",
@@ -17,7 +17,29 @@
   },
   {
    "t": "p",
-   "x": "The workflows we industrialize here: Forecasting and dispatch, Asset condition management, DER/flexibility orchestration, CIP compliance, Grid-edge planning. Each arrives with its current cycle times measured in the Diagnose phase, and each leaves the program governed by outcome SLOs rather than anecdotes."
+   "x": "The operating surface here spans Forecasting and dispatch, Asset condition management, DER/flexibility orchestration, CIP compliance, Grid-edge planning. The engineering bet is explicit: each stage owns its latency budget and its failure policy across the Power Generation & Grid estate, and rollback is rehearsed before go-live rather than after the incident."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Governed lakehouse pipeline — Power Generation & Grid",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "What holds the build together is discipline at the boundaries: the decision path and the audit path share one timeline across the Power Generation & Grid estate, so a regression is a cohort, never an estate."
+  },
+  {
+   "t": "p",
+   "x": "The part that survives audit is the boring part: cost and quality telemetry land in the same view your owners read for Energy & Utilities at scale, so a regression is a cohort, never an estate."
   },
   {
    "t": "h2",
@@ -28,27 +50,27 @@
    "items": [
     [
      "Forecasting under intermittency",
-     "Renewable/demand forecasts legacy; imbalance and curtailment climb."
+     "Nothing in this topology is accidental: every state change is replayable from the signed baseline on Data, Analytics & Lakehouse programs, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Substation assets uninstrumented",
-     "Transformers/breakers lack condition telemetry; failures unscheduled."
+     "What holds the build together is discipline at the boundaries: the decision path and the audit path share one timeline across Energy & Utilities, so your control owners can interrogate any number we publish."
     ],
     [
      "CIP/62443 compliance load",
-     "Evidence assembled manually; flat zones persist."
+     "At operating tempo, the properties that carry the load are structural: signals cross boundaries only through typed contracts in Power Generation & Grid, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Flexibility orchestration manual",
-     "DER flexibility activation by phone/portal; markets underused."
+     "Under the hood this pattern runs on one rule: signals cross boundaries only through typed contracts in Data, Analytics & Lakehouse delivery, which is what makes the reported delta defensible in audit."
     ],
     [
      "Unit-commitment ceilings",
-     "Scheduling formulations exceed solvers; flexibility left unused."
+     "Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read for Energy & Utilities at scale, which keeps the blast radius of any change inside one lane."
     ],
     [
      "Grid-edge data blind",
-     "AMI/DER telemetry unharvested; planning blind to edge reality."
+     "The engineering bet is explicit: the decision path and the audit path share one timeline on Data, Analytics & Lakehouse programs, so a regression is a cohort, never an estate."
     ]
    ]
   },
@@ -84,6 +106,98 @@
   },
   {
    "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Delta / Iceberg tables",
+     "Nothing in this topology is accidental: identity is short-lived and authorization is deny-by-default in Power Generation & Grid, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "dbt transformation graph",
+     "dbt transformation graph carries the decision path — tested, documented models with lineage exposure"
+    ],
+    [
+     "cost-aware clustering",
+     "The design principle here is simple: models, agents and rules move through versioned, evaluated releases across the Power Generation & Grid estate, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "Unity Catalog governance",
+     "At operating tempo, the properties that carry the load are structural: models, agents and rules move through versioned, evaluated releases in Data, Analytics & Lakehouse delivery, so your control owners can interrogate any number we publish."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "SCADA / EMS cores",
+     "Under the hood this pattern runs on one rule: each stage owns its latency budget and its failure policy in Power Generation & Grid, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "asset health registries",
+     "At operating tempo, the properties that carry the load are structural: the decision path and the audit path share one timeline for Energy & Utilities at scale, so the question of how we know gets a pointer, not a paragraph."
+    ],
+    [
+     "work & asset management",
+     "Nothing in this topology is accidental: models, agents and rules move through versioned, evaluated releases across Energy & Utilities, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "meter data platforms",
+     "Nothing in this topology is accidental: every state change is replayable from the signed baseline on Data, Analytics & Lakehouse programs, so drift shows up as a ticket with an owner, not as a mystery."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "batch window",
+     "Down 50–62.1% after re-architecture per feeder, reported weekly against the signed baseline"
+    ],
+    [
+     "freshness SLO attainment",
+     "Up 97–98.9% of tables inside their declared window per feeder, reported weekly against the signed baseline"
+    ],
+    [
+     "warehouse spend per query",
+     "Down 20–34.9% after clustering and pruning per feeder, reported weekly against the signed baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Metric anarchy",
+     "What holds the build together is discipline at the boundaries: each stage owns its latency budget and its failure policy in Power Generation & Grid, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "Cost creep",
+     "What holds the build together is discipline at the boundaries: every state change is replayable from the signed baseline across Energy & Utilities, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "Silent schema drift",
+     "Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read for Energy & Utilities at scale, which is what makes the reported delta defensible in audit."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
    "x": "How we help — five priority capabilities"
   },
   {
@@ -91,25 +205,33 @@
    "items": [
     [
      "Data & Lakehouse",
-     "Weather-coupled ML at asset/portfolio level: imbalance cost down"
+     "Nothing in this topology is accidental: the decision path and the audit path share one timeline in Power Generation & Grid, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "IoT, Twin & Robotics",
-     "Condition monitoring on critical assets: outages down"
+     "The build earns trust the same way every gate does: each stage owns its latency budget and its failure policy for Energy & Utilities at scale, and every exception path degrades to human review, never to silence."
     ],
     [
      "Cyber & Zero-Trust",
-     "Continuous evidence and zone enforcement: compliance real"
+     "The engineering bet is explicit: the decision path and the audit path share one timeline in Data, Analytics & Lakehouse delivery, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "Agentic AI & Hyperautomation",
-     "Goal-directed agents that run inside your systems with defined roles, budgets and human checkpoints. Every action is logged, measurable and reversible."
+     "The build earns trust the same way every gate does: signals cross boundaries only through typed contracts for Energy & Utilities at scale, so a regression is a cohort, never an estate."
     ],
     [
      "Quantum & Advanced Compute",
-     "Optimization, simulation and post-quantum cryptography migration, applied where the mathematics pays back and benchmarked against classical baselines."
+     "Nothing in this topology is accidental: every state change is replayable from the signed baseline across the Power Generation & Grid estate, which is what makes the reported delta defensible in audit."
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "How the engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is engineered, not ritual: the first 2 weeks are pure verification — we measure Forecast error with your analysts, reconcile disagreements, and freeze the number both sides defend. The part that survives audit is the boring part: the decision path and the audit path share one timeline for Energy & Utilities at scale, so your control owners can interrogate any number we publish.. What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later across Energy & Utilities, and rollback is rehearsed before go-live rather than after the incident.. The build earns trust the same way every gate does: models, agents and rules move through versioned, evaluated releases across Energy & Utilities, so the question of how we know gets a pointer, not a paragraph."
   },
   {
    "t": "h2",
@@ -124,25 +246,17 @@
     ],
     [
      "Substation outages",
-     "Down 30%+"
+     "Substation outages is tracked weekly to your control owner; the number at gate three is the number finance sees"
     ],
     [
      "Flexibility activated",
-     "Up sharply"
+     "Flexibility activated is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
     ],
     [
      "CIP evidence",
-     "Continuous"
+     "CIP evidence defines success for this pattern and is audited against the week-two baseline at every gate"
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
-  },
-  {
-   "t": "p",
-   "x": "A named pod carries this sub-industry pattern — delivery lead, quality owner, control owner — on a follow-the-sun rhythm spanning build, run and the conformance monitoring that keeps the design honest once we hand over."
   },
   {
    "t": "h2",
@@ -153,11 +267,11 @@
    "items": [
     [
      "A European TSO-DSO group",
-     "Forecast error down 31%: imbalance cost recovered across three control zones"
+     "Target range down 31 on the first working slice, with the method note attached"
     ],
     [
      "A global integrated energy major",
-     "Turnaround duration down 14%: scheduling optimization at refinery scale"
+     "Nothing in this topology is accidental: identity is short-lived and authorization is deny-by-default across Energy & Utilities, so your control owners can interrogate any number we publish."
     ]
    ]
   },
@@ -167,14 +281,14 @@
   },
   {
    "t": "p",
-   "x": "Related sub-industry pages: Oil & Gas, Renewable Energy, Water, Waste & City Utilities — each with its own capability alignments under /industries/energy-utilities/."
+   "x": "The neighbouring operating units are Oil & Gas, Renewable Energy, Water, Waste & City Utilities — each with its own capability alignments under /industries/energy-utilities/; programs that span two of them usually share one baseline."
   },
   {
    "t": "cta",
-   "x": "Pick a capability to go deeper — or take your metric straight to the industry practice lead."
+   "x": "Start with a value assessment: two weeks, your Forecast error measured and signed, a delivery plan priced from evidence."
   }
  ],
- "words": 353,
+ "words": 1379,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Energy & Utilities",

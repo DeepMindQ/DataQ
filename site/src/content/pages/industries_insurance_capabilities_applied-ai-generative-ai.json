@@ -9,26 +9,60 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "How Applied AI & GenAI lands in Capabilities — the constraints that shape the build, the gated delivery pattern, and the deltas we commit against your baseline."
+   "x": "How Applied AI & GenAI for Insurance & Risk runs when it is engineered for Insurance & Risk: bounded scope per gate, platform evidence generated in-flight, and outcomes stated as deltas against the number we signed together."
   },
   {
    "t": "h2",
-   "x": "Why this capability matters here"
+   "x": "Overview"
   },
   {
    "t": "p",
-   "x": "In Insurance & Risk, applied ai & generative ai at dataq soft covers the full lifecycle of enterprise intelligence: strategy and value mapping, platform build-out, model adaptation, retrieval architectures, multimodal systems, and the governance fabric that keeps every model auditable. That is the baseline pattern; the differentiator is what it connects to: enterprise ai strategy & roadmapping, generative ai platform engineering, llm fine-tuning & model operations — delivered on Dataq Compass and Dataq Forge and Dataq Nexus with the sector's regulatory posture built in."
+   "x": "Applied AI & GenAI for Insurance & Risk earns its budget only when it changes a number on someone's scorecard. So we invert the usual sequence: lock the metric and its baseline first, then work backwards to the smallest architecture that moves it — usually composed from policy admin platforms and the tower platform rather than built from scratch. The Insurance & Risk operating reality gives this work its shape: loss ratios pressure at event speed, Solvency II reporting obligations on every artifact, and practitioners who will not accept recommendations they cannot interrogate. The pattern below is calibrated to those three forces."
   },
   {
    "t": "h2",
-   "x": "The pressure points we attack"
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "decision-fabric",
+   "title": "Grounded generation fabric — Applied AI & GenAI for Insurance & Risk",
+   "labels": [
+    "Documents & policies",
+    "Grounded retrieval core",
+    "Eval & guard harness",
+    "Decision plane",
+    "Governed action",
+    "Evidence telemetry"
+   ],
+   "note": "Under the hood this pattern runs on one rule: evidence is captured where the work happens, not reconstructed later in Insurance & Risk, and every exception path degrades to human review, never to silence."
+  },
+  {
+   "t": "p",
+   "x": "The part that survives audit is the boring part: every state change is replayable from the signed baseline across the Insurance & Risk estate, so a regression is a cohort, never an estate."
+  },
+  {
+   "t": "p",
+   "x": "The design principle here is simple: each stage owns its latency budget and its failure policy for Insurance & Risk at scale, so the question of how we know gets a pointer, not a paragraph."
+  },
+  {
+   "t": "h2",
+   "x": "Why this matters in Insurance & Risk"
+  },
+  {
+   "t": "p",
+   "x": "Under the hood this pattern runs on one rule: models, agents and rules move through versioned, evaluated releases in Insurance & Risk, so the question of how we know gets a pointer, not a paragraph."
+  },
+  {
+   "t": "h2",
+   "x": "Pressure points we attack"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Pricing sophistication outrunning governance",
-     "GLM-based pricing, telematics factors and external data enrichment multiply model complexity faster than validation capacity. Filings get challenged; model risk documentation is reconstructed under exam pressure."
+     "Nothing in this topology is accidental: models, agents and rules move through versioned, evaluated releases in Insurance & Risk, so a regression is a cohort, never an estate."
     ],
     [
      "Distribution partners need embedded rails",
@@ -36,17 +70,17 @@
     ],
     [
      "Claims intake drowning in documents",
-     "FNOL packets, medical reports, repair estimates and police files arrive as unstructured documents; manual triage queues claims for days before an adjuster sees them. Leakage and customer patience both bleed in the queue."
+     "What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default for Insurance & Risk at scale, and rollback is rehearsed before go-live rather than after the incident."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "How we deliver it in this sector"
+   "x": "How we deliver it here"
   },
   {
    "t": "p",
-   "x": "Delivery composes 7 services from the Applied AI & Generative AI tower — Enterprise AI Strategy & Roadmapping, Generative AI Platform Engineering, LLM Fine-Tuning & Model Operations, RAG & Enterprise Knowledge Systems as the usual core — sequenced through the Dataq Method, with AML/CTF obligations obligations shaping the design from the first sprint."
+   "x": "The build sequence is deliberate: contracts and identity first, the working decision slice second, the verification harness third — because a Applied AI & GenAI for Insurance & Risk capability without its eval gate is just another unattended automation."
   },
   {
    "t": "h2",
@@ -57,19 +91,19 @@
    "items": [
     [
      "Enterprise AI Strategy & Roadmapping",
-     "Align AI to P&L lines and risk mandates — a sequenced portfolio, not a pile of pilots."
+     "At operating tempo, the properties that carry the load are structural: each stage owns its latency budget and its failure policy across Insurance & Risk, which keeps the blast radius of any change inside one lane."
     ],
     [
      "Generative AI Platform Engineering",
-     "One governed platform, many GenAI products: retrieval, guardrails and cost control as shared services."
+     "The design principle here is simple: signals cross boundaries only through typed contracts on Applied AI & Generative AI programs, so your control owners can interrogate any number we publish."
     ],
     [
      "LLM Fine-Tuning & Model Operations",
-     "Own your models: tune, distill and operate LLMs with measurable quality, controlled cost and enforceable policy."
+     "The design principle here is simple: every state change is replayable from the signed baseline in Insurance & Risk, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "RAG & Enterprise Knowledge Systems",
-     "Answers with citations, not vibes: permission-aware retrieval over your regulated document estate."
+     "Nothing in this topology is accidental: every state change is replayable from the signed baseline in Insurance & Risk, which is what makes the reported delta defensible in audit."
     ]
    ]
   },
@@ -91,33 +125,104 @@
    ]
   },
   {
+   "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
    "t": "bullets",
    "items": [
     [
-     "Fraud detection uplift",
-     "+20-30% capture with network analytics at stable SIU capacity"
+     "PII redaction fence",
+     "PII redaction fence carries the ingest path — entity-level masking before any model call"
     ],
     [
-     "Combined-ratio contribution from loss adjustment expense",
-     "Measurable reduction on automated flows"
+     "vLLM serving pool",
+     "vLLM serving pool carries the decision path — batched GPU inference with p95 latency ceilings"
     ],
     [
-     "Model filing preparation effort",
-     "Down 50% with documentation-as-you-build"
+     "canary eval gate",
+     "canary eval gate carries the evidence path — release blocked when groundedness regresses"
+    ],
+    [
+     "hybrid retrieval",
+     "hybrid retrieval carries the control path — BM25 + dense embeddings with reciprocal-rank fusion"
     ]
    ]
   },
   {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
    "t": "bullets",
-   "items": []
+   "items": [
+    [
+     "underwriting workbench",
+     "underwriting workbench: risk inputs, referrals and authority limits; contracts are agreed with your system owners in week one"
+    ],
+    [
+     "policy admin platforms",
+     "policy admin platforms, where master policy state with event streams — with replay possible for any window your auditors name"
+    ],
+    [
+     "claims document intake",
+     "claims document intake — indexed packets with redaction at rest; the adapter is part of the deliverable, not a future phase"
+    ],
+    [
+     "actuarial & pricing stores",
+     "actuarial & pricing stores — exposure bases and factor tables under versioning; changes there raise events here, so the pattern never silently diverges"
+    ]
+   ]
   },
   {
    "t": "h2",
-   "x": "Governance note"
+   "x": "Operational telemetry"
   },
   {
    "t": "p",
-   "x": "Two regimes anchor the control design here: AML/CTF obligations and IFRS 17 / LDTI accounting. Data and actuarial pipeline discipline for new reporting bases. Evidence for both is generated by the delivery itself — control tests, replay trails and documentation are artifacts of the program, not a reconstruction project."
+   "x": "What we watch so you do not have to ask:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "citation precision",
+     "Up 90–95.8% of citations pointing to the right passage, with the method note attached so your analysts can reproduce it"
+    ],
+    [
+     "cost per resolved query",
+     "Down 25–39.7% after cache and routing tuning on the first working slice; deeper scope moves it further"
+    ],
+    [
+     "p95 response latency",
+     "Down 30–43.4% under load-matched conditions in current programs; measured, not modeled"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "p",
+   "x": "The ways programs like this die — and the guard we ship against each:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "PII escape",
+     "At operating tempo, the properties that carry the load are structural: each stage owns its latency budget and its failure policy in Insurance & Risk, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "Silent prompt drift",
+     "The part that survives audit is the boring part: evidence is captured where the work happens, not reconstructed later on Applied AI & Generative AI programs, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "Ungrounded fluency",
+     "The build earns trust the same way every gate does: models, agents and rules move through versioned, evaluated releases in Applied AI & Generative AI delivery, so the question of how we know gets a pointer, not a paragraph."
+    ]
+   ]
   },
   {
    "t": "h2",
@@ -125,7 +230,7 @@
   },
   {
    "t": "p",
-   "x": "The cadence below is the standard pattern for this capability, and it does not flex by account. Weeks 1–2 belong to measurement: the baseline metric is captured with your team and signed before build starts. Weeks 3–8 run a bounded pilot — one decision path, one workflow, one plant or one portfolio — steered by a control owner on your side. Weeks 9–12 convert the pilot into runbooks, monitoring and enablement, and close with a measured delta against the signed baseline. Anything that misses a gate is stopped or redirected on the record."
+   "x": "The cadence, without the ceremony: The part that survives audit is the boring part: the decision path and the audit path share one timeline for Insurance & Risk at scale, which keeps the blast radius of any change inside one lane.. Nothing in this topology is accidental: signals cross boundaries only through typed contracts across the Insurance & Risk estate, and rollback is rehearsed before go-live rather than after the incident.. The design principle here is simple: evidence is captured where the work happens, not reconstructed later across Insurance & Risk, so your control owners can interrogate any number we publish.. The part that survives audit is the boring part: signals cross boundaries only through typed contracts across the Insurance & Risk estate, and rollback is rehearsed before go-live rather than after the incident."
   },
   {
    "t": "h2",
@@ -133,22 +238,22 @@
   },
   {
    "t": "p",
-   "x": "This capability is one move in a larger program. The pages below show where it connects."
+   "x": "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases on Applied AI & Generative AI programs, so a regression is a cohort, never an estate."
   },
   {
    "t": "bullets",
    "items": [
     [
      "Cyber & Zero-Trust for Energy & Utilities",
-     "A tower applied to this operating unit."
+     "Under the hood this pattern runs on one rule: identity is short-lived and authorization is deny-by-default in Applied AI & Generative AI delivery, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "Cyber & Zero-Trust for Healthcare & Life Sciences",
-     "A tower applied to this operating unit."
+     "The build earns trust the same way every gate does: cost and quality telemetry land in the same view your owners read across Insurance & Risk, so a regression is a cohort, never an estate."
     ],
     [
      "Insurance & Risk",
-     "Priority programs and regulatory posture."
+     "Nothing in this topology is accidental: the decision path and the audit path share one timeline on Applied AI & Generative AI programs, and every exception path degrades to human review, never to silence."
     ]
    ]
   },
@@ -158,35 +263,56 @@
   },
   {
    "t": "p",
-   "x": "At the end of the first quarter of a typical program you hold four concrete assets:"
+   "x": "The quarter-close package, built to be handed over rather than demonstrated:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Baseline diagnostic",
-     "The signed measurement of where the metric stands today, with the method written out so the number can be defended to finance."
+     "The part that survives audit is the boring part: evidence is captured where the work happens, not reconstructed later in Insurance & Risk, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Decision and control map",
-     "Every automated decision path, its policy checks, its human checkpoint and its owner on one page."
+     "The build earns trust the same way every gate does: identity is short-lived and authorization is deny-by-default for Insurance & Risk at scale, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Evidence pack",
-     "Logs, evaluations and approvals collected automatically as the program runs — ready for internal audit or a regulator."
+     "What holds the build together is discipline at the boundaries: signals cross boundaries only through typed contracts across Insurance & Risk, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Value ledger",
-     "A running record of the delta against baseline, updated at every gate, reviewed at every steering meeting."
+     "What holds the build together is discipline at the boundaries: every state change is replayable from the signed baseline in Applied AI & Generative AI delivery, so a regression is a cohort, never an estate."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Outcomes we commit to"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "citation precision",
+     "Up 90–95.5% of citations pointing to the right passage in current programs; the gate reviews the live number, not a projection"
+    ],
+    [
+     "cost per resolved query",
+     "Down 25–40.4% after cache and routing tuning in current programs; the gate reviews the live number, not a projection"
+    ],
+    [
+     "reviewer override rate",
+     "Down 35–51.1% on drafted knowledge work in current programs; the gate reviews the live number, not a projection"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Go deeper into the services behind this capability — or put your metric in front of the industry practice lead."
+   "x": "The part that survives audit is the boring part: identity is short-lived and authorization is deny-by-default on Applied AI & Generative AI programs, so drift shows up as a ticket with an owner, not as a mystery."
   }
  ],
- "words": 505,
+ "words": 1616,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Insurance & Risk",

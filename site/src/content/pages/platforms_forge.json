@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Dataq Forge — Overview: what it does, the architecture and trust controls, and where it is used inside client programs."
+   "x": "A no-theater description of Dataq Forge — Overview: what ships first, what it touches at operational stores, how it is verified, and the per workflow metric we commit to moving against baseline."
   },
   {
    "t": "h2",
@@ -18,6 +18,28 @@
   {
    "t": "p",
    "x": "Dataq Forge operationalizes the lakehouse: medallion pipelines with data contracts, Unity Catalog-class governance, lineage and freshness SLAs, streaming and batch in one estate, and the AI-ready layer (feature stores, vector search, retrieval services) built on the same governed data. It is the substrate tower made product."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "decision-fabric",
+   "title": "Dataq Forge — control and evidence planes",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "At operating tempo, the properties that carry the load are structural: signals cross boundaries only through typed contracts across the Dataq Forge estate, and every exception path degrades to human review, never to silence."
+  },
+  {
+   "t": "p",
+   "x": "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later for the enterprise at scale, so drift shows up as a ticket with an owner, not as a mystery."
   },
   {
    "t": "h2",
@@ -62,11 +84,70 @@
   },
   {
    "t": "h2",
-   "x": "Trust and compliance"
+   "x": "Engineering standards & stack"
   },
   {
-   "t": "p",
-   "x": "Forge inherits platform controls from the customer landing zone and adds its own: contract enforcement, lineage capture, quality gates and privacy-tag-driven access. Every dataset carries its owner, SLA and classification — governance is system behavior, not committee minutes."
+   "t": "bullets",
+   "items": [
+    [
+     " freshness SLOs",
+     "The build earns trust the same way every gate does: the decision path and the audit path share one timeline in Dataq Forge, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "cost-aware clustering",
+     "At operating tempo, the properties that carry the load are structural: the decision path and the audit path share one timeline for the enterprise at scale, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Unity Catalog governance",
+     "Under the hood this pattern runs on one rule: evidence is captured where the work happens, not reconstructed later across the Dataq Forge estate, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "data contracts",
+     "The design principle here is simple: the decision path and the audit path share one timeline across the Dataq Forge estate, so drift shows up as a ticket with an owner, not as a mystery."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "freshness SLO attainment",
+     "Up 97–99.1% of tables inside their declared window per workflow, reported weekly against the signed baseline"
+    ],
+    [
+     "pipeline breakage MTTR",
+     "Down 55–68.3% with contracts and lineage paging per workflow, reported weekly against the signed baseline"
+    ],
+    [
+     "batch window",
+     "Down 50–66.3% after re-architecture per workflow, reported weekly against the signed baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Silent schema drift",
+     "The build earns trust the same way every gate does: the decision path and the audit path share one timeline in Dataq Forge, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "Cost creep",
+     "The part that survives audit is the boring part: evidence is captured where the work happens, not reconstructed later across the enterprise, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "Metric anarchy",
+     "What holds the build together is discipline at the boundaries: signals cross boundaries only through typed contracts across the enterprise, so a regression is a cohort, never an estate."
+    ]
+   ]
   },
   {
    "t": "h2",
@@ -77,25 +158,17 @@
    "items": [
     [
      "Evidence by default",
-     "Every artifact the platform produces doubles as audit evidence — no reconstruction projects."
+     "The build earns trust the same way every gate does: signals cross boundaries only through typed contracts in Dataq Forge, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Pattern use",
-     "Teams start from a configured 80 percent baseline and spend their budget on the 20% that is genuinely yours."
+     "Reported as 20% against baseline, reproducible by your analysts from the method note"
     ],
     [
      "Accountability",
-     "Named control owner per deployment; platform telemetry makes the owner's job inspectable."
+     "The part that survives audit is the boring part: models, agents and rules move through versioned, evaluated releases across the Dataq Forge estate, so a regression is a cohort, never an estate."
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "How programs use it"
-  },
-  {
-   "t": "p",
-   "x": "Most programs deploy Dataq Forge inside the customer's landing zone with a Dataq pod operating it through a named run model, then transfer operations to client teams once the SLOs have held for two quarters."
   },
   {
    "t": "h2",
@@ -106,19 +179,40 @@
    "x": "Certified integration surface: Databricks, Snowflake, Kafka, dbt, Unity Catalog/Purview."
   },
   {
+   "t": "bullets",
+   "items": [
+    [
+     " freshness SLOs",
+     "The build earns trust the same way every gate does: the decision path and the audit path share one timeline in Dataq Forge, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "cost-aware clustering",
+     "At operating tempo, the properties that carry the load are structural: the decision path and the audit path share one timeline for the enterprise at scale, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Unity Catalog governance",
+     "Under the hood this pattern runs on one rule: evidence is captured where the work happens, not reconstructed later across the Dataq Forge estate, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "data contracts",
+     "The design principle here is simple: the decision path and the audit path share one timeline across the Dataq Forge estate, so drift shows up as a ticket with an owner, not as a mystery."
+    ]
+   ]
+  },
+  {
    "t": "h2",
-   "x": "Where it is deployed"
+   "x": "How programs use it"
   },
   {
    "t": "p",
-   "x": "Primary industry deployments: Banking & Financial Services, Insurance & Risk, Retail & Consumer Goods, Healthcare & Life Sciences, Energy & Utilities, Manufacturing & Industrial."
+   "x": "What the delivery actually looks like week to week: The design principle here is simple: cost and quality telemetry land in the same view your owners read for the enterprise at scale, so a regression is a cohort, never an estate.. Under the hood this pattern runs on one rule: every state change is replayable from the signed baseline in Data, Analytics & Lakehouse delivery, and rollback is rehearsed before go-live rather than after the incident.. The engineering bet is explicit: identity is short-lived and authorization is deny-by-default across the Dataq Forge estate, which is what makes the reported delta defensible in audit.. The part that survives audit is the boring part: evidence is captured where the work happens, not reconstructed later for the enterprise at scale, so drift shows up as a ticket with an owner, not as a mystery."
   },
   {
    "t": "cta",
-   "x": "Read the Architecture & Trust page, or book a platform briefing with the engineering team."
+   "x": "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later in Data, Analytics & Lakehouse delivery, so your control owners can interrogate any number we publish."
   }
  ],
- "words": 336,
+ "words": 1017,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Forge",

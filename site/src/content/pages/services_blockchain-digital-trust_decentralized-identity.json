@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Decentralized Identity & Verifiable Credentials in production: what gets built, who owns each control, how the pilot widens into an industrial deployment, and the metrics that gate each phase."
+   "x": "A no-theater description of Decentralized Identity & Verifiable Credentials: what ships first, what it touches at operational stores, how it is verified, and the per workflow metric we commit to moving against baseline."
   },
   {
    "t": "h2",
@@ -17,7 +17,29 @@
   },
   {
    "t": "p",
-   "x": "Identity verification is repeated everywhere and owned nowhere: employee onboarding repeats checks across systems, customers re-prove themselves to every subsidiary, supply-chain partners exchange documents by email. We implement decentralized identity with W3C Verifiable Credentials: issuers (HR, regulators, accredited bodies), wallets for holders, and verifiers checking cryptographic proofs — with selective disclosure so users prove 'over 18' or 'certified forklift operator' without exposing the whole document."
+   "x": "At operating tempo, the properties that carry the load are structural: evidence is captured where the work happens, not reconstructed later across the enterprise, and every exception path degrades to human review, never to silence. The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later across the Decentralized Identity & Verifiable Credentials estate, so drift shows up as a ticket with an owner, not as a mystery."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "ledger-chain",
+   "title": "Signed provenance chain — Decentralized Identity & Verifiable Credentials",
+   "labels": [
+    "Event capture",
+    "Canonical signing",
+    "Distributed ledger",
+    "Verification layer",
+    "Settlement & action",
+    "Provenance query"
+   ],
+   "note": "What holds the build together is discipline at the boundaries: the decision path and the audit path share one timeline in Blockchain & Digital Trust delivery, and rollback is rehearsed before go-live rather than after the incident."
+  },
+  {
+   "t": "p",
+   "x": "The engineering bet is explicit: every state change is replayable from the signed baseline on Blockchain & Digital Trust programs, and rollback is rehearsed before go-live rather than after the incident."
   },
   {
    "t": "h2",
@@ -25,7 +47,19 @@
   },
   {
    "t": "p",
-   "x": "Institutional deployments need the trust layer: governance frameworks defining who may issue what, revocation infrastructure, biometric-binding where regulation requires it, and recovery paths for lost credentials. We deliver against eIDAS 2.0 / EUDI wallet expectations in the EU and comparable regimes elsewhere, integrating with existing IAM rather than replacing it — credentials augment your identity plane; they do not fork it."
+   "x": "Delivery composes proven services rather than bespoke heroics: the pattern below draws on 5 services from the Blockchain & Digital Trust tower, each with its own runbook, so your team inherits something maintained — not a one-off."
+  },
+  {
+   "t": "diagram",
+   "kind": "delivery-cadence",
+   "title": "Delivery cadence — Decentralized Identity & Verifiable Credentials",
+   "labels": [
+    "Diagnose · W1–2",
+    "Pilot · W3–8",
+    "Industrialize · W9–12",
+    "Scale · Q2+"
+   ],
+   "note": "The part that survives audit is the boring part: signals cross boundaries only through typed contracts in Decentralized Identity & Verifiable Credentials, and rollback is rehearsed before go-live rather than after the incident."
   },
   {
    "t": "h2",
@@ -83,32 +117,107 @@
   },
   {
    "t": "h2",
-   "x": "Technology and standards"
+   "x": "Engineering standards & stack"
   },
   {
    "t": "p",
-   "x": "Typical stack and standards: W3C VC/DID, OID4VC family, eIDAS 2.0 references, IAM integration, revocation registries."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
+   "x": "The engineering substrate, as deployed in current programs:"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "verification friction",
-     "Seconds with cryptographic proofs vs. Document exchanges"
+     "W3C Verifiable Credentials",
+     "W3C Verifiable Credentials carries the ingest path — issuer-agnostic attestations with revocation"
     ],
     [
-     "data minimization",
-     "Selective disclosure cuts shared PII sharply"
+     "notarized audit exports",
+     "Under the hood this pattern runs on one rule: every state change is replayable from the signed baseline across the Decentralized Identity & Verifiable Credentials estate, which keeps the blast radius of any change inside one lane."
     ],
     [
-     "re-onboarding cost",
-     "Portable credentials reduce repeated verification"
+     "HSM key ceremonies",
+     "At operating tempo, the properties that carry the load are structural: every state change is replayable from the signed baseline across the enterprise, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "permissioned DLT",
+     "permissioned DLT carries the control path — Hyperledger-class networks with known validators"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "W3C Verifiable Credentials",
+     "W3C Verifiable Credentials carries the ingest path — issuer-agnostic attestations with revocation"
+    ],
+    [
+     "notarized audit exports",
+     "Under the hood this pattern runs on one rule: every state change is replayable from the signed baseline across the Decentralized Identity & Verifiable Credentials estate, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "HSM key ceremonies",
+     "At operating tempo, the properties that carry the load are structural: every state change is replayable from the signed baseline across the enterprise, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "permissioned DLT",
+     "permissioned DLT carries the control path — Hyperledger-class networks with known validators"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "reconciliation breaks",
+     "Down 60–81.5% on anchored flows per workflow, reported weekly against the signed baseline"
+    ],
+    [
+     "audit evidence prep",
+     "Down 50–65.2% — exports are generated, not assembled — the gate compares the live value to baseline every quarter"
+    ],
+    [
+     "dispute resolution time",
+     "Down 40–52.1% with shared provenance on the first working slice; deeper scope moves it further"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Ledger worship",
+     "Under the hood this pattern runs on one rule: identity is short-lived and authorization is deny-by-default across the enterprise, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "On-chain PII",
+     "At operating tempo, the properties that carry the load are structural: identity is short-lived and authorization is deny-by-default on Blockchain & Digital Trust programs, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Key fragility",
+     "What holds the build together is discipline at the boundaries: the decision path and the audit path share one timeline on Blockchain & Digital Trust programs, which is what makes the reported delta defensible in audit."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Technology and standards"
+  },
+  {
+   "t": "p",
+   "x": "Typical stack and standards: W3C VC/DID, OID4VC family, eIDAS 2.0 references, IAM integration, revocation registries."
   },
   {
    "t": "h2",
@@ -119,15 +228,15 @@
    "items": [
     [
      "Weeks 1-4",
-     "Baseline metrics locked with named owners; data-readiness assessed against the delivery contracts."
+     "The part that survives audit is the boring part: evidence is captured where the work happens, not reconstructed later for the enterprise at scale, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Weeks 5-8",
-     "Reference architecture adapted to your estate; integration contracts tested against your systems."
+     "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later across the Decentralized Identity & Verifiable Credentials estate, so a regression is a cohort, never an estate."
     ],
     [
      "Weeks 9-13",
-     "Staged rollout plan with SLO instrumentation; evidence pack draft reviewed with audit stakeholders."
+     "The build earns trust the same way every gate does: every state change is replayable from the signed baseline across the enterprise, and every exception path degrades to human review, never to silence."
     ]
    ]
   },
@@ -140,25 +249,17 @@
    "items": [
     [
      "Asset Tokenization & Digital Assets",
-     "Instruments as tokens: issuance, custody and lifecycle under securities-law discipline."
+     "The part that survives audit is the boring part: evidence is captured where the work happens, not reconstructed later in Decentralized Identity & Verifiable Credentials, so your control owners can interrogate any number we publish."
     ],
     [
      "Smart Contract Engineering & Audit",
-     "Contracts as production software: specification, formal verification and audit before value moves."
+     "The build earns trust the same way every gate does: the decision path and the audit path share one timeline on Blockchain & Digital Trust programs, and every exception path degrades to human review, never to silence."
     ],
     [
      "Provenance, Traceability & Supply Chain Trust",
-     "Proof, not paperwork: EUDR, DPP and chain-of-custody systems regulators and customers can verify."
+     "What holds the build together is discipline at the boundaries: signals cross boundaries only through typed contracts on Blockchain & Digital Trust programs, and every exception path degrades to human review, never to silence."
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "Where it applies"
-  },
-  {
-   "t": "p",
-   "x": "Anchor industries: Public Sector & Government, Banking & Financial Services, Healthcare & Life Sciences, Education & Research, Logistics & Supply Chain, Agriculture & Food Systems. Platform rails: Dataq Ledger and Dataq Sentinel. Related tower: Blockchain & Digital Trust."
   },
   {
    "t": "h2",
@@ -166,7 +267,7 @@
   },
   {
    "t": "p",
-   "x": "Below is the delivery cadence for this capability — the same pattern on every engagement. Weeks 1–2 lock the baseline: the current metric is measured with your team and signed before build starts. Weeks 3–8 deliver the pilot on bounded scope — one decision path, one workflow, one plant or one portfolio — with a control owner named on your side. Weeks 9–12 industrialize what worked: runbooks, monitoring, enablement and a measured delta against the signed baseline. Anything that misses its gate is stopped or redirected with a documented decision, not quietly extended."
+   "x": "The operating cadence, concretely: the first 2 weeks are pure verification — we measure verification friction with your analysts, reconcile disagreements, and freeze the number both sides defend. The part that survives audit is the boring part: every state change is replayable from the signed baseline across the enterprise, and rollback is rehearsed before go-live rather than after the incident.. The design principle here is simple: evidence is captured where the work happens, not reconstructed later for the enterprise at scale, which is what makes the reported delta defensible in audit.. At operating tempo, the properties that carry the load are structural: identity is short-lived and authorization is deny-by-default in Decentralized Identity & Verifiable Credentials, which keeps the blast radius of any change inside one lane."
   },
   {
    "t": "h2",
@@ -174,26 +275,26 @@
   },
   {
    "t": "p",
-   "x": "In delivery, this work composes with the adjacent capabilities listed here."
+   "x": "At operating tempo, the properties that carry the load are structural: signals cross boundaries only through typed contracts across the Decentralized Identity & Verifiable Credentials estate, so your control owners can interrogate any number we publish."
   },
   {
    "t": "bullets",
    "items": [
     [
      "Smart Contract Engineering & Audit",
-     "Scope, delivery pattern and committed outcomes."
+     "The part that survives audit is the boring part: each stage owns its latency budget and its failure policy across the Decentralized Identity & Verifiable Credentials estate, and every exception path degrades to human review, never to silence."
     ],
     [
      "Asset Tokenization & Digital Assets",
-     "Scope, delivery pattern and committed outcomes."
+     "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later across the Decentralized Identity & Verifiable Credentials estate, so your control owners can interrogate any number we publish."
     ],
     [
      "Talent, Skills & Workforce Intelligence",
-     "Composed architecture and the metric it answers to."
+     "Nothing in this topology is accidental: identity is short-lived and authorization is deny-by-default for the enterprise at scale, which is what makes the reported delta defensible in audit."
     ],
     [
      "Agentic AI & Hyperautomation for Energy & Utilities",
-     "A tower applied to this operating unit."
+     "The part that survives audit is the boring part: evidence is captured where the work happens, not reconstructed later across the Decentralized Identity & Verifiable Credentials estate, which keeps the blast radius of any change inside one lane."
     ]
    ]
   },
@@ -203,35 +304,56 @@
   },
   {
    "t": "p",
-   "x": "At the end of the first quarter of a typical program you hold four concrete assets:"
+   "x": "Artifacts, not anecdotes — at the first-quarter close your team holds:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Baseline diagnostic",
-     "The signed measurement of where the metric stands today, with the method written out so the number can be defended to finance."
+     "What holds the build together is discipline at the boundaries: every state change is replayable from the signed baseline in Decentralized Identity & Verifiable Credentials, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Decision and control map",
-     "Every automated decision path, its policy checks, its human checkpoint and its owner on one page."
+     "Under the hood this pattern runs on one rule: each stage owns its latency budget and its failure policy on Blockchain & Digital Trust programs, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Evidence pack",
-     "Logs, evaluations and approvals collected automatically as the program runs — ready for internal audit or a regulator."
+     "The part that survives audit is the boring part: every state change is replayable from the signed baseline for the enterprise at scale, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "Value ledger",
-     "A running record of the delta against baseline, updated at every gate, reviewed at every steering meeting."
+     "Nothing in this topology is accidental: models, agents and rules move through versioned, evaluated releases in Blockchain & Digital Trust delivery, and every exception path degrades to human review, never to silence."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Outcomes we commit to"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "verification friction",
+     "verification friction is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
+    ],
+    [
+     "data minimization",
+     "data minimization carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
+    ],
+    [
+     "re-onboarding cost",
+     "re-onboarding cost defines success for this pattern and is audited against the week-two baseline at every gate"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Talk through this service with the practice lead, or request a value assessment scoped to your estate."
+   "x": "Start with a value assessment: two weeks, your verification friction measured and signed, a delivery plan priced from evidence."
   }
  ],
- "words": 421,
+ "words": 1605,
  "section": "Services",
  "l1": "Services",
  "l2": "Blockchain & Digital Trust",

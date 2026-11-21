@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Dataq Ledger — Overview: what it does, the architecture and trust controls, and where it is used inside client programs."
+   "x": "A no-theater description of Dataq Ledger — Overview: what ships first, what it touches at operational stores, how it is verified, and the per workflow metric we commit to moving against baseline."
   },
   {
    "t": "h2",
@@ -18,6 +18,28 @@
   {
    "t": "p",
    "x": "Dataq Ledger is the institution-grade DLT platform: permissioned network engineering (Fabric/Besu-class) with governance charters and legal wrappers, tokenization with securities-law discipline, smart contracts built to formal-verification standards, provenance networks for EUDR/DPP-grade traceability, and verifiable-credential ecosystems against eIDAS 2.0 expectations."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "decision-fabric",
+   "title": "Dataq Ledger — control and evidence planes",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "Under the hood this pattern runs on one rule: models, agents and rules move through versioned, evaluated releases across the Dataq Ledger estate, so drift shows up as a ticket with an owner, not as a mystery."
+  },
+  {
+   "t": "p",
+   "x": "What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default in Data, Analytics & Lakehouse delivery, which is what makes the reported delta defensible in audit."
   },
   {
    "t": "h2",
@@ -62,11 +84,70 @@
   },
   {
    "t": "h2",
-   "x": "Trust and compliance"
+   "x": "Engineering standards & stack"
   },
   {
-   "t": "p",
-   "x": "Ledger networks ship key management under HSM custody, timelocked upgrade governance, and immutable audit exports. Smart contracts carry specification, verification and independent audit before value moves; pause procedures are rehearsed, not improvised."
+   "t": "bullets",
+   "items": [
+    [
+     "streaming ingest",
+     "streaming ingest carries the ingest path — Kafka-backed CDC with exactly-once sinks"
+    ],
+    [
+     "data contracts",
+     "What holds the build together is discipline at the boundaries: each stage owns its latency budget and its failure policy across the Dataq Ledger estate, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     " freshness SLOs",
+     "The part that survives audit is the boring part: models, agents and rules move through versioned, evaluated releases in Dataq Ledger, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "dbt transformation graph",
+     "dbt transformation graph carries the control path — tested, documented models with lineage exposure"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "warehouse spend per query",
+     "Down 20–36.5% after clustering and pruning per workflow, reported weekly against the signed baseline"
+    ],
+    [
+     "query p95",
+     "Down 40–54.6% on the certified gold layer on the first working slice; deeper scope moves it further"
+    ],
+    [
+     "pipeline breakage MTTR",
+     "Down 55–67.2% with contracts and lineage paging per workflow, reported weekly against the signed baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Cost creep",
+     "Under the hood this pattern runs on one rule: cost and quality telemetry land in the same view your owners read across the Dataq Ledger estate, so a regression is a cohort, never an estate."
+    ],
+    [
+     "Silent schema drift",
+     "The build earns trust the same way every gate does: the decision path and the audit path share one timeline on Data, Analytics & Lakehouse programs, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "Metric anarchy",
+     "The engineering bet is explicit: the decision path and the audit path share one timeline for the enterprise at scale, so a regression is a cohort, never an estate."
+    ]
+   ]
   },
   {
    "t": "h2",
@@ -77,25 +158,17 @@
    "items": [
     [
      "Evidence by default",
-     "Every artifact the platform produces doubles as audit evidence — no reconstruction projects."
+     "The engineering bet is explicit: signals cross boundaries only through typed contracts across the Dataq Ledger estate, so a regression is a cohort, never an estate."
     ],
     [
      "Pattern apply",
-     "Teams start from a configured 80 percent baseline and spend their budget on the 20% that is genuinely yours."
+     "The committed move on this metric: 20%, measured against the baseline signed in week two"
     ],
     [
      "Accountability",
-     "Named control owner per deployment; platform telemetry makes the owner's job inspectable."
+     "What holds the build together is discipline at the boundaries: each stage owns its latency budget and its failure policy across the enterprise, so the question of how we know gets a pointer, not a paragraph."
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "How programs use it"
-  },
-  {
-   "t": "p",
-   "x": "Most programs deploy Dataq Ledger inside the customer's landing zone with a Dataq pod operating it through a named run model, then transfer operations to client teams once the SLOs have held for two quarters."
   },
   {
    "t": "h2",
@@ -106,19 +179,40 @@
    "x": "Certified integration surface: Hyperledger Fabric/Besu, HSM fleets, W3C VC/DID, static/formal verification tools."
   },
   {
+   "t": "bullets",
+   "items": [
+    [
+     "streaming ingest",
+     "streaming ingest carries the ingest path — Kafka-backed CDC with exactly-once sinks"
+    ],
+    [
+     "data contracts",
+     "What holds the build together is discipline at the boundaries: each stage owns its latency budget and its failure policy across the Dataq Ledger estate, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     " freshness SLOs",
+     "The part that survives audit is the boring part: models, agents and rules move through versioned, evaluated releases in Dataq Ledger, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "dbt transformation graph",
+     "dbt transformation graph carries the control path — tested, documented models with lineage exposure"
+    ]
+   ]
+  },
+  {
    "t": "h2",
-   "x": "Where it is deployed"
+   "x": "How programs use it"
   },
   {
    "t": "p",
-   "x": "Primary industry deployments: Banking & Financial Services, Agriculture & Food Systems, Logistics & Supply Chain, Energy & Utilities, Public Sector & Government, Manufacturing & Industrial."
+   "x": "The operating cadence, concretely: The engineering bet is explicit: signals cross boundaries only through typed contracts in Data, Analytics & Lakehouse delivery, so the question of how we know gets a pointer, not a paragraph.. The engineering bet is explicit: signals cross boundaries only through typed contracts in Dataq Ledger, so a regression is a cohort, never an estate.. What holds the build together is discipline at the boundaries: every state change is replayable from the signed baseline across the enterprise, so your control owners can interrogate any number we publish.. The engineering bet is explicit: signals cross boundaries only through typed contracts across the enterprise, and every exception path degrades to human review, never to silence."
   },
   {
    "t": "cta",
-   "x": "Read the Architecture & Trust page, or book a platform briefing with the engineering team."
+   "x": "The build earns trust the same way every gate does: the decision path and the audit path share one timeline on Data, Analytics & Lakehouse programs, so a regression is a cohort, never an estate."
   }
  ],
- "words": 315,
+ "words": 890,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Ledger",

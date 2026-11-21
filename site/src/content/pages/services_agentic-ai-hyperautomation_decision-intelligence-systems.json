@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "A practical build of Decision Intelligence Systems: two weeks to a signed baseline, six to a working pilot, twelve to an industrialized deployment with the delta reported against week zero."
+   "x": "Decision Intelligence Systems in production terms — the runtime that holds it, the policies that bound it, the dashboards that prove it, and the quarterly delta your finance team can bank."
   },
   {
    "t": "h2",
@@ -17,7 +17,29 @@
   },
   {
    "t": "p",
-   "x": "High-volume decisions — credit, claims, pricing, triage, fraud, service routing — deserve dedicated decision infrastructure, not rules buried in application code. We build decision hubs that combine predictive models, business rules and agentic reasoning behind one decision API, with champion-challenger testing, decision policies as versioned artifacts, and full replay so every outcome can be explained months later to an auditor or a customer."
+   "x": "The part that survives audit is the boring part: identity is short-lived and authorization is deny-by-default in Agentic AI & Hyperautomation delivery, so drift shows up as a ticket with an owner, not as a mystery. The engineering bet is explicit: signals cross boundaries only through typed contracts in Agentic AI & Hyperautomation delivery, which keeps the blast radius of any change inside one lane."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "orchestration-loop",
+   "title": "Agent fleet orchestration loop — Decision Intelligence Systems",
+   "labels": [
+    "Work intake & queueing",
+    "Role & policy engine",
+    "Agent fleet execution",
+    "Tool & system adapters",
+    "Verification & eval",
+    "Audit & cost ledger"
+   ],
+   "note": "Under the hood this pattern runs on one rule: the decision path and the audit path share one timeline across the Decision Intelligence Systems estate, and rollback is rehearsed before go-live rather than after the incident."
+  },
+  {
+   "t": "p",
+   "x": "At operating tempo, the properties that carry the load are structural: identity is short-lived and authorization is deny-by-default in Agentic AI & Hyperautomation delivery, so a regression is a cohort, never an estate."
   },
   {
    "t": "h2",
@@ -25,7 +47,19 @@
   },
   {
    "t": "p",
-   "x": "The design principle is separability: models score, policy decides, and humans supervise. That separation lets risk teams change policy without retraining models, lets data scientists ship models without touching code paths, and gives compliance a single place to inspect what decision logic actually ran on any given day."
+   "x": "The build sequence is deliberate: contracts and identity first, the working decision slice second, the verification harness third — because a Decision Intelligence Systems capability without its eval gate is just another unattended automation."
+  },
+  {
+   "t": "diagram",
+   "kind": "delivery-cadence",
+   "title": "Delivery cadence — Decision Intelligence Systems",
+   "labels": [
+    "Diagnose · W1–2",
+    "Pilot · W3–8",
+    "Industrialize · W9–12",
+    "Scale · Q2+"
+   ],
+   "note": "What holds the build together is discipline at the boundaries: signals cross boundaries only through typed contracts for the enterprise at scale, which is what makes the reported delta defensible in audit."
   },
   {
    "t": "h2",
@@ -40,7 +74,7 @@
     ],
     [
      "Policy-as-artifact",
-     "Versioned decision policies with effective-dating and simulation"
+     "The build earns trust the same way every gate does: identity is short-lived and authorization is deny-by-default across the Decision Intelligence Systems estate, and every exception path degrades to human review, never to silence."
     ],
     [
      "Champion-challenger testing",
@@ -52,7 +86,7 @@
     ],
     [
      "Feature platform",
-     "Online feature store with point-in-time correctness"
+     "Nothing in this topology is accidental: the decision path and the audit path share one timeline across the enterprise, which is what makes the reported delta defensible in audit."
     ]
    ]
   },
@@ -83,32 +117,107 @@
   },
   {
    "t": "h2",
-   "x": "Technology and standards"
+   "x": "Engineering standards & stack"
   },
   {
    "t": "p",
-   "x": "Typical stack and standards: Databricks Feature Store, Feast, Kafka, Flink, Redis, OPA."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
+   "x": "Standards we hold the build to, component by component:"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "decision latency",
-     "P99 under 150 ms for scoring+policy paths"
+     "OPA policy engine",
+     "Nothing in this topology is accidental: models, agents and rules move through versioned, evaluated releases for the enterprise at scale, so a regression is a cohort, never an estate."
     ],
     [
-     "bad-decision rates",
-     "Measured and improving quarter-over-quarter via challenger program"
+     "Kafka event backbone",
+     "At operating tempo, the properties that carry the load are structural: each stage owns its latency budget and its failure policy in Decision Intelligence Systems, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
-     "audit response time",
-     "Any decision reconstructable in minutes, not weeks"
+     "LangGraph agent runtimes",
+     "LangGraph agent runtimes carries the evidence path — typed tool calls with scoped credentials"
+    ],
+    [
+     "Temporal durable execution",
+     "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later for the enterprise at scale, and rollback is rehearsed before go-live rather than after the incident."
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "OPA policy engine",
+     "Nothing in this topology is accidental: models, agents and rules move through versioned, evaluated releases for the enterprise at scale, so a regression is a cohort, never an estate."
+    ],
+    [
+     "Kafka event backbone",
+     "At operating tempo, the properties that carry the load are structural: each stage owns its latency budget and its failure policy in Decision Intelligence Systems, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "LangGraph agent runtimes",
+     "LangGraph agent runtimes carries the evidence path — typed tool calls with scoped credentials"
+    ],
+    [
+     "Temporal durable execution",
+     "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later for the enterprise at scale, and rollback is rehearsed before go-live rather than after the incident."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "approval cycle time",
+     "Down 40–52.8% on policy-routed actions on the first working slice; deeper scope moves it further"
+    ],
+    [
+     "straight-through processing",
+     "Up 25–37.6 points on selected decision paths per workflow, reported weekly against the signed baseline"
+    ],
+    [
+     "rollback time",
+     "Down 60–78.8% — cohort rollout contains incidents in minutes on the first working slice; deeper scope moves it further"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Runaway loops",
+     "Under the hood this pattern runs on one rule: identity is short-lived and authorization is deny-by-default in Decision Intelligence Systems, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Agent sprawl",
+     "The part that survives audit is the boring part: evidence is captured where the work happens, not reconstructed later for the enterprise at scale, so a regression is a cohort, never an estate."
+    ],
+    [
+     "Duplicated work",
+     "The build earns trust the same way every gate does: the decision path and the audit path share one timeline across the Decision Intelligence Systems estate, which is what makes the reported delta defensible in audit."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Technology and standards"
+  },
+  {
+   "t": "p",
+   "x": "Typical stack and standards: Databricks Feature Store, Feast, Kafka, Flink, Redis, OPA."
   },
   {
    "t": "h2",
@@ -119,15 +228,15 @@
    "items": [
     [
      "Weeks 1-4",
-     "Baseline metrics locked with named owners; data-readiness assessed against the delivery contracts."
+     "The design principle here is simple: every state change is replayable from the signed baseline across the enterprise, which is what makes the reported delta defensible in audit."
     ],
     [
      "Weeks 5-8",
-     "Reference architecture adapted to your estate; integration contracts tested against your systems."
+     "The engineering bet is explicit: models, agents and rules move through versioned, evaluated releases on Agentic AI & Hyperautomation programs, so your control owners can interrogate any number we publish."
     ],
     [
      "Weeks 9-13",
-     "Operational run model agreed; value memo drafted for the investment committee."
+     "What holds the build together is discipline at the boundaries: cost and quality telemetry land in the same view your owners read in Decision Intelligence Systems, which is what makes the reported delta defensible in audit."
     ]
    ]
   },
@@ -140,25 +249,17 @@
    "items": [
     [
      "Process & Task Mining",
-     "See the work as it actually runs: event-log truth before you automate anything."
+     "The part that survives audit is the boring part: signals cross boundaries only through typed contracts on Agentic AI & Hyperautomation programs, so a regression is a cohort, never an estate."
     ],
     [
      "Hyperautomation & Systems Integration",
-     "One automation spine: APIs, events, RPA and agents composable under common control."
+     "The build earns trust the same way every gate does: models, agents and rules move through versioned, evaluated releases across the enterprise, and every exception path degrades to human review, never to silence."
     ],
     [
      "Autonomous Workflow Orchestration",
-     "Workflows that recover from failure on their own — long-running business processes that adapt, retry and recover without tickets."
+     "The engineering bet is explicit: signals cross boundaries only through typed contracts across the Decision Intelligence Systems estate, and rollback is rehearsed before go-live rather than after the incident."
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "Where it applies"
-  },
-  {
-   "t": "p",
-   "x": "Anchor industries: Banking & Financial Services, Insurance & Risk, Healthcare & Life Sciences, Retail & Consumer Goods, Energy & Utilities, Logistics & Supply Chain. Platform rails: Dataq Nexus and Dataq Forge. Related tower: Agentic AI & Hyperautomation."
   },
   {
    "t": "h2",
@@ -166,7 +267,7 @@
   },
   {
    "t": "p",
-   "x": "A fixed rhythm keeps progress visible from week one — here is the one we run. The first two weeks lock the baseline: your team and ours measure the current metric together and sign it. Weeks 3–8 carry the pilot on bounded scope — a single decision path, workflow, plant or portfolio — and a control owner on your side owns the evidence. Weeks 9–12 industrialize: runbooks, monitoring, enablement, and a measured delta against the signed baseline. Missing a gate produces a documented decision to stop or redirect — never a silent extension."
+   "x": "Here is the working rhythm, stated so you can hold us to it: before any build work, we spend 2 weeks proving the measurement: if two analysts cannot reproduce decision latency the same way, nothing else starts. What holds the build together is discipline at the boundaries: cost and quality telemetry land in the same view your owners read across the enterprise, so a regression is a cohort, never an estate.. Under the hood this pattern runs on one rule: each stage owns its latency budget and its failure policy in Agentic AI & Hyperautomation delivery, so your control owners can interrogate any number we publish.. At operating tempo, the properties that carry the load are structural: each stage owns its latency budget and its failure policy in Decision Intelligence Systems, and rollback is rehearsed before go-live rather than after the incident."
   },
   {
    "t": "h2",
@@ -174,26 +275,26 @@
   },
   {
    "t": "p",
-   "x": "No capability stands alone. These are the pages most clients open next."
+   "x": "No capability ships alone: the links below are the compositions this service most often travels with, chosen by observed delivery patterns rather than menu logic."
   },
   {
    "t": "bullets",
    "items": [
     [
      "Hyperautomation & Systems Integration",
-     "Scope, delivery pattern and committed outcomes."
+     "What holds the build together is discipline at the boundaries: each stage owns its latency budget and its failure policy across the enterprise, and every exception path degrades to human review, never to silence."
     ],
     [
      "Intelligent Document Processing",
-     "Scope, delivery pattern and committed outcomes."
+     "The design principle here is simple: every state change is replayable from the signed baseline on Agentic AI & Hyperautomation programs, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Customer 360 & Hyper-Personalization",
-     "Composed architecture and the metric it answers to."
+     "The part that survives audit is the boring part: cost and quality telemetry land in the same view your owners read across the enterprise, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "Data & Lakehouse for Manufacturing & Industrial",
-     "A tower applied to this operating unit."
+     "Nothing in this topology is accidental: signals cross boundaries only through typed contracts across the Decision Intelligence Systems estate, so a regression is a cohort, never an estate."
     ]
    ]
   },
@@ -203,35 +304,56 @@
   },
   {
    "t": "p",
-   "x": "These artifacts change hands at the end of the first quarter, with a live walkthrough for your team:"
+   "x": "Artifacts, not anecdotes — at the first-quarter close your team holds:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Baseline diagnostic",
-     "The signed measurement of where the metric stands today, with the method written out so the number can be defended to finance."
+     "The build earns trust the same way every gate does: each stage owns its latency budget and its failure policy across the enterprise, which is what makes the reported delta defensible in audit."
     ],
     [
      "Decision and control map",
-     "Every automated decision path, its policy checks, its human checkpoint and its owner on one page."
+     "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases across the enterprise, which keeps the blast radius of any change inside one lane."
     ],
     [
      "Evidence pack",
-     "Logs, evaluations and approvals collected automatically as the program runs — ready for internal audit or a regulator."
+     "What holds the build together is discipline at the boundaries: every state change is replayable from the signed baseline in Decision Intelligence Systems, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Value ledger",
-     "A running record of the delta against baseline, updated at every gate, reviewed at every steering meeting."
+     "At operating tempo, the properties that carry the load are structural: every state change is replayable from the signed baseline on Agentic AI & Hyperautomation programs, and rollback is rehearsed before go-live rather than after the incident."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Outcomes we commit to"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "decision latency",
+     "decision latency is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
+    ],
+    [
+     "bad-decision rates",
+     "bad-decision rates defines success for this pattern and is audited against the week-two baseline at every gate"
+    ],
+    [
+     "audit response time",
+     "audit response time is tracked weekly to your control owner; the number at gate three is the number finance sees"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Take this service to the practice lead in a working session — or ask for a scoped value assessment of your estate."
+   "x": "Start with a value assessment: two weeks, your decision latency measured and signed, a delivery plan priced from evidence."
   }
  ],
- "words": 417,
+ "words": 1667,
  "section": "Services",
  "l1": "Services",
  "l2": "Agentic AI & Hyperautomation",

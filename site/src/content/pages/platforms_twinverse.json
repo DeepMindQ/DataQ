@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Dataq Twinverse — Overview: what it does, the architecture and trust controls, and where it is used inside client programs."
+   "x": "The contract behind Dataq Twinverse — Overview: signed baseline in week two, working slice by week eight, industrialized controls by week twelve, and evidence flowing to your control owner throughout."
   },
   {
    "t": "h2",
@@ -18,6 +18,28 @@
   {
    "t": "p",
    "x": "Dataq Twinverse bridges sensor network to decisions: governed telemetry (OPC UA/Sparkplug) from retrofit-friendly devices, physics+data digital twins with validated models, edge inference fleets with OTA, predictive maintenance wired into CMMS work orders, and the scenario engines planners actually use."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "decision-fabric",
+   "title": "Dataq Twinverse — control and evidence planes",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "Under the hood this pattern runs on one rule: signals cross boundaries only through typed contracts in Dataq Twinverse, which is what makes the reported delta defensible in audit."
+  },
+  {
+   "t": "p",
+   "x": "The design principle here is simple: identity is short-lived and authorization is deny-by-default across the Dataq Twinverse estate, and every exception path degrades to human review, never to silence."
   },
   {
    "t": "h2",
@@ -62,11 +84,70 @@
   },
   {
    "t": "h2",
-   "x": "Trust and compliance"
+   "x": "Engineering standards & stack"
   },
   {
-   "t": "p",
-   "x": "Twinverse runs IEC 62443-aligned segmentation for industrial estates, hardware roots of trust and signed boot on edge fleets, and privacy governance (face blurring, retention) for camera systems. Telemetry carries contracts — units, timestamps and lineage are trustworthy by construction."
+   "t": "bullets",
+   "items": [
+    [
+     " freshness SLOs",
+     "The part that survives audit is the boring part: each stage owns its latency budget and its failure policy across the enterprise, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "streaming ingest",
+     "streaming ingest carries the decision path — Kafka-backed CDC with exactly-once sinks"
+    ],
+    [
+     "Unity Catalog governance",
+     "At operating tempo, the properties that carry the load are structural: models, agents and rules move through versioned, evaluated releases across the enterprise, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "Delta / Iceberg tables",
+     "Under the hood this pattern runs on one rule: every state change is replayable from the signed baseline across the Dataq Twinverse estate, so a regression is a cohort, never an estate."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "query p95",
+     "Down 40–52.3% on the certified gold layer per workflow, reported weekly against the signed baseline"
+    ],
+    [
+     "warehouse spend per query",
+     "Down 20–32.9% after clustering and pruning in current programs; measured, not modeled"
+    ],
+    [
+     "batch window",
+     "Down 50–66.4% after re-architecture — the gate compares the live value to baseline every quarter"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Silent schema drift",
+     "Nothing in this topology is accidental: every state change is replayable from the signed baseline in Dataq Twinverse, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "Metric anarchy",
+     "The design principle here is simple: cost and quality telemetry land in the same view your owners read for the enterprise at scale, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "Cost creep",
+     "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later in Dataq Twinverse, so your control owners can interrogate any number we publish."
+    ]
+   ]
   },
   {
    "t": "h2",
@@ -77,25 +158,17 @@
    "items": [
     [
      "Evidence by default",
-     "Every artifact the platform produces doubles as audit evidence — no reconstruction projects."
+     "The build earns trust the same way every gate does: the decision path and the audit path share one timeline in Dataq Twinverse, which keeps the blast radius of any change inside one lane."
     ],
     [
      "Pattern draw on",
-     "Teams start from a configured 80 percent baseline and spend their budget on the 20% that is genuinely yours."
+     "Target range 20% on the first working slice, with the method note attached"
     ],
     [
      "Accountability",
-     "Named control owner per deployment; platform telemetry makes the owner's job inspectable."
+     "Under the hood this pattern runs on one rule: the decision path and the audit path share one timeline across the enterprise, which is what makes the reported delta defensible in audit."
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "How programs use it"
-  },
-  {
-   "t": "p",
-   "x": "Dataq Twinverse typically enters an estate during the Prove phase — configured for your controls in the sandbox, hardened through Industrialize, and left running under the customer's own keys with our pods on the follow-the-sun operations rhythm."
   },
   {
    "t": "h2",
@@ -106,19 +179,40 @@
    "x": "Certified integration surface: OPC UA, MQTT Sparkplug B, LoRaWAN/NB-IoT, KubeEdge/K3s, CMMS/MES adapters."
   },
   {
+   "t": "bullets",
+   "items": [
+    [
+     " freshness SLOs",
+     "The part that survives audit is the boring part: each stage owns its latency budget and its failure policy across the enterprise, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "streaming ingest",
+     "streaming ingest carries the decision path — Kafka-backed CDC with exactly-once sinks"
+    ],
+    [
+     "Unity Catalog governance",
+     "At operating tempo, the properties that carry the load are structural: models, agents and rules move through versioned, evaluated releases across the enterprise, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "Delta / Iceberg tables",
+     "Under the hood this pattern runs on one rule: every state change is replayable from the signed baseline across the Dataq Twinverse estate, so a regression is a cohort, never an estate."
+    ]
+   ]
+  },
+  {
    "t": "h2",
-   "x": "Where it is deployed"
+   "x": "How programs use it"
   },
   {
    "t": "p",
-   "x": "Primary industry deployments: Manufacturing & Industrial, Energy & Utilities, Logistics & Supply Chain, Retail & Consumer Goods, Agriculture & Food Systems, Healthcare & Life Sciences."
+   "x": "The operating cadence, concretely: The build earns trust the same way every gate does: cost and quality telemetry land in the same view your owners read for the enterprise at scale, and every exception path degrades to human review, never to silence.. Nothing in this topology is accidental: the decision path and the audit path share one timeline for the enterprise at scale, so your control owners can interrogate any number we publish.. What holds the build together is discipline at the boundaries: every state change is replayable from the signed baseline for the enterprise at scale, which keeps the blast radius of any change inside one lane.. The part that survives audit is the boring part: each stage owns its latency budget and its failure policy across the enterprise, and every exception path degrades to human review, never to silence."
   },
   {
    "t": "cta",
-   "x": "Read the Architecture & Trust page, or book a platform briefing with the engineering team."
+   "x": "The build earns trust the same way every gate does: identity is short-lived and authorization is deny-by-default for the enterprise at scale, so drift shows up as a ticket with an owner, not as a mystery."
   }
  ],
- "words": 327,
+ "words": 936,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Twinverse",

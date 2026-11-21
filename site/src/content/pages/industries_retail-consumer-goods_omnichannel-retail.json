@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Omnichannel Retail: the operating units, priority programs and the five capability towers that matter most here."
+   "x": "A no-theater description of Omnichannel Retail: what ships first, what it touches at inventory & order brokers, how it is verified, and the per SKU-store metric we commit to moving against baseline."
   },
   {
    "t": "h2",
@@ -17,7 +17,29 @@
   },
   {
    "t": "p",
-   "x": "The workflows we industrialize here: Demand sensing and pricing, Allocation/replenishment, Order promise and fulfillment, Shelf operations, Loyalty and personalization. Each arrives with its current cycle times measured in the Diagnose phase, and each leaves the program governed by outcome SLOs rather than anecdotes."
+   "x": "The operating surface here spans Demand sensing and pricing, Allocation/replenishment, Order promise and fulfillment, Shelf operations, Loyalty and personalization. The design principle here is simple: identity is short-lived and authorization is deny-by-default for Retail & Consumer Goods at scale, so the question of how we know gets a pointer, not a paragraph."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Governed lakehouse pipeline — Omnichannel Retail",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "The part that survives audit is the boring part: signals cross boundaries only through typed contracts in Omnichannel Retail, so the question of how we know gets a pointer, not a paragraph."
+  },
+  {
+   "t": "p",
+   "x": "At operating tempo, the properties that carry the load are structural: each stage owns its latency budget and its failure policy in Data, Analytics & Lakehouse delivery, and every exception path degrades to human review, never to silence."
   },
   {
    "t": "h2",
@@ -28,23 +50,23 @@
    "items": [
     [
      "Demand signals batch-stale",
-     "Forecasts update weekly while baskets shift daily; markdowns and stockouts both inherit the lag."
+     "The engineering bet is explicit: identity is short-lived and authorization is deny-by-default across Retail & Consumer Goods, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Allocation and replenishment heuristics",
-     "Store/DC allocation on legacy rules; phantom availability coexists with overstock."
+     "Nothing in this topology is accidental: identity is short-lived and authorization is deny-by-default in Omnichannel Retail, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Shelf truth unknown",
-     "OOS and planogram drift discovered at audit; camera estates idle."
+     "Nothing in this topology is accidental: evidence is captured where the work happens, not reconstructed later across Retail & Consumer Goods, and every exception path degrades to human review, never to silence."
     ],
     [
      "Personalization blocked by privacy",
-     "Consent and profiling governance is not yet defined; personalization ships as generic segments."
+     "What holds the build together is discipline at the boundaries: every state change is replayable from the signed baseline across the Omnichannel Retail estate, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Peak economics unmanaged",
-     "Trading peaks break cost and reliability models; P95 cost per order unknown."
+     "The engineering bet is explicit: the decision path and the audit path share one timeline on Data, Analytics & Lakehouse programs, and every exception path degrades to human review, never to silence."
     ],
     [
      "Loyalty accounts under attack",
@@ -84,6 +106,98 @@
   },
   {
    "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     " freshness SLOs",
+     "Under the hood this pattern runs on one rule: cost and quality telemetry land in the same view your owners read across the Omnichannel Retail estate, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "cost-aware clustering",
+     "Nothing in this topology is accidental: models, agents and rules move through versioned, evaluated releases for Retail & Consumer Goods at scale, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "data contracts",
+     "The design principle here is simple: cost and quality telemetry land in the same view your owners read on Data, Analytics & Lakehouse programs, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "dbt transformation graph",
+     "dbt transformation graph carries the control path — tested, documented models with lineage exposure"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "loyalty & CDP platforms",
+     "Nothing in this topology is accidental: models, agents and rules move through versioned, evaluated releases across the Omnichannel Retail estate, so the question of how we know gets a pointer, not a paragraph."
+    ],
+    [
+     "demand planning suites",
+     "The design principle here is simple: cost and quality telemetry land in the same view your owners read in Omnichannel Retail, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "supply chain control towers",
+     "The build earns trust the same way every gate does: signals cross boundaries only through typed contracts across the Omnichannel Retail estate, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "trade promotion systems",
+     "The engineering bet is explicit: each stage owns its latency budget and its failure policy in Omnichannel Retail, and rollback is rehearsed before go-live rather than after the incident."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "batch window",
+     "Down 50–64.6% after re-architecture in current programs; measured, not modeled"
+    ],
+    [
+     "query p95",
+     "Down 40–52.3% on the certified gold layer — the gate compares the live value to baseline every quarter"
+    ],
+    [
+     "pipeline breakage MTTR",
+     "Down 55–67.5% with contracts and lineage paging on the first working slice; deeper scope moves it further"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Cost creep",
+     "The engineering bet is explicit: cost and quality telemetry land in the same view your owners read across Retail & Consumer Goods, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "Metric anarchy",
+     "At operating tempo, the properties that carry the load are structural: every state change is replayable from the signed baseline across Retail & Consumer Goods, so a regression is a cohort, never an estate."
+    ],
+    [
+     "Silent schema drift",
+     "What holds the build together is discipline at the boundaries: signals cross boundaries only through typed contracts in Omnichannel Retail, and rollback is rehearsed before go-live rather than after the incident."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
    "x": "How we help — five priority capabilities"
   },
   {
@@ -91,25 +205,33 @@
    "items": [
     [
      "Data & Lakehouse",
-     "Streaming signals into daily SKU-store forecasts: forecast error down 20-35%"
+     "Target range down 20 on the first working slice, with the method note attached"
     ],
     [
      "Agentic AI & Hyperautomation",
-     "Goal-directed agents that run inside your systems with defined roles, budgets and human checkpoints. Every action is logged, measurable and reversible."
+     "Nothing in this topology is accidental: models, agents and rules move through versioned, evaluated releases in Omnichannel Retail, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "IoT, Twin & Robotics",
-     "OOS/planogram detection on existing cameras: shelf fixed in minutes"
+     "Under the hood this pattern runs on one rule: signals cross boundaries only through typed contracts in Omnichannel Retail, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Applied AI & GenAI",
-     "Consent-scoped profiling with clean-room measurement: lift verified"
+     "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later across Retail & Consumer Goods, so a regression is a cohort, never an estate."
     ],
     [
      "Cloud, Edge & Platform",
-     "Load/chaos readiness for trading peaks: peaks absorbed"
+     "Nothing in this topology is accidental: each stage owns its latency budget and its failure policy across Retail & Consumer Goods, so the question of how we know gets a pointer, not a paragraph."
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "How the engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "Here is the working rhythm, stated so you can hold us to it: the first 2 weeks are pure verification — we measure OOS rate with your analysts, reconcile disagreements, and freeze the number both sides defend. What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases across the Omnichannel Retail estate, so drift shows up as a ticket with an owner, not as a mystery.. At operating tempo, the properties that carry the load are structural: cost and quality telemetry land in the same view your owners read across Retail & Consumer Goods, which is what makes the reported delta defensible in audit.. The build earns trust the same way every gate does: the decision path and the audit path share one timeline for Retail & Consumer Goods at scale, and every exception path degrades to human review, never to silence."
   },
   {
    "t": "h2",
@@ -128,21 +250,13 @@
     ],
     [
      "Peak P95 cost/order",
-     "Known, controlled"
+     "Peak P95 cost/order is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
     ],
     [
      "Personalization lift",
-     "Clean-room verified"
+     "Personalization lift is tracked weekly to your control owner; the number at gate three is the number finance sees"
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
-  },
-  {
-   "t": "p",
-   "x": "Every engagement opens with the baseline measurement pack — cycle times, error rates and unit costs for the workflows above. Every committed outcome on this page is reported against that locked baseline, and the baseline is audited annually."
   },
   {
    "t": "h2",
@@ -153,11 +267,11 @@
    "items": [
     [
      "A top-3 grocery retailer (800+ stores)",
-     "Fresh waste down 28%, OOS down 31%: day-part demand and ordering agents"
+     "Under the hood this pattern runs on one rule: the decision path and the audit path share one timeline across Retail & Consumer Goods, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "A global fashion group",
-     "Sell-through +8 points and hero-SKU availability +24%: assortment intelligence"
+     "Target range 24% on the first working slice, with the method note attached"
     ]
    ]
   },
@@ -167,14 +281,14 @@
   },
   {
    "t": "p",
-   "x": "Related sub-industry pages: CPG & Brands, Grocery & Convenience, Fashion & Luxury — each with its own capability alignments under /industries/retail-consumer-goods/."
+   "x": "The neighbouring operating units are CPG & Brands, Grocery & Convenience, Fashion & Luxury — each with its own capability alignments under /industries/retail-consumer-goods/; programs that span two of them usually share one baseline."
   },
   {
    "t": "cta",
-   "x": "The capability pages break this down further; the industry practice lead can map it to your estate in a briefing."
+   "x": "Start with a value assessment: two weeks, your OOS rate measured and signed, a delivery plan priced from evidence."
   }
  ],
- "words": 406,
+ "words": 1310,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Retail & Consumer Goods",

@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Predictive Maintenance & Asset Intelligence in production: what gets built, who owns each control, how the pilot widens into an industrial deployment, and the metrics that gate each phase."
+   "x": "Predictive Maintenance & Asset Intelligence in production terms — the runtime that holds it, the policies that bound it, the dashboards that prove it, and the quarterly delta your finance team can bank."
   },
   {
    "t": "h2",
@@ -17,7 +17,29 @@
   },
   {
    "t": "p",
-   "x": "Predictive maintenance pays when it changes the plan: remaining-useful-life models feeding scheduler decisions, spare-parts availability and maintenance-window selection. We build the full loop — governed telemetry from the sensor network, failure-mode-driven model design (not generic anomaly detection), RUL and condition models validated against work-order history, and integration into EAM/CMMS (SAP PM/Maximo-class) so predictions become scheduled work with parts reserved, not dashboard decorations."
+   "x": "Under the hood this pattern runs on one rule: each stage owns its latency budget and its failure policy in Predictive Maintenance & Asset Intelligence, and rollback is rehearsed before go-live rather than after the incident. The engineering bet is explicit: cost and quality telemetry land in the same view your owners read in Predictive Maintenance & Asset Intelligence, which keeps the blast radius of any change inside one lane."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "twin-loop",
+   "title": "Physical-digital twin loop — Predictive Maintenance & Asset Intelligence",
+   "labels": [
+    "Sensors & PLCs",
+    "Edge gateway",
+    "Twin state store",
+    "Simulation & prediction",
+    "Control recommendations",
+    "Plant feedback"
+   ],
+   "note": "What holds the build together is discipline at the boundaries: the decision path and the audit path share one timeline across the Predictive Maintenance & Asset Intelligence estate, so drift shows up as a ticket with an owner, not as a mystery."
+  },
+  {
+   "t": "p",
+   "x": "Nothing in this topology is accidental: every state change is replayable from the signed baseline in IoT, Digital Twin & Robotics delivery, which keeps the blast radius of any change inside one lane."
   },
   {
    "t": "h2",
@@ -25,7 +47,19 @@
   },
   {
    "t": "p",
-   "x": "We start where physics pays: rotating equipment, transformers, compressors, conveyors, fleet drivetrains — failure modes with measurable precursors. Clients see the outcome in planning language: unplanned downtime hours, maintenance cost per unit of output, planner trust (the share of predictions acted upon). False-alarm discipline is a first-class design goal; one crying-wolf quarter kills the program politically."
+   "x": "The build sequence is deliberate: contracts and identity first, the working decision slice second, the verification harness third — because a Predictive Maintenance & Asset Intelligence capability without its eval gate is just another unattended automation."
+  },
+  {
+   "t": "diagram",
+   "kind": "delivery-cadence",
+   "title": "Delivery cadence — Predictive Maintenance & Asset Intelligence",
+   "labels": [
+    "Diagnose · W1–2",
+    "Pilot · W3–8",
+    "Industrialize · W9–12",
+    "Scale · Q2+"
+   ],
+   "note": "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases across the Predictive Maintenance & Asset Intelligence estate, so a regression is a cohort, never an estate."
   },
   {
    "t": "h2",
@@ -83,11 +117,215 @@
   },
   {
    "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
+   "t": "p",
+   "x": "The stack is boring by design — proven components, no experimental dependencies:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "OPC UA / MQTT spine",
+     "The build earns trust the same way every gate does: signals cross boundaries only through typed contracts in IoT, Digital Twin & Robotics delivery, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "edge inference",
+     "The build earns trust the same way every gate does: evidence is captured where the work happens, not reconstructed later in Predictive Maintenance & Asset Intelligence, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "physics + ML hybrid",
+     "What holds the build together is discipline at the boundaries: each stage owns its latency budget and its failure policy in Predictive Maintenance & Asset Intelligence, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "twin state store",
+     "twin state store carries the control path — calibrated digital mirror with drift tracking"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "OPC UA / MQTT spine",
+     "The build earns trust the same way every gate does: signals cross boundaries only through typed contracts in IoT, Digital Twin & Robotics delivery, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "edge inference",
+     "The build earns trust the same way every gate does: evidence is captured where the work happens, not reconstructed later in Predictive Maintenance & Asset Intelligence, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "physics + ML hybrid",
+     "What holds the build together is discipline at the boundaries: each stage owns its latency budget and its failure policy in Predictive Maintenance & Asset Intelligence, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "twin state store",
+     "twin state store carries the control path — calibrated digital mirror with drift tracking"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "unplanned downtime",
+     "Down 25–40.2% on instrumented lines per workflow, reported weekly against the signed baseline"
+    ],
+    [
+     "scrap & rework",
+     "Down 15–26.2% with early-warning signatures on the first working slice; deeper scope moves it further"
+    ],
+    [
+     "energy per unit",
+     "Down 8–14.8% after orchestration tuning in current programs; measured, not modeled"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Override culture",
+     "What holds the build together is discipline at the boundaries: the decision path and the audit path share one timeline in Predictive Maintenance & Asset Intelligence, so the question of how we know gets a pointer, not a paragraph."
+    ],
+    [
+     "OT/IT blur",
+     "Under the hood this pattern runs on one rule: every state change is replayable from the signed baseline across the Predictive Maintenance & Asset Intelligence estate, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "Twin decay",
+     "Nothing in this topology is accidental: every state change is replayable from the signed baseline in Predictive Maintenance & Asset Intelligence, and rollback is rehearsed before go-live rather than after the incident."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
    "x": "Technology and standards"
   },
   {
    "t": "p",
    "x": "Typical stack and standards: Databricks, survival/RUL modeling, OPC UA telemetry, SAP PM/Maximo integration, OpenTelemetry."
+  },
+  {
+   "t": "h2",
+   "x": "The first 90 days"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-4",
+     "What holds the build together is discipline at the boundaries: each stage owns its latency budget and its failure policy in Predictive Maintenance & Asset Intelligence, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "Weeks 5-8",
+     "The part that survives audit is the boring part: models, agents and rules move through versioned, evaluated releases in Predictive Maintenance & Asset Intelligence, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Weeks 9-13",
+     "The build earns trust the same way every gate does: evidence is captured where the work happens, not reconstructed later in Predictive Maintenance & Asset Intelligence, and rollback is rehearsed before go-live rather than after the incident."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Related services"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Connected Products & Smart Devices",
+     "The engineering bet is explicit: signals cross boundaries only through typed contracts across the Predictive Maintenance & Asset Intelligence estate, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "Smart Infrastructure, Buildings & Cities",
+     "Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read in IoT, Digital Twin & Robotics delivery, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "Industrial IoT & Sensor Fabric",
+     "The design principle here is simple: identity is short-lived and authorization is deny-by-default in Predictive Maintenance & Asset Intelligence, and every exception path degrades to human review, never to silence."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How a delivery runs"
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is engineered, not ritual: The build earns trust the same way every gate does: each stage owns its latency budget and its failure policy in Predictive Maintenance & Asset Intelligence, and rollback is rehearsed before go-live rather than after the incident.. Nothing in this topology is accidental: identity is short-lived and authorization is deny-by-default on IoT, Digital Twin & Robotics programs, so drift shows up as a ticket with an owner, not as a mystery.. The engineering bet is explicit: identity is short-lived and authorization is deny-by-default in Predictive Maintenance & Asset Intelligence, and every exception path degrades to human review, never to silence.. At operating tempo, the properties that carry the load are structural: cost and quality telemetry land in the same view your owners read on IoT, Digital Twin & Robotics programs, which is what makes the reported delta defensible in audit."
+  },
+  {
+   "t": "h2",
+   "x": "Where this fits in the portfolio"
+  },
+  {
+   "t": "p",
+   "x": "The part that survives audit is the boring part: signals cross boundaries only through typed contracts on IoT, Digital Twin & Robotics programs, which keeps the blast radius of any change inside one lane."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Industrial IoT & Sensor Fabric",
+     "The part that survives audit is the boring part: each stage owns its latency budget and its failure policy for the enterprise at scale, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "Connected Products & Smart Devices",
+     "The build earns trust the same way every gate does: evidence is captured where the work happens, not reconstructed later for the enterprise at scale, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "Fraud & Financial Crime Decisioning",
+     "Under the hood this pattern runs on one rule: the decision path and the audit path share one timeline across the enterprise, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "IoT, Twin & Robotics for Energy & Utilities",
+     "What holds the build together is discipline at the boundaries: the decision path and the audit path share one timeline for the enterprise at scale, so drift shows up as a ticket with an owner, not as a mystery."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "What you receive"
+  },
+  {
+   "t": "p",
+   "x": "Artifacts, not anecdotes — at the first-quarter close your team holds:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Baseline diagnostic",
+     "At operating tempo, the properties that carry the load are structural: models, agents and rules move through versioned, evaluated releases in Predictive Maintenance & Asset Intelligence, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "Decision and control map",
+     "The design principle here is simple: signals cross boundaries only through typed contracts on IoT, Digital Twin & Robotics programs, so a regression is a cohort, never an estate."
+    ],
+    [
+     "Evidence pack",
+     "What holds the build together is discipline at the boundaries: every state change is replayable from the signed baseline on IoT, Digital Twin & Robotics programs, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "Value ledger",
+     "Nothing in this topology is accidental: every state change is replayable from the signed baseline in Predictive Maintenance & Asset Intelligence, and rollback is rehearsed before go-live rather than after the incident."
+    ]
+   ]
   },
   {
    "t": "h2",
@@ -106,132 +344,16 @@
     ],
     [
      "planner trust",
-     "Above 70% of predictions actioned by quarter three"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "The first 90 days"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Weeks 1-4",
-     "Baseline metrics locked with named owners; data-readiness assessed against the delivery contracts."
-    ],
-    [
-     "Weeks 5-8",
-     "First working increment on your data, evaluated against the signed criteria; production-path sketch reviewed with risk."
-    ],
-    [
-     "Weeks 9-13",
-     "Staged rollout plan with SLO instrumentation; evidence pack draft reviewed with audit stakeholders."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Related services"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Connected Products & Smart Devices",
-     "Your product becomes a service: device fleets, OTA and telemetry products with revenue attached."
-    ],
-    [
-     "Smart Infrastructure, Buildings & Cities",
-     "Facilities that run themselves: BMS/IoT fusion, energy optimization and city-scale platforms."
-    ],
-    [
-     "Industrial IoT & Sensor Fabric",
-     "Sense everything that matters: retrofit-friendly sensor network with governed telemetry."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Where it applies"
-  },
-  {
-   "t": "p",
-   "x": "Anchor industries: Manufacturing & Industrial, Energy & Utilities, Logistics & Supply Chain, Retail & Consumer Goods, Agriculture & Food Systems. Platform rails: Dataq Twinverse and Dataq Nexus. Related tower: IoT, Digital Twin & Robotics."
-  },
-  {
-   "t": "h2",
-   "x": "How a delivery runs"
-  },
-  {
-   "t": "p",
-   "x": "A fixed rhythm keeps progress visible from week one — here is the one we run. The first two weeks lock the baseline: your team and ours measure the current metric together and sign it. Weeks 3–8 carry the pilot on bounded scope — a single decision path, workflow, plant or portfolio — and a control owner on your side owns the evidence. Weeks 9–12 industrialize: runbooks, monitoring, enablement, and a measured delta against the signed baseline. Missing a gate produces a documented decision to stop or redirect — never a silent extension."
-  },
-  {
-   "t": "h2",
-   "x": "Where this fits in the portfolio"
-  },
-  {
-   "t": "p",
-   "x": "No capability stands alone. These are the pages most clients open next."
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Industrial IoT & Sensor Fabric",
-     "Scope, delivery pattern and committed outcomes."
-    ],
-    [
-     "Connected Products & Smart Devices",
-     "Scope, delivery pattern and committed outcomes."
-    ],
-    [
-     "Fraud & Financial Crime Decisioning",
-     "Composed architecture and the metric it answers to."
-    ],
-    [
-     "IoT, Twin & Robotics for Energy & Utilities",
-     "A tower applied to this operating unit."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you receive"
-  },
-  {
-   "t": "p",
-   "x": "At the end of the first quarter of a typical program you hold four concrete assets:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Baseline diagnostic",
-     "The signed measurement of where the metric stands today, with the method written out so the number can be defended to finance."
-    ],
-    [
-     "Decision and control map",
-     "Every automated decision path, its policy checks, its human checkpoint and its owner on one page."
-    ],
-    [
-     "Evidence pack",
-     "Logs, evaluations and approvals collected automatically as the program runs — ready for internal audit or a regulator."
-    ],
-    [
-     "Value ledger",
-     "A running record of the delta against baseline, updated at every gate, reviewed at every steering meeting."
+     "planner trust is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Take this service to the practice lead in a working session — or ask for a scoped value assessment of your estate."
+   "x": "The design principle here is simple: the decision path and the audit path share one timeline on IoT, Digital Twin & Robotics programs, which keeps the blast radius of any change inside one lane."
   }
  ],
- "words": 425,
+ "words": 1692,
  "section": "Services",
  "l1": "Services",
  "l2": "IoT, Digital Twin & Robotics",

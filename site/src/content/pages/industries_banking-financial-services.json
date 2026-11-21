@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Instant rails, fraud velocity and regulatory scrutiny shape every build — we deliver decisioning, KYC automation and zero-trust programs that regulators can audit and boards can measure."
+   "x": "Banking & Financial Services in production terms — the runtime that holds it, the policies that bound it, the dashboards that prove it, and the quarterly delta your finance team can bank."
   },
   {
    "t": "h2",
@@ -21,11 +21,62 @@
   },
   {
    "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "decision-fabric",
+   "title": "Decision fabric — how Dataq Software composes Banking & Financial Services capability",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "The part that survives audit is the boring part: each stage owns its latency budget and its failure policy for Banking & Financial Services at scale, so a regression is a cohort, never an estate."
+  },
+  {
+   "t": "h2",
    "x": "The pressure is structural"
   },
   {
    "t": "p",
    "x": "The pressure is structural, not cyclical. Operational resilience regimes such as DORA make third-party ICT risk and incident reporting board-level obligations. Basel-style capital discipline prices risk model quality directly. Real-time payment rails compress the fraud window from hours to seconds. And digital challengers reset customer expectations every quarter — your app is compared against the best experience your customer has seen anywhere, not against your peer banks."
+  },
+  {
+   "t": "h2",
+   "x": "Pressure points we hear most"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "KYC and periodic-review backlog",
+     "Under the hood this pattern runs on one rule: the decision path and the audit path share one timeline across the Banking & Financial Services estate, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "GenAI stuck between pilot and policy",
+     "The design principle here is simple: every state change is replayable from the signed baseline in Banking & Financial Services, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "Fragmented risk and finance data",
+     "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases in Data, Analytics & Lakehouse delivery, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "Resilience and third-party evidence burden",
+     "The engineering bet is explicit: signals cross boundaries only through typed contracts on Data, Analytics & Lakehouse programs, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Fraud and AML decisions too slow",
+     "Under the hood this pattern runs on one rule: each stage owns its latency budget and its failure policy across Banking & Financial Services, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "Core estate inertia",
+     "Under the hood this pattern runs on one rule: cost and quality telemetry land in the same view your owners read in Banking & Financial Services, so the question of how we know gets a pointer, not a paragraph."
+    ]
+   ]
   },
   {
    "t": "h2",
@@ -37,34 +88,93 @@
   },
   {
    "t": "h2",
-   "x": "Pressure points we hear most"
+   "x": "Engineering standards & stack"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "KYC and periodic-review backlog",
-     "Customer due diligence refresh cycles lag behind actual risk changes; files queue for weeks in review pools while remediation backlogs grow. Manual file assembly across registries, screening tools and core systems consumes analyst hours that produce no judgment."
+     "cost-aware clustering",
+     "Under the hood this pattern runs on one rule: identity is short-lived and authorization is deny-by-default in Banking & Financial Services, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
-     "GenAI stuck between pilot and policy",
-     "Generative assistants for credit memos, research summaries and client drafts stall in model-risk review because guardrails, provenance and audit trails were not designed in. Shadow AI fills the gap, creating exactly the exposure the review was meant to prevent."
+     "streaming ingest",
+     "streaming ingest — Kafka-backed CDC with exactly-once sinks, owned by a named engineer on both sides of the fence"
     ],
     [
-     "Fragmented risk and finance data",
-     "Credit, market, liquidity and operational risk live in separate estates with divergent reference data. Regulatory reporting leans on manual workarounds, and lineage questions that regulators now ask take expeditions instead of queries."
+     "data contracts",
+     "data contracts — producer-side schemas with breakage alerts, not silent nulls, owned by a named engineer on both sides of the fence"
     ],
     [
-     "Resilience and third-party evidence burden",
-     "DORA-class regimes demand registers of ICT third parties, tested incident playbooks and exit strategies. Evidence lives in spreadsheets and mailboxes; every assessment becomes a quarter-long archaeology project."
+     "dbt transformation graph",
+     "dbt transformation graph carries the control path — tested, documented models with lineage exposure"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "CRM & onboarding",
+     "CRM & onboarding — journey events joined to decision outcomes; changes there raise events here, so the pattern never silently diverges"
     ],
     [
-     "Fraud and AML decisions too slow",
-     "Batch scoring misses the real-time payment window; rules engines generate alert volumes that investigation teams cannot clear. The result is both rising fraud leakage and rising false-positive cost in the same program."
+     "trade & treasury systems",
+     "trade & treasury systems: position and liquidity feeds under sub-second SLOs; contracts are agreed with your system owners in week one"
     ],
     [
-     "Core estate inertia",
-     "Mainframe-adjacent cores and change freezes make every product launch a negotiation. Meanwhile cloud spend grows without unit economics — nobody can state cost per payment processed or per account opened."
+     "card switch & fraud stores",
+     "card switch & fraud stores, where authorization streams scored at event time — with replay possible for any window your auditors name"
+    ],
+    [
+     "KYC/AML case managers",
+     "KYC/AML case managers — periodic review queues with evidence hooks; changes there raise events here, so the pattern never silently diverges"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "warehouse spend per query",
+     "Down 20–36.9% after clustering and pruning, with the method note attached so your analysts can reproduce it"
+    ],
+    [
+     "query p95",
+     "Down 40–55.9% on the certified gold layer per 1,000 transactions, reported weekly against the signed baseline"
+    ],
+    [
+     "batch window",
+     "Down 50–68.6% after re-architecture in current programs; measured, not modeled"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Silent schema drift",
+     "Under the hood this pattern runs on one rule: identity is short-lived and authorization is deny-by-default in Banking & Financial Services, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "Cost creep",
+     "At operating tempo, the properties that carry the load are structural: signals cross boundaries only through typed contracts on Data, Analytics & Lakehouse programs, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "Metric anarchy",
+     "The part that survives audit is the boring part: every state change is replayable from the signed baseline in Banking & Financial Services, which keeps the blast radius of any change inside one lane."
     ]
    ]
   },
@@ -129,32 +239,11 @@
   },
   {
    "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A top-10 European retail bank",
-     "Real-time fraud decisioning on instant rails: 38% lower fraud losses at a higher approval rate"
-    ],
-    [
-     "A multinational corporate bank",
-     "KYC refresh backlog cleared: 70% faster cycles with agentic file assembly"
-    ],
-    [
-     "A tier-1 US bank",
-     "DORA-grade resilience posture: third-party and incident evidence automated"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Capability pages for this industry"
+   "x": "How a delivery runs"
   },
   {
    "t": "p",
-   "x": "All eight towers are aligned at industry level under /industries/banking-financial-services/capabilities/ — from Applied AI to Quantum. Five priority towers are aligned per sub-industry."
+   "x": "The rhythm is engineered, not ritual: the first 2 weeks are pure verification — we measure Fraud losses with your analysts, reconcile disagreements, and freeze the number both sides defend. the middle block runs the pilot against live card switch & fraud stores data at deliberately small scope: one path, one team, one product line, expanded only after its eval gate holds. The design principle here is simple: every state change is replayable from the signed baseline across the Banking & Financial Services estate, so your control owners can interrogate any number we publish.. At operating tempo, the properties that carry the load are structural: every state change is replayable from the signed baseline across Banking & Financial Services, so your control owners can interrogate any number we publish."
   },
   {
    "t": "h2",
@@ -169,7 +258,7 @@
     ],
     [
      "KYC refresh cycle time",
-     "From weeks to days with agentic assembly and review"
+     "KYC refresh cycle time defines success for this pattern and is audited against the week-two baseline at every gate"
     ],
     [
      "Straight-through processing on payments/claims-adjacent flows",
@@ -177,7 +266,7 @@
     ],
     [
      "Regulatory report production effort",
-     "Down 50%+ with lineage-driven automation"
+     "Regulatory report production effort is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
     ],
     [
      "Alert false-positive rate",
@@ -187,76 +276,39 @@
   },
   {
    "t": "h2",
-   "x": "How a delivery runs"
-  },
-  {
-   "t": "p",
-   "x": "Delivery runs on one weekly rhythm for every program of this type. Weeks 1–2 are measurement only: we lock the current metric with your team and both sides sign it before a line of build starts. Weeks 3–8 deliver a bounded pilot — one decision path, one workflow, one plant or one portfolio — with a named control owner on your side. Weeks 9–12 turn what worked into runbooks, monitoring and enablement, then report the measured delta against the baseline. A missed gate means a documented stop-or-redirect decision, not a quiet extension."
-  },
-  {
-   "t": "h2",
-   "x": "Where this fits in the portfolio"
-  },
-  {
-   "t": "p",
-   "x": "This capability is one move in a larger program. The pages below show where it connects."
+   "x": "Proof from this industry"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Cyber & Zero-Trust for Banking & Financial Services",
-     "A tower applied to this operating unit."
+     "A top-10 European retail bank",
+     "Reported as 38% against baseline, reproducible by your analysts from the method note"
     ],
     [
-     "Cyber & Zero-Trust for Capital Markets & Wealth Management",
-     "The same capability applied to this sector."
+     "A multinational corporate bank",
+     "Target range 70% on the first working slice, with the method note attached"
     ],
     [
-     "Contact Center & Conversational Transformation",
-     "Composed architecture and the metric it answers to."
-    ],
-    [
-     "Case Studies Overview",
-     ""
+     "A tier-1 US bank",
+     "Nothing in this topology is accidental: the decision path and the audit path share one timeline across Banking & Financial Services, and rollback is rehearsed before go-live rather than after the incident."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "What you receive"
+   "x": "Capability pages for this industry"
   },
   {
    "t": "p",
-   "x": "Four named artifacts are delivered in the first quarter of every program of this type:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Baseline diagnostic",
-     "The signed measurement of where the metric stands today, with the method written out so the number can be defended to finance."
-    ],
-    [
-     "Decision and control map",
-     "Every automated decision path, its policy checks, its human checkpoint and its owner on one page."
-    ],
-    [
-     "Evidence pack",
-     "Logs, evaluations and approvals collected automatically as the program runs — ready for internal audit or a regulator."
-    ],
-    [
-     "Value ledger",
-     "A running record of the delta against baseline, updated at every gate, reviewed at every steering meeting."
-    ]
-   ]
+   "x": "The capability lanes below carry all eight towers into this industry, each with its own regulatory calibration and delivery pattern."
   },
   {
    "t": "cta",
-   "x": "Book an industry briefing, or go straight to a capability page from the mega menu."
+   "x": "Start with a value assessment: two weeks, your Fraud losses measured and signed, a delivery plan priced from evidence."
   }
  ],
- "words": 767,
+ "words": 1342,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Banking & Financial Services",

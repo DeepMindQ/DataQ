@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Dataq Quanta — Overview: what it does, the architecture and trust controls, and where it is used inside client programs."
+   "x": "How Dataq Quanta — Overview runs when it is engineered for the enterprise: bounded scope per gate, platform evidence generated in-flight, and outcomes stated as deltas against the number we signed together."
   },
   {
    "t": "h2",
@@ -18,6 +18,28 @@
   {
    "t": "p",
    "x": "Dataq Quanta runs our quantum and advanced-compute programs: readiness assessments with HNDL risk clocks, solver tournaments (classical vs. Quantum-inspired vs. Hybrid) on your actual formulations, PQC migration with CBOM-grade discovery, HPC engineering, and the emerging-silicon watchlist."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "decision-fabric",
+   "title": "Dataq Quanta — control and evidence planes",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "Under the hood this pattern runs on one rule: cost and quality telemetry land in the same view your owners read across the Dataq Quanta estate, so your control owners can interrogate any number we publish."
+  },
+  {
+   "t": "p",
+   "x": "At operating tempo, the properties that carry the load are structural: identity is short-lived and authorization is deny-by-default for the enterprise at scale, and rollback is rehearsed before go-live rather than after the incident."
   },
   {
    "t": "h2",
@@ -62,11 +84,70 @@
   },
   {
    "t": "h2",
-   "x": "Trust and compliance"
+   "x": "Engineering standards & stack"
   },
   {
-   "t": "p",
-   "x": "Quanta's PQC work aligns to NIST FIPS 203/204/205 with crypto-agility architectures that make future transitions configuration events. All benchmarks publish methodology and baselines — your quantum narrative survives diligence because it is true."
+   "t": "bullets",
+   "items": [
+    [
+     "dbt transformation graph",
+     "dbt transformation graph carries the ingest path — tested, documented models with lineage exposure"
+    ],
+    [
+     "Delta / Iceberg tables",
+     "Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read across the enterprise, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     " freshness SLOs",
+     "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later across the Dataq Quanta estate, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "Unity Catalog governance",
+     "At operating tempo, the properties that carry the load are structural: cost and quality telemetry land in the same view your owners read in Dataq Quanta, which is what makes the reported delta defensible in audit."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "query p95",
+     "Down 40–54.6% on the certified gold layer — the gate compares the live value to baseline every quarter"
+    ],
+    [
+     "pipeline breakage MTTR",
+     "Down 55–68.8% with contracts and lineage paging on the first working slice; deeper scope moves it further"
+    ],
+    [
+     "freshness SLO attainment",
+     "Up 97–98.5% of tables inside their declared window per workflow, reported weekly against the signed baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Silent schema drift",
+     "The part that survives audit is the boring part: the decision path and the audit path share one timeline for the enterprise at scale, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "Metric anarchy",
+     "What holds the build together is discipline at the boundaries: cost and quality telemetry land in the same view your owners read across the Dataq Quanta estate, so the question of how we know gets a pointer, not a paragraph."
+    ],
+    [
+     "Cost creep",
+     "The engineering bet is explicit: identity is short-lived and authorization is deny-by-default across the Dataq Quanta estate, and every exception path degrades to human review, never to silence."
+    ]
+   ]
   },
   {
    "t": "h2",
@@ -77,25 +158,17 @@
    "items": [
     [
      "Evidence by default",
-     "Every artifact the platform produces doubles as audit evidence — no reconstruction projects."
+     "The part that survives audit is the boring part: the decision path and the audit path share one timeline for the enterprise at scale, which is what makes the reported delta defensible in audit."
     ],
     [
      "Pattern draw on",
-     "Teams start from a configured 80 percent baseline and spend their budget on the 20% that is genuinely yours."
+     "Target range 20% on the first working slice, with the method note attached"
     ],
     [
      "Accountability",
-     "Named control owner per deployment; platform telemetry makes the owner's job inspectable."
+     "The design principle here is simple: the decision path and the audit path share one timeline across the Dataq Quanta estate, which is what makes the reported delta defensible in audit."
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "How programs use it"
-  },
-  {
-   "t": "p",
-   "x": "Most programs deploy Dataq Quanta inside the customer's landing zone with a Dataq pod operating it through a named run model, then transfer operations to client teams once the SLOs have held for two quarters."
   },
   {
    "t": "h2",
@@ -106,19 +179,40 @@
    "x": "Certified integration surface: Qiskit, PennyLane, Gurobi/CP-SAT, Slurm, CUDA, CBOM tooling."
   },
   {
+   "t": "bullets",
+   "items": [
+    [
+     "dbt transformation graph",
+     "dbt transformation graph carries the ingest path — tested, documented models with lineage exposure"
+    ],
+    [
+     "Delta / Iceberg tables",
+     "Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read across the enterprise, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     " freshness SLOs",
+     "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later across the Dataq Quanta estate, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "Unity Catalog governance",
+     "At operating tempo, the properties that carry the load are structural: cost and quality telemetry land in the same view your owners read in Dataq Quanta, which is what makes the reported delta defensible in audit."
+    ]
+   ]
+  },
+  {
    "t": "h2",
-   "x": "Where it is deployed"
+   "x": "How programs use it"
   },
   {
    "t": "p",
-   "x": "Primary industry deployments: Banking & Financial Services, Energy & Utilities, Logistics & Supply Chain, Manufacturing & Industrial, Healthcare & Life Sciences, Public Sector & Government."
+   "x": "The rhythm is engineered, not ritual: What holds the build together is discipline at the boundaries: cost and quality telemetry land in the same view your owners read across the Dataq Quanta estate, so drift shows up as a ticket with an owner, not as a mystery.. The build earns trust the same way every gate does: models, agents and rules move through versioned, evaluated releases across the Dataq Quanta estate, which keeps the blast radius of any change inside one lane.. At operating tempo, the properties that carry the load are structural: cost and quality telemetry land in the same view your owners read across the enterprise, which keeps the blast radius of any change inside one lane.. The part that survives audit is the boring part: signals cross boundaries only through typed contracts on Data, Analytics & Lakehouse programs, and every exception path degrades to human review, never to silence."
   },
   {
    "t": "cta",
-   "x": "Read the Architecture & Trust page, or book a platform briefing with the engineering team."
+   "x": "The part that survives audit is the boring part: cost and quality telemetry land in the same view your owners read in Dataq Quanta, and every exception path degrades to human review, never to silence."
   }
  ],
- "words": 322,
+ "words": 981,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Quanta",

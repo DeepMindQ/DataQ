@@ -829,6 +829,130 @@
   to { background-position: 440px 440px; }
 }
 
+/* ── Hero visual panel (wave-2: image INSIDE the title block) ─────────── */
+.hv-figure {
+  transform: translateZ(0);
+  transition: box-shadow 0.5s var(--dq-ease);
+}
+.hv-figure:hover { box-shadow: 0 24px 60px -18px rgba(24, 20, 45, 0.55); }
+.hv-figure .hv-img {
+  animation: hv-zoom 22s ease-in-out infinite alternate;
+  transform-origin: 55% 40%;
+}
+@keyframes hv-zoom {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.09); }
+}
+.hv-beam {
+  mix-blend-mode: screen;
+}
+.hv-beam span {
+  position: absolute;
+  top: -18%;
+  bottom: -18%;
+  left: -34%;
+  width: 30%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(254, 87, 34, 0.13) 38%,
+    rgba(255, 255, 255, 0.22) 50%,
+    rgba(254, 87, 34, 0.13) 62%,
+    transparent 100%
+  );
+  transform: skewX(-14deg);
+  animation: hv-sweep 7.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: 1.2s;
+}
+@keyframes hv-sweep {
+  0% { left: -34%; opacity: 0; }
+  12% { opacity: 1; }
+  46% { opacity: 1; }
+  60% { left: 104%; opacity: 0; }
+  100% { left: 104%; opacity: 0; }
+}
+.hv-chip {
+  transition: transform 0.45s var(--dq-ease), border-color 0.45s var(--dq-ease);
+}
+.hv-figure:hover .hv-chip { transform: translateY(-4px); border-color: rgba(254, 87, 34, 0.45); }
+.hv-pulse {
+  animation: hv-dot 2.2s ease-in-out infinite;
+}
+@keyframes hv-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(254, 87, 34, 0.55); opacity: 1; }
+  50% { box-shadow: 0 0 0 6px rgba(254, 87, 34, 0); opacity: 0.6; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hv-figure .hv-img, .hv-beam span, .hv-pulse { animation: none; }
+}
+
+/* ── TechDiagrams (wave-2): animated technical schematics ─────────────── */
+.td-wrap { margin-top: 2.25rem; }
+.td-figure { background: #0d0b1e; }
+.td-canvas {
+  position: relative;
+  background-image: radial-gradient(58% 70% at 50% 30%, rgba(254, 87, 34, 0.08), transparent 70%);
+}
+.td-svg { max-height: 460px; }
+.td-lbl {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.td-lbl-c { display: flex; align-items: center; justify-content: center; text-align: center; }
+.td-lbl-2 { font-size: 11.5px; }
+/* packet streams */
+.td-flow { stroke-dashoffset: 0; animation: td-dash 2s linear infinite; }
+@keyframes td-dash { to { stroke-dashoffset: -64; } }
+/* breathing nodes & dots */
+.td-breathe { animation: td-breathe 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes td-breathe { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+.td-pulse { animation: td-pulse 2.4s ease-in-out infinite; }
+@keyframes td-pulse { 0%, 100% { opacity: 0.35; r: 2.4; } 50% { opacity: 1; r: 4; } }
+/* rotating dashed rings */
+.td-spin { animation: td-spin 26s linear infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes td-spin { to { transform: rotate(360deg); } }
+/* halo breath on cores */
+.td-halo { animation: td-halo 3.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes td-halo { 0%, 100% { opacity: 0.25; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.06); } }
+/* packet drops between layers */
+.td-drop { animation: td-drop 1.6s cubic-bezier(0.55, 0, 0.85, 0.4) infinite; }
+@keyframes td-drop {
+  0% { transform: translateY(0); opacity: 0; }
+  18% { opacity: 1; }
+  82% { opacity: 1; }
+  100% { transform: translateY(12px); opacity: 0; }
+}
+/* orbiting particles on the optimization funnel */
+.td-orbit { animation: td-orbit 7s linear infinite; }
+.td-orbit-2 { animation-duration: 11s; animation-direction: reverse; }
+@keyframes td-orbit {
+  from { transform: rotate(0deg) translateX(250px) scaleY(0.14) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(250px) scaleY(0.14) rotate(-360deg); }
+}
+/* evaluation fill ticks */
+.td-eval { animation: td-eval 3s cubic-bezier(0.2, 0.6, 0.3, 1) infinite alternate; }
+@keyframes td-eval { from { width: 0; } to { width: 44px; } }
+/* phase progress bars */
+.td-prog { width: 0; animation: td-prog 5.6s cubic-bezier(0.25, 0.6, 0.3, 1) infinite; }
+@keyframes td-prog { 0% { width: 0; } 55% { width: 100%; } 78% { width: 100%; opacity: 0.85; } 100% { width: 100%; opacity: 0.2; } }
+/* LIVE chip */
+.td-live { animation: td-live 1.8s ease-in-out infinite; }
+@keyframes td-live { 0%, 100% { box-shadow: 0 0 0 0 rgba(254, 87, 34, 0.5); } 50% { box-shadow: 0 0 0 5px rgba(254, 87, 34, 0); } }
+@media (prefers-reduced-motion: reduce) {
+  .td-flow, .td-breathe, .td-pulse, .td-spin, .td-halo, .td-drop, .td-orbit, .td-eval, .td-prog, .td-live {
+    animation: none;
+  }
+  .td-eval { width: 44px; }
+  .td-prog { width: 100%; }
+}
+
 /* Illustration figure — hover lift + slow Ken Burns zoom */
 .pi-figure {
   transition:

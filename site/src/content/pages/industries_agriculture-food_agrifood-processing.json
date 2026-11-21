@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Agri-Food Processing: the operating units, priority programs and the five capability towers that matter most here."
+   "x": "The Dataq Software build of Agri-Food Processing: concrete interfaces at farm management systems, measured movement on Grading throughput, and a delivery rhythm your control owners can plan around from week one."
   },
   {
    "t": "h2",
@@ -17,7 +17,29 @@
   },
   {
    "t": "p",
-   "x": "The workflows we industrialize here: Intake grading, Process yield analytics, Lot traceability, Cold-chain monitoring, Provenance claims. Each arrives with its current cycle times measured in the Diagnose phase, and each leaves the program governed by outcome SLOs rather than anecdotes."
+   "x": "The operating surface here spans Intake grading, Process yield analytics, Lot traceability, Cold-chain monitoring, Provenance claims. Each one is instrumented before anything changes: baseline numbers first, then the working slice, then the measured delta at the gate."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Governed lakehouse pipeline — Agri-Food Processing",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "The build earns trust the same way every gate does: every state change is replayable from the signed baseline in Agri-Food Processing, which is what makes the reported delta defensible in audit."
+  },
+  {
+   "t": "p",
+   "x": "Nothing in this topology is accidental: the decision path and the audit path share one timeline across the Agri-Food Processing estate, so your control owners can interrogate any number we publish."
   },
   {
    "t": "h2",
@@ -28,27 +50,27 @@
    "items": [
     [
      "Intake grading manual",
-     "Quality grading by inspectors; variance and throughput loss."
+     "The part that survives audit is the boring part: evidence is captured where the work happens, not reconstructed later across the Agri-Food Processing estate, which is what makes the reported delta defensible in audit."
     ],
     [
      "Yield opaque",
-     "Process yield by line/lot unknown; losses accepted."
+     "The part that survives audit is the boring part: each stage owns its latency budget and its failure policy in Agri-Food Processing, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "Provenance claims unverifiable",
-     "Origin/organic claims manual; EUDR pressure."
+     "At operating tempo, the properties that carry the load are structural: evidence is captured where the work happens, not reconstructed later for Agriculture & Food Systems at scale, which keeps the blast radius of any change inside one lane."
     ],
     [
      "Traceability slow",
-     "Lot traceability document-based; recalls days."
+     "The engineering bet is explicit: every state change is replayable from the signed baseline across the Agri-Food Processing estate, and every exception path degrades to human review, never to silence."
     ],
     [
      "Cold chain unverified",
-     "Storage/transport telemetry missing; spoilage."
+     "Under the hood this pattern runs on one rule: signals cross boundaries only through typed contracts across Agriculture & Food Systems, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "OT estates exposed",
-     "Plant networks flat; food-safety systems targeted."
+     "The build earns trust the same way every gate does: cost and quality telemetry land in the same view your owners read for Agriculture & Food Systems at scale, so a regression is a cohort, never an estate."
     ]
    ]
   },
@@ -84,6 +106,98 @@
   },
   {
    "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "dbt transformation graph",
+     "dbt transformation graph in this pattern: tested, documented models with lineage exposure, reviewed with your platform team before cutover"
+    ],
+    [
+     "Unity Catalog governance",
+     "Unity Catalog governance carries the decision path — tag-based access control inherited end to end"
+    ],
+    [
+     " freshness SLOs",
+     " freshness SLOs — per-table freshness and completeness SLAs wired to paging; wired so your engineers can trace every decision to its inputs"
+    ],
+    [
+     "Delta / Iceberg tables",
+     "Delta / Iceberg tables — ACID guarantees with time travel and schema enforcement; swaps are versioned and rehearsed, never improvised"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "processing line historians",
+     "processing line historians — yield and quality signatures; the adapter is part of the deliverable, not a future phase"
+    ],
+    [
+     "food-safety labs",
+     "The engineering bet is explicit: the decision path and the audit path share one timeline in Agri-Food Processing, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "cold-chain telemetry",
+     "The design principle here is simple: each stage owns its latency budget and its failure policy across the Agri-Food Processing estate, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "farm management systems",
+     "farm management systems: field operations joined to telemetry; contracts are agreed with your system owners in week one"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "warehouse spend per query",
+     "Down 20–34.8% after clustering and pruning — the gate compares the live value to baseline every quarter"
+    ],
+    [
+     "pipeline breakage MTTR",
+     "Down 55–68.5% with contracts and lineage paging — the gate compares the live value to baseline every quarter"
+    ],
+    [
+     "freshness SLO attainment",
+     "Up 97–98.9% of tables inside their declared window in current programs; measured, not modeled"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Metric anarchy",
+     "Metric anarchy — one certified semantic layer owns definitions — dashboards that shadow it lose endorsement and budget, enforced by the platform rather than by discipline alone"
+    ],
+    [
+     "Cost creep",
+     "Cost creep, the classic killer; here per-team chargeback with query tags; untagged compute is quarantined at the queue level"
+    ],
+    [
+     "Silent schema drift",
+     "Silent schema drift — producer contracts fail loudly at ingest; downstream models refuse to build on drifted sources"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
    "x": "How we help — five priority capabilities"
   },
   {
@@ -91,25 +205,33 @@
    "items": [
     [
      "Applied AI & GenAI",
-     "Defect/quality grading at line speed: throughput up"
+     "What holds the build together is discipline at the boundaries: every state change is replayable from the signed baseline in Data, Analytics & Lakehouse delivery, so a regression is a cohort, never an estate."
     ],
     [
      "Data & Lakehouse",
-     "Line/lot yield with loss decomposition: recovery targeted"
+     "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later in Data, Analytics & Lakehouse delivery, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Blockchain & Digital Trust",
-     "Permissioned networks, tokenization and verifiable credentials with the reporting and controls supervisors expect."
+     "Under the hood this pattern runs on one rule: evidence is captured where the work happens, not reconstructed later on Data, Analytics & Lakehouse programs, which keeps the blast radius of any change inside one lane."
     ],
     [
      "IoT, Twin & Robotics",
-     "Storage/transport monitoring: spoilage prevented"
+     "The build earns trust the same way every gate does: evidence is captured where the work happens, not reconstructed later in Agri-Food Processing, and every exception path degrades to human review, never to silence."
     ],
     [
      "Cyber & Zero-Trust",
-     "Segmentation around safety/quality systems: continuity protected"
+     "At operating tempo, the properties that carry the load are structural: evidence is captured where the work happens, not reconstructed later in Agri-Food Processing, which keeps the blast radius of any change inside one lane."
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "How the engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The operating cadence, concretely: before any build work, we spend 2 weeks proving the measurement: if two analysts cannot reproduce Grading throughput the same way, nothing else starts. The part that survives audit is the boring part: identity is short-lived and authorization is deny-by-default on Data, Analytics & Lakehouse programs, so a regression is a cohort, never an estate.. The build earns trust the same way every gate does: cost and quality telemetry land in the same view your owners read across Agriculture & Food Systems, which keeps the blast radius of any change inside one lane.. The design principle here is simple: evidence is captured where the work happens, not reconstructed later in Agri-Food Processing, which keeps the blast radius of any change inside one lane."
   },
   {
    "t": "h2",
@@ -128,21 +250,13 @@
     ],
     [
      "Recall scoping",
-     "Minutes"
+     "Recall scoping defines success for this pattern and is audited against the week-two baseline at every gate"
     ],
     [
      "Cold-chain excursions",
-     "Intercepted"
+     "Cold-chain excursions is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
-  },
-  {
-   "t": "p",
-   "x": "We start with the baseline measurement pack: cycle times, error rates, unit costs across the workflows above. It matters because each committed outcome here is reported against that locked baseline — audited annually."
   },
   {
    "t": "h2",
@@ -153,11 +267,11 @@
    "items": [
     [
      "A European agri-cooperative (4,200 farms)",
-     "Input cost per hectare down 14%: precision agronomy at cooperative scale"
+     "Target range down 14 on the first working slice, with the method note attached"
     ],
     [
      "A global coffee trader",
-     "EUDR due-diligence automated: compliance evidence in hours, premium channels opened"
+     "The build earns trust the same way every gate does: the decision path and the audit path share one timeline on Data, Analytics & Lakehouse programs, and rollback is rehearsed before go-live rather than after the incident."
     ]
    ]
   },
@@ -167,14 +281,14 @@
   },
   {
    "t": "p",
-   "x": "Related sub-industry pages: Precision Agriculture & Agronomy, Food Safety & Food Retail, AgriFinance & Commodity Markets — each with its own capability alignments under /industries/agriculture-food/."
+   "x": "Adjacent delivery lanes: Precision Agriculture & Agronomy, Food Safety & Food Retail, AgriFinance & Commodity Markets — each with its own capability alignments under /industries/agriculture-food/. Where two lanes share a metric, one program can carry both."
   },
   {
    "t": "cta",
-   "x": "Pick a capability to go deeper — or take your metric straight to the industry practice lead."
+   "x": "Put your Grading throughput in front of the practice lead — bring the baseline, leave with a scoped plan."
   }
  ],
- "words": 339,
+ "words": 1231,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Agriculture & Food Systems",

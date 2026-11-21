@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Every mile is a cost line — we deliver visibility, optimization and twin programs measured on OTIF, cost per shipment and inventory turns."
+   "x": "A no-theater description of Logistics & Supply Chain: what ships first, what it touches at WMS floor systems, how it is verified, and the per lane metric we commit to moving against baseline."
   },
   {
    "t": "h2",
@@ -21,11 +21,62 @@
   },
   {
    "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "decision-fabric",
+   "title": "Decision fabric — how Dataq Software composes Logistics & Supply Chain capability",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "The build earns trust the same way every gate does: identity is short-lived and authorization is deny-by-default across the Logistics & Supply Chain estate, so a regression is a cohort, never an estate."
+  },
+  {
+   "t": "h2",
    "x": "The pressure is structural"
   },
   {
    "t": "p",
    "x": "The environment keeps raising stakes: e-commerce compresses promise windows, capacity markets swing, EUDR/CSRD-style provenance and emissions reporting reach freight, and labor scarcity meets aging infrastructure. Ports, 3PLs, parcel networks and shippers all face the same core gap — operational telemetry exists but decisions still run on spreadsheets and veterans' instinct."
+  },
+  {
+   "t": "h2",
+   "x": "Pressure points we hear most"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Visibility stitched from portals",
+     "The build earns trust the same way every gate does: evidence is captured where the work happens, not reconstructed later across the Logistics & Supply Chain estate, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "Dispatch and exception work manual",
+     "The build earns trust the same way every gate does: each stage owns its latency budget and its failure policy across Logistics & Supply Chain, so the question of how we know gets a pointer, not a paragraph."
+    ],
+    [
+     "Fleet and yard telemetry gaps",
+     "The part that survives audit is the boring part: signals cross boundaries only through typed contracts across Logistics & Supply Chain, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "Demand and capacity planning stale",
+     "At operating tempo, the properties that carry the load are structural: every state change is replayable from the signed baseline for Logistics & Supply Chain at scale, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "Freight fraud and cyber exposure",
+     "The build earns trust the same way every gate does: each stage owns its latency budget and its failure policy across Logistics & Supply Chain, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Compliance-grade provenance missing",
+     "The part that survives audit is the boring part: the decision path and the audit path share one timeline for Logistics & Supply Chain at scale, so a regression is a cohort, never an estate."
+    ]
+   ]
   },
   {
    "t": "h2",
@@ -37,34 +88,93 @@
   },
   {
    "t": "h2",
-   "x": "Pressure points we hear most"
+   "x": "Engineering standards & stack"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Visibility stitched from portals",
-     "Carrier portals, EDI and telematics produce a patchwork; the control tower reads yesterday. Exceptions surface as customer complaints."
+     " freshness SLOs",
+     "Nothing in this topology is accidental: models, agents and rules move through versioned, evaluated releases across Logistics & Supply Chain, and every exception path degrades to human review, never to silence."
     ],
     [
-     "Dispatch and exception work manual",
-     "Planners re-plan routes and loads by hand when trucks break down or orders change; exception queues eat capacity that should improve the network."
+     "streaming ingest",
+     "streaming ingest carries the decision path — Kafka-backed CDC with exactly-once sinks"
     ],
     [
-     "Fleet and yard telemetry gaps",
-     "Trailer/container/yard assets lack sensing; detention, dwell and theft are discovered in invoices. Cold-chain excursions surface at claim time."
+     "cost-aware clustering",
+     "The engineering bet is explicit: each stage owns its latency budget and its failure policy in Data, Analytics & Lakehouse delivery, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
-     "Demand and capacity planning stale",
-     "Volume forecasts lag promotion cycles and market shifts; capacity buys and network design inherit the error."
+     "Unity Catalog governance",
+     "The build earns trust the same way every gate does: identity is short-lived and authorization is deny-by-default across Logistics & Supply Chain, and every exception path degrades to human review, never to silence."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "customs & compliance hubs",
+     "customs & compliance hubs, where document packs with sanction screening — with replay possible for any window your auditors name"
     ],
     [
-     "Freight fraud and cyber exposure",
-     "Double-brokering fraud and carrier-identity theft rise alongside ransomware targeting 3PLs; the estate mixes corporate IT with driver-facing OT."
+     "yard & gate systems",
+     "yard & gate systems — dwell and appointment orchestration; the adapter is part of the deliverable, not a future phase"
     ],
     [
-     "Compliance-grade provenance missing",
-     "EUDR-grade due diligence and custody evidence for high-value goods remain paper-based; customs and buyers escalate."
+     "visibility networks",
+     "visibility networks: carrier EDI/API milestones with quality scores; contracts are agreed with your system owners in week one"
+    ],
+    [
+     "fleet telematics",
+     "fleet telematics — position and driver-state streams; changes there raise events here, so the pattern never silently diverges"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "query p95",
+     "Down 40–54.8% on the certified gold layer in current programs; measured, not modeled"
+    ],
+    [
+     "warehouse spend per query",
+     "Down 20–34.4% after clustering and pruning — the gate compares the live value to baseline every quarter"
+    ],
+    [
+     "freshness SLO attainment",
+     "Up 97–98.9% of tables inside their declared window on the first working slice; deeper scope moves it further"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Metric anarchy",
+     "Under the hood this pattern runs on one rule: cost and quality telemetry land in the same view your owners read across Logistics & Supply Chain, so the question of how we know gets a pointer, not a paragraph."
+    ],
+    [
+     "Cost creep",
+     "The design principle here is simple: the decision path and the audit path share one timeline across Logistics & Supply Chain, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "Silent schema drift",
+     "The part that survives audit is the boring part: the decision path and the audit path share one timeline for Logistics & Supply Chain at scale, and rollback is rehearsed before go-live rather than after the incident."
     ]
    ]
   },
@@ -129,32 +239,11 @@
   },
   {
    "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A global 3PL (40+ countries)",
-     "Exceptions auto-resolved at 74%: control tower to agentic remediation"
-    ],
-    [
-     "A container-terminal operator",
-     "Berth productivity +16%: planning platform and crane health sensing"
-    ],
-    [
-     "A parcel network (12M parcels/week)",
-     "Failed deliveries down 34%: promise engine and exception agents"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Capability pages for this industry"
+   "x": "How a delivery runs"
   },
   {
    "t": "p",
-   "x": "All eight towers are aligned at industry level under /industries/logistics-supply-chain/capabilities/ — from Applied AI to Quantum. Five priority towers are aligned per sub-industry."
+   "x": "The operating cadence, concretely: the first 2 weeks are pure verification — we measure On-time-in-full with your analysts, reconcile disagreements, and freeze the number both sides defend. The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later across the Logistics & Supply Chain estate, so the question of how we know gets a pointer, not a paragraph.. The engineering bet is explicit: each stage owns its latency budget and its failure policy across Logistics & Supply Chain, so a regression is a cohort, never an estate.. The design principle here is simple: identity is short-lived and authorization is deny-by-default across the Logistics & Supply Chain estate, and rollback is rehearsed before go-live rather than after the incident."
   },
   {
    "t": "h2",
@@ -177,86 +266,49 @@
     ],
     [
      "Exception resolution time",
-     "Hours instead of days via agentic remediation"
+     "Exception resolution time defines success for this pattern and is audited against the week-two baseline at every gate"
     ],
     [
      "Cold-chain excursions",
-     "Intercepted in transit, not at claims"
+     "Cold-chain excursions is tracked weekly to your control owner; the number at gate three is the number finance sees"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "How a delivery runs"
-  },
-  {
-   "t": "p",
-   "x": "This capability runs on the cadence set out below; the rhythm is fixed, the scope is signed. The first two weeks lock the baseline: your team and ours measure the current metric together and sign it. Weeks 3–8 carry the pilot on bounded scope — a single decision path, workflow, plant or portfolio — and a control owner on your side owns the evidence. Weeks 9–12 industrialize: runbooks, monitoring, enablement, and a measured delta against the signed baseline. Missing a gate produces a documented decision to stop or redirect — never a silent extension."
-  },
-  {
-   "t": "h2",
-   "x": "Where this fits in the portfolio"
-  },
-  {
-   "t": "p",
-   "x": "In delivery, this work composes with the adjacent capabilities listed here."
+   "x": "Proof from this industry"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Cloud, Edge & Platform for Logistics & Supply Chain",
-     "A tower applied to this operating unit."
+     "A global 3PL (40+ countries)",
+     "The delta we sign up to is 74% — verified against live data at every gate"
     ],
     [
-     "Data & Lakehouse for Last-Mile & Urban Logistics",
-     "The same capability applied to this sector."
+     "A container-terminal operator",
+     "Target range 16% on the first working slice, with the method note attached"
     ],
     [
-     "ESG Reporting & Sustainable Operations",
-     "Composed architecture and the metric it answers to."
-    ],
-    [
-     "Case Studies Overview",
-     ""
+     "A parcel network (12M parcels/week)",
+     "Failed deliveries down 34%: promise engine and exception agents"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "What you receive"
+   "x": "Capability pages for this industry"
   },
   {
    "t": "p",
-   "x": "These artifacts change hands at the end of the first quarter, with a live walkthrough for your team:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Baseline diagnostic",
-     "The signed measurement of where the metric stands today, with the method written out so the number can be defended to finance."
-    ],
-    [
-     "Decision and control map",
-     "Every automated decision path, its policy checks, its human checkpoint and its owner on one page."
-    ],
-    [
-     "Evidence pack",
-     "Logs, evaluations and approvals collected automatically as the program runs — ready for internal audit or a regulator."
-    ],
-    [
-     "Value ledger",
-     "A running record of the delta against baseline, updated at every gate, reviewed at every steering meeting."
-    ]
-   ]
+   "x": "Under the hood this pattern runs on one rule: cost and quality telemetry land in the same view your owners read for Logistics & Supply Chain at scale, which is what makes the reported delta defensible in audit."
   },
   {
    "t": "cta",
-   "x": "Book an industry briefing, or go straight to a capability page from the mega menu."
+   "x": "Start with a value assessment: two weeks, your On-time-in-full measured and signed, a delivery plan priced from evidence."
   }
  ],
- "words": 551,
+ "words": 1266,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Logistics & Supply Chain",

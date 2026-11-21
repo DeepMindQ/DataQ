@@ -14,6 +14,7 @@ export type Block =
   | { t: "bullets"; items: [string, string][] }
   | { t: "table"; caption?: string; headers: string[]; rows: string[][] }
   | { t: "note"; x: string }
+  | { t: "diagram"; kind: string; title?: string; labels?: string[]; note?: string }
   | { t: "cta"; x: string };
 
 export type PageData = {

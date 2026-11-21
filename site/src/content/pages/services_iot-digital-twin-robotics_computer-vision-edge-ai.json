@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "What Computer Vision & Edge AI looks like when it has to survive an audit: scoped deliverables, weekly evidence, named control owners and a committed delta per gate."
+   "x": "How Computer Vision & Edge AI runs when it is engineered for the enterprise: bounded scope per gate, platform evidence generated in-flight, and outcomes stated as deltas against the number we signed together."
   },
   {
    "t": "h2",
@@ -17,7 +17,29 @@
   },
   {
    "t": "p",
-   "x": "Cameras are already everywhere; intelligence makes them instruments. We deliver vision systems for quality inspection (surface defects, welds, assembly completeness), safety compliance (PPE, zone intrusion, lockout-tagout verification), process reading (gauges, levels, counters) and logistics flows (damage, load verification) — engineered for the edge: GPU/accelerator inference on plant hardware, sub-second loop closure into PLCs and andon systems, and store-and-forward retraining pipelines for the rare classes."
+   "x": "Nothing in this topology is accidental: identity is short-lived and authorization is deny-by-default on IoT, Digital Twin & Robotics programs, which keeps the blast radius of any change inside one lane. The build earns trust the same way every gate does: the decision path and the audit path share one timeline across the Computer Vision & Edge AI estate, and every exception path degrades to human review, never to silence."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "twin-loop",
+   "title": "Physical-digital twin loop — Computer Vision & Edge AI",
+   "labels": [
+    "Sensors & PLCs",
+    "Edge gateway",
+    "Twin state store",
+    "Simulation & prediction",
+    "Control recommendations",
+    "Plant feedback"
+   ],
+   "note": "The part that survives audit is the boring part: cost and quality telemetry land in the same view your owners read for the enterprise at scale, and rollback is rehearsed before go-live rather than after the incident."
+  },
+  {
+   "t": "p",
+   "x": "The design principle here is simple: every state change is replayable from the signed baseline in Computer Vision & Edge AI, and every exception path degrades to human review, never to silence."
   },
   {
    "t": "h2",
@@ -25,7 +47,19 @@
   },
   {
    "t": "p",
-   "x": "Deployment discipline covers the unglamorous failure causes: lighting and lens design for the actual environment, camera calibration schedules, class-imbalance handling for rare defects, out-of-distribution monitoring, and privacy governance — face blurring, retention policy and works-council alignment where personnel are in frame. Autonomy tightens gradually: shadow mode first, human-verified second, closed-loop actuation only after measured error earns it."
+   "x": "Delivery composes proven services rather than bespoke heroics: the pattern below draws on 5 services from the IoT, Digital Twin & Robotics tower, each with its own runbook, so your team inherits something maintained — not a one-off."
+  },
+  {
+   "t": "diagram",
+   "kind": "delivery-cadence",
+   "title": "Delivery cadence — Computer Vision & Edge AI",
+   "labels": [
+    "Diagnose · W1–2",
+    "Pilot · W3–8",
+    "Industrialize · W9–12",
+    "Scale · Q2+"
+   ],
+   "note": "At operating tempo, the properties that carry the load are structural: models, agents and rules move through versioned, evaluated releases for the enterprise at scale, so a regression is a cohort, never an estate."
   },
   {
    "t": "h2",
@@ -83,32 +117,107 @@
   },
   {
    "t": "h2",
-   "x": "Technology and standards"
+   "x": "Engineering standards & stack"
   },
   {
    "t": "p",
-   "x": "Typical stack and standards: YOLO/RT-DETR families, NVIDIA Jetson / industrial GPUs, TensorRT, OPC UA/PLC integration, OpenTelemetry."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
+   "x": "The stack is boring by design — proven components, no experimental dependencies:"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "defect escape rate",
-     "Down sharply on instrumented stations"
+     "OPC UA / MQTT spine",
+     "The engineering bet is explicit: models, agents and rules move through versioned, evaluated releases across the enterprise, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
-     "manual inspection load",
-     "Down 50-70% as autonomy tightens"
+     "edge inference",
+     "Nothing in this topology is accidental: models, agents and rules move through versioned, evaluated releases in Computer Vision & Edge AI, so your control owners can interrogate any number we publish."
     ],
     [
-     "safety events caught",
-     "Measured interdiction on zone/PPE violations"
+     "twin state store",
+     "twin state store carries the evidence path — calibrated digital mirror with drift tracking"
+    ],
+    [
+     "control guard-banding",
+     "control guard-banding carries the control path — recommendations clamped to certified envelopes"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "OPC UA / MQTT spine",
+     "The engineering bet is explicit: models, agents and rules move through versioned, evaluated releases across the enterprise, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "edge inference",
+     "Nothing in this topology is accidental: models, agents and rules move through versioned, evaluated releases in Computer Vision & Edge AI, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "twin state store",
+     "twin state store carries the evidence path — calibrated digital mirror with drift tracking"
+    ],
+    [
+     "control guard-banding",
+     "control guard-banding carries the control path — recommendations clamped to certified envelopes"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "scrap & rework",
+     "Down 15–24.5% with early-warning signatures — the gate compares the live value to baseline every quarter"
+    ],
+    [
+     "alarm noise",
+     "Down 50–67.8% after rationalization on the first working slice; deeper scope moves it further"
+    ],
+    [
+     "unplanned downtime",
+     "Down 25–40.7% on instrumented lines per workflow, reported weekly against the signed baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Override culture",
+     "Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read in Computer Vision & Edge AI, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "OT/IT blur",
+     "What holds the build together is discipline at the boundaries: the decision path and the audit path share one timeline on IoT, Digital Twin & Robotics programs, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "Twin decay",
+     "Under the hood this pattern runs on one rule: identity is short-lived and authorization is deny-by-default in Computer Vision & Edge AI, and rollback is rehearsed before go-live rather than after the incident."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Technology and standards"
+  },
+  {
+   "t": "p",
+   "x": "Typical stack and standards: YOLO/RT-DETR families, NVIDIA Jetson / industrial GPUs, TensorRT, OPC UA/PLC integration, OpenTelemetry."
   },
   {
    "t": "h2",
@@ -119,15 +228,15 @@
    "items": [
     [
      "Weeks 1-4",
-     "Baseline metrics locked with named owners; data-readiness assessed against the delivery contracts."
+     "The part that survives audit is the boring part: signals cross boundaries only through typed contracts in IoT, Digital Twin & Robotics delivery, so a regression is a cohort, never an estate."
     ],
     [
      "Weeks 5-8",
-     "First working increment on your data, evaluated against the signed criteria; production-path sketch reviewed with risk."
+     "Nothing in this topology is accidental: evidence is captured where the work happens, not reconstructed later in Computer Vision & Edge AI, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Weeks 9-13",
-     "Operational run model agreed; value memo drafted for the investment committee."
+     "The design principle here is simple: identity is short-lived and authorization is deny-by-default on IoT, Digital Twin & Robotics programs, and every exception path degrades to human review, never to silence."
     ]
    ]
   },
@@ -140,25 +249,17 @@
    "items": [
     [
      "Smart Infrastructure, Buildings & Cities",
-     "Facilities that run themselves: BMS/IoT fusion, energy optimization and city-scale platforms."
+     "The build earns trust the same way every gate does: cost and quality telemetry land in the same view your owners read across the enterprise, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Industrial IoT & Sensor Fabric",
-     "Sense everything that matters: retrofit-friendly sensor network with governed telemetry."
+     "The engineering bet is explicit: models, agents and rules move through versioned, evaluated releases across the Computer Vision & Edge AI estate, so a regression is a cohort, never an estate."
     ],
     [
      "Digital Twin Platform Engineering",
-     "Simulate before you cut steel: plant, fleet and product twins with governed physics and data."
+     "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases in Computer Vision & Edge AI, which keeps the blast radius of any change inside one lane."
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "Where it applies"
-  },
-  {
-   "t": "p",
-   "x": "Anchor industries: Manufacturing & Industrial, Logistics & Supply Chain, Retail & Consumer Goods, Energy & Utilities, Agriculture & Food Systems, Healthcare & Life Sciences. Platform rails: Dataq Twinverse and Dataq Sentinel. Related tower: IoT, Digital Twin & Robotics."
   },
   {
    "t": "h2",
@@ -166,7 +267,7 @@
   },
   {
    "t": "p",
-   "x": "Below is the delivery cadence for this capability — the same pattern on every engagement. Weeks 1–2 are measurement only: we lock the current metric with your team and both sides sign it before a line of build starts. Weeks 3–8 deliver a bounded pilot — one decision path, one workflow, one plant or one portfolio — with a named control owner on your side. Weeks 9–12 turn what worked into runbooks, monitoring and enablement, then report the measured delta against the baseline. A missed gate means a documented stop-or-redirect decision, not a quiet extension."
+   "x": "What the delivery actually looks like week to week: before any build work, we spend 2 weeks proving the measurement: if two analysts cannot reproduce defect escape rate the same way, nothing else starts. The engineering bet is explicit: each stage owns its latency budget and its failure policy across the Computer Vision & Edge AI estate, which is what makes the reported delta defensible in audit.. The engineering bet is explicit: identity is short-lived and authorization is deny-by-default for the enterprise at scale, which keeps the blast radius of any change inside one lane.. The part that survives audit is the boring part: cost and quality telemetry land in the same view your owners read on IoT, Digital Twin & Robotics programs, and every exception path degrades to human review, never to silence."
   },
   {
    "t": "h2",
@@ -174,26 +275,26 @@
   },
   {
    "t": "p",
-   "x": "In delivery, this work composes with the adjacent capabilities listed here."
+   "x": "Under the hood this pattern runs on one rule: signals cross boundaries only through typed contracts across the enterprise, so a regression is a cohort, never an estate."
   },
   {
    "t": "bullets",
    "items": [
     [
      "Predictive Maintenance & Asset Intelligence",
-     "Scope, delivery pattern and committed outcomes."
+     "What holds the build together is discipline at the boundaries: the decision path and the audit path share one timeline across the Computer Vision & Edge AI estate, which keeps the blast radius of any change inside one lane."
     ],
     [
      "Digital Twin Platform Engineering",
-     "Scope, delivery pattern and committed outcomes."
+     "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later for the enterprise at scale, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Intelligent Process Automation at Scale",
-     "Composed architecture and the metric it answers to."
+     "At operating tempo, the properties that carry the load are structural: evidence is captured where the work happens, not reconstructed later for the enterprise at scale, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "Data & Lakehouse for Banking & Financial Services",
-     "A tower applied to this operating unit."
+     "The part that survives audit is the boring part: every state change is replayable from the signed baseline in Computer Vision & Edge AI, so drift shows up as a ticket with an owner, not as a mystery."
     ]
    ]
   },
@@ -203,35 +304,56 @@
   },
   {
    "t": "p",
-   "x": "At the end of the first quarter of a typical program you hold four concrete assets:"
+   "x": "Artifacts, not anecdotes — at the first-quarter close your team holds:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Baseline diagnostic",
-     "The signed measurement of where the metric stands today, with the method written out so the number can be defended to finance."
+     "What holds the build together is discipline at the boundaries: cost and quality telemetry land in the same view your owners read in IoT, Digital Twin & Robotics delivery, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Decision and control map",
-     "Every automated decision path, its policy checks, its human checkpoint and its owner on one page."
+     "The part that survives audit is the boring part: signals cross boundaries only through typed contracts across the Computer Vision & Edge AI estate, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "Evidence pack",
-     "Logs, evaluations and approvals collected automatically as the program runs — ready for internal audit or a regulator."
+     "The engineering bet is explicit: each stage owns its latency budget and its failure policy in IoT, Digital Twin & Robotics delivery, which keeps the blast radius of any change inside one lane."
     ],
     [
      "Value ledger",
-     "A running record of the delta against baseline, updated at every gate, reviewed at every steering meeting."
+     "At operating tempo, the properties that carry the load are structural: evidence is captured where the work happens, not reconstructed later on IoT, Digital Twin & Robotics programs, so a regression is a cohort, never an estate."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Outcomes we commit to"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "defect escape rate",
+     "defect escape rate moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
+    ],
+    [
+     "manual inspection load",
+     "Down 50-70% as autonomy tightens"
+    ],
+    [
+     "safety events caught",
+     "safety events caught is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Talk through this service with the practice lead, or request a value assessment scoped to your estate."
+   "x": "Start with a value assessment: two weeks, your defect escape rate measured and signed, a delivery plan priced from evidence."
   }
  ],
- "words": 426,
+ "words": 1601,
  "section": "Services",
  "l1": "Services",
  "l2": "IoT, Digital Twin & Robotics",

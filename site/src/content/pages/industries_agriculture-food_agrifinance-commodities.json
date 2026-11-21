@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "AgriFinance & Commodity Markets: the operating units, priority programs and the five capability towers that matter most here."
+   "x": "A working definition of AgriFinance & Commodity Markets for Agriculture & Food Systems: engineered controls, named owners, weekly evidence, and a signed baseline so every claim of improvement can be replayed line by line."
   },
   {
    "t": "h2",
@@ -17,7 +17,29 @@
   },
   {
    "t": "p",
-   "x": "The workflows we industrialize here: Credit scoring, Parametric insurance, Commodity trading, Subsidy verification, Collateral management. Each arrives with its current cycle times measured in the Diagnose phase, and each leaves the program governed by outcome SLOs rather than anecdotes."
+   "x": "The operating surface here spans Credit scoring, Parametric insurance, Commodity trading, Subsidy verification, Collateral management. Every item on that list starts with a two-week measurement and ends its first quarter with a signed delta or a documented redirect."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Governed lakehouse pipeline — AgriFinance & Commodity Markets",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases in Data, Analytics & Lakehouse delivery, and every exception path degrades to human review, never to silence."
+  },
+  {
+   "t": "p",
+   "x": "The reference architecture separates concerns so each plane can evolve independently: signals land through contracts, the core reasons over governed state, and every outward action passes a policy check with a signed audit trail. Nothing crosses a boundary without an owner and a metric."
   },
   {
    "t": "h2",
@@ -28,23 +50,23 @@
    "items": [
     [
      "Practice data absent",
-     "Lending priced on history; sustainable practice unrewarded."
+     "At operating tempo, the properties that carry the load are structural: the decision path and the audit path share one timeline in AgriFinance & Commodity Markets, which keeps the blast radius of any change inside one lane."
     ],
     [
      "Provenance collateral weak",
-     "Commodity provenance manual; financing blind."
+     "The engineering bet is explicit: every state change is replayable from the signed baseline across Agriculture & Food Systems, so a regression is a cohort, never an estate."
     ],
     [
      "Yield risk models crude",
-     "Insurance/credit risk from regional averages."
+     "The part that survives audit is the boring part: the decision path and the audit path share one timeline in AgriFinance & Commodity Markets, which is what makes the reported delta defensible in audit."
     ],
     [
      "Portfolio/trading optimization",
-     "Blending/hedging combinatorial."
+     "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases for Agriculture & Food Systems at scale, and every exception path degrades to human review, never to silence."
     ],
     [
      "Fraud in subsidy/claims",
-     "Application fraud persistent; verification manual."
+     "At operating tempo, the properties that carry the load are structural: identity is short-lived and authorization is deny-by-default on Data, Analytics & Lakehouse programs, which is what makes the reported delta defensible in audit."
     ],
     [
      "Trading platform rigidity",
@@ -84,6 +106,98 @@
   },
   {
    "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "cost-aware clustering",
+     "cost-aware clustering — partition and Z-order plans reviewed per load, owned by a named engineer on both sides of the fence"
+    ],
+    [
+     "Delta / Iceberg tables",
+     "Delta / Iceberg tables — ACID guarantees with time travel and schema enforcement, owned by a named engineer on both sides of the fence"
+    ],
+    [
+     "Unity Catalog governance",
+     "Unity Catalog governance — tag-based access control inherited end to end; wired so your engineers can trace every decision to its inputs"
+    ],
+    [
+     "streaming ingest",
+     "streaming ingest — Kafka-backed CDC with exactly-once sinks; swaps are versioned and rehearsed, never improvised"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "cold-chain telemetry",
+     "cold-chain telemetry — temperature excursions with alerting; changes there raise events here, so the pattern never silently diverges"
+    ],
+    [
+     "commodity & trade desks",
+     "commodity & trade desks — position and hedging data under controls; the adapter is part of the deliverable, not a future phase"
+    ],
+    [
+     "traceability ledgers",
+     "traceability ledgers — lot-level provenance from field to shelf; changes there raise events here, so the pattern never silently diverges"
+    ],
+    [
+     "food-safety labs",
+     "food-safety labs — test results with lot linkage; changes there raise events here, so the pattern never silently diverges"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "batch window",
+     "Down 50–62.3% after re-architecture per field, reported weekly against the signed baseline"
+    ],
+    [
+     "freshness SLO attainment",
+     "Up 97–98.5% of tables inside their declared window per field, reported weekly against the signed baseline"
+    ],
+    [
+     "warehouse spend per query",
+     "Down 20–35.7% after clustering and pruning per field, reported weekly against the signed baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Metric anarchy",
+     "Metric anarchy — guarded because one certified semantic layer owns definitions — dashboards that shadow it lose endorsement and budget"
+    ],
+    [
+     "Cost creep",
+     "Cost creep — per-team chargeback with query tags; untagged compute is quarantined at the queue level, enforced by the platform rather than by discipline alone"
+    ],
+    [
+     "Silent schema drift",
+     "Silent schema drift — guarded because producer contracts fail loudly at ingest; downstream models refuse to build on drifted sources"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
    "x": "How we help — five priority capabilities"
   },
   {
@@ -91,25 +205,33 @@
    "items": [
     [
      "Data & Lakehouse",
-     "Verified agronomic data into credit/insurance models: losses down"
+     "The part that survives audit is the boring part: every state change is replayable from the signed baseline across the AgriFinance & Commodity Markets estate, so a regression is a cohort, never an estate."
     ],
     [
      "Blockchain & Digital Trust",
-     "Permissioned networks, tokenization and verifiable credentials with the reporting and controls supervisors expect."
+     "The design principle here is simple: cost and quality telemetry land in the same view your owners read across the AgriFinance & Commodity Markets estate, so your control owners can interrogate any number we publish."
     ],
     [
      "Applied AI & GenAI",
-     "Field-level yield risk with uncertainty: pricing precise"
+     "What holds the build together is discipline at the boundaries: each stage owns its latency budget and its failure policy on Data, Analytics & Lakehouse programs, so your control owners can interrogate any number we publish."
     ],
     [
      "Quantum & Advanced Compute",
-     "Optimization, simulation and post-quantum cryptography migration, applied where the mathematics pays back and benchmarked against classical baselines."
+     "Nothing in this topology is accidental: identity is short-lived and authorization is deny-by-default for Agriculture & Food Systems at scale, and every exception path degrades to human review, never to silence."
     ],
     [
      "Cyber & Zero-Trust",
-     "Subsidy/claim verification scoring: capture up"
+     "At operating tempo, the properties that carry the load are structural: cost and quality telemetry land in the same view your owners read in AgriFinance & Commodity Markets, and every exception path degrades to human review, never to silence."
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "How the engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is engineered, not ritual: before any build work, we spend 2 weeks proving the measurement: if two analysts cannot reproduce Credit losses the same way, nothing else starts. the middle block runs the pilot against live traceability ledgers data at deliberately small scope: one path, one team, one portfolio, expanded only after its eval gate holds. The design principle here is simple: signals cross boundaries only through typed contracts on Data, Analytics & Lakehouse programs, which is what makes the reported delta defensible in audit.. Under the hood this pattern runs on one rule: each stage owns its latency budget and its failure policy for Agriculture & Food Systems at scale, which is what makes the reported delta defensible in audit."
   },
   {
    "t": "h2",
@@ -124,25 +246,17 @@
     ],
     [
      "Parametric payouts",
-     "Days"
+     "Parametric payouts is tracked weekly to your control owner; the number at gate three is the number finance sees"
     ],
     [
      "Trading margins",
-     "Up where optimized"
+     "Trading margins carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
     ],
     [
      "Fraud capture",
-     "Up sharply"
+     "Fraud capture moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
-  },
-  {
-   "t": "p",
-   "x": "Programs here begin with a two-week diagnostic: the workflows named above get measured, the baseline gets locked. A gated proof on your data follows, then industrialization on platform rails with compliance evidence generated as the work runs."
   },
   {
    "t": "h2",
@@ -153,11 +267,11 @@
    "items": [
     [
      "A European agri-cooperative (4,200 farms)",
-     "Input cost per hectare down 14%: precision agronomy at cooperative scale"
+     "Current programs land down 14 here; the gate reviews the live number, not a projection"
     ],
     [
      "A global coffee trader",
-     "EUDR due-diligence automated: compliance evidence in hours, premium channels opened"
+     "At operating tempo, the properties that carry the load are structural: evidence is captured where the work happens, not reconstructed later across Agriculture & Food Systems, so a regression is a cohort, never an estate."
     ]
    ]
   },
@@ -167,14 +281,14 @@
   },
   {
    "t": "p",
-   "x": "Related sub-industry pages: Precision Agriculture & Agronomy, Agri-Food Processing, Food Safety & Food Retail — each with its own capability alignments under /industries/agriculture-food/."
+   "x": "Adjacent delivery lanes: Precision Agriculture & Agronomy, Agri-Food Processing, Food Safety & Food Retail — each with its own capability alignments under /industries/agriculture-food/. Where two lanes share a metric, one program can carry both."
   },
   {
    "t": "cta",
-   "x": "The capability pages break this down further; the industry practice lead can map it to your estate in a briefing."
+   "x": "Bring the audited baseline; we will show the pattern on your numbers and scope the first slice in the same session."
   }
  ],
- "words": 340,
+ "words": 1221,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Agriculture & Food Systems",

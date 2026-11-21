@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Underwriting accuracy and claims latency decide the margin — we rebuild both on governed AI with controls your actuarial and compliance teams sign off."
+   "x": "The contract behind Insurance & Risk: signed baseline in week two, working slice by week eight, industrialized controls by week twelve, and evidence flowing to your control owner throughout."
   },
   {
    "t": "h2",
@@ -21,11 +21,62 @@
   },
   {
    "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "decision-fabric",
+   "title": "Decision fabric — how Dataq Software composes Insurance & Risk capability",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later for Insurance & Risk at scale, and rollback is rehearsed before go-live rather than after the incident."
+  },
+  {
+   "t": "h2",
    "x": "The pressure is structural"
   },
   {
    "t": "p",
    "x": "The industry's structural pressures compound: catastrophe volatility reprices property books annually, combined-ratio pressure meets softening cycles, and fraud has industrialized on both sides of the ledger. Meanwhile distribution shifts — embedded insurance, ecosystems, digital MGAs — reward carriers whose underwriting and claims engines can plug into partners' platforms through APIs rather than PDFs."
+  },
+  {
+   "t": "h2",
+   "x": "Pressure points we hear most"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Claims intake drowning in documents",
+     "The design principle here is simple: every state change is replayable from the signed baseline in Insurance & Risk, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Pricing sophistication outrunning governance",
+     "The engineering bet is explicit: cost and quality telemetry land in the same view your owners read in Insurance & Risk, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "Claims, policy and exposure data fragmented",
+     "The design principle here is simple: every state change is replayable from the signed baseline for Insurance & Risk at scale, so the question of how we know gets a pointer, not a paragraph."
+    ],
+    [
+     "Sensitive data estate under pressure",
+     "The engineering bet is explicit: cost and quality telemetry land in the same view your owners read in Insurance & Risk, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "Fraud industrialized against manual detection",
+     "Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read across Insurance & Risk, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "Legacy policy admin drag",
+     "The part that survives audit is the boring part: each stage owns its latency budget and its failure policy for Insurance & Risk at scale, which is what makes the reported delta defensible in audit."
+    ]
+   ]
   },
   {
    "t": "h2",
@@ -37,34 +88,93 @@
   },
   {
    "t": "h2",
-   "x": "Pressure points we hear most"
+   "x": "Engineering standards & stack"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Claims intake drowning in documents",
-     "FNOL packets, medical reports, repair estimates and police files arrive as unstructured documents; manual triage queues claims for days before an adjuster sees them. Leakage and customer patience both bleed in the queue."
+     "cost-aware clustering",
+     "The design principle here is simple: signals cross boundaries only through typed contracts for Insurance & Risk at scale, which is what makes the reported delta defensible in audit."
     ],
     [
-     "Pricing sophistication outrunning governance",
-     "GLM-based pricing, telematics factors and external data enrichment multiply model complexity faster than validation capacity. Filings get challenged; model risk documentation is reconstructed under exam pressure."
+     "data contracts",
+     "The build earns trust the same way every gate does: each stage owns its latency budget and its failure policy across Insurance & Risk, which keeps the blast radius of any change inside one lane."
     ],
     [
-     "Claims, policy and exposure data fragmented",
-     "Underwriting, claims and finance each hold their own truth; loss triangles reconcile by spreadsheet. Portfolio analytics that should steer the cycle take months of manual assembly."
+     " freshness SLOs",
+     "The design principle here is simple: every state change is replayable from the signed baseline across Insurance & Risk, which keeps the blast radius of any change inside one lane."
     ],
     [
-     "Sensitive data estate under pressure",
-     "Health and financial records concentrate breach value; carrier cyber programs face both attacker interest and regulatory scrutiny on safeguarding. Third-party ecosystems (TPAs, brokers) extend the attack surface."
+     "Delta / Iceberg tables",
+     "At operating tempo, the properties that carry the load are structural: cost and quality telemetry land in the same view your owners read for Insurance & Risk at scale, so drift shows up as a ticket with an owner, not as a mystery."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "actuarial & pricing stores",
+     "actuarial & pricing stores, where exposure bases and factor tables under versioning — with replay possible for any window your auditors name"
     ],
     [
-     "Fraud industrialized against manual detection",
-     "Organized fraud rings exploit application and claims patterns across carriers faster than rule updates. SIU teams work leads generated by thresholds tuned for last year's fraud."
+     "claims document intake",
+     "claims document intake: indexed packets with redaction at rest; contracts are agreed with your system owners in week one"
     ],
     [
-     "Legacy policy admin drag",
-     "Core policy systems from another era make product changes quarterly affairs. Expense ratios carry the weight of manual operations that competitors have automated."
+     "reinsurance reporting",
+     "reinsurance reporting, where treaty-level aggregation with audit lineage — with replay possible for any window your auditors name"
+    ],
+    [
+     "underwriting workbench",
+     "underwriting workbench — risk inputs, referrals and authority limits; we integrate read-first, write only through policy-checked commands"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "query p95",
+     "Down 40–53.9% on the certified gold layer — the gate compares the live value to baseline every quarter"
+    ],
+    [
+     "freshness SLO attainment",
+     "Up 97–99% of tables inside their declared window per 1,000 claims, reported weekly against the signed baseline"
+    ],
+    [
+     "batch window",
+     "Down 50–62.5% after re-architecture per 1,000 claims, reported weekly against the signed baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Metric anarchy",
+     "At operating tempo, the properties that carry the load are structural: signals cross boundaries only through typed contracts on Data, Analytics & Lakehouse programs, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "Silent schema drift",
+     "At operating tempo, the properties that carry the load are structural: models, agents and rules move through versioned, evaluated releases across the Insurance & Risk estate, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "Cost creep",
+     "Under the hood this pattern runs on one rule: cost and quality telemetry land in the same view your owners read on Data, Analytics & Lakehouse programs, and rollback is rehearsed before go-live rather than after the incident."
     ]
    ]
   },
@@ -129,32 +239,11 @@
   },
   {
    "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A top-5 global P&C insurer",
-     "Claims triage in minutes: 55% faster cycle times with document intelligence"
-    ],
-    [
-     "A leading life insurer (North America)",
-     "Underwriting evidence assembled in hours: case cycle time down 44%"
-    ],
-    [
-     "A European specialty reinsurer",
-     "Bordereaux automation and settlement evidence: reconciliation effort down 74%"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Capability pages for this industry"
+   "x": "How a delivery runs"
   },
   {
    "t": "p",
-   "x": "All eight towers are aligned at industry level under /industries/insurance/capabilities/ — from Applied AI to Quantum. Five priority towers are aligned per sub-industry."
+   "x": "The operating cadence, concretely: before any build work, we spend 2 weeks proving the measurement: if two analysts cannot reproduce Claims cycle time (FNOL to decision) the same way, nothing else starts. The part that survives audit is the boring part: each stage owns its latency budget and its failure policy across Insurance & Risk, which is what makes the reported delta defensible in audit.. The engineering bet is explicit: every state change is replayable from the signed baseline in Data, Analytics & Lakehouse delivery, so drift shows up as a ticket with an owner, not as a mystery.. Under the hood this pattern runs on one rule: the decision path and the audit path share one timeline on Data, Analytics & Lakehouse programs, so a regression is a cohort, never an estate."
   },
   {
    "t": "h2",
@@ -169,7 +258,7 @@
     ],
     [
      "Underwriting submission turnaround",
-     "Hours for SME classes with agentic workbenches"
+     "Underwriting submission turnaround defines success for this pattern and is audited against the week-two baseline at every gate"
     ],
     [
      "Fraud detection uplift",
@@ -177,86 +266,49 @@
     ],
     [
      "Combined-ratio contribution from loss adjustment expense",
-     "Measurable reduction on automated flows"
+     "Combined-ratio contribution from loss adjustment expense is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
     ],
     [
      "Model filing preparation effort",
-     "Down 50% with documentation-as-you-build"
+     "Model filing preparation effort is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "How a delivery runs"
-  },
-  {
-   "t": "p",
-   "x": "This capability runs on the cadence set out below; the rhythm is fixed, the scope is signed. Weeks 1–2 lock the baseline: the current metric is measured with your team and signed before build starts. Weeks 3–8 deliver the pilot on bounded scope — one decision path, one workflow, one plant or one portfolio — with a control owner named on your side. Weeks 9–12 industrialize what worked: runbooks, monitoring, enablement and a measured delta against the signed baseline. Anything that misses its gate is stopped or redirected with a documented decision, not quietly extended."
-  },
-  {
-   "t": "h2",
-   "x": "Where this fits in the portfolio"
-  },
-  {
-   "t": "p",
-   "x": "In delivery, this work composes with the adjacent capabilities listed here."
+   "x": "Proof from this industry"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Cyber & Zero-Trust for Reinsurance & Commercial Lines",
-     "The same capability applied to this sector."
+     "A top-5 global P&C insurer",
+     "The committed move on this metric: 55%, measured against the baseline signed in week two"
     ],
     [
-     "Applied AI & GenAI for Insurance & Risk",
-     "A tower applied to this operating unit."
+     "A leading life insurer (North America)",
+     "The committed move on this metric: down 44, measured against the baseline signed in week two"
     ],
     [
-     "Enterprise Risk & Scenario Intelligence",
-     "Composed architecture and the metric it answers to."
-    ],
-    [
-     "Case Studies Overview",
-     ""
+     "A European specialty reinsurer",
+     "The committed move on this metric: down 74, measured against the baseline signed in week two"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "What you receive"
+   "x": "Capability pages for this industry"
   },
   {
    "t": "p",
-   "x": "At the end of the first quarter of a typical program you hold four concrete assets:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Baseline diagnostic",
-     "The signed measurement of where the metric stands today, with the method written out so the number can be defended to finance."
-    ],
-    [
-     "Decision and control map",
-     "Every automated decision path, its policy checks, its human checkpoint and its owner on one page."
-    ],
-    [
-     "Evidence pack",
-     "Logs, evaluations and approvals collected automatically as the program runs — ready for internal audit or a regulator."
-    ],
-    [
-     "Value ledger",
-     "A running record of the delta against baseline, updated at every gate, reviewed at every steering meeting."
-    ]
-   ]
+   "x": "The build earns trust the same way every gate does: every state change is replayable from the signed baseline in Insurance & Risk, which is what makes the reported delta defensible in audit."
   },
   {
    "t": "cta",
-   "x": "Book an industry briefing, or go straight to a capability page from the mega menu."
+   "x": "Start with a value assessment: two weeks, your Claims cycle time (FNOL to decision) measured and signed, a delivery plan priced from evidence."
   }
  ],
- "words": 674,
+ "words": 1349,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Insurance & Risk",

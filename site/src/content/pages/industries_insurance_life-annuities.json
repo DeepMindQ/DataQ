@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Life & Annuities: the operating units, priority programs and the five capability towers that matter most here."
+   "x": "The Dataq Software build of Life & Annuities: concrete interfaces at policy admin platforms, measured movement on Underwriting case cycle time, and a delivery rhythm your control owners can plan around from week one."
   },
   {
    "t": "h2",
@@ -17,7 +17,29 @@
   },
   {
    "t": "p",
-   "x": "The workflows we industrialize here: Underwriting evidence assembly, Policy servicing transactions, Claims/beneficiary processing, Actuarial valuation data prep, In-force retention actions. Each arrives with its current cycle times measured in the Diagnose phase, and each leaves the program governed by outcome SLOs rather than anecdotes."
+   "x": "The operating surface here spans Underwriting evidence assembly, Policy servicing transactions, Claims/beneficiary processing, Actuarial valuation data prep, In-force retention actions. Nothing in this topology is accidental: the decision path and the audit path share one timeline in Data, Analytics & Lakehouse delivery, so the question of how we know gets a pointer, not a paragraph."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Governed lakehouse pipeline — Life & Annuities",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "The design principle here is simple: identity is short-lived and authorization is deny-by-default in Life & Annuities, which is what makes the reported delta defensible in audit."
+  },
+  {
+   "t": "p",
+   "x": "The design principle here is simple: every state change is replayable from the signed baseline in Life & Annuities, so the question of how we know gets a pointer, not a paragraph."
   },
   {
    "t": "h2",
@@ -28,27 +50,27 @@
    "items": [
     [
      "Underwriting evidence assembly",
-     "APS records, paramedical data and financial underwriting arrive as documents; assembly consumes days per case."
+     "What holds the build together is discipline at the boundaries: each stage owns its latency budget and its failure policy across the Life & Annuities estate, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Actuarial data wrangling",
-     "Valuation and experience studies assemble from extracts with manual reconciliation; regime changes (IFRS 17) expose the debt."
+     "At operating tempo, the properties that carry the load are structural: cost and quality telemetry land in the same view your owners read across the Life & Annuities estate, and every exception path degrades to human review, never to silence."
     ],
     [
      "Surrender and service queues",
-     "Surrender, loan and beneficiary transactions route through document-heavy queues with abandonment risk."
+     "The part that survives audit is the boring part: models, agents and rules move through versioned, evaluated releases on Data, Analytics & Lakehouse programs, which keeps the blast radius of any change inside one lane."
     ],
     [
      "Health and PII concentration",
-     "Underwriting health data and beneficiary PII create long-retention sensitive estates; PQ exposure deep."
+     "At operating tempo, the properties that carry the load are structural: each stage owns its latency budget and its failure policy across Insurance & Risk, so your control owners can interrogate any number we publish."
     ],
     [
      "Admin platform drag",
-     "Policy admin systems resist product change; new products take quarters."
+     "The engineering bet is explicit: models, agents and rules move through versioned, evaluated releases for Insurance & Risk at scale, which keeps the blast radius of any change inside one lane."
     ],
     [
      "In-force management blind spots",
-     "Lapse and mortality experience signals arrive late; retention and repricing actions lag."
+     "The engineering bet is explicit: the decision path and the audit path share one timeline in Data, Analytics & Lakehouse delivery, and every exception path degrades to human review, never to silence."
     ]
    ]
   },
@@ -84,6 +106,98 @@
   },
   {
    "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "streaming ingest",
+     "streaming ingest carries the ingest path — Kafka-backed CDC with exactly-once sinks"
+    ],
+    [
+     "data contracts",
+     "Under the hood this pattern runs on one rule: evidence is captured where the work happens, not reconstructed later for Insurance & Risk at scale, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Unity Catalog governance",
+     "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later in Life & Annuities, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "cost-aware clustering",
+     "Nothing in this topology is accidental: evidence is captured where the work happens, not reconstructed later across the Life & Annuities estate, so drift shows up as a ticket with an owner, not as a mystery."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "claims document intake",
+     "The engineering bet is explicit: models, agents and rules move through versioned, evaluated releases across the Life & Annuities estate, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "claims orchestration",
+     "The part that survives audit is the boring part: evidence is captured where the work happens, not reconstructed later on Data, Analytics & Lakehouse programs, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "policy admin platforms",
+     "Under the hood this pattern runs on one rule: models, agents and rules move through versioned, evaluated releases across the Life & Annuities estate, so the question of how we know gets a pointer, not a paragraph."
+    ],
+    [
+     "actuarial & pricing stores",
+     "What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default for Insurance & Risk at scale, so drift shows up as a ticket with an owner, not as a mystery."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "freshness SLO attainment",
+     "Up 97–99% of tables inside their declared window in current programs; measured, not modeled"
+    ],
+    [
+     "pipeline breakage MTTR",
+     "Down 55–72.6% with contracts and lineage paging, with the method note attached so your analysts can reproduce it"
+    ],
+    [
+     "query p95",
+     "Down 40–56.2% on the certified gold layer in current programs; measured, not modeled"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Metric anarchy",
+     "The design principle here is simple: each stage owns its latency budget and its failure policy in Data, Analytics & Lakehouse delivery, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "Cost creep",
+     "The engineering bet is explicit: models, agents and rules move through versioned, evaluated releases in Life & Annuities, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "Silent schema drift",
+     "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases for Insurance & Risk at scale, so your control owners can interrogate any number we publish."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
    "x": "How we help — five priority capabilities"
   },
   {
@@ -91,7 +205,7 @@
    "items": [
     [
      "Agentic AI & Hyperautomation",
-     "Goal-directed agents that run inside your systems with defined roles, budgets and human checkpoints. Every action is logged, measurable and reversible."
+     "The design principle here is simple: signals cross boundaries only through typed contracts on Data, Analytics & Lakehouse programs, so your control owners can interrogate any number we publish."
     ],
     [
      "Data & Lakehouse",
@@ -99,17 +213,25 @@
     ],
     [
      "Cyber & Zero-Trust",
-     "Classification-aware controls for health/PII archives: sensitive estate governed"
+     "What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default across the Life & Annuities estate, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Cloud, Edge & Platform",
-     "Strangler decomposition of policy admin wrappers: product change lead time halved"
+     "The part that survives audit is the boring part: models, agents and rules move through versioned, evaluated releases in Data, Analytics & Lakehouse delivery, which keeps the blast radius of any change inside one lane."
     ],
     [
      "Applied AI & GenAI",
      "Payment and engagement signals predicting lapse with action policy — retention actions timely"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "How the engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is engineered, not ritual: the first 2 weeks are pure verification — we measure Underwriting case cycle time with your analysts, reconcile disagreements, and freeze the number both sides defend. The engineering bet is explicit: signals cross boundaries only through typed contracts for Insurance & Risk at scale, which keeps the blast radius of any change inside one lane.. What holds the build together is discipline at the boundaries: signals cross boundaries only through typed contracts for Insurance & Risk at scale, which keeps the blast radius of any change inside one lane.. Under the hood this pattern runs on one rule: identity is short-lived and authorization is deny-by-default for Insurance & Risk at scale, and rollback is rehearsed before go-live rather than after the incident."
   },
   {
    "t": "h2",
@@ -124,25 +246,17 @@
     ],
     [
      "Servicing transaction STP",
-     "Up 30+ points"
+     "Servicing transaction STP is tracked weekly to your control owner; the number at gate three is the number finance sees"
     ],
     [
      "Valuation prep effort",
-     "Down 50%"
+     "Valuation prep effort is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
     ],
     [
      "Lapse-save actions",
-     "Timely and targeted"
+     "Lapse-save actions is tracked weekly to your control owner; the number at gate three is the number finance sees"
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
-  },
-  {
-   "t": "p",
-   "x": "Staffing follows the sub-industry pattern: a named pod with a delivery lead, quality owner and control owner, working follow-the-sun across build, run and post-handover conformance monitoring."
   },
   {
    "t": "h2",
@@ -153,11 +267,11 @@
    "items": [
     [
      "A top-5 global P&C insurer",
-     "Claims triage in minutes: 55% faster cycle times with document intelligence"
+     "Reported as 55% against baseline, reproducible by your analysts from the method note"
     ],
     [
      "A leading life insurer (North America)",
-     "Underwriting evidence assembled in hours: case cycle time down 44%"
+     "The build earns trust the same way every gate does: evidence is captured where the work happens, not reconstructed later across Insurance & Risk, so a regression is a cohort, never an estate."
     ]
    ]
   },
@@ -167,14 +281,14 @@
   },
   {
    "t": "p",
-   "x": "Related sub-industry pages: Property & Casualty, Health Insurance & Benefits, Reinsurance & Commercial Lines — each with its own capability alignments under /industries/insurance/."
+   "x": "Adjacent delivery lanes: Property & Casualty, Health Insurance & Benefits, Reinsurance & Commercial Lines — each with its own capability alignments under /industries/insurance/. Where two lanes share a metric, one program can carry both."
   },
   {
    "t": "cta",
-   "x": "The capability pages break this down further; the industry practice lead can map it to your estate in a briefing."
+   "x": "Start with a value assessment: two weeks, your Underwriting case cycle time measured and signed, a delivery plan priced from evidence."
   }
  ],
- "words": 447,
+ "words": 1342,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Insurance & Risk",

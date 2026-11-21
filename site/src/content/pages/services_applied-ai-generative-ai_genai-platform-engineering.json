@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The working definition of Generative AI Platform Engineering at Dataq Software: scope we sign, the cadence you can plan around, platform evidence generated in-flight, and outcomes measured against your baseline."
+   "x": "How Generative AI Platform Engineering runs when it is engineered for the enterprise: bounded scope per gate, platform evidence generated in-flight, and outcomes stated as deltas against the number we signed together."
   },
   {
    "t": "h2",
@@ -17,7 +17,29 @@
   },
   {
    "t": "p",
-   "x": "Enterprises that build GenAI apps ad hoc end up with a dozen disconnected stacks, inconsistent guardrails and no idea what inference costs. We build the alternative: a central GenAI platform providing model routing, managed retrieval, prompt and policy management, evaluation applies, red-teaming hooks, and per-team cost meters — so product teams ship in days on rails that risk teams already trust."
+   "x": "The design principle here is simple: cost and quality telemetry land in the same view your owners read for the enterprise at scale, which keeps the blast radius of any change inside one lane. The part that survives audit is the boring part: identity is short-lived and authorization is deny-by-default on Applied AI & Generative AI programs, and rollback is rehearsed before go-live rather than after the incident."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "decision-fabric",
+   "title": "Grounded generation fabric — Generative AI Platform Engineering",
+   "labels": [
+    "Documents & policies",
+    "Grounded retrieval core",
+    "Eval & guard harness",
+    "Decision plane",
+    "Governed action",
+    "Evidence telemetry"
+   ],
+   "note": "The part that survives audit is the boring part: evidence is captured where the work happens, not reconstructed later across the Generative AI Platform Engineering estate, so the question of how we know gets a pointer, not a paragraph."
+  },
+  {
+   "t": "p",
+   "x": "Nothing in this topology is accidental: the decision path and the audit path share one timeline in Applied AI & Generative AI delivery, and rollback is rehearsed before go-live rather than after the incident."
   },
   {
    "t": "h2",
@@ -25,7 +47,19 @@
   },
   {
    "t": "p",
-   "x": "The platform is model-agnostic by design: frontier APIs, open-weight models served on vLLM, and fine-tuned specialists behind one gateway with semantic caching, fallback routing and PII redaction enforced at the edge. Every response carries provenance metadata, so audit can trace an answer to the document, the model version and the policy that allowed it."
+   "x": "The build sequence is deliberate: contracts and identity first, the working decision slice second, the verification harness third — because a Generative AI Platform Engineering capability without its eval gate is just another unattended automation."
+  },
+  {
+   "t": "diagram",
+   "kind": "delivery-cadence",
+   "title": "Delivery cadence — Generative AI Platform Engineering",
+   "labels": [
+    "Diagnose · W1–2",
+    "Pilot · W3–8",
+    "Industrialize · W9–12",
+    "Scale · Q2+"
+   ],
+   "note": "Nothing in this topology is accidental: evidence is captured where the work happens, not reconstructed later across the Generative AI Platform Engineering estate, so drift shows up as a ticket with an owner, not as a mystery."
   },
   {
    "t": "h2",
@@ -83,32 +117,107 @@
   },
   {
    "t": "h2",
-   "x": "Technology and standards"
+   "x": "Engineering standards & stack"
   },
   {
    "t": "p",
-   "x": "Typical stack and standards: vLLM, Databricks Model Serving, Kubernetes, Milvus / pgvector, LangGraph, OpenTelemetry, Ragas."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
+   "x": "Under the hood, chosen for operability rather than novelty:"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "feature lead time",
-     "From weeks to days via shared retrieval and guardrail services"
+     "PII redaction fence",
+     "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later for the enterprise at scale, which is what makes the reported delta defensible in audit."
     ],
     [
-     "inference unit cost",
-     "40-60% reduction through caching and routing policy"
+     "prompt registry",
+     "prompt registry carries the decision path — versioned templates with signed change records"
     ],
     [
-     "unsafe-output escape rate",
-     "Below 0.1% on red-team benchmark suites"
+     "LangGraph state machines",
+     "LangGraph state machines carries the evidence path — typed graph runs with checkpointed state"
+    ],
+    [
+     "hybrid retrieval",
+     "hybrid retrieval carries the control path — BM25 + dense embeddings with reciprocal-rank fusion"
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "PII redaction fence",
+     "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later for the enterprise at scale, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "prompt registry",
+     "prompt registry carries the decision path — versioned templates with signed change records"
+    ],
+    [
+     "LangGraph state machines",
+     "LangGraph state machines carries the evidence path — typed graph runs with checkpointed state"
+    ],
+    [
+     "hybrid retrieval",
+     "hybrid retrieval carries the control path — BM25 + dense embeddings with reciprocal-rank fusion"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "p95 response latency",
+     "Down 30–44.1% under load-matched conditions, with the method note attached so your analysts can reproduce it"
+    ],
+    [
+     "citation precision",
+     "Up 90–95.6% of citations pointing to the right passage — the gate compares the live value to baseline every quarter"
+    ],
+    [
+     "cost per resolved query",
+     "Down 25–40.8% after cache and routing tuning on the first working slice; deeper scope moves it further"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "PII escape",
+     "The build earns trust the same way every gate does: each stage owns its latency budget and its failure policy for the enterprise at scale, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "Silent prompt drift",
+     "The build earns trust the same way every gate does: every state change is replayable from the signed baseline for the enterprise at scale, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "Ungrounded fluency",
+     "The part that survives audit is the boring part: models, agents and rules move through versioned, evaluated releases in Generative AI Platform Engineering, so a regression is a cohort, never an estate."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Technology and standards"
+  },
+  {
+   "t": "p",
+   "x": "Typical stack and standards: vLLM, Databricks Model Serving, Kubernetes, Milvus / pgvector, LangGraph, OpenTelemetry, Ragas."
   },
   {
    "t": "h2",
@@ -119,15 +228,15 @@
    "items": [
     [
      "Weeks 1-4",
-     "Stakeholder map and control ownership agreed; success criteria signed before the first build sprint."
+     "The build earns trust the same way every gate does: cost and quality telemetry land in the same view your owners read in Generative AI Platform Engineering, which keeps the blast radius of any change inside one lane."
     ],
     [
      "Weeks 5-8",
-     "Reference architecture adapted to your estate; integration contracts tested against your systems."
+     "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases in Applied AI & Generative AI delivery, so a regression is a cohort, never an estate."
     ],
     [
      "Weeks 9-13",
-     "Operational run model agreed; value memo drafted for the investment committee."
+     "The part that survives audit is the boring part: the decision path and the audit path share one timeline across the enterprise, so your control owners can interrogate any number we publish."
     ]
    ]
   },
@@ -140,25 +249,17 @@
    "items": [
     [
      "Multimodal AI & Vision-Language Systems",
-     "Models that read scans, scenes and schematics: multimodal intelligence wired into operations."
+     "The design principle here is simple: cost and quality telemetry land in the same view your owners read across the enterprise, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Conversational AI & Digital Humans",
-     "Voice and avatar interfaces that resolve, not deflect — with emotion-aware escalation and full auditability."
+     "Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read in Applied AI & Generative AI delivery, which is what makes the reported delta defensible in audit."
     ],
     [
      "AI Proof-of-Concept & Value Validation",
-     "Replace hype with evidence: feasibility, value and adoption risk proven on your data in 6-10 weeks."
+     "The build earns trust the same way every gate does: evidence is captured where the work happens, not reconstructed later on Applied AI & Generative AI programs, and every exception path degrades to human review, never to silence."
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "Where it applies"
-  },
-  {
-   "t": "p",
-   "x": "Anchor industries: Technology & SaaS, Banking & Financial Services, Insurance & Risk, Retail & Consumer Goods, Telecom, Media & Entertainment, Healthcare & Life Sciences. Platform rails: Dataq Forge and Dataq Compass. Related tower: Applied AI & Generative AI."
   },
   {
    "t": "h2",
@@ -166,7 +267,7 @@
   },
   {
    "t": "p",
-   "x": "This capability runs on the cadence set out below; the rhythm is fixed, the scope is signed. Weeks 1–2 belong to measurement: the baseline metric is captured with your team and signed before build starts. Weeks 3–8 run a bounded pilot — one decision path, one workflow, one plant or one portfolio — steered by a control owner on your side. Weeks 9–12 convert the pilot into runbooks, monitoring and enablement, and close with a measured delta against the signed baseline. Anything that misses a gate is stopped or redirected on the record."
+   "x": "What the delivery actually looks like week to week: the first 2 weeks are pure verification — we measure feature lead time with your analysts, reconcile disagreements, and freeze the number both sides defend. At operating tempo, the properties that carry the load are structural: models, agents and rules move through versioned, evaluated releases for the enterprise at scale, so drift shows up as a ticket with an owner, not as a mystery.. Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read in Applied AI & Generative AI delivery, which keeps the blast radius of any change inside one lane.. Nothing in this topology is accidental: the decision path and the audit path share one timeline across the Generative AI Platform Engineering estate, so the question of how we know gets a pointer, not a paragraph."
   },
   {
    "t": "h2",
@@ -174,26 +275,26 @@
   },
   {
    "t": "p",
-   "x": "In delivery, this work composes with the adjacent capabilities listed here."
+   "x": "The part that survives audit is the boring part: the decision path and the audit path share one timeline across the enterprise, so the question of how we know gets a pointer, not a paragraph."
   },
   {
    "t": "bullets",
    "items": [
     [
      "Enterprise AI Strategy & Roadmapping",
-     "Scope, delivery pattern and committed outcomes."
+     "Under the hood this pattern runs on one rule: identity is short-lived and authorization is deny-by-default in Generative AI Platform Engineering, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "RAG & Enterprise Knowledge Systems",
-     "Scope, delivery pattern and committed outcomes."
+     "At operating tempo, the properties that carry the load are structural: models, agents and rules move through versioned, evaluated releases across the Generative AI Platform Engineering estate, so a regression is a cohort, never an estate."
     ],
     [
      "Subscription & Monetization Platforms",
-     "Composed architecture and the metric it answers to."
+     "The build earns trust the same way every gate does: every state change is replayable from the signed baseline across the enterprise, which keeps the blast radius of any change inside one lane."
     ],
     [
      "Applied AI & GenAI for Banking & Financial Services",
-     "A tower applied to this operating unit."
+     "At operating tempo, the properties that carry the load are structural: models, agents and rules move through versioned, evaluated releases in Applied AI & Generative AI delivery, and rollback is rehearsed before go-live rather than after the incident."
     ]
    ]
   },
@@ -203,35 +304,56 @@
   },
   {
    "t": "p",
-   "x": "The first quarter ends with an artifact handover — the list below, walked through with your team:"
+   "x": "What changes hands at quarter close, with a guided walkthrough per item:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Baseline diagnostic",
-     "The signed measurement of where the metric stands today, with the method written out so the number can be defended to finance."
+     "The build earns trust the same way every gate does: each stage owns its latency budget and its failure policy in Generative AI Platform Engineering, so a regression is a cohort, never an estate."
     ],
     [
      "Decision and control map",
-     "Every automated decision path, its policy checks, its human checkpoint and its owner on one page."
+     "The part that survives audit is the boring part: cost and quality telemetry land in the same view your owners read in Generative AI Platform Engineering, and every exception path degrades to human review, never to silence."
     ],
     [
      "Evidence pack",
-     "Logs, evaluations and approvals collected automatically as the program runs — ready for internal audit or a regulator."
+     "The design principle here is simple: signals cross boundaries only through typed contracts across the Generative AI Platform Engineering estate, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "Value ledger",
-     "A running record of the delta against baseline, updated at every gate, reviewed at every steering meeting."
+     "At operating tempo, the properties that carry the load are structural: cost and quality telemetry land in the same view your owners read across the Generative AI Platform Engineering estate, so your control owners can interrogate any number we publish."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Outcomes we commit to"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "feature lead time",
+     "feature lead time moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
+    ],
+    [
+     "inference unit cost",
+     "40-60% reduction through caching and routing policy"
+    ],
+    [
+     "unsafe-output escape rate",
+     "unsafe-output escape rate moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Talk through this service with the practice lead, or request a value assessment scoped to your estate."
+   "x": "Start with a value assessment: two weeks, your feature lead time measured and signed, a delivery plan priced from evidence."
   }
  ],
- "words": 457,
+ "words": 1622,
  "section": "Services",
  "l1": "Services",
  "l2": "Applied AI & Generative AI",

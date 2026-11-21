@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "SRE & Reliability Engineering in production: what gets built, who owns each control, how the pilot widens into an industrial deployment, and the metrics that gate each phase."
+   "x": "A no-theater description of SRE & Reliability Engineering: what ships first, what it touches at operational stores, how it is verified, and the per workflow metric we commit to moving against baseline."
   },
   {
    "t": "h2",
@@ -17,7 +17,29 @@
   },
   {
    "t": "p",
-   "x": "Reliability is a negotiation, and SRE makes it explicit: user-journey SLOs instead of server vanity metrics, error budgets that gate feature velocity, and incident discipline (blameless review, action tracking, toil budgets) that converts failures into roadmap. We implement SRE on existing teams and platforms — SLO catalog construction, alert redesign from symptom-based paging, capacity planning, and chaos experiments that prove recovery paths."
+   "x": "Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read on Cloud, Edge & Platform Engineering programs, and rollback is rehearsed before go-live rather than after the incident. The design principle here is simple: each stage owns its latency budget and its failure policy across the SRE & Reliability Engineering estate, and every exception path degrades to human review, never to silence."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "edge-topology",
+   "title": "Golden-path platform topology — SRE & Reliability Engineering",
+   "labels": [
+    "Golden-path templates",
+    "Self-service portal",
+    "GitOps control plane",
+    "Runtime enforcement",
+    "Observability plane",
+    "FinOps telemetry"
+   ],
+   "note": "The engineering bet is explicit: each stage owns its latency budget and its failure policy across the enterprise, and every exception path degrades to human review, never to silence."
+  },
+  {
+   "t": "p",
+   "x": "The engineering bet is explicit: identity is short-lived and authorization is deny-by-default across the enterprise, so your control owners can interrogate any number we publish."
   },
   {
    "t": "h2",
@@ -25,7 +47,19 @@
   },
   {
    "t": "p",
-   "x": "The measurable outcomes are cultural as much as technical: paging volume drops when alerts point at symptoms, release confidence rises when error budgets arbitrate, and incident duration falls when playbooks, roles and comms are rehearsed. We leave behind the operating rhythm — reviews, budgets, postmortems — because reliability that depends on heroics is not reliability."
+   "x": "The build sequence is deliberate: contracts and identity first, the working decision slice second, the verification harness third — because a SRE & Reliability Engineering capability without its eval gate is just another unattended automation."
+  },
+  {
+   "t": "diagram",
+   "kind": "delivery-cadence",
+   "title": "Delivery cadence — SRE & Reliability Engineering",
+   "labels": [
+    "Diagnose · W1–2",
+    "Pilot · W3–8",
+    "Industrialize · W9–12",
+    "Scale · Q2+"
+   ],
+   "note": "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later in Cloud, Edge & Platform Engineering delivery, and every exception path degrades to human review, never to silence."
   },
   {
    "t": "h2",
@@ -83,11 +117,215 @@
   },
   {
    "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
+   "t": "p",
+   "x": "The stack is boring by design — proven components, no experimental dependencies:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "GitOps reconciliation",
+     "GitOps reconciliation carries the ingest path — Argo-style drift correction with signed commits"
+    ],
+    [
+     "Kubernetes landing zones",
+     "At operating tempo, the properties that carry the load are structural: signals cross boundaries only through typed contracts across the SRE & Reliability Engineering estate, so the question of how we know gets a pointer, not a paragraph."
+    ],
+    [
+     "Backstage-style portal",
+     "The engineering bet is explicit: models, agents and rules move through versioned, evaluated releases across the enterprise, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "SLO tooling",
+     "SLO tooling carries the control path — error budgets enforced in the release gate"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "GitOps reconciliation",
+     "GitOps reconciliation carries the ingest path — Argo-style drift correction with signed commits"
+    ],
+    [
+     "Kubernetes landing zones",
+     "At operating tempo, the properties that carry the load are structural: signals cross boundaries only through typed contracts across the SRE & Reliability Engineering estate, so the question of how we know gets a pointer, not a paragraph."
+    ],
+    [
+     "Backstage-style portal",
+     "The engineering bet is explicit: models, agents and rules move through versioned, evaluated releases across the enterprise, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "SLO tooling",
+     "SLO tooling carries the control path — error budgets enforced in the release gate"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "toil hours per sprint",
+     "Down 40–57.8% absorbed by golden paths on the first working slice; deeper scope moves it further"
+    ],
+    [
+     "cost per deployed service",
+     "Down 20–31.5% after right-sizing per workflow, reported weekly against the signed baseline"
+    ],
+    [
+     "environment lead time",
+     "Down 70–80.9% — from weeks to same-day per workflow, reported weekly against the signed baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Observability theater",
+     "Observability theater — dashboards without alerts, or alerts without owners, fail the readiness review"
+    ],
+    [
+     "Snowflake infrastructure",
+     "The part that survives audit is the boring part: evidence is captured where the work happens, not reconstructed later on Cloud, Edge & Platform Engineering programs, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "Cost invisibility",
+     "The build earns trust the same way every gate does: identity is short-lived and authorization is deny-by-default across the SRE & Reliability Engineering estate, and rollback is rehearsed before go-live rather than after the incident."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
    "x": "Technology and standards"
   },
   {
    "t": "p",
    "x": "Typical stack and standards: OpenSLO, Prometheus/Grafana, OpenTelemetry, chaos tooling, on-call platforms."
+  },
+  {
+   "t": "h2",
+   "x": "The first 90 days"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-4",
+     "The design principle here is simple: evidence is captured where the work happens, not reconstructed later in SRE & Reliability Engineering, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Weeks 5-8",
+     "At operating tempo, the properties that carry the load are structural: identity is short-lived and authorization is deny-by-default for the enterprise at scale, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Weeks 9-13",
+     "The part that survives audit is the boring part: cost and quality telemetry land in the same view your owners read on Cloud, Edge & Platform Engineering programs, so your control owners can interrogate any number we publish."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Related services"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "High-Performance & Mission-Critical Systems",
+     "Under the hood this pattern runs on one rule: identity is short-lived and authorization is deny-by-default across the SRE & Reliability Engineering estate, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "Hybrid & Multicloud Architecture",
+     "The part that survives audit is the boring part: models, agents and rules move through versioned, evaluated releases for the enterprise at scale, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Cloud-Native & Legacy Modernization",
+     "What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default across the SRE & Reliability Engineering estate, and rollback is rehearsed before go-live rather than after the incident."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How a delivery runs"
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is engineered, not ritual: before any build work, we spend 2 weeks proving the measurement: if two analysts cannot reproduce mean time to restore the same way, nothing else starts. The build earns trust the same way every gate does: signals cross boundaries only through typed contracts across the SRE & Reliability Engineering estate, so drift shows up as a ticket with an owner, not as a mystery.. Under the hood this pattern runs on one rule: models, agents and rules move through versioned, evaluated releases for the enterprise at scale, and rollback is rehearsed before go-live rather than after the incident.. The part that survives audit is the boring part: each stage owns its latency budget and its failure policy across the enterprise, which keeps the blast radius of any change inside one lane."
+  },
+  {
+   "t": "h2",
+   "x": "Where this fits in the portfolio"
+  },
+  {
+   "t": "p",
+   "x": "The design principle here is simple: signals cross boundaries only through typed contracts in SRE & Reliability Engineering, which keeps the blast radius of any change inside one lane."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "FinOps & Sustainable Computing",
+     "Nothing in this topology is accidental: evidence is captured where the work happens, not reconstructed later on Cloud, Edge & Platform Engineering programs, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Edge Computing & Distributed Infrastructure",
+     "What holds the build together is discipline at the boundaries: each stage owns its latency budget and its failure policy on Cloud, Edge & Platform Engineering programs, so a regression is a cohort, never an estate."
+    ],
+    [
+     "Talent, Skills & Workforce Intelligence",
+     "The design principle here is simple: every state change is replayable from the signed baseline on Cloud, Edge & Platform Engineering programs, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "Applied AI & GenAI for Energy & Utilities",
+     "The part that survives audit is the boring part: cost and quality telemetry land in the same view your owners read across the SRE & Reliability Engineering estate, and every exception path degrades to human review, never to silence."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "What you receive"
+  },
+  {
+   "t": "p",
+   "x": "What changes hands at quarter close, with a guided walkthrough per item:"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Baseline diagnostic",
+     "Under the hood this pattern runs on one rule: models, agents and rules move through versioned, evaluated releases across the SRE & Reliability Engineering estate, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "Decision and control map",
+     "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later on Cloud, Edge & Platform Engineering programs, so a regression is a cohort, never an estate."
+    ],
+    [
+     "Evidence pack",
+     "Nothing in this topology is accidental: each stage owns its latency budget and its failure policy across the enterprise, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "Value ledger",
+     "Under the hood this pattern runs on one rule: cost and quality telemetry land in the same view your owners read in Cloud, Edge & Platform Engineering delivery, which keeps the blast radius of any change inside one lane."
+    ]
+   ]
   },
   {
    "t": "h2",
@@ -102,136 +340,20 @@
     ],
     [
      "paging volume",
-     "Down sharply; pages map to user impact"
+     "paging volume moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
     ],
     [
      "release throughput",
-     "Stable or up while availability holds within SLO"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "The first 90 days"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Weeks 1-4",
-     "Stakeholder map and control ownership agreed; success criteria signed before the first build sprint."
-    ],
-    [
-     "Weeks 5-8",
-     "First working increment on your data, evaluated against the signed criteria; production-path sketch reviewed with risk."
-    ],
-    [
-     "Weeks 9-13",
-     "Operational run model agreed; value memo drafted for the investment committee."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Related services"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "High-Performance & Mission-Critical Systems",
-     "When microseconds and uptime are the product: HPC, low-latency and always-on engineering."
-    ],
-    [
-     "Hybrid & Multicloud Architecture",
-     "The estate as designed system: landing zones, network fabric and workload placement by economics."
-    ],
-    [
-     "Cloud-Native & Legacy Modernization",
-     "Retire the legacy tax: strangler-pattern modernization with measurable unit economics."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Where it applies"
-  },
-  {
-   "t": "p",
-   "x": "Anchor industries: Technology & SaaS, Banking & Financial Services, Retail & Consumer Goods, Telecom, Media & Entertainment, Logistics & Supply Chain, Healthcare & Life Sciences. Platform rails: Dataq Forge and Dataq Sentinel. Related tower: Cloud, Edge & Platform Engineering."
-  },
-  {
-   "t": "h2",
-   "x": "How a delivery runs"
-  },
-  {
-   "t": "p",
-   "x": "Delivery runs on one weekly rhythm for every program of this type. Weeks 1–2 lock the baseline with your team: the current metric is measured, signed and stored as the reference for every later gate. Weeks 3–8 run the pilot on deliberately narrow scope — one decision path, one workflow, one plant or one portfolio — with a control owner named on your side. Weeks 9–12 industrialize what worked: runbooks, monitoring, enablement and a measured delta against the signed baseline. Anything that misses its gate is stopped or redirected with a documented decision, never quietly extended."
-  },
-  {
-   "t": "h2",
-   "x": "Where this fits in the portfolio"
-  },
-  {
-   "t": "p",
-   "x": "This capability is one move in a larger program. The pages below show where it connects."
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "FinOps & Sustainable Computing",
-     "Scope, delivery pattern and committed outcomes."
-    ],
-    [
-     "Edge Computing & Distributed Infrastructure",
-     "Scope, delivery pattern and committed outcomes."
-    ],
-    [
-     "Talent, Skills & Workforce Intelligence",
-     "Composed architecture and the metric it answers to."
-    ],
-    [
-     "Applied AI & GenAI for Energy & Utilities",
-     "A tower applied to this operating unit."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "What you receive"
-  },
-  {
-   "t": "p",
-   "x": "At the end of the first quarter of a typical program you hold four concrete assets:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Baseline diagnostic",
-     "The signed measurement of where the metric stands today, with the method written out so the number can be defended to finance."
-    ],
-    [
-     "Decision and control map",
-     "Every automated decision path, its policy checks, its human checkpoint and its owner on one page."
-    ],
-    [
-     "Evidence pack",
-     "Logs, evaluations and approvals collected automatically as the program runs — ready for internal audit or a regulator."
-    ],
-    [
-     "Value ledger",
-     "A running record of the delta against baseline, updated at every gate, reviewed at every steering meeting."
+     "release throughput is tracked weekly to your control owner; the number at gate three is the number finance sees"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Put this service in front of the practice lead — or have a value assessment scoped against your baseline."
+   "x": "Put your mean time to restore in front of the practice lead — bring the baseline, leave with a scoped plan."
   }
  ],
- "words": 427,
+ "words": 1562,
  "section": "Services",
  "l1": "Services",
  "l2": "Cloud, Edge & Platform Engineering",

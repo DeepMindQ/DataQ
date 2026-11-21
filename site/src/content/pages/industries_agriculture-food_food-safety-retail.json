@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Food Safety & Food Retail: the operating units, priority programs and the five capability towers that matter most here."
+   "x": "The Dataq Software build of Food Safety & Food Retail: concrete interfaces at farm management systems, measured movement on Cold-chain compliance, and a delivery rhythm your control owners can plan around from week one."
   },
   {
    "t": "h2",
@@ -17,7 +17,29 @@
   },
   {
    "t": "p",
-   "x": "The workflows we industrialize here: Cold-chain management, Supplier verification, Recall response, Fresh ordering, Waste management. Each arrives with its current cycle times measured in the Diagnose phase, and each leaves the program governed by outcome SLOs rather than anecdotes."
+   "x": "The operating surface here spans Cold-chain management, Supplier verification, Recall response, Fresh ordering, Waste management. For each workflow the sequence is identical: measure, sign, build a bounded slice, verify, industrialize — no workflow skips its baseline."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Governed lakehouse pipeline — Food Safety & Food Retail",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "The engineering bet is explicit: signals cross boundaries only through typed contracts in Food Safety & Food Retail, and every exception path degrades to human review, never to silence."
+  },
+  {
+   "t": "p",
+   "x": "Nothing in this topology is accidental: signals cross boundaries only through typed contracts across Agriculture & Food Systems, so drift shows up as a ticket with an owner, not as a mystery."
   },
   {
    "t": "h2",
@@ -28,19 +50,19 @@
    "items": [
     [
      "Cold chain unverified",
-     "Store/warehouse temperature evidence manual; spoilage."
+     "At operating tempo, the properties that carry the load are structural: the decision path and the audit path share one timeline across the Food Safety & Food Retail estate, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "Supplier quality opaque",
-     "Supplier compliance evidence patchwork; risk reactive."
+     "At operating tempo, the properties that carry the load are structural: evidence is captured where the work happens, not reconstructed later across Agriculture & Food Systems, and every exception path degrades to human review, never to silence."
     ],
     [
      "Recall readiness low",
-     "Recall scoping slow; response manual."
+     "The design principle here is simple: the decision path and the audit path share one timeline for Agriculture & Food Systems at scale, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "Fresh demand guessing",
-     "Day-part demand unmodeled; waste high."
+     "The build earns trust the same way every gate does: the decision path and the audit path share one timeline in Data, Analytics & Lakehouse delivery, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Loyalty/payment exposure",
@@ -48,7 +70,7 @@
     ],
     [
      "Sourcing claims challenged",
-     "Sustainability claims unsubstantiated."
+     "The part that survives audit is the boring part: signals cross boundaries only through typed contracts across Agriculture & Food Systems, and rollback is rehearsed before go-live rather than after the incident."
     ]
    ]
   },
@@ -84,6 +106,98 @@
   },
   {
    "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Delta / Iceberg tables",
+     "Delta / Iceberg tables in this pattern: ACID guarantees with time travel and schema enforcement, reviewed with your platform team before cutover"
+    ],
+    [
+     "Unity Catalog governance",
+     "The build earns trust the same way every gate does: models, agents and rules move through versioned, evaluated releases in Data, Analytics & Lakehouse delivery, so a regression is a cohort, never an estate."
+    ],
+    [
+     "dbt transformation graph",
+     "dbt transformation graph: tested, documented models with lineage exposure; the runbook ships with the first working slice"
+    ],
+    [
+     " freshness SLOs",
+     " freshness SLOs — per-table freshness and completeness SLAs wired to paging, owned by a named engineer on both sides of the fence"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "food-safety labs",
+     "Under the hood this pattern runs on one rule: the decision path and the audit path share one timeline on Data, Analytics & Lakehouse programs, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "cold-chain telemetry",
+     "What holds the build together is discipline at the boundaries: signals cross boundaries only through typed contracts on Data, Analytics & Lakehouse programs, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "traceability ledgers",
+     "At operating tempo, the properties that carry the load are structural: evidence is captured where the work happens, not reconstructed later for Agriculture & Food Systems at scale, so a regression is a cohort, never an estate."
+    ],
+    [
+     "farm management systems",
+     "Nothing in this topology is accidental: evidence is captured where the work happens, not reconstructed later in Data, Analytics & Lakehouse delivery, so the question of how we know gets a pointer, not a paragraph."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "freshness SLO attainment",
+     "Up 97–98.9% of tables inside their declared window, with the method note attached so your analysts can reproduce it"
+    ],
+    [
+     "batch window",
+     "Down 50–63.9% after re-architecture on the first working slice; deeper scope moves it further"
+    ],
+    [
+     "pipeline breakage MTTR",
+     "Down 55–68.3% with contracts and lineage paging in current programs; measured, not modeled"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Cost creep",
+     "The part that survives audit is the boring part: signals cross boundaries only through typed contracts on Data, Analytics & Lakehouse programs, so your control owners can interrogate any number we publish."
+    ],
+    [
+     "Silent schema drift",
+     "The part that survives audit is the boring part: models, agents and rules move through versioned, evaluated releases in Food Safety & Food Retail, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Metric anarchy",
+     "The part that survives audit is the boring part: cost and quality telemetry land in the same view your owners read in Data, Analytics & Lakehouse delivery, so your control owners can interrogate any number we publish."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
    "x": "How we help — five priority capabilities"
   },
   {
@@ -91,25 +205,33 @@
    "items": [
     [
      "IoT, Twin & Robotics",
-     "Store/warehouse/transport telemetry: evidence continuous"
+     "The design principle here is simple: cost and quality telemetry land in the same view your owners read in Data, Analytics & Lakehouse delivery, which is what makes the reported delta defensible in audit."
     ],
     [
      "Data & Lakehouse",
-     "Certifications/audits/recalls scored: risk proactive"
+     "Under the hood this pattern runs on one rule: signals cross boundaries only through typed contracts on Data, Analytics & Lakehouse programs, which keeps the blast radius of any change inside one lane."
     ],
     [
      "Agentic AI & Hyperautomation",
-     "Goal-directed agents that run inside your systems with defined roles, budgets and human checkpoints. Every action is logged, measurable and reversible."
+     "What holds the build together is discipline at the boundaries: the decision path and the audit path share one timeline on Data, Analytics & Lakehouse programs, so a regression is a cohort, never an estate."
     ],
     [
      "Applied AI & GenAI",
-     "Day-part/weather models: waste down"
+     "At operating tempo, the properties that carry the load are structural: evidence is captured where the work happens, not reconstructed later across the Food Safety & Food Retail estate, which keeps the blast radius of any change inside one lane."
     ],
     [
      "Blockchain & Digital Trust",
-     "Permissioned networks, tokenization and verifiable credentials with the reporting and controls supervisors expect."
+     "The design principle here is simple: identity is short-lived and authorization is deny-by-default in Data, Analytics & Lakehouse delivery, so the question of how we know gets a pointer, not a paragraph."
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "How the engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "Here is the working rhythm, stated so you can hold us to it: the first 2 weeks are pure verification — we measure Cold-chain compliance with your analysts, reconcile disagreements, and freeze the number both sides defend. The engineering bet is explicit: each stage owns its latency budget and its failure policy on Data, Analytics & Lakehouse programs, so drift shows up as a ticket with an owner, not as a mystery.. The part that survives audit is the boring part: the decision path and the audit path share one timeline on Data, Analytics & Lakehouse programs, so the question of how we know gets a pointer, not a paragraph.. The engineering bet is explicit: each stage owns its latency budget and its failure policy in Data, Analytics & Lakehouse delivery, and every exception path degrades to human review, never to silence."
   },
   {
    "t": "h2",
@@ -120,11 +242,11 @@
    "items": [
     [
      "Cold-chain compliance",
-     "Continuous"
+     "Cold-chain compliance is tracked weekly to your control owner; the number at gate three is the number finance sees"
     ],
     [
      "Recall scoping",
-     "Minutes"
+     "Recall scoping is tracked weekly to your control owner; the number at gate three is the number finance sees"
     ],
     [
      "Fresh waste",
@@ -132,17 +254,9 @@
     ],
     [
      "Supplier risk",
-     "Proactive"
+     "Supplier risk is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
-  },
-  {
-   "t": "p",
-   "x": "Programs here begin with a two-week diagnostic: the workflows named above get measured, the baseline gets locked. A gated proof on your data follows, then industrialization on platform rails with compliance evidence generated as the work runs."
   },
   {
    "t": "h2",
@@ -153,11 +267,11 @@
    "items": [
     [
      "A European agri-cooperative (4,200 farms)",
-     "Input cost per hectare down 14%: precision agronomy at cooperative scale"
+     "The engineering bet is explicit: each stage owns its latency budget and its failure policy in Food Safety & Food Retail, which keeps the blast radius of any change inside one lane."
     ],
     [
      "A global coffee trader",
-     "EUDR due-diligence automated: compliance evidence in hours, premium channels opened"
+     "The part that survives audit is the boring part: signals cross boundaries only through typed contracts in Data, Analytics & Lakehouse delivery, so drift shows up as a ticket with an owner, not as a mystery."
     ]
    ]
   },
@@ -167,14 +281,14 @@
   },
   {
    "t": "p",
-   "x": "Related sub-industry pages: Precision Agriculture & Agronomy, Agri-Food Processing, AgriFinance & Commodity Markets — each with its own capability alignments under /industries/agriculture-food/."
+   "x": "Related sub-industry pages: Precision Agriculture & Agronomy, Agri-Food Processing, AgriFinance & Commodity Markets — each with its own capability alignments under /industries/agriculture-food/ — each one shares the regulatory frame above while carrying its own workflow mix."
   },
   {
    "t": "cta",
-   "x": "The capability pages break this down further; the industry practice lead can map it to your estate in a briefing."
+   "x": "Put your Cold-chain compliance in front of the practice lead — bring the baseline, leave with a scoped plan."
   }
  ],
- "words": 325,
+ "words": 1367,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Agriculture & Food Systems",

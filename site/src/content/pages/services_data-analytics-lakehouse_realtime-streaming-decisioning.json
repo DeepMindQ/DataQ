@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "What Real-Time Streaming & Event-Driven Decisioning looks like when it has to survive an audit: scoped deliverables, weekly evidence, named control owners and a committed delta per gate."
+   "x": "What Real-Time Streaming & Event-Driven Decisioning means at Dataq Software: the scope we sign, the architecture we ship, the evidence generated in-flight, and the per workflow outcomes measured against your audited baseline."
   },
   {
    "t": "h2",
@@ -17,7 +17,29 @@
   },
   {
    "t": "p",
-   "x": "Batch thinking caps business performance: fraud caught after settlement, stockouts discovered at replenishment, churn addressed after the customer calls to leave. We build streaming backbones — Kafka or managed equivalents, Flink/Spark Structured Streaming processing, exactly-once semantics where money moves — feeding online feature stores and decision APIs that act within the customer moment, the machine cycle or the fraud window."
+   "x": "What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default in Real-Time Streaming & Event-Driven Decisioning, which keeps the blast radius of any change inside one lane. At operating tempo, the properties that carry the load are structural: each stage owns its latency budget and its failure policy across the Real-Time Streaming & Event-Driven Decisioning estate, and rollback is rehearsed before go-live rather than after the incident."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Governed lakehouse pipeline — Real-Time Streaming & Event-Driven Decisioning",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later across the enterprise, so your control owners can interrogate any number we publish."
+  },
+  {
+   "t": "p",
+   "x": "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later in Real-Time Streaming & Event-Driven Decisioning, which keeps the blast radius of any change inside one lane."
   },
   {
    "t": "h2",
@@ -25,7 +47,19 @@
   },
   {
    "t": "p",
-   "x": "Engineering discipline makes it trustworthy: schema-first topics, watermark handling for late events, back-pressure design, and chaos drills that prove recovery. We pair the stack with event-storming workshops so the topics and events reflect how the business actually works — the difference between a streaming platform and a streaming mess."
+   "x": "The build sequence is deliberate: contracts and identity first, the working decision slice second, the verification harness third — because a Real-Time Streaming & Event-Driven Decisioning capability without its eval gate is just another unattended automation."
+  },
+  {
+   "t": "diagram",
+   "kind": "delivery-cadence",
+   "title": "Delivery cadence — Real-Time Streaming & Event-Driven Decisioning",
+   "labels": [
+    "Diagnose · W1–2",
+    "Pilot · W3–8",
+    "Industrialize · W9–12",
+    "Scale · Q2+"
+   ],
+   "note": "The design principle here is simple: every state change is replayable from the signed baseline for the enterprise at scale, so drift shows up as a ticket with an owner, not as a mystery."
   },
   {
    "t": "h2",
@@ -83,32 +117,107 @@
   },
   {
    "t": "h2",
-   "x": "Technology and standards"
+   "x": "Engineering standards & stack"
   },
   {
    "t": "p",
-   "x": "Typical stack and standards: Kafka, Flink, Spark Structured Streaming, Redis, Feast, Kubernetes, Terraform."
-  },
-  {
-   "t": "h2",
-   "x": "Outcomes we commit to"
+   "x": "The engineering substrate, as deployed in current programs:"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "event-to-action latency",
-     "P99 under one second on decision paths"
+     "dbt transformation graph",
+     "dbt transformation graph carries the ingest path — tested, documented models with lineage exposure"
     ],
     [
-     "batch-to-stream conversion",
-     "60-80% of decision workloads moved to event time"
+     "Unity Catalog governance",
+     "The part that survives audit is the boring part: evidence is captured where the work happens, not reconstructed later in Real-Time Streaming & Event-Driven Decisioning, so a regression is a cohort, never an estate."
     ],
     [
-     "decision freshness",
-     "Fraud, pricing and personalization acting on live state"
+     "data contracts",
+     "Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read across the Real-Time Streaming & Event-Driven Decisioning estate, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "cost-aware clustering",
+     "What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default in Real-Time Streaming & Event-Driven Decisioning, which keeps the blast radius of any change inside one lane."
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "dbt transformation graph",
+     "dbt transformation graph carries the ingest path — tested, documented models with lineage exposure"
+    ],
+    [
+     "Unity Catalog governance",
+     "The part that survives audit is the boring part: evidence is captured where the work happens, not reconstructed later in Real-Time Streaming & Event-Driven Decisioning, so a regression is a cohort, never an estate."
+    ],
+    [
+     "data contracts",
+     "Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read across the Real-Time Streaming & Event-Driven Decisioning estate, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "cost-aware clustering",
+     "What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default in Real-Time Streaming & Event-Driven Decisioning, which keeps the blast radius of any change inside one lane."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "batch window",
+     "Down 50–67.8% after re-architecture, with the method note attached so your analysts can reproduce it"
+    ],
+    [
+     "query p95",
+     "Down 40–53.2% on the certified gold layer per workflow, reported weekly against the signed baseline"
+    ],
+    [
+     "freshness SLO attainment",
+     "At operating tempo, the properties that carry the load are structural: each stage owns its latency budget and its failure policy in Real-Time Streaming & Event-Driven Decisioning, and every exception path degrades to human review, never to silence."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Metric anarchy",
+     "Under the hood this pattern runs on one rule: each stage owns its latency budget and its failure policy in Real-Time Streaming & Event-Driven Decisioning, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "Cost creep",
+     "Under the hood this pattern runs on one rule: identity is short-lived and authorization is deny-by-default across the Real-Time Streaming & Event-Driven Decisioning estate, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "Silent schema drift",
+     "The engineering bet is explicit: every state change is replayable from the signed baseline for the enterprise at scale, so a regression is a cohort, never an estate."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Technology and standards"
+  },
+  {
+   "t": "p",
+   "x": "Typical stack and standards: Kafka, Flink, Spark Structured Streaming, Redis, Feast, Kubernetes, Terraform."
   },
   {
    "t": "h2",
@@ -119,15 +228,15 @@
    "items": [
     [
      "Weeks 1-4",
-     "Baseline metrics locked with named owners; data-readiness assessed against the delivery contracts."
+     "Nothing in this topology is accidental: identity is short-lived and authorization is deny-by-default across the Real-Time Streaming & Event-Driven Decisioning estate, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Weeks 5-8",
-     "First working increment on your data, evaluated against the signed criteria; production-path sketch reviewed with risk."
+     "What holds the build together is discipline at the boundaries: each stage owns its latency budget and its failure policy across the Real-Time Streaming & Event-Driven Decisioning estate, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "Weeks 9-13",
-     "Operational run model agreed; value memo drafted for the investment committee."
+     "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases in Data, Analytics & Lakehouse delivery, and rollback is rehearsed before go-live rather than after the incident."
     ]
    ]
   },
@@ -140,25 +249,17 @@
    "items": [
     [
      "Advanced Risk & Predictive Analytics",
-     "Forward-looking risk on governed data: credit, insurance, operational and market models that explain themselves."
+     "The part that survives audit is the boring part: each stage owns its latency budget and its failure policy in Real-Time Streaming & Event-Driven Decisioning, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "Data Monetization & Analytics Products",
-     "Turn the data estate into revenue: embedded analytics, data sharing and insight products with real P&L."
+     "At operating tempo, the properties that carry the load are structural: evidence is captured where the work happens, not reconstructed later for the enterprise at scale, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Data Engineering & Pipeline Modernization",
-     "Resilient, observable pipelines: trusted data from source to decision at SLA."
+     "At operating tempo, the properties that carry the load are structural: each stage owns its latency budget and its failure policy in Real-Time Streaming & Event-Driven Decisioning, so drift shows up as a ticket with an owner, not as a mystery."
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "Where it applies"
-  },
-  {
-   "t": "p",
-   "x": "Anchor industries: Banking & Financial Services, Retail & Consumer Goods, Telecom, Media & Entertainment, Logistics & Supply Chain, Energy & Utilities, Manufacturing & Industrial. Platform rails: Dataq Nexus and Dataq Forge. Related tower: Data, Analytics & Lakehouse."
   },
   {
    "t": "h2",
@@ -166,7 +267,7 @@
   },
   {
    "t": "p",
-   "x": "The rhythm is fixed on purpose: progress becomes visible from week one, not after the first steering meeting. The first quarter of the rhythm is verification: weeks 1–2 measure the current metric with your team and lock it by signature. Weeks 3–8 deliver the pilot on bounded scope — one decision path, one workflow, one plant or one portfolio — with your control owner receiving evidence weekly. Weeks 9–12 industrialize: runbooks, monitoring, enablement and the measured delta against the signed baseline. Gates are binding: miss one and the program stops or redirects with a documented decision."
+   "x": "What the delivery actually looks like week to week: before any build work, we spend 2 weeks proving the measurement: if two analysts cannot reproduce event-to-action latency the same way, nothing else starts. Under the hood this pattern runs on one rule: evidence is captured where the work happens, not reconstructed later across the Real-Time Streaming & Event-Driven Decisioning estate, so drift shows up as a ticket with an owner, not as a mystery.. The build earns trust the same way every gate does: cost and quality telemetry land in the same view your owners read across the enterprise, which keeps the blast radius of any change inside one lane.. Nothing in this topology is accidental: each stage owns its latency budget and its failure policy in Real-Time Streaming & Event-Driven Decisioning, which is what makes the reported delta defensible in audit."
   },
   {
    "t": "h2",
@@ -174,26 +275,26 @@
   },
   {
    "t": "p",
-   "x": "No capability stands alone. These are the pages most clients open next."
+   "x": "The part that survives audit is the boring part: each stage owns its latency budget and its failure policy in Data, Analytics & Lakehouse delivery, which is what makes the reported delta defensible in audit."
   },
   {
    "t": "bullets",
    "items": [
     [
      "Data Engineering & Pipeline Modernization",
-     "Scope, delivery pattern and committed outcomes."
+     "The build earns trust the same way every gate does: identity is short-lived and authorization is deny-by-default for the enterprise at scale, which is what makes the reported delta defensible in audit."
     ],
     [
      "Data Monetization & Analytics Products",
-     "Scope, delivery pattern and committed outcomes."
+     "Under the hood this pattern runs on one rule: cost and quality telemetry land in the same view your owners read in Real-Time Streaming & Event-Driven Decisioning, so your control owners can interrogate any number we publish."
     ],
     [
      "Quality, Yield & Energy Intelligence",
-     "Composed architecture and the metric it answers to."
+     "The engineering bet is explicit: identity is short-lived and authorization is deny-by-default on Data, Analytics & Lakehouse programs, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Blockchain & Digital Trust for Agriculture & Food Systems",
-     "A tower applied to this operating unit."
+     "The build earns trust the same way every gate does: signals cross boundaries only through typed contracts in Real-Time Streaming & Event-Driven Decisioning, so the question of how we know gets a pointer, not a paragraph."
     ]
    ]
   },
@@ -203,35 +304,56 @@
   },
   {
    "t": "p",
-   "x": "At the end of the first quarter of a typical program you hold four concrete assets:"
+   "x": "Artifacts, not anecdotes — at the first-quarter close your team holds:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Baseline diagnostic",
-     "The signed measurement of where the metric stands today, with the method written out so the number can be defended to finance."
+     "Nothing in this topology is accidental: models, agents and rules move through versioned, evaluated releases across the Real-Time Streaming & Event-Driven Decisioning estate, which keeps the blast radius of any change inside one lane."
     ],
     [
      "Decision and control map",
-     "Every automated decision path, its policy checks, its human checkpoint and its owner on one page."
+     "The build earns trust the same way every gate does: models, agents and rules move through versioned, evaluated releases across the Real-Time Streaming & Event-Driven Decisioning estate, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Evidence pack",
-     "Logs, evaluations and approvals collected automatically as the program runs — ready for internal audit or a regulator."
+     "Nothing in this topology is accidental: evidence is captured where the work happens, not reconstructed later in Real-Time Streaming & Event-Driven Decisioning, which is what makes the reported delta defensible in audit."
     ],
     [
      "Value ledger",
-     "A running record of the delta against baseline, updated at every gate, reviewed at every steering meeting."
+     "At operating tempo, the properties that carry the load are structural: signals cross boundaries only through typed contracts in Real-Time Streaming & Event-Driven Decisioning, so your control owners can interrogate any number we publish."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Outcomes we commit to"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "event-to-action latency",
+     "event-to-action latency defines success for this pattern and is audited against the week-two baseline at every gate"
+    ],
+    [
+     "batch-to-stream conversion",
+     "60-80% of decision workloads moved to event time"
+    ],
+    [
+     "decision freshness",
+     "decision freshness moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Talk through this service with the practice lead, or request a value assessment scoped to your estate."
+   "x": "Start with a value assessment: two weeks, your event-to-action latency measured and signed, a delivery plan priced from evidence."
   }
  ],
- "words": 433,
+ "words": 1711,
  "section": "Services",
  "l1": "Services",
  "l2": "Data, Analytics & Lakehouse",

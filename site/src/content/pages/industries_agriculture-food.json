@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Volatility, traceability and margin pressure decide this sector — we build the data, agentic and provenance programs that hold up from farm gate to commodity desk."
+   "x": "The Dataq Software build of Agriculture & Food Systems: concrete interfaces at farm management systems, measured movement on Input cost per hectare, and a delivery rhythm your control owners can plan around from week one."
   },
   {
    "t": "h2",
@@ -21,11 +21,62 @@
   },
   {
    "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "decision-fabric",
+   "title": "Decision fabric — how Dataq Software composes Agriculture & Food Systems capability",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "Every arrow in the schematic is a contract with an SLO, and every box is a service with a named owner. That is deliberate: the fastest way to lose a Agriculture & Food Systems program is an architecture nobody can draw from memory."
+  },
+  {
+   "t": "h2",
    "x": "The pressure is structural"
   },
   {
    "t": "p",
    "x": "The regulatory wave is arriving: EU Deforestation Regulation due diligence, Digital Product Passports, residue and food-safety regimes, and subsidy programs demanding measured practice. Farms and co-ops that instrument now convert compliance into competitive advantage; those that wait will buy evidence later at retail prices."
+  },
+  {
+   "t": "h2",
+   "x": "Pressure points we hear most"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Field data gap",
+     "What holds the build together is discipline at the boundaries: the decision path and the audit path share one timeline across Agriculture & Food Systems, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Provenance claims unverifiable",
+     "Under the hood this pattern runs on one rule: models, agents and rules move through versioned, evaluated releases in Agriculture & Food Systems, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "Yield and quality surprises",
+     "The part that survives audit is the boring part: the decision path and the audit path share one timeline for Agriculture & Food Systems at scale, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "Chain data broken at every handoff",
+     "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases across Agriculture & Food Systems, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Input and logistics planning manual",
+     "Nothing in this topology is accidental: each stage owns its latency budget and its failure policy across Agriculture & Food Systems, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "Agri-finance blind to practice",
+     "The design principle here is simple: signals cross boundaries only through typed contracts for Agriculture & Food Systems at scale, so a regression is a cohort, never an estate."
+    ]
+   ]
   },
   {
    "t": "h2",
@@ -37,34 +88,93 @@
   },
   {
    "t": "h2",
-   "x": "Pressure points we hear most"
+   "x": "Engineering standards & stack"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Field data gap",
-     "Agronomic decisions run on tradition because soil, weather and crop telemetry are patchy; input spend is uniform where it should be variable."
+     "data contracts",
+     "data contracts: producer-side schemas with breakage alerts, not silent nulls; the runbook ships with the first working slice"
     ],
     [
-     "Provenance claims unverifiable",
-     "Origin, organic and deforestation-free claims face EUDR-grade scrutiny; evidence is paper and trust."
+     " freshness SLOs",
+     " freshness SLOs carries the decision path — per-table freshness and completeness SLAs wired to paging"
     ],
     [
-     "Yield and quality surprises",
-     "Harvest forecasting is regional guesswork; quality attributes (protein, moisture, defects) are discovered at intake, not predicted."
+     "dbt transformation graph",
+     "dbt transformation graph — tested, documented models with lineage exposure, owned by a named engineer on both sides of the fence"
     ],
     [
-     "Chain data broken at every handoff",
-     "Farm, co-op, processor and retail data never join; traceability requires weeks of document archaeology."
+     "Unity Catalog governance",
+     "Unity Catalog governance — tag-based access control inherited end to end; swaps are versioned and rehearsed, never improvised"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "traceability ledgers",
+     "traceability ledgers, where lot-level provenance from field to shelf — with replay possible for any window your auditors name"
     ],
     [
-     "Input and logistics planning manual",
-     "Input ordering, harvest logistics and storage decisions run on experience; weather windows missed cost yield and quality."
+     "farm management systems",
+     "farm management systems — field operations joined to telemetry; the adapter is part of the deliverable, not a future phase"
     ],
     [
-     "Agri-finance blind to practice",
-     "Lenders and insurers price farms on history, not practice; sustainable practice earns no capital advantage."
+     "cold-chain telemetry",
+     "cold-chain telemetry: temperature excursions with alerting; contracts are agreed with your system owners in week one"
+    ],
+    [
+     "commodity & trade desks",
+     "commodity & trade desks: position and hedging data under controls; contracts are agreed with your system owners in week one"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "freshness SLO attainment",
+     "Up 97–99.1% of tables inside their declared window in current programs; measured, not modeled"
+    ],
+    [
+     "batch window",
+     "Down 50–64.1% after re-architecture — the gate compares the live value to baseline every quarter"
+    ],
+    [
+     "pipeline breakage MTTR",
+     "Down 55–71.3% with contracts and lineage paging on the first working slice; deeper scope moves it further"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Silent schema drift",
+     "Silent schema drift, the classic killer; here producer contracts fail loudly at ingest; downstream models refuse to build on drifted sources"
+    ],
+    [
+     "Cost creep",
+     "Cost creep: per-team chargeback with query tags; untagged compute is quarantined at the queue level; the guard is part of the first slice, not a hardening phase"
+    ],
+    [
+     "Metric anarchy",
+     "Metric anarchy, the classic killer; here one certified semantic layer owns definitions — dashboards that shadow it lose endorsement and budget"
     ]
    ]
   },
@@ -129,32 +239,11 @@
   },
   {
    "t": "h2",
-   "x": "Proof from this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A European agri-cooperative (4,200 farms)",
-     "Input cost per hectare down 14%: precision agronomy at cooperative scale"
-    ],
-    [
-     "A global coffee trader",
-     "EUDR due-diligence automated: compliance evidence in hours, premium channels opened"
-    ],
-    [
-     "A food processor (dairy)",
-     "Yield +2.8 points, recalls scoped in minutes: quality and traceability program"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Capability pages for this industry"
+   "x": "How a delivery runs"
   },
   {
    "t": "p",
-   "x": "All eight towers are aligned at industry level under /industries/agriculture-food/capabilities/ — from Applied AI to Quantum. Five priority towers are aligned per sub-industry."
+   "x": "The operating cadence, concretely: the first 2 weeks are pure verification — we measure Input cost per hectare with your analysts, reconcile disagreements, and freeze the number both sides defend. the middle block runs the pilot against live traceability ledgers data at deliberately small scope: one path, one team, one region, expanded only after its eval gate holds. Nothing in this topology is accidental: signals cross boundaries only through typed contracts for Agriculture & Food Systems at scale, and every exception path degrades to human review, never to silence.. What holds the build together is discipline at the boundaries: the decision path and the audit path share one timeline in Agriculture & Food Systems, which keeps the blast radius of any change inside one lane."
   },
   {
    "t": "h2",
@@ -173,90 +262,53 @@
     ],
     [
      "Recall scoping time",
-     "Minutes with chain-of-custody, vs. Weeks"
+     "Recall scoping time moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
     ],
     [
      "Provenance premium capture",
-     "Verified claims opening premium channels"
+     "Provenance premium capture is tracked weekly to your control owner; the number at gate three is the number finance sees"
     ],
     [
      "Harvest logistics losses",
-     "Down measurably with orchestrated windows"
+     "Harvest logistics losses is tracked weekly to your control owner; the number at gate three is the number finance sees"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "How a delivery runs"
-  },
-  {
-   "t": "p",
-   "x": "Below is the delivery cadence for this capability — the same pattern on every engagement. Weeks 1–2 lock the baseline: the current metric is measured with your team and signed before build starts. Weeks 3–8 deliver the pilot on bounded scope — one decision path, one workflow, one plant or one portfolio — with a control owner named on your side. Weeks 9–12 industrialize what worked: runbooks, monitoring, enablement and a measured delta against the signed baseline. Anything that misses its gate is stopped or redirected with a documented decision, not quietly extended."
-  },
-  {
-   "t": "h2",
-   "x": "Where this fits in the portfolio"
-  },
-  {
-   "t": "p",
-   "x": "This capability is one move in a larger program. The pages below show where it connects."
+   "x": "Proof from this industry"
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Applied AI & GenAI for Agri-Food Processing",
-     "The same capability applied to this sector."
+     "A European agri-cooperative (4,200 farms)",
+     "The delta we sign up to is down 14 — verified against live data at every gate"
     ],
     [
-     "Quantum & Advanced Compute for AgriFinance & Commodity Markets",
-     "The same capability applied to this sector."
+     "A global coffee trader",
+     "The part that survives audit is the boring part: each stage owns its latency budget and its failure policy across Agriculture & Food Systems, so your control owners can interrogate any number we publish."
     ],
     [
-     "Regulatory Compliance Automation",
-     "Composed architecture and the metric it answers to."
-    ],
-    [
-     "Case Studies Overview",
-     ""
+     "A food processor (dairy)",
+     "Under the hood this pattern runs on one rule: each stage owns its latency budget and its failure policy for Agriculture & Food Systems at scale, which keeps the blast radius of any change inside one lane."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "What you receive"
+   "x": "Capability pages for this industry"
   },
   {
    "t": "p",
-   "x": "At the end of the first quarter of a typical program you hold four concrete assets:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Baseline diagnostic",
-     "The signed measurement of where the metric stands today, with the method written out so the number can be defended to finance."
-    ],
-    [
-     "Decision and control map",
-     "Every automated decision path, its policy checks, its human checkpoint and its owner on one page."
-    ],
-    [
-     "Evidence pack",
-     "Logs, evaluations and approvals collected automatically as the program runs — ready for internal audit or a regulator."
-    ],
-    [
-     "Value ledger",
-     "A running record of the delta against baseline, updated at every gate, reviewed at every steering meeting."
-    ]
-   ]
+   "x": "The lanes below are where the industry context above becomes buildable scope, one capability at a time."
   },
   {
    "t": "cta",
-   "x": "Book an industry briefing, or go straight to a capability page from the mega menu."
+   "x": "Put your Input cost per hectare in front of the practice lead — bring the baseline, leave with a scoped plan."
   }
  ],
- "words": 537,
+ "words": 1239,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Agriculture & Food Systems",

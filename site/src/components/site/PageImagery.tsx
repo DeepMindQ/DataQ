@@ -95,7 +95,7 @@ function firstRule(rules: [RegExp, Img][], haystack: string): Img | null {
   return null;
 }
 
-function pick(page: { url: string; template: string; l1?: string | null; l2?: string | null }): Img {
+export function pick(page: { url: string; template: string; l1?: string | null; l2?: string | null }): Img {
   const url = page.url || "/";
   const hay = `${url} ${page.l1 ?? ""} ${page.l2 ?? ""}`.toLowerCase();
 

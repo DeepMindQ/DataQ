@@ -1,10 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, ArrowUpRight, ChevronRight, Info, Layers, Cog, Factory, FileBarChart2, BookOpen, Boxes, Building2, Compass, UserRound, Mail, Scale, Briefcase, Newspaper, Wrench, MapPin, Handshake, ShieldCheck, FileText } from "lucide-react";
 import Reveal from "./Reveal";
 import { CountUp } from "./Motion";
 import { TableOfContents } from "./Wave3";
 import { OutputTelemetry, PatentStrip, OfficesMap } from "./PageAugment";
-import { PageImagery } from "./PageImagery";
+import { pick as pickImagery } from "./PageImagery";
+import { TechDiagram, DIAGRAM_KINDS, type DiagramKind } from "./TechDiagrams";
 import { brandData, pageIndex } from "@/lib/content";
 import type { Block, Card, Crumb, PageData } from "@/lib/content";
 
@@ -95,7 +97,34 @@ function heroSecondaryCta(page: PageData): { label: string; url: string } | null
 }
 const NO_HERO_CTA = new Set(["contact_page", "legal_page", "leadership_profile", "search_page"]);
 
-/* ── Dark hero band v2 — kicker icon, context chips, per-template CTA ── */
+/* Per-template micro-chips shown ON the hero image (wave-2 hero redesign).
+   Two short, factual lines — never repeated copy, just template semantics. */
+const HERO_CHIP: Record<string, { head: string; sub: string }> = {
+  tower_hub: { head: "8 services · 2 platforms", sub: "Tower evidence pack" },
+  service_page: { head: "Baseline → audited delta", sub: "Weekly evidence cadence" },
+  sub_capability: { head: "Composable delivery", sub: "Signed baseline metric" },
+  industry_capability: { head: "Sector-calibrated", sub: "Regime-aware controls" },
+  subindustry_page: { head: "Workflow-level scope", sub: "Five priority capabilities" },
+  industry_hub: { head: "8 capability lanes", sub: "Regulatory posture mapped" },
+  solution_page: { head: "Composed architecture", sub: "Named prerequisites" },
+  platform_overview: { head: "Production rails", sub: "Deployment under NDA" },
+  platform_architecture: { head: "Three-plane design", sub: "Audit evidence ready" },
+  platform_usecases: { head: "Proven scenarios", sub: "Reference flows" },
+  case_study: { head: "Baseline audited", sub: "Method under NDA" },
+  insight_article: { head: "Field-tested practice", sub: "No vendor theater" },
+  newsroom_article: { head: "Company release", sub: "Press contact inside" },
+  company_page: { head: "Operating detail", sub: "Named owners" },
+  approach_page: { head: "Method, not slideware", sub: "Gates that bind" },
+  partner_page: { head: "Certified delivery", sub: "Joint reference stack" },
+  leadership_profile: { head: "Practice leader", sub: "Direct line to team" },
+  careers_page: { head: "Hiring now", sub: "Human process" },
+  legal_page: { head: "Plain-language terms", sub: "Effective date inside" },
+  contact_page: { head: "Named inboxes", sub: "Response within 1 business day" },
+};
+
+/* ── Split hero v3 (wave-2): copy left, live visual INSIDE the title block ──
+   The image is no longer a detached figure under the band — it is a framed
+   panel of the hero grid itself, with beam sweep, telemetry chip and ring. */
 export function PageHero({
   page,
   kicker,
@@ -115,62 +144,111 @@ export function PageHero({
   const Icon = KICKER_ICON[page.template];
   const secondary = heroSecondaryCta(page);
   const chips = [page.l1, page.l2, page.l3].filter(Boolean) as string[];
+  const showVisual = page.url !== "/search" && page.url !== "/style-guide";
+  const im = showVisual ? pickImagery(page) : null;
+  const chip = HERO_CHIP[page.template];
+  const priority = page.template === "tower_hub" || page.template === "industry_hub";
   return (
     <section className="dq-hero relative overflow-hidden grad-navy-field text-white">
       <div className="absolute inset-0 dot-grid" aria-hidden="true" />
       <div className="absolute inset-0 grad-orange-glow" aria-hidden="true" />
-      <div className="relative container-dq pb-14 pt-10 sm:pb-16 sm:pt-14">
-        <div className="hero-stagger">
-          <div>
+      <div className="relative container-dq pb-12 pt-10 sm:pb-16 sm:pt-14">
+        <div className="hero-stagger grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:items-center lg:gap-12">
+          {/* left column — the copy */}
+          <div className="min-w-0">
             <Breadcrumbs crumbs={page.crumbs} dark />
-          </div>
-          <div className="measure mt-6">
-            {kicker && (
-              <p className="kicker-bar-dark flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-300">
-                {Icon && <Icon className="h-4 w-4" aria-hidden="true" />}
-                {kicker}
-              </p>
+            <div className="measure mt-6">
+              {kicker && (
+                <p className="kicker-bar-dark flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-300">
+                  {Icon && <Icon className="h-4 w-4" aria-hidden="true" />}
+                  {kicker}
+                </p>
+              )}
+              <h1 data-split className="text-display-2 mt-2 max-w-3xl text-white">{page.title}</h1>
+              {intro && <p className="mt-4 text-[15px] leading-relaxed text-white/70">{intro}</p>}
+            </div>
+            {chips.length > 0 && (
+              <div className="mt-5 flex flex-wrap items-center gap-2">
+                {chips.map((c, i) => (
+                  <span
+                    key={c + i}
+                    className="rounded-full border border-white/15 bg-white/[0.06] px-3 py-1 text-[11px] font-medium text-white/70"
+                  >
+                    {c}
+                  </span>
+                ))}
+                {page.template === "case_study" && (
+                  <span className="rounded-full border border-brand/40 bg-brand/15 px-3 py-1 text-[11px] font-semibold text-brand-300">
+                    Identity withheld · Baseline audited · Method under NDA
+                  </span>
+                )}
+              </div>
             )}
-            <h1 data-split className="text-display-2 mt-2 max-w-3xl text-white">{page.title}</h1>
-            {intro && <p className="mt-4 text-[15px] leading-relaxed text-white/70">{intro}</p>}
-          </div>
-        {/* context chips replace the generic pill (CHG-289) */}
-        {chips.length > 0 && (
-          <div className="mt-5 flex flex-wrap items-center gap-2">
-            {chips.map((c, i) => (
-              <span
-                key={c + i}
-                className="rounded-full border border-white/15 bg-white/[0.06] px-3 py-1 text-[11px] font-medium text-white/70"
-              >
-                {c}
-              </span>
-            ))}
-            {page.template === "case_study" && (
-              <span className="rounded-full border border-brand/40 bg-brand/15 px-3 py-1 text-[11px] font-semibold text-brand-300">
-                Identity withheld · Baseline audited · Method under NDA
-              </span>
+            {children}
+            {!NO_HERO_CTA.has(page.template) && (
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link
+                  href="/book-a-briefing/"
+                  className="btn-sheen inline-flex items-center gap-2 rounded-[10px] bg-brand px-5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-brand-hover"
+                >
+                  Book an Executive Briefing <ArrowRight className="h-4 w-4" />
+                </Link>
+                {secondary && (
+                  <Link
+                    href={secondary.url}
+                    className="inline-flex items-center rounded-[10px] border border-white/25 px-5 py-2.5 text-[13px] font-medium text-white/85 transition hover:border-brand-300 hover:text-brand-300"
+                  >
+                    {secondary.label}
+                  </Link>
+                )}
+              </div>
             )}
           </div>
-        )}
-        {children}
-        {!NO_HERO_CTA.has(page.template) && (
-          <div className="mt-7 flex flex-wrap gap-3">
-            <Link
-              href="/book-a-briefing/"
-              className="btn-sheen inline-flex items-center gap-2 rounded-[10px] bg-brand px-5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-brand-hover"
-            >
-              Book an Executive Briefing <ArrowRight className="h-4 w-4" />
-            </Link>
-            {secondary && (
-              <Link
-                href={secondary.url}
-                className="inline-flex items-center rounded-[10px] border border-white/25 px-5 py-2.5 text-[13px] font-medium text-white/85 transition hover:border-brand-300 hover:text-brand-300"
-              >
-                {secondary.label}
-              </Link>
-            )}
-          </div>
-        )}
+
+          {/* right column — the visual, INSIDE the title block */}
+          {im && (
+            <figure className="hv-figure group relative m-0 aspect-[16/11] w-full overflow-hidden rounded-2xl border border-white/15 bg-navy-900 shadow-3 lg:aspect-[4/3]">
+              <Image
+                src={im.src}
+                alt={im.alt}
+                fill
+                sizes="(max-width: 1024px) 100vw, 480px"
+                className="object-cover hv-img"
+                priority={priority}
+              />
+              {/* legibility + brand grading */}
+              <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-950/85 via-navy-950/15 to-transparent" />
+              <div aria-hidden="true" className="pointer-events-none absolute inset-0 grad-orange-glow-soft opacity-60 mix-blend-screen" />
+              {/* animated beam sweep */}
+              <div aria-hidden="true" className="hv-beam pointer-events-none absolute inset-0 overflow-hidden">
+                <span />
+              </div>
+              {/* corner brackets */}
+              <svg aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full text-brand-300/70" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M3 12 V3 H12" fill="none" stroke="currentColor" strokeWidth="0.8" vectorEffect="non-scaling-stroke" />
+                <path d="M88 3 H97 V12" fill="none" stroke="currentColor" strokeWidth="0.8" vectorEffect="non-scaling-stroke" />
+                <path d="M97 88 V97 H88" fill="none" stroke="currentColor" strokeWidth="0.8" vectorEffect="non-scaling-stroke" />
+                <path d="M12 97 H3 V88" fill="none" stroke="currentColor" strokeWidth="0.8" vectorEffect="non-scaling-stroke" />
+              </svg>
+              {/* template badge — top right */}
+              {kicker && (
+                <figcaption className="absolute right-3 top-3 rounded-full border border-white/20 bg-navy-950/55 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/80 backdrop-blur-sm">
+                  {kicker}
+                </figcaption>
+              )}
+              {/* telemetry chip — bottom left, rises on hover */}
+              {chip && (
+                <div className="hv-chip absolute bottom-3 left-3 rounded-xl border border-white/15 bg-navy-950/65 px-3.5 py-2.5 backdrop-blur-md">
+                  <p className="text-[12.5px] font-semibold leading-none text-white">{chip.head}</p>
+                  <p className="mt-1 flex items-center gap-1.5 text-[10.5px] leading-none text-brand-300">
+                    <span className="hv-pulse inline-block h-1.5 w-1.5 rounded-full bg-brand" aria-hidden="true" />
+                    {chip.sub}
+                  </p>
+                </div>
+              )}
+              <div aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10" />
+            </figure>
+          )}
         </div>
       </div>
     </section>
@@ -188,6 +266,16 @@ export function Blocks({ blocks, skip = [] }: { blocks: Block[]; skip?: string[]
         <Reveal key={`p-${out.length}`}>
           <p className="measure text-[14.5px] leading-[1.75] text-slate-body">{b.x}</p>
         </Reveal>,
+      );
+    } else if (b.t === "diagram") {
+      out.push(
+        <TechDiagram
+          key={`d-${out.length}`}
+          kind={(DIAGRAM_KINDS as string[]).includes(b.kind) ? (b.kind as DiagramKind) : "pipeline"}
+          labels={b.labels}
+          note={b.note}
+          title={b.title}
+        />,
       );
     } else if (b.t === "h2") {
       h2Index += 1;
@@ -212,6 +300,7 @@ export function Blocks({ blocks, skip = [] }: { blocks: Block[]; skip?: string[]
         </Reveal>,
       );
     } else if (b.t === "bullets") {
+      if (!b.items || b.items.length === 0) continue; // never render empty card grids
       out.push(
         <Reveal key={`b-${out.length}`}>
           <ul data-stagger className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -516,7 +605,6 @@ export function ContentPage({ page }: { page: PageData }) {
           </div>
         )}
       </PageHero>
-      <PageImagery page={page} />
       <div className="container-dq py-12">
         {/* content-fill layout fix (2026-11-20): main copy left (wide), TOC rail
             right — the old 200px-left-rail left a ~260px blank margin because

@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Citizen & Patient Experience Orchestration: the composed architecture, the platforms underneath and the metric the program is judged on."
+   "x": "A no-theater description of Citizen & Patient Experience Orchestration: what ships first, what it touches at operational stores, how it is verified, and the per workflow metric we commit to moving against baseline."
   },
   {
    "t": "h2",
@@ -26,6 +26,28 @@
   {
    "t": "p",
    "x": "We redesign journeys on shared rails — identity, consent, notification — orchestrate cross-agency/cross-clinic workflows with event fabric, and instrument experience (resolution, effort, equity) as operating metrics."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Governed lakehouse pipeline — Citizen & Patient Experience Orchestration",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "Under the hood this pattern runs on one rule: the decision path and the audit path share one timeline in Citizen & Patient Experience Orchestration, and rollback is rehearsed before go-live rather than after the incident."
+  },
+  {
+   "t": "p",
+   "x": "The design principle here is simple: every state change is replayable from the signed baseline on Data, Analytics & Lakehouse programs, and every exception path degrades to human review, never to silence."
   },
   {
    "t": "h2",
@@ -62,7 +84,7 @@
   },
   {
    "t": "p",
-   "x": "The solution runs on Dataq Swarm and Dataq Nexus: Many agents operating as one governed, measurable workforce. Enterprise decisions in milliseconds — with a full evidence trail for each decision."
+   "x": "The engineering bet is explicit: identity is short-lived and authorization is deny-by-default in Citizen & Patient Experience Orchestration, which is what makes the reported delta defensible in audit."
   },
   {
    "t": "h2",
@@ -73,19 +95,111 @@
    "items": [
     [
      "Diagnose",
-     "Baseline metrics for this problem locked with owners; current-state decision/data flow mapped in two weeks."
+     "Nothing in this topology is accidental: every state change is replayable from the signed baseline in Citizen & Patient Experience Orchestration, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Prove",
-     "Gated pilot on bounded scope with the testable criterion agreed by finance before the first build sprint."
+     "The engineering bet is explicit: models, agents and rules move through versioned, evaluated releases in Citizen & Patient Experience Orchestration, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "Industrialize",
-     "Staged rollout on the platform stack with SLOs, replay evidence and operator enablement."
+     "The engineering bet is explicit: every state change is replayable from the signed baseline across the Citizen & Patient Experience Orchestration estate, so a regression is a cohort, never an estate."
     ],
     [
      "Compound",
-     "Challenger models and policies quarterly; conformance monitoring; annual value audit against baseline."
+     "The engineering bet is explicit: identity is short-lived and authorization is deny-by-default across the Citizen & Patient Experience Orchestration estate, so the question of how we know gets a pointer, not a paragraph."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "streaming ingest",
+     "streaming ingest carries the ingest path — Kafka-backed CDC with exactly-once sinks"
+    ],
+    [
+     "Delta / Iceberg tables",
+     "Nothing in this topology is accidental: each stage owns its latency budget and its failure policy across the Citizen & Patient Experience Orchestration estate, so the question of how we know gets a pointer, not a paragraph."
+    ],
+    [
+     "cost-aware clustering",
+     "The part that survives audit is the boring part: the decision path and the audit path share one timeline across the Citizen & Patient Experience Orchestration estate, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Unity Catalog governance",
+     "Nothing in this topology is accidental: signals cross boundaries only through typed contracts in Citizen & Patient Experience Orchestration, so a regression is a cohort, never an estate."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "streaming ingest",
+     "streaming ingest carries the ingest path — Kafka-backed CDC with exactly-once sinks"
+    ],
+    [
+     "Delta / Iceberg tables",
+     "Nothing in this topology is accidental: each stage owns its latency budget and its failure policy across the Citizen & Patient Experience Orchestration estate, so the question of how we know gets a pointer, not a paragraph."
+    ],
+    [
+     "cost-aware clustering",
+     "The part that survives audit is the boring part: the decision path and the audit path share one timeline across the Citizen & Patient Experience Orchestration estate, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "Unity Catalog governance",
+     "Nothing in this topology is accidental: signals cross boundaries only through typed contracts in Citizen & Patient Experience Orchestration, so a regression is a cohort, never an estate."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "query p95",
+     "Down 40–55.4% on the certified gold layer on the first working slice; deeper scope moves it further"
+    ],
+    [
+     "batch window",
+     "Down 50–64.4% after re-architecture on the first working slice; deeper scope moves it further"
+    ],
+    [
+     "warehouse spend per query",
+     "Down 20–37.3% after clustering and pruning per workflow, reported weekly against the signed baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Metric anarchy",
+     "What holds the build together is discipline at the boundaries: models, agents and rules move through versioned, evaluated releases in Citizen & Patient Experience Orchestration, so the question of how we know gets a pointer, not a paragraph."
+    ],
+    [
+     "Silent schema drift",
+     "The part that survives audit is the boring part: identity is short-lived and authorization is deny-by-default across the Citizen & Patient Experience Orchestration estate, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "Cost creep",
+     "At operating tempo, the properties that carry the load are structural: signals cross boundaries only through typed contracts in Citizen & Patient Experience Orchestration, so a regression is a cohort, never an estate."
     ]
    ]
   },
@@ -98,19 +212,19 @@
    "items": [
     [
      "Architecture pack",
-     "Reference architecture adapted to your estate, with the integration contracts itemized."
+     "The design principle here is simple: the decision path and the audit path share one timeline in Citizen & Patient Experience Orchestration, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Working system",
-     "The composed capability live on bounded scope, with audit evidence produced automatically."
+     "The design principle here is simple: the decision path and the audit path share one timeline across the Citizen & Patient Experience Orchestration estate, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Run model",
-     "Runbooks, SLO catalog and the named-pod accountability chain for production."
+     "The design principle here is simple: the decision path and the audit path share one timeline for the enterprise at scale, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Value audit kit",
-     "Baseline pack, measurement method and the quarterly review template your finance team signs."
+     "The design principle here is simple: models, agents and rules move through versioned, evaluated releases across the enterprise, so the question of how we know gets a pointer, not a paragraph."
     ]
    ]
   },
@@ -120,32 +234,15 @@
   },
   {
    "t": "p",
-   "x": "The readiness checklist covers three items: source-system access under your security policy, an operating team willing to trial the new workflow, and agreement on the baseline measurement method before work starts."
+   "x": "The part that survives audit is the boring part: signals cross boundaries only through typed contracts in Citizen & Patient Experience Orchestration, and rollback is rehearsed before go-live rather than after the incident."
   },
   {
    "t": "h2",
-   "x": "Proof"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "A top-10 European retail bank",
-     "Real-time fraud decisioning on instant rails: 38% lower fraud losses at a higher approval rate"
-    ],
-    [
-     "A multinational corporate bank",
-     "KYC refresh backlog cleared: 70% faster cycles with agentic file assembly"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "Industry fit"
+   "x": "How a delivery runs"
   },
   {
    "t": "p",
-   "x": "Deployed across Public Sector & Government, Healthcare & Life Sciences, Education & Research. Each industry play adjusts the regulatory frame, the integration surface and the KPI set — the pattern stays, the physics changes."
+   "x": "Here is the working rhythm, stated so you can hold us to it: the first 2 weeks are pure verification — we measure first-contact resolution with your analysts, reconcile disagreements, and freeze the number both sides defend. What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later across the enterprise, so the question of how we know gets a pointer, not a paragraph.. The build earns trust the same way every gate does: evidence is captured where the work happens, not reconstructed later across the Citizen & Patient Experience Orchestration estate, which keeps the blast radius of any change inside one lane.. Under the hood this pattern runs on one rule: each stage owns its latency budget and its failure policy across the Citizen & Patient Experience Orchestration estate, which is what makes the reported delta defensible in audit."
   },
   {
    "t": "h2",
@@ -156,25 +253,34 @@
    "items": [
     [
      "first-contact resolution",
-     "Up sharply"
+     "The build earns trust the same way every gate does: each stage owns its latency budget and its failure policy across the Citizen & Patient Experience Orchestration estate, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "repeat data entry",
-     "Down sharply"
+     "repeat data entry defines success for this pattern and is audited against the week-two baseline at every gate"
     ],
     [
      "equity metrics",
-     "Measured and improving"
+     "equity metrics carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "How a delivery runs"
+   "x": "Proof"
   },
   {
-   "t": "p",
-   "x": "This capability runs on the cadence set out below; the rhythm is fixed, the scope is signed. Weeks 1–2 measure and sign the baseline with your team; nothing builds against an unsigned number. Weeks 3–8 prove the pattern on deliberately bounded scope — one decision path, one workflow, one plant or one portfolio — under a control owner named on your side. Weeks 9–12 industrialize what worked into runbooks, monitoring and enablement, closing with a measured delta against the baseline. Every gate is pass, stop or redirect, in writing."
+   "t": "bullets",
+   "items": [
+    [
+     "A top-10 European retail bank",
+     "Target range 38% on the first working slice, with the method note attached"
+    ],
+    [
+     "A multinational corporate bank",
+     "Reported as 70% against baseline, reproducible by your analysts from the method note"
+    ]
+   ]
   },
   {
    "t": "h2",
@@ -182,26 +288,26 @@
   },
   {
    "t": "p",
-   "x": "In delivery, this work composes with the adjacent capabilities listed here."
+   "x": "No capability ships alone: the links below are the compositions this solution most often travels with, chosen by observed delivery patterns rather than menu logic."
   },
   {
    "t": "bullets",
    "items": [
     [
      "Public Sector & Government",
-     "Priority programs and regulatory posture."
+     "Nothing in this topology is accidental: signals cross boundaries only through typed contracts on Data, Analytics & Lakehouse programs, which keeps the blast radius of any change inside one lane."
     ],
     [
      "Energy & Utilities",
-     "Priority programs and regulatory posture."
+     "What holds the build together is discipline at the boundaries: every state change is replayable from the signed baseline in Citizen & Patient Experience Orchestration, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Enterprise AI Strategy & Roadmapping",
-     "Scope, delivery pattern and committed outcomes."
+     "The build earns trust the same way every gate does: every state change is replayable from the signed baseline across the Citizen & Patient Experience Orchestration estate, which is what makes the reported delta defensible in audit."
     ],
     [
      "A top-10 European retail bank",
-     "Anonymized engagement with audited baseline and outcome."
+     "Nothing in this topology is accidental: every state change is replayable from the signed baseline for the enterprise at scale, which is what makes the reported delta defensible in audit."
     ]
    ]
   },
@@ -211,35 +317,35 @@
   },
   {
    "t": "p",
-   "x": "At the end of the first quarter of a typical program you hold four concrete assets:"
+   "x": "The quarter-close package, built to be handed over rather than demonstrated:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Baseline diagnostic",
-     "The signed measurement of where the metric stands today, with the method written out so the number can be defended to finance."
+     "Nothing in this topology is accidental: models, agents and rules move through versioned, evaluated releases across the Citizen & Patient Experience Orchestration estate, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Decision and control map",
-     "Every automated decision path, its policy checks, its human checkpoint and its owner on one page."
+     "The part that survives audit is the boring part: cost and quality telemetry land in the same view your owners read across the Citizen & Patient Experience Orchestration estate, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "Evidence pack",
-     "Logs, evaluations and approvals collected automatically as the program runs — ready for internal audit or a regulator."
+     "The build earns trust the same way every gate does: each stage owns its latency budget and its failure policy in Citizen & Patient Experience Orchestration, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Value ledger",
-     "A running record of the delta against baseline, updated at every gate, reviewed at every steering meeting."
+     "What holds the build together is discipline at the boundaries: each stage owns its latency budget and its failure policy for the enterprise at scale, which is what makes the reported delta defensible in audit."
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Request a solution briefing — or a scoped value assessment for your version of this problem."
+   "x": "Put your first-contact resolution in front of the practice lead — bring the baseline, leave with a scoped plan."
   }
  ],
- "words": 393,
+ "words": 1664,
  "section": "Solutions",
  "l1": "Solutions",
  "l2": "Workforce & Experience",

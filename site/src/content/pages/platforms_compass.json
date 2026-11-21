@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Dataq Compass — Overview: what it does, the architecture and trust controls, and where it is used inside client programs."
+   "x": "A working definition of Dataq Compass — Overview for the enterprise: engineered controls, named owners, weekly evidence, and a signed baseline so every claim of improvement can be replayed line by line."
   },
   {
    "t": "h2",
@@ -18,6 +18,28 @@
   {
    "t": "p",
    "x": "Dataq Compass operationalizes AI governance: the policy layer (NIST AI RMF, ISO 42001, EU AI Act mapping), model registry with technical documentation, evaluation puts to work with red-team suites, guardrail configuration, incident response for AI events, and the evidence pack that turns conformity assessment into a formality."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "decision-fabric",
+   "title": "Dataq Compass — control and evidence planes",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "The design principle here is simple: each stage owns its latency budget and its failure policy across the Dataq Compass estate, and rollback is rehearsed before go-live rather than after the incident."
+  },
+  {
+   "t": "p",
+   "x": "What holds the build together is discipline at the boundaries: signals cross boundaries only through typed contracts across the enterprise, so drift shows up as a ticket with an owner, not as a mystery."
   },
   {
    "t": "h2",
@@ -62,11 +84,70 @@
   },
   {
    "t": "h2",
-   "x": "Trust and compliance"
+   "x": "Engineering standards & stack"
   },
   {
-   "t": "p",
-   "x": "Compass treats governance as system behavior: policies versioned, evaluations gated in CI, incidents tracked to closure with owners. The output is an AI estate your CISO defends to the board and your regulator inspects without expeditions."
+   "t": "bullets",
+   "items": [
+    [
+     " freshness SLOs",
+     "The build earns trust the same way every gate does: models, agents and rules move through versioned, evaluated releases across the enterprise, so the question of how we know gets a pointer, not a paragraph."
+    ],
+    [
+     "Delta / Iceberg tables",
+     "The part that survives audit is the boring part: identity is short-lived and authorization is deny-by-default across the enterprise, so a regression is a cohort, never an estate."
+    ],
+    [
+     "data contracts",
+     "What holds the build together is discipline at the boundaries: the decision path and the audit path share one timeline across the Dataq Compass estate, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "streaming ingest",
+     "streaming ingest carries the control path — Kafka-backed CDC with exactly-once sinks"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "freshness SLO attainment",
+     "Up 97–99.4% of tables inside their declared window in current programs; measured, not modeled"
+    ],
+    [
+     "pipeline breakage MTTR",
+     "Down 55–72.4% with contracts and lineage paging, with the method note attached so your analysts can reproduce it"
+    ],
+    [
+     "warehouse spend per query",
+     "Down 20–36.4% after clustering and pruning in current programs; measured, not modeled"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Metric anarchy",
+     "At operating tempo, the properties that carry the load are structural: evidence is captured where the work happens, not reconstructed later in Dataq Compass, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "Silent schema drift",
+     "The part that survives audit is the boring part: models, agents and rules move through versioned, evaluated releases across the enterprise, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "Cost creep",
+     "The design principle here is simple: models, agents and rules move through versioned, evaluated releases in Dataq Compass, so a regression is a cohort, never an estate."
+    ]
+   ]
   },
   {
    "t": "h2",
@@ -77,25 +158,17 @@
    "items": [
     [
      "Evidence by default",
-     "Every artifact the platform produces doubles as audit evidence — no reconstruction projects."
+     "At operating tempo, the properties that carry the load are structural: signals cross boundaries only through typed contracts across the Dataq Compass estate, so your control owners can interrogate any number we publish."
     ],
     [
      "Pattern draw on",
-     "Teams start from a configured 80 percent baseline and spend their budget on the 20% that is genuinely yours."
+     "Target range 20% on the first working slice, with the method note attached"
     ],
     [
      "Accountability",
-     "Named control owner per deployment; platform telemetry makes the owner's job inspectable."
+     "Nothing in this topology is accidental: identity is short-lived and authorization is deny-by-default across the enterprise, so the question of how we know gets a pointer, not a paragraph."
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "How programs use it"
-  },
-  {
-   "t": "p",
-   "x": "Dataq Compass typically enters an estate during the Prove phase — configured for your controls in the sandbox, hardened through Industrialize, and left running under the customer's own keys with our pods on the follow-the-sun operations rhythm."
   },
   {
    "t": "h2",
@@ -106,19 +179,40 @@
    "x": "Certified integration surface: MLflow, evaluation frameworks, guardrail libraries, GRC integration."
   },
   {
+   "t": "bullets",
+   "items": [
+    [
+     " freshness SLOs",
+     "The build earns trust the same way every gate does: models, agents and rules move through versioned, evaluated releases across the enterprise, so the question of how we know gets a pointer, not a paragraph."
+    ],
+    [
+     "Delta / Iceberg tables",
+     "The part that survives audit is the boring part: identity is short-lived and authorization is deny-by-default across the enterprise, so a regression is a cohort, never an estate."
+    ],
+    [
+     "data contracts",
+     "What holds the build together is discipline at the boundaries: the decision path and the audit path share one timeline across the Dataq Compass estate, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "streaming ingest",
+     "streaming ingest carries the control path — Kafka-backed CDC with exactly-once sinks"
+    ]
+   ]
+  },
+  {
    "t": "h2",
-   "x": "Where it is deployed"
+   "x": "How programs use it"
   },
   {
    "t": "p",
-   "x": "Primary industry deployments: Banking & Financial Services, Healthcare & Life Sciences, Insurance & Risk, Public Sector & Government, Technology & SaaS, Education & Research."
+   "x": "The rhythm is engineered, not ritual: Nothing in this topology is accidental: each stage owns its latency budget and its failure policy across the Dataq Compass estate, so your control owners can interrogate any number we publish.. The engineering bet is explicit: each stage owns its latency budget and its failure policy in Dataq Compass, so your control owners can interrogate any number we publish.. Nothing in this topology is accidental: the decision path and the audit path share one timeline across the Dataq Compass estate, which is what makes the reported delta defensible in audit.. Nothing in this topology is accidental: models, agents and rules move through versioned, evaluated releases across the Dataq Compass estate, which keeps the blast radius of any change inside one lane."
   },
   {
    "t": "cta",
-   "x": "Read the Architecture & Trust page, or book a platform briefing with the engineering team."
+   "x": "At operating tempo, the properties that carry the load are structural: each stage owns its latency budget and its failure policy for the enterprise at scale, so a regression is a cohort, never an estate."
   }
  ],
- "words": 340,
+ "words": 947,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Compass",

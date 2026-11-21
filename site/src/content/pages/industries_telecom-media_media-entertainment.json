@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "Media & Entertainment: the operating units, priority programs and the five capability towers that matter most here."
+   "x": "How Media & Entertainment runs when it is engineered for Telecom, Media & Entertainment: bounded scope per gate, platform evidence generated in-flight, and outcomes stated as deltas against the number we signed together."
   },
   {
    "t": "h2",
@@ -17,7 +17,29 @@
   },
   {
    "t": "p",
-   "x": "The workflows we industrialize here: Commissioning and audience analysis, Content localization/ops, Rights/royalty accounting, Ad trafficking, Content security. Each arrives with its current cycle times measured in the Diagnose phase, and each leaves the program governed by outcome SLOs rather than anecdotes."
+   "x": "The operating surface here spans Commissioning and audience analysis, Content localization/ops, Rights/royalty accounting, Ad trafficking, Content security. At operating tempo, the properties that carry the load are structural: cost and quality telemetry land in the same view your owners read across the Media & Entertainment estate, and rollback is rehearsed before go-live rather than after the incident."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture"
+  },
+  {
+   "t": "diagram",
+   "kind": "pipeline",
+   "title": "Governed lakehouse pipeline — Media & Entertainment",
+   "labels": [
+    "Source systems",
+    "Ingest & contracts",
+    "Lakehouse storage",
+    "Feature & metric layer",
+    "Serving & BI",
+    "Decision feedback"
+   ],
+   "note": "Under the hood this pattern runs on one rule: the decision path and the audit path share one timeline in Media & Entertainment, and rollback is rehearsed before go-live rather than after the incident."
+  },
+  {
+   "t": "p",
+   "x": "The design principle here is simple: each stage owns its latency budget and its failure policy across Telecom, Media & Entertainment, so your control owners can interrogate any number we publish."
   },
   {
    "t": "h2",
@@ -28,23 +50,23 @@
    "items": [
     [
      "Audience data fragmented",
-     "Linear, streaming, social and box-office data siloed; commissioning decisions anecdotal."
+     "Under the hood this pattern runs on one rule: the decision path and the audit path share one timeline across Telecom, Media & Entertainment, and every exception path degrades to human review, never to silence."
     ],
     [
      "Content ops manual",
-     "Localization, metadata, trailers and compliance edits consume weeks per title."
+     "The engineering bet is explicit: the decision path and the audit path share one timeline across the Media & Entertainment estate, and every exception path degrades to human review, never to silence."
     ],
     [
      "Pre-release leakage",
-     "Embanked titles leak with catastrophic value loss; supply-chain security thin."
+     "The engineering bet is explicit: identity is short-lived and authorization is deny-by-default in Media & Entertainment, and every exception path degrades to human review, never to silence."
     ],
     [
      "Rights reconciliation disputed",
-     "Royalty/rights accounting bilateral; disputes take quarters."
+     "The design principle here is simple: the decision path and the audit path share one timeline in Media & Entertainment, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "Ad ops workflows manual",
-     "Campaign trafficking and reconciliation by spreadsheet; makegoods costly."
+     "At operating tempo, the properties that carry the load are structural: signals cross boundaries only through typed contracts in Media & Entertainment, so your control owners can interrogate any number we publish."
     ],
     [
      "Delivery costs unmanaged",
@@ -84,6 +106,98 @@
   },
   {
    "t": "h2",
+   "x": "Engineering standards & stack"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Delta / Iceberg tables",
+     "The design principle here is simple: the decision path and the audit path share one timeline in Media & Entertainment, so a regression is a cohort, never an estate."
+    ],
+    [
+     " freshness SLOs",
+     "The design principle here is simple: each stage owns its latency budget and its failure policy across the Media & Entertainment estate, which is what makes the reported delta defensible in audit."
+    ],
+    [
+     "Unity Catalog governance",
+     "At operating tempo, the properties that carry the load are structural: every state change is replayable from the signed baseline across the Media & Entertainment estate, and rollback is rehearsed before go-live rather than after the incident."
+    ],
+    [
+     "streaming ingest",
+     "streaming ingest carries the control path — Kafka-backed CDC with exactly-once sinks"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration surface"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "ad & audience platforms",
+     "What holds the build together is discipline at the boundaries: each stage owns its latency budget and its failure policy across Telecom, Media & Entertainment, so a regression is a cohort, never an estate."
+    ],
+    [
+     "OSS/BSS stacks",
+     "The design principle here is simple: signals cross boundaries only through typed contracts across Telecom, Media & Entertainment, and every exception path degrades to human review, never to silence."
+    ],
+    [
+     "billing & mediation",
+     "What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default across the Media & Entertainment estate, so a regression is a cohort, never an estate."
+    ],
+    [
+     "content supply chains",
+     "The design principle here is simple: identity is short-lived and authorization is deny-by-default across the Media & Entertainment estate, so the question of how we know gets a pointer, not a paragraph."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Operational telemetry"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "warehouse spend per query",
+     "Down 20–36.7% after clustering and pruning per cell site, reported weekly against the signed baseline"
+    ],
+    [
+     "pipeline breakage MTTR",
+     "Down 55–73.6% with contracts and lineage paging, with the method note attached so your analysts can reproduce it"
+    ],
+    [
+     "batch window",
+     "Down 50–67.9% after re-architecture per cell site, reported weekly against the signed baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes & the guards we ship"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Cost creep",
+     "The design principle here is simple: identity is short-lived and authorization is deny-by-default across the Media & Entertainment estate, which keeps the blast radius of any change inside one lane."
+    ],
+    [
+     "Metric anarchy",
+     "The part that survives audit is the boring part: signals cross boundaries only through typed contracts across Telecom, Media & Entertainment, so drift shows up as a ticket with an owner, not as a mystery."
+    ],
+    [
+     "Silent schema drift",
+     "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later in Media & Entertainment, and rollback is rehearsed before go-live rather than after the incident."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
    "x": "How we help — five priority capabilities"
   },
   {
@@ -91,25 +205,33 @@
    "items": [
     [
      "Data & Lakehouse",
-     "Cross-channel unified with certified metrics: commissioning evidenced"
+     "At operating tempo, the properties that carry the load are structural: the decision path and the audit path share one timeline for Telecom, Media & Entertainment at scale, so the question of how we know gets a pointer, not a paragraph."
     ],
     [
      "Applied AI & GenAI",
-     "Metadata/localization/compliance pipelines with human QC: cycle down 40-60%"
+     "Reported as down 40 against baseline, reproducible by your analysts from the method note"
     ],
     [
      "Cyber & Zero-Trust",
-     "Watermarking, access control and partner gating: leakage prevented"
+     "What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default in Media & Entertainment, which is what makes the reported delta defensible in audit."
     ],
     [
      "Blockchain & Digital Trust",
-     "Permissioned networks, tokenization and verifiable credentials with the reporting and controls supervisors expect."
+     "What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later for Telecom, Media & Entertainment at scale, and rollback is rehearsed before go-live rather than after the incident."
     ],
     [
      "Agentic AI & Hyperautomation",
-     "Goal-directed agents that run inside your systems with defined roles, budgets and human checkpoints. Every action is logged, measurable and reversible."
+     "At operating tempo, the properties that carry the load are structural: every state change is replayable from the signed baseline for Telecom, Media & Entertainment at scale, so a regression is a cohort, never an estate."
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "How the engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "Here is the working rhythm, stated so you can hold us to it: before any build work, we spend 2 weeks proving the measurement: if two analysts cannot reproduce Commissioning hit-rate the same way, nothing else starts. Under the hood this pattern runs on one rule: cost and quality telemetry land in the same view your owners read on Data, Analytics & Lakehouse programs, so drift shows up as a ticket with an owner, not as a mystery.. The engineering bet is explicit: evidence is captured where the work happens, not reconstructed later in Data, Analytics & Lakehouse delivery, and rollback is rehearsed before go-live rather than after the incident.. Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read for Telecom, Media & Entertainment at scale, so the question of how we know gets a pointer, not a paragraph."
   },
   {
    "t": "h2",
@@ -120,7 +242,7 @@
    "items": [
     [
      "Commissioning hit-rate",
-     "Improved with evidence"
+     "Commissioning hit-rate defines success for this pattern and is audited against the week-two baseline at every gate"
     ],
     [
      "Localization cycle",
@@ -128,21 +250,13 @@
     ],
     [
      "Rights disputes",
-     "Down 60%"
+     "Rights disputes is reported with its method note attached, so the delta is reproducible by your analysts, not just ours"
     ],
     [
      "Delivery cost/title",
-     "Visible, down"
+     "Delivery cost/title moves first here — the gate reviews the measured delta against the signed baseline before any scope expands"
     ]
    ]
-  },
-  {
-   "t": "h2",
-   "x": "How the engagement runs"
-  },
-  {
-   "t": "p",
-   "x": "Start with a two-week diagnostic that measures the workflows above and locks the baseline. Then a gated proof on your data. Then industrialization on platform rails — compliance evidence for the sector generated in-flight along the way."
   },
   {
    "t": "h2",
@@ -153,11 +267,11 @@
    "items": [
     [
      "A tier-1 European operator",
-     "Churn down 19% in target segments: event-triggered save hub"
+     "The build earns trust the same way every gate does: every state change is replayable from the signed baseline across Telecom, Media & Entertainment, so drift shows up as a ticket with an owner, not as a mystery."
     ],
     [
      "A Middle East operator group",
-     "Energy per site down 18%: telemetry-driven optimization at 12,000 sites"
+     "Current programs land down 18 here; the gate reviews the live number, not a projection"
     ]
    ]
   },
@@ -167,14 +281,14 @@
   },
   {
    "t": "p",
-   "x": "Related sub-industry pages: Network Operators (CSPs), Streaming & Digital Platforms, Advertising & MarTech — each with its own capability alignments under /industries/telecom-media/."
+   "x": "The neighbouring operating units are Network Operators (CSPs), Streaming & Digital Platforms, Advertising & MarTech — each with its own capability alignments under /industries/telecom-media/; programs that span two of them usually share one baseline."
   },
   {
    "t": "cta",
-   "x": "Begin with a capability page, or book a briefing with the industry practice lead."
+   "x": "Put your Commissioning hit-rate in front of the practice lead — bring the baseline, leave with a scoped plan."
   }
  ],
- "words": 370,
+ "words": 1335,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Telecom, Media & Entertainment",
