@@ -13,7 +13,7 @@ shadcn/ui primitives · Pagefind static search · self-hosted Sora/Inter fonts.
 
 | | |
 |---|---|
-| Pages | 633 content pages (home, 8 service towers, 54 services, 12 industries, 48 sub-industries, 336 capability pages, 24 solutions, 8 platforms ×3, 36 case studies, insights, company, leadership, partners, careers, newsroom, contact, legal) |
+| Pages | 633 content pages (home, 8 expertise domains, 54 services, 12 industries, 48 sub-industries, 336 capability pages, 24 solutions, 8 platforms ×3, 36 case studies, insights, company, leadership, partners, careers, newsroom, contact, legal) |
 | Navigation | 4-level mega menu (Services / Industries / Solutions / Platforms / Insights / About) + mobile drawer |
 | SEO | Per-page SEO title + meta description, canonical URLs, Open Graph/Twitter cards, JSON-LD (Organization, WebSite, BreadcrumbList, Service, Article, NewsArticle, ProfilePage), auto sitemap.xml + robots.txt |
 | Search | Pagefind static index generated on every export (`/search`) |

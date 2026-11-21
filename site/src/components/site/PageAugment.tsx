@@ -179,7 +179,7 @@ export function PatentGrid() {
             </ul>
             <div className="mt-4 flex flex-wrap gap-1.5 border-t border-line pt-3">
               <span className="text-[10.5px] font-semibold uppercase tracking-wider text-slate-body/50">Powers</span>
-              {[...p.platforms.map((x) => `/platforms/${x}/`), ...p.towers.map((x) => `/services/${x}/`)].map((u) => (
+              {[...p.platforms.map((x) => `/platforms/${x}/`), ...p.expertise.map((x) => `/services/${x}/`)].map((u) => (
                 <Link
                   key={u}
                   href={u}

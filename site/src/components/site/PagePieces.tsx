@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, ChevronRight } from "lucide-react";
+import { ArrowUpRight, ArrowRight, ChevronRight, GitBranch, Scale, FileSearch, Network } from "lucide-react";
 import { PageHero, Blocks, CardGrid, RelatedRail } from "./PageBlocks";
 import { DashStyles } from "./ArchDash";
 import { PatentStrip, OfficesMap } from "./PageAugment";
@@ -21,7 +21,7 @@ function siblingPages(page: PageData) {
 const NEXT_STEP: Record<string, { label: string; blurb: string; url: string }> = {
   consulting_service: { label: "Book a practice briefing", blurb: "45 minutes with the practice lead — your estate, the method, a straight feasibility read.", url: "/book-a-briefing/" },
   service_page: { label: "Value assessment", blurb: "Price the delta in your estate before anything is signed.", url: "/value-assessment/" },
-  tower_hub: { label: "Book a briefing", blurb: "45 minutes with the domain lead — your metric, our method.", url: "/book-a-briefing/" },
+  expertise_hub: { label: "Book a briefing", blurb: "45 minutes with the domain lead — your metric, our method.", url: "/book-a-briefing/" },
   solution_page: { label: "Book a briefing", blurb: "Map this solution to the metric you own.", url: "/book-a-briefing/" },
   case_study: { label: "Run the same diagnostic", blurb: "The diagnostic that locked this baseline takes two weeks.", url: "/value-assessment/" },
   insight_article: { label: "Talk to the practice lead", blurb: "Bring your context — the thesis meets your data.", url: "/contact/" },
@@ -29,7 +29,7 @@ const NEXT_STEP: Record<string, { label: string; blurb: string; url: string }> =
 };
 
 function faqJsonLd(page: PageData): object | null {
-  if (page.template !== "service_page" && page.template !== "tower_hub") return null;
+  if (page.template !== "service_page" && page.template !== "expertise_hub") return null;
   const bullets = page.blocks
     .filter((b) => b.t === "bullets")
     .flatMap((b) => (b as { items: [string, string][] }).items.slice(0, 4));
@@ -43,6 +43,158 @@ function faqJsonLd(page: PageData): object | null {
       acceptedAnswer: { "@type": "Answer", text: a },
     })),
   };
+}
+
+/* ── ServiceNetwork — the interlinking web across the Services estate ────
+   Every service page sits in a navigable network: siblings inside the same
+   expertise domain, curated cross-domain pairings, anonymized field evidence
+   and the sector briefs behind it. Server-rendered from the page index, so
+   the links are always live and consistent with the URL contract. */
+const DOMAIN_PAIRS: Record<string, { label: string; url: string }[]> = {
+  "Agentic AI & Hyperautomation": [
+    { label: "Conversational AI & Digital Humans", url: "/services/applied-ai-generative-ai/conversational-ai-digital-humans/" },
+    { label: "Real-Time Streaming & Event-Driven Decisioning", url: "/services/data-analytics-lakehouse/realtime-streaming-decisioning/" },
+    { label: "Zero-Trust Architecture & Implementation", url: "/services/cybersecurity-zero-trust/zero-trust-architecture/" },
+  ],
+  "Applied AI & Generative AI": [
+    { label: "Agentic Process Automation", url: "/services/agentic-ai-hyperautomation/agentic-process-automation/" },
+    { label: "Enterprise BI & Executive Analytics", url: "/services/data-analytics-lakehouse/enterprise-bi-executive-analytics/" },
+    { label: "AI Security & Model Protection", url: "/services/cybersecurity-zero-trust/ai-security-model-protection/" },
+  ],
+  "Blockchain & Digital Trust": [
+    { label: "Identity & Access Modernization", url: "/services/cybersecurity-zero-trust/identity-access-modernization/" },
+    { label: "Industrial IoT & Sensor Fabric", url: "/services/iot-digital-twin-robotics/industrial-iot-sensor-fabric/" },
+    { label: "Compliance, Audit & Digital Trust", url: "/services/cybersecurity-zero-trust/compliance-audit-digital-trust/" },
+  ],
+  "Cloud, Edge & Platform Engineering": [
+    { label: "Zero-Trust Architecture & Implementation", url: "/services/cybersecurity-zero-trust/zero-trust-architecture/" },
+    { label: "Industrial IoT & Sensor Fabric", url: "/services/iot-digital-twin-robotics/industrial-iot-sensor-fabric/" },
+    { label: "Lakehouse Architecture & Migration", url: "/services/data-analytics-lakehouse/lakehouse-architecture/" },
+  ],
+  "Cybersecurity & Zero-Trust": [
+    { label: "Decentralized Identity & Verifiable Credentials", url: "/services/blockchain-digital-trust/decentralized-identity/" },
+    { label: "Hybrid & Multicloud Architecture", url: "/services/cloud-edge-platform-engineering/hybrid-multicloud-architecture/" },
+    { label: "Post-Quantum Cryptography Migration", url: "/services/quantum-advanced-compute/post-quantum-cryptography/" },
+  ],
+  "Data, Analytics & Lakehouse": [
+    { label: "Generative AI Platform Engineering", url: "/services/applied-ai-generative-ai/genai-platform-engineering/" },
+    { label: "Decision Intelligence Systems", url: "/services/agentic-ai-hyperautomation/decision-intelligence-systems/" },
+    { label: "Cloud-Native & Legacy Modernization", url: "/services/cloud-edge-platform-engineering/cloud-native-modernization/" },
+  ],
+  "IoT, Digital Twin & Robotics": [
+    { label: "High-Performance & Mission-Critical Systems", url: "/services/cloud-edge-platform-engineering/high-performance-mission-critical/" },
+    { label: "Advanced Risk & Predictive Analytics", url: "/services/data-analytics-lakehouse/advanced-risk-predictive-analytics/" },
+    { label: "Zero-Trust Architecture & Implementation", url: "/services/cybersecurity-zero-trust/zero-trust-architecture/" },
+  ],
+  "Quantum & Advanced Compute": [
+    { label: "Cyber Resilience & Incident Recovery", url: "/services/cybersecurity-zero-trust/cyber-resilience-incident-recovery/" },
+    { label: "Advanced Risk & Predictive Analytics", url: "/services/data-analytics-lakehouse/advanced-risk-predictive-analytics/" },
+    { label: "SRE & Reliability Engineering", url: "/services/cloud-edge-platform-engineering/sre-reliability-engineering/" },
+  ],
+};
+
+function ServiceNetwork({ page }: { page: PageData }) {
+  const isService = page.template === "service_page";
+  const isDomainHub = page.template === "expertise_hub";
+  const isRoot = page.template === "services_hub";
+  if (!isService && !isDomainHub && !isRoot) return null;
+
+  const rows = pageIndex();
+  const siblings = isService
+    ? rows.filter((r) => r.template === "service_page" && r.l2 === page.l2 && r.url !== page.url)
+    : isRoot
+      ? rows.filter((r) => r.template === "expertise_hub" && r.l1 === "Services")
+      : [];
+  const pairs = isRoot || isDomainHub ? [] : DOMAIN_PAIRS[page.l2] ?? [];
+  const evidence = page.evidence ?? [];
+  if (!siblings.length && !pairs.length && !evidence.length) return null;
+
+  const groupHead = "text-[10.5px] font-bold uppercase tracking-[0.14em] text-slate-body/55";
+  const chip =
+    "inline-flex items-center rounded-lg border border-line bg-mist/60 px-3 py-1.5 text-[12px] font-medium text-navy-800 transition hover:border-brand hover:text-brand-deep hover:bg-white";
+
+  return (
+    <section className="mt-14" aria-label="Where this capability connects">
+      <div className="flex items-center gap-2.5">
+        <Network className="h-4.5 w-4.5 text-brand-deep" aria-hidden="true" />
+        <h2 className="font-display text-[20px] font-semibold text-navy-800 sm:text-[22px]">
+          Where this capability connects
+        </h2>
+      </div>
+      <p className="mt-1 max-w-3xl text-[13px] text-slate-body/70">
+        The service network around this page — continue across the expertise, pair with the adjacent domain,
+        or read the anonymized field evidence behind the method.
+      </p>
+      <div className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {siblings.length > 0 && (
+          <div className="rounded-2xl border border-line bg-white p-5 shadow-1">
+            <p className={`flex items-center gap-1.5 ${groupHead}`}>
+              <GitBranch className="h-3.5 w-3.5 text-brand-deep" aria-hidden="true" />
+              {isRoot ? "The eight expertise domains" : "Continue across this expertise"}
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {siblings.map((s) => (
+                <Link key={s.url} href={s.url} className={chip}>
+                  {s.title}
+                </Link>
+              ))}
+            </div>
+            {!isRoot && page.l2 && (
+              <Link
+                href={`/services/${page.l2.toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "")}/`}
+                className="mt-4 inline-flex items-center gap-1 text-[12px] font-semibold text-brand-deep hover:underline"
+              >
+                {page.l2} domain overview <ArrowRight className="h-3 w-3" aria-hidden="true" />
+              </Link>
+            )}
+          </div>
+        )}
+        {pairs.length > 0 && (
+          <div className="rounded-2xl border border-line bg-white p-5 shadow-1">
+            <p className={`flex items-center gap-1.5 ${groupHead}`}>
+              <Scale className="h-3.5 w-3.5 text-brand-deep" aria-hidden="true" />
+              Pairs with — adjacent domains
+            </p>
+            <div className="mt-3 flex flex-col gap-2">
+              {pairs.map((p) => (
+                <Link
+                  key={p.url}
+                  href={p.url}
+                  className="group flex items-center justify-between gap-3 rounded-lg border border-line bg-mist/50 px-3.5 py-2.5 transition hover:border-brand/60 hover:bg-white"
+                >
+                  <span className="text-[12.5px] font-medium text-navy-800 group-hover:text-brand-deep">{p.label}</span>
+                  <ArrowRight className="h-3.5 w-3.5 shrink-0 text-brand-deep transition group-hover:translate-x-0.5" aria-hidden="true" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+        {evidence.length > 0 && (
+          <div className="rounded-2xl border border-line bg-white p-5 shadow-1">
+            <p className={`flex items-center gap-1.5 ${groupHead}`}>
+              <FileSearch className="h-3.5 w-3.5 text-brand-deep" aria-hidden="true" />
+              Field evidence — anonymized builds
+            </p>
+            <div className="mt-3 flex flex-col gap-2">
+              {evidence.map((e) => (
+                <Link
+                  key={e.url}
+                  href={e.url}
+                  className="group flex items-center justify-between gap-3 rounded-lg border border-line bg-mist/50 px-3.5 py-2.5 transition hover:border-brand/60 hover:bg-white"
+                >
+                  <span>
+                    <span className="block text-[12.5px] font-medium text-navy-800 group-hover:text-brand-deep">{e.title}</span>
+                    <span className="mt-0.5 block text-[11px] text-slate-body/60">{e.ind}</span>
+                  </span>
+                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-brand-deep transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
 }
 
 /* ── Universal content page (all templates except home) ───────────────── */
@@ -90,12 +242,15 @@ export function ContentPage({ page }: { page: PageData }) {
         <article className="dq-article mx-auto w-full max-w-[1080px]">
           <Blocks blocks={page.blocks} skip={["hero"]} />
 
-          {/* in-narrative exploration cards ("Services in this tower", hubs…) */}
+          {/* in-narrative exploration cards ("Services in this expertise", hubs…) */}
           <CardGrid
             cards={page.cards}
             heading={cardsHeading(page.template)}
             sub={cardsSub(page.template)}
           />
+
+          {/* the interlinking web — siblings, paired domains, field evidence */}
+          <ServiceNetwork page={page} />
 
           {/* the patented methods underneath — factual, patent-mapped */}
           <PatentStrip page={page} />
@@ -173,7 +328,7 @@ export function ContentPage({ page }: { page: PageData }) {
 
 function sectionKicker(page: PageData): string | undefined {
   const map: Record<string, string> = {
-    tower_hub: "Expertise Domain",
+    expertise_hub: "Expertise Domain",
     service_page: "Service",
     industry_hub: "Industry",
     subindustry_page: "Sub-industry",
@@ -214,7 +369,7 @@ function cardsHeading(template: string): string {
     platforms_hub: "The Dataq platform portfolio",
     cases_hub: "The case index",
     insights_hub: "Insight categories",
-    tower_hub: "Services in this expertise domain",
+    expertise_hub: "Services in this expertise domain",
     industry_hub: "Sub-industries",
     subindustry_page: "Capabilities for this sub-industry",
     industry_capability: "Sub-industry depth",

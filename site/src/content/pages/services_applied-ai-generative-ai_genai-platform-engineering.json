@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "The platform economics nobody prices until month three"
+   "x": "The platform economics nobody prices until month three",
+   "sub": "Metering, caching and allocation designed in — before the first invoice lands"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four ways GenAI platforms blow their mandate"
+   "x": "Four ways GenAI platforms blow their mandate",
+   "sub": "Bypass culture, unbudgeted spend, silent swaps, guardrail debt"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — the governed model gateway"
+   "x": "Reference architecture — the governed model gateway",
+   "sub": "Gateway, registry, guard chain and the metering spine"
   },
   {
    "t": "p",
@@ -105,13 +108,15 @@
      "id": "gw",
      "lane": 1,
      "label": "Inference gateway",
-     "hot": true
+     "hot": true,
+     "sub": "routed, metered, budgeted"
     },
     {
      "id": "auth",
      "lane": 1,
      "label": "Use-case authz",
-     "hot": true
+     "hot": true,
+     "sub": "per-use-case scopes"
     },
     {
      "id": "shape",
@@ -122,13 +127,15 @@
      "id": "cache",
      "lane": 1,
      "label": "Semantic cache",
-     "hot": true
+     "hot": true,
+     "sub": "content-hash keyed, TTL'd"
     },
     {
      "id": "reg",
      "lane": 2,
      "label": "Model registry",
-     "hot": true
+     "hot": true,
+     "sub": "versioned, signed lineage"
     },
     {
      "id": "host",
@@ -138,7 +145,8 @@
     {
      "id": "router",
      "lane": 2,
-     "label": "Model router"
+     "label": "Model router",
+     "sub": "class of service per intent"
     },
     {
      "id": "vdb",
@@ -149,18 +157,21 @@
      "id": "docs",
      "lane": 3,
      "label": "Prompt & eval repo",
-     "hot": true
+     "hot": true,
+     "sub": "versioned, peer-reviewed"
     },
     {
      "id": "trace",
      "lane": 3,
-     "label": "Trace store"
+     "label": "Trace store",
+     "sub": "prompt + context + output"
     },
     {
      "id": "guard",
      "lane": 4,
      "label": "Guardrail stack",
-     "hot": true
+     "hot": true,
+     "sub": "pre-generation filters"
     },
     {
      "id": "eval",
@@ -176,7 +187,8 @@
      "id": "budget",
      "lane": 5,
      "label": "Budgets & cutoffs",
-     "hot": true
+     "hot": true,
+     "sub": "spend ceilings, loud trips"
     },
     {
      "id": "showback",
@@ -278,11 +290,26 @@
      "label": "samples"
     }
    ],
-   "note": "Direct vendor egress fails closed at the network layer. The gateway is the only door, which is what makes budgets, caching and audit actually binding."
+   "note": "Direct vendor egress fails closed at the network layer. The gateway is the only door, which is what makes budgets, caching and audit actually binding.",
+   "badges": [
+    {
+     "label": "Cache hit rate target",
+     "value": "34%"
+    },
+    {
+     "label": "Cost per answer, metered",
+     "value": "per use case"
+    },
+    {
+     "label": "Guard chain",
+     "value": "pre-generation"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "A request through the governed door"
+   "x": "A request through the governed door",
+   "sub": "The hop-by-hop path, with the checks each hop runs"
   },
   {
    "t": "p",
@@ -305,7 +332,8 @@
   },
   {
    "t": "h2",
-   "x": "The platform console finance and engineering share"
+   "x": "The platform console finance and engineering share",
+   "sub": "Cost, latency and guard events on one surface"
   },
   {
    "t": "p",
@@ -639,7 +667,8 @@
   },
   {
    "t": "h2",
-   "x": "Cost and latency posture across load tiers"
+   "x": "Cost and latency posture across load tiers",
+   "sub": "How the posture holds as concurrency climbs"
   },
   {
    "t": "p",
@@ -688,7 +717,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": true,
-     "hook": "; competition sets the pace.",
+     "hook": "Research desks, contact centers and KYC teams need grounded answers with citations an examiner can trace — RAG with permission fidelity and eval discipline, not a chatbot bolted to a search box.",
      "plays": [
       "Model gateway with authz, quotas, semantic caching and full traces",
       "Prompt CI with versioned guardrail suites and model-registry discipline",
@@ -696,25 +725,40 @@
      ],
      "kpis": [
       {
-       "label": "p95 gateway latency",
-       "value": "480ms"
+       "label": "Containment on tier-1 intents",
+       "value": "40%"
       },
       {
-       "label": "Cache hit rate",
-       "value": "58%"
+       "label": "Citation coverage on answers",
+       "value": "97%"
       },
       {
-       "label": "Cost per 1k calls",
-       "value": "$2.4"
+       "label": "Answer latency p95",
+       "value": "6s"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/banking-financial-services/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Research portals and policy corpora",
+      "Model-risk evidence (SR 11-7)",
+      "Contact-center stacks (Genesys-class)"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-2 universal bank",
+       "url": "/case-studies/bank-05/"
+      },
+      {
+       "title": "A private banking group",
+       "url": "/case-studies/bank-07/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": false,
-     "hook": "Ask what pricing sophistication outrunning governance costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Underwriting submissions, claims notes and policy wordings hold the answers; the work is retrieval with strict citations to wording versions, plus dialog systems that keep adjusters in the loop.",
      "plays": [
       "Model gateway with authz, quotas, semantic caching and full traces",
       "Prompt CI with versioned guardrail suites and model-registry discipline",
@@ -722,25 +766,40 @@
      ],
      "kpis": [
       {
-       "label": "p95 gateway latency",
-       "value": "480ms"
+       "label": "Submission auto-summary adoption",
+       "value": "46%"
       },
       {
-       "label": "Cache hit rate",
-       "value": "58%"
+       "label": "Wording-citation fidelity",
+       "value": "100%"
       },
       {
-       "label": "Cost per 1k calls",
-       "value": "$2.4"
+       "label": "Adjuster review time saved",
+       "value": "7 min"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/insurance/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "PAS/claims document estates",
+      "Versioned wording libraries",
+      "Adjuster workbenches"
+     ],
+     "evidence": [
+      {
+       "title": "A top-5 global P&C insurer",
+       "url": "/case-studies/ins-01/"
+      },
+      {
+       "title": "A life insurer",
+       "url": "/case-studies/ins-07/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Clinical and administrative knowledge sits in guideline PDFs, EHR notes and payer policies — grounded generation with citation discipline, PHI redaction and clinician review at the right points.",
      "plays": [
       "Model gateway with authz, quotas, semantic caching and full traces",
       "Prompt CI with versioned guardrail suites and model-registry discipline",
@@ -749,25 +808,40 @@
      ],
      "kpis": [
       {
-       "label": "p95 gateway latency",
-       "value": "480ms"
+       "label": "Clinician acceptance of grounded answers",
+       "value": "79%"
       },
       {
-       "label": "Cache hit rate",
-       "value": "58%"
+       "label": "PHI redaction coverage",
+       "value": "100%"
       },
       {
-       "label": "Cost per 1k calls",
-       "value": "$2.4"
+       "label": "Prior-auth packet prep time",
+       "value": "7 min"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Clinical guidelines + payer policy",
+      "EHR notes via HL7 FHIR",
+      "PHI de-identification pipeline"
+     ],
+     "evidence": [
+      {
+       "title": "A 12-hospital US health system",
+       "url": "/case-studies/hc-01/"
+      },
+      {
+       "title": "A multi-hospital network",
+       "url": "/case-studies/hc-04/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "Manufacturing & Industrial operators recognize the pattern: quality escapes and manual inspection, quarter after quarter.",
+     "hook": "SOPs, failure-mode libraries and quality records are the corpus, and vision systems read the line — value shows up as fewer repeat defects and faster root-cause, not as demos.",
      "plays": [
       "Model gateway with authz, quotas, semantic caching and full traces",
       "Prompt CI with versioned guardrail suites and model-registry discipline",
@@ -775,25 +849,40 @@
      ],
      "kpis": [
       {
-       "label": "p95 gateway latency",
-       "value": "480ms"
+       "label": "First-pass extraction accuracy",
+       "value": "96%"
       },
       {
-       "label": "Cache hit rate",
-       "value": "58%"
+       "label": "Root-cause search time cut",
+       "value": "48%"
       },
       {
-       "label": "Cost per 1k calls",
-       "value": "$2.4"
+       "label": "Edge inference within deadline",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/manufacturing/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "SOP / FMEA corpora",
+      "Quality records (eDHR)",
+      "Plant-floor capture (vision)"
+     ],
+     "evidence": [
+      {
+       "title": "A specialty chemicals producer",
+       "url": "/case-studies/mfg-02/"
+      },
+      {
+       "title": "An automotive tier-1 supplier",
+       "url": "/case-studies/mfg-04/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Product content, service dialogs and demand chat run at consumer scale — containment with dignity: the assistant handles the routine, the human gets the judgment call with context attached.",
      "plays": [
       "Model gateway with authz, quotas, semantic caching and full traces",
       "Prompt CI with versioned guardrail suites and model-registry discipline",
@@ -801,25 +890,40 @@
      ],
      "kpis": [
       {
-       "label": "p95 gateway latency",
-       "value": "480ms"
+       "label": "Dialog containment",
+       "value": "44%"
       },
       {
-       "label": "Cache hit rate",
-       "value": "58%"
+       "label": "CSAT on contained sessions",
+       "value": "75%"
       },
       {
-       "label": "Cost per 1k calls",
-       "value": "$2.4"
+       "label": "Dignified escalation quality",
+       "value": "95%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Commerce and CX platforms",
+      "Versioned knowledge bases",
+      "CRM agent desktops"
+     ],
+     "evidence": [
+      {
+       "title": "A global fashion group",
+       "url": "/case-studies/ret-02/"
+      },
+      {
+       "title": "A specialty marketplace",
+       "url": "/case-studies/ret-06/"
+      }
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": true,
-     "hook": "; competition sets the pace.",
+     "hook": "Care and activation dialogs, network runbooks and billing knowledge — containment and first-contact resolution on the care side, grounded retrieval for the agents who take escalations.",
      "plays": [
       "Model gateway with authz, quotas, semantic caching and full traces",
       "Prompt CI with versioned guardrail suites and model-registry discipline",
@@ -828,25 +932,40 @@
      ],
      "kpis": [
       {
-       "label": "p95 gateway latency",
-       "value": "480ms"
+       "label": "Care containment",
+       "value": "44%"
       },
       {
-       "label": "Cache hit rate",
-       "value": "58%"
+       "label": "FCR lift on assisted calls",
+       "value": "16%"
       },
       {
-       "label": "Cost per 1k calls",
-       "value": "$2.4"
+       "label": "Runbook freshness SLA",
+       "value": "12 hrs"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/telecom-media/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Care platforms and runbooks",
+      "Billing/CRM knowledge",
+      "TM Forum API surfaces"
+     ],
+     "evidence": [
+      {
+       "title": "A North American cable operator",
+       "url": "/case-studies/tel-03/"
+      },
+      {
+       "title": "A mobile operator",
+       "url": "/case-studies/tel-06/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Field crews and control rooms need procedures and asset history at the point of work — grounded retrieval with version control over the procedure corpus, and voice interfaces that survive gloves and noise.",
      "plays": [
       "Model gateway with authz, quotas, semantic caching and full traces",
       "Prompt CI with versioned guardrail suites and model-registry discipline",
@@ -854,25 +973,36 @@
      ],
      "kpis": [
       {
-       "label": "p95 gateway latency",
-       "value": "480ms"
+       "label": "Procedure retrieval at point of work",
+       "value": "95%"
       },
       {
-       "label": "Cache hit rate",
-       "value": "58%"
+       "label": "Version-stale answers blocked",
+       "value": "100%"
       },
       {
-       "label": "Cost per 1k calls",
-       "value": "$2.4"
+       "label": "Hands-free voice-task completion",
+       "value": "78%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Versioned procedure management",
+      "Asset history (EAM)",
+      "Field tablets, hands-free UI"
+     ],
+     "evidence": [
+      {
+       "title": "A renewable energy developer",
+       "url": "/case-studies/en-09/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": "Logistics & Supply Chain operators recognize the pattern: demand and capacity planning stale, quarter after quarter.",
+     "hook": "Exception handling, customs knowledge and carrier rules live in documents — retrieval that answers what applies to this lane, with citations, plus document AI that reads the paperwork.",
      "plays": [
       "Model gateway with authz, quotas, semantic caching and full traces",
       "Prompt CI with versioned guardrail suites and model-registry discipline",
@@ -881,25 +1011,30 @@
      ],
      "kpis": [
       {
-       "label": "p95 gateway latency",
-       "value": "480ms"
+       "label": "Lane-rule answers with citations",
+       "value": "88%"
       },
       {
-       "label": "Cache hit rate",
-       "value": "58%"
+       "label": "Exception-doc processing time cut",
+       "value": "44%"
       },
       {
-       "label": "Cost per 1k calls",
-       "value": "$2.4"
+       "label": "Customs doc first-pass yield",
+       "value": "85%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Customs and lane-rule corpora",
+      "TMS exception queues",
+      "Document-AI intake"
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use.",
+     "hook": "Citizen services and caseworker support need grounded answers bound to statute versions and eligibility rules, with every answer citable for oversight and appeal.",
      "plays": [
       "Model gateway with authz, quotas, semantic caching and full traces",
       "Prompt CI with versioned guardrail suites and model-registry discipline",
@@ -907,25 +1042,40 @@
      ],
      "kpis": [
       {
-       "label": "p95 gateway latency",
-       "value": "480ms"
+       "label": "Statute-bound answer coverage",
+       "value": "94%"
       },
       {
-       "label": "Cache hit rate",
-       "value": "58%"
+       "label": "Citable decision trail",
+       "value": "100%"
       },
       {
-       "label": "Cost per 1k calls",
-       "value": "$2.4"
+       "label": "Caseworker research time cut",
+       "value": "34%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/public-sector/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Statute and eligibility corpora",
+      "Case-management systems",
+      "Oversight/appeal evidence"
+     ],
+     "evidence": [
+      {
+       "title": "A national digital-government agency",
+       "url": "/case-studies/pub-01/"
+      },
+      {
+       "title": "A national employment agency",
+       "url": "/case-studies/pub-06/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Faculty, advisors and students need answers grounded in catalogs, policy and course content — with accessibility and academic-integrity guards designed in from the start.",
      "plays": [
       "Model gateway with authz, quotas, semantic caching and full traces",
       "Prompt CI with versioned guardrail suites and model-registry discipline",
@@ -933,25 +1083,40 @@
      ],
      "kpis": [
       {
-       "label": "p95 gateway latency",
-       "value": "480ms"
+       "label": "Adviser-grounded query resolution",
+       "value": "77%"
       },
       {
-       "label": "Cache hit rate",
-       "value": "58%"
+       "label": "Academic-integrity guard enforcement",
+       "value": "100%"
       },
       {
-       "label": "Cost per 1k calls",
-       "value": "$2.4"
+       "label": "Faculty admin time returned",
+       "value": "5 hrs"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/education-research/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Catalogs, policy, course content",
+      "LMS/SIS estates",
+      "Integrity and accessibility guards"
+     ],
+     "evidence": [
+      {
+       "title": "A national EdTech platform (2M learners)",
+       "url": "/case-studies/edu-02/"
+      },
+      {
+       "title": "A national medical research institute",
+       "url": "/case-studies/edu-08/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": true,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Support, docs and success knowledge scale with ARR — containment and deflection measured against CSAT, with the eval suite gating every prompt and model change.",
      "plays": [
       "Model gateway with authz, quotas, semantic caching and full traces",
       "Prompt CI with versioned guardrail suites and model-registry discipline",
@@ -959,25 +1124,40 @@
      ],
      "kpis": [
       {
-       "label": "p95 gateway latency",
-       "value": "480ms"
+       "label": "Support containment",
+       "value": "47%"
       },
       {
-       "label": "Cache hit rate",
-       "value": "58%"
+       "label": "Eval-suite gate coverage",
+       "value": "100%"
       },
       {
-       "label": "Cost per 1k calls",
-       "value": "$2.4"
+       "label": "Docs answer freshness",
+       "value": "6 hrs"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/technology-saas/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Docs and support knowledge",
+      "Eval CI on prompts/models",
+      "Helpdesk stacks (Zendesk-class)"
+     ],
+     "evidence": [
+      {
+       "title": "A B2B SaaS platform (Series D)",
+       "url": "/case-studies/tech-01/"
+      },
+      {
+       "title": "A global gaming studio (live-service title, 15M MAU)",
+       "url": "/case-studies/tech-03/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Agronomy advice, subsidy rules and certification standards as grounded answers for co-ops and growers — multilingual, season-aware, and citable to the standard that governs the crop.",
      "plays": [
       "Model gateway with authz, quotas, semantic caching and full traces",
       "Prompt CI with versioned guardrail suites and model-registry discipline",
@@ -985,26 +1165,42 @@
      ],
      "kpis": [
       {
-       "label": "p95 gateway latency",
-       "value": "480ms"
+       "label": "Advisory answer acceptance",
+       "value": "79%"
       },
       {
-       "label": "Cache hit rate",
-       "value": "58%"
+       "label": "Standard-citation fidelity",
+       "value": "98%"
       },
       {
-       "label": "Cost per 1k calls",
-       "value": "$2.4"
+       "label": "Multilingual query coverage",
+       "value": "91%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Agronomy and subsidy corpora",
+      "Certification standards (GLOBALG.A.P.)",
+      "Multilingual advisory channels"
+     ],
+     "evidence": [
+      {
+       "title": "A European agri-cooperative (4,200 farms)",
+       "url": "/case-studies/agr-01/"
+      },
+      {
+       "title": "A food processor (dairy)",
+       "url": "/case-studies/agr-03/"
+      }
+     ]
     }
    ],
    "practiceNote": "Generative AI Platform Engineering view: one governed door for every model call — authz, budgets, caching, guardrails and traces — so fifty use cases stay operable and affordable."
   },
   {
    "t": "h2",
-   "x": "Default platform components — and the deviations we allow"
+   "x": "Default platform components — and the deviations we allow",
+   "sub": "The default stack, and where we sign deviations"
   },
   {
    "t": "p",
@@ -1053,7 +1249,8 @@
   },
   {
    "t": "h2",
-   "x": "Platform release gates — evidence before exposure"
+   "x": "Platform release gates — evidence before exposure",
+   "sub": "What must be proven before a use case is exposed"
   },
   {
    "t": "table",
@@ -1093,7 +1290,8 @@
   },
   {
    "t": "h2",
-   "x": "What the platform team hands over"
+   "x": "What the platform team hands over",
+   "sub": "Golden paths, runbooks, registry and the budget policy"
   },
   {
    "t": "bullets",
@@ -1126,7 +1324,8 @@
   },
   {
    "t": "h2",
-   "x": "The platform build, sprint by sprint"
+   "x": "The platform build, sprint by sprint",
+   "sub": "Gateway first, guardrails second, golden paths third"
   },
   {
    "t": "bullets",
@@ -1159,7 +1358,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — identity, finance and every consuming team"
+   "x": "Integration surface — identity, finance and every consuming team",
+   "sub": "IdP, chargeback systems and the consumer contract"
   },
   {
    "t": "p",
@@ -1192,7 +1392,8 @@
   },
   {
    "t": "h2",
-   "x": "Governance enforced once, inherited by every consuming team"
+   "x": "Governance enforced once, inherited by every consuming team",
+   "sub": "Why the gateway beats per-team policy"
   },
   {
    "t": "p",
@@ -1222,6 +1423,44 @@
   {
    "t": "note",
    "x": "Guardrail configuration is versioned like code: a rule change is a pull request with an eval run attached, never a dashboard edit at midnight."
+  },
+  {
+   "t": "h2",
+   "x": "The gateway is the product",
+   "sub": "Routing, caching, budgeting and guardrails as one governed surface — and the economics that prove it",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "GenAI platforms justify themselves in month three, when the first per-team invoices land. The design that survives is the governed gateway: every request enters through one surface that routes by class of service, enforces use-case authz, applies the guard chain before generation, and meters cost per use case — so finance reads an allocation, engineering reads a router config, and neither reads a spreadsheet reconciliation. The semantic cache is the silent margin-maker: content-hash keyed, TTL-bounded and eval-safe, it turns repeated enterprise queries into a fraction of their token cost.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Budgets and cutoffs are policy, not dashboards. Each use case carries a spend ceiling with a loud trip — the circuit breaker pattern the agent runtime uses — and the model registry pins versions with signed lineage, because a silent model swap is a compliance event wearing a deploy. The platform release gate asks one question: can a consuming team ship a use case without touching the platform team? If the answer is no, the golden path is not done.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "One governed door",
+     "Routing, authz, guards and metering at the gateway; nothing bypasses."
+    ],
+    [
+     "Semantic cache as margin",
+     "Content-hash keyed and TTL-bounded; eval-safe by construction."
+    ],
+    [
+     "Budgets that trip loudly",
+     "Per-use-case ceilings with circuit breakers — cost control is policy."
+    ],
+    [
+     "Signed model lineage",
+     "Registry pins versions; a silent swap is a compliance event."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1342,6 +1581,23 @@
    "url": "/case-studies/agr-03/",
    "tag": "Evidence",
    "desc": "Yield +2.8 points, recalls scoped in minutes — quality and traceability program."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A tier-2 universal bank",
+   "url": "/case-studies/bank-05/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A top-5 global P&C insurer",
+   "url": "/case-studies/ins-01/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A North American cable operator",
+   "url": "/case-studies/tel-03/",
+   "ind": "Telecom, Media & Entertainment"
   }
  ]
 }

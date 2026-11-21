@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "A decision system is judged by its worst defensible case"
+   "x": "A decision system is judged by its worst defensible case",
+   "sub": "Design for the decision a regulator will read, not the average case"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that make decisions indefensible"
+   "x": "Four failure modes that make decisions indefensible",
+   "sub": "Unbounded autonomy, absent challengers, sampled explanations, drifting fairness"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — challenger panels around every decision"
+   "x": "Reference architecture — challenger panels around every decision",
+   "sub": "Champion, challenger, policy envelope and explanation layer as one governed service"
   },
   {
    "t": "p",
@@ -89,7 +92,8 @@
     {
      "id": "feat",
      "lane": 0,
-     "label": "Feature store"
+     "label": "Feature store",
+     "sub": "point-in-time correct"
     },
     {
      "id": "docs",
@@ -105,46 +109,54 @@
      "id": "score",
      "lane": 1,
      "label": "Decision model",
-     "hot": true
+     "hot": true,
+     "sub": "champion within policy bounds"
     },
     {
      "id": "ensemble",
      "lane": 1,
-     "label": "Challenger models"
+     "label": "Challenger models",
+     "sub": "score silently, always"
     },
     {
      "id": "rules",
      "lane": 1,
-     "label": "Rule overlays"
+     "label": "Rule overlays",
+     "sub": "signed policy deltas"
     },
     {
      "id": "bounds",
      "lane": 2,
      "label": "Policy bounds",
-     "hot": true
+     "hot": true,
+     "sub": "signed envelope per decision class"
     },
     {
      "id": "eligible",
      "lane": 2,
-     "label": "Eligibility rules"
+     "label": "Eligibility rules",
+     "sub": "versioned, examinable"
     },
     {
      "id": "explain",
      "lane": 2,
      "label": "Explanation layer",
-     "hot": true
+     "hot": true,
+     "sub": "reason codes on 100%"
     },
     {
      "id": "panel",
      "lane": 3,
      "label": "Benchmark panel",
-     "hot": true
+     "hot": true,
+     "sub": "human panel, refreshed quarterly"
     },
     {
      "id": "fair",
      "lane": 3,
      "label": "Fairness tests",
-     "hot": true
+     "hot": true,
+     "sub": "disparate-impact gates"
     },
     {
      "id": "drift",
@@ -154,24 +166,28 @@
     {
      "id": "act",
      "lane": 4,
-     "label": "Action APIs"
+     "label": "Action APIs",
+     "sub": "scoped, idempotent writes"
     },
     {
      "id": "appeal",
      "lane": 4,
      "label": "Appeal path",
-     "hot": true
+     "hot": true,
+     "sub": "named reviewer, full context"
     },
     {
      "id": "override",
      "lane": 4,
-     "label": "Human override"
+     "label": "Human override",
+     "sub": "context attached, logged"
     },
     {
      "id": "ledger",
      "lane": 5,
      "label": "Decision ledger",
-     "hot": true
+     "hot": true,
+     "sub": "every output, replayable"
     },
     {
      "id": "report",
@@ -181,7 +197,8 @@
     {
      "id": "audit",
      "lane": 5,
-     "label": "Audit sampling"
+     "label": "Audit sampling",
+     "sub": "discrepancy-driven"
     }
    ],
    "edges": [
@@ -268,11 +285,26 @@
      "label": "samples"
     }
    ],
-   "note": "The champion only acts inside the policy envelope; the challenger scores every case silently, and disagreement rates above threshold force a review before promotion."
+   "note": "The champion only acts inside the policy envelope; the challenger scores every case silently, and disagreement rates above threshold force a review before promotion.",
+   "badges": [
+    {
+     "label": "Panel agreement",
+     "value": "91%"
+    },
+    {
+     "label": "Reason-code coverage",
+     "value": "100%"
+    },
+    {
+     "label": "Decisions replayable",
+     "value": "100%"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "One decision, challenged and explained"
+   "x": "One decision, challenged and explained",
+   "sub": "The lifecycle of a single output, from features to reason codes to appeal path"
   },
   {
    "t": "p",
@@ -295,7 +327,8 @@
   },
   {
    "t": "h2",
-   "x": "The decision console the risk committee reads"
+   "x": "The decision console the risk committee reads",
+   "sub": "Agreement, drift and fairness as a standing agenda item"
   },
   {
    "t": "p",
@@ -634,7 +667,8 @@
   },
   {
    "t": "h2",
-   "x": "Decision quality against the human panel, quarter by quarter"
+   "x": "Decision quality against the human panel, quarter by quarter",
+   "sub": "Benchmark-panel methodology and what agreement actually measures"
   },
   {
    "t": "p",
@@ -693,7 +727,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": true,
-     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: orchestration is the discipline — dozens of small automations running as one auditable workforce, with escalations designed rather than improvised.",
+     "hook": "KYC refresh backlogs, sanctions-alert triage and reconcile-everything month-ends are high-volume, rule-bounded and examinable — exactly the workload where role-scoped agents out-perform both manual desks and brittle RPA.",
      "plays": [
       "Challenger benchmarks with agreement-gated autonomy",
       "Continuous disparate-impact monitoring with signed tolerances",
@@ -701,25 +735,40 @@
      ],
      "kpis": [
       {
-       "label": "Panel agreement",
-       "value": "91%"
+       "label": "STP rate, agent-handled ops",
+       "value": "61%"
       },
       {
-       "label": "Disparate impact",
-       "value": "0.92"
+       "label": "Checkpoint fidelity at audit sampling",
+       "value": "98%"
       },
       {
-       "label": "Reason-code coverage",
-       "value": "100%"
+       "label": "Cost per completed action",
+       "value": "$0.42"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "KYC/case suites and watchlist tools",
+      "SWIFT gpi and payment-rail events",
+      "SR 11-7 / OCC 2011-12 evidence"
+     ],
+     "evidence": [
+      {
+       "title": "A top-10 European retail bank",
+       "url": "/case-studies/bank-01/"
+      },
+      {
+       "title": "A multinational corporate bank",
+       "url": "/case-studies/bank-02/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": true,
-     "hook": "Ask what fraud industrialized against manual detection costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "FNOL intake, submission triage and reserve refresh run on ACORD-coded documents and PAS queues that surge at catastrophe season — agent pools absorb the surge while adjusters keep the judgment calls, with every step logged.",
      "plays": [
       "Challenger benchmarks with agreement-gated autonomy",
       "Continuous disparate-impact monitoring with signed tolerances",
@@ -727,25 +776,40 @@
      ],
      "kpis": [
       {
-       "label": "Panel agreement",
-       "value": "91%"
+       "label": "Claims auto-adjudicated to settlement",
+       "value": "67%"
       },
       {
-       "label": "Disparate impact",
-       "value": "0.92"
+       "label": "FNOL intake cycle time",
+       "value": "2 hrs"
       },
       {
-       "label": "Reason-code coverage",
-       "value": "100%"
+       "label": "Adjuster override rate",
+       "value": "19%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "PAS/claims suites (Guidewire-class)",
+      "ACORD forms and ISO claim codes",
+      "NAIC market-conduct evidence"
+     ],
+     "evidence": [
+      {
+       "title": "A top-5 global P&C insurer",
+       "url": "/case-studies/ins-01/"
+      },
+      {
+       "title": "A leading life insurer (North America)",
+       "url": "/case-studies/ins-02/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": false,
-     "hook": "Healthcare & Life Sciences operators recognize the pattern: prior authorization and RCM friction, quarter after quarter.",
+     "hook": "Prior authorization, claims status and denials follow-up drown coding and RCM teams in X12 278/837 transactions and payer-portal hunts — agents that read the rule set, assemble the packet and log every step give the queue an owner.",
      "plays": [
       "Challenger benchmarks with agreement-gated autonomy",
       "Continuous disparate-impact monitoring with signed tolerances",
@@ -753,25 +817,40 @@
      ],
      "kpis": [
       {
-       "label": "Panel agreement",
-       "value": "91%"
+       "label": "Prior-auth auto-approval share",
+       "value": "30%"
       },
       {
-       "label": "Disparate impact",
-       "value": "0.92"
+       "label": "Denials follow-up queue age p90",
+       "value": "8 days"
       },
       {
-       "label": "Reason-code coverage",
+       "label": "Action replay coverage",
        "value": "100%"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "EHR/RCM estates (Epic-class)",
+      "HL7 FHIR + X12 278/837",
+      "HIPAA audit controls"
+     ],
+     "evidence": [
+      {
+       "title": "A national health insurer",
+       "url": "/case-studies/hc-02/"
+      },
+      {
+       "title": "A European biopharma group",
+       "url": "/case-studies/hc-03/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — maintenance planning reactive included — and prove it moved.",
+     "hook": "Maintenance planners and quality engineers live in SAP PM work orders, MES transactions and supplier ASN exceptions — automation earns its keep here only when it clears the backlog without touching the safety-rated path.",
      "plays": [
       "Challenger benchmarks with agreement-gated autonomy",
       "Continuous disparate-impact monitoring with signed tolerances",
@@ -779,25 +858,40 @@
      ],
      "kpis": [
       {
-       "label": "Panel agreement",
-       "value": "91%"
+       "label": "Work orders auto-dispositioned",
+       "value": "62%"
       },
       {
-       "label": "Disparate impact",
-       "value": "0.92"
+       "label": "NCR closure cycle",
+       "value": "7 days"
       },
       {
-       "label": "Reason-code coverage",
-       "value": "100%"
+       "label": "Actions with sealed evidence packet",
+       "value": "98%"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "SAP PM / CMMS work orders",
+      "MES context via ISA-95",
+      "IATF 16949 NCR-CAPA flows"
+     ],
+     "evidence": [
+      {
+       "title": "A global automotive OEM",
+       "url": "/case-studies/mfg-01/"
+      },
+      {
+       "title": "A packaging producer",
+       "url": "/case-studies/mfg-10/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": "Ask what supplier collaboration by email costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "EDI 850/855/856 exceptions, trade-promotion deduction disputes and supplier onboarding are pure document-and-decision churn across GS1 identifiers — the queue shrinks fastest when agents work the exception list under merchandiser-approved checkpoints.",
      "plays": [
       "Challenger benchmarks with agreement-gated autonomy",
       "Continuous disparate-impact monitoring with signed tolerances",
@@ -805,25 +899,40 @@
      ],
      "kpis": [
       {
-       "label": "Panel agreement",
-       "value": "91%"
+       "label": "PO exceptions auto-resolved",
+       "value": "58%"
       },
       {
-       "label": "Disparate impact",
-       "value": "0.92"
+       "label": "Deduction dispute cycle",
+       "value": "17 days"
       },
       {
-       "label": "Reason-code coverage",
-       "value": "100%"
+       "label": "Agent actions reconciled to ERP",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "EDI 850/855/856 + GS1 GTIN",
+      "ERP order ledgers (SAP Retail-class)",
+      "Trade-promotion deduction systems"
+     ],
+     "evidence": [
+      {
+       "title": "A top-3 grocery retailer (800+ stores)",
+       "url": "/case-studies/ret-01/"
+      },
+      {
+       "title": "A home-improvement retailer",
+       "url": "/case-studies/ret-08/"
+      }
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Order fallout between OSS/BSS layers, usage-dispute tickets and churn-save queues are where TM Forum Open API journeys break — durable orchestration re-drives the fallout and hands judgment calls to humans with context attached.",
      "plays": [
       "Challenger benchmarks with agreement-gated autonomy",
       "Continuous disparate-impact monitoring with signed tolerances",
@@ -831,25 +940,40 @@
      ],
      "kpis": [
       {
-       "label": "Panel agreement",
-       "value": "91%"
+       "label": "Order fallout auto-recovered",
+       "value": "53%"
       },
       {
-       "label": "Disparate impact",
-       "value": "0.92"
+       "label": "Repeat-fallout rate",
+       "value": "9%"
       },
       {
-       "label": "Reason-code coverage",
-       "value": "100%"
+       "label": "Usage disputes closed within SLA",
+       "value": "94%"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "OSS/BSS order orchestration",
+      "TM Forum Open APIs (TMF622/641)",
+      "Campaign and churn platforms"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-1 European operator",
+       "url": "/case-studies/tel-01/"
+      },
+      {
+       "title": "A North American cable operator",
+       "url": "/case-studies/tel-03/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — trading and scheduling decisions at market speed included — and prove it moved.",
+     "hook": "Outage tickets, switch-order packets, market-submission checks and billing exceptions stack across OMS/EMS and CIS estates — the wins sit in bounded, auditable workflows where a wrong write is recoverable and every action is logged.",
      "plays": [
       "Challenger benchmarks with agreement-gated autonomy",
       "Continuous disparate-impact monitoring with signed tolerances",
@@ -857,25 +981,40 @@
      ],
      "kpis": [
       {
-       "label": "Panel agreement",
-       "value": "91%"
+       "label": "Field work orders auto-routed",
+       "value": "41%"
       },
       {
-       "label": "Disparate impact",
-       "value": "0.92"
+       "label": "Outage-ticket backlog age p90",
+       "value": "17 hrs"
       },
       {
-       "label": "Reason-code coverage",
+       "label": "Switch-order packet completeness",
        "value": "100%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "OMS/EMS and CIS estates",
+      "NERC and market-submission calendars",
+      "Field-service scheduling"
+     ],
+     "evidence": [
+      {
+       "title": "A European TSO-DSO group",
+       "url": "/case-studies/en-01/"
+      },
+      {
+       "title": "A global integrated energy major",
+       "url": "/case-studies/en-02/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Missed appointments, failed EDI messages, customs holds and detention disputes across TMS/WMS/telematics feeds — agentic pools triage, re-drive and document exceptions so the control tower shows truth, not noise.",
      "plays": [
       "Challenger benchmarks with agreement-gated autonomy",
       "Continuous disparate-impact monitoring with signed tolerances",
@@ -883,25 +1022,40 @@
      ],
      "kpis": [
       {
-       "label": "Panel agreement",
-       "value": "91%"
+       "label": "Exceptions auto-triaged",
+       "value": "55%"
       },
       {
-       "label": "Disparate impact",
-       "value": "0.92"
+       "label": "Detention disputes resolved in",
+       "value": "6 days"
       },
       {
-       "label": "Reason-code coverage",
-       "value": "100%"
+       "label": "EDI messages re-driven in window",
+       "value": "98%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "TMS/WMS/telematics event feeds",
+      "EDIFACT / X12 carrier messages",
+      "Customs and HS documentation"
+     ],
+     "evidence": [
+      {
+       "title": "A global 3PL (40+ countries)",
+       "url": "/case-studies/log-01/"
+      },
+      {
+       "title": "A parcel network operator",
+       "url": "/case-studies/log-06/"
+      }
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": true,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Permit, benefit and FOIA case backlogs move at the pace of document assembly and eligibility checks — agents that pre-fill, verify and route cut cycle time while every decision keeps a citable evidence trail for oversight bodies.",
      "plays": [
       "Challenger benchmarks with agreement-gated autonomy",
       "Continuous disparate-impact monitoring with signed tolerances",
@@ -909,25 +1063,40 @@
      ],
      "kpis": [
       {
-       "label": "Panel agreement",
-       "value": "91%"
+       "label": "Cases auto-assembled for review",
+       "value": "58%"
       },
       {
-       "label": "Disparate impact",
-       "value": "0.92"
+       "label": "Permit cycle-time reduction",
+       "value": "41%"
       },
       {
-       "label": "Reason-code coverage",
+       "label": "Decisions with citable evidence trail",
        "value": "100%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "Permit/benefit case systems",
+      "FOIA and records statutory clocks",
+      "Budget and procurement controls"
+     ],
+     "evidence": [
+      {
+       "title": "A national digital-government agency",
+       "url": "/case-studies/pub-01/"
+      },
+      {
+       "title": "A national tax administration",
+       "url": "/case-studies/pub-02/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "Ask what administrative burden on faculty costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Admissions processing, aid-verification packets and grant-administration reporting scale with enrollment cycles — role-scoped agents clear the routine files and route judgment calls to registrars and aid officers with full context.",
      "plays": [
       "Challenger benchmarks with agreement-gated autonomy",
       "Continuous disparate-impact monitoring with signed tolerances",
@@ -935,25 +1104,40 @@
      ],
      "kpis": [
       {
-       "label": "Panel agreement",
-       "value": "91%"
+       "label": "Applications auto-processed",
+       "value": "64%"
       },
       {
-       "label": "Disparate impact",
-       "value": "0.92"
+       "label": "Verification packet cycle",
+       "value": "11 days"
       },
       {
-       "label": "Reason-code coverage",
-       "value": "100%"
+       "label": "Staff hours returned per week",
+       "value": "205"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "SIS estates (Banner-class)",
+      "Aid verification workflows",
+      "Grant reporting portals"
+     ],
+     "evidence": [
+      {
+       "title": "A public research university (38,000 students)",
+       "url": "/case-studies/edu-01/"
+      },
+      {
+       "title": "An online university",
+       "url": "/case-studies/edu-06/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": false,
-     "hook": "Ask what support and success scale linearly costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Support triage, entitlement checks and renewal-desk workflows scale linearly with ARR unless an agent layer absorbs the repeatable steps — with checkpoints where account teams keep pricing judgment and CRM history stays structured.",
      "plays": [
       "Challenger benchmarks with agreement-gated autonomy",
       "Continuous disparate-impact monitoring with signed tolerances",
@@ -961,25 +1145,40 @@
      ],
      "kpis": [
       {
-       "label": "Panel agreement",
-       "value": "91%"
+       "label": "Tickets auto-triaged",
+       "value": "71%"
       },
       {
-       "label": "Disparate impact",
-       "value": "0.92"
+       "label": "First-response time",
+       "value": "2 min"
       },
       {
-       "label": "Reason-code coverage",
-       "value": "100%"
+       "label": "Entitlement checks automated",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "ITSM/CRM (ServiceNow-class)",
+      "CPQ and entitlement registries",
+      "SOC 2 evidence controls"
+     ],
+     "evidence": [
+      {
+       "title": "A consumer fintech (8M users)",
+       "url": "/case-studies/tech-02/"
+      },
+      {
+       "title": "An enterprise IT services firm",
+       "url": "/case-studies/tech-07/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "Ask what input and logistics planning manual costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Contract management, grading certificates, subsidy dossiers and harvest-logistics planning run on seasonal surges — agent pools absorb the surge with checkpoints where agronomists and traders keep commercial judgment.",
      "plays": [
       "Challenger benchmarks with agreement-gated autonomy",
       "Continuous disparate-impact monitoring with signed tolerances",
@@ -987,26 +1186,32 @@
      ],
      "kpis": [
       {
-       "label": "Panel agreement",
-       "value": "91%"
+       "label": "Contract milestones auto-tracked",
+       "value": "77%"
       },
       {
-       "label": "Disparate impact",
-       "value": "0.92"
+       "label": "Certification doc prep time",
+       "value": "5 hrs"
       },
       {
-       "label": "Reason-code coverage",
-       "value": "100%"
+       "label": "Subsidy dossier completeness",
+       "value": "96%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "Procurement and contract ledgers",
+      "Certification schemes (GLOBALG.A.P.-class)",
+      "Subsidy and traceability portals"
+     ]
     }
    ],
    "practiceNote": "Decision Intelligence Systems view: decision models wrapped in policy bounds, challenger benchmarks and explainable outputs — decisions you can defend to a regulator, not just scores in a dashboard."
   },
   {
    "t": "h2",
-   "x": "Decision stack defaults — and documented deviations"
+   "x": "Decision stack defaults — and documented deviations",
+   "sub": "The default stack, and the deviations we sign for"
   },
   {
    "t": "p",
@@ -1050,7 +1255,8 @@
   },
   {
    "t": "h2",
-   "x": "Decision release gates — what a supervisory review will ask"
+   "x": "Decision release gates — what a supervisory review will ask",
+   "sub": "The evidence pack a model-risk examination expects, prepared in advance"
   },
   {
    "t": "table",
@@ -1090,7 +1296,8 @@
   },
   {
    "t": "h2",
-   "x": "What risk and compliance inherit"
+   "x": "What risk and compliance inherit",
+   "sub": "Consoles, ledgers, drift reports and the review calendar"
   },
   {
    "t": "bullets",
@@ -1123,7 +1330,8 @@
   },
   {
    "t": "h2",
-   "x": "Wrap the model, week by week"
+   "x": "Wrap the model, week by week",
+   "sub": "The build sequence around the model — envelope first, autonomy last"
   },
   {
    "t": "bullets",
@@ -1156,7 +1364,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — policy engines and case systems"
+   "x": "Integration surface — policy engines and case systems",
+   "sub": "Where decisions land, and how overrides return into the ledger"
   },
   {
    "t": "p",
@@ -1189,7 +1398,8 @@
   },
   {
    "t": "h2",
-   "x": "Fairness and explainability overlay"
+   "x": "Fairness and explainability overlay",
+   "sub": "Disparate-impact monitoring with signed tolerances, audited continuously"
   },
   {
    "t": "p",
@@ -1219,6 +1429,44 @@
   {
    "t": "note",
    "x": "Defer-to-human is measured, not assumed: deferral quality is scored against panel outcomes quarterly, and eroding deferral quality narrows model autonomy automatically."
+  },
+  {
+   "t": "h2",
+   "x": "The challenger scores every case, silently",
+   "sub": "Champion-challenger economics and the disagreement triggers that keep autonomy honest",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Every production decision is scored twice: the champion decides, the challenger disagrees silently. The disagreement rate is the most honest model-health metric available — it detects population drift months before accuracy metrics move, because challengers built on different features or different vintages fail in different places. Disagreement above threshold forces a review of the affected stratum before the next release, and the review is quantitative: which strata, which feature regime, which direction. This is the discipline that turns model risk management from an annual document into a weekly measurement.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "The policy envelope is the second half of the defense. The champion only acts inside bounds signed by the risk owner — exposure ceilings, eligibility overlays, mandatory referral classes — and the explanation layer emits reason codes on every output, not on the samples an auditor requests. Reason-code coverage is therefore 100% by construction, and the appeal path routes to a named reviewer with the decision's full context, which is what a supervisory examination actually asks to see.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Silent challenger on 100% of cases",
+     "Disagreement rate as leading indicator; stratum-level review above threshold."
+    ],
+    [
+     "Signed policy envelope",
+     "Exposure ceilings, eligibility overlays and referral classes bound the champion."
+    ],
+    [
+     "Reason codes by construction",
+     "Coverage is structural, not sampled — examinable line by line."
+    ],
+    [
+     "Named-reviewer appeals",
+     "The appeal path carries full decision context to an accountable human."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1344,6 +1592,23 @@
    "url": "/case-studies/en-01/",
    "tag": "Evidence",
    "desc": "Forecast error down 31% — imbalance cost recovered across three control zones."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A top-10 European retail bank",
+   "url": "/case-studies/bank-01/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A top-5 global P&C insurer",
+   "url": "/case-studies/ins-01/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A global 3PL (40+ countries)",
+   "url": "/case-studies/log-01/",
+   "ind": "Logistics & Supply Chain"
   }
  ]
 }

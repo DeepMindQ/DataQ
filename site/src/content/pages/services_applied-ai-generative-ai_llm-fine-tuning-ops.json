@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "Fine-tuning is a data engineering program that occasionally involves a GPU"
+   "x": "Fine-tuning as a data-engineering program — the GPU is the smallest part",
+   "sub": "Dataset quality, leakage discipline and eval matrices decide the outcome"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four ways tuning programs produce quietly bad models"
+   "x": "Four ways tuning programs produce quietly bad models",
+   "sub": "Contamination, off-task regressions, unsigned lineage, no canary"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — the tuning factory from dataset to canary"
+   "x": "Reference architecture — the tuning factory from dataset to canary",
+   "sub": "Curate, decontaminate, train, evaluate, canary — as one pipeline"
   },
   {
    "t": "p",
@@ -105,7 +108,8 @@
      "id": "clean",
      "lane": 1,
      "label": "Decontamination",
-     "hot": true
+     "hot": true,
+     "sub": "eval leakage, blocked"
     },
     {
      "id": "label",
@@ -121,7 +125,8 @@
      "id": "train",
      "lane": 2,
      "label": "Trainer (LoRA/full)",
-     "hot": true
+     "hot": true,
+     "sub": "budget-matched method"
     },
     {
      "id": "hpo",
@@ -137,7 +142,8 @@
      "id": "eval",
      "lane": 3,
      "label": "Multi-task eval matrix",
-     "hot": true
+     "hot": true,
+     "sub": "per-task regression gates"
     },
     {
      "id": "red",
@@ -153,7 +159,8 @@
      "id": "reg",
      "lane": 4,
      "label": "Model registry",
-     "hot": true
+     "hot": true,
+     "sub": "signed dataset lineage"
     },
     {
      "id": "canary",
@@ -169,7 +176,8 @@
      "id": "drift",
      "lane": 5,
      "label": "Drift watch",
-     "hot": true
+     "hot": true,
+     "sub": "score + cost drift"
     },
     {
      "id": "samp",
@@ -265,11 +273,26 @@
      "label": "queue"
     }
    ],
-   "note": "Promotion requires the full multi-task matrix plus safety evals; canary auto-rolls back on any per-task threshold breach, not just the aggregate."
+   "note": "Promotion requires the full multi-task matrix plus safety evals; canary auto-rolls back on any per-task threshold breach, not just the aggregate.",
+   "badges": [
+    {
+     "label": "Eval leakage tolerance",
+     "value": "0"
+    },
+    {
+     "label": "Regression gates per task",
+     "value": "all"
+    },
+    {
+     "label": "Canary before promotion",
+     "value": "always"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "The promotion path — dataset to production traffic"
+   "x": "The promotion path — dataset to production traffic",
+   "sub": "Gates from data freeze to estate-wide serving"
   },
   {
    "t": "p",
@@ -292,7 +315,8 @@
   },
   {
    "t": "h2",
-   "x": "The model-ops console for tuned fleets"
+   "x": "The model-ops console for tuned fleets",
+   "sub": "Scores, costs and drift for every tuned candidate"
   },
   {
    "t": "p",
@@ -642,7 +666,8 @@
   },
   {
    "t": "h2",
-   "x": "Quality retention against serving cost across model sizes"
+   "x": "Quality retention against serving cost across model sizes",
+   "sub": "The frontier the fleet actually sits on"
   },
   {
    "t": "p",
@@ -691,7 +716,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": true,
-     "hook": "; competition sets the pace.",
+     "hook": "Research desks, contact centers and KYC teams need grounded answers with citations an examiner can trace — RAG with permission fidelity and eval discipline, not a chatbot bolted to a search box.",
      "plays": [
       "Dataset factory: decontamination, label consistency, hard-negative mining",
       "Multi-task eval gate with zero-regression promotion policy",
@@ -699,25 +724,40 @@
      ],
      "kpis": [
       {
-       "label": "Task accuracy (vs base)",
-       "value": "+11.2pt"
+       "label": "Containment on tier-1 intents",
+       "value": "46%"
       },
       {
-       "label": "Multi-task regression",
-       "value": "0"
+       "label": "Citation coverage on answers",
+       "value": "99%"
       },
       {
-       "label": "Eval contamination",
-       "value": "0.0%"
+       "label": "Answer latency p95",
+       "value": "3s"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/banking-financial-services/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Research portals and policy corpora",
+      "Model-risk evidence (SR 11-7)",
+      "Contact-center stacks (Genesys-class)"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-2 universal bank",
+       "url": "/case-studies/bank-05/"
+      },
+      {
+       "title": "A private banking group",
+       "url": "/case-studies/bank-07/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": false,
-     "hook": "Ask what pricing sophistication outrunning governance costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Underwriting submissions, claims notes and policy wordings hold the answers; the work is retrieval with strict citations to wording versions, plus dialog systems that keep adjusters in the loop.",
      "plays": [
       "Dataset factory: decontamination, label consistency, hard-negative mining",
       "Multi-task eval gate with zero-regression promotion policy",
@@ -725,25 +765,40 @@
      ],
      "kpis": [
       {
-       "label": "Task accuracy (vs base)",
-       "value": "+11.2pt"
+       "label": "Submission auto-summary adoption",
+       "value": "60%"
       },
       {
-       "label": "Multi-task regression",
-       "value": "0"
+       "label": "Wording-citation fidelity",
+       "value": "98%"
       },
       {
-       "label": "Eval contamination",
-       "value": "0.0%"
+       "label": "Adjuster review time saved",
+       "value": "10 min"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/insurance/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "PAS/claims document estates",
+      "Versioned wording libraries",
+      "Adjuster workbenches"
+     ],
+     "evidence": [
+      {
+       "title": "A top-5 global P&C insurer",
+       "url": "/case-studies/ins-01/"
+      },
+      {
+       "title": "A life insurer",
+       "url": "/case-studies/ins-07/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": true,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Clinical and administrative knowledge sits in guideline PDFs, EHR notes and payer policies — grounded generation with citation discipline, PHI redaction and clinician review at the right points.",
      "plays": [
       "Dataset factory: decontamination, label consistency, hard-negative mining",
       "Multi-task eval gate with zero-regression promotion policy",
@@ -752,25 +807,40 @@
      ],
      "kpis": [
       {
-       "label": "Task accuracy (vs base)",
-       "value": "+11.2pt"
+       "label": "Clinician acceptance of grounded answers",
+       "value": "75%"
       },
       {
-       "label": "Multi-task regression",
-       "value": "0"
+       "label": "PHI redaction coverage",
+       "value": "100%"
       },
       {
-       "label": "Eval contamination",
-       "value": "0.0%"
+       "label": "Prior-auth packet prep time",
+       "value": "7 min"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Clinical guidelines + payer policy",
+      "EHR notes via HL7 FHIR",
+      "PHI de-identification pipeline"
+     ],
+     "evidence": [
+      {
+       "title": "A 12-hospital US health system",
+       "url": "/case-studies/hc-01/"
+      },
+      {
+       "title": "A multi-hospital network",
+       "url": "/case-studies/hc-04/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "Manufacturing & Industrial operators recognize the pattern: quality escapes and manual inspection, quarter after quarter.",
+     "hook": "SOPs, failure-mode libraries and quality records are the corpus, and vision systems read the line — value shows up as fewer repeat defects and faster root-cause, not as demos.",
      "plays": [
       "Dataset factory: decontamination, label consistency, hard-negative mining",
       "Multi-task eval gate with zero-regression promotion policy",
@@ -778,25 +848,40 @@
      ],
      "kpis": [
       {
-       "label": "Task accuracy (vs base)",
-       "value": "+11.2pt"
+       "label": "First-pass extraction accuracy",
+       "value": "91%"
       },
       {
-       "label": "Multi-task regression",
-       "value": "0"
+       "label": "Root-cause search time cut",
+       "value": "48%"
       },
       {
-       "label": "Eval contamination",
-       "value": "0.0%"
+       "label": "Edge inference within deadline",
+       "value": "97%"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/manufacturing/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "SOP / FMEA corpora",
+      "Quality records (eDHR)",
+      "Plant-floor capture (vision)"
+     ],
+     "evidence": [
+      {
+       "title": "A specialty chemicals producer",
+       "url": "/case-studies/mfg-02/"
+      },
+      {
+       "title": "An automotive tier-1 supplier",
+       "url": "/case-studies/mfg-04/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Product content, service dialogs and demand chat run at consumer scale — containment with dignity: the assistant handles the routine, the human gets the judgment call with context attached.",
      "plays": [
       "Dataset factory: decontamination, label consistency, hard-negative mining",
       "Multi-task eval gate with zero-regression promotion policy",
@@ -804,25 +889,40 @@
      ],
      "kpis": [
       {
-       "label": "Task accuracy (vs base)",
-       "value": "+11.2pt"
+       "label": "Dialog containment",
+       "value": "63%"
       },
       {
-       "label": "Multi-task regression",
-       "value": "0"
+       "label": "CSAT on contained sessions",
+       "value": "85%"
       },
       {
-       "label": "Eval contamination",
-       "value": "0.0%"
+       "label": "Dignified escalation quality",
+       "value": "90%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Commerce and CX platforms",
+      "Versioned knowledge bases",
+      "CRM agent desktops"
+     ],
+     "evidence": [
+      {
+       "title": "A global fashion group",
+       "url": "/case-studies/ret-02/"
+      },
+      {
+       "title": "A specialty marketplace",
+       "url": "/case-studies/ret-06/"
+      }
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Care and activation dialogs, network runbooks and billing knowledge — containment and first-contact resolution on the care side, grounded retrieval for the agents who take escalations.",
      "plays": [
       "Dataset factory: decontamination, label consistency, hard-negative mining",
       "Multi-task eval gate with zero-regression promotion policy",
@@ -831,25 +931,40 @@
      ],
      "kpis": [
       {
-       "label": "Task accuracy (vs base)",
-       "value": "+11.2pt"
+       "label": "Care containment",
+       "value": "44%"
       },
       {
-       "label": "Multi-task regression",
-       "value": "0"
+       "label": "FCR lift on assisted calls",
+       "value": "20%"
       },
       {
-       "label": "Eval contamination",
-       "value": "0.0%"
+       "label": "Runbook freshness SLA",
+       "value": "11 hrs"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/telecom-media/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Care platforms and runbooks",
+      "Billing/CRM knowledge",
+      "TM Forum API surfaces"
+     ],
+     "evidence": [
+      {
+       "title": "A North American cable operator",
+       "url": "/case-studies/tel-03/"
+      },
+      {
+       "title": "A mobile operator",
+       "url": "/case-studies/tel-06/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Field crews and control rooms need procedures and asset history at the point of work — grounded retrieval with version control over the procedure corpus, and voice interfaces that survive gloves and noise.",
      "plays": [
       "Dataset factory: decontamination, label consistency, hard-negative mining",
       "Multi-task eval gate with zero-regression promotion policy",
@@ -857,25 +972,36 @@
      ],
      "kpis": [
       {
-       "label": "Task accuracy (vs base)",
-       "value": "+11.2pt"
+       "label": "Procedure retrieval at point of work",
+       "value": "88%"
       },
       {
-       "label": "Multi-task regression",
-       "value": "0"
+       "label": "Version-stale answers blocked",
+       "value": "100%"
       },
       {
-       "label": "Eval contamination",
-       "value": "0.0%"
+       "label": "Hands-free voice-task completion",
+       "value": "76%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Versioned procedure management",
+      "Asset history (EAM)",
+      "Field tablets, hands-free UI"
+     ],
+     "evidence": [
+      {
+       "title": "A renewable energy developer",
+       "url": "/case-studies/en-09/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": "Logistics & Supply Chain operators recognize the pattern: demand and capacity planning stale, quarter after quarter.",
+     "hook": "Exception handling, customs knowledge and carrier rules live in documents — retrieval that answers what applies to this lane, with citations, plus document AI that reads the paperwork.",
      "plays": [
       "Dataset factory: decontamination, label consistency, hard-negative mining",
       "Multi-task eval gate with zero-regression promotion policy",
@@ -884,25 +1010,30 @@
      ],
      "kpis": [
       {
-       "label": "Task accuracy (vs base)",
-       "value": "+11.2pt"
+       "label": "Lane-rule answers with citations",
+       "value": "92%"
       },
       {
-       "label": "Multi-task regression",
-       "value": "0"
+       "label": "Exception-doc processing time cut",
+       "value": "45%"
       },
       {
-       "label": "Eval contamination",
-       "value": "0.0%"
+       "label": "Customs doc first-pass yield",
+       "value": "85%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Customs and lane-rule corpora",
+      "TMS exception queues",
+      "Document-AI intake"
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use.",
+     "hook": "Citizen services and caseworker support need grounded answers bound to statute versions and eligibility rules, with every answer citable for oversight and appeal.",
      "plays": [
       "Dataset factory: decontamination, label consistency, hard-negative mining",
       "Multi-task eval gate with zero-regression promotion policy",
@@ -910,25 +1041,40 @@
      ],
      "kpis": [
       {
-       "label": "Task accuracy (vs base)",
-       "value": "+11.2pt"
+       "label": "Statute-bound answer coverage",
+       "value": "97%"
       },
       {
-       "label": "Multi-task regression",
-       "value": "0"
+       "label": "Citable decision trail",
+       "value": "100%"
       },
       {
-       "label": "Eval contamination",
-       "value": "0.0%"
+       "label": "Caseworker research time cut",
+       "value": "34%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/public-sector/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Statute and eligibility corpora",
+      "Case-management systems",
+      "Oversight/appeal evidence"
+     ],
+     "evidence": [
+      {
+       "title": "A national digital-government agency",
+       "url": "/case-studies/pub-01/"
+      },
+      {
+       "title": "A national employment agency",
+       "url": "/case-studies/pub-06/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Faculty, advisors and students need answers grounded in catalogs, policy and course content — with accessibility and academic-integrity guards designed in from the start.",
      "plays": [
       "Dataset factory: decontamination, label consistency, hard-negative mining",
       "Multi-task eval gate with zero-regression promotion policy",
@@ -936,25 +1082,40 @@
      ],
      "kpis": [
       {
-       "label": "Task accuracy (vs base)",
-       "value": "+11.2pt"
+       "label": "Adviser-grounded query resolution",
+       "value": "83%"
       },
       {
-       "label": "Multi-task regression",
-       "value": "0"
+       "label": "Academic-integrity guard enforcement",
+       "value": "100%"
       },
       {
-       "label": "Eval contamination",
-       "value": "0.0%"
+       "label": "Faculty admin time returned",
+       "value": "6 hrs"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/education-research/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Catalogs, policy, course content",
+      "LMS/SIS estates",
+      "Integrity and accessibility guards"
+     ],
+     "evidence": [
+      {
+       "title": "A national EdTech platform (2M learners)",
+       "url": "/case-studies/edu-02/"
+      },
+      {
+       "title": "A national medical research institute",
+       "url": "/case-studies/edu-08/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": true,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Support, docs and success knowledge scale with ARR — containment and deflection measured against CSAT, with the eval suite gating every prompt and model change.",
      "plays": [
       "Dataset factory: decontamination, label consistency, hard-negative mining",
       "Multi-task eval gate with zero-regression promotion policy",
@@ -962,25 +1123,40 @@
      ],
      "kpis": [
       {
-       "label": "Task accuracy (vs base)",
-       "value": "+11.2pt"
+       "label": "Support containment",
+       "value": "46%"
       },
       {
-       "label": "Multi-task regression",
-       "value": "0"
+       "label": "Eval-suite gate coverage",
+       "value": "100%"
       },
       {
-       "label": "Eval contamination",
-       "value": "0.0%"
+       "label": "Docs answer freshness",
+       "value": "8 hrs"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/technology-saas/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Docs and support knowledge",
+      "Eval CI on prompts/models",
+      "Helpdesk stacks (Zendesk-class)"
+     ],
+     "evidence": [
+      {
+       "title": "A B2B SaaS platform (Series D)",
+       "url": "/case-studies/tech-01/"
+      },
+      {
+       "title": "A global gaming studio (live-service title, 15M MAU)",
+       "url": "/case-studies/tech-03/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Agronomy advice, subsidy rules and certification standards as grounded answers for co-ops and growers — multilingual, season-aware, and citable to the standard that governs the crop.",
      "plays": [
       "Dataset factory: decontamination, label consistency, hard-negative mining",
       "Multi-task eval gate with zero-regression promotion policy",
@@ -988,26 +1164,42 @@
      ],
      "kpis": [
       {
-       "label": "Task accuracy (vs base)",
-       "value": "+11.2pt"
+       "label": "Advisory answer acceptance",
+       "value": "83%"
       },
       {
-       "label": "Multi-task regression",
-       "value": "0"
+       "label": "Standard-citation fidelity",
+       "value": "98%"
       },
       {
-       "label": "Eval contamination",
-       "value": "0.0%"
+       "label": "Multilingual query coverage",
+       "value": "95%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Agronomy and subsidy corpora",
+      "Certification standards (GLOBALG.A.P.)",
+      "Multilingual advisory channels"
+     ],
+     "evidence": [
+      {
+       "title": "A European agri-cooperative (4,200 farms)",
+       "url": "/case-studies/agr-01/"
+      },
+      {
+       "title": "A food processor (dairy)",
+       "url": "/case-studies/agr-03/"
+      }
+     ]
     }
    ],
    "practiceNote": "LLM Fine-Tuning & Model Operations view: a tuning factory with decontaminated datasets, a multi-task eval gate that blocks silent regressions, and canary rollout with rehearsed rollback."
   },
   {
    "t": "h2",
-   "x": "Training and serving defaults — and when we deviate"
+   "x": "Training and serving defaults — and when we deviate",
+   "sub": "The default factory config, and the deviations we sign"
   },
   {
    "t": "p",
@@ -1056,7 +1248,8 @@
   },
   {
    "t": "h2",
-   "x": "Model promotion gates — what evidence blocks a bad tune"
+   "x": "Model promotion gates — what evidence blocks a bad tune",
+   "sub": "The matrix results a promotion carries"
   },
   {
    "t": "table",
@@ -1096,7 +1289,8 @@
   },
   {
    "t": "h2",
-   "x": "What you own when the factory is handed over"
+   "x": "What you own when the factory is handed over",
+   "sub": "Pipelines, lineage, eval suite and the retrain calendar"
   },
   {
    "t": "bullets",
@@ -1129,7 +1323,8 @@
   },
   {
    "t": "h2",
-   "x": "Factory build-out, week by week"
+   "x": "Factory build-out, week by week",
+   "sub": "From dataset audit to canary ring, sequenced"
   },
   {
    "t": "bullets",
@@ -1162,7 +1357,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — data platform to serving mesh"
+   "x": "Integration surface — data platform to serving mesh",
+   "sub": "Where the factory touches the estate"
   },
   {
    "t": "p",
@@ -1195,7 +1391,8 @@
   },
   {
    "t": "h2",
-   "x": "Model governance — dataset-to-canary lineage"
+   "x": "Model governance — dataset-to-canary lineage",
+   "sub": "The audit trail from document to served weight"
   },
   {
    "t": "p",
@@ -1225,6 +1422,44 @@
   {
    "t": "note",
    "x": "Contamination probes run against every dataset version: overlapping n-grams against eval sets are measured and reported — zero is the only passing number."
+  },
+  {
+   "t": "h2",
+   "x": "Decontamination is the first gate",
+   "sub": "Dataset engineering as the program — leakage tests, task matrices and the promotion path",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Tuned models fail quietly through contamination: eval questions leaking into training data make the golden set flatter than reality, and the regression appears only in production phrasing. The factory therefore runs decontamination as a hard gate — n-gram and embedding-similarity scans against every eval split, with provenance recorded per document — before any GPU hour is spent. The multi-task eval matrix then protects against the classic LoRA failure: gains on the target task that quietly degrade general capability, so every candidate runs the full matrix and regression on any off-task domain blocks promotion.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Method selection is budget-matched engineering, not fashion: LoRA for narrow style/format shifts, full tuning when behavior must move and data supports it, distillation when serving cost dominates. The registry carries signed dataset lineage — every training document traceable to its source and license class — and the promotion path ends in a canary ring before estate-wide serving, because the last mile of a tune is operational, not academic.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Hard decontamination gate",
+     "n-gram + embedding scans against eval splits; provenance per document."
+    ],
+    [
+     "Multi-task regression matrix",
+     "Off-task degradation blocks promotion, not just target-task gains."
+    ],
+    [
+     "Budget-matched methods",
+     "LoRA, full or distillation chosen by behavior delta and serving cost."
+    ],
+    [
+     "Signed dataset lineage",
+     "Every document traceable to source and license; audit-ready."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1350,6 +1585,23 @@
    "url": "/case-studies/edu-02/",
    "tag": "Evidence",
    "desc": "Outcome evidence published — renewals secured with learning-gain pipelines."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A tier-2 universal bank",
+   "url": "/case-studies/bank-05/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A top-5 global P&C insurer",
+   "url": "/case-studies/ins-01/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A North American cable operator",
+   "url": "/case-studies/tel-03/",
+   "ind": "Telecom, Media & Entertainment"
   }
  ]
 }

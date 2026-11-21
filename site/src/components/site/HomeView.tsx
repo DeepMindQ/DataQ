@@ -27,7 +27,7 @@ const PILLARS = [
   },
 ];
 
-const TOWER_ICONS = [BrainCircuit, Bot, Database, ShieldCheck, CloudCog, Atom, Blocks, Radar];
+const DOMAIN_ICONS = [BrainCircuit, Bot, Database, ShieldCheck, CloudCog, Atom, Blocks, Radar];
 
 /* consulting groups — mirrored from the consulting data (4 groups × practices) */
 const CONSULTING_GROUPS = [
@@ -197,7 +197,7 @@ export default function HomeView() {
         </div>
       </section>
 
-      {/* towers */}
+      {/* the eight expertise domains */}
       <section id="services" className="scroll-mt-24 border-y border-line bg-mist/60 dot-grid-light">
         <div className="container-dq section-y-sm">
           <Reveal>
@@ -224,8 +224,8 @@ export default function HomeView() {
             </div>
           </Reveal>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {brand.towers.map((t, i) => {
-              const Icon = TOWER_ICONS[i % TOWER_ICONS.length];
+            {brand.domains.map((t, i) => {
+              const Icon = DOMAIN_ICONS[i % DOMAIN_ICONS.length];
               return (
                 <Reveal key={t.url} delay={i * 40}>
                   <Link
@@ -376,7 +376,7 @@ export default function HomeView() {
                 </h2>
                 <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
                   DORA in banking. HIPAA in health. IEC 62443 on the plant floor. Every industry hub
-                  maps its regulatory reality and decision pressure to the towers, with named workflows
+                  maps its regulatory reality and decision pressure to the expertise domains, with named workflows
                   and the systems of record your programs will touch.
                 </p>
               </div>

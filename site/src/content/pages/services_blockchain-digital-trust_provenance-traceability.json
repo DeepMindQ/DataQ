@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "Provenance is a capture problem before it is a ledger problem"
+   "x": "Provenance is a capture problem before it is a ledger problem",
+   "sub": "Source-signed events, identity crosswalks and drilled recalls over ledger choice"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that make provenance decorative"
+   "x": "Four failure modes that make provenance decorative",
+   "sub": "Retyped events, anonymous identifiers, untested recalls, tier-blind coverage"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — the capture chain from field to ledger"
+   "x": "Reference architecture — the capture chain from field to ledger",
+   "sub": "Normalize, anchor, reconstruct — with the crosswalk underneath"
   },
   {
    "t": "p",
@@ -105,7 +108,8 @@
      "id": "map",
      "lane": 1,
      "label": "Identity crosswalk",
-     "hot": true
+     "hot": true,
+     "sub": "EPCIS IDs to real parties"
     },
     {
      "id": "gs1",
@@ -121,7 +125,8 @@
      "id": "ev",
      "lane": 2,
      "label": "Evidence store",
-     "hot": true
+     "hot": true,
+     "sub": "sealed, hash-linked"
     },
     {
      "id": "doc",
@@ -137,7 +142,8 @@
      "id": "anchor",
      "lane": 3,
      "label": "Ledger anchoring",
-     "hot": true
+     "hot": true,
+     "sub": "batch merkle roots"
     },
     {
      "id": "batch",
@@ -153,7 +159,8 @@
      "id": "rec",
      "lane": 4,
      "label": "Reconstruction service",
-     "hot": true
+     "hot": true,
+     "sub": "batch → full chain view"
     },
     {
      "id": "fwd",
@@ -169,12 +176,14 @@
      "id": "drill",
      "lane": 5,
      "label": "Recall drills",
-     "hot": true
+     "hot": true,
+     "sub": "reconstruct in minutes"
     },
     {
      "id": "assur",
      "lane": 5,
-     "label": "Assurance packs"
+     "label": "Assurance packs",
+     "sub": "auditor-ready exports"
     },
     {
      "id": "kpi",
@@ -269,11 +278,26 @@
      "label": "evidence"
     }
    ],
-   "note": "Merkle-batch anchoring keeps cost sane: thousands of document hashes root to one ledger transaction, with per-document proofs reconstructable on demand."
+   "note": "Merkle-batch anchoring keeps cost sane: thousands of document hashes root to one ledger transaction, with per-document proofs reconstructable on demand.",
+   "badges": [
+    {
+     "label": "Recall drill target",
+     "value": "≤75 min"
+    },
+    {
+     "label": "Capture at source",
+     "value": "anchored"
+    },
+    {
+     "label": "Partner onboarding",
+     "value": "evidence-gated"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "One batch, from field event to recall drill"
+   "x": "One batch, from field event to recall drill",
+   "sub": "The journey with the evidence each step seals"
   },
   {
    "t": "p",
@@ -296,7 +320,8 @@
   },
   {
    "t": "h2",
-   "x": "The provenance console — recall time as the headline"
+   "x": "The provenance console — recall time as the headline",
+   "sub": "Drill results, capture coverage and chain health on one surface"
   },
   {
    "t": "p",
@@ -595,7 +620,8 @@
   },
   {
    "t": "h2",
-   "x": "Capture coverage across the partner network"
+   "x": "Capture coverage across the partner network",
+   "sub": "Tier by tier, with the onboarding evidence behind each"
   },
   {
    "t": "p",
@@ -647,7 +673,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": false,
-     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "hook": "Tokenized collateral, interbank DLT settlement and digital-asset analytics under a supervisory lens — permissioned networks with reconciliation-first design and examination-grade evidence.",
      "plays": [
       "Event provenance at every handoff under shared identifier standards",
       "Document anchoring with originals in your systems of record",
@@ -655,25 +681,36 @@
      ],
      "kpis": [
       {
-       "label": "Recall drill time",
-       "value": "6.4m"
+       "label": "Restricted transfers blocked by controls",
+       "value": "100%"
       },
       {
-       "label": "Provenance completeness",
-       "value": "96%"
+       "label": "Ledger-to-custody reconciliation breaks",
+       "value": "2"
       },
       {
-       "label": "Partner capture coverage",
-       "value": "88%"
+       "label": "Evidence pack production time",
+       "value": "17 min"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/banking-financial-services/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "Permissioned DLT (Fabric-class)",
+      "Qualified custody + HSM",
+      "Regulatory reporting (MiCA-class)"
+     ],
+     "evidence": [
+      {
+       "title": "The trade-finance unit of a pan-Asian bank",
+       "url": "/case-studies/bank-10/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — claims, policy and exposure data fragmented included — and prove it moved.",
+     "hook": "Parametric products, reinsurance trust and claims provenance — smart contracts that pay on verifiable events, with the legal wrapper standing in front of the token.",
      "plays": [
       "Event provenance at every handoff under shared identifier standards",
       "Document anchoring with originals in your systems of record",
@@ -681,25 +718,36 @@
      ],
      "kpis": [
       {
-       "label": "Recall drill time",
-       "value": "6.4m"
+       "label": "Parametric payouts on attested events",
+       "value": "100%"
       },
       {
-       "label": "Provenance completeness",
-       "value": "96%"
-      },
-      {
-       "label": "Partner capture coverage",
+       "label": "Claims provenance coverage",
        "value": "88%"
+      },
+      {
+       "label": "Dispute resolution time cut",
+       "value": "32%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/insurance/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "Parametric oracles + attestation",
+      "Reinsurance trust frameworks",
+      "Claims evidence packs"
+     ],
+     "evidence": [
+      {
+       "title": "A European specialty reinsurer",
+       "url": "/case-studies/ins-03/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Credentialing, consent and provenance for drugs and devices — decentralized identity for clinicians, verifiable consent for patients, DSCSA-grade traceability across the chain.",
      "plays": [
       "Event provenance at every handoff under shared identifier standards",
       "Document anchoring with originals in your systems of record",
@@ -707,25 +755,30 @@
      ],
      "kpis": [
       {
-       "label": "Recall drill time",
-       "value": "6.4m"
-      },
-      {
-       "label": "Provenance completeness",
+       "label": "One-scan clinician credential checks",
        "value": "96%"
       },
       {
-       "label": "Partner capture coverage",
-       "value": "88%"
+       "label": "Consent records verifiable",
+       "value": "100%"
+      },
+      {
+       "label": "Recall reconstruction time",
+       "value": "90 min"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "DSCSA / EU FMD traceability",
+      "W3C Verifiable Credentials",
+      "EHR consent surfaces"
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "hook": "Multi-tier supplier provenance, digital product passports and machine-trust networks — GS1/EPCIS events anchored so recalls reconstruct in hours, not weeks.",
      "plays": [
       "Event provenance at every handoff under shared identifier standards",
       "Document anchoring with originals in your systems of record",
@@ -733,25 +786,36 @@
      ],
      "kpis": [
       {
-       "label": "Recall drill time",
-       "value": "6.4m"
+       "label": "Tier-2/3 capture coverage",
+       "value": "65%"
       },
       {
-       "label": "Provenance completeness",
-       "value": "96%"
+       "label": "Recall drill reconstruction",
+       "value": "59 min"
       },
       {
-       "label": "Partner capture coverage",
-       "value": "88%"
+       "label": "Passport data completeness",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/manufacturing/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "GS1 EPCIS 2.0 events",
+      "Digital product passports",
+      "MES/ERP event capture"
+     ],
+     "evidence": [
+      {
+       "title": "An aerospace supplier",
+       "url": "/case-studies/mfg-09/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": true,
-     "hook": "Retail & Consumer Goods operators recognize the pattern: provenance claims unverifiable, quarter after quarter.",
+     "hook": "Supply-chain trust consumers can scan: provenance claims, authenticity and duty-of-care evidence across GS1 identifiers, without exposing supplier commercial data.",
      "plays": [
       "Event provenance at every handoff under shared identifier standards",
       "Document anchoring with originals in your systems of record",
@@ -760,25 +824,30 @@
      ],
      "kpis": [
       {
-       "label": "Recall drill time",
-       "value": "6.4m"
+       "label": "Provenance claims with anchored proof",
+       "value": "91%"
       },
       {
-       "label": "Provenance completeness",
-       "value": "96%"
+       "label": "POS authenticity check coverage",
+       "value": "99%"
       },
       {
-       "label": "Partner capture coverage",
-       "value": "88%"
+       "label": "Supplier data-leak incidents",
+       "value": "0"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "GS1 GTIN / EPCIS anchoring",
+      "POS authenticity checks",
+      "Supplier privacy domains"
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": false,
-     "hook": "Telecom, Media & Entertainment operators recognize the pattern: interconnect and roaming reconciliation, quarter after quarter.",
+     "hook": "Number and identity trust (STIR/SHAKEN-class), roaming settlement reconciliation and consortium data sharing — boring, permissioned, auditable networks.",
      "plays": [
       "Event provenance at every handoff under shared identifier standards",
       "Document anchoring with originals in your systems of record",
@@ -786,25 +855,30 @@
      ],
      "kpis": [
       {
-       "label": "Recall drill time",
-       "value": "6.4m"
+       "label": "Settlement breaks auto-reconciled",
+       "value": "89%"
       },
       {
-       "label": "Provenance completeness",
-       "value": "96%"
+       "label": "Number-trust enforcement coverage",
+       "value": "98%"
       },
       {
-       "label": "Partner capture coverage",
-       "value": "88%"
+       "label": "Consortium disputes reaching legal",
+       "value": "2"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/telecom-media/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "STIR/SHAKEN-class trust registries",
+      "Roaming settlement (TAP-class)",
+      "Consortium governance boards"
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": "Ask what GO/REC certificate integrity costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Renewable-certificate provenance, grid-flexibility settlement and multi-party trading — anchored events that meters attest and regulators can reconstruct.",
      "plays": [
       "Event provenance at every handoff under shared identifier standards",
       "Document anchoring with originals in your systems of record",
@@ -812,25 +886,30 @@
      ],
      "kpis": [
       {
-       "label": "Recall drill time",
-       "value": "6.4m"
+       "label": "Certificate events meter-attested",
+       "value": "95%"
       },
       {
-       "label": "Provenance completeness",
-       "value": "96%"
+       "label": "Settlement reconciliation breaks",
+       "value": "1"
       },
       {
-       "label": "Partner capture coverage",
-       "value": "88%"
+       "label": "Regulatory reconstruction time",
+       "value": "22 min"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/energy-utilities/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "Meter attestation (MDM)",
+      "REC / certificate registries",
+      "Market settlement systems"
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": true,
-     "hook": "The work here has one job: move a named number — compliance-grade provenance missing included — and prove it moved.",
+     "hook": "The control tower's trust layer: EDI events anchored at source, customs documents verifiable in one scan, multi-party exception trails that survive a dispute.",
      "plays": [
       "Event provenance at every handoff under shared identifier standards",
       "Document anchoring with originals in your systems of record",
@@ -838,25 +917,30 @@
      ],
      "kpis": [
       {
-       "label": "Recall drill time",
-       "value": "6.4m"
+       "label": "EDI events anchored at source",
+       "value": "78%"
       },
       {
-       "label": "Provenance completeness",
-       "value": "96%"
+       "label": "Customs docs verified one-scan",
+       "value": "93%"
       },
       {
-       "label": "Partner capture coverage",
-       "value": "88%"
+       "label": "Dispute evidence pack coverage",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "EDI/X12 + anchoring service",
+      "Customs (HS) documentation",
+      "Carrier dispute evidence"
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — records integrity under dispute included — and prove it moved.",
+     "hook": "Land registries, licenses and benefits with verifiable credentials — citizen-held proof, issuer-grade audit, and privacy domains that pass DPA review.",
      "plays": [
       "Event provenance at every handoff under shared identifier standards",
       "Document anchoring with originals in your systems of record",
@@ -864,25 +948,36 @@
      ],
      "kpis": [
       {
-       "label": "Recall drill time",
-       "value": "6.4m"
+       "label": "Credentials in citizen wallets",
+       "value": "85%"
       },
       {
-       "label": "Provenance completeness",
-       "value": "96%"
+       "label": "Issuer audit-trail completeness",
+       "value": "100%"
       },
       {
-       "label": "Partner capture coverage",
-       "value": "88%"
+       "label": "Privacy-domain review pass",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/public-sector/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "W3C VC / DID suites",
+      "Land and license registries",
+      "DPA privacy review gates"
+     ],
+     "evidence": [
+      {
+       "title": "A customs agency",
+       "url": "/case-studies/pub-07/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Verifiable diplomas and micro-credentials — learner-held wallets, issuer governance and revocation that employers can check in one scan.",
      "plays": [
       "Event provenance at every handoff under shared identifier standards",
       "Document anchoring with originals in your systems of record",
@@ -890,25 +985,30 @@
      ],
      "kpis": [
       {
-       "label": "Recall drill time",
-       "value": "6.4m"
+       "label": "Credentials issued to wallet",
+       "value": "100%"
       },
       {
-       "label": "Provenance completeness",
-       "value": "96%"
+       "label": "Employer verification one-scan",
+       "value": "92%"
       },
       {
-       "label": "Partner capture coverage",
-       "value": "88%"
+       "label": "Revocation propagation time",
+       "value": "3 min"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/education-research/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "W3C Verifiable Credentials",
+      "SIS issuer systems",
+      "Learner wallet SDKs"
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the trust layer is engineered, not asserted: signed events, permissioned consensus, and a provenance graph every participant can verify.",
+     "hook": "Software provenance (SBOM anchoring), signing trust and customer data sharing under verifiable consent — the trust surfaces enterprise buyers now ask about.",
      "plays": [
       "Event provenance at every handoff under shared identifier standards",
       "Document anchoring with originals in your systems of record",
@@ -916,25 +1016,30 @@
      ],
      "kpis": [
       {
-       "label": "Recall drill time",
-       "value": "6.4m"
+       "label": "SBOM anchored per release",
+       "value": "95%"
       },
       {
-       "label": "Provenance completeness",
+       "label": "Consent proofs verifiable",
        "value": "96%"
       },
       {
-       "label": "Partner capture coverage",
-       "value": "88%"
+       "label": "Key compromise blast radius",
+       "value": "1"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/technology-saas/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "SBOM (SPDX / CycloneDX)",
+      "Sigstore-class signing",
+      "Customer consent registries"
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": true,
-     "hook": "Ask what provenance claims unverifiable costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Field-to-fork provenance: certification events, subsidy eligibility proofs and commodity-chain traceability anchored at the point of capture.",
      "plays": [
       "Event provenance at every handoff under shared identifier standards",
       "Document anchoring with originals in your systems of record",
@@ -942,26 +1047,42 @@
      ],
      "kpis": [
       {
-       "label": "Recall drill time",
-       "value": "6.4m"
+       "label": "Certification events anchored",
+       "value": "81%"
       },
       {
-       "label": "Provenance completeness",
-       "value": "96%"
+       "label": "Subsidy proof completeness",
+       "value": "91%"
       },
       {
-       "label": "Partner capture coverage",
-       "value": "88%"
+       "label": "Chain reconstruction time",
+       "value": "49 min"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/agriculture-food/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "Certification schemes (GLOBALG.A.P.)",
+      "Subsidy eligibility proofs",
+      "Commodity chain events (EPCIS)"
+     ],
+     "evidence": [
+      {
+       "title": "A global coffee trader",
+       "url": "/case-studies/agr-02/"
+      },
+      {
+       "title": "A food processing group",
+       "url": "/case-studies/agr-06/"
+      }
+     ]
     }
    ],
    "practiceNote": "Provenance, Traceability & Supply Chain Trust view: end-to-end supply-chain evidence — anchored document hashes, event provenance at each handoff, and recall queries that finish in minutes, not weeks."
   },
   {
    "t": "h2",
-   "x": "Provenance defaults — and documented deviations"
+   "x": "Provenance defaults — and documented deviations",
+   "sub": "The default stack, and the deviations we sign"
   },
   {
    "t": "p",
@@ -1005,7 +1126,8 @@
   },
   {
    "t": "h2",
-   "x": "Provenance release gates — evidence before partner onboarding"
+   "x": "Provenance release gates — evidence before partner onboarding",
+   "sub": "What a partner must prove before joining the chain"
   },
   {
    "t": "table",
@@ -1045,7 +1167,8 @@
   },
   {
    "t": "h2",
-   "x": "What the supply-chain integrity team inherits"
+   "x": "What the supply-chain integrity team inherits",
+   "sub": "Drill calendar, coverage console and the evidence store"
   },
   {
    "t": "bullets",
@@ -1078,7 +1201,8 @@
   },
   {
    "t": "h2",
-   "x": "Partners in order, week by week"
+   "x": "Partners in order, week by week",
+   "sub": "The onboarding sequence and the capability proof per partner"
   },
   {
    "t": "bullets",
@@ -1111,7 +1235,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — partner systems, labels and the ledger"
+   "x": "Integration surface — partner systems, labels and the ledger",
+   "sub": "Scanners, MES, label printers and the anchoring service"
   },
   {
    "t": "p",
@@ -1144,7 +1269,8 @@
   },
   {
    "t": "h2",
-   "x": "Recall-readiness governance overlay"
+   "x": "Recall-readiness governance overlay",
+   "sub": "The standing state of readiness, audited like a control"
   },
   {
    "t": "p",
@@ -1174,6 +1300,44 @@
   {
    "t": "note",
    "x": "Paper analogs are detected, not assumed away: when a partner's events arrive as week-late batch uploads, the drill treats that segment as unproven — coverage claims must match capture cadence."
+  },
+  {
+   "t": "h2",
+   "x": "Capture fidelity beats ledger choice",
+   "sub": "The capture chain, the identity crosswalk and recall drills — what actually makes provenance defensible",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Provenance programs decorate supply chains when the events are typed into portals at the end of the week; they defend supply chains when capture happens at the source, signed by the device or system that observed the physical event. The capture chain therefore runs from scanners, IoT signals and ERP events through a normalization layer that anchors batches as merkle roots — the full chain is reconstructable from the roots plus the sealed evidence store, and the identity crosswalk maps EPCIS identifiers to real parties so 'lot 4711' has a name, a site and a certification status behind it.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Recall drills are the product test: on a schedule, the reconstruction service must rebuild the affected lot's journey — forward and backward trace — inside the drill window, with the evidence pack a regulator expects. Partner onboarding is evidence-gated (a partner joins with capture capability proven on their line, not with a signed promise), and capture coverage is measured per tier, because tier-2 and tier-3 blindness is where recalls quietly fail.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Capture at the source",
+     "Events signed by devices and systems that observed them, not retyped later."
+    ],
+    [
+     "Anchored batches",
+     "Merkle roots on-ledger; the full chain reconstructs from roots plus sealed evidence."
+    ],
+    [
+     "Identity crosswalk",
+     "Every EPCIS identifier resolves to a party, site and certification status."
+    ],
+    [
+     "Drilled recalls",
+     "Forward and backward trace rehearsed to a clock, with regulator-grade packs."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1299,6 +1463,23 @@
    "url": "/case-studies/ins-03/",
    "tag": "Evidence",
    "desc": "Bordereaux automation and settlement evidence — reconciliation effort down 74%."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "The trade-finance unit of a pan-Asian bank",
+   "url": "/case-studies/bank-10/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A European specialty reinsurer",
+   "url": "/case-studies/ins-03/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A global coffee trader",
+   "url": "/case-studies/agr-02/",
+   "ind": "Agriculture & Food Systems"
   }
  ]
 }

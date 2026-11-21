@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "An agent is a junior employee with perfect attendance — staff it like one"
+   "x": "The agent operating model — roles, grants and supervision",
+   "sub": "Staffing discipline applied to software: explicit duties, bounded tools, inspected work"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that erode agent programs"
+   "x": "Four failure modes that erode agent programs",
+   "sub": "Tool sprawl, loop economics, silent wrongness, checkpoint erosion — with the countermeasure that ships against each"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — policy-bounded execution with risk-placed checkpoints"
+   "x": "Reference architecture — policy-bounded execution with risk-placed checkpoints",
+   "sub": "Scope from role definitions; autonomy earned step by step against a signed risk matrix"
   },
   {
    "t": "p",
@@ -94,12 +97,14 @@
     {
      "id": "queue",
      "lane": 0,
-     "label": "Work queues"
+     "label": "Work queues",
+     "sub": "depth + SLA clock, visible"
     },
     {
      "id": "sched",
      "lane": 0,
-     "label": "Schedules"
+     "label": "Schedules",
+     "sub": "calendar-aware triggers"
     },
     {
      "id": "router",
@@ -110,13 +115,15 @@
      "id": "agent",
      "lane": 1,
      "label": "Role agent",
-     "hot": true
+     "hot": true,
+     "sub": "role-derived scope, no ad hoc"
     },
     {
      "id": "tools",
      "lane": 1,
      "label": "Tool belt (scoped)",
-     "hot": true
+     "hot": true,
+     "sub": "least-privilege, expiring grants"
     },
     {
      "id": "mem",
@@ -127,7 +134,8 @@
      "id": "policy",
      "lane": 2,
      "label": "Policy engine",
-     "hot": true
+     "hot": true,
+     "sub": "OPA/Rego bundle · deny-by-default"
     },
     {
      "id": "ident",
@@ -144,7 +152,8 @@
      "id": "ver",
      "lane": 3,
      "label": "Verifier steps",
-     "hot": true
+     "hot": true,
+     "sub": "assertions before any commit"
     },
     {
      "id": "recon",
@@ -175,7 +184,8 @@
      "id": "sup",
      "lane": 5,
      "label": "Supervisor review",
-     "hot": true
+     "hot": true,
+     "sub": "sampling + discrepancy SLAs"
     },
     {
      "id": "replay",
@@ -282,11 +292,26 @@
      "label": "metrics"
     }
    ],
-   "note": "Commit only passes through the confidence gate; anything below bar goes to supervisor review with the trace attached — and the supervisor's correction becomes training data for the policy engine."
+   "note": "Commit only passes through the confidence gate; anything below bar goes to supervisor review with the trace attached — and the supervisor's correction becomes training data for the policy engine.",
+   "badges": [
+    {
+     "label": "Straight-through target",
+     "value": "72%"
+    },
+    {
+     "label": "Policy breaches tolerated",
+     "value": "0"
+    },
+    {
+     "label": "Replay coverage",
+     "value": "100%"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "One task's journey — assignment, execution, checkpoint, replay"
+   "x": "One task's journey — assignment, execution, checkpoint, replay",
+   "sub": "The five-stage run anatomy from typed intake to sealed evidence packet"
   },
   {
    "t": "p",
@@ -309,7 +334,8 @@
   },
   {
    "t": "h2",
-   "x": "The agent console operations and compliance share"
+   "x": "The agent console operations and compliance share",
+   "sub": "Run ledger, policy denials and cost ceilings on one surface"
   },
   {
    "t": "p",
@@ -653,7 +679,8 @@
   },
   {
    "t": "h2",
-   "x": "Task economics across process families"
+   "x": "Task economics across process families",
+   "sub": "Straight-through targets and unit cost by family — where the next cohort gets staffed"
   },
   {
    "t": "p",
@@ -702,7 +729,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": true,
-     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: orchestration is the discipline — dozens of small automations running as one auditable workforce, with escalations designed rather than improvised.",
+     "hook": "KYC refresh backlogs, sanctions-alert triage and reconcile-everything month-ends are high-volume, rule-bounded and examinable — exactly the workload where role-scoped agents out-perform both manual desks and brittle RPA.",
      "plays": [
       "Role-scoped agents with policy bounds derived from role definitions",
       "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
@@ -710,25 +737,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "72%"
+       "label": "STP rate, agent-handled ops",
+       "value": "58%"
       },
       {
-       "label": "Policy breaches",
-       "value": "0"
+       "label": "Checkpoint fidelity at audit sampling",
+       "value": "98%"
       },
       {
-       "label": "Cost per task",
-       "value": "$0.41"
+       "label": "Cost per completed action",
+       "value": "$0.28"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "KYC/case suites and watchlist tools",
+      "SWIFT gpi and payment-rail events",
+      "SR 11-7 / OCC 2011-12 evidence"
+     ],
+     "evidence": [
+      {
+       "title": "A top-10 European retail bank",
+       "url": "/case-studies/bank-01/"
+      },
+      {
+       "title": "A multinational corporate bank",
+       "url": "/case-studies/bank-02/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": true,
-     "hook": "Ask what fraud industrialized against manual detection costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "FNOL intake, submission triage and reserve refresh run on ACORD-coded documents and PAS queues that surge at catastrophe season — agent pools absorb the surge while adjusters keep the judgment calls, with every step logged.",
      "plays": [
       "Role-scoped agents with policy bounds derived from role definitions",
       "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
@@ -736,25 +778,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "72%"
+       "label": "Claims auto-adjudicated to settlement",
+       "value": "60%"
       },
       {
-       "label": "Policy breaches",
-       "value": "0"
+       "label": "FNOL intake cycle time",
+       "value": "9 hrs"
       },
       {
-       "label": "Cost per task",
-       "value": "$0.41"
+       "label": "Adjuster override rate",
+       "value": "9%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "PAS/claims suites (Guidewire-class)",
+      "ACORD forms and ISO claim codes",
+      "NAIC market-conduct evidence"
+     ],
+     "evidence": [
+      {
+       "title": "A top-5 global P&C insurer",
+       "url": "/case-studies/ins-01/"
+      },
+      {
+       "title": "A leading life insurer (North America)",
+       "url": "/case-studies/ins-02/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": false,
-     "hook": "Healthcare & Life Sciences operators recognize the pattern: prior authorization and RCM friction, quarter after quarter.",
+     "hook": "Prior authorization, claims status and denials follow-up drown coding and RCM teams in X12 278/837 transactions and payer-portal hunts — agents that read the rule set, assemble the packet and log every step give the queue an owner.",
      "plays": [
       "Role-scoped agents with policy bounds derived from role definitions",
       "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
@@ -762,25 +819,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "72%"
+       "label": "Prior-auth auto-approval share",
+       "value": "33%"
       },
       {
-       "label": "Policy breaches",
-       "value": "0"
+       "label": "Denials follow-up queue age p90",
+       "value": "7 days"
       },
       {
-       "label": "Cost per task",
-       "value": "$0.41"
+       "label": "Action replay coverage",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "EHR/RCM estates (Epic-class)",
+      "HL7 FHIR + X12 278/837",
+      "HIPAA audit controls"
+     ],
+     "evidence": [
+      {
+       "title": "A national health insurer",
+       "url": "/case-studies/hc-02/"
+      },
+      {
+       "title": "A European biopharma group",
+       "url": "/case-studies/hc-03/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — maintenance planning reactive included — and prove it moved.",
+     "hook": "Maintenance planners and quality engineers live in SAP PM work orders, MES transactions and supplier ASN exceptions — automation earns its keep here only when it clears the backlog without touching the safety-rated path.",
      "plays": [
       "Role-scoped agents with policy bounds derived from role definitions",
       "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
@@ -788,25 +860,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "72%"
+       "label": "Work orders auto-dispositioned",
+       "value": "57%"
       },
       {
-       "label": "Policy breaches",
-       "value": "0"
+       "label": "NCR closure cycle",
+       "value": "6 days"
       },
       {
-       "label": "Cost per task",
-       "value": "$0.41"
+       "label": "Actions with sealed evidence packet",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "SAP PM / CMMS work orders",
+      "MES context via ISA-95",
+      "IATF 16949 NCR-CAPA flows"
+     ],
+     "evidence": [
+      {
+       "title": "A global automotive OEM",
+       "url": "/case-studies/mfg-01/"
+      },
+      {
+       "title": "A packaging producer",
+       "url": "/case-studies/mfg-10/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": "Ask what supplier collaboration by email costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "EDI 850/855/856 exceptions, trade-promotion deduction disputes and supplier onboarding are pure document-and-decision churn across GS1 identifiers — the queue shrinks fastest when agents work the exception list under merchandiser-approved checkpoints.",
      "plays": [
       "Role-scoped agents with policy bounds derived from role definitions",
       "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
@@ -814,25 +901,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "72%"
+       "label": "PO exceptions auto-resolved",
+       "value": "60%"
       },
       {
-       "label": "Policy breaches",
-       "value": "0"
+       "label": "Deduction dispute cycle",
+       "value": "15 days"
       },
       {
-       "label": "Cost per task",
-       "value": "$0.41"
+       "label": "Agent actions reconciled to ERP",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "EDI 850/855/856 + GS1 GTIN",
+      "ERP order ledgers (SAP Retail-class)",
+      "Trade-promotion deduction systems"
+     ],
+     "evidence": [
+      {
+       "title": "A top-3 grocery retailer (800+ stores)",
+       "url": "/case-studies/ret-01/"
+      },
+      {
+       "title": "A home-improvement retailer",
+       "url": "/case-studies/ret-08/"
+      }
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": true,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Order fallout between OSS/BSS layers, usage-dispute tickets and churn-save queues are where TM Forum Open API journeys break — durable orchestration re-drives the fallout and hands judgment calls to humans with context attached.",
      "plays": [
       "Role-scoped agents with policy bounds derived from role definitions",
       "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
@@ -840,25 +942,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "72%"
+       "label": "Order fallout auto-recovered",
+       "value": "70%"
       },
       {
-       "label": "Policy breaches",
-       "value": "0"
+       "label": "Repeat-fallout rate",
+       "value": "9%"
       },
       {
-       "label": "Cost per task",
-       "value": "$0.41"
+       "label": "Usage disputes closed within SLA",
+       "value": "91%"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "OSS/BSS order orchestration",
+      "TM Forum Open APIs (TMF622/641)",
+      "Campaign and churn platforms"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-1 European operator",
+       "url": "/case-studies/tel-01/"
+      },
+      {
+       "title": "A North American cable operator",
+       "url": "/case-studies/tel-03/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — trading and scheduling decisions at market speed included — and prove it moved.",
+     "hook": "Outage tickets, switch-order packets, market-submission checks and billing exceptions stack across OMS/EMS and CIS estates — the wins sit in bounded, auditable workflows where a wrong write is recoverable and every action is logged.",
      "plays": [
       "Role-scoped agents with policy bounds derived from role definitions",
       "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
@@ -866,25 +983,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "72%"
+       "label": "Field work orders auto-routed",
+       "value": "47%"
       },
       {
-       "label": "Policy breaches",
-       "value": "0"
+       "label": "Outage-ticket backlog age p90",
+       "value": "30 hrs"
       },
       {
-       "label": "Cost per task",
-       "value": "$0.41"
+       "label": "Switch-order packet completeness",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "OMS/EMS and CIS estates",
+      "NERC and market-submission calendars",
+      "Field-service scheduling"
+     ],
+     "evidence": [
+      {
+       "title": "A European TSO-DSO group",
+       "url": "/case-studies/en-01/"
+      },
+      {
+       "title": "A global integrated energy major",
+       "url": "/case-studies/en-02/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Missed appointments, failed EDI messages, customs holds and detention disputes across TMS/WMS/telematics feeds — agentic pools triage, re-drive and document exceptions so the control tower shows truth, not noise.",
      "plays": [
       "Role-scoped agents with policy bounds derived from role definitions",
       "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
@@ -892,25 +1024,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "72%"
+       "label": "Exceptions auto-triaged",
+       "value": "57%"
       },
       {
-       "label": "Policy breaches",
-       "value": "0"
+       "label": "Detention disputes resolved in",
+       "value": "12 days"
       },
       {
-       "label": "Cost per task",
-       "value": "$0.41"
+       "label": "EDI messages re-driven in window",
+       "value": "94%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "TMS/WMS/telematics event feeds",
+      "EDIFACT / X12 carrier messages",
+      "Customs and HS documentation"
+     ],
+     "evidence": [
+      {
+       "title": "A global 3PL (40+ countries)",
+       "url": "/case-studies/log-01/"
+      },
+      {
+       "title": "A parcel network operator",
+       "url": "/case-studies/log-06/"
+      }
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Permit, benefit and FOIA case backlogs move at the pace of document assembly and eligibility checks — agents that pre-fill, verify and route cut cycle time while every decision keeps a citable evidence trail for oversight bodies.",
      "plays": [
       "Role-scoped agents with policy bounds derived from role definitions",
       "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
@@ -918,25 +1065,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "72%"
+       "label": "Cases auto-assembled for review",
+       "value": "47%"
       },
       {
-       "label": "Policy breaches",
-       "value": "0"
+       "label": "Permit cycle-time reduction",
+       "value": "30%"
       },
       {
-       "label": "Cost per task",
-       "value": "$0.41"
+       "label": "Decisions with citable evidence trail",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "Permit/benefit case systems",
+      "FOIA and records statutory clocks",
+      "Budget and procurement controls"
+     ],
+     "evidence": [
+      {
+       "title": "A national digital-government agency",
+       "url": "/case-studies/pub-01/"
+      },
+      {
+       "title": "A national tax administration",
+       "url": "/case-studies/pub-02/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "Ask what administrative burden on faculty costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Admissions processing, aid-verification packets and grant-administration reporting scale with enrollment cycles — role-scoped agents clear the routine files and route judgment calls to registrars and aid officers with full context.",
      "plays": [
       "Role-scoped agents with policy bounds derived from role definitions",
       "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
@@ -944,25 +1106,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "72%"
+       "label": "Applications auto-processed",
+       "value": "69%"
       },
       {
-       "label": "Policy breaches",
-       "value": "0"
+       "label": "Verification packet cycle",
+       "value": "7 days"
       },
       {
-       "label": "Cost per task",
-       "value": "$0.41"
+       "label": "Staff hours returned per week",
+       "value": "230"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "SIS estates (Banner-class)",
+      "Aid verification workflows",
+      "Grant reporting portals"
+     ],
+     "evidence": [
+      {
+       "title": "A public research university (38,000 students)",
+       "url": "/case-studies/edu-01/"
+      },
+      {
+       "title": "An online university",
+       "url": "/case-studies/edu-06/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": false,
-     "hook": "Ask what support and success scale linearly costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Support triage, entitlement checks and renewal-desk workflows scale linearly with ARR unless an agent layer absorbs the repeatable steps — with checkpoints where account teams keep pricing judgment and CRM history stays structured.",
      "plays": [
       "Role-scoped agents with policy bounds derived from role definitions",
       "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
@@ -970,25 +1147,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
+       "label": "Tickets auto-triaged",
        "value": "72%"
       },
       {
-       "label": "Policy breaches",
-       "value": "0"
+       "label": "First-response time",
+       "value": "10 min"
       },
       {
-       "label": "Cost per task",
-       "value": "$0.41"
+       "label": "Entitlement checks automated",
+       "value": "91%"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "ITSM/CRM (ServiceNow-class)",
+      "CPQ and entitlement registries",
+      "SOC 2 evidence controls"
+     ],
+     "evidence": [
+      {
+       "title": "A consumer fintech (8M users)",
+       "url": "/case-studies/tech-02/"
+      },
+      {
+       "title": "An enterprise IT services firm",
+       "url": "/case-studies/tech-07/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "Ask what input and logistics planning manual costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Contract management, grading certificates, subsidy dossiers and harvest-logistics planning run on seasonal surges — agent pools absorb the surge with checkpoints where agronomists and traders keep commercial judgment.",
      "plays": [
       "Role-scoped agents with policy bounds derived from role definitions",
       "Human checkpoints placed by a signed risk matrix, autonomy earned by evidence",
@@ -996,26 +1188,32 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "72%"
+       "label": "Contract milestones auto-tracked",
+       "value": "85%"
       },
       {
-       "label": "Policy breaches",
-       "value": "0"
+       "label": "Certification doc prep time",
+       "value": "9 hrs"
       },
       {
-       "label": "Cost per task",
-       "value": "$0.41"
+       "label": "Subsidy dossier completeness",
+       "value": "97%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "Procurement and contract ledgers",
+      "Certification schemes (GLOBALG.A.P.-class)",
+      "Subsidy and traceability portals"
+     ]
     }
    ],
    "practiceNote": "Agentic Process Automation view: role-scoped agents that execute process steps under policy bounds, with human checkpoints placed by risk and replay for every action taken."
   },
   {
    "t": "h2",
-   "x": "Agent stack defaults — and documented deviations"
+   "x": "Agent stack defaults — and documented deviations",
+   "sub": "The default stack, and the deviations we sign for explicitly"
   },
   {
    "t": "p",
@@ -1059,7 +1257,8 @@
   },
   {
    "t": "h2",
-   "x": "Agent release gates — what blocks a cohort from going live"
+   "x": "Agent release gates — what blocks a cohort from going live",
+   "sub": "The evidence a cohort carries before production load"
   },
   {
    "t": "table",
@@ -1099,7 +1298,8 @@
   },
   {
    "t": "h2",
-   "x": "What the process owner inherits"
+   "x": "What the process owner inherits",
+   "sub": "Runbooks, consoles, the re-certification calendar and named owners"
   },
   {
    "t": "bullets",
@@ -1132,7 +1332,8 @@
   },
   {
    "t": "h2",
-   "x": "The build, week by week"
+   "x": "The build, week by week",
+   "sub": "Twelve weeks from baseline audit to an industrialized cohort"
   },
   {
    "t": "bullets",
@@ -1165,7 +1366,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — the tools agents are scoped to touch"
+   "x": "Integration surface — the tools agents are scoped to touch",
+   "sub": "ERP, CRM, ITSM and comms — named systems, typed calls, expiry on every grant"
   },
   {
    "t": "p",
@@ -1198,7 +1400,8 @@
   },
   {
    "t": "h2",
-   "x": "Control overlay — auditability of every autonomous action"
+   "x": "Control overlay — auditability of every autonomous action",
+   "sub": "Evidence packets, replay traces and the money path"
   },
   {
    "t": "p",
@@ -1228,6 +1431,49 @@
   {
    "t": "note",
    "x": "Autonomy expansion is earned, not configured: a cohort's scope widens only after two consecutive quarters inside the checkpoint-fidelity tolerance, and the widening is itself a gated change."
+  },
+  {
+   "t": "h2",
+   "x": "Idempotency is the load-bearing wall",
+   "sub": "The engineering property every agent action inherits — and what we build when a system cannot offer it",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Every write an agent makes carries an idempotency key, and the key is semantic, not syntactic: two calls that would move the same business object to the same state share a key, so a retry after timeout cannot double-book, double-pay or double-file. Systems that support idempotent writes natively get used directly; systems that do not get a reconciliation shim that proves the intended end-state before the run is allowed to close. This is why our failure rate claims survive audit — a run that could not prove its end-state is a failed run by definition, and the failure is visible in the run ledger, not in a spreadsheet.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "The second wall is the retry budget. Agents do not retry until success; they retry within a budget — bounded attempts, bounded cost, bounded wall-clock — and when the budget exhausts, the run escalates with its trace attached. The economics matter: an agent that retries expensive LLM calls until the bill spikes is the most common cost failure we inherit from prior programs. The circuit breaker on spend is set at design time from the risk matrix, reviewed at every release gate, and it trips loudly when it trips.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Semantic idempotency keys",
+     "Same business object + same end-state = same key; retries collapse, side effects stay single."
+    ],
+    [
+     "Reconciliation shims",
+     "For systems without native idempotency, end-state is proven from source before a run closes."
+    ],
+    [
+     "Budgeted retries",
+     "Bounded attempts, cost and wall-clock; exhaustion escalates with trace attached."
+    ],
+    [
+     "Spend circuit breakers",
+     "Per-run and per-cohort ceilings from the risk matrix; trips are loud and reviewed at gates."
+    ]
+   ],
+   "phase3_deep": true
+  },
+  {
+   "t": "note",
+   "x": "Design targets from the reference program model — gate thresholds from delivery, not a client's live telemetry.",
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1353,6 +1599,23 @@
    "url": "/case-studies/bank-02/",
    "tag": "Evidence",
    "desc": "KYC refresh backlog cleared — 70% faster cycles with agentic file assembly."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A top-10 European retail bank",
+   "url": "/case-studies/bank-01/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A top-5 global P&C insurer",
+   "url": "/case-studies/ins-01/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A global 3PL (40+ countries)",
+   "url": "/case-studies/log-01/",
+   "ind": "Logistics & Supply Chain"
   }
  ]
 }

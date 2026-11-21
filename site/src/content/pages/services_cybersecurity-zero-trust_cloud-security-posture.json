@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "Cloud security is an engineering gate, not a compliance report"
+   "x": "Cloud security is an engineering gate — not a compliance report",
+   "sub": "Plan-time guardrails, entitlement analytics and the dwell-time clock"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that turn posture into churn"
+   "x": "Four failure modes that turn posture into churn",
+   "sub": "Late findings, triage oblivion, drifting gates, ownerless entitlements"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — guardrails from IaC to runtime"
+   "x": "Reference architecture — guardrails from IaC to runtime",
+   "sub": "Plan-time checks, runtime posture and revert as one loop"
   },
   {
    "t": "p",
@@ -105,13 +108,15 @@
      "id": "iac",
      "lane": 1,
      "label": "IaC guardrails",
-     "hot": true
+     "hot": true,
+     "sub": "plan-time policy checks"
     },
     {
      "id": "plan",
      "lane": 1,
      "label": "Plan-time policy",
-     "hot": true
+     "hot": true,
+     "sub": "block before apply"
     },
     {
      "id": "cicd",
@@ -122,7 +127,8 @@
      "id": "cspm",
      "lane": 2,
      "label": "Posture engine",
-     "hot": true
+     "hot": true,
+     "sub": "continuous, per control"
     },
     {
      "id": "norm",
@@ -138,7 +144,8 @@
      "id": "entl",
      "lane": 3,
      "label": "Entitlement analytics",
-     "hot": true
+     "hot": true,
+     "sub": "identity-to-permission graph"
     },
     {
      "id": "right",
@@ -159,7 +166,8 @@
      "id": "drift",
      "lane": 4,
      "label": "Drift revert",
-     "hot": true
+     "hot": true,
+     "sub": "auto, with log entry"
     },
     {
      "id": "ticket",
@@ -174,7 +182,8 @@
     {
      "id": "evid",
      "lane": 5,
-     "label": "Evidence packs"
+     "label": "Evidence packs",
+     "sub": "examiner-ready"
     },
     {
      "id": "trend",
@@ -261,11 +270,26 @@
      "label": "report"
     }
    ],
-   "note": "Dwell time is the honest metric: how long does a critical misconfiguration live? Prevention at plan time drives it toward zero better than weekly scans."
+   "note": "Dwell time is the honest metric: how long does a critical misconfiguration live? Prevention at plan time drives it toward zero better than weekly scans.",
+   "badges": [
+    {
+     "label": "Plan-time blocks",
+     "value": "before apply"
+    },
+    {
+     "label": "Critical findings dwell",
+     "value": "≤14 days"
+    },
+    {
+     "label": "Drift revert",
+     "value": "automatic"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "One deploy, guarded from commit to runtime"
+   "x": "One deploy, guarded from commit to runtime",
+   "sub": "The gate path with the checks each stage runs"
   },
   {
    "t": "p",
@@ -288,7 +312,8 @@
   },
   {
    "t": "h2",
-   "x": "The posture console — dwell time as the headline"
+   "x": "The posture console — dwell time as the headline",
+   "sub": "Dwell, entitlements and drift as standing numbers"
   },
   {
    "t": "p",
@@ -586,7 +611,8 @@
   },
   {
    "t": "h2",
-   "x": "Dwell time and entitlements across the quarters"
+   "x": "Dwell time and entitlements across the quarters",
+   "sub": "The trend that shows the program is real"
   },
   {
    "t": "p",
@@ -653,7 +679,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": true,
-     "hook": "Banking & Financial Services operators recognize the pattern: genAI stuck between pilot and policy, quarter after quarter.",
+     "hook": "Supervisory scrutiny sets the bar: model-risk evidence for AI defenses, entitlement analytics that survive examinations, and containment drills timed against regulator expectations.",
      "plays": [
       "IaC guardrails that block bad deploys before they exist",
       "CSPM with signed dwell-time budgets — breaches page owners",
@@ -661,25 +687,36 @@
      ],
      "kpis": [
       {
-       "label": "Critical misconfig dwell",
-       "value": "4.2h"
+       "label": "Containment time, critical threats",
+       "value": "36 min"
       },
       {
-       "label": "IaC gate blocks (week)",
-       "value": "17"
+       "label": "Entitlement review findings closed",
+       "value": "95%"
       },
       {
-       "label": "Entitlement reduction",
-       "value": "-31%"
+       "label": "Evidence pack prep time",
+       "value": "6 days"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/banking-financial-services/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Supervisory evidence frameworks",
+      "Entitlement analytics",
+      "Purple-team programs"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-1 US bank",
+       "url": "/case-studies/bank-03/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": false,
-     "hook": "Insurance & Risk operators recognize the pattern: sensitive data estate under pressure, quarter after quarter.",
+     "hook": "Policy and claims data under market-conduct rules — identity lifecycle that passes audit, posture gates on underwriting platforms, and recovery drills that prove the RTO.",
      "plays": [
       "IaC guardrails that block bad deploys before they exist",
       "CSPM with signed dwell-time budgets — breaches page owners",
@@ -687,25 +724,36 @@
      ],
      "kpis": [
       {
-       "label": "Critical misconfig dwell",
-       "value": "4.2h"
+       "label": "Leaver revocation within SLA",
+       "value": "100%"
       },
       {
-       "label": "IaC gate blocks (week)",
-       "value": "17"
+       "label": "Critical posture findings dwell",
+       "value": "11 days"
       },
       {
-       "label": "Entitlement reduction",
-       "value": "-31%"
+       "label": "Recovery drill RTO vs target",
+       "value": "90%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/insurance/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "PAS/claims identity estates",
+      "CSPM + plan-time policy",
+      "Immutable backup vaults"
+     ],
+     "evidence": [
+      {
+       "title": "An insurance group",
+       "url": "/case-studies/ins-10/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": false,
-     "hook": "Ask what PHI concentration and ransomware exposure costs Healthcare & Life Sciences firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Clinical uptime is patient safety: zero-trust segmentation around clinical networks, AI-model protection for diagnostic tools, and recovery rehearsals that respect HIPAA evidence.",
      "plays": [
       "IaC guardrails that block bad deploys before they exist",
       "CSPM with signed dwell-time budgets — breaches page owners",
@@ -713,25 +761,36 @@
      ],
      "kpis": [
       {
-       "label": "Critical misconfig dwell",
-       "value": "4.2h"
+       "label": "Clinical network segmentation coverage",
+       "value": "99%"
       },
       {
-       "label": "IaC gate blocks (week)",
-       "value": "17"
+       "label": "Model-layer incidents contained",
+       "value": "100%"
       },
       {
-       "label": "Entitlement reduction",
-       "value": "-31%"
+       "label": "Restore drill RTO adherence",
+       "value": "97%"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Clinical network segmentation",
+      "Model-layer guard stack",
+      "HIPAA evidence controls"
+     ],
+     "evidence": [
+      {
+       "title": "A national health service agency",
+       "url": "/case-studies/hc-09/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — IT/OT convergence exposure included — and prove it moved.",
+     "hook": "The OT boundary is the perimeter: IEC 62443-informed segmentation, identity for machines and humans, and incident response that keeps the line running safely.",
      "plays": [
       "IaC guardrails that block bad deploys before they exist",
       "CSPM with signed dwell-time budgets — breaches page owners",
@@ -739,25 +798,30 @@
      ],
      "kpis": [
       {
-       "label": "Critical misconfig dwell",
-       "value": "4.2h"
+       "label": "IT-OT crossings under control",
+       "value": "97%"
       },
       {
-       "label": "IaC gate blocks (week)",
-       "value": "17"
+       "label": "Machine identity coverage",
+       "value": "84%"
       },
       {
-       "label": "Entitlement reduction",
-       "value": "-31%"
+       "label": "Line-impact incidents per quarter",
+       "value": "1"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/manufacturing/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "IEC 62443-informed zones",
+      "Machine identity (SPIFFE-class)",
+      "OT-safe incident playbooks"
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone.",
+     "hook": "PCI-scoped estates and consumer trust: posture gates on commerce platforms, identity lifecycle across seasonal workforces, and fraud-adjacent detection tuned to checkout.",
      "plays": [
       "IaC guardrails that block bad deploys before they exist",
       "CSPM with signed dwell-time budgets — breaches page owners",
@@ -765,25 +829,30 @@
      ],
      "kpis": [
       {
-       "label": "Critical misconfig dwell",
-       "value": "4.2h"
+       "label": "PCI-scoped asset posture compliance",
+       "value": "96%"
       },
       {
-       "label": "IaC gate blocks (week)",
-       "value": "17"
+       "label": "Seasonal-joiner provisioning fidelity",
+       "value": "95%"
       },
       {
-       "label": "Entitlement reduction",
-       "value": "-31%"
+       "label": "Checkout-path detections tuned",
+       "value": "97%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "PCI-scoped posture gates",
+      "Seasonal JML automation",
+      "Checkout-path detection"
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": true,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the design assumes breach: blast radii contained, lateral movement priced, and detection tuned to the attacks your sector actually sees.",
+     "hook": "Carrier-grade availability duties: zero-trust across OSS/BSS, threat intel tuned to telecom attack paths, and resilience drills that respect network change windows.",
      "plays": [
       "IaC guardrails that block bad deploys before they exist",
       "CSPM with signed dwell-time budgets — breaches page owners",
@@ -791,25 +860,40 @@
      ],
      "kpis": [
       {
-       "label": "Critical misconfig dwell",
-       "value": "4.2h"
+       "label": "OSS/BSS enforcement-point coverage",
+       "value": "92%"
       },
       {
-       "label": "IaC gate blocks (week)",
-       "value": "17"
+       "label": "Threat-path drill coverage",
+       "value": "88%"
       },
       {
-       "label": "Entitlement reduction",
-       "value": "-31%"
+       "label": "Change-window incident rate",
+       "value": "2"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/telecom-media/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "OSS/BSS enforcement points",
+      "Telecom threat intel feeds",
+      "Network change windows"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-1 European telecom operator",
+       "url": "/case-studies/tel-04/"
+      },
+      {
+       "title": "A telecom infrastructure group",
+       "url": "/case-studies/tel-08/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — OT estate exposed by convergence included — and prove it moved.",
+     "hook": "NERC CIP-class obligations: segmented OT zones, controlled IT-OT crossings, identity for field workforces, and recovery drills rehearsed against grid scenarios.",
      "plays": [
       "IaC guardrails that block bad deploys before they exist",
       "CSPM with signed dwell-time budgets — breaches page owners",
@@ -817,25 +901,36 @@
      ],
      "kpis": [
       {
-       "label": "Critical misconfig dwell",
-       "value": "4.2h"
+       "label": "OT-zone policy compliance",
+       "value": "98%"
       },
       {
-       "label": "IaC gate blocks (week)",
-       "value": "17"
+       "label": "Field identity lifecycle fidelity",
+       "value": "91%"
       },
       {
-       "label": "Entitlement reduction",
-       "value": "-31%"
+       "label": "Grid-scenario drill pass rate",
+       "value": "88%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/energy-utilities/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "NERC CIP-informed zones",
+      "Field identity (MDM-linked)",
+      "Grid-scenario drills"
+     ],
+     "evidence": [
+      {
+       "title": "A gas transmission system operator",
+       "url": "/case-studies/en-08/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Attack surface across EDI, carrier portals and partner APIs: zero-trust for the control tower, identity for 3PL partners, and recovery that protects the customs calendar.",
      "plays": [
       "IaC guardrails that block bad deploys before they exist",
       "CSPM with signed dwell-time budgets — breaches page owners",
@@ -843,25 +938,30 @@
      ],
      "kpis": [
       {
-       "label": "Critical misconfig dwell",
-       "value": "4.2h"
+       "label": "Partner access via zero-trust gates",
+       "value": "86%"
       },
       {
-       "label": "IaC gate blocks (week)",
-       "value": "17"
+       "label": "EDI endpoint posture compliance",
+       "value": "92%"
       },
       {
-       "label": "Entitlement reduction",
-       "value": "-31%"
+       "label": "Customs-calendar incidents",
+       "value": "1"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Partner zero-trust gates",
+      "EDI endpoint posture",
+      "Customs-calendar resilience"
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Citizen trust and sovereign obligations: zero-trust architecture on legacy estates, evidence-ready compliance, and identity lifecycle across political turnover cycles.",
      "plays": [
       "IaC guardrails that block bad deploys before they exist",
       "CSPM with signed dwell-time budgets — breaches page owners",
@@ -869,25 +969,30 @@
      ],
      "kpis": [
       {
-       "label": "Critical misconfig dwell",
-       "value": "4.2h"
+       "label": "Enforcement points on critical paths",
+       "value": "91%"
       },
       {
-       "label": "IaC gate blocks (week)",
-       "value": "17"
+       "label": "Assertion evidence freshness",
+       "value": "91%"
       },
       {
-       "label": "Entitlement reduction",
-       "value": "-31%"
+       "label": "Legacy-segment isolation coverage",
+       "value": "78%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/public-sector/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Legacy-segment isolation",
+      "Continuous evidence collection",
+      "Sovereign identity policy"
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone.",
+     "hook": "Open estates with sensitive records: identity lifecycle across academic calendars, research-data segmentation, and ransomware resilience for the registrar's systems.",
      "plays": [
       "IaC guardrails that block bad deploys before they exist",
       "CSPM with signed dwell-time budgets — breaches page owners",
@@ -896,25 +1001,36 @@
      ],
      "kpis": [
       {
-       "label": "Critical misconfig dwell",
-       "value": "4.2h"
+       "label": "Term-cycle identity fidelity",
+       "value": "98%"
       },
       {
-       "label": "IaC gate blocks (week)",
-       "value": "17"
+       "label": "Research-segment isolation",
+       "value": "91%"
       },
       {
-       "label": "Entitlement reduction",
-       "value": "-31%"
+       "label": "Ransomware drill RTO adherence",
+       "value": "97%"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/education-research/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Academic-calendar JML",
+      "Research data segmentation",
+      "Ransomware clean rooms"
+     ],
+     "evidence": [
+      {
+       "title": "A K-12 school district",
+       "url": "/case-studies/edu-07/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": true,
-     "hook": "; competition sets the pace.",
+     "hook": "Your product is the attack surface: model protection for AI features, posture gates in CI/CD, and SOC practice that scales with the customer count.",
      "plays": [
       "IaC guardrails that block bad deploys before they exist",
       "CSPM with signed dwell-time budgets — breaches page owners",
@@ -922,25 +1038,36 @@
      ],
      "kpis": [
       {
-       "label": "Critical misconfig dwell",
-       "value": "4.2h"
+       "label": "Model-layer defense coverage",
+       "value": "93%"
       },
       {
-       "label": "IaC gate blocks (week)",
-       "value": "17"
+       "label": "Posture gates blocking bad deploys",
+       "value": "100%"
       },
       {
-       "label": "Entitlement reduction",
-       "value": "-31%"
+       "label": "MTTD on emulated intrusions",
+       "value": "21 min"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/technology-saas/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Model-protection guard stack",
+      "CI/CD posture gates",
+      "Cloud-native SOC tooling"
+     ],
+     "evidence": [
+      {
+       "title": "A collaboration software vendor",
+       "url": "/case-studies/tech-09/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means security here is architecture, not product sprawl — identity-first controls, segmented networks, and telemetry your SOC can act on the same hour.",
+     "hook": "Seasonal and dispersed estates: zero-trust for co-op networks, identity for field workforces, and provenance-system recovery that protects the certification calendar.",
      "plays": [
       "IaC guardrails that block bad deploys before they exist",
       "CSPM with signed dwell-time budgets — breaches page owners",
@@ -948,26 +1075,32 @@
      ],
      "kpis": [
       {
-       "label": "Critical misconfig dwell",
-       "value": "4.2h"
+       "label": "Co-op network segmentation",
+       "value": "93%"
       },
       {
-       "label": "IaC gate blocks (week)",
-       "value": "17"
+       "label": "Field identity lifecycle fidelity",
+       "value": "88%"
       },
       {
-       "label": "Entitlement reduction",
-       "value": "-31%"
+       "label": "Certification-system recovery drills",
+       "value": "85%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/agriculture-food/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Co-op network segmentation",
+      "Field identity systems",
+      "Certification-system recovery"
+     ]
     }
    ],
    "practiceNote": "Cloud Security & Posture Management view: multi-cloud misconfiguration and entitlement control — infrastructure-as-code guardrails, CSPM with dwell-time metrics, and drift that fixes itself."
   },
   {
    "t": "h2",
-   "x": "Posture stack defaults — and documented deviations"
+   "x": "Posture stack defaults — and documented deviations",
+   "sub": "The default stack, and where we sign deviations"
   },
   {
    "t": "p",
@@ -1011,7 +1144,8 @@
   },
   {
    "t": "h2",
-   "x": "Posture release gates — evidence before enforcement"
+   "x": "Posture release gates — evidence before enforcement",
+   "sub": "What must be proven before guardrails block builds"
   },
   {
    "t": "table",
@@ -1051,7 +1185,8 @@
   },
   {
    "t": "h2",
-   "x": "What the platform security team inherits"
+   "x": "What the platform security team inherits",
+   "sub": "Policies, engines, consoles and the review cadence"
   },
   {
    "t": "bullets",
@@ -1084,7 +1219,8 @@
   },
   {
    "t": "h2",
-   "x": "Guardrails in order, week by week"
+   "x": "Guardrails in order, week by week",
+   "sub": "The build sequence from baseline to auto-revert"
   },
   {
    "t": "bullets",
@@ -1117,7 +1253,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — repos, pipelines and the clouds"
+   "x": "Integration surface — repos, pipelines and the clouds",
+   "sub": "Where the gate attaches, honestly named"
   },
   {
    "t": "p",
@@ -1150,7 +1287,8 @@
   },
   {
    "t": "h2",
-   "x": "Entitlement governance overlay"
+   "x": "Entitlement governance overlay",
+   "sub": "The standing grants review that never lapses"
   },
   {
    "t": "p",
@@ -1180,6 +1318,44 @@
   {
    "t": "note",
    "x": "Console-blind spots are mapped quarterly: every resource class the native consoles cannot see is listed with its compensating control, and the list ships in the audit pack instead of surprising anyone."
+  },
+  {
+   "t": "h2",
+   "x": "Guardrails at plan time, not findings at audit time",
+   "sub": "The deploy-time gate, entitlement analytics and the dwell-time metric that drives the backlog",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Cloud security becomes churn when it reports: findings arrive weeks late, get triaged into oblivion, and the same misconfiguration returns with the next sprint. The engineering gate inverts it — policy checks run at plan time in the IaC pipeline, blocking non-compliant infrastructure before it applies, with developer-readable messages and golden-path alternatives. The posture engine then watches runtime continuously, and drift reverts automatically with a log entry, because an unowned drift is an incident in rehearsal.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Entitlement analytics is where cloud estates actually bleed: the identity-to-permission graph finds the standing admin grants, the stale cross-account roles and the service principals nobody can name. Dwell time — how long a critical finding lives — is the headline metric, because it converts posture from a count into a clock, and the review reads the trend: which finding classes dwell longest, and which team owns the fix.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Plan-time blocking",
+     "Policy checks in the pipeline; non-compliant infra never applies."
+    ],
+    [
+     "Automatic drift revert",
+     "Runtime drift reverts with a log entry — no unowned drift."
+    ],
+    [
+     "Entitlement graph",
+     "Standing grants and stale roles surfaced with named owners."
+    ],
+    [
+     "Dwell time as headline",
+     "Findings become a clock; the trend drives the backlog."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1305,6 +1481,23 @@
    "url": "/case-studies/bank-03/",
    "tag": "Evidence",
    "desc": "DORA-grade resilience posture — third-party and incident evidence automated."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A tier-1 US bank",
+   "url": "/case-studies/bank-03/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "An insurance group",
+   "url": "/case-studies/ins-10/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A tier-1 European telecom operator",
+   "url": "/case-studies/tel-04/",
+   "ind": "Telecom, Media & Entertainment"
   }
  ]
 }

@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "Every metric argument is secretly a master-data argument"
+   "x": "Every metric argument is secretly a master-data argument",
+   "sub": "Match discipline, survivorship and stewardship under the numbers"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that keep master data contested"
+   "x": "Four failure modes that keep master data contested",
+   "sub": "Precision-blind matching, unsigned survivorship, broken merges, stewards without rights"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — golden records with survivorship and ownership"
+   "x": "Reference architecture — golden records with survivorship and ownership",
+   "sub": "Match, survivorship, catalog and steward workflow as one system"
   },
   {
    "t": "p",
@@ -110,19 +113,22 @@
      "id": "match",
      "lane": 1,
      "label": "Match engine",
-     "hot": true
+     "hot": true,
+     "sub": "probabilistic + rules"
     },
     {
      "id": "surv",
      "lane": 1,
      "label": "Survivorship rules",
-     "hot": true
+     "hot": true,
+     "sub": "signed per attribute"
     },
     {
      "id": "gold",
      "lane": 2,
      "label": "Golden records",
-     "hot": true
+     "hot": true,
+     "sub": "one per real entity"
     },
     {
      "id": "xref",
@@ -153,12 +159,14 @@
      "id": "cat",
      "lane": 4,
      "label": "Catalog & lineage",
-     "hot": true
+     "hot": true,
+     "sub": "column-level, queryable"
     },
     {
      "id": "gloss",
      "lane": 4,
-     "label": "Business glossary"
+     "label": "Business glossary",
+     "sub": "one definition per metric"
     },
     {
      "id": "badge",
@@ -169,7 +177,8 @@
      "id": "qual",
      "lane": 5,
      "label": "Pipeline quality gates",
-     "hot": true
+     "hot": true,
+     "sub": "promote only on pass"
     },
     {
      "id": "acc",
@@ -179,7 +188,8 @@
     {
      "id": "exp",
      "lane": 5,
-     "label": "Purpose limits"
+     "label": "Purpose limits",
+     "sub": "enforced at query time"
     }
    ],
    "edges": [
@@ -270,11 +280,26 @@
      "label": "limits"
     }
    ],
-   "note": "Merge history is the safety net: every automated merge can be un-merged with evidence, and steward queues exist precisely where match confidence is not good enough to act alone."
+   "note": "Merge history is the safety net: every automated merge can be un-merged with evidence, and steward queues exist precisely where match confidence is not good enough to act alone.",
+   "badges": [
+    {
+     "label": "Merge audit trail",
+     "value": "complete"
+    },
+    {
+     "label": "Survivorship",
+     "value": "signed per attribute"
+    },
+    {
+     "label": "Steward workflow",
+     "value": "owned queues"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "One customer record, resolved and defended"
+   "x": "One customer record, resolved and defended",
+   "sub": "The resolution path with the evidence it keeps"
   },
   {
    "t": "p",
@@ -297,7 +322,8 @@
   },
   {
    "t": "h2",
-   "x": "The governance console — trust as a number"
+   "x": "The governance console — trust as a number",
+   "sub": "Duplicate rates, disputes and SLA adherence as standing numbers"
   },
   {
    "t": "p",
@@ -617,7 +643,8 @@
   },
   {
    "t": "h2",
-   "x": "Duplicate and trust metrics across domains"
+   "x": "Duplicate and trust metrics across domains",
+   "sub": "Where the estate stands, domain by domain"
   },
   {
    "t": "p",
@@ -669,7 +696,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": true,
-     "hook": "Ask what fraud and AML decisions too slow costs Banking & Financial Services firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Risk and finance need point-in-time correct features, lineage that survives model-risk examinations, and metric contracts that end the credit-loss-number argument for good.",
      "plays": [
       "Measured match pipelines with precision you can defend in reconciliation",
       "Survivorship rules signed by owners, applied as gated releases",
@@ -677,25 +704,40 @@
      ],
      "kpis": [
       {
-       "label": "Customer duplicate rate",
-       "value": "1.8%"
+       "label": "Feature point-in-time correctness",
+       "value": "100%"
       },
       {
-       "label": "Match precision",
-       "value": "97.5%"
+       "label": "Metric disputes resolved by contract",
+       "value": "99%"
       },
       {
-       "label": "Steward SLA adherence",
-       "value": "94%"
+       "label": "Model-risk lineage completeness",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/banking-financial-services/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Feature stores (point-in-time)",
+      "Model-risk lineage",
+      "Finance metric contracts"
+     ],
+     "evidence": [
+      {
+       "title": "A top-10 European retail bank",
+       "url": "/case-studies/bank-01/"
+      },
+      {
+       "title": "A multinational corporate bank",
+       "url": "/case-studies/bank-02/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": false,
-     "hook": "Insurance & Risk operators recognize the pattern: claims, policy and exposure data fragmented, quarter after quarter.",
+     "hook": "Actuarial reserving, claims analytics and pricing features on versioned, governed tables — with freshness SLAs the actuarial function signs and quarantine gates the examiners read.",
      "plays": [
       "Measured match pipelines with precision you can defend in reconciliation",
       "Survivorship rules signed by owners, applied as gated releases",
@@ -703,25 +745,40 @@
      ],
      "kpis": [
       {
-       "label": "Customer duplicate rate",
-       "value": "1.8%"
-      },
-      {
-       "label": "Match precision",
-       "value": "97.5%"
-      },
-      {
-       "label": "Steward SLA adherence",
+       "label": "Actuarial-table freshness SLA met",
        "value": "94%"
+      },
+      {
+       "label": "Quarantine-gated loads",
+       "value": "100%"
+      },
+      {
+       "label": "Pricing feature reuse rate",
+       "value": "47%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/insurance/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Actuarial data marts",
+      "Quarantine gates",
+      "Pricing feature registry"
+     ],
+     "evidence": [
+      {
+       "title": "A leading life insurer (North America)",
+       "url": "/case-studies/ins-02/"
+      },
+      {
+       "title": "A European specialty reinsurer",
+       "url": "/case-studies/ins-03/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": true,
-     "hook": "Healthcare & Life Sciences operators recognize the pattern: trial recruitment and RWE pipelines manual, quarter after quarter.",
+     "hook": "Clinical and operational analytics on PHI-governed estates: de-identified layers, purpose-limited access, and freshness that clinical operations and research both trust.",
      "plays": [
       "Measured match pipelines with precision you can defend in reconciliation",
       "Survivorship rules signed by owners, applied as gated releases",
@@ -729,25 +786,40 @@
      ],
      "kpis": [
       {
-       "label": "Customer duplicate rate",
-       "value": "1.8%"
+       "label": "PHI-governed layer compliance",
+       "value": "100%"
       },
       {
-       "label": "Match precision",
-       "value": "97.5%"
+       "label": "Purpose-limit violations",
+       "value": "0"
       },
       {
-       "label": "Steward SLA adherence",
-       "value": "94%"
+       "label": "Clinical freshness SLA met",
+       "value": "97%"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "PHI-governed zones",
+      "De-identification pipeline",
+      "Clinical freshness SLAs"
+     ],
+     "evidence": [
+      {
+       "title": "A 12-hospital US health system",
+       "url": "/case-studies/hc-01/"
+      },
+      {
+       "title": "A national health insurer",
+       "url": "/case-studies/hc-02/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "The structural pressure will not be solved by another dashboard.",
+     "hook": "Sensor-to-decision pipelines across plants: ISA-95 context in the lakehouse, quality analytics with provenance, and unit-cost telemetry per line and lot.",
      "plays": [
       "Measured match pipelines with precision you can defend in reconciliation",
       "Survivorship rules signed by owners, applied as gated releases",
@@ -756,25 +828,40 @@
      ],
      "kpis": [
       {
-       "label": "Customer duplicate rate",
-       "value": "1.8%"
+       "label": "Sensor event capture fidelity",
+       "value": "97%"
       },
       {
-       "label": "Match precision",
-       "value": "97.5%"
+       "label": "Lot-level traceability joins",
+       "value": "98%"
       },
       {
-       "label": "Steward SLA adherence",
-       "value": "94%"
+       "label": "Pipeline freshness p95",
+       "value": "1 min"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/manufacturing/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "ISA-95 context modeling",
+      "Historians + MES events",
+      "Lot traceability joins"
+     ],
+     "evidence": [
+      {
+       "title": "A construction-equipment manufacturer",
+       "url": "/case-studies/mfg-03/"
+      },
+      {
+       "title": "A consumer goods manufacturer",
+       "url": "/case-studies/mfg-06/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": true,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the work is pipeline and lakehouse engineering — modeled once, certified once, reused everywhere the decision appears.",
+     "hook": "Demand, pricing and promotion analytics at transaction scale — event-driven decisioning for the store hour, governed product data behind every dashboard.",
      "plays": [
       "Measured match pipelines with precision you can defend in reconciliation",
       "Survivorship rules signed by owners, applied as gated releases",
@@ -782,25 +869,40 @@
      ],
      "kpis": [
       {
-       "label": "Customer duplicate rate",
-       "value": "1.8%"
+       "label": "Decision latency, store-hour events",
+       "value": "4s"
       },
       {
-       "label": "Match precision",
-       "value": "97.5%"
-      },
-      {
-       "label": "Steward SLA adherence",
+       "label": "Governed metric coverage",
        "value": "94%"
+      },
+      {
+       "label": "Demand feature reuse rate",
+       "value": "55%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Event streams (commerce)",
+      "Governed semantic layer",
+      "Demand feature stores"
+     ],
+     "evidence": [
+      {
+       "title": "A top-3 grocery retailer (800+ stores)",
+       "url": "/case-studies/ret-01/"
+      },
+      {
+       "title": "A global fashion group",
+       "url": "/case-studies/ret-02/"
+      }
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": false,
-     "hook": "Telecom, Media & Entertainment operators recognize the pattern: network telemetry underused, quarter after quarter.",
+     "hook": "Network, care and subscriber analytics on streaming estates: real-time decisioning for care and activation, lakehouse history for capacity planning.",
      "plays": [
       "Measured match pipelines with precision you can defend in reconciliation",
       "Survivorship rules signed by owners, applied as gated releases",
@@ -808,25 +910,36 @@
      ],
      "kpis": [
       {
-       "label": "Customer duplicate rate",
-       "value": "1.8%"
+       "label": "Streaming decision latency p99",
+       "value": "382 ms"
       },
       {
-       "label": "Match precision",
-       "value": "97.5%"
+       "label": "Exactly-once decision audit",
+       "value": "100%"
       },
       {
-       "label": "Steward SLA adherence",
-       "value": "94%"
+       "label": "Capacity-model freshness",
+       "value": "96%"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/telecom-media/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Kafka-class event backbone",
+      "OSS/BSS data feeds",
+      "Real-time decision tier"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-1 European operator",
+       "url": "/case-studies/tel-01/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": "Energy & Utilities operators recognize the pattern: forecasting under intermittency, quarter after quarter.",
+     "hook": "Meter-to-market pipelines: settlement-grade event streams, outage analytics with provenance, and forecast features the trading desk signs against.",
      "plays": [
       "Measured match pipelines with precision you can defend in reconciliation",
       "Survivorship rules signed by owners, applied as gated releases",
@@ -834,25 +947,40 @@
      ],
      "kpis": [
       {
-       "label": "Customer duplicate rate",
-       "value": "1.8%"
+       "label": "Settlement-grade stream completeness",
+       "value": "99%"
       },
       {
-       "label": "Match precision",
-       "value": "97.5%"
+       "label": "Outage event provenance coverage",
+       "value": "98%"
       },
       {
-       "label": "Steward SLA adherence",
-       "value": "94%"
+       "label": "Forecast feature point-in-time fidelity",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/energy-utilities/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "MDM + settlement streams",
+      "Outage event capture",
+      "Trading feature pipelines"
+     ],
+     "evidence": [
+      {
+       "title": "A European TSO-DSO group",
+       "url": "/case-studies/en-01/"
+      },
+      {
+       "title": "A national water utility",
+       "url": "/case-studies/en-03/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": "Logistics & Supply Chain operators recognize the pattern: visibility stitched from portals, quarter after quarter.",
+     "hook": "The control tower's data spine: TMS/WMS/telematics events conformed into decision-ready streams, with freshness priced against detention minutes.",
      "plays": [
       "Measured match pipelines with precision you can defend in reconciliation",
       "Survivorship rules signed by owners, applied as gated releases",
@@ -861,25 +989,40 @@
      ],
      "kpis": [
       {
-       "label": "Customer duplicate rate",
-       "value": "1.8%"
+       "label": "Control-tower event freshness p95",
+       "value": "11s"
       },
       {
-       "label": "Match precision",
-       "value": "97.5%"
+       "label": "Exception-event completeness",
+       "value": "96%"
       },
       {
-       "label": "Steward SLA adherence",
-       "value": "94%"
+       "label": "Carrier-message conformance",
+       "value": "96%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "TMS/WMS/telematics feeds",
+      "EDI conformance layer",
+      "Control-tower APIs"
+     ],
+     "evidence": [
+      {
+       "title": "A global 3PL (40+ countries)",
+       "url": "/case-studies/log-01/"
+      },
+      {
+       "title": "A container-terminal operator",
+       "url": "/case-studies/log-02/"
+      }
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": false,
-     "hook": "Public Sector & Government operators recognize the pattern: agency data islands, quarter after quarter.",
+     "hook": "Statutory reporting with lineage: benefit and permit analytics on governed estates, purpose-limited access, and evidence packs for oversight bodies.",
      "plays": [
       "Measured match pipelines with precision you can defend in reconciliation",
       "Survivorship rules signed by owners, applied as gated releases",
@@ -887,25 +1030,40 @@
      ],
      "kpis": [
       {
-       "label": "Customer duplicate rate",
-       "value": "1.8%"
+       "label": "Statutory report lineage coverage",
+       "value": "99%"
       },
       {
-       "label": "Match precision",
-       "value": "97.5%"
+       "label": "Purpose-limit enforcement",
+       "value": "100%"
       },
       {
-       "label": "Steward SLA adherence",
-       "value": "94%"
+       "label": "Oversight evidence pack time",
+       "value": "1 hrs"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/public-sector/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Statutory reporting marts",
+      "Purpose-limit enforcement",
+      "Oversight evidence portal"
+     ],
+     "evidence": [
+      {
+       "title": "A national tax administration",
+       "url": "/case-studies/pub-02/"
+      },
+      {
+       "title": "A national tax authority",
+       "url": "/case-studies/pub-04/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means we make the source systems agree: one governed definition per metric, streaming where the decision is time-critical, batch where it is not.",
+     "hook": "Enrollment, outcome and research analytics with FERPA-class governance: point-in-time cohorts for research, governed dashboards for the registrar.",
      "plays": [
       "Measured match pipelines with precision you can defend in reconciliation",
       "Survivorship rules signed by owners, applied as gated releases",
@@ -914,25 +1072,40 @@
      ],
      "kpis": [
       {
-       "label": "Customer duplicate rate",
-       "value": "1.8%"
+       "label": "Cohort point-in-time correctness",
+       "value": "98%"
       },
       {
-       "label": "Match precision",
-       "value": "97.5%"
+       "label": "FERPA-class access compliance",
+       "value": "100%"
       },
       {
-       "label": "Steward SLA adherence",
-       "value": "94%"
+       "label": "Registrar metric trust score",
+       "value": "85%"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/education-research/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "SIS/LMS event pipelines",
+      "Research cohort builder",
+      "FERPA-class governance"
+     ],
+     "evidence": [
+      {
+       "title": "A public research university (38,000 students)",
+       "url": "/case-studies/edu-01/"
+      },
+      {
+       "title": "A national EdTech platform (2M learners)",
+       "url": "/case-studies/edu-02/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": false,
-     "hook": "Technology & SaaS operators recognize the pattern: data moat unrealized, quarter after quarter.",
+     "hook": "Product and customer analytics as the growth engine: event contracts from every service, feature stores for the models, usage metering that invoices.",
      "plays": [
       "Measured match pipelines with precision you can defend in reconciliation",
       "Survivorship rules signed by owners, applied as gated releases",
@@ -940,25 +1113,40 @@
      ],
      "kpis": [
       {
-       "label": "Customer duplicate rate",
-       "value": "1.8%"
+       "label": "Event contract coverage per service",
+       "value": "97%"
       },
       {
-       "label": "Match precision",
-       "value": "97.5%"
+       "label": "Feature store freshness SLA met",
+       "value": "96%"
       },
       {
-       "label": "Steward SLA adherence",
-       "value": "94%"
+       "label": "Usage-to-invoice accuracy",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/technology-saas/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Service event contracts",
+      "Feature store + registry",
+      "Usage metering spine"
+     ],
+     "evidence": [
+      {
+       "title": "A consumer fintech (8M users)",
+       "url": "/case-studies/tech-02/"
+      },
+      {
+       "title": "A global gaming studio (live-service title, 15M MAU)",
+       "url": "/case-studies/tech-03/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "Agriculture & Food Systems operators recognize the pattern: chain data broken at every handoff, quarter after quarter.",
+     "hook": "Yield, quality and subsidy analytics from field events: certification-grade provenance in the data, seasonal freshness SLAs, and co-op dashboards growers trust.",
      "plays": [
       "Measured match pipelines with precision you can defend in reconciliation",
       "Survivorship rules signed by owners, applied as gated releases",
@@ -966,26 +1154,42 @@
      ],
      "kpis": [
       {
-       "label": "Customer duplicate rate",
-       "value": "1.8%"
+       "label": "Provenance-grade field events",
+       "value": "97%"
       },
       {
-       "label": "Match precision",
-       "value": "97.5%"
-      },
-      {
-       "label": "Steward SLA adherence",
+       "label": "Seasonal freshness SLA met",
        "value": "94%"
+      },
+      {
+       "label": "Grower dashboard trust score",
+       "value": "93%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Field event capture",
+      "Certification-grade provenance",
+      "Seasonal SLA framework"
+     ],
+     "evidence": [
+      {
+       "title": "A food processor (dairy)",
+       "url": "/case-studies/agr-03/"
+      },
+      {
+       "title": "An agri-input company",
+       "url": "/case-studies/agr-07/"
+      }
+     ]
     }
    ],
    "practiceNote": "Master Data, Governance & Cataloging view: golden records with owners, survivorship rules and a catalog people actually trust — governance as engineering, not committee minutes."
   },
   {
    "t": "h2",
-   "x": "Matching stack defaults — and documented deviations"
+   "x": "Matching stack defaults — and documented deviations",
+   "sub": "The default stack, and where we sign deviations"
   },
   {
    "t": "p",
@@ -1029,7 +1233,8 @@
   },
   {
    "t": "h2",
-   "x": "Governance release gates — evidence before golden status"
+   "x": "Governance release gates — evidence before golden status",
+   "sub": "What a domain must prove before golden records ship"
   },
   {
    "t": "table",
@@ -1069,7 +1274,8 @@
   },
   {
    "t": "h2",
-   "x": "What the data governance office inherits"
+   "x": "What the data governance office inherits",
+   "sub": "Rules, queues, consoles and the steward charter"
   },
   {
    "t": "bullets",
@@ -1102,7 +1308,8 @@
   },
   {
    "t": "h2",
-   "x": "Domain by domain, week by week"
+   "x": "Domain by domain, week by week",
+   "sub": "The build sequence across master-data domains"
   },
   {
    "t": "bullets",
@@ -1135,7 +1342,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — source systems and the steward workflow"
+   "x": "Integration surface — source systems and the steward workflow",
+   "sub": "Where records originate and who decides"
   },
   {
    "t": "p",
@@ -1168,7 +1376,8 @@
   },
   {
    "t": "h2",
-   "x": "Governance overlay — the merge audit trail"
+   "x": "Governance overlay — the merge audit trail",
+   "sub": "The evidence that defends every golden record"
   },
   {
    "t": "p",
@@ -1198,6 +1407,44 @@
   {
    "t": "note",
    "x": "Steward overload is monitored as a risk: when queue age or override rates exceed tolerance, the matching logic gets the investigation — not the steward's calendar."
+  },
+  {
+   "t": "h2",
+   "x": "Every metric argument is a master-data argument",
+   "sub": "Match discipline, survivorship and the merge audit trail — the foundations under the numbers",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Metric arguments trace to master data more often than to math: two customer records, three product hierarchies, an org structure that changed mid-quarter. The governance mechanics make resolution systematic — the match engine runs probabilistic and rules-based matching with precision tuned per domain, survivorship rules are signed per attribute (which source wins when sources disagree, decided once, by the accountable owner), and golden records are one per real entity with the merge audit trail complete: every merge, survivor decision and steward override is reconstructable, which is what turns 'we combined them somehow' into evidence.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Stewardship is a workflow, not a meeting: owned queues with SLAs, domain stewards with decision rights documented, and quality gates in the pipelines so unmastered records cannot promote. The console reads trust as numbers — duplicate rates per domain, survivorship disputes, resolution SLA adherence — because master-data programs earn their budget by making the metric arguments disappear.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Tuned match discipline",
+     "Precision per domain; false merges are costlier than misses."
+    ],
+    [
+     "Signed survivorship",
+     "Attribute-level precedence decided once, by the accountable owner."
+    ],
+    [
+     "Complete merge audit trail",
+     "Every merge and override reconstructable — evidence, not folklore."
+    ],
+    [
+     "Stewards with decision rights",
+     "Owned queues, SLAs and documented authority per domain."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1323,6 +1570,23 @@
    "url": "/case-studies/edu-01/",
    "tag": "Evidence",
    "desc": "Retention +4.1 points in target cohorts — early-warning to advising loop."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A top-10 European retail bank",
+   "url": "/case-studies/bank-01/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A leading life insurer (North America)",
+   "url": "/case-studies/ins-02/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A global 3PL (40+ countries)",
+   "url": "/case-studies/log-01/",
+   "ind": "Logistics & Supply Chain"
   }
  ]
 }

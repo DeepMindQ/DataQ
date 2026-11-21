@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "Modernization is consumer management, not code migration"
+   "x": "Modernization is consumer management — not code migration",
+   "sub": "Behavior capture, parity gates and retirement as the real work"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that stall migration programs"
+   "x": "Four failure modes that stall migration programs",
+   "sub": "Undocumented behavior, parity theater, irreversible cutovers, deferred retirement"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — the strangler pattern for pipeline estates"
+   "x": "Reference architecture — the strangler pattern for pipeline estates",
+   "sub": "Taps, typed pipelines, comparators and the shifter as one path"
   },
   {
    "t": "p",
@@ -105,7 +108,8 @@
      "id": "tap",
      "lane": 1,
      "label": "Output taps",
-     "hot": true
+     "hot": true,
+     "sub": "dual-run comparators"
     },
     {
      "id": "cdc",
@@ -116,13 +120,15 @@
      "id": "docs",
      "lane": 1,
      "label": "Behavior capture",
-     "hot": true
+     "hot": true,
+     "sub": "documented, not guessed"
     },
     {
      "id": "new",
      "lane": 2,
      "label": "Typed pipelines",
-     "hot": true
+     "hot": true,
+     "sub": "declarative, testable"
     },
     {
      "id": "orch",
@@ -138,7 +144,8 @@
      "id": "diff",
      "lane": 3,
      "label": "Output comparator",
-     "hot": true
+     "hot": true,
+     "sub": "parity diffs, gated"
     },
     {
      "id": "probe",
@@ -154,7 +161,8 @@
      "id": "route",
      "lane": 4,
      "label": "Traffic shifter",
-     "hot": true
+     "hot": true,
+     "sub": "gradual, reversible"
     },
     {
      "id": "cons",
@@ -170,7 +178,8 @@
      "id": "gate",
      "lane": 5,
      "label": "Retirement gate",
-     "hot": true
+     "hot": true,
+     "sub": "consumer count zero"
     },
     {
      "id": "arch",
@@ -259,11 +268,26 @@
      "label": "savings"
     }
    ],
-   "note": "Every retirement carries a diff report and an owner sign-off; the cost ledger shows the dual-run shrinking as consumers shift, which is what keeps the program funded."
+   "note": "Every retirement carries a diff report and an owner sign-off; the cost ledger shows the dual-run shrinking as consumers shift, which is what keeps the program funded.",
+   "badges": [
+    {
+     "label": "Dual-run parity gate",
+     "value": "before retirement"
+    },
+    {
+     "label": "Behavior documented first",
+     "value": "always"
+    },
+    {
+     "label": "Waves with retirements",
+     "value": "measured"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "One pipeline's move, from undocumented logic to retirement"
+   "x": "One pipeline's move, from undocumented logic to retirement",
+   "sub": "The wave, step by step, with evidence at each step"
   },
   {
    "t": "p",
@@ -286,7 +310,8 @@
   },
   {
    "t": "h2",
-   "x": "The migration console — parity as the headline"
+   "x": "The migration console — parity as the headline",
+   "sub": "Diffs, adjudications and dual-run economics on one surface"
   },
   {
    "t": "p",
@@ -623,7 +648,8 @@
   },
   {
    "t": "h2",
-   "x": "Dual-run economics across the program"
+   "x": "Dual-run economics across the program",
+   "sub": "What parity costs and what the estate saves"
   },
   {
    "t": "p",
@@ -698,7 +724,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": false,
-     "hook": "Ask what fraud and AML decisions too slow costs Banking & Financial Services firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Risk and finance need point-in-time correct features, lineage that survives model-risk examinations, and metric contracts that end the credit-loss-number argument for good.",
      "plays": [
       "Strangler-pattern waves with automated dual-run diffs",
       "Consumer shift by contract — no reader left behind undocumented",
@@ -706,25 +732,40 @@
      ],
      "kpis": [
       {
-       "label": "Pipelines migrated",
-       "value": "34/61"
+       "label": "Feature point-in-time correctness",
+       "value": "99%"
       },
       {
-       "label": "Diff mismatches",
-       "value": "0.3%"
+       "label": "Metric disputes resolved by contract",
+       "value": "97%"
       },
       {
-       "label": "Consumers shifted",
-       "value": "28/40"
+       "label": "Model-risk lineage completeness",
+       "value": "97%"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/banking-financial-services/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Feature stores (point-in-time)",
+      "Model-risk lineage",
+      "Finance metric contracts"
+     ],
+     "evidence": [
+      {
+       "title": "A top-10 European retail bank",
+       "url": "/case-studies/bank-01/"
+      },
+      {
+       "title": "A multinational corporate bank",
+       "url": "/case-studies/bank-02/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": true,
-     "hook": "Insurance & Risk operators recognize the pattern: claims, policy and exposure data fragmented, quarter after quarter.",
+     "hook": "Actuarial reserving, claims analytics and pricing features on versioned, governed tables — with freshness SLAs the actuarial function signs and quarantine gates the examiners read.",
      "plays": [
       "Strangler-pattern waves with automated dual-run diffs",
       "Consumer shift by contract — no reader left behind undocumented",
@@ -732,25 +773,40 @@
      ],
      "kpis": [
       {
-       "label": "Pipelines migrated",
-       "value": "34/61"
+       "label": "Actuarial-table freshness SLA met",
+       "value": "97%"
       },
       {
-       "label": "Diff mismatches",
-       "value": "0.3%"
+       "label": "Quarantine-gated loads",
+       "value": "100%"
       },
       {
-       "label": "Consumers shifted",
-       "value": "28/40"
+       "label": "Pricing feature reuse rate",
+       "value": "57%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/insurance/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Actuarial data marts",
+      "Quarantine gates",
+      "Pricing feature registry"
+     ],
+     "evidence": [
+      {
+       "title": "A leading life insurer (North America)",
+       "url": "/case-studies/ins-02/"
+      },
+      {
+       "title": "A European specialty reinsurer",
+       "url": "/case-studies/ins-03/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": false,
-     "hook": "Healthcare & Life Sciences operators recognize the pattern: trial recruitment and RWE pipelines manual, quarter after quarter.",
+     "hook": "Clinical and operational analytics on PHI-governed estates: de-identified layers, purpose-limited access, and freshness that clinical operations and research both trust.",
      "plays": [
       "Strangler-pattern waves with automated dual-run diffs",
       "Consumer shift by contract — no reader left behind undocumented",
@@ -758,25 +814,40 @@
      ],
      "kpis": [
       {
-       "label": "Pipelines migrated",
-       "value": "34/61"
+       "label": "PHI-governed layer compliance",
+       "value": "100%"
       },
       {
-       "label": "Diff mismatches",
-       "value": "0.3%"
+       "label": "Purpose-limit violations",
+       "value": "0"
       },
       {
-       "label": "Consumers shifted",
-       "value": "28/40"
+       "label": "Clinical freshness SLA met",
+       "value": "94%"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "PHI-governed zones",
+      "De-identification pipeline",
+      "Clinical freshness SLAs"
+     ],
+     "evidence": [
+      {
+       "title": "A 12-hospital US health system",
+       "url": "/case-studies/hc-01/"
+      },
+      {
+       "title": "A national health insurer",
+       "url": "/case-studies/hc-02/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": true,
-     "hook": "The structural pressure will not be solved by another dashboard.",
+     "hook": "Sensor-to-decision pipelines across plants: ISA-95 context in the lakehouse, quality analytics with provenance, and unit-cost telemetry per line and lot.",
      "plays": [
       "Strangler-pattern waves with automated dual-run diffs",
       "Consumer shift by contract — no reader left behind undocumented",
@@ -785,25 +856,40 @@
      ],
      "kpis": [
       {
-       "label": "Pipelines migrated",
-       "value": "34/61"
+       "label": "Sensor event capture fidelity",
+       "value": "99%"
       },
       {
-       "label": "Diff mismatches",
-       "value": "0.3%"
+       "label": "Lot-level traceability joins",
+       "value": "96%"
       },
       {
-       "label": "Consumers shifted",
-       "value": "28/40"
+       "label": "Pipeline freshness p95",
+       "value": "6 min"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/manufacturing/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "ISA-95 context modeling",
+      "Historians + MES events",
+      "Lot traceability joins"
+     ],
+     "evidence": [
+      {
+       "title": "A construction-equipment manufacturer",
+       "url": "/case-studies/mfg-03/"
+      },
+      {
+       "title": "A consumer goods manufacturer",
+       "url": "/case-studies/mfg-06/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the work is pipeline and lakehouse engineering — modeled once, certified once, reused everywhere the decision appears.",
+     "hook": "Demand, pricing and promotion analytics at transaction scale — event-driven decisioning for the store hour, governed product data behind every dashboard.",
      "plays": [
       "Strangler-pattern waves with automated dual-run diffs",
       "Consumer shift by contract — no reader left behind undocumented",
@@ -811,25 +897,40 @@
      ],
      "kpis": [
       {
-       "label": "Pipelines migrated",
-       "value": "34/61"
+       "label": "Decision latency, store-hour events",
+       "value": "3s"
       },
       {
-       "label": "Diff mismatches",
-       "value": "0.3%"
+       "label": "Governed metric coverage",
+       "value": "92%"
       },
       {
-       "label": "Consumers shifted",
-       "value": "28/40"
+       "label": "Demand feature reuse rate",
+       "value": "80%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Event streams (commerce)",
+      "Governed semantic layer",
+      "Demand feature stores"
+     ],
+     "evidence": [
+      {
+       "title": "A top-3 grocery retailer (800+ stores)",
+       "url": "/case-studies/ret-01/"
+      },
+      {
+       "title": "A global fashion group",
+       "url": "/case-studies/ret-02/"
+      }
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": false,
-     "hook": "Telecom, Media & Entertainment operators recognize the pattern: network telemetry underused, quarter after quarter.",
+     "hook": "Network, care and subscriber analytics on streaming estates: real-time decisioning for care and activation, lakehouse history for capacity planning.",
      "plays": [
       "Strangler-pattern waves with automated dual-run diffs",
       "Consumer shift by contract — no reader left behind undocumented",
@@ -837,25 +938,36 @@
      ],
      "kpis": [
       {
-       "label": "Pipelines migrated",
-       "value": "34/61"
+       "label": "Streaming decision latency p99",
+       "value": "199 ms"
       },
       {
-       "label": "Diff mismatches",
-       "value": "0.3%"
+       "label": "Exactly-once decision audit",
+       "value": "100%"
       },
       {
-       "label": "Consumers shifted",
-       "value": "28/40"
+       "label": "Capacity-model freshness",
+       "value": "96%"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/telecom-media/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Kafka-class event backbone",
+      "OSS/BSS data feeds",
+      "Real-time decision tier"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-1 European operator",
+       "url": "/case-studies/tel-01/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": "Energy & Utilities operators recognize the pattern: forecasting under intermittency, quarter after quarter.",
+     "hook": "Meter-to-market pipelines: settlement-grade event streams, outage analytics with provenance, and forecast features the trading desk signs against.",
      "plays": [
       "Strangler-pattern waves with automated dual-run diffs",
       "Consumer shift by contract — no reader left behind undocumented",
@@ -863,25 +975,40 @@
      ],
      "kpis": [
       {
-       "label": "Pipelines migrated",
-       "value": "34/61"
+       "label": "Settlement-grade stream completeness",
+       "value": "100%"
       },
       {
-       "label": "Diff mismatches",
-       "value": "0.3%"
+       "label": "Outage event provenance coverage",
+       "value": "94%"
       },
       {
-       "label": "Consumers shifted",
-       "value": "28/40"
+       "label": "Forecast feature point-in-time fidelity",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/energy-utilities/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "MDM + settlement streams",
+      "Outage event capture",
+      "Trading feature pipelines"
+     ],
+     "evidence": [
+      {
+       "title": "A European TSO-DSO group",
+       "url": "/case-studies/en-01/"
+      },
+      {
+       "title": "A national water utility",
+       "url": "/case-studies/en-03/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": "Logistics & Supply Chain operators recognize the pattern: visibility stitched from portals, quarter after quarter.",
+     "hook": "The control tower's data spine: TMS/WMS/telematics events conformed into decision-ready streams, with freshness priced against detention minutes.",
      "plays": [
       "Strangler-pattern waves with automated dual-run diffs",
       "Consumer shift by contract — no reader left behind undocumented",
@@ -890,25 +1017,40 @@
      ],
      "kpis": [
       {
-       "label": "Pipelines migrated",
-       "value": "34/61"
+       "label": "Control-tower event freshness p95",
+       "value": "7s"
       },
       {
-       "label": "Diff mismatches",
-       "value": "0.3%"
+       "label": "Exception-event completeness",
+       "value": "100%"
       },
       {
-       "label": "Consumers shifted",
-       "value": "28/40"
+       "label": "Carrier-message conformance",
+       "value": "98%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "TMS/WMS/telematics feeds",
+      "EDI conformance layer",
+      "Control-tower APIs"
+     ],
+     "evidence": [
+      {
+       "title": "A global 3PL (40+ countries)",
+       "url": "/case-studies/log-01/"
+      },
+      {
+       "title": "A container-terminal operator",
+       "url": "/case-studies/log-02/"
+      }
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": true,
-     "hook": "Public Sector & Government operators recognize the pattern: agency data islands, quarter after quarter.",
+     "hook": "Statutory reporting with lineage: benefit and permit analytics on governed estates, purpose-limited access, and evidence packs for oversight bodies.",
      "plays": [
       "Strangler-pattern waves with automated dual-run diffs",
       "Consumer shift by contract — no reader left behind undocumented",
@@ -916,25 +1058,40 @@
      ],
      "kpis": [
       {
-       "label": "Pipelines migrated",
-       "value": "34/61"
+       "label": "Statutory report lineage coverage",
+       "value": "98%"
       },
       {
-       "label": "Diff mismatches",
-       "value": "0.3%"
+       "label": "Purpose-limit enforcement",
+       "value": "100%"
       },
       {
-       "label": "Consumers shifted",
-       "value": "28/40"
+       "label": "Oversight evidence pack time",
+       "value": "3 hrs"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/public-sector/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Statutory reporting marts",
+      "Purpose-limit enforcement",
+      "Oversight evidence portal"
+     ],
+     "evidence": [
+      {
+       "title": "A national tax administration",
+       "url": "/case-studies/pub-02/"
+      },
+      {
+       "title": "A national tax authority",
+       "url": "/case-studies/pub-04/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means we make the source systems agree: one governed definition per metric, streaming where the decision is time-critical, batch where it is not.",
+     "hook": "Enrollment, outcome and research analytics with FERPA-class governance: point-in-time cohorts for research, governed dashboards for the registrar.",
      "plays": [
       "Strangler-pattern waves with automated dual-run diffs",
       "Consumer shift by contract — no reader left behind undocumented",
@@ -943,25 +1100,40 @@
      ],
      "kpis": [
       {
-       "label": "Pipelines migrated",
-       "value": "34/61"
+       "label": "Cohort point-in-time correctness",
+       "value": "100%"
       },
       {
-       "label": "Diff mismatches",
-       "value": "0.3%"
+       "label": "FERPA-class access compliance",
+       "value": "100%"
       },
       {
-       "label": "Consumers shifted",
-       "value": "28/40"
+       "label": "Registrar metric trust score",
+       "value": "84%"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/education-research/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "SIS/LMS event pipelines",
+      "Research cohort builder",
+      "FERPA-class governance"
+     ],
+     "evidence": [
+      {
+       "title": "A public research university (38,000 students)",
+       "url": "/case-studies/edu-01/"
+      },
+      {
+       "title": "A national EdTech platform (2M learners)",
+       "url": "/case-studies/edu-02/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": false,
-     "hook": "Technology & SaaS operators recognize the pattern: data moat unrealized, quarter after quarter.",
+     "hook": "Product and customer analytics as the growth engine: event contracts from every service, feature stores for the models, usage metering that invoices.",
      "plays": [
       "Strangler-pattern waves with automated dual-run diffs",
       "Consumer shift by contract — no reader left behind undocumented",
@@ -969,25 +1141,40 @@
      ],
      "kpis": [
       {
-       "label": "Pipelines migrated",
-       "value": "34/61"
+       "label": "Event contract coverage per service",
+       "value": "91%"
       },
       {
-       "label": "Diff mismatches",
-       "value": "0.3%"
+       "label": "Feature store freshness SLA met",
+       "value": "94%"
       },
       {
-       "label": "Consumers shifted",
-       "value": "28/40"
+       "label": "Usage-to-invoice accuracy",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/technology-saas/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Service event contracts",
+      "Feature store + registry",
+      "Usage metering spine"
+     ],
+     "evidence": [
+      {
+       "title": "A consumer fintech (8M users)",
+       "url": "/case-studies/tech-02/"
+      },
+      {
+       "title": "A global gaming studio (live-service title, 15M MAU)",
+       "url": "/case-studies/tech-03/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "Agriculture & Food Systems operators recognize the pattern: chain data broken at every handoff, quarter after quarter.",
+     "hook": "Yield, quality and subsidy analytics from field events: certification-grade provenance in the data, seasonal freshness SLAs, and co-op dashboards growers trust.",
      "plays": [
       "Strangler-pattern waves with automated dual-run diffs",
       "Consumer shift by contract — no reader left behind undocumented",
@@ -995,26 +1182,42 @@
      ],
      "kpis": [
       {
-       "label": "Pipelines migrated",
-       "value": "34/61"
+       "label": "Provenance-grade field events",
+       "value": "90%"
       },
       {
-       "label": "Diff mismatches",
-       "value": "0.3%"
+       "label": "Seasonal freshness SLA met",
+       "value": "100%"
       },
       {
-       "label": "Consumers shifted",
-       "value": "28/40"
+       "label": "Grower dashboard trust score",
+       "value": "78%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Field event capture",
+      "Certification-grade provenance",
+      "Seasonal SLA framework"
+     ],
+     "evidence": [
+      {
+       "title": "A food processor (dairy)",
+       "url": "/case-studies/agr-03/"
+      },
+      {
+       "title": "An agri-input company",
+       "url": "/case-studies/agr-07/"
+      }
+     ]
     }
    ],
    "practiceNote": "Data Engineering & Pipeline Modernization view: legacy pipelines rebuilt as typed, contract-gated, observable jobs — with a strangler pattern that retires the old estate without a big-bang cutover."
   },
   {
    "t": "h2",
-   "x": "Modernization defaults — and when we deviate"
+   "x": "Modernization defaults — and when we deviate",
+   "sub": "The default patterns, and where we sign deviations"
   },
   {
    "t": "p",
@@ -1058,7 +1261,8 @@
   },
   {
    "t": "h2",
-   "x": "Migration gates — evidence before each retirement"
+   "x": "Migration gates — evidence before each retirement",
+   "sub": "What must hold before a legacy pipeline dies"
   },
   {
    "t": "table",
@@ -1098,7 +1302,8 @@
   },
   {
    "t": "h2",
-   "x": "What the data platform team inherits"
+   "x": "What the data platform team inherits",
+   "sub": "Typed estate, corpora, runbooks and the retirement ledger"
   },
   {
    "t": "bullets",
@@ -1131,7 +1336,8 @@
   },
   {
    "t": "h2",
-   "x": "Waves and retirements, week by week"
+   "x": "Waves and retirements, week by week",
+   "sub": "The cadence from taps to shutdown"
   },
   {
    "t": "bullets",
@@ -1164,7 +1370,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — schedulers, catalogs and the old estate"
+   "x": "Integration surface — schedulers, catalogs and the old estate",
+   "sub": "What the migration touches, honestly named"
   },
   {
    "t": "p",
@@ -1197,7 +1404,8 @@
   },
   {
    "t": "h2",
-   "x": "Governance overlay — auditability across two estates"
+   "x": "Governance overlay — auditability across two estates",
+   "sub": "Lineage and evidence while both estates run"
   },
   {
    "t": "p",
@@ -1227,6 +1435,44 @@
   {
    "t": "note",
    "x": "Hidden-consumer sweeps run before every retirement: access logs, scheduler exports and network flows are diffed against the declared consumer list, and unexplained readers block the wave."
+  },
+  {
+   "t": "h2",
+   "x": "Parity is the deliverable; retirement is the proof",
+   "sub": "Behavior capture, dual-run comparators and the retirement gate — modernization as evidence",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Pipeline migrations fail because behavior is undocumented: the legacy job encodes twenty years of quirks nobody wrote down, and the rewrite is 'correct' against a spec that never existed. The discipline captures behavior first — output taps on the legacy pipeline record real outputs across calendar edges (month-end, quarter-end, leap days), and the edge cases become the test corpus. The typed rewrite then runs dual against the legacy with comparators gating every promotion: parity diffs on rows, counts and distributions, with discrepancies adjudicated explicitly (bug fix or migration error — decided, logged and signed).",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "The traffic shifter moves consumers gradually and reversibly, and the retirement gate closes each wave: a legacy pipeline dies when its consumer count reaches zero and parity held for the agreed window. The console reads dual-run economics — what parity costs, what the new estate saves — because the program is an investment decision that happens to involve code.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Behavior before rewrite",
+     "Output taps across calendar edges become the test corpus."
+    ],
+    [
+     "Dual-run comparators",
+     "Rows, counts and distributions gated on parity, adjudicated explicitly."
+    ],
+    [
+     "Reversible traffic shifts",
+     "Consumers move gradually; rollback is a routing change."
+    ],
+    [
+     "Retirement gate",
+     "Consumer count zero plus parity window — then the legacy dies."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1352,6 +1598,23 @@
    "url": "/case-studies/bank-01/",
    "tag": "Evidence",
    "desc": "Real-time fraud decisioning on instant rails — 38% lower fraud losses at a higher approval rate."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A top-10 European retail bank",
+   "url": "/case-studies/bank-01/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A leading life insurer (North America)",
+   "url": "/case-studies/ins-02/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A global 3PL (40+ countries)",
+   "url": "/case-studies/log-01/",
+   "ind": "Logistics & Supply Chain"
   }
  ]
 }

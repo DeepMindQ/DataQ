@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "Fifty agents are a workforce, and workforces need management"
+   "x": "The fleet as a managed workforce — capacity, shifts, versions",
+   "sub": "Workforce management applied to agent estates: demand planning to retirement"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four ways fleets sprawl into liabilities"
+   "x": "Four ways fleets sprawl into liabilities",
+   "sub": "Orphaned agents, stale credentials, dishonest utilization, unmanaged retirement"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — the fleet layer from capacity to retirement"
+   "x": "Reference architecture — the fleet layer from capacity to retirement",
+   "sub": "Registry, scheduler, version train and retirement gate as one control plane"
   },
   {
    "t": "p",
@@ -94,7 +97,8 @@
     {
      "id": "queues",
      "lane": 0,
-     "label": "Work queues"
+     "label": "Work queues",
+     "sub": "depth + SLA clock, visible"
     },
     {
      "id": "cal",
@@ -105,13 +109,15 @@
      "id": "reg",
      "lane": 1,
      "label": "Agent registry",
-     "hot": true
+     "hot": true,
+     "sub": "identity, version, owner, scope"
     },
     {
      "id": "sched",
      "lane": 1,
      "label": "Capacity scheduler",
-     "hot": true
+     "hot": true,
+     "sub": "demand curve → shift plan"
     },
     {
      "id": "pool",
@@ -132,13 +138,15 @@
      "id": "retire",
      "lane": 2,
      "label": "Retirement gate",
-     "hot": true
+     "hot": true,
+     "sub": "evidence before decommission"
     },
     {
      "id": "secrets",
      "lane": 3,
      "label": "Secret rotation",
-     "hot": true
+     "hot": true,
+     "sub": "90-day or shorter, automated"
     },
     {
      "id": "ident",
@@ -169,7 +177,8 @@
      "id": "util",
      "lane": 5,
      "label": "Utilization (busy/blocked)",
-     "hot": true
+     "hot": true,
+     "sub": "state-honest, not calendar-based"
     },
     {
      "id": "kpi",
@@ -266,11 +275,26 @@
      "label": "per task"
     }
    ],
-   "note": "Retirement is a gate, not a cleanup task: role ownership transfers, grants revoke, work reassigns, and the ledger records what the agent did over its life."
+   "note": "Retirement is a gate, not a cleanup task: role ownership transfers, grants revoke, work reassigns, and the ledger records what the agent did over its life.",
+   "badges": [
+    {
+     "label": "Fleet utilization (state-honest)",
+     "value": "71%"
+    },
+    {
+     "label": "Credential rotation",
+     "value": "≤90 days"
+    },
+    {
+     "label": "Agents at retirement gate",
+     "value": "0 drift"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "A week in the fleet — demand, shifts, upgrades, retirement"
+   "x": "A week in the fleet — demand, shifts, upgrades, retirement",
+   "sub": "The operating rhythm the fleet manager actually runs"
   },
   {
    "t": "p",
@@ -293,7 +317,8 @@
   },
   {
    "t": "h2",
-   "x": "The fleet console — utilization you can trust"
+   "x": "The fleet console — utilization you can trust",
+   "sub": "State-honest busy/blocked/idle with blockage causes attached"
   },
   {
    "t": "p",
@@ -598,7 +623,8 @@
   },
   {
    "t": "h2",
-   "x": "Fleet state across a demand week"
+   "x": "Fleet state across a demand week",
+   "sub": "How capacity absorbs the Monday peak and the month-end surge"
   },
   {
    "t": "p",
@@ -669,7 +695,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": false,
-     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: orchestration is the discipline — dozens of small automations running as one auditable workforce, with escalations designed rather than improvised.",
+     "hook": "KYC refresh backlogs, sanctions-alert triage and reconcile-everything month-ends are high-volume, rule-bounded and examinable — exactly the workload where role-scoped agents out-perform both manual desks and brittle RPA.",
      "plays": [
       "Demand-based capacity plans and shift policy for agent fleets",
       "Version trains with cohort canaries and SLA-held upgrade windows",
@@ -677,25 +703,40 @@
      ],
      "kpis": [
       {
-       "label": "Fleet utilization (busy)",
-       "value": "71%"
+       "label": "STP rate, agent-handled ops",
+       "value": "58%"
       },
       {
-       "label": "Blocked time",
-       "value": "4%"
+       "label": "Checkpoint fidelity at audit sampling",
+       "value": "100%"
       },
       {
-       "label": "Queue SLA breach",
-       "value": "1.2%"
+       "label": "Cost per completed action",
+       "value": "$0.28"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "KYC/case suites and watchlist tools",
+      "SWIFT gpi and payment-rail events",
+      "SR 11-7 / OCC 2011-12 evidence"
+     ],
+     "evidence": [
+      {
+       "title": "A top-10 European retail bank",
+       "url": "/case-studies/bank-01/"
+      },
+      {
+       "title": "A multinational corporate bank",
+       "url": "/case-studies/bank-02/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": false,
-     "hook": "Ask what fraud industrialized against manual detection costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "FNOL intake, submission triage and reserve refresh run on ACORD-coded documents and PAS queues that surge at catastrophe season — agent pools absorb the surge while adjusters keep the judgment calls, with every step logged.",
      "plays": [
       "Demand-based capacity plans and shift policy for agent fleets",
       "Version trains with cohort canaries and SLA-held upgrade windows",
@@ -703,25 +744,40 @@
      ],
      "kpis": [
       {
-       "label": "Fleet utilization (busy)",
-       "value": "71%"
+       "label": "Claims auto-adjudicated to settlement",
+       "value": "65%"
       },
       {
-       "label": "Blocked time",
-       "value": "4%"
+       "label": "FNOL intake cycle time",
+       "value": "8 hrs"
       },
       {
-       "label": "Queue SLA breach",
-       "value": "1.2%"
+       "label": "Adjuster override rate",
+       "value": "16%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "PAS/claims suites (Guidewire-class)",
+      "ACORD forms and ISO claim codes",
+      "NAIC market-conduct evidence"
+     ],
+     "evidence": [
+      {
+       "title": "A top-5 global P&C insurer",
+       "url": "/case-studies/ins-01/"
+      },
+      {
+       "title": "A leading life insurer (North America)",
+       "url": "/case-studies/ins-02/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": false,
-     "hook": "Healthcare & Life Sciences operators recognize the pattern: prior authorization and RCM friction, quarter after quarter.",
+     "hook": "Prior authorization, claims status and denials follow-up drown coding and RCM teams in X12 278/837 transactions and payer-portal hunts — agents that read the rule set, assemble the packet and log every step give the queue an owner.",
      "plays": [
       "Demand-based capacity plans and shift policy for agent fleets",
       "Version trains with cohort canaries and SLA-held upgrade windows",
@@ -729,25 +785,40 @@
      ],
      "kpis": [
       {
-       "label": "Fleet utilization (busy)",
-       "value": "71%"
+       "label": "Prior-auth auto-approval share",
+       "value": "30%"
       },
       {
-       "label": "Blocked time",
-       "value": "4%"
+       "label": "Denials follow-up queue age p90",
+       "value": "9 days"
       },
       {
-       "label": "Queue SLA breach",
-       "value": "1.2%"
+       "label": "Action replay coverage",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "EHR/RCM estates (Epic-class)",
+      "HL7 FHIR + X12 278/837",
+      "HIPAA audit controls"
+     ],
+     "evidence": [
+      {
+       "title": "A national health insurer",
+       "url": "/case-studies/hc-02/"
+      },
+      {
+       "title": "A European biopharma group",
+       "url": "/case-studies/hc-03/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — maintenance planning reactive included — and prove it moved.",
+     "hook": "Maintenance planners and quality engineers live in SAP PM work orders, MES transactions and supplier ASN exceptions — automation earns its keep here only when it clears the backlog without touching the safety-rated path.",
      "plays": [
       "Demand-based capacity plans and shift policy for agent fleets",
       "Version trains with cohort canaries and SLA-held upgrade windows",
@@ -755,25 +826,40 @@
      ],
      "kpis": [
       {
-       "label": "Fleet utilization (busy)",
-       "value": "71%"
+       "label": "Work orders auto-dispositioned",
+       "value": "52%"
       },
       {
-       "label": "Blocked time",
-       "value": "4%"
+       "label": "NCR closure cycle",
+       "value": "11 days"
       },
       {
-       "label": "Queue SLA breach",
-       "value": "1.2%"
+       "label": "Actions with sealed evidence packet",
+       "value": "98%"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "SAP PM / CMMS work orders",
+      "MES context via ISA-95",
+      "IATF 16949 NCR-CAPA flows"
+     ],
+     "evidence": [
+      {
+       "title": "A global automotive OEM",
+       "url": "/case-studies/mfg-01/"
+      },
+      {
+       "title": "A packaging producer",
+       "url": "/case-studies/mfg-10/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": true,
-     "hook": "Ask what supplier collaboration by email costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "EDI 850/855/856 exceptions, trade-promotion deduction disputes and supplier onboarding are pure document-and-decision churn across GS1 identifiers — the queue shrinks fastest when agents work the exception list under merchandiser-approved checkpoints.",
      "plays": [
       "Demand-based capacity plans and shift policy for agent fleets",
       "Version trains with cohort canaries and SLA-held upgrade windows",
@@ -781,25 +867,40 @@
      ],
      "kpis": [
       {
-       "label": "Fleet utilization (busy)",
-       "value": "71%"
+       "label": "PO exceptions auto-resolved",
+       "value": "54%"
       },
       {
-       "label": "Blocked time",
-       "value": "4%"
+       "label": "Deduction dispute cycle",
+       "value": "16 days"
       },
       {
-       "label": "Queue SLA breach",
-       "value": "1.2%"
+       "label": "Agent actions reconciled to ERP",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "EDI 850/855/856 + GS1 GTIN",
+      "ERP order ledgers (SAP Retail-class)",
+      "Trade-promotion deduction systems"
+     ],
+     "evidence": [
+      {
+       "title": "A top-3 grocery retailer (800+ stores)",
+       "url": "/case-studies/ret-01/"
+      },
+      {
+       "title": "A home-improvement retailer",
+       "url": "/case-studies/ret-08/"
+      }
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": true,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Order fallout between OSS/BSS layers, usage-dispute tickets and churn-save queues are where TM Forum Open API journeys break — durable orchestration re-drives the fallout and hands judgment calls to humans with context attached.",
      "plays": [
       "Demand-based capacity plans and shift policy for agent fleets",
       "Version trains with cohort canaries and SLA-held upgrade windows",
@@ -807,25 +908,40 @@
      ],
      "kpis": [
       {
-       "label": "Fleet utilization (busy)",
-       "value": "71%"
+       "label": "Order fallout auto-recovered",
+       "value": "68%"
       },
       {
-       "label": "Blocked time",
-       "value": "4%"
+       "label": "Repeat-fallout rate",
+       "value": "3%"
       },
       {
-       "label": "Queue SLA breach",
-       "value": "1.2%"
+       "label": "Usage disputes closed within SLA",
+       "value": "86%"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "OSS/BSS order orchestration",
+      "TM Forum Open APIs (TMF622/641)",
+      "Campaign and churn platforms"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-1 European operator",
+       "url": "/case-studies/tel-01/"
+      },
+      {
+       "title": "A North American cable operator",
+       "url": "/case-studies/tel-03/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — trading and scheduling decisions at market speed included — and prove it moved.",
+     "hook": "Outage tickets, switch-order packets, market-submission checks and billing exceptions stack across OMS/EMS and CIS estates — the wins sit in bounded, auditable workflows where a wrong write is recoverable and every action is logged.",
      "plays": [
       "Demand-based capacity plans and shift policy for agent fleets",
       "Version trains with cohort canaries and SLA-held upgrade windows",
@@ -833,25 +949,40 @@
      ],
      "kpis": [
       {
-       "label": "Fleet utilization (busy)",
-       "value": "71%"
+       "label": "Field work orders auto-routed",
+       "value": "62%"
       },
       {
-       "label": "Blocked time",
-       "value": "4%"
+       "label": "Outage-ticket backlog age p90",
+       "value": "10 hrs"
       },
       {
-       "label": "Queue SLA breach",
-       "value": "1.2%"
+       "label": "Switch-order packet completeness",
+       "value": "98%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "OMS/EMS and CIS estates",
+      "NERC and market-submission calendars",
+      "Field-service scheduling"
+     ],
+     "evidence": [
+      {
+       "title": "A European TSO-DSO group",
+       "url": "/case-studies/en-01/"
+      },
+      {
+       "title": "A global integrated energy major",
+       "url": "/case-studies/en-02/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Missed appointments, failed EDI messages, customs holds and detention disputes across TMS/WMS/telematics feeds — agentic pools triage, re-drive and document exceptions so the control tower shows truth, not noise.",
      "plays": [
       "Demand-based capacity plans and shift policy for agent fleets",
       "Version trains with cohort canaries and SLA-held upgrade windows",
@@ -859,25 +990,40 @@
      ],
      "kpis": [
       {
-       "label": "Fleet utilization (busy)",
-       "value": "71%"
+       "label": "Exceptions auto-triaged",
+       "value": "55%"
       },
       {
-       "label": "Blocked time",
-       "value": "4%"
+       "label": "Detention disputes resolved in",
+       "value": "4 days"
       },
       {
-       "label": "Queue SLA breach",
-       "value": "1.2%"
+       "label": "EDI messages re-driven in window",
+       "value": "93%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "TMS/WMS/telematics event feeds",
+      "EDIFACT / X12 carrier messages",
+      "Customs and HS documentation"
+     ],
+     "evidence": [
+      {
+       "title": "A global 3PL (40+ countries)",
+       "url": "/case-studies/log-01/"
+      },
+      {
+       "title": "A parcel network operator",
+       "url": "/case-studies/log-06/"
+      }
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Permit, benefit and FOIA case backlogs move at the pace of document assembly and eligibility checks — agents that pre-fill, verify and route cut cycle time while every decision keeps a citable evidence trail for oversight bodies.",
      "plays": [
       "Demand-based capacity plans and shift policy for agent fleets",
       "Version trains with cohort canaries and SLA-held upgrade windows",
@@ -885,25 +1031,40 @@
      ],
      "kpis": [
       {
-       "label": "Fleet utilization (busy)",
-       "value": "71%"
+       "label": "Cases auto-assembled for review",
+       "value": "46%"
       },
       {
-       "label": "Blocked time",
-       "value": "4%"
+       "label": "Permit cycle-time reduction",
+       "value": "47%"
       },
       {
-       "label": "Queue SLA breach",
-       "value": "1.2%"
+       "label": "Decisions with citable evidence trail",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "Permit/benefit case systems",
+      "FOIA and records statutory clocks",
+      "Budget and procurement controls"
+     ],
+     "evidence": [
+      {
+       "title": "A national digital-government agency",
+       "url": "/case-studies/pub-01/"
+      },
+      {
+       "title": "A national tax administration",
+       "url": "/case-studies/pub-02/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "Ask what administrative burden on faculty costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Admissions processing, aid-verification packets and grant-administration reporting scale with enrollment cycles — role-scoped agents clear the routine files and route judgment calls to registrars and aid officers with full context.",
      "plays": [
       "Demand-based capacity plans and shift policy for agent fleets",
       "Version trains with cohort canaries and SLA-held upgrade windows",
@@ -911,25 +1072,40 @@
      ],
      "kpis": [
       {
-       "label": "Fleet utilization (busy)",
-       "value": "71%"
+       "label": "Applications auto-processed",
+       "value": "54%"
       },
       {
-       "label": "Blocked time",
-       "value": "4%"
+       "label": "Verification packet cycle",
+       "value": "10 days"
       },
       {
-       "label": "Queue SLA breach",
-       "value": "1.2%"
+       "label": "Staff hours returned per week",
+       "value": "169"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "SIS estates (Banner-class)",
+      "Aid verification workflows",
+      "Grant reporting portals"
+     ],
+     "evidence": [
+      {
+       "title": "A public research university (38,000 students)",
+       "url": "/case-studies/edu-01/"
+      },
+      {
+       "title": "An online university",
+       "url": "/case-studies/edu-06/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": true,
-     "hook": "Ask what support and success scale linearly costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Support triage, entitlement checks and renewal-desk workflows scale linearly with ARR unless an agent layer absorbs the repeatable steps — with checkpoints where account teams keep pricing judgment and CRM history stays structured.",
      "plays": [
       "Demand-based capacity plans and shift policy for agent fleets",
       "Version trains with cohort canaries and SLA-held upgrade windows",
@@ -937,25 +1113,40 @@
      ],
      "kpis": [
       {
-       "label": "Fleet utilization (busy)",
-       "value": "71%"
+       "label": "Tickets auto-triaged",
+       "value": "62%"
       },
       {
-       "label": "Blocked time",
-       "value": "4%"
+       "label": "First-response time",
+       "value": "12 min"
       },
       {
-       "label": "Queue SLA breach",
-       "value": "1.2%"
+       "label": "Entitlement checks automated",
+       "value": "98%"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "ITSM/CRM (ServiceNow-class)",
+      "CPQ and entitlement registries",
+      "SOC 2 evidence controls"
+     ],
+     "evidence": [
+      {
+       "title": "A consumer fintech (8M users)",
+       "url": "/case-studies/tech-02/"
+      },
+      {
+       "title": "An enterprise IT services firm",
+       "url": "/case-studies/tech-07/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "Ask what input and logistics planning manual costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Contract management, grading certificates, subsidy dossiers and harvest-logistics planning run on seasonal surges — agent pools absorb the surge with checkpoints where agronomists and traders keep commercial judgment.",
      "plays": [
       "Demand-based capacity plans and shift policy for agent fleets",
       "Version trains with cohort canaries and SLA-held upgrade windows",
@@ -963,26 +1154,32 @@
      ],
      "kpis": [
       {
-       "label": "Fleet utilization (busy)",
-       "value": "71%"
+       "label": "Contract milestones auto-tracked",
+       "value": "78%"
       },
       {
-       "label": "Blocked time",
-       "value": "4%"
+       "label": "Certification doc prep time",
+       "value": "4 hrs"
       },
       {
-       "label": "Queue SLA breach",
-       "value": "1.2%"
+       "label": "Subsidy dossier completeness",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "Procurement and contract ledgers",
+      "Certification schemes (GLOBALG.A.P.-class)",
+      "Subsidy and traceability portals"
+     ]
     }
    ],
    "practiceNote": "Digital Workforce & Multi-Agent Orchestration view: agent-fleet management as workforce management — capacity, shifts, versioning, retirement and utilization, with SLAs that hold while the fleet scales."
   },
   {
    "t": "h2",
-   "x": "Fleet stack defaults — and deliberate deviations"
+   "x": "Fleet stack defaults — and deliberate deviations",
+   "sub": "The default control plane, and the deviations we sign for"
   },
   {
    "t": "p",
@@ -1026,7 +1223,8 @@
   },
   {
    "t": "h2",
-   "x": "Fleet change gates — what evidence an upgrade carries"
+   "x": "Fleet change gates — what evidence an upgrade carries",
+   "sub": "Canary evidence, regression deltas and rollback proof per cohort"
   },
   {
    "t": "table",
@@ -1066,7 +1264,8 @@
   },
   {
    "t": "h2",
-   "x": "What the digital-workforce manager inherits"
+   "x": "What the digital-workforce manager inherits",
+   "sub": "Registry, calendars, runbooks and the quarterly re-certification pack"
   },
   {
    "t": "bullets",
@@ -1099,7 +1298,8 @@
   },
   {
    "t": "h2",
-   "x": "Fleet quarter in motion, week by week"
+   "x": "Fleet quarter in motion, week by week",
+   "sub": "The quarterly cadence from demand review to retirement review"
   },
   {
    "t": "bullets",
@@ -1132,7 +1332,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — identity, queues and the demand systems"
+   "x": "Integration surface — identity, queues and the demand systems",
+   "sub": "Identity provider, work queues and the systems that generate demand"
   },
   {
    "t": "p",
@@ -1165,7 +1366,8 @@
   },
   {
    "t": "h2",
-   "x": "Credential and lifecycle governance"
+   "x": "Credential and lifecycle governance",
+   "sub": "Rotation SLAs, break-glass paths and the audit trail of the estate"
   },
   {
    "t": "p",
@@ -1195,6 +1397,44 @@
   {
    "t": "note",
    "x": "Retirement is enforced by ledger: an agent that misses its review window is suspended automatically, and the ledger of retirements ships in the handover pack."
+  },
+  {
+   "t": "h2",
+   "x": "Utilization you can trust is a measurement problem",
+   "sub": "Busy/blocked/idle as measured states — and why calendar-based utilization lies",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Fleet programs misreport utilization because they measure occupancy on a calendar rather than state on the run ledger. An agent waiting on a human checkpoint is blocked, not idle; an agent rate-limited by a partner API is blocked, not idle; an agent holding a work item it cannot legally route further is blocked — and each blocked class has a different owner and a different fix. We instrument the three states from the run ledger, so the capacity plan is built on blockage causes: checkpoint latency, tool availability, routing rules. The number a COO reads is therefore actionable by construction.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "The second discipline is version currency. An agent is software with a lease: model versions deprecate, tool schemas move, policies tighten. The registry tracks every agent's model pin, grant expiry and last evidence packet, and the upgrade train moves cohorts through a canary ring before estate-wide promotion. Retirement is a gate, not a shutdown script: a decommissioning agent hands its queue to named successors, its credentials are revoked in the same change window, and its evidence is archived under the retention policy — because auditors ask about the agents you turned off as often as the ones you run.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "State-honest utilization",
+     "Busy, blocked and idle measured from the run ledger; blockage causes drive the capacity plan."
+    ],
+    [
+     "Version currency tracking",
+     "Model pins, grant expiry and evidence recency in the registry; canary before promotion."
+    ],
+    [
+     "Retirement as a gate",
+     "Queue handover to named successors, credential revocation in-window, evidence archived."
+    ],
+    [
+     "Shift discipline",
+     "Demand curves → shift plans, with overflow rules signed by process owners."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1320,6 +1560,23 @@
    "url": "/case-studies/en-02/",
    "tag": "Evidence",
    "desc": "Turnaround duration down 14% — scheduling optimization at refinery scale."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A top-10 European retail bank",
+   "url": "/case-studies/bank-01/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A top-5 global P&C insurer",
+   "url": "/case-studies/ins-01/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A global 3PL (40+ countries)",
+   "url": "/case-studies/log-01/",
+   "ind": "Logistics & Supply Chain"
   }
  ]
 }

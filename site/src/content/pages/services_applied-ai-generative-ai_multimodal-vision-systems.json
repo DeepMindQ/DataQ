@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "Vision in the enterprise is a bookkeeping problem wearing a camera"
+   "x": "Enterprise vision is judged by what posts to the ledger",
+   "sub": "Extraction is the middle; provenance, reconciliation and routing are the product"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that turn extraction into re-work"
+   "x": "Four failure modes that turn extraction into re-work",
+   "sub": "Unrouted confidence, unproven posting, silent capture drift, unowned review benches"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — confidence-gated extraction into systems of record"
+   "x": "Reference architecture — confidence-gated extraction into systems of record",
+   "sub": "Detection, extraction, gating, reconciliation and evidence as one path"
   },
   {
    "t": "p",
@@ -110,7 +113,8 @@
      "id": "det",
      "lane": 1,
      "label": "Layout & object detection",
-     "hot": true
+     "hot": true,
+     "sub": "page grammar first"
     },
     {
      "id": "ocr",
@@ -121,7 +125,8 @@
      "id": "extr",
      "lane": 2,
      "label": "Field extraction",
-     "hot": true
+     "hot": true,
+     "sub": "model + rules ensemble"
     },
     {
      "id": "vlm",
@@ -137,13 +142,15 @@
      "id": "recon",
      "lane": 3,
      "label": "Ledger reconciliation",
-     "hot": true
+     "hot": true,
+     "sub": "prove end-state before post"
     },
     {
      "id": "conf",
      "lane": 3,
      "label": "Confidence gating",
-     "hot": true
+     "hot": true,
+     "sub": "route, do not guess"
     },
     {
      "id": "human",
@@ -169,12 +176,14 @@
      "id": "ev",
      "lane": 5,
      "label": "Evidence store",
-     "hot": true
+     "hot": true,
+     "sub": "page-level provenance"
     },
     {
      "id": "mon",
      "lane": 5,
-     "label": "Drift monitors"
+     "label": "Drift monitors",
+     "sub": "eval score + cost drift"
     },
     {
      "id": "rep",
@@ -269,11 +278,26 @@
      "label": "drift"
     }
    ],
-   "note": "Confidence gating is the honest heart of the system: below-bar fields go to humans with the evidence attached, and the threshold is tuned per field class, not globally."
+   "note": "Confidence gating is the honest heart of the system: below-bar fields go to humans with the evidence attached, and the threshold is tuned per field class, not globally.",
+   "badges": [
+    {
+     "label": "Straight-through target",
+     "value": "61%"
+    },
+    {
+     "label": "Posted-field provenance",
+     "value": "page-level"
+    },
+    {
+     "label": "Reconciliation before post",
+     "value": "always"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "A document's path — pixels to posted entries"
+   "x": "A document's path — pixels to posted entries",
+   "sub": "The journey with the checks each stage runs"
   },
   {
    "t": "p",
@@ -297,7 +321,8 @@
   },
   {
    "t": "h2",
-   "x": "The vision-ops console operations and finance share"
+   "x": "The vision-ops console operations and finance share",
+   "sub": "Straight-through share, exception mix and cost per document"
   },
   {
    "t": "p",
@@ -595,7 +620,8 @@
   },
   {
    "t": "h2",
-   "x": "Straight-through economics by document class"
+   "x": "Straight-through economics by document class",
+   "sub": "Where the volume pays and where humans stay by design"
   },
   {
    "t": "p",
@@ -644,7 +670,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Research desks, contact centers and KYC teams need grounded answers with citations an examiner can trace — RAG with permission fidelity and eval discipline, not a chatbot bolted to a search box.",
      "plays": [
       "Confidence-gated extraction wired to your systems of record",
       "Ledger-side reconciliation with per-field evidence for auditors",
@@ -652,25 +678,40 @@
      ],
      "kpis": [
       {
-       "label": "Field-level accuracy",
-       "value": "98.4%"
+       "label": "Containment on tier-1 intents",
+       "value": "48%"
       },
       {
-       "label": "Straight-through rate",
-       "value": "81%"
+       "label": "Citation coverage on answers",
+       "value": "97%"
       },
       {
-       "label": "Review queue depth",
-       "value": "312"
+       "label": "Answer latency p95",
+       "value": "6s"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/banking-financial-services/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Research portals and policy corpora",
+      "Model-risk evidence (SR 11-7)",
+      "Contact-center stacks (Genesys-class)"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-2 universal bank",
+       "url": "/case-studies/bank-05/"
+      },
+      {
+       "title": "A private banking group",
+       "url": "/case-studies/bank-07/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": true,
-     "hook": "Ask what pricing sophistication outrunning governance costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Underwriting submissions, claims notes and policy wordings hold the answers; the work is retrieval with strict citations to wording versions, plus dialog systems that keep adjusters in the loop.",
      "plays": [
       "Confidence-gated extraction wired to your systems of record",
       "Ledger-side reconciliation with per-field evidence for auditors",
@@ -678,25 +719,40 @@
      ],
      "kpis": [
       {
-       "label": "Field-level accuracy",
-       "value": "98.4%"
+       "label": "Submission auto-summary adoption",
+       "value": "53%"
       },
       {
-       "label": "Straight-through rate",
-       "value": "81%"
+       "label": "Wording-citation fidelity",
+       "value": "98%"
       },
       {
-       "label": "Review queue depth",
-       "value": "312"
+       "label": "Adjuster review time saved",
+       "value": "14 min"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/insurance/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "PAS/claims document estates",
+      "Versioned wording libraries",
+      "Adjuster workbenches"
+     ],
+     "evidence": [
+      {
+       "title": "A top-5 global P&C insurer",
+       "url": "/case-studies/ins-01/"
+      },
+      {
+       "title": "A life insurer",
+       "url": "/case-studies/ins-07/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": true,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Clinical and administrative knowledge sits in guideline PDFs, EHR notes and payer policies — grounded generation with citation discipline, PHI redaction and clinician review at the right points.",
      "plays": [
       "Confidence-gated extraction wired to your systems of record",
       "Ledger-side reconciliation with per-field evidence for auditors",
@@ -705,25 +761,40 @@
      ],
      "kpis": [
       {
-       "label": "Field-level accuracy",
-       "value": "98.4%"
+       "label": "Clinician acceptance of grounded answers",
+       "value": "70%"
       },
       {
-       "label": "Straight-through rate",
-       "value": "81%"
+       "label": "PHI redaction coverage",
+       "value": "100%"
       },
       {
-       "label": "Review queue depth",
-       "value": "312"
+       "label": "Prior-auth packet prep time",
+       "value": "8 min"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Clinical guidelines + payer policy",
+      "EHR notes via HL7 FHIR",
+      "PHI de-identification pipeline"
+     ],
+     "evidence": [
+      {
+       "title": "A 12-hospital US health system",
+       "url": "/case-studies/hc-01/"
+      },
+      {
+       "title": "A multi-hospital network",
+       "url": "/case-studies/hc-04/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "Manufacturing & Industrial operators recognize the pattern: quality escapes and manual inspection, quarter after quarter.",
+     "hook": "SOPs, failure-mode libraries and quality records are the corpus, and vision systems read the line — value shows up as fewer repeat defects and faster root-cause, not as demos.",
      "plays": [
       "Confidence-gated extraction wired to your systems of record",
       "Ledger-side reconciliation with per-field evidence for auditors",
@@ -731,25 +802,40 @@
      ],
      "kpis": [
       {
-       "label": "Field-level accuracy",
-       "value": "98.4%"
+       "label": "First-pass extraction accuracy",
+       "value": "88%"
       },
       {
-       "label": "Straight-through rate",
-       "value": "81%"
+       "label": "Root-cause search time cut",
+       "value": "53%"
       },
       {
-       "label": "Review queue depth",
-       "value": "312"
+       "label": "Edge inference within deadline",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/manufacturing/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "SOP / FMEA corpora",
+      "Quality records (eDHR)",
+      "Plant-floor capture (vision)"
+     ],
+     "evidence": [
+      {
+       "title": "A specialty chemicals producer",
+       "url": "/case-studies/mfg-02/"
+      },
+      {
+       "title": "An automotive tier-1 supplier",
+       "url": "/case-studies/mfg-04/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Product content, service dialogs and demand chat run at consumer scale — containment with dignity: the assistant handles the routine, the human gets the judgment call with context attached.",
      "plays": [
       "Confidence-gated extraction wired to your systems of record",
       "Ledger-side reconciliation with per-field evidence for auditors",
@@ -757,25 +843,40 @@
      ],
      "kpis": [
       {
-       "label": "Field-level accuracy",
-       "value": "98.4%"
+       "label": "Dialog containment",
+       "value": "57%"
       },
       {
-       "label": "Straight-through rate",
-       "value": "81%"
+       "label": "CSAT on contained sessions",
+       "value": "79%"
       },
       {
-       "label": "Review queue depth",
-       "value": "312"
+       "label": "Dignified escalation quality",
+       "value": "93%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Commerce and CX platforms",
+      "Versioned knowledge bases",
+      "CRM agent desktops"
+     ],
+     "evidence": [
+      {
+       "title": "A global fashion group",
+       "url": "/case-studies/ret-02/"
+      },
+      {
+       "title": "A specialty marketplace",
+       "url": "/case-studies/ret-06/"
+      }
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Care and activation dialogs, network runbooks and billing knowledge — containment and first-contact resolution on the care side, grounded retrieval for the agents who take escalations.",
      "plays": [
       "Confidence-gated extraction wired to your systems of record",
       "Ledger-side reconciliation with per-field evidence for auditors",
@@ -784,25 +885,40 @@
      ],
      "kpis": [
       {
-       "label": "Field-level accuracy",
-       "value": "98.4%"
+       "label": "Care containment",
+       "value": "48%"
       },
       {
-       "label": "Straight-through rate",
-       "value": "81%"
+       "label": "FCR lift on assisted calls",
+       "value": "27%"
       },
       {
-       "label": "Review queue depth",
-       "value": "312"
+       "label": "Runbook freshness SLA",
+       "value": "2 hrs"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/telecom-media/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Care platforms and runbooks",
+      "Billing/CRM knowledge",
+      "TM Forum API surfaces"
+     ],
+     "evidence": [
+      {
+       "title": "A North American cable operator",
+       "url": "/case-studies/tel-03/"
+      },
+      {
+       "title": "A mobile operator",
+       "url": "/case-studies/tel-06/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Field crews and control rooms need procedures and asset history at the point of work — grounded retrieval with version control over the procedure corpus, and voice interfaces that survive gloves and noise.",
      "plays": [
       "Confidence-gated extraction wired to your systems of record",
       "Ledger-side reconciliation with per-field evidence for auditors",
@@ -810,25 +926,36 @@
      ],
      "kpis": [
       {
-       "label": "Field-level accuracy",
-       "value": "98.4%"
+       "label": "Procedure retrieval at point of work",
+       "value": "94%"
       },
       {
-       "label": "Straight-through rate",
-       "value": "81%"
+       "label": "Version-stale answers blocked",
+       "value": "100%"
       },
       {
-       "label": "Review queue depth",
-       "value": "312"
+       "label": "Hands-free voice-task completion",
+       "value": "79%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Versioned procedure management",
+      "Asset history (EAM)",
+      "Field tablets, hands-free UI"
+     ],
+     "evidence": [
+      {
+       "title": "A renewable energy developer",
+       "url": "/case-studies/en-09/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": true,
-     "hook": "Logistics & Supply Chain operators recognize the pattern: demand and capacity planning stale, quarter after quarter.",
+     "hook": "Exception handling, customs knowledge and carrier rules live in documents — retrieval that answers what applies to this lane, with citations, plus document AI that reads the paperwork.",
      "plays": [
       "Confidence-gated extraction wired to your systems of record",
       "Ledger-side reconciliation with per-field evidence for auditors",
@@ -837,25 +964,30 @@
      ],
      "kpis": [
       {
-       "label": "Field-level accuracy",
-       "value": "98.4%"
+       "label": "Lane-rule answers with citations",
+       "value": "94%"
       },
       {
-       "label": "Straight-through rate",
-       "value": "81%"
+       "label": "Exception-doc processing time cut",
+       "value": "34%"
       },
       {
-       "label": "Review queue depth",
-       "value": "312"
+       "label": "Customs doc first-pass yield",
+       "value": "93%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Customs and lane-rule corpora",
+      "TMS exception queues",
+      "Document-AI intake"
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use.",
+     "hook": "Citizen services and caseworker support need grounded answers bound to statute versions and eligibility rules, with every answer citable for oversight and appeal.",
      "plays": [
       "Confidence-gated extraction wired to your systems of record",
       "Ledger-side reconciliation with per-field evidence for auditors",
@@ -863,25 +995,40 @@
      ],
      "kpis": [
       {
-       "label": "Field-level accuracy",
-       "value": "98.4%"
+       "label": "Statute-bound answer coverage",
+       "value": "94%"
       },
       {
-       "label": "Straight-through rate",
-       "value": "81%"
+       "label": "Citable decision trail",
+       "value": "100%"
       },
       {
-       "label": "Review queue depth",
-       "value": "312"
+       "label": "Caseworker research time cut",
+       "value": "31%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/public-sector/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Statute and eligibility corpora",
+      "Case-management systems",
+      "Oversight/appeal evidence"
+     ],
+     "evidence": [
+      {
+       "title": "A national digital-government agency",
+       "url": "/case-studies/pub-01/"
+      },
+      {
+       "title": "A national employment agency",
+       "url": "/case-studies/pub-06/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Faculty, advisors and students need answers grounded in catalogs, policy and course content — with accessibility and academic-integrity guards designed in from the start.",
      "plays": [
       "Confidence-gated extraction wired to your systems of record",
       "Ledger-side reconciliation with per-field evidence for auditors",
@@ -889,25 +1036,40 @@
      ],
      "kpis": [
       {
-       "label": "Field-level accuracy",
-       "value": "98.4%"
+       "label": "Adviser-grounded query resolution",
+       "value": "71%"
       },
       {
-       "label": "Straight-through rate",
-       "value": "81%"
+       "label": "Academic-integrity guard enforcement",
+       "value": "99%"
       },
       {
-       "label": "Review queue depth",
-       "value": "312"
+       "label": "Faculty admin time returned",
+       "value": "7 hrs"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/education-research/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Catalogs, policy, course content",
+      "LMS/SIS estates",
+      "Integrity and accessibility guards"
+     ],
+     "evidence": [
+      {
+       "title": "A national EdTech platform (2M learners)",
+       "url": "/case-studies/edu-02/"
+      },
+      {
+       "title": "A national medical research institute",
+       "url": "/case-studies/edu-08/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Support, docs and success knowledge scale with ARR — containment and deflection measured against CSAT, with the eval suite gating every prompt and model change.",
      "plays": [
       "Confidence-gated extraction wired to your systems of record",
       "Ledger-side reconciliation with per-field evidence for auditors",
@@ -915,25 +1077,40 @@
      ],
      "kpis": [
       {
-       "label": "Field-level accuracy",
-       "value": "98.4%"
+       "label": "Support containment",
+       "value": "54%"
       },
       {
-       "label": "Straight-through rate",
-       "value": "81%"
+       "label": "Eval-suite gate coverage",
+       "value": "100%"
       },
       {
-       "label": "Review queue depth",
-       "value": "312"
+       "label": "Docs answer freshness",
+       "value": "2 hrs"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/technology-saas/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Docs and support knowledge",
+      "Eval CI on prompts/models",
+      "Helpdesk stacks (Zendesk-class)"
+     ],
+     "evidence": [
+      {
+       "title": "A B2B SaaS platform (Series D)",
+       "url": "/case-studies/tech-01/"
+      },
+      {
+       "title": "A global gaming studio (live-service title, 15M MAU)",
+       "url": "/case-studies/tech-03/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Agronomy advice, subsidy rules and certification standards as grounded answers for co-ops and growers — multilingual, season-aware, and citable to the standard that governs the crop.",
      "plays": [
       "Confidence-gated extraction wired to your systems of record",
       "Ledger-side reconciliation with per-field evidence for auditors",
@@ -941,26 +1118,42 @@
      ],
      "kpis": [
       {
-       "label": "Field-level accuracy",
-       "value": "98.4%"
+       "label": "Advisory answer acceptance",
+       "value": "85%"
       },
       {
-       "label": "Straight-through rate",
-       "value": "81%"
+       "label": "Standard-citation fidelity",
+       "value": "99%"
       },
       {
-       "label": "Review queue depth",
-       "value": "312"
+       "label": "Multilingual query coverage",
+       "value": "94%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Agronomy and subsidy corpora",
+      "Certification standards (GLOBALG.A.P.)",
+      "Multilingual advisory channels"
+     ],
+     "evidence": [
+      {
+       "title": "A European agri-cooperative (4,200 farms)",
+       "url": "/case-studies/agr-01/"
+      },
+      {
+       "title": "A food processor (dairy)",
+       "url": "/case-studies/agr-03/"
+      }
+     ]
     }
    ],
    "practiceNote": "Multimodal AI & Vision-Language Systems view: document and scene understanding wired into systems of record, with confidence gating, ledger reconciliation and per-field evidence for auditors."
   },
   {
    "t": "h2",
-   "x": "Extraction stack defaults — and documented deviations"
+   "x": "Extraction stack defaults — and documented deviations",
+   "sub": "The default stack, and the deviations we sign"
   },
   {
    "t": "p",
@@ -1009,7 +1202,8 @@
   },
   {
    "t": "h2",
-   "x": "Extraction release gates — what blocks a go-live"
+   "x": "Extraction release gates — what blocks a go-live",
+   "sub": "Class-level evidence before estate routing"
   },
   {
    "t": "table",
@@ -1049,7 +1243,8 @@
   },
   {
    "t": "h2",
-   "x": "The handover package for operations and finance"
+   "x": "The handover package for operations and finance",
+   "sub": "Consoles, band definitions, exception taxonomy and the review bench"
   },
   {
    "t": "bullets",
@@ -1082,7 +1277,8 @@
   },
   {
    "t": "h2",
-   "x": "From capture to straight-through, week by week"
+   "x": "From capture to straight-through, week by week",
+   "sub": "The build sequence with evidence at every doubling"
   },
   {
    "t": "bullets",
@@ -1115,7 +1311,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — capture, records and the review bench"
+   "x": "Integration surface — capture, records and the review bench",
+   "sub": "Scanners, portals, ledgers and the human queue"
   },
   {
    "t": "p",
@@ -1148,7 +1345,8 @@
   },
   {
    "t": "h2",
-   "x": "Audit-ready extraction — evidence on every posted field"
+   "x": "Audit-ready extraction — evidence on every posted field",
+   "sub": "What the sample request pulls, in one query"
   },
   {
    "t": "p",
@@ -1178,6 +1376,44 @@
   {
    "t": "note",
    "x": "Layout drift alerts are wired to the capture pipeline: a changed template pages the owner before extraction quality degrades, not after the misposting is reconciled."
+  },
+  {
+   "t": "h2",
+   "x": "The posting is the deliverable, not the bounding box",
+   "sub": "From pixels to posted entries — why reconciliation and provenance gate the vision pipeline",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Enterprise vision programs succeed when they are measured as bookkeeping: a document class is done when its fields post to the system of record with provenance, not when the model's IoU looks good on a holdout. The pipeline therefore runs page grammar first — layout and object detection establish what the page is and where things are — before field extraction ensembles (model plus rules) read values, and confidence gates route on band: straight-through after reconciliation, human review with highlighted regions, or recapture. The reconciliation step is the money path: extracted totals match the ledger arithmetic before anything posts, so the queue measures exceptions rather than errors.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Evidence is page-level by design: every posted field carries the crop, the confidence and the model version that produced it, which is what an auditor's sample request actually wants. Drift monitoring watches document scanners as much as models — a new copier preset silently shifts dewarp statistics — and release trains move document classes through canary volumes before estate-wide routing.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Page grammar before reading",
+     "Layout and detection establish structure; extraction reads within it."
+    ],
+    [
+     "Reconcile before post",
+     "Ledger arithmetic checked before anything lands in the system of record."
+    ],
+    [
+     "Page-level provenance",
+     "Crop, confidence and model version ride every posted field."
+    ],
+    [
+     "Scanner-aware drift watch",
+     "Capture drift is monitored alongside model drift."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1303,6 +1539,23 @@
    "url": "/case-studies/hc-01/",
    "tag": "Evidence",
    "desc": "Clinicians get 90 minutes a day back — ambient documentation inside the EHR."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A tier-2 universal bank",
+   "url": "/case-studies/bank-05/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A top-5 global P&C insurer",
+   "url": "/case-studies/ins-01/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A North American cable operator",
+   "url": "/case-studies/tel-03/",
+   "ind": "Telecom, Media & Entertainment"
   }
  ]
 }

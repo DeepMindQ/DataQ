@@ -69,7 +69,7 @@ function pageJsonLd(page: PageData): object | null {
   const base = { "@context": "https://schema.org" };
   switch (page.template) {
     case "service_page":
-    case "tower_hub":
+    case "expertise_hub":
       return {
         ...base,
         "@type": "Service",

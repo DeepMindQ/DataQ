@@ -4,7 +4,7 @@ import Reveal from "./Reveal";
 /* ── PageImagery (Wave 2 → v3: premium art direction) ─────────────────────
    Every page gets a real brand-graded visual. Priority order:
    1. AI-generated brand photography (site/public/images/gen/*) for service
-      towers, industries, platforms and company pages.
+      expertise domains, industries, platforms and company pages.
    2. Animated SMIL SVG art for the long tail (solutions, insights, cases).
    NOTE: next/image does NOT prefix src under unoptimized+basePath, so every
    raw asset path must go through withBasePath(). */
@@ -18,7 +18,7 @@ const gen = (file: string, alt: string): Img => ({
   alt,
 });
 
-const TOWER_IMG: Record<string, Img> = {
+const DOMAIN_IMG: Record<string, Img> = {
   "applied-ai-generative-ai": gen("svc-applied-ai", "Neural intelligence mesh over a city skyline — applied and generative AI in production"),
   "agentic-ai-hyperautomation": gen("svc-agentic", "Agent fleet moving in coordinated formation — hyperautomation at work"),
   "data-analytics-lakehouse": gen("svc-data", "Layered lakehouse strata with live data streams — analytics foundation"),
@@ -109,10 +109,10 @@ export function pick(page: { url: string; template: string; l1?: string | null; 
 
   const segs = url.split("/").filter(Boolean);
   if (segs[0] === "services") {
-    for (const s of segs) if (TOWER_IMG[s]) return TOWER_IMG[s];
+    for (const s of segs) if (DOMAIN_IMG[s]) return DOMAIN_IMG[s];
     const r = firstRule(SOLUTION_RULES, hay);
     if (r) return r;
-    return TOWER_IMG["applied-ai-generative-ai"];
+    return DOMAIN_IMG["applied-ai-generative-ai"];
   }
   if (segs[0] === "platforms") {
     return PLATFORM_IMG[segs[segs.length - 1]] ?? PLATFORM_IMG.nexus;
@@ -134,7 +134,7 @@ export function PageImagery({
 }) {
   if (page.url === "/search" || page.url === "/style-guide") return null;
   const im = pick(page);
-  const priority = page.template === "tower_hub" || page.template === "industry_hub";
+  const priority = page.template === "expertise_hub" || page.template === "industry_hub";
   return (
     <Reveal className="container-dq pt-2" delay={60}>
       <figure className="pi-figure overflow-hidden rounded-2xl border border-line bg-white shadow-1">

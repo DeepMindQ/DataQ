@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "Identity wallets live or die at the same intersection as consumer apps"
+   "x": "Wallet adoption lives or dies at the consumer-app intersection",
+   "sub": "Cold-start economics, one-scan verification and privacy-by-protocol design"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that strand credential ecosystems"
+   "x": "Four failure modes that strand credential ecosystems",
+   "sub": "Empty wallets, beaconing queries, slow revocation, unowned trust registries"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — the governed trust triangle"
+   "x": "Reference architecture — the governed trust triangle",
+   "sub": "Registry, issuers, holders, verifiers and the status layer as one system"
   },
   {
    "t": "p",
@@ -90,7 +93,8 @@
      "id": "reg",
      "lane": 0,
      "label": "Trust registry",
-     "hot": true
+     "hot": true,
+     "sub": "who may issue what"
     },
     {
      "id": "gov",
@@ -106,7 +110,8 @@
      "id": "iss",
      "lane": 1,
      "label": "Issuer services",
-     "hot": true
+     "hot": true,
+     "sub": "schema + revocation registry"
     },
     {
      "id": "kyc",
@@ -122,7 +127,8 @@
      "id": "wallet",
      "lane": 2,
      "label": "Holder wallets",
-     "hot": true
+     "hot": true,
+     "sub": "user-held, issuer-agnostic"
     },
     {
      "id": "backup",
@@ -138,7 +144,8 @@
      "id": "sdk",
      "lane": 3,
      "label": "Verifier SDK",
-     "hot": true
+     "hot": true,
+     "sub": "one-scan verification"
     },
     {
      "id": "offline",
@@ -154,7 +161,8 @@
      "id": "status",
      "lane": 4,
      "label": "Status registry",
-     "hot": true
+     "hot": true,
+     "sub": "revocation, checkable"
     },
     {
      "id": "rev",
@@ -169,7 +177,8 @@
     {
      "id": "assur",
      "lane": 5,
-     "label": "Assurance packs"
+     "label": "Assurance packs",
+     "sub": "auditor-ready exports"
     },
     {
      "id": "probe",
@@ -269,11 +278,26 @@
      "label": "score"
     }
    ],
-   "note": "Revocation lives in the verification path: a credential proves its status cryptographically at check time — not by an honor-system phone call the verifier skips."
+   "note": "Revocation lives in the verification path: a credential proves its status cryptographically at check time — not by an honor-system phone call the verifier skips.",
+   "badges": [
+    {
+     "label": "One-scan verification",
+     "value": "target 94%"
+    },
+    {
+     "label": "Revocation propagation",
+     "value": "≤10 min"
+    },
+    {
+     "label": "Privacy review",
+     "value": "DPA-passed"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "One credential, issuance to offline verification"
+   "x": "One credential, issuance to offline verification",
+   "sub": "The lifecycle including the offline-proof path"
   },
   {
    "t": "p",
@@ -296,7 +320,8 @@
   },
   {
    "t": "h2",
-   "x": "The identity console — adoption and trust as the headline"
+   "x": "The identity console — adoption and trust as the headline",
+   "sub": "Issuance, verification and retention, measured honestly"
   },
   {
    "t": "p",
@@ -611,7 +636,8 @@
   },
   {
    "t": "h2",
-   "x": "Verification performance across issuer growth"
+   "x": "Verification performance across issuer growth",
+   "sub": "How the triangle scales without slowing down"
   },
   {
    "t": "p",
@@ -663,7 +689,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": false,
-     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "hook": "Tokenized collateral, interbank DLT settlement and digital-asset analytics under a supervisory lens — permissioned networks with reconciliation-first design and examination-grade evidence.",
      "plays": [
       "Chartered issuers with accreditation rules — no issuer anarchy",
       "Wallets designed for retention, selective disclosure built in",
@@ -671,25 +697,36 @@
      ],
      "kpis": [
       {
-       "label": "Verification latency p95",
-       "value": "210ms"
+       "label": "Restricted transfers blocked by controls",
+       "value": "100%"
       },
       {
-       "label": "Offline verification rate",
-       "value": "82%"
+       "label": "Ledger-to-custody reconciliation breaks",
+       "value": "1"
       },
       {
-       "label": "Revocation propagation",
-       "value": "4m"
+       "label": "Evidence pack production time",
+       "value": "11 min"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/banking-financial-services/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "Permissioned DLT (Fabric-class)",
+      "Qualified custody + HSM",
+      "Regulatory reporting (MiCA-class)"
+     ],
+     "evidence": [
+      {
+       "title": "The trade-finance unit of a pan-Asian bank",
+       "url": "/case-studies/bank-10/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — claims, policy and exposure data fragmented included — and prove it moved.",
+     "hook": "Parametric products, reinsurance trust and claims provenance — smart contracts that pay on verifiable events, with the legal wrapper standing in front of the token.",
      "plays": [
       "Chartered issuers with accreditation rules — no issuer anarchy",
       "Wallets designed for retention, selective disclosure built in",
@@ -697,25 +734,36 @@
      ],
      "kpis": [
       {
-       "label": "Verification latency p95",
-       "value": "210ms"
+       "label": "Parametric payouts on attested events",
+       "value": "100%"
       },
       {
-       "label": "Offline verification rate",
-       "value": "82%"
+       "label": "Claims provenance coverage",
+       "value": "93%"
       },
       {
-       "label": "Revocation propagation",
-       "value": "4m"
+       "label": "Dispute resolution time cut",
+       "value": "37%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/insurance/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "Parametric oracles + attestation",
+      "Reinsurance trust frameworks",
+      "Claims evidence packs"
+     ],
+     "evidence": [
+      {
+       "title": "A European specialty reinsurer",
+       "url": "/case-studies/ins-03/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": true,
-     "hook": "; competition sets the pace.",
+     "hook": "Credentialing, consent and provenance for drugs and devices — decentralized identity for clinicians, verifiable consent for patients, DSCSA-grade traceability across the chain.",
      "plays": [
       "Chartered issuers with accreditation rules — no issuer anarchy",
       "Wallets designed for retention, selective disclosure built in",
@@ -723,25 +771,30 @@
      ],
      "kpis": [
       {
-       "label": "Verification latency p95",
-       "value": "210ms"
+       "label": "One-scan clinician credential checks",
+       "value": "95%"
       },
       {
-       "label": "Offline verification rate",
-       "value": "82%"
+       "label": "Consent records verifiable",
+       "value": "100%"
       },
       {
-       "label": "Revocation propagation",
-       "value": "4m"
+       "label": "Recall reconstruction time",
+       "value": "82 min"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "DSCSA / EU FMD traceability",
+      "W3C Verifiable Credentials",
+      "EHR consent surfaces"
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "hook": "Multi-tier supplier provenance, digital product passports and machine-trust networks — GS1/EPCIS events anchored so recalls reconstruct in hours, not weeks.",
      "plays": [
       "Chartered issuers with accreditation rules — no issuer anarchy",
       "Wallets designed for retention, selective disclosure built in",
@@ -749,25 +802,36 @@
      ],
      "kpis": [
       {
-       "label": "Verification latency p95",
-       "value": "210ms"
+       "label": "Tier-2/3 capture coverage",
+       "value": "73%"
       },
       {
-       "label": "Offline verification rate",
-       "value": "82%"
+       "label": "Recall drill reconstruction",
+       "value": "43 min"
       },
       {
-       "label": "Revocation propagation",
-       "value": "4m"
+       "label": "Passport data completeness",
+       "value": "98%"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/manufacturing/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "GS1 EPCIS 2.0 events",
+      "Digital product passports",
+      "MES/ERP event capture"
+     ],
+     "evidence": [
+      {
+       "title": "An aerospace supplier",
+       "url": "/case-studies/mfg-09/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": "Retail & Consumer Goods operators recognize the pattern: provenance claims unverifiable, quarter after quarter.",
+     "hook": "Supply-chain trust consumers can scan: provenance claims, authenticity and duty-of-care evidence across GS1 identifiers, without exposing supplier commercial data.",
      "plays": [
       "Chartered issuers with accreditation rules — no issuer anarchy",
       "Wallets designed for retention, selective disclosure built in",
@@ -776,25 +840,30 @@
      ],
      "kpis": [
       {
-       "label": "Verification latency p95",
-       "value": "210ms"
+       "label": "Provenance claims with anchored proof",
+       "value": "94%"
       },
       {
-       "label": "Offline verification rate",
-       "value": "82%"
+       "label": "POS authenticity check coverage",
+       "value": "99%"
       },
       {
-       "label": "Revocation propagation",
-       "value": "4m"
+       "label": "Supplier data-leak incidents",
+       "value": "0"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "GS1 GTIN / EPCIS anchoring",
+      "POS authenticity checks",
+      "Supplier privacy domains"
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": false,
-     "hook": "Telecom, Media & Entertainment operators recognize the pattern: interconnect and roaming reconciliation, quarter after quarter.",
+     "hook": "Number and identity trust (STIR/SHAKEN-class), roaming settlement reconciliation and consortium data sharing — boring, permissioned, auditable networks.",
      "plays": [
       "Chartered issuers with accreditation rules — no issuer anarchy",
       "Wallets designed for retention, selective disclosure built in",
@@ -802,25 +871,30 @@
      ],
      "kpis": [
       {
-       "label": "Verification latency p95",
-       "value": "210ms"
+       "label": "Settlement breaks auto-reconciled",
+       "value": "96%"
       },
       {
-       "label": "Offline verification rate",
-       "value": "82%"
+       "label": "Number-trust enforcement coverage",
+       "value": "95%"
       },
       {
-       "label": "Revocation propagation",
-       "value": "4m"
+       "label": "Consortium disputes reaching legal",
+       "value": "2"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/telecom-media/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "STIR/SHAKEN-class trust registries",
+      "Roaming settlement (TAP-class)",
+      "Consortium governance boards"
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": "Ask what GO/REC certificate integrity costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Renewable-certificate provenance, grid-flexibility settlement and multi-party trading — anchored events that meters attest and regulators can reconstruct.",
      "plays": [
       "Chartered issuers with accreditation rules — no issuer anarchy",
       "Wallets designed for retention, selective disclosure built in",
@@ -828,25 +902,30 @@
      ],
      "kpis": [
       {
-       "label": "Verification latency p95",
-       "value": "210ms"
+       "label": "Certificate events meter-attested",
+       "value": "95%"
       },
       {
-       "label": "Offline verification rate",
-       "value": "82%"
+       "label": "Settlement reconciliation breaks",
+       "value": "2"
       },
       {
-       "label": "Revocation propagation",
-       "value": "4m"
+       "label": "Regulatory reconstruction time",
+       "value": "60 min"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/energy-utilities/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "Meter attestation (MDM)",
+      "REC / certificate registries",
+      "Market settlement systems"
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — compliance-grade provenance missing included — and prove it moved.",
+     "hook": "The control tower's trust layer: EDI events anchored at source, customs documents verifiable in one scan, multi-party exception trails that survive a dispute.",
      "plays": [
       "Chartered issuers with accreditation rules — no issuer anarchy",
       "Wallets designed for retention, selective disclosure built in",
@@ -854,25 +933,30 @@
      ],
      "kpis": [
       {
-       "label": "Verification latency p95",
-       "value": "210ms"
+       "label": "EDI events anchored at source",
+       "value": "87%"
       },
       {
-       "label": "Offline verification rate",
-       "value": "82%"
+       "label": "Customs docs verified one-scan",
+       "value": "97%"
       },
       {
-       "label": "Revocation propagation",
-       "value": "4m"
+       "label": "Dispute evidence pack coverage",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "EDI/X12 + anchoring service",
+      "Customs (HS) documentation",
+      "Carrier dispute evidence"
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": true,
-     "hook": "The work here has one job: move a named number — records integrity under dispute included — and prove it moved.",
+     "hook": "Land registries, licenses and benefits with verifiable credentials — citizen-held proof, issuer-grade audit, and privacy domains that pass DPA review.",
      "plays": [
       "Chartered issuers with accreditation rules — no issuer anarchy",
       "Wallets designed for retention, selective disclosure built in",
@@ -880,25 +964,36 @@
      ],
      "kpis": [
       {
-       "label": "Verification latency p95",
-       "value": "210ms"
+       "label": "Credentials in citizen wallets",
+       "value": "67%"
       },
       {
-       "label": "Offline verification rate",
-       "value": "82%"
+       "label": "Issuer audit-trail completeness",
+       "value": "100%"
       },
       {
-       "label": "Revocation propagation",
-       "value": "4m"
+       "label": "Privacy-domain review pass",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/public-sector/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "W3C VC / DID suites",
+      "Land and license registries",
+      "DPA privacy review gates"
+     ],
+     "evidence": [
+      {
+       "title": "A customs agency",
+       "url": "/case-studies/pub-07/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": true,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Verifiable diplomas and micro-credentials — learner-held wallets, issuer governance and revocation that employers can check in one scan.",
      "plays": [
       "Chartered issuers with accreditation rules — no issuer anarchy",
       "Wallets designed for retention, selective disclosure built in",
@@ -906,25 +1001,30 @@
      ],
      "kpis": [
       {
-       "label": "Verification latency p95",
-       "value": "210ms"
+       "label": "Credentials issued to wallet",
+       "value": "98%"
       },
       {
-       "label": "Offline verification rate",
-       "value": "82%"
+       "label": "Employer verification one-scan",
+       "value": "97%"
       },
       {
-       "label": "Revocation propagation",
-       "value": "4m"
+       "label": "Revocation propagation time",
+       "value": "8 min"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/education-research/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "W3C Verifiable Credentials",
+      "SIS issuer systems",
+      "Learner wallet SDKs"
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the trust layer is engineered, not asserted: signed events, permissioned consensus, and a provenance graph every participant can verify.",
+     "hook": "Software provenance (SBOM anchoring), signing trust and customer data sharing under verifiable consent — the trust surfaces enterprise buyers now ask about.",
      "plays": [
       "Chartered issuers with accreditation rules — no issuer anarchy",
       "Wallets designed for retention, selective disclosure built in",
@@ -932,25 +1032,30 @@
      ],
      "kpis": [
       {
-       "label": "Verification latency p95",
-       "value": "210ms"
+       "label": "SBOM anchored per release",
+       "value": "96%"
       },
       {
-       "label": "Offline verification rate",
-       "value": "82%"
+       "label": "Consent proofs verifiable",
+       "value": "96%"
       },
       {
-       "label": "Revocation propagation",
-       "value": "4m"
+       "label": "Key compromise blast radius",
+       "value": "0"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/technology-saas/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "SBOM (SPDX / CycloneDX)",
+      "Sigstore-class signing",
+      "Customer consent registries"
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "Ask what provenance claims unverifiable costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Field-to-fork provenance: certification events, subsidy eligibility proofs and commodity-chain traceability anchored at the point of capture.",
      "plays": [
       "Chartered issuers with accreditation rules — no issuer anarchy",
       "Wallets designed for retention, selective disclosure built in",
@@ -958,26 +1063,42 @@
      ],
      "kpis": [
       {
-       "label": "Verification latency p95",
-       "value": "210ms"
+       "label": "Certification events anchored",
+       "value": "95%"
       },
       {
-       "label": "Offline verification rate",
-       "value": "82%"
+       "label": "Subsidy proof completeness",
+       "value": "94%"
       },
       {
-       "label": "Revocation propagation",
-       "value": "4m"
+       "label": "Chain reconstruction time",
+       "value": "58 min"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/agriculture-food/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "Certification schemes (GLOBALG.A.P.)",
+      "Subsidy eligibility proofs",
+      "Commodity chain events (EPCIS)"
+     ],
+     "evidence": [
+      {
+       "title": "A global coffee trader",
+       "url": "/case-studies/agr-02/"
+      },
+      {
+       "title": "A food processing group",
+       "url": "/case-studies/agr-06/"
+      }
+     ]
     }
    ],
    "practiceNote": "Decentralized Identity & Verifiable Credentials view: DIDs and verifiable credentials that work offline — issuer governance, holder wallets, selective disclosure, and verification at 200ms without a phone-home."
   },
   {
    "t": "h2",
-   "x": "Identity defaults — and documented deviations"
+   "x": "Identity defaults — and documented deviations",
+   "sub": "The default stack, and the deviations we sign"
   },
   {
    "t": "p",
@@ -1021,7 +1142,8 @@
   },
   {
    "t": "h2",
-   "x": "Identity release gates — evidence before ecosystem launch"
+   "x": "Identity release gates — evidence before ecosystem launch",
+   "sub": "Privacy review, probe suite and adoption baselines"
   },
   {
    "t": "table",
@@ -1061,7 +1183,8 @@
   },
   {
    "t": "h2",
-   "x": "What the trust-framework team inherits"
+   "x": "What the trust-framework team inherits",
+   "sub": "Registry, schemas, consoles and the adoption calendar"
   },
   {
    "t": "bullets",
@@ -1094,7 +1217,8 @@
   },
   {
    "t": "h2",
-   "x": "Charter to wallets, week by week"
+   "x": "Charter to wallets, week by week",
+   "sub": "The build sequence from trust order to first verification"
   },
   {
    "t": "bullets",
@@ -1127,7 +1251,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — issuer systems, wallets and verifier gates"
+   "x": "Integration surface — issuer systems, wallets and verifier gates",
+   "sub": "Where the triangle touches the estate"
   },
   {
    "t": "p",
@@ -1160,7 +1285,8 @@
   },
   {
    "t": "h2",
-   "x": "Privacy and governance overlay"
+   "x": "Privacy and governance overlay",
+   "sub": "Selective disclosure, beacon protection and the DPA file"
   },
   {
    "t": "p",
@@ -1190,6 +1316,44 @@
   {
    "t": "note",
    "x": "Revocation is tested like a control: synthetic cancelled credentials are presented to verifiers weekly, and any acceptance is a sev-1 — revocation fiction is the ecosystem's most dangerous failure."
+  },
+  {
+   "t": "h2",
+   "x": "Adoption is a cold-start problem, not a cryptography problem",
+   "sub": "Why the trust triangle lives or dies on issuer economics and verifier convenience",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Verifiable-credential ecosystems fail for the reason marketplaces fail: issuers will not issue without verifiers, verifiers will not verify without holders, and holders delete wallets that sit empty. The engineering answer is sequencing, not evangelism — pick the pair with existing economic gravity (an employer issuing to employees who already verify at a gate, a university issuing to students who already verify at a licensure board), ship the verifier SDK to the one-scan standard (a verification must be one action, under five seconds, with the trust registry doing the policy work), and let revocation propagation under ten minutes make the credentials operationally real rather than ceremonial.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Privacy review is the launch gate: selective disclosure, no beaconing to issuers (verifier queries must not leak to the issuer who issued), and retention rules for the status registry that survive DPA scrutiny. The identity console reads adoption honestly — issuance counts, verification counts, wallet retention — because a trust framework that is not being verified is a pilot, no matter how elegant the cryptography.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Sequence the triangle",
+     "Start with the issuer-verifier pair that already has economic gravity."
+    ],
+    [
+     "One-scan verifier standard",
+     "One action, under five seconds; the registry carries the policy."
+    ],
+    [
+     "Issuer-blind verification",
+     "Verifier queries never leak back to issuers — privacy by protocol."
+    ],
+    [
+     "Fast revocation",
+     "Status propagation under ten minutes makes credentials operationally real."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1315,6 +1479,23 @@
    "url": "/case-studies/agr-02/",
    "tag": "Evidence",
    "desc": "EUDR due-diligence automated — compliance evidence in hours, premium channels opened."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "The trade-finance unit of a pan-Asian bank",
+   "url": "/case-studies/bank-10/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A European specialty reinsurer",
+   "url": "/case-studies/ins-03/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A global coffee trader",
+   "url": "/case-studies/agr-02/",
+   "ind": "Agriculture & Food Systems"
   }
  ]
 }

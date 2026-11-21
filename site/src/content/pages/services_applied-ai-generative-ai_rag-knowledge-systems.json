@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "Why corpus engineering decides the answer quality"
+   "x": "Why corpus engineering decides the answer quality",
+   "sub": "Canonical registry, dedup and ownership — the unglamorous work behind every good answer"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that quietly kill enterprise RAG"
+   "x": "Four failure modes that quietly kill enterprise RAG",
+   "sub": "Permission leaks, stale canon, multi-hop pretense, unsampled eval"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — permission-aware retrieval with citations"
+   "x": "Reference architecture — permission-aware retrieval with citations",
+   "sub": "Index, permission fold, planner and grounded generation as one path"
   },
   {
    "t": "p",
@@ -110,18 +113,21 @@
      "id": "dedup",
      "lane": 1,
      "label": "Canonical registry",
-     "hot": true
+     "hot": true,
+     "sub": "one URI per fact"
     },
     {
      "id": "pii",
      "lane": 1,
-     "label": "PII scan"
+     "label": "PII scan",
+     "sub": "detect + redact at ingest"
     },
     {
      "id": "idx",
      "lane": 2,
      "label": "Hybrid index (BM25+dense)",
-     "hot": true
+     "hot": true,
+     "sub": "fusion with rerank"
     },
     {
      "id": "kg",
@@ -132,7 +138,8 @@
      "id": "acl",
      "lane": 2,
      "label": "Permission map",
-     "hot": true
+     "hot": true,
+     "sub": "ACL-folded, query-time"
     },
     {
      "id": "tsla",
@@ -143,23 +150,27 @@
      "id": "ret",
      "lane": 3,
      "label": "Retrieval planner",
-     "hot": true
+     "hot": true,
+     "sub": "decompose + route"
     },
     {
      "id": "rerank",
      "lane": 3,
-     "label": "Cross-encoder rerank"
+     "label": "Cross-encoder rerank",
+     "sub": "top-k precision layer"
     },
     {
      "id": "gen",
      "lane": 3,
      "label": "Grounded generation",
-     "hot": true
+     "hot": true,
+     "sub": "no cite, no answer"
     },
     {
      "id": "eval",
      "lane": 4,
-     "label": "Eval harness"
+     "label": "Eval harness",
+     "sub": "golden set, CI-gated"
     },
     {
      "id": "redteam",
@@ -169,7 +180,8 @@
     {
      "id": "meter",
      "lane": 4,
-     "label": "Cost meter"
+     "label": "Cost meter",
+     "sub": "tokens, cache hits, egress"
     },
     {
      "id": "chat",
@@ -282,11 +294,26 @@
      "label": "budget"
     }
    ],
-   "note": "The permission map filters at query time, not index time — index-time filtering rots the moment an ACL changes. Denied retrieval is logged with the reason code."
+   "note": "The permission map filters at query time, not index time — index-time filtering rots the moment an ACL changes. Denied retrieval is logged with the reason code.",
+   "badges": [
+    {
+     "label": "Citation coverage",
+     "value": "100%"
+    },
+    {
+     "label": "Permission fidelity",
+     "value": "query-time enforced"
+    },
+    {
+     "label": "Freshness SLA per corpus",
+     "value": "signed"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "The answer path, question by question"
+   "x": "The answer path, question by question",
+   "sub": "From decomposed query to cited, trace-sealed answer"
   },
   {
    "t": "p",
@@ -310,7 +337,8 @@
   },
   {
    "t": "h2",
-   "x": "The operating console for a retrieval estate"
+   "x": "The operating console for a retrieval estate",
+   "sub": "Permission probes, freshness and citation coverage as headlines"
   },
   {
    "t": "p",
@@ -621,7 +649,8 @@
   },
   {
    "t": "h2",
-   "x": "Retrieval quality across eval suite generations"
+   "x": "Retrieval quality across eval suite generations",
+   "sub": "How the golden set grows and what the trend line says"
   },
   {
    "t": "p",
@@ -680,7 +709,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": true,
-     "hook": "; competition sets the pace.",
+     "hook": "Research desks, contact centers and KYC teams need grounded answers with citations an examiner can trace — RAG with permission fidelity and eval discipline, not a chatbot bolted to a search box.",
      "plays": [
       "Corpus contracts: canonical registry, freshness SLAs, permission scans",
       "Hybrid retrieval with reranking and span-level citations",
@@ -688,25 +717,40 @@
      ],
      "kpis": [
       {
-       "label": "Grounded answer rate",
-       "value": "94%"
+       "label": "Containment on tier-1 intents",
+       "value": "47%"
       },
       {
-       "label": "Citation precision",
-       "value": "96%"
+       "label": "Citation coverage on answers",
+       "value": "99%"
       },
       {
-       "label": "Recall@5 (legal cohort)",
-       "value": "0.91"
+       "label": "Answer latency p95",
+       "value": "5s"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/banking-financial-services/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Research portals and policy corpora",
+      "Model-risk evidence (SR 11-7)",
+      "Contact-center stacks (Genesys-class)"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-2 universal bank",
+       "url": "/case-studies/bank-05/"
+      },
+      {
+       "title": "A private banking group",
+       "url": "/case-studies/bank-07/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": true,
-     "hook": "Ask what pricing sophistication outrunning governance costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Underwriting submissions, claims notes and policy wordings hold the answers; the work is retrieval with strict citations to wording versions, plus dialog systems that keep adjusters in the loop.",
      "plays": [
       "Corpus contracts: canonical registry, freshness SLAs, permission scans",
       "Hybrid retrieval with reranking and span-level citations",
@@ -714,25 +758,40 @@
      ],
      "kpis": [
       {
-       "label": "Grounded answer rate",
-       "value": "94%"
+       "label": "Submission auto-summary adoption",
+       "value": "54%"
       },
       {
-       "label": "Citation precision",
-       "value": "96%"
+       "label": "Wording-citation fidelity",
+       "value": "100%"
       },
       {
-       "label": "Recall@5 (legal cohort)",
-       "value": "0.91"
+       "label": "Adjuster review time saved",
+       "value": "11 min"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/insurance/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "PAS/claims document estates",
+      "Versioned wording libraries",
+      "Adjuster workbenches"
+     ],
+     "evidence": [
+      {
+       "title": "A top-5 global P&C insurer",
+       "url": "/case-studies/ins-01/"
+      },
+      {
+       "title": "A life insurer",
+       "url": "/case-studies/ins-07/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Clinical and administrative knowledge sits in guideline PDFs, EHR notes and payer policies — grounded generation with citation discipline, PHI redaction and clinician review at the right points.",
      "plays": [
       "Corpus contracts: canonical registry, freshness SLAs, permission scans",
       "Hybrid retrieval with reranking and span-level citations",
@@ -741,25 +800,40 @@
      ],
      "kpis": [
       {
-       "label": "Grounded answer rate",
-       "value": "94%"
+       "label": "Clinician acceptance of grounded answers",
+       "value": "80%"
       },
       {
-       "label": "Citation precision",
-       "value": "96%"
+       "label": "PHI redaction coverage",
+       "value": "100%"
       },
       {
-       "label": "Recall@5 (legal cohort)",
-       "value": "0.91"
+       "label": "Prior-auth packet prep time",
+       "value": "11 min"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Clinical guidelines + payer policy",
+      "EHR notes via HL7 FHIR",
+      "PHI de-identification pipeline"
+     ],
+     "evidence": [
+      {
+       "title": "A 12-hospital US health system",
+       "url": "/case-studies/hc-01/"
+      },
+      {
+       "title": "A multi-hospital network",
+       "url": "/case-studies/hc-04/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "Manufacturing & Industrial operators recognize the pattern: quality escapes and manual inspection, quarter after quarter.",
+     "hook": "SOPs, failure-mode libraries and quality records are the corpus, and vision systems read the line — value shows up as fewer repeat defects and faster root-cause, not as demos.",
      "plays": [
       "Corpus contracts: canonical registry, freshness SLAs, permission scans",
       "Hybrid retrieval with reranking and span-level citations",
@@ -767,25 +841,40 @@
      ],
      "kpis": [
       {
-       "label": "Grounded answer rate",
+       "label": "First-pass extraction accuracy",
        "value": "94%"
       },
       {
-       "label": "Citation precision",
-       "value": "96%"
+       "label": "Root-cause search time cut",
+       "value": "57%"
       },
       {
-       "label": "Recall@5 (legal cohort)",
-       "value": "0.91"
+       "label": "Edge inference within deadline",
+       "value": "98%"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/manufacturing/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "SOP / FMEA corpora",
+      "Quality records (eDHR)",
+      "Plant-floor capture (vision)"
+     ],
+     "evidence": [
+      {
+       "title": "A specialty chemicals producer",
+       "url": "/case-studies/mfg-02/"
+      },
+      {
+       "title": "An automotive tier-1 supplier",
+       "url": "/case-studies/mfg-04/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Product content, service dialogs and demand chat run at consumer scale — containment with dignity: the assistant handles the routine, the human gets the judgment call with context attached.",
      "plays": [
       "Corpus contracts: canonical registry, freshness SLAs, permission scans",
       "Hybrid retrieval with reranking and span-level citations",
@@ -793,25 +882,40 @@
      ],
      "kpis": [
       {
-       "label": "Grounded answer rate",
-       "value": "94%"
+       "label": "Dialog containment",
+       "value": "67%"
       },
       {
-       "label": "Citation precision",
-       "value": "96%"
+       "label": "CSAT on contained sessions",
+       "value": "75%"
       },
       {
-       "label": "Recall@5 (legal cohort)",
-       "value": "0.91"
+       "label": "Dignified escalation quality",
+       "value": "92%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Commerce and CX platforms",
+      "Versioned knowledge bases",
+      "CRM agent desktops"
+     ],
+     "evidence": [
+      {
+       "title": "A global fashion group",
+       "url": "/case-studies/ret-02/"
+      },
+      {
+       "title": "A specialty marketplace",
+       "url": "/case-studies/ret-06/"
+      }
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Care and activation dialogs, network runbooks and billing knowledge — containment and first-contact resolution on the care side, grounded retrieval for the agents who take escalations.",
      "plays": [
       "Corpus contracts: canonical registry, freshness SLAs, permission scans",
       "Hybrid retrieval with reranking and span-level citations",
@@ -820,25 +924,40 @@
      ],
      "kpis": [
       {
-       "label": "Grounded answer rate",
-       "value": "94%"
+       "label": "Care containment",
+       "value": "37%"
       },
       {
-       "label": "Citation precision",
-       "value": "96%"
+       "label": "FCR lift on assisted calls",
+       "value": "26%"
       },
       {
-       "label": "Recall@5 (legal cohort)",
-       "value": "0.91"
+       "label": "Runbook freshness SLA",
+       "value": "2 hrs"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/telecom-media/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Care platforms and runbooks",
+      "Billing/CRM knowledge",
+      "TM Forum API surfaces"
+     ],
+     "evidence": [
+      {
+       "title": "A North American cable operator",
+       "url": "/case-studies/tel-03/"
+      },
+      {
+       "title": "A mobile operator",
+       "url": "/case-studies/tel-06/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Field crews and control rooms need procedures and asset history at the point of work — grounded retrieval with version control over the procedure corpus, and voice interfaces that survive gloves and noise.",
      "plays": [
       "Corpus contracts: canonical registry, freshness SLAs, permission scans",
       "Hybrid retrieval with reranking and span-level citations",
@@ -846,25 +965,36 @@
      ],
      "kpis": [
       {
-       "label": "Grounded answer rate",
-       "value": "94%"
+       "label": "Procedure retrieval at point of work",
+       "value": "82%"
       },
       {
-       "label": "Citation precision",
-       "value": "96%"
+       "label": "Version-stale answers blocked",
+       "value": "100%"
       },
       {
-       "label": "Recall@5 (legal cohort)",
-       "value": "0.91"
+       "label": "Hands-free voice-task completion",
+       "value": "76%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/energy-utilities/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Versioned procedure management",
+      "Asset history (EAM)",
+      "Field tablets, hands-free UI"
+     ],
+     "evidence": [
+      {
+       "title": "A renewable energy developer",
+       "url": "/case-studies/en-09/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": "Logistics & Supply Chain operators recognize the pattern: demand and capacity planning stale, quarter after quarter.",
+     "hook": "Exception handling, customs knowledge and carrier rules live in documents — retrieval that answers what applies to this lane, with citations, plus document AI that reads the paperwork.",
      "plays": [
       "Corpus contracts: canonical registry, freshness SLAs, permission scans",
       "Hybrid retrieval with reranking and span-level citations",
@@ -873,25 +1003,30 @@
      ],
      "kpis": [
       {
-       "label": "Grounded answer rate",
+       "label": "Lane-rule answers with citations",
        "value": "94%"
       },
       {
-       "label": "Citation precision",
-       "value": "96%"
+       "label": "Exception-doc processing time cut",
+       "value": "51%"
       },
       {
-       "label": "Recall@5 (legal cohort)",
-       "value": "0.91"
+       "label": "Customs doc first-pass yield",
+       "value": "85%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Customs and lane-rule corpora",
+      "TMS exception queues",
+      "Document-AI intake"
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": true,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use.",
+     "hook": "Citizen services and caseworker support need grounded answers bound to statute versions and eligibility rules, with every answer citable for oversight and appeal.",
      "plays": [
       "Corpus contracts: canonical registry, freshness SLAs, permission scans",
       "Hybrid retrieval with reranking and span-level citations",
@@ -899,25 +1034,40 @@
      ],
      "kpis": [
       {
-       "label": "Grounded answer rate",
-       "value": "94%"
+       "label": "Statute-bound answer coverage",
+       "value": "90%"
       },
       {
-       "label": "Citation precision",
-       "value": "96%"
+       "label": "Citable decision trail",
+       "value": "100%"
       },
       {
-       "label": "Recall@5 (legal cohort)",
-       "value": "0.91"
+       "label": "Caseworker research time cut",
+       "value": "45%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/public-sector/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Statute and eligibility corpora",
+      "Case-management systems",
+      "Oversight/appeal evidence"
+     ],
+     "evidence": [
+      {
+       "title": "A national digital-government agency",
+       "url": "/case-studies/pub-01/"
+      },
+      {
+       "title": "A national employment agency",
+       "url": "/case-studies/pub-06/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Faculty, advisors and students need answers grounded in catalogs, policy and course content — with accessibility and academic-integrity guards designed in from the start.",
      "plays": [
       "Corpus contracts: canonical registry, freshness SLAs, permission scans",
       "Hybrid retrieval with reranking and span-level citations",
@@ -925,25 +1075,40 @@
      ],
      "kpis": [
       {
-       "label": "Grounded answer rate",
-       "value": "94%"
+       "label": "Adviser-grounded query resolution",
+       "value": "66%"
       },
       {
-       "label": "Citation precision",
-       "value": "96%"
+       "label": "Academic-integrity guard enforcement",
+       "value": "100%"
       },
       {
-       "label": "Recall@5 (legal cohort)",
-       "value": "0.91"
+       "label": "Faculty admin time returned",
+       "value": "6 hrs"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/education-research/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Catalogs, policy, course content",
+      "LMS/SIS estates",
+      "Integrity and accessibility guards"
+     ],
+     "evidence": [
+      {
+       "title": "A national EdTech platform (2M learners)",
+       "url": "/case-studies/edu-02/"
+      },
+      {
+       "title": "A national medical research institute",
+       "url": "/case-studies/edu-08/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Support, docs and success knowledge scale with ARR — containment and deflection measured against CSAT, with the eval suite gating every prompt and model change.",
      "plays": [
       "Corpus contracts: canonical registry, freshness SLAs, permission scans",
       "Hybrid retrieval with reranking and span-level citations",
@@ -951,25 +1116,40 @@
      ],
      "kpis": [
       {
-       "label": "Grounded answer rate",
-       "value": "94%"
+       "label": "Support containment",
+       "value": "45%"
       },
       {
-       "label": "Citation precision",
-       "value": "96%"
+       "label": "Eval-suite gate coverage",
+       "value": "100%"
       },
       {
-       "label": "Recall@5 (legal cohort)",
-       "value": "0.91"
+       "label": "Docs answer freshness",
+       "value": "6 hrs"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/technology-saas/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Docs and support knowledge",
+      "Eval CI on prompts/models",
+      "Helpdesk stacks (Zendesk-class)"
+     ],
+     "evidence": [
+      {
+       "title": "A B2B SaaS platform (Series D)",
+       "url": "/case-studies/tech-01/"
+      },
+      {
+       "title": "A global gaming studio (live-service title, 15M MAU)",
+       "url": "/case-studies/tech-03/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Agronomy advice, subsidy rules and certification standards as grounded answers for co-ops and growers — multilingual, season-aware, and citable to the standard that governs the crop.",
      "plays": [
       "Corpus contracts: canonical registry, freshness SLAs, permission scans",
       "Hybrid retrieval with reranking and span-level citations",
@@ -977,26 +1157,42 @@
      ],
      "kpis": [
       {
-       "label": "Grounded answer rate",
-       "value": "94%"
+       "label": "Advisory answer acceptance",
+       "value": "81%"
       },
       {
-       "label": "Citation precision",
-       "value": "96%"
+       "label": "Standard-citation fidelity",
+       "value": "99%"
       },
       {
-       "label": "Recall@5 (legal cohort)",
-       "value": "0.91"
+       "label": "Multilingual query coverage",
+       "value": "88%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/"
+     "capUrl": "/industries/agriculture-food/capabilities/applied-ai-generative-ai/",
+     "systems": [
+      "Agronomy and subsidy corpora",
+      "Certification standards (GLOBALG.A.P.)",
+      "Multilingual advisory channels"
+     ],
+     "evidence": [
+      {
+       "title": "A European agri-cooperative (4,200 farms)",
+       "url": "/case-studies/agr-01/"
+      },
+      {
+       "title": "A food processor (dairy)",
+       "url": "/case-studies/agr-03/"
+      }
+     ]
     }
    ],
    "practiceNote": "RAG & Enterprise Knowledge Systems view: permission-aware retrieval over your regulated document estate, with answers that cite their sources and refuse when the ground is thin."
   },
   {
    "t": "h2",
-   "x": "The stack we default to — and when we deliberately leave it"
+   "x": "The stack we default to — and when we deliberately leave it",
+   "sub": "Default components, and the deviations we sign"
   },
   {
    "t": "p",
@@ -1045,7 +1241,8 @@
   },
   {
    "t": "h2",
-   "x": "What a release must prove before promotion"
+   "x": "What a release must prove before promotion",
+   "sub": "Eval replays, permission probes and freshness checks"
   },
   {
    "t": "table",
@@ -1085,7 +1282,8 @@
   },
   {
    "t": "h2",
-   "x": "What your team owns at handover"
+   "x": "What your team owns at handover",
+   "sub": "Registry, SLAs, eval suite and the drift watch"
   },
   {
    "t": "bullets",
@@ -1118,7 +1316,8 @@
   },
   {
    "t": "h2",
-   "x": "How the build runs, week by week"
+   "x": "How the build runs, week by week",
+   "sub": "Corpus first, permissions second, generation last"
   },
   {
    "t": "bullets",
@@ -1151,7 +1350,8 @@
   },
   {
    "t": "h2",
-   "x": "Where this service plugs into your estate"
+   "x": "Where this service plugs into your estate",
+   "sub": "SharePoint to data lakes — the honest source list"
   },
   {
    "t": "p",
@@ -1184,7 +1384,8 @@
   },
   {
    "t": "h2",
-   "x": "The control surface — permission fidelity, trace discipline, egress policy"
+   "x": "The control surface — permission fidelity, trace discipline, egress policy",
+   "sub": "The three controls auditors ask about first"
   },
   {
    "t": "p",
@@ -1214,6 +1415,44 @@
   {
    "t": "note",
    "x": "Permission fidelity probes run continuously in staging and nightly in production shadows — any synthetic principal reading denied content pages security before a user could ever see it."
+  },
+  {
+   "t": "h2",
+   "x": "Permission fidelity is the hard part",
+   "sub": "ACL folding, corpus hygiene and the freshness contract — the three disciplines that decide enterprise RAG",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Consumer RAG is a search problem; enterprise RAG is a permissions problem with search attached. The index must return only what the asker could have read — so ACLs fold into the retrieval layer at query time, denied documents never enter candidate sets, and permission fidelity is tested with adversarial probes (privileged questions from unprivileged accounts) on every release, not just at launch. The canonical registry is the corpus-hygiene discipline: one URI per fact, superseded versions marked, ownership named — because duplicate and stale content is what makes retrieval confidently wrong.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "The freshness contract closes the loop: every corpus carries a signed freshness SLA (how long a fact may serve before re-verification), the retrieval planner decomposes multi-hop questions rather than pretending one embedding finds them, and the eval suite is replayed on every index or prompt change. The operating console reads permission probes, freshness breaches and citation coverage as its headline numbers — those three decide whether the estate trusts the answers.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "ACL-folded retrieval",
+     "Denied documents never reach candidate sets; probes test fidelity every release."
+    ],
+    [
+     "Canonical registry",
+     "One URI per fact, stale versions marked, owners named."
+    ],
+    [
+     "Signed freshness SLAs",
+     "Corpus-level contracts; breaches surface on the console."
+    ],
+    [
+     "Multi-hop planning",
+     "Decomposed queries instead of one-embedding answers."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1339,6 +1578,23 @@
    "url": "/case-studies/agr-01/",
    "tag": "Evidence",
    "desc": "Input cost per hectare down 14% — precision agronomy at cooperative scale."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A tier-2 universal bank",
+   "url": "/case-studies/bank-05/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A top-5 global P&C insurer",
+   "url": "/case-studies/ins-01/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A North American cable operator",
+   "url": "/case-studies/tel-03/",
+   "ind": "Telecom, Media & Entertainment"
   }
  ]
 }

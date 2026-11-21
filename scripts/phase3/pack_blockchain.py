@@ -1,0 +1,435 @@
+#!/usr/bin/env python3
+"""Pack: Blockchain & Digital Trust (dom=blockchain-digital-trust)."""
+
+DOM = "blockchain-digital-trust"
+
+HOOKS = {
+    "banking-financial-services": "Tokenized collateral, interbank DLT settlement and digital-asset analytics under a supervisory lens — permissioned networks with reconciliation-first design and examination-grade evidence.",
+    "insurance": "Parametric products, reinsurance trust and claims provenance — smart contracts that pay on verifiable events, with the legal wrapper standing in front of the token.",
+    "healthcare-life-sciences": "Credentialing, consent and provenance for drugs and devices — decentralized identity for clinicians, verifiable consent for patients, DSCSA-grade traceability across the chain.",
+    "manufacturing": "Multi-tier supplier provenance, digital product passports and machine-trust networks — GS1/EPCIS events anchored so recalls reconstruct in hours, not weeks.",
+    "retail-consumer-goods": "Supply-chain trust consumers can scan: provenance claims, authenticity and duty-of-care evidence across GS1 identifiers, without exposing supplier commercial data.",
+    "telecom-media": "Number and identity trust (STIR/SHAKEN-class), roaming settlement reconciliation and consortium data sharing — boring, permissioned, auditable networks.",
+    "energy-utilities": "Renewable-certificate provenance, grid-flexibility settlement and multi-party trading — anchored events that meters attest and regulators can reconstruct.",
+    "logistics-supply-chain": "The control tower's trust layer: EDI events anchored at source, customs documents verifiable in one scan, multi-party exception trails that survive a dispute.",
+    "public-sector": "Land registries, licenses and benefits with verifiable credentials — citizen-held proof, issuer-grade audit, and privacy domains that pass DPA review.",
+    "education-research": "Verifiable diplomas and micro-credentials — learner-held wallets, issuer governance and revocation that employers can check in one scan.",
+    "technology-saas": "Software provenance (SBOM anchoring), signing trust and customer data sharing under verifiable consent — the trust surfaces enterprise buyers now ask about.",
+    "agriculture-food": "Field-to-fork provenance: certification events, subsidy eligibility proofs and commodity-chain traceability anchored at the point of capture.",
+}
+
+KPIS = {
+    "banking-financial-services": [
+        ("Restricted transfers blocked by controls", 100, 100, "pct"),
+        ("Ledger-to-custody reconciliation breaks", 0, 2, "num"),
+        ("Evidence pack production time", 5, 20, "min"),
+    ],
+    "insurance": [
+        ("Parametric payouts on attested events", 96, 100, "pct"),
+        ("Claims provenance coverage", 85, 97, "pct"),
+        ("Dispute resolution time cut", 30, 60, "pct"),
+    ],
+    "healthcare-life-sciences": [
+        ("One-scan clinician credential checks", 92, 99, "pct"),
+        ("Consent records verifiable", 100, 100, "pct"),
+        ("Recall reconstruction time", 20, 90, "min"),
+    ],
+    "manufacturing": [
+        ("Tier-2/3 capture coverage", 62, 88, "pct"),
+        ("Recall drill reconstruction", 15, 75, "min"),
+        ("Passport data completeness", 92, 99, "pct"),
+    ],
+    "retail-consumer-goods": [
+        ("Provenance claims with anchored proof", 88, 98, "pct"),
+        ("POS authenticity check coverage", 95, 99, "pct"),
+        ("Supplier data-leak incidents", 0, 0, "num"),
+    ],
+    "telecom-media": [
+        ("Settlement breaks auto-reconciled", 82, 96, "pct"),
+        ("Number-trust enforcement coverage", 94, 100, "pct"),
+        ("Consortium disputes reaching legal", 0, 2, "num"),
+    ],
+    "energy-utilities": [
+        ("Certificate events meter-attested", 90, 99, "pct"),
+        ("Settlement reconciliation breaks", 0, 3, "num"),
+        ("Regulatory reconstruction time", 15, 60, "min"),
+    ],
+    "logistics-supply-chain": [
+        ("EDI events anchored at source", 78, 95, "pct"),
+        ("Customs docs verified one-scan", 88, 98, "pct"),
+        ("Dispute evidence pack coverage", 100, 100, "pct"),
+    ],
+    "public-sector": [
+        ("Credentials in citizen wallets", 55, 85, "pct"),
+        ("Issuer audit-trail completeness", 100, 100, "pct"),
+        ("Privacy-domain review pass", 100, 100, "pct"),
+    ],
+    "education-research": [
+        ("Credentials issued to wallet", 96, 100, "pct"),
+        ("Employer verification one-scan", 90, 98, "pct"),
+        ("Revocation propagation time", 1, 10, "min"),
+    ],
+    "technology-saas": [
+        ("SBOM anchored per release", 92, 100, "pct"),
+        ("Consent proofs verifiable", 95, 100, "pct"),
+        ("Key compromise blast radius", 0, 1, "num"),
+    ],
+    "agriculture-food": [
+        ("Certification events anchored", 80, 96, "pct"),
+        ("Subsidy proof completeness", 90, 99, "pct"),
+        ("Chain reconstruction time", 20, 80, "min"),
+    ],
+}
+
+SYSTEMS = {
+    "banking-financial-services": ["Permissioned DLT (Fabric-class)", "Qualified custody + HSM", "Regulatory reporting (MiCA-class)"],
+    "insurance": ["Parametric oracles + attestation", "Reinsurance trust frameworks", "Claims evidence packs"],
+    "healthcare-life-sciences": ["DSCSA / EU FMD traceability", "W3C Verifiable Credentials", "EHR consent surfaces"],
+    "manufacturing": ["GS1 EPCIS 2.0 events", "Digital product passports", "MES/ERP event capture"],
+    "retail-consumer-goods": ["GS1 GTIN / EPCIS anchoring", "POS authenticity checks", "Supplier privacy domains"],
+    "telecom-media": ["STIR/SHAKEN-class trust registries", "Roaming settlement (TAP-class)", "Consortium governance boards"],
+    "energy-utilities": ["Meter attestation (MDM)", "REC / certificate registries", "Market settlement systems"],
+    "logistics-supply-chain": ["EDI/X12 + anchoring service", "Customs (HS) documentation", "Carrier dispute evidence"],
+    "public-sector": ["W3C VC / DID suites", "Land and license registries", "DPA privacy review gates"],
+    "education-research": ["W3C Verifiable Credentials", "SIS issuer systems", "Learner wallet SDKs"],
+    "technology-saas": ["SBOM (SPDX / CycloneDX)", "Sigstore-class signing", "Customer consent registries"],
+    "agriculture-food": ["Certification schemes (GLOBALG.A.P.)", "Subsidy eligibility proofs", "Commodity chain events (EPCIS)"],
+}
+
+COMMON_SUBS = {
+    "Permissioned ledger": "BFT consensus, endorsed txns",
+    "Privacy domains": "need-to-know data channels",
+    "Decentralized identity": "W3C DID + VC stack",
+    "Key ceremonies": "witnessed, dual-control",
+    "Independent verifier": "no issuer trust assumed",
+    "Network governance": "charter held on-ledger",
+    "Anchoring service": "batch roots, external trust",
+    "Assurance packs": "auditor-ready exports",
+    "Off-chain store": "hashes on-chain only",
+    "Issuer services": "schema + revocation registry",
+    "HSM-backed keys": "FIPS-grade, dual control",
+    "Trust registry": "who may issue what",
+    "Status registry": "revocation, checkable",
+    "Holder wallets": "user-held, issuer-agnostic",
+    "Verifier SDK": "one-scan verification",
+    "Consensus (BFT-class)": "finality with quorum",
+    "Evidence pack builder": "case files, auto-assembled",
+    "Sanctions screening": "list sync + reason codes",
+    "Address clustering": "heuristics, attributed",
+    "Flow risk scoring": "value-path based",
+    "Reconciliation gate": "ledger-custody, daily",
+    "Legal wrapper": "off-chain rights, drafted",
+    "Token standard": "permissioned transfer hooks",
+    "Transfer controls": "whitelist + duty checks",
+    "Settlement workflow": "DvP with timed legs",
+    "Recall drills": "reconstruct in minutes",
+    "Ledger anchoring": "batch merkle roots",
+    "Identity crosswalk": "EPCIS IDs to real parties",
+    "Formal verification": "invariants proven, not hoped",
+    "Upgrade governance": "multi-sig + notice",
+    "Member onboarding": "charter-signed, KYC'd",
+    "Network charter": "rights, duties, exits",
+    "Evidence store": "sealed, hash-linked",
+    "Reconstruction service": "batch → full chain view",
+    "Audit evidence": "examiner-ready exports",
+}
+
+PAGES = {
+    "services_blockchain-digital-trust": {
+        "archsubs": {
+            "Permissioned ledger": "BFT consensus, endorsed txns",
+            "Privacy domains": "need-to-know channels",
+            "Decentralized identity": "W3C DID + VC stack",
+            "Key ceremonies": "witnessed, dual-control",
+            "Independent verifier": "no issuer trust assumed",
+            "Network governance": "charter held on-ledger",
+        },
+        "badges": [
+            ("Practices in the domain", "6"),
+            ("Evidence packs", "auditor-ready"),
+            ("Industries served", "12"),
+        ],
+        "deep": {
+            "h2": "Boring by design is the engineering thesis",
+            "sub": "Why trust infrastructure earns adoption by never surprising its operators, auditors or members",
+            "paras": [
+                "Distributed-ledger programs fail when they are exciting: novel consensus, token improvisation and governance-by-goodwill produce systems nobody will sign. The domain standard is deliberate dullness — permissioned networks with chartered membership, BFT-class consensus sized to the member set, privacy domains that pass data-protection review, and key ceremonies that are witnessed events with dual control rather than DevOps chores. Every write lands with an assurance pack, and every claim a member makes can be reconstructed by an independent verifier who assumes no issuer goodwill.",
+                "The second thesis is that the ledger is the small part. The hard parts are the capture chain (are the events true?), the legal wrapper (do on-ledger rights match off-chain law?) and the governance (who may change what, decided before the first transaction). The six practices in this domain exist because each hard part needs its own engineering — and because a network that gets them boring survives its third year, which is where most die.",
+            ],
+            "bullets": [
+                ("Chartered membership", "Rights, duties and exits written before the first transaction, held on-ledger."),
+                ("Boring consensus choices", "BFT-class, sized to members; novelty is a cost, not a feature."),
+                ("Privacy by architecture", "Need-to-know channels that pass DPA review, not promises."),
+                ("Independent verification", "Every claim reconstructable without trusting the issuer."),
+            ],
+        },
+        "heads": {
+            "Six practices from network charter to token lifecycle": ("Six practices, from network charter to token lifecycle", "Charter, ledger, identity, provenance, contracts and analytics as one trust estate"),
+            "Boring on purpose: the engineering case for dull distributed systems": ("Boring on purpose — the engineering case for dull distributed systems", "Dull systems get signed, audited and adopted; exciting ones get pilot budgets"),
+            "The domain reference architecture — charter to verifiable surface": ("The domain reference architecture — charter to verifiable surface", "Membership, ledger, privacy, identity and the verifiable surface in one map"),
+            "The network on one screen — trust with its numbers": ("The network on one screen — trust with its numbers", "Membership health, reconciliation and evidence freshness as the console reads them"),
+            "The network as a system — membership and flow topology": ("The network as a system — membership and flow topology", "How trust flows between members, verifiers and regulators"),
+            "Sector depth — where the digital-trust practice runs deepest today": ("Sector depth — where the digital-trust practice runs deepest today", "Twelve-industry lens with targets we sign against and the sector briefs behind them"),
+            "How digital-trust engagements run": ("How digital-trust engagements run", "Charter first, capture second, ledger third — the sequencing that survives"),
+            "Network release gates — the domain contract": ("Network release gates — the domain contract", "The evidence each gate demands; nothing advances on narrative"),
+        },
+    },
+
+    "services_blockchain-digital-trust_asset-tokenization": {
+        "archsubs": {
+            "Legal wrapper": "off-chain rights, drafted",
+            "Token standard": "permissioned transfer hooks",
+            "Transfer controls": "whitelist + duty checks",
+            "Transfer agent": "register of record, synced",
+            "Settlement workflow": "DvP with timed legs",
+            "Lifecycle drills": "corporate actions rehearsed",
+        },
+        "badges": [
+            ("Transfers blocked by controls", "100%"),
+            ("Reconciliation breaks tolerated", "0"),
+            ("Corporate actions rehearsed", "yes"),
+        ],
+        "deep": {
+            "h2": "Delivery-versus-payment is a legal statement",
+            "sub": "Timed legs, reconciliation gates and the register of record — the mechanics that make tokenized assets real",
+            "paras": [
+                "Tokenization becomes real when the off-chain register, the on-ledger token and the custody arrangement agree — every day, provably. The settlement workflow therefore runs as delivery-versus-payment with timed legs: the cash leg and the asset leg are enforced by the contract, the reconciliation gate compares ledger holdings against the transfer agent's register daily, and any break is a stop-the-world event, not a ticket. Transfer controls enforce eligibility before every movement — whitelists, duty checks and jurisdiction matrices evaluated at the contract boundary — so a restricted transfer fails by construction rather than by after-the-fact clawback.",
+                "The lifecycle is rehearsed before issuance: corporate actions, splits, redemptions and holder-noticing run as drills against a staging network with the real wrapper documents, because the failure modes that strand tokenized assets are always lifecycle events nobody scheduled. The console's headline is reconciliation, not volume — a tokenization program with daily zero-break reconciliation is sellable to auditors; one with impressive TPS is not.",
+            ],
+            "bullets": [
+                ("Timed DvP legs", "Cash and asset legs enforced by contract; settlement is atomic or it does not happen."),
+                ("Daily reconciliation gate", "Ledger versus register versus custody; zero breaks is the operating standard."),
+                ("Eligibility at the boundary", "Whitelists, duty checks and jurisdiction rules run before every transfer."),
+                ("Rehearsed lifecycle", "Corporate actions drilled on staging with the real wrapper before issuance."),
+            ],
+        },
+        "heads": {
+            "The token is the easy part; the legal wrapper is the product": ("The token is the easy part — the legal wrapper is the product", "Wrapper-first tokenization: rights drafted, registers synced, settlement timed"),
+            "Four failure modes that strand tokenized assets": ("Four failure modes that strand tokenized assets", "Wrapper gaps, register drift, uncontrolled transfers, unrehearsed lifecycle"),
+            "Reference architecture — wrapper-first tokenization": ("Reference architecture — wrapper-first tokenization", "Wrapper, standard, controls, agent and settlement as one flow"),
+            "One restricted transfer, controlled end to end": ("One restricted transfer, controlled end to end", "Eligibility, enforcement and evidence on a single movement"),
+            "The tokenization console — reconciliation as the headline": ("The tokenization console — reconciliation as the headline", "Breaks, transfer attempts and lifecycle posture on one surface"),
+            "Restriction enforcement across transfer attempts": ("Restriction enforcement across transfer attempts", "What the controls blocked, and why the blocks hold"),
+            "Tokenization defaults — and documented deviations": ("Tokenization defaults — and documented deviations", "The default stack, and the deviations we sign"),
+            "Token release gates — evidence before issuance": ("Token release gates — evidence before issuance", "Wrapper sign-off, drill results and reconciliation proof"),
+            "What the asset operations team inherits": ("What the asset operations team inherits", "Consoles, drill calendar, notice templates and the register sync"),
+            "Wrapper to lifecycle, week by week": ("Wrapper to lifecycle, week by week", "The build sequence from drafting to rehearsed issuance"),
+            "Integration surface — registries, transfer agents and settlement rails": ("Integration surface — registries, transfer agents and settlement rails", "The systems the token must agree with, daily"),
+            "Lifecycle-governance overlay": ("Lifecycle-governance overlay", "Corporate actions, noticing and the audit trail of every event"),
+        },
+    },
+
+    "services_blockchain-digital-trust_blockchain-analytics-compliance": {
+        "archsubs": {
+            "Address clustering": "heuristics, attributed",
+            "Flow risk scoring": "value-path based",
+            "Sanctions screening": "list sync + reason codes",
+            "Case assembly": "evidence, auto-built",
+            "Evidence pack builder": "examiner-ready exports",
+        },
+        "badges": [
+            ("Screening precision target", "91%"),
+            ("Reason codes on alerts", "100%"),
+            ("Case packs, auto-built", "always"),
+        ],
+        "deep": {
+            "h2": "Precision is the compliance outcome",
+            "sub": "Clustering discipline, reason-coded alerts and case assembly that regulators can read",
+            "paras": [
+                "Analytics programs drown compliance teams by optimizing recall: every address looks suspicious, every alert lacks context, and analysts stop trusting the queue. The discipline runs the other way — attribution sources are ranked and cited, clustering heuristics carry confidence bands, and every alert ships with reason codes tied to the specific risk rule that fired. Precision becomes the headline metric because a screened-and-cleared population that survives regulatory sampling is worth more than a noisy one; the console reports precision, coverage and the alert-to-case conversion funnel as standing numbers.",
+                "Case assembly is where the audit survives: flagged flows assemble into evidence packs with the transaction graph, the attribution basis, the screening history and the analyst's disposition — exported in the format an examiner expects, not a screenshot bundle. Model changes run through validation with population-drift monitors on both the attribution layer and the risk scores, because sanctions lists and mixing patterns move monthly, and a stale model is a silent compliance debt.",
+            ],
+            "bullets": [
+                ("Reason codes on every alert", "The rule, the confidence and the attribution basis ride the alert."),
+                ("Precision as headline", "Cleared populations must survive sampling; noise is a cost, not coverage."),
+                ("Auto-assembled case packs", "Graph, basis, history and disposition in examiner-ready exports."),
+                ("Drift-monitored models", "Attribution and scoring validated monthly; staleness is compliance debt."),
+            ],
+        },
+        "heads": {
+            "Screening precision is a compliance outcome, not a vendor spec sheet": ("Screening precision is a compliance outcome — not a vendor spec sheet", "Attribution discipline and reason-coded alerts that analysts and examiners trust"),
+            "Four failure modes that drown compliance teams in noise": ("Four failure modes that drown compliance teams in noise", "Recall theater, uncited attribution, stale models, screenshot evidence"),
+            "Reference architecture — from ledger events to case files": ("Reference architecture — from ledger events to case files", "Ingest, clustering, scoring, screening and case assembly as one path"),
+            "One flagged transaction, from screen to case closure": ("One flagged transaction, from screen to case closure", "The lifecycle with the evidence each step produces"),
+            "The analytics console — precision as the headline": ("The analytics console — precision as the headline", "Precision, coverage and funnel conversion as standing numbers"),
+            "Precision and coverage across screening cycles": ("Precision and coverage across screening cycles", "The monthly trend the compliance committee reads"),
+            "Analytics defaults — and documented deviations": ("Analytics defaults — and documented deviations", "The default stack, and the deviations we sign"),
+            "Analytics release gates — evidence before deployment": ("Analytics release gates — evidence before deployment", "Validation, drift baselines and the probe suite"),
+            "What the compliance function inherits": ("What the compliance function inherits", "Consoles, rule docs, model cards and the examination calendar"),
+            "Attribution to cases, week by week": ("Attribution to cases, week by week", "The build sequence from source ranking to case automation"),
+            "Integration surface — ledgers, registries and the case systems": ("Integration surface — ledgers, registries and the case systems", "Multi-chain ingest and the case-management handoff"),
+            "Regulatory-examination overlay": ("Regulatory-examination overlay", "What an examiner asks for, prepared in advance"),
+        },
+    },
+
+    "services_blockchain-digital-trust_decentralized-identity": {
+        "archsubs": {
+            "Trust registry": "who may issue what",
+            "Issuer services": "schema + revocation registry",
+            "Holder wallets": "user-held, issuer-agnostic",
+            "Verifier SDK": "one-scan verification",
+            "Status registry": "revocation, checkable",
+        },
+        "badges": [
+            ("One-scan verification", "target 94%"),
+            ("Revocation propagation", "≤10 min"),
+            ("Privacy review", "DPA-passed"),
+        ],
+        "deep": {
+            "h2": "Adoption is a cold-start problem, not a cryptography problem",
+            "sub": "Why the trust triangle lives or dies on issuer economics and verifier convenience",
+            "paras": [
+                "Verifiable-credential ecosystems fail for the reason marketplaces fail: issuers will not issue without verifiers, verifiers will not verify without holders, and holders delete wallets that sit empty. The engineering answer is sequencing, not evangelism — pick the pair with existing economic gravity (an employer issuing to employees who already verify at a gate, a university issuing to students who already verify at a licensure board), ship the verifier SDK to the one-scan standard (a verification must be one action, under five seconds, with the trust registry doing the policy work), and let revocation propagation under ten minutes make the credentials operationally real rather than ceremonial.",
+                "Privacy review is the launch gate: selective disclosure, no beaconing to issuers (verifier queries must not leak to the issuer who issued), and retention rules for the status registry that survive DPA scrutiny. The identity console reads adoption honestly — issuance counts, verification counts, wallet retention — because a trust framework that is not being verified is a pilot, no matter how elegant the cryptography.",
+            ],
+            "bullets": [
+                ("Sequence the triangle", "Start with the issuer-verifier pair that already has economic gravity."),
+                ("One-scan verifier standard", "One action, under five seconds; the registry carries the policy."),
+                ("Issuer-blind verification", "Verifier queries never leak back to issuers — privacy by protocol."),
+                ("Fast revocation", "Status propagation under ten minutes makes credentials operationally real."),
+            ],
+        },
+        "heads": {
+            "Identity wallets live or die at the same intersection as consumer apps": ("Wallet adoption lives or dies at the consumer-app intersection", "Cold-start economics, one-scan verification and privacy-by-protocol design"),
+            "Four failure modes that strand credential ecosystems": ("Four failure modes that strand credential ecosystems", "Empty wallets, beaconing queries, slow revocation, unowned trust registries"),
+            "Reference architecture — the governed trust triangle": ("Reference architecture — the governed trust triangle", "Registry, issuers, holders, verifiers and the status layer as one system"),
+            "One credential, issuance to offline verification": ("One credential, issuance to offline verification", "The lifecycle including the offline-proof path"),
+            "The identity console — adoption and trust as the headline": ("The identity console — adoption and trust as the headline", "Issuance, verification and retention, measured honestly"),
+            "Verification performance across issuer growth": ("Verification performance across issuer growth", "How the triangle scales without slowing down"),
+            "Identity defaults — and documented deviations": ("Identity defaults — and documented deviations", "The default stack, and the deviations we sign"),
+            "Identity release gates — evidence before ecosystem launch": ("Identity release gates — evidence before ecosystem launch", "Privacy review, probe suite and adoption baselines"),
+            "What the trust-framework team inherits": ("What the trust-framework team inherits", "Registry, schemas, consoles and the adoption calendar"),
+            "Charter to wallets, week by week": ("Charter to wallets, week by week", "The build sequence from trust order to first verification"),
+            "Integration surface — issuer systems, wallets and verifier gates": ("Integration surface — issuer systems, wallets and verifier gates", "Where the triangle touches the estate"),
+            "Privacy and governance overlay": ("Privacy and governance overlay", "Selective disclosure, beacon protection and the DPA file"),
+        },
+    },
+
+    "services_blockchain-digital-trust_enterprise-dlt-networks": {
+        "archsubs": {
+            "Network charter": "rights, duties, exits",
+            "Ledger runtime": "BFT, sized to members",
+            "HSM-backed keys": "FIPS-grade, dual control",
+            "Privacy domains": "need-to-know channels",
+        },
+        "badges": [
+            ("Charter signed before txns", "always"),
+            ("Reconciliation breaks", "0 tolerated"),
+            ("Member health on console", "live"),
+        ],
+        "deep": {
+            "h2": "The charter is the load-bearing artifact",
+            "sub": "Membership economics, on-ledger governance and why boring consensus wins consortia",
+            "paras": [
+                "Consortium networks stall at the speed of their charter: membership fees, data rights, exit terms and dispute paths written after go-live produce veto games that freeze the roadmap. The discipline is charter-first — the rights and duties are drafted, negotiated and (where the platform allows) held on-ledger, so governance changes are transactions with notice periods rather than meetings with minutes. Consensus is deliberately boring: BFT-class, sized to the member set, with performance targets set by the slowest governed member rather than the fastest node — because a consortium runs at the pace of its least-invested participant.",
+                "Operations carry the trust: HSM-backed keys under dual control, witnessed key ceremonies for root material, member onboarding that is KYC-checked and charter-signed, and a daily reconciliation gate between the ledger and every member's system of record. The console reads member health — block production, endorsement participation, reconciliation breaks — because a member silently falling behind is the first symptom of the exit nobody scheduled.",
+            ],
+            "bullets": [
+                ("Charter before transactions", "Rights, duties, fees and exits negotiated and signed first; governance changes are transactions."),
+                ("Boring consensus, honestly sized", "BFT-class tuned to the member set; pace set by the slowest governed member."),
+                ("Dual-control key discipline", "HSM-backed, witnessed ceremonies, rotation on schedule."),
+                ("Daily reconciliation gate", "Ledger versus each member's system of record; breaks stop the world."),
+            ],
+        },
+        "heads": {
+            "The network succeeds at the speed of its charter, not its consensus": ("The network moves at the speed of its charter — not its consensus", "Charter-first governance and operations that keep members signed in"),
+            "Four failure modes that stall consortium networks": ("Four failure modes that stall consortium networks", "Late charters, governance veto games, key drift, silent member decay"),
+            "Reference architecture — the governed permissioned network": ("Reference architecture — the governed permissioned network", "Charter, runtime, keys and privacy domains as one structure"),
+            "One transaction, endorsed to finality": ("One transaction, endorsed to finality", "The endorsement path with the checks each step runs"),
+            "The network console — member health as the headline": ("The network console — member health as the headline", "Participation, reconciliation and governance posture, live"),
+            "Cost and throughput across network growth": ("Cost and throughput across network growth", "How the economics move as members join"),
+            "Network defaults — and documented deviations": ("Network defaults — and documented deviations", "The default platform choices, and the deviations we sign"),
+            "Network release gates — evidence before member onboarding": ("Network release gates — evidence before member onboarding", "What must be proven before the next member signs"),
+            "What the consortium inherits": ("What the consortium inherits", "Charter, runbooks, ceremonies and the health console"),
+            "Charter to mainnet, week by week": ("Charter to mainnet, week by week", "The build sequence from negotiation to governed production"),
+            "Integration surface — member systems and the shared ledger": ("Integration surface — member systems and the shared ledger", "Where member estates meet the network"),
+            "Governance overlay — the on-ledger charter": ("Governance overlay — the on-ledger charter", "How governance changes themselves are governed"),
+        },
+    },
+
+    "services_blockchain-digital-trust_provenance-traceability": {
+        "archsubs": {
+            "Identity crosswalk": "EPCIS IDs to real parties",
+            "Evidence store": "sealed, hash-linked",
+            "Ledger anchoring": "batch merkle roots",
+            "Reconstruction service": "batch → full chain view",
+            "Recall drills": "reconstruct in minutes",
+        },
+        "badges": [
+            ("Recall drill target", "≤75 min"),
+            ("Capture at source", "anchored"),
+            ("Partner onboarding", "evidence-gated"),
+        ],
+        "deep": {
+            "h2": "Capture fidelity beats ledger choice",
+            "sub": "The capture chain, the identity crosswalk and recall drills — what actually makes provenance defensible",
+            "paras": [
+                "Provenance programs decorate supply chains when the events are typed into portals at the end of the week; they defend supply chains when capture happens at the source, signed by the device or system that observed the physical event. The capture chain therefore runs from scanners, IoT signals and ERP events through a normalization layer that anchors batches as merkle roots — the full chain is reconstructable from the roots plus the sealed evidence store, and the identity crosswalk maps EPCIS identifiers to real parties so 'lot 4711' has a name, a site and a certification status behind it.",
+                "Recall drills are the product test: on a schedule, the reconstruction service must rebuild the affected lot's journey — forward and backward trace — inside the drill window, with the evidence pack a regulator expects. Partner onboarding is evidence-gated (a partner joins with capture capability proven on their line, not with a signed promise), and capture coverage is measured per tier, because tier-2 and tier-3 blindness is where recalls quietly fail.",
+            ],
+            "bullets": [
+                ("Capture at the source", "Events signed by devices and systems that observed them, not retyped later."),
+                ("Anchored batches", "Merkle roots on-ledger; the full chain reconstructs from roots plus sealed evidence."),
+                ("Identity crosswalk", "Every EPCIS identifier resolves to a party, site and certification status."),
+                ("Drilled recalls", "Forward and backward trace rehearsed to a clock, with regulator-grade packs."),
+            ],
+        },
+        "heads": {
+            "Provenance is a capture problem before it is a ledger problem": ("Provenance is a capture problem before it is a ledger problem", "Source-signed events, identity crosswalks and drilled recalls over ledger choice"),
+            "Four failure modes that make provenance decorative": ("Four failure modes that make provenance decorative", "Retyped events, anonymous identifiers, untested recalls, tier-blind coverage"),
+            "Reference architecture — the capture chain from field to ledger": ("Reference architecture — the capture chain from field to ledger", "Normalize, anchor, reconstruct — with the crosswalk underneath"),
+            "One batch, from field event to recall drill": ("One batch, from field event to recall drill", "The journey with the evidence each step seals"),
+            "The provenance console — recall time as the headline": ("The provenance console — recall time as the headline", "Drill results, capture coverage and chain health on one surface"),
+            "Capture coverage across the partner network": ("Capture coverage across the partner network", "Tier by tier, with the onboarding evidence behind each"),
+            "Provenance defaults — and documented deviations": ("Provenance defaults — and documented deviations", "The default stack, and the deviations we sign"),
+            "Provenance release gates — evidence before partner onboarding": ("Provenance release gates — evidence before partner onboarding", "What a partner must prove before joining the chain"),
+            "What the supply-chain integrity team inherits": ("What the supply-chain integrity team inherits", "Drill calendar, coverage console and the evidence store"),
+            "Partners in order, week by week": ("Partners in order, week by week", "The onboarding sequence and the capability proof per partner"),
+            "Integration surface — partner systems, labels and the ledger": ("Integration surface — partner systems, labels and the ledger", "Scanners, MES, label printers and the anchoring service"),
+            "Recall-readiness governance overlay": ("Recall-readiness governance overlay", "The standing state of readiness, audited like a control"),
+        },
+    },
+
+    "services_blockchain-digital-trust_smart-contract-engineering": {
+        "archsubs": {
+            "Executable spec": "invariants written first",
+            "Formal verification": "invariants proven, not hoped",
+            "Independent audit": "external, scoped, remediated",
+            "Runtime monitor": "invariants checked live",
+            "Upgrade governance": "multi-sig + notice",
+        },
+        "badges": [
+            ("Invariant coverage", "spec-first"),
+            ("Independent audit", "before deployment"),
+            ("Upgrade path", "timelocked + noticed"),
+        ],
+        "deep": {
+            "h2": "Invariants are written before code exists",
+            "sub": "Spec-first engineering — formal verification, fuzzing, audits and the upgrade discipline",
+            "paras": [
+                "Contract failures are specification failures that shipped: the code does faithfully what nobody wrote down. The discipline inverts the order — the executable specification states the invariants (what must always be true), the business rules and the failure paths, and stakeholders sign it before implementation begins. Formal verification then proves the invariants hold on the contract, property-based fuzzing attacks the boundaries the proofs assume, and the independent audit is scoped against the spec so findings map to named invariants rather than generic concern lists.",
+                "Deployment is not the end of the engineering: runtime monitors check the invariants live (a violated invariant pages before funds move), and upgrade governance is multi-sig with timelock and notice — the change window is a governed event with a rollback plan, not a deploy button. The console reads invariant coverage, monitor violations and audit remediation state, because a contract estate whose safety posture is a PDF is a liability wearing a badge.",
+            ],
+            "bullets": [
+                ("Spec before code", "Invariants and failure paths signed by stakeholders before implementation."),
+                ("Proven invariants", "Formal verification plus fuzzing on the boundaries proofs assume."),
+                ("Scoped independent audit", "Findings mapped to named invariants; remediation tracked to closure."),
+                ("Live invariant monitors", "Violations page before funds move; upgrades timelocked and noticed."),
+            ],
+        },
+        "heads": {
+            "The specification is the contract; the code is just its executable form": ("The specification is the contract — the code is its executable form", "Spec-first engineering with proofs, fuzzing and governed upgrades"),
+            "Four failure modes that put vulnerabilities on mainnet": ("Four failure modes that put vulnerabilities on mainnet", "Unwritten invariants, unscoped audits, monitor-less runtimes, button upgrades"),
+            "Reference architecture — from spec to audited contract": ("Reference architecture — from spec to audited contract", "Spec, verification, audit, deployment and monitoring as one path"),
+            "One contract change, from spec diff to audited release": ("One contract change, from spec diff to audited release", "The change lifecycle with the evidence each step leaves"),
+            "The contract console — audit readiness as the headline": ("The contract console — audit readiness as the headline", "Invariant coverage, findings and monitor state on one surface"),
+            "Invariant coverage across contract versions": ("Invariant coverage across contract versions", "How the safety case grows with every release"),
+            "Contract defaults — and documented deviations": ("Contract defaults — and documented deviations", "The default stack, and the deviations we sign"),
+            "Contract release gates — evidence before deployment": ("Contract release gates — evidence before deployment", "Proofs, fuzz runs and audit remediation before mainnet"),
+            "What the engineering team inherits": ("What the engineering team inherits", "Spec, proofs, monitors and the upgrade calendar"),
+            "Spec to audit, week by week": ("Spec to audit, week by week", "The build sequence from workshop to signed audit"),
+            "Integration surface — ledgers, oracles and the business systems": ("Integration surface — ledgers, oracles and the business systems", "What contracts touch, and the trust each touch carries"),
+            "Upgrade-governance overlay": ("Upgrade-governance overlay", "Multi-sig, timelock, notice — the governed change window"),
+        },
+    },
+}

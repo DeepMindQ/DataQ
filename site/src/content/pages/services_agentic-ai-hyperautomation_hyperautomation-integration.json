@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "Automation dies in the seams, not in the agents"
+   "x": "Automation dies in the seams — the integration discipline that prevents it",
+   "sub": "Contract-first seams with replay, drift monitors and month-end rehearsals"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that break seams at month-end"
+   "x": "Four failure modes that break seams at month-end",
+   "sub": "Schema drift, semantic drift, volume cliffs and the unkeyed write"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — typed seams with replay and drift monitors"
+   "x": "Reference architecture — typed seams with replay and drift monitors",
+   "sub": "Registry, gateway, ledger and monitors as the load-bearing structure"
   },
   {
    "t": "p",
@@ -105,13 +108,15 @@
      "id": "schema",
      "lane": 1,
      "label": "Schema registry",
-     "hot": true
+     "hot": true,
+     "sub": "typed contracts, versioned"
     },
     {
      "id": "contract",
      "lane": 1,
      "label": "Contract tests",
-     "hot": true
+     "hot": true,
+     "sub": "break the build on drift"
     },
     {
      "id": "ver",
@@ -122,7 +127,8 @@
      "id": "gw",
      "lane": 2,
      "label": "Integration gateway",
-     "hot": true
+     "hot": true,
+     "sub": "typed calls, replay on fail"
     },
     {
      "id": "shape",
@@ -138,7 +144,8 @@
      "id": "idem",
      "lane": 3,
      "label": "Idempotency ledger",
-     "hot": true
+     "hot": true,
+     "sub": "exactly-once, provable"
     },
     {
      "id": "dlq",
@@ -169,7 +176,8 @@
      "id": "drift",
      "lane": 5,
      "label": "Drift monitors",
-     "hot": true
+     "hot": true,
+     "sub": "schema + semantic drift"
     },
     {
      "id": "lat",
@@ -264,11 +272,26 @@
      "label": "owners"
     }
    ],
-   "note": "Contract tests run in CI against sandbox on every vendor release notification — the drift monitor is the smoke detector, the contract test is the fire drill."
+   "note": "Contract tests run in CI against sandbox on every vendor release notification — the drift monitor is the smoke detector, the contract test is the fire drill.",
+   "badges": [
+    {
+     "label": "Seams under contract",
+     "value": "100%"
+    },
+    {
+     "label": "Month-end error budget",
+     "value": "0 breaches"
+    },
+    {
+     "label": "Replay on failed write",
+     "value": "always"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "One write across three systems, guaranteed once"
+   "x": "One write across three systems, guaranteed once",
+   "sub": "The exactly-once path, step by step, with receipts"
   },
   {
    "t": "p",
@@ -291,7 +314,8 @@
   },
   {
    "t": "h2",
-   "x": "The seam console — health under real load"
+   "x": "The seam console — health under real load",
+   "sub": "Error budgets, replay queues and drift alarms on one surface"
   },
   {
    "t": "p",
@@ -623,7 +647,8 @@
   },
   {
    "t": "h2",
-   "x": "Seam health across month-end load"
+   "x": "Seam health across month-end load",
+   "sub": "Capacity shape and back-pressure under a replayed close"
   },
   {
    "t": "p",
@@ -689,7 +714,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": false,
-     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: orchestration is the discipline — dozens of small automations running as one auditable workforce, with escalations designed rather than improvised.",
+     "hook": "KYC refresh backlogs, sanctions-alert triage and reconcile-everything month-ends are high-volume, rule-bounded and examinable — exactly the workload where role-scoped agents out-perform both manual desks and brittle RPA.",
      "plays": [
       "Typed seam contracts across ERP, CRM, ITSM and comms",
       "Replayable failure handling with idempotency and duplicate prevention",
@@ -697,25 +722,40 @@
      ],
      "kpis": [
       {
-       "label": "Seam success rate",
-       "value": "99.4%"
+       "label": "STP rate, agent-handled ops",
+       "value": "68%"
       },
       {
-       "label": "Replay queue depth",
-       "value": "37"
+       "label": "Checkpoint fidelity at audit sampling",
+       "value": "97%"
       },
       {
-       "label": "Duplicate writes",
-       "value": "0"
+       "label": "Cost per completed action",
+       "value": "$0.36"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "KYC/case suites and watchlist tools",
+      "SWIFT gpi and payment-rail events",
+      "SR 11-7 / OCC 2011-12 evidence"
+     ],
+     "evidence": [
+      {
+       "title": "A top-10 European retail bank",
+       "url": "/case-studies/bank-01/"
+      },
+      {
+       "title": "A multinational corporate bank",
+       "url": "/case-studies/bank-02/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": false,
-     "hook": "Ask what fraud industrialized against manual detection costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "FNOL intake, submission triage and reserve refresh run on ACORD-coded documents and PAS queues that surge at catastrophe season — agent pools absorb the surge while adjusters keep the judgment calls, with every step logged.",
      "plays": [
       "Typed seam contracts across ERP, CRM, ITSM and comms",
       "Replayable failure handling with idempotency and duplicate prevention",
@@ -723,25 +763,40 @@
      ],
      "kpis": [
       {
-       "label": "Seam success rate",
-       "value": "99.4%"
+       "label": "Claims auto-adjudicated to settlement",
+       "value": "59%"
       },
       {
-       "label": "Replay queue depth",
-       "value": "37"
+       "label": "FNOL intake cycle time",
+       "value": "5 hrs"
       },
       {
-       "label": "Duplicate writes",
-       "value": "0"
+       "label": "Adjuster override rate",
+       "value": "17%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "PAS/claims suites (Guidewire-class)",
+      "ACORD forms and ISO claim codes",
+      "NAIC market-conduct evidence"
+     ],
+     "evidence": [
+      {
+       "title": "A top-5 global P&C insurer",
+       "url": "/case-studies/ins-01/"
+      },
+      {
+       "title": "A leading life insurer (North America)",
+       "url": "/case-studies/ins-02/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": false,
-     "hook": "Healthcare & Life Sciences operators recognize the pattern: prior authorization and RCM friction, quarter after quarter.",
+     "hook": "Prior authorization, claims status and denials follow-up drown coding and RCM teams in X12 278/837 transactions and payer-portal hunts — agents that read the rule set, assemble the packet and log every step give the queue an owner.",
      "plays": [
       "Typed seam contracts across ERP, CRM, ITSM and comms",
       "Replayable failure handling with idempotency and duplicate prevention",
@@ -749,25 +804,40 @@
      ],
      "kpis": [
       {
-       "label": "Seam success rate",
-       "value": "99.4%"
+       "label": "Prior-auth auto-approval share",
+       "value": "47%"
       },
       {
-       "label": "Replay queue depth",
-       "value": "37"
+       "label": "Denials follow-up queue age p90",
+       "value": "10 days"
       },
       {
-       "label": "Duplicate writes",
-       "value": "0"
+       "label": "Action replay coverage",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "EHR/RCM estates (Epic-class)",
+      "HL7 FHIR + X12 278/837",
+      "HIPAA audit controls"
+     ],
+     "evidence": [
+      {
+       "title": "A national health insurer",
+       "url": "/case-studies/hc-02/"
+      },
+      {
+       "title": "A European biopharma group",
+       "url": "/case-studies/hc-03/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": true,
-     "hook": "The work here has one job: move a named number — maintenance planning reactive included — and prove it moved.",
+     "hook": "Maintenance planners and quality engineers live in SAP PM work orders, MES transactions and supplier ASN exceptions — automation earns its keep here only when it clears the backlog without touching the safety-rated path.",
      "plays": [
       "Typed seam contracts across ERP, CRM, ITSM and comms",
       "Replayable failure handling with idempotency and duplicate prevention",
@@ -775,25 +845,40 @@
      ],
      "kpis": [
       {
-       "label": "Seam success rate",
-       "value": "99.4%"
+       "label": "Work orders auto-dispositioned",
+       "value": "41%"
       },
       {
-       "label": "Replay queue depth",
-       "value": "37"
+       "label": "NCR closure cycle",
+       "value": "15 days"
       },
       {
-       "label": "Duplicate writes",
-       "value": "0"
+       "label": "Actions with sealed evidence packet",
+       "value": "98%"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "SAP PM / CMMS work orders",
+      "MES context via ISA-95",
+      "IATF 16949 NCR-CAPA flows"
+     ],
+     "evidence": [
+      {
+       "title": "A global automotive OEM",
+       "url": "/case-studies/mfg-01/"
+      },
+      {
+       "title": "A packaging producer",
+       "url": "/case-studies/mfg-10/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": "Ask what supplier collaboration by email costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "EDI 850/855/856 exceptions, trade-promotion deduction disputes and supplier onboarding are pure document-and-decision churn across GS1 identifiers — the queue shrinks fastest when agents work the exception list under merchandiser-approved checkpoints.",
      "plays": [
       "Typed seam contracts across ERP, CRM, ITSM and comms",
       "Replayable failure handling with idempotency and duplicate prevention",
@@ -801,25 +886,40 @@
      ],
      "kpis": [
       {
-       "label": "Seam success rate",
-       "value": "99.4%"
+       "label": "PO exceptions auto-resolved",
+       "value": "62%"
       },
       {
-       "label": "Replay queue depth",
-       "value": "37"
+       "label": "Deduction dispute cycle",
+       "value": "16 days"
       },
       {
-       "label": "Duplicate writes",
-       "value": "0"
+       "label": "Agent actions reconciled to ERP",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "EDI 850/855/856 + GS1 GTIN",
+      "ERP order ledgers (SAP Retail-class)",
+      "Trade-promotion deduction systems"
+     ],
+     "evidence": [
+      {
+       "title": "A top-3 grocery retailer (800+ stores)",
+       "url": "/case-studies/ret-01/"
+      },
+      {
+       "title": "A home-improvement retailer",
+       "url": "/case-studies/ret-08/"
+      }
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Order fallout between OSS/BSS layers, usage-dispute tickets and churn-save queues are where TM Forum Open API journeys break — durable orchestration re-drives the fallout and hands judgment calls to humans with context attached.",
      "plays": [
       "Typed seam contracts across ERP, CRM, ITSM and comms",
       "Replayable failure handling with idempotency and duplicate prevention",
@@ -827,25 +927,40 @@
      ],
      "kpis": [
       {
-       "label": "Seam success rate",
-       "value": "99.4%"
+       "label": "Order fallout auto-recovered",
+       "value": "66%"
       },
       {
-       "label": "Replay queue depth",
-       "value": "37"
+       "label": "Repeat-fallout rate",
+       "value": "6%"
       },
       {
-       "label": "Duplicate writes",
-       "value": "0"
+       "label": "Usage disputes closed within SLA",
+       "value": "78%"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "OSS/BSS order orchestration",
+      "TM Forum Open APIs (TMF622/641)",
+      "Campaign and churn platforms"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-1 European operator",
+       "url": "/case-studies/tel-01/"
+      },
+      {
+       "title": "A North American cable operator",
+       "url": "/case-studies/tel-03/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": true,
-     "hook": "The work here has one job: move a named number — trading and scheduling decisions at market speed included — and prove it moved.",
+     "hook": "Outage tickets, switch-order packets, market-submission checks and billing exceptions stack across OMS/EMS and CIS estates — the wins sit in bounded, auditable workflows where a wrong write is recoverable and every action is logged.",
      "plays": [
       "Typed seam contracts across ERP, CRM, ITSM and comms",
       "Replayable failure handling with idempotency and duplicate prevention",
@@ -853,25 +968,40 @@
      ],
      "kpis": [
       {
-       "label": "Seam success rate",
-       "value": "99.4%"
+       "label": "Field work orders auto-routed",
+       "value": "47%"
       },
       {
-       "label": "Replay queue depth",
-       "value": "37"
+       "label": "Outage-ticket backlog age p90",
+       "value": "26 hrs"
       },
       {
-       "label": "Duplicate writes",
-       "value": "0"
+       "label": "Switch-order packet completeness",
+       "value": "97%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "OMS/EMS and CIS estates",
+      "NERC and market-submission calendars",
+      "Field-service scheduling"
+     ],
+     "evidence": [
+      {
+       "title": "A European TSO-DSO group",
+       "url": "/case-studies/en-01/"
+      },
+      {
+       "title": "A global integrated energy major",
+       "url": "/case-studies/en-02/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Missed appointments, failed EDI messages, customs holds and detention disputes across TMS/WMS/telematics feeds — agentic pools triage, re-drive and document exceptions so the control tower shows truth, not noise.",
      "plays": [
       "Typed seam contracts across ERP, CRM, ITSM and comms",
       "Replayable failure handling with idempotency and duplicate prevention",
@@ -879,25 +1009,40 @@
      ],
      "kpis": [
       {
-       "label": "Seam success rate",
-       "value": "99.4%"
+       "label": "Exceptions auto-triaged",
+       "value": "66%"
       },
       {
-       "label": "Replay queue depth",
-       "value": "37"
+       "label": "Detention disputes resolved in",
+       "value": "3 days"
       },
       {
-       "label": "Duplicate writes",
-       "value": "0"
+       "label": "EDI messages re-driven in window",
+       "value": "94%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "TMS/WMS/telematics event feeds",
+      "EDIFACT / X12 carrier messages",
+      "Customs and HS documentation"
+     ],
+     "evidence": [
+      {
+       "title": "A global 3PL (40+ countries)",
+       "url": "/case-studies/log-01/"
+      },
+      {
+       "title": "A parcel network operator",
+       "url": "/case-studies/log-06/"
+      }
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Permit, benefit and FOIA case backlogs move at the pace of document assembly and eligibility checks — agents that pre-fill, verify and route cut cycle time while every decision keeps a citable evidence trail for oversight bodies.",
      "plays": [
       "Typed seam contracts across ERP, CRM, ITSM and comms",
       "Replayable failure handling with idempotency and duplicate prevention",
@@ -905,25 +1050,40 @@
      ],
      "kpis": [
       {
-       "label": "Seam success rate",
-       "value": "99.4%"
+       "label": "Cases auto-assembled for review",
+       "value": "53%"
       },
       {
-       "label": "Replay queue depth",
-       "value": "37"
+       "label": "Permit cycle-time reduction",
+       "value": "50%"
       },
       {
-       "label": "Duplicate writes",
-       "value": "0"
+       "label": "Decisions with citable evidence trail",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "Permit/benefit case systems",
+      "FOIA and records statutory clocks",
+      "Budget and procurement controls"
+     ],
+     "evidence": [
+      {
+       "title": "A national digital-government agency",
+       "url": "/case-studies/pub-01/"
+      },
+      {
+       "title": "A national tax administration",
+       "url": "/case-studies/pub-02/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": true,
-     "hook": "Ask what administrative burden on faculty costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Admissions processing, aid-verification packets and grant-administration reporting scale with enrollment cycles — role-scoped agents clear the routine files and route judgment calls to registrars and aid officers with full context.",
      "plays": [
       "Typed seam contracts across ERP, CRM, ITSM and comms",
       "Replayable failure handling with idempotency and duplicate prevention",
@@ -931,25 +1091,40 @@
      ],
      "kpis": [
       {
-       "label": "Seam success rate",
-       "value": "99.4%"
+       "label": "Applications auto-processed",
+       "value": "51%"
       },
       {
-       "label": "Replay queue depth",
-       "value": "37"
+       "label": "Verification packet cycle",
+       "value": "6 days"
       },
       {
-       "label": "Duplicate writes",
-       "value": "0"
+       "label": "Staff hours returned per week",
+       "value": "269"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "SIS estates (Banner-class)",
+      "Aid verification workflows",
+      "Grant reporting portals"
+     ],
+     "evidence": [
+      {
+       "title": "A public research university (38,000 students)",
+       "url": "/case-studies/edu-01/"
+      },
+      {
+       "title": "An online university",
+       "url": "/case-studies/edu-06/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": false,
-     "hook": "Ask what support and success scale linearly costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Support triage, entitlement checks and renewal-desk workflows scale linearly with ARR unless an agent layer absorbs the repeatable steps — with checkpoints where account teams keep pricing judgment and CRM history stays structured.",
      "plays": [
       "Typed seam contracts across ERP, CRM, ITSM and comms",
       "Replayable failure handling with idempotency and duplicate prevention",
@@ -957,25 +1132,40 @@
      ],
      "kpis": [
       {
-       "label": "Seam success rate",
-       "value": "99.4%"
+       "label": "Tickets auto-triaged",
+       "value": "50%"
       },
       {
-       "label": "Replay queue depth",
-       "value": "37"
+       "label": "First-response time",
+       "value": "12 min"
       },
       {
-       "label": "Duplicate writes",
-       "value": "0"
+       "label": "Entitlement checks automated",
+       "value": "96%"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "ITSM/CRM (ServiceNow-class)",
+      "CPQ and entitlement registries",
+      "SOC 2 evidence controls"
+     ],
+     "evidence": [
+      {
+       "title": "A consumer fintech (8M users)",
+       "url": "/case-studies/tech-02/"
+      },
+      {
+       "title": "An enterprise IT services firm",
+       "url": "/case-studies/tech-07/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "Ask what input and logistics planning manual costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Contract management, grading certificates, subsidy dossiers and harvest-logistics planning run on seasonal surges — agent pools absorb the surge with checkpoints where agronomists and traders keep commercial judgment.",
      "plays": [
       "Typed seam contracts across ERP, CRM, ITSM and comms",
       "Replayable failure handling with idempotency and duplicate prevention",
@@ -983,26 +1173,32 @@
      ],
      "kpis": [
       {
-       "label": "Seam success rate",
-       "value": "99.4%"
+       "label": "Contract milestones auto-tracked",
+       "value": "64%"
       },
       {
-       "label": "Replay queue depth",
-       "value": "37"
+       "label": "Certification doc prep time",
+       "value": "8 hrs"
       },
       {
-       "label": "Duplicate writes",
-       "value": "0"
+       "label": "Subsidy dossier completeness",
+       "value": "96%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "Procurement and contract ledgers",
+      "Certification schemes (GLOBALG.A.P.-class)",
+      "Subsidy and traceability portals"
+     ]
     }
    ],
    "practiceNote": "Hyperautomation & Systems Integration view: the contracted seams — ERP, CRM, ITSM, comms and queues — with typed contracts, replayable failures and monitors that catch drift before business users do."
   },
   {
    "t": "h2",
-   "x": "Integration defaults — and documented deviations"
+   "x": "Integration defaults — and documented deviations",
+   "sub": "The default patterns, and where we sign deviations"
   },
   {
    "t": "p",
@@ -1046,7 +1242,8 @@
   },
   {
    "t": "h2",
-   "x": "Seam release gates — evidence before the next close"
+   "x": "Seam release gates — evidence before the next close",
+   "sub": "What a seam must prove before month-end load"
   },
   {
    "t": "table",
@@ -1086,7 +1283,8 @@
   },
   {
    "t": "h2",
-   "x": "What the integration team inherits"
+   "x": "What the integration team inherits",
+   "sub": "Registry ownership, migration notes and the drill calendar"
   },
   {
    "t": "bullets",
@@ -1119,7 +1317,8 @@
   },
   {
    "t": "h2",
-   "x": "Seam by seam, week by week"
+   "x": "Seam by seam, week by week",
+   "sub": "The build sequence from contract to rehearsal"
   },
   {
    "t": "bullets",
@@ -1152,7 +1351,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — the systems list, honestly named"
+   "x": "Integration surface — the systems list, honestly named",
+   "sub": "ERP, CRM, ITSM, comms and queues — named, typed, owned"
   },
   {
    "t": "p",
@@ -1185,7 +1385,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration governance — contracts as controlled artifacts"
+   "x": "Integration governance — contracts as controlled artifacts",
+   "sub": "Versioning, review and change control for every seam"
   },
   {
    "t": "p",
@@ -1215,6 +1416,44 @@
   {
    "t": "note",
    "x": "Sandbox parity is verified before every release: if the vendor's sandbox drifts from production behavior, the seam gate stays closed — sandbox fiction is treated as a failed gate."
+  },
+  {
+   "t": "h2",
+   "x": "Typed seams, or the month-end will find you",
+   "sub": "Contract-first integration — the discipline that makes cross-system writes survivable",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Integration failures are calendar-driven: the seam that held all quarter breaks on the last business day of the month, when volumes triple and upstream schemas drift. The countermeasure is contract-first seams — every integration is a typed contract in the registry, versioned like code, with contract tests that break the build when a provider drifts. The drift monitors then watch the two failure classes tests cannot catch: semantic drift (a field that keeps its name and loses its meaning) and volume drift (a source that changes its shape under load). Both page the integration desk before the close, not after.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "The write path is engineered for exactly-once semantics under provable conditions: idempotency keys per business object, the idempotency ledger as the receipt of record, and replay queues that re-drive any write that landed nowhere. The seam console reads month-end as a load profile, not an incident — capacity shapes, back-pressure rules and rate limits are rehearsed against a replayed close before the live one. When a seam does break, the repair is a contract version bump with a migration note, not a hotfix that quietly widens a type.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Contracts in the registry",
+     "Every seam typed, versioned and owned; drift breaks the build before it breaks the close."
+    ],
+    [
+     "Semantic + volume drift monitors",
+     "The two failure classes tests miss, watched continuously."
+    ],
+    [
+     "Provable exactly-once",
+     "Business-object idempotency keys and the ledger as receipt of record."
+    ],
+    [
+     "Month-end as a load profile",
+     "Rehearsed against replayed closes; back-pressure and rate limits signed."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1340,6 +1579,23 @@
    "url": "/case-studies/hc-03/",
    "tag": "Evidence",
    "desc": "Trial eligibility matching at 10x — enrollment windows met."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A top-10 European retail bank",
+   "url": "/case-studies/bank-01/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A top-5 global P&C insurer",
+   "url": "/case-studies/ins-01/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A global 3PL (40+ countries)",
+   "url": "/case-studies/log-01/",
+   "ind": "Logistics & Supply Chain"
   }
  ]
 }

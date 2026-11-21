@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "Selling data is a controls business wearing a revenue costume"
+   "x": "Selling data is a controls business — wearing a revenue costume",
+   "sub": "Contracts, purpose limits and metering that make data revenue durable"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that turn data products into liabilities"
+   "x": "Four failure modes that turn data products into liabilities",
+   "sub": "Vague terms, unenforced purposes, estimated metering, silent deprecations"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — the governed data product surface"
+   "x": "Reference architecture — the governed data product surface",
+   "sub": "Contracts, entitlement, metering and egress as one serving path"
   },
   {
    "t": "p",
@@ -90,7 +93,8 @@
      "id": "prod",
      "lane": 0,
      "label": "Product datasets",
-     "hot": true
+     "hot": true,
+     "sub": "contracted, SLA'd"
     },
     {
      "id": "lic",
@@ -106,13 +110,15 @@
      "id": "terms",
      "lane": 1,
      "label": "Usage terms",
-     "hot": true
+     "hot": true,
+     "sub": "legal purpose, signed"
     },
     {
      "id": "purp",
      "lane": 1,
      "label": "Purpose limits",
-     "hot": true
+     "hot": true,
+     "sub": "enforced at query time"
     },
     {
      "id": "schema",
@@ -138,7 +144,8 @@
      "id": "meter",
      "lane": 3,
      "label": "Usage metering",
-     "hot": true
+     "hot": true,
+     "sub": "invoice-grade counts"
     },
     {
      "id": "bill",
@@ -169,7 +176,8 @@
      "id": "audit",
      "lane": 5,
      "label": "Audit packs",
-     "hot": true
+     "hot": true,
+     "sub": "consumer-visible"
     },
     {
      "id": "credit",
@@ -180,7 +188,8 @@
      "id": "egress",
      "lane": 5,
      "label": "Egress enforcement",
-     "hot": true
+     "hot": true,
+     "sub": "policy-checked exports"
     }
    ],
    "edges": [
@@ -270,11 +279,26 @@
      "label": "evidence"
     }
    ],
-   "note": "Purpose limits are enforced at egress, not in the contract PDF: a query that violates the licensed purpose fails at the gate with the clause cited."
+   "note": "Purpose limits are enforced at egress, not in the contract PDF: a query that violates the licensed purpose fails at the gate with the clause cited.",
+   "badges": [
+    {
+     "label": "Purpose limits",
+     "value": "query-time enforced"
+    },
+    {
+     "label": "Metering",
+     "value": "invoice-grade"
+    },
+    {
+     "label": "Consumer SLAs",
+     "value": "signed per product"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "One subscription, from entitlement to invoice"
+   "x": "One subscription, from entitlement to invoice",
+   "sub": "The lifecycle with the controls each step runs"
   },
   {
    "t": "p",
@@ -297,7 +321,8 @@
   },
   {
    "t": "h2",
-   "x": "The product console — SLOs and invoices that agree"
+   "x": "The product console — SLOs and invoices that agree",
+   "sub": "Usage, margin and SLA posture per consumer"
   },
   {
    "t": "p",
@@ -621,7 +646,8 @@
   },
   {
    "t": "h2",
-   "x": "Product economics by consumer tier"
+   "x": "Product economics by consumer tier",
+   "sub": "Where the revenue pays and what it costs to serve"
   },
   {
    "t": "p",
@@ -679,7 +705,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": false,
-     "hook": "Ask what fraud and AML decisions too slow costs Banking & Financial Services firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Risk and finance need point-in-time correct features, lineage that survives model-risk examinations, and metric contracts that end the credit-loss-number argument for good.",
      "plays": [
       "Entitlement and purpose limits enforced at query time, logged and reviewed",
       "Usage metering that reconciles to billing — exactly",
@@ -687,25 +713,40 @@
      ],
      "kpis": [
       {
-       "label": "Product SLO adherence",
-       "value": "99.3%"
+       "label": "Feature point-in-time correctness",
+       "value": "99%"
       },
       {
-       "label": "Onboarding time",
-       "value": "6 days"
+       "label": "Metric disputes resolved by contract",
+       "value": "98%"
       },
       {
-       "label": "Usage billed accuracy",
+       "label": "Model-risk lineage completeness",
        "value": "100%"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/banking-financial-services/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Feature stores (point-in-time)",
+      "Model-risk lineage",
+      "Finance metric contracts"
+     ],
+     "evidence": [
+      {
+       "title": "A top-10 European retail bank",
+       "url": "/case-studies/bank-01/"
+      },
+      {
+       "title": "A multinational corporate bank",
+       "url": "/case-studies/bank-02/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": false,
-     "hook": "Insurance & Risk operators recognize the pattern: claims, policy and exposure data fragmented, quarter after quarter.",
+     "hook": "Actuarial reserving, claims analytics and pricing features on versioned, governed tables — with freshness SLAs the actuarial function signs and quarantine gates the examiners read.",
      "plays": [
       "Entitlement and purpose limits enforced at query time, logged and reviewed",
       "Usage metering that reconciles to billing — exactly",
@@ -713,25 +754,40 @@
      ],
      "kpis": [
       {
-       "label": "Product SLO adherence",
-       "value": "99.3%"
+       "label": "Actuarial-table freshness SLA met",
+       "value": "96%"
       },
       {
-       "label": "Onboarding time",
-       "value": "6 days"
-      },
-      {
-       "label": "Usage billed accuracy",
+       "label": "Quarantine-gated loads",
        "value": "100%"
+      },
+      {
+       "label": "Pricing feature reuse rate",
+       "value": "74%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/insurance/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Actuarial data marts",
+      "Quarantine gates",
+      "Pricing feature registry"
+     ],
+     "evidence": [
+      {
+       "title": "A leading life insurer (North America)",
+       "url": "/case-studies/ins-02/"
+      },
+      {
+       "title": "A European specialty reinsurer",
+       "url": "/case-studies/ins-03/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": true,
-     "hook": "Healthcare & Life Sciences operators recognize the pattern: trial recruitment and RWE pipelines manual, quarter after quarter.",
+     "hook": "Clinical and operational analytics on PHI-governed estates: de-identified layers, purpose-limited access, and freshness that clinical operations and research both trust.",
      "plays": [
       "Entitlement and purpose limits enforced at query time, logged and reviewed",
       "Usage metering that reconciles to billing — exactly",
@@ -739,25 +795,40 @@
      ],
      "kpis": [
       {
-       "label": "Product SLO adherence",
-       "value": "99.3%"
-      },
-      {
-       "label": "Onboarding time",
-       "value": "6 days"
-      },
-      {
-       "label": "Usage billed accuracy",
+       "label": "PHI-governed layer compliance",
        "value": "100%"
+      },
+      {
+       "label": "Purpose-limit violations",
+       "value": "0"
+      },
+      {
+       "label": "Clinical freshness SLA met",
+       "value": "96%"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "PHI-governed zones",
+      "De-identification pipeline",
+      "Clinical freshness SLAs"
+     ],
+     "evidence": [
+      {
+       "title": "A 12-hospital US health system",
+       "url": "/case-studies/hc-01/"
+      },
+      {
+       "title": "A national health insurer",
+       "url": "/case-studies/hc-02/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "The structural pressure will not be solved by another dashboard.",
+     "hook": "Sensor-to-decision pipelines across plants: ISA-95 context in the lakehouse, quality analytics with provenance, and unit-cost telemetry per line and lot.",
      "plays": [
       "Entitlement and purpose limits enforced at query time, logged and reviewed",
       "Usage metering that reconciles to billing — exactly",
@@ -766,25 +837,40 @@
      ],
      "kpis": [
       {
-       "label": "Product SLO adherence",
-       "value": "99.3%"
+       "label": "Sensor event capture fidelity",
+       "value": "97%"
       },
       {
-       "label": "Onboarding time",
-       "value": "6 days"
+       "label": "Lot-level traceability joins",
+       "value": "92%"
       },
       {
-       "label": "Usage billed accuracy",
-       "value": "100%"
+       "label": "Pipeline freshness p95",
+       "value": "5 min"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/manufacturing/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "ISA-95 context modeling",
+      "Historians + MES events",
+      "Lot traceability joins"
+     ],
+     "evidence": [
+      {
+       "title": "A construction-equipment manufacturer",
+       "url": "/case-studies/mfg-03/"
+      },
+      {
+       "title": "A consumer goods manufacturer",
+       "url": "/case-studies/mfg-06/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the work is pipeline and lakehouse engineering — modeled once, certified once, reused everywhere the decision appears.",
+     "hook": "Demand, pricing and promotion analytics at transaction scale — event-driven decisioning for the store hour, governed product data behind every dashboard.",
      "plays": [
       "Entitlement and purpose limits enforced at query time, logged and reviewed",
       "Usage metering that reconciles to billing — exactly",
@@ -792,25 +878,40 @@
      ],
      "kpis": [
       {
-       "label": "Product SLO adherence",
-       "value": "99.3%"
+       "label": "Decision latency, store-hour events",
+       "value": "3s"
       },
       {
-       "label": "Onboarding time",
-       "value": "6 days"
+       "label": "Governed metric coverage",
+       "value": "91%"
       },
       {
-       "label": "Usage billed accuracy",
-       "value": "100%"
+       "label": "Demand feature reuse rate",
+       "value": "58%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Event streams (commerce)",
+      "Governed semantic layer",
+      "Demand feature stores"
+     ],
+     "evidence": [
+      {
+       "title": "A top-3 grocery retailer (800+ stores)",
+       "url": "/case-studies/ret-01/"
+      },
+      {
+       "title": "A global fashion group",
+       "url": "/case-studies/ret-02/"
+      }
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": true,
-     "hook": "Telecom, Media & Entertainment operators recognize the pattern: network telemetry underused, quarter after quarter.",
+     "hook": "Network, care and subscriber analytics on streaming estates: real-time decisioning for care and activation, lakehouse history for capacity planning.",
      "plays": [
       "Entitlement and purpose limits enforced at query time, logged and reviewed",
       "Usage metering that reconciles to billing — exactly",
@@ -818,25 +919,36 @@
      ],
      "kpis": [
       {
-       "label": "Product SLO adherence",
-       "value": "99.3%"
+       "label": "Streaming decision latency p99",
+       "value": "349 ms"
       },
       {
-       "label": "Onboarding time",
-       "value": "6 days"
-      },
-      {
-       "label": "Usage billed accuracy",
+       "label": "Exactly-once decision audit",
        "value": "100%"
+      },
+      {
+       "label": "Capacity-model freshness",
+       "value": "96%"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/telecom-media/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Kafka-class event backbone",
+      "OSS/BSS data feeds",
+      "Real-time decision tier"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-1 European operator",
+       "url": "/case-studies/tel-01/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": "Energy & Utilities operators recognize the pattern: forecasting under intermittency, quarter after quarter.",
+     "hook": "Meter-to-market pipelines: settlement-grade event streams, outage analytics with provenance, and forecast features the trading desk signs against.",
      "plays": [
       "Entitlement and purpose limits enforced at query time, logged and reviewed",
       "Usage metering that reconciles to billing — exactly",
@@ -844,25 +956,40 @@
      ],
      "kpis": [
       {
-       "label": "Product SLO adherence",
-       "value": "99.3%"
-      },
-      {
-       "label": "Onboarding time",
-       "value": "6 days"
-      },
-      {
-       "label": "Usage billed accuracy",
+       "label": "Settlement-grade stream completeness",
        "value": "100%"
+      },
+      {
+       "label": "Outage event provenance coverage",
+       "value": "95%"
+      },
+      {
+       "label": "Forecast feature point-in-time fidelity",
+       "value": "98%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/energy-utilities/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "MDM + settlement streams",
+      "Outage event capture",
+      "Trading feature pipelines"
+     ],
+     "evidence": [
+      {
+       "title": "A European TSO-DSO group",
+       "url": "/case-studies/en-01/"
+      },
+      {
+       "title": "A national water utility",
+       "url": "/case-studies/en-03/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": "Logistics & Supply Chain operators recognize the pattern: visibility stitched from portals, quarter after quarter.",
+     "hook": "The control tower's data spine: TMS/WMS/telematics events conformed into decision-ready streams, with freshness priced against detention minutes.",
      "plays": [
       "Entitlement and purpose limits enforced at query time, logged and reviewed",
       "Usage metering that reconciles to billing — exactly",
@@ -871,25 +998,40 @@
      ],
      "kpis": [
       {
-       "label": "Product SLO adherence",
-       "value": "99.3%"
+       "label": "Control-tower event freshness p95",
+       "value": "4s"
       },
       {
-       "label": "Onboarding time",
-       "value": "6 days"
+       "label": "Exception-event completeness",
+       "value": "99%"
       },
       {
-       "label": "Usage billed accuracy",
+       "label": "Carrier-message conformance",
        "value": "100%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "TMS/WMS/telematics feeds",
+      "EDI conformance layer",
+      "Control-tower APIs"
+     ],
+     "evidence": [
+      {
+       "title": "A global 3PL (40+ countries)",
+       "url": "/case-studies/log-01/"
+      },
+      {
+       "title": "A container-terminal operator",
+       "url": "/case-studies/log-02/"
+      }
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": false,
-     "hook": "Public Sector & Government operators recognize the pattern: agency data islands, quarter after quarter.",
+     "hook": "Statutory reporting with lineage: benefit and permit analytics on governed estates, purpose-limited access, and evidence packs for oversight bodies.",
      "plays": [
       "Entitlement and purpose limits enforced at query time, logged and reviewed",
       "Usage metering that reconciles to billing — exactly",
@@ -897,25 +1039,40 @@
      ],
      "kpis": [
       {
-       "label": "Product SLO adherence",
-       "value": "99.3%"
+       "label": "Statutory report lineage coverage",
+       "value": "98%"
       },
       {
-       "label": "Onboarding time",
-       "value": "6 days"
-      },
-      {
-       "label": "Usage billed accuracy",
+       "label": "Purpose-limit enforcement",
        "value": "100%"
+      },
+      {
+       "label": "Oversight evidence pack time",
+       "value": "3 hrs"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/public-sector/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Statutory reporting marts",
+      "Purpose-limit enforcement",
+      "Oversight evidence portal"
+     ],
+     "evidence": [
+      {
+       "title": "A national tax administration",
+       "url": "/case-studies/pub-02/"
+      },
+      {
+       "title": "A national tax authority",
+       "url": "/case-studies/pub-04/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means we make the source systems agree: one governed definition per metric, streaming where the decision is time-critical, batch where it is not.",
+     "hook": "Enrollment, outcome and research analytics with FERPA-class governance: point-in-time cohorts for research, governed dashboards for the registrar.",
      "plays": [
       "Entitlement and purpose limits enforced at query time, logged and reviewed",
       "Usage metering that reconciles to billing — exactly",
@@ -924,25 +1081,40 @@
      ],
      "kpis": [
       {
-       "label": "Product SLO adherence",
-       "value": "99.3%"
+       "label": "Cohort point-in-time correctness",
+       "value": "98%"
       },
       {
-       "label": "Onboarding time",
-       "value": "6 days"
-      },
-      {
-       "label": "Usage billed accuracy",
+       "label": "FERPA-class access compliance",
        "value": "100%"
+      },
+      {
+       "label": "Registrar metric trust score",
+       "value": "81%"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/education-research/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "SIS/LMS event pipelines",
+      "Research cohort builder",
+      "FERPA-class governance"
+     ],
+     "evidence": [
+      {
+       "title": "A public research university (38,000 students)",
+       "url": "/case-studies/edu-01/"
+      },
+      {
+       "title": "A national EdTech platform (2M learners)",
+       "url": "/case-studies/edu-02/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": true,
-     "hook": "Technology & SaaS operators recognize the pattern: data moat unrealized, quarter after quarter.",
+     "hook": "Product and customer analytics as the growth engine: event contracts from every service, feature stores for the models, usage metering that invoices.",
      "plays": [
       "Entitlement and purpose limits enforced at query time, logged and reviewed",
       "Usage metering that reconciles to billing — exactly",
@@ -950,25 +1122,40 @@
      ],
      "kpis": [
       {
-       "label": "Product SLO adherence",
-       "value": "99.3%"
+       "label": "Event contract coverage per service",
+       "value": "96%"
       },
       {
-       "label": "Onboarding time",
-       "value": "6 days"
+       "label": "Feature store freshness SLA met",
+       "value": "93%"
       },
       {
-       "label": "Usage billed accuracy",
+       "label": "Usage-to-invoice accuracy",
        "value": "100%"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/technology-saas/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Service event contracts",
+      "Feature store + registry",
+      "Usage metering spine"
+     ],
+     "evidence": [
+      {
+       "title": "A consumer fintech (8M users)",
+       "url": "/case-studies/tech-02/"
+      },
+      {
+       "title": "A global gaming studio (live-service title, 15M MAU)",
+       "url": "/case-studies/tech-03/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "Agriculture & Food Systems operators recognize the pattern: chain data broken at every handoff, quarter after quarter.",
+     "hook": "Yield, quality and subsidy analytics from field events: certification-grade provenance in the data, seasonal freshness SLAs, and co-op dashboards growers trust.",
      "plays": [
       "Entitlement and purpose limits enforced at query time, logged and reviewed",
       "Usage metering that reconciles to billing — exactly",
@@ -976,26 +1163,42 @@
      ],
      "kpis": [
       {
-       "label": "Product SLO adherence",
-       "value": "99.3%"
+       "label": "Provenance-grade field events",
+       "value": "90%"
       },
       {
-       "label": "Onboarding time",
-       "value": "6 days"
-      },
-      {
-       "label": "Usage billed accuracy",
+       "label": "Seasonal freshness SLA met",
        "value": "100%"
+      },
+      {
+       "label": "Grower dashboard trust score",
+       "value": "85%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Field event capture",
+      "Certification-grade provenance",
+      "Seasonal SLA framework"
+     ],
+     "evidence": [
+      {
+       "title": "A food processor (dairy)",
+       "url": "/case-studies/agr-03/"
+      },
+      {
+       "title": "An agri-input company",
+       "url": "/case-studies/agr-07/"
+      }
+     ]
     }
    ],
    "practiceNote": "Data Monetization & Analytics Products view: data as a product for external consumption — contracts, SLAs, purpose limits and billing, with controls that get stronger the moment data leaves the building."
   },
   {
    "t": "h2",
-   "x": "Product stack defaults — and documented deviations"
+   "x": "Product stack defaults — and documented deviations",
+   "sub": "The default stack, and where we sign deviations"
   },
   {
    "t": "p",
@@ -1039,7 +1242,8 @@
   },
   {
    "t": "h2",
-   "x": "Product release gates — evidence before revenue"
+   "x": "Product release gates — evidence before revenue",
+   "sub": "What must hold before a dataset is sold"
   },
   {
    "t": "table",
@@ -1079,7 +1283,8 @@
   },
   {
    "t": "h2",
-   "x": "What the data product team inherits"
+   "x": "What the data product team inherits",
+   "sub": "Contracts, metering, consoles and the review cadence"
   },
   {
    "t": "bullets",
@@ -1112,7 +1317,8 @@
   },
   {
    "t": "h2",
-   "x": "Product launch path, week by week"
+   "x": "Product launch path, week by week",
+   "sub": "The sequence from contract to first invoice"
   },
   {
    "t": "bullets",
@@ -1145,7 +1351,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — entitlement, billing and the customer estate"
+   "x": "Integration surface — entitlement, billing and the customer estate",
+   "sub": "What the product touches, honestly named"
   },
   {
    "t": "p",
@@ -1178,7 +1385,8 @@
   },
   {
    "t": "h2",
-   "x": "Compliance overlay — purpose limits that bind"
+   "x": "Compliance overlay — purpose limits that bind",
+   "sub": "The legal machinery behind the serving path"
   },
   {
    "t": "p",
@@ -1208,6 +1416,44 @@
   {
    "t": "note",
    "x": "Purpose-limit blocks are reviewed weekly with the privacy office: a block is the control working, and the review is where product scope and legal scope stay aligned."
+  },
+  {
+   "t": "h2",
+   "x": "Data products are contracts with an SLA",
+   "sub": "Usage terms, purpose limits and metering that invoices — the controls behind data revenue",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Selling data becomes a liability when the product is a feed and the controls are an email thread: usage terms vague, purpose limits unenforced, metering estimated. The product surface contracts everything — the dataset schema is versioned with deprecation notice, the usage terms are signed per consumer with legal purpose stated, and purpose limits are enforced at query time (the consumer's entitlement filter is part of the serving path, not a promise). Usage metering is invoice-grade: every consumption event counted, metered and reconciled, so the invoice and the logs agree by construction.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "The operations rhythm makes the revenue durable: consumer-facing SLAs on freshness and completeness, audit packs the consumer can inspect, and egress enforcement that policy-checks every export. The console reads product economics per consumer tier — usage, cost to serve, margin — because a data product that cannot state its margin is a hobby.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Contracted schema",
+     "Versioned datasets with deprecation notice; consumers plan, not panic."
+    ],
+    [
+     "Purpose limits enforced",
+     "Entitlement filtering in the serving path — limits bind, not promise."
+    ],
+    [
+     "Invoice-grade metering",
+     "Every consumption event counted; invoice and logs agree."
+    ],
+    [
+     "Consumer-visible SLAs",
+     "Freshness and completeness signed, with audit packs to prove them."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1333,6 +1579,23 @@
    "url": "/case-studies/en-01/",
    "tag": "Evidence",
    "desc": "Forecast error down 31% — imbalance cost recovered across three control zones."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A top-10 European retail bank",
+   "url": "/case-studies/bank-01/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A leading life insurer (North America)",
+   "url": "/case-studies/ins-02/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A global 3PL (40+ countries)",
+   "url": "/case-studies/log-01/",
+   "ind": "Logistics & Supply Chain"
   }
  ]
 }

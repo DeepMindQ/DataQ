@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Building2, ChevronRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Building2, ChevronRight, FileSearch, Layers } from "lucide-react";
 
 /* ── ServiceIndustryExplorer — the service × industry lens ──────────────────
    A CXO lands on a service page from any of our 12 industries. This panel
@@ -17,6 +17,8 @@ export type ExplorerIndustry = {
   flagship: boolean;
   hook: string;
   plays: string[];
+  systems?: string[];
+  evidence?: { title: string; url: string }[];
   kpis: { label: string; value: string }[];
   capUrl: string;
 };
@@ -111,6 +113,24 @@ export function ServiceIndustryExplorer({
                   </li>
                 ))}
               </ul>
+              {sel.systems && sel.systems.length > 0 && (
+                <div className="mt-4">
+                  <p className="flex items-center gap-1.5 text-[10.5px] font-bold uppercase tracking-[0.14em] text-white/45">
+                    <Layers className="h-3 w-3 text-brand-300/80" aria-hidden="true" />
+                    Systems &amp; standards in scope
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {sel.systems.map((s) => (
+                      <span
+                        key={s}
+                        className="rounded-md border border-white/15 bg-white/[0.06] px-2 py-1 text-[11px] font-medium text-white/70"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* right — KPI targets + deep links */}
@@ -134,6 +154,26 @@ export function ServiceIndustryExplorer({
                   ))}
                 </div>
               </div>
+              {sel.evidence && sel.evidence.length > 0 && (
+                <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4 sm:p-5">
+                  <p className="flex items-center gap-1.5 text-[10.5px] font-bold uppercase tracking-[0.14em] text-white/45">
+                    <FileSearch className="h-3 w-3 text-brand-300/80" aria-hidden="true" />
+                    Field evidence — anonymized builds
+                  </p>
+                  <div className="mt-2 space-y-1.5">
+                    {sel.evidence.map((ev) => (
+                      <Link
+                        key={ev.url}
+                        href={ev.url}
+                        className="group/ev flex items-center justify-between gap-2 rounded-lg border border-white/10 bg-navy-950/40 px-3 py-2 transition hover:border-brand/50 hover:bg-brand/10"
+                      >
+                        <span className="text-[12px] font-medium text-white/80 group-hover/ev:text-white">{ev.title}</span>
+                        <ArrowRight className="h-3.5 w-3.5 shrink-0 text-brand-300 transition group-hover/ev:translate-x-0.5" aria-hidden="true" />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
               <Link
                 href={sel.capUrl}
                 className="group flex items-center justify-between gap-3 rounded-xl border border-brand/35 bg-brand/10 px-4 py-3 transition hover:border-brand hover:bg-brand/20"

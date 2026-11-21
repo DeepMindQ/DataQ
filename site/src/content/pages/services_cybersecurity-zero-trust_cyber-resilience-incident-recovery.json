@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "Your RTO is whatever your last rehearsal proved — nothing else"
+   "x": "Your RTO is whatever your last rehearsal proved — nothing else",
+   "sub": "Immutable vaults, clean rooms and timed drills as the only honest recovery story"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that make recovery fictional"
+   "x": "Four failure modes that make recovery fictional",
+   "sub": "Untested backups, shared vault identity, unmeasured restores, untrained command"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — immutable, isolated, rehearsed"
+   "x": "Reference architecture — immutable, isolated, rehearsed",
+   "sub": "Snapshots, vault, clean room and command as one system"
   },
   {
    "t": "p",
@@ -90,7 +93,8 @@
      "id": "svc",
      "lane": 0,
      "label": "Business services",
-     "hot": true
+     "hot": true,
+     "sub": "RTO/RPO named per service"
     },
     {
      "id": "deps",
@@ -106,13 +110,15 @@
      "id": "snap",
      "lane": 1,
      "label": "Immutable snapshots",
-     "hot": true
+     "hot": true,
+     "sub": "write-once, air-gapped"
     },
     {
      "id": "vault",
      "lane": 1,
      "label": "Isolated vault",
-     "hot": true
+     "hot": true,
+     "sub": "separate identity plane"
     },
     {
      "id": "rep",
@@ -138,7 +144,8 @@
      "id": "clean",
      "lane": 3,
      "label": "Clean-room restore",
-     "hot": true
+     "hot": true,
+     "sub": "network-segregated"
     },
     {
      "id": "orch",
@@ -154,7 +161,8 @@
      "id": "cmd",
      "lane": 4,
      "label": "Incident command",
-     "hot": true
+     "hot": true,
+     "sub": "named roles, trained"
     },
     {
      "id": "comms",
@@ -170,7 +178,8 @@
      "id": "drill",
      "lane": 5,
      "label": "Rehearsals",
-     "hot": true
+     "hot": true,
+     "sub": "timed, evidence kept"
     },
     {
      "id": "evid",
@@ -270,11 +279,26 @@
      "label": "packs"
     }
    ],
-   "note": "Restores are orchestrated by business service against signed RTOs — the unit of recovery is 'invoice-to-cash in 4 hours', not 'server SRV-214 in 8 hours'."
+   "note": "Restores are orchestrated by business service against signed RTOs — the unit of recovery is 'invoice-to-cash in 4 hours', not 'server SRV-214 in 8 hours'.",
+   "badges": [
+    {
+     "label": "RTO = last drill",
+     "value": "nothing else"
+    },
+    {
+     "label": "Vault identity plane",
+     "value": "separate"
+    },
+    {
+     "label": "Rehearsal cadence",
+     "value": "per service tier"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "One restore drill, from declaration to service handback"
+   "x": "One restore drill, from declaration to service handback",
+   "sub": "The timed path with the evidence each step keeps"
   },
   {
    "t": "p",
@@ -297,7 +321,8 @@
   },
   {
    "t": "h2",
-   "x": "The resilience console — drills as the headline"
+   "x": "The resilience console — drills as the headline",
+   "sub": "RTO adherence and drill coverage per service, trending"
   },
   {
    "t": "p",
@@ -584,7 +609,8 @@
   },
   {
    "t": "h2",
-   "x": "Drill results across business services"
+   "x": "Drill results across business services",
+   "sub": "Which services meet their RTO and which slip"
   },
   {
    "t": "p",
@@ -636,7 +662,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": true,
-     "hook": "Banking & Financial Services operators recognize the pattern: genAI stuck between pilot and policy, quarter after quarter.",
+     "hook": "Supervisory scrutiny sets the bar: model-risk evidence for AI defenses, entitlement analytics that survive examinations, and containment drills timed against regulator expectations.",
      "plays": [
       "Immutable, isolated backups with integrity checks on every restore",
       "Clean-room restore drills with business-service RTOs timed and published",
@@ -644,25 +670,36 @@
      ],
      "kpis": [
       {
-       "label": "Restore drill RTO adherence",
-       "value": "94%"
+       "label": "Containment time, critical threats",
+       "value": "21 min"
       },
       {
-       "label": "Immutability coverage",
-       "value": "100%"
+       "label": "Entitlement review findings closed",
+       "value": "99%"
       },
       {
-       "label": "Integrity check pass",
-       "value": "100%"
+       "label": "Evidence pack prep time",
+       "value": "10 days"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/banking-financial-services/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Supervisory evidence frameworks",
+      "Entitlement analytics",
+      "Purple-team programs"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-1 US bank",
+       "url": "/case-studies/bank-03/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": false,
-     "hook": "Insurance & Risk operators recognize the pattern: sensitive data estate under pressure, quarter after quarter.",
+     "hook": "Policy and claims data under market-conduct rules — identity lifecycle that passes audit, posture gates on underwriting platforms, and recovery drills that prove the RTO.",
      "plays": [
       "Immutable, isolated backups with integrity checks on every restore",
       "Clean-room restore drills with business-service RTOs timed and published",
@@ -670,25 +707,36 @@
      ],
      "kpis": [
       {
-       "label": "Restore drill RTO adherence",
-       "value": "94%"
+       "label": "Leaver revocation within SLA",
+       "value": "98%"
       },
       {
-       "label": "Immutability coverage",
-       "value": "100%"
+       "label": "Critical posture findings dwell",
+       "value": "10 days"
       },
       {
-       "label": "Integrity check pass",
-       "value": "100%"
+       "label": "Recovery drill RTO vs target",
+       "value": "96%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/insurance/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "PAS/claims identity estates",
+      "CSPM + plan-time policy",
+      "Immutable backup vaults"
+     ],
+     "evidence": [
+      {
+       "title": "An insurance group",
+       "url": "/case-studies/ins-10/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": true,
-     "hook": "Ask what PHI concentration and ransomware exposure costs Healthcare & Life Sciences firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Clinical uptime is patient safety: zero-trust segmentation around clinical networks, AI-model protection for diagnostic tools, and recovery rehearsals that respect HIPAA evidence.",
      "plays": [
       "Immutable, isolated backups with integrity checks on every restore",
       "Clean-room restore drills with business-service RTOs timed and published",
@@ -696,25 +744,36 @@
      ],
      "kpis": [
       {
+       "label": "Clinical network segmentation coverage",
+       "value": "90%"
+      },
+      {
+       "label": "Model-layer incidents contained",
+       "value": "100%"
+      },
+      {
        "label": "Restore drill RTO adherence",
-       "value": "94%"
-      },
-      {
-       "label": "Immutability coverage",
-       "value": "100%"
-      },
-      {
-       "label": "Integrity check pass",
-       "value": "100%"
+       "value": "91%"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Clinical network segmentation",
+      "Model-layer guard stack",
+      "HIPAA evidence controls"
+     ],
+     "evidence": [
+      {
+       "title": "A national health service agency",
+       "url": "/case-studies/hc-09/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — IT/OT convergence exposure included — and prove it moved.",
+     "hook": "The OT boundary is the perimeter: IEC 62443-informed segmentation, identity for machines and humans, and incident response that keeps the line running safely.",
      "plays": [
       "Immutable, isolated backups with integrity checks on every restore",
       "Clean-room restore drills with business-service RTOs timed and published",
@@ -722,25 +781,30 @@
      ],
      "kpis": [
       {
-       "label": "Restore drill RTO adherence",
-       "value": "94%"
+       "label": "IT-OT crossings under control",
+       "value": "95%"
       },
       {
-       "label": "Immutability coverage",
-       "value": "100%"
+       "label": "Machine identity coverage",
+       "value": "81%"
       },
       {
-       "label": "Integrity check pass",
-       "value": "100%"
+       "label": "Line-impact incidents per quarter",
+       "value": "0"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/manufacturing/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "IEC 62443-informed zones",
+      "Machine identity (SPIFFE-class)",
+      "OT-safe incident playbooks"
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone.",
+     "hook": "PCI-scoped estates and consumer trust: posture gates on commerce platforms, identity lifecycle across seasonal workforces, and fraud-adjacent detection tuned to checkout.",
      "plays": [
       "Immutable, isolated backups with integrity checks on every restore",
       "Clean-room restore drills with business-service RTOs timed and published",
@@ -748,25 +812,30 @@
      ],
      "kpis": [
       {
-       "label": "Restore drill RTO adherence",
-       "value": "94%"
+       "label": "PCI-scoped asset posture compliance",
+       "value": "96%"
       },
       {
-       "label": "Immutability coverage",
-       "value": "100%"
+       "label": "Seasonal-joiner provisioning fidelity",
+       "value": "93%"
       },
       {
-       "label": "Integrity check pass",
-       "value": "100%"
+       "label": "Checkout-path detections tuned",
+       "value": "97%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "PCI-scoped posture gates",
+      "Seasonal JML automation",
+      "Checkout-path detection"
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the design assumes breach: blast radii contained, lateral movement priced, and detection tuned to the attacks your sector actually sees.",
+     "hook": "Carrier-grade availability duties: zero-trust across OSS/BSS, threat intel tuned to telecom attack paths, and resilience drills that respect network change windows.",
      "plays": [
       "Immutable, isolated backups with integrity checks on every restore",
       "Clean-room restore drills with business-service RTOs timed and published",
@@ -774,25 +843,40 @@
      ],
      "kpis": [
       {
-       "label": "Restore drill RTO adherence",
-       "value": "94%"
+       "label": "OSS/BSS enforcement-point coverage",
+       "value": "96%"
       },
       {
-       "label": "Immutability coverage",
-       "value": "100%"
+       "label": "Threat-path drill coverage",
+       "value": "95%"
       },
       {
-       "label": "Integrity check pass",
-       "value": "100%"
+       "label": "Change-window incident rate",
+       "value": "2"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/telecom-media/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "OSS/BSS enforcement points",
+      "Telecom threat intel feeds",
+      "Network change windows"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-1 European telecom operator",
+       "url": "/case-studies/tel-04/"
+      },
+      {
+       "title": "A telecom infrastructure group",
+       "url": "/case-studies/tel-08/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": true,
-     "hook": "The work here has one job: move a named number — OT estate exposed by convergence included — and prove it moved.",
+     "hook": "NERC CIP-class obligations: segmented OT zones, controlled IT-OT crossings, identity for field workforces, and recovery drills rehearsed against grid scenarios.",
      "plays": [
       "Immutable, isolated backups with integrity checks on every restore",
       "Clean-room restore drills with business-service RTOs timed and published",
@@ -800,25 +884,36 @@
      ],
      "kpis": [
       {
-       "label": "Restore drill RTO adherence",
+       "label": "OT-zone policy compliance",
+       "value": "95%"
+      },
+      {
+       "label": "Field identity lifecycle fidelity",
        "value": "94%"
       },
       {
-       "label": "Immutability coverage",
-       "value": "100%"
-      },
-      {
-       "label": "Integrity check pass",
-       "value": "100%"
+       "label": "Grid-scenario drill pass rate",
+       "value": "98%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/energy-utilities/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "NERC CIP-informed zones",
+      "Field identity (MDM-linked)",
+      "Grid-scenario drills"
+     ],
+     "evidence": [
+      {
+       "title": "A gas transmission system operator",
+       "url": "/case-studies/en-08/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Attack surface across EDI, carrier portals and partner APIs: zero-trust for the control tower, identity for 3PL partners, and recovery that protects the customs calendar.",
      "plays": [
       "Immutable, isolated backups with integrity checks on every restore",
       "Clean-room restore drills with business-service RTOs timed and published",
@@ -826,25 +921,30 @@
      ],
      "kpis": [
       {
-       "label": "Restore drill RTO adherence",
-       "value": "94%"
+       "label": "Partner access via zero-trust gates",
+       "value": "88%"
       },
       {
-       "label": "Immutability coverage",
-       "value": "100%"
+       "label": "EDI endpoint posture compliance",
+       "value": "99%"
       },
       {
-       "label": "Integrity check pass",
-       "value": "100%"
+       "label": "Customs-calendar incidents",
+       "value": "1"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Partner zero-trust gates",
+      "EDI endpoint posture",
+      "Customs-calendar resilience"
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Citizen trust and sovereign obligations: zero-trust architecture on legacy estates, evidence-ready compliance, and identity lifecycle across political turnover cycles.",
      "plays": [
       "Immutable, isolated backups with integrity checks on every restore",
       "Clean-room restore drills with business-service RTOs timed and published",
@@ -852,25 +952,30 @@
      ],
      "kpis": [
       {
-       "label": "Restore drill RTO adherence",
+       "label": "Enforcement points on critical paths",
+       "value": "93%"
+      },
+      {
+       "label": "Assertion evidence freshness",
        "value": "94%"
       },
       {
-       "label": "Immutability coverage",
-       "value": "100%"
-      },
-      {
-       "label": "Integrity check pass",
-       "value": "100%"
+       "label": "Legacy-segment isolation coverage",
+       "value": "85%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/public-sector/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Legacy-segment isolation",
+      "Continuous evidence collection",
+      "Sovereign identity policy"
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone.",
+     "hook": "Open estates with sensitive records: identity lifecycle across academic calendars, research-data segmentation, and ransomware resilience for the registrar's systems.",
      "plays": [
       "Immutable, isolated backups with integrity checks on every restore",
       "Clean-room restore drills with business-service RTOs timed and published",
@@ -879,25 +984,36 @@
      ],
      "kpis": [
       {
-       "label": "Restore drill RTO adherence",
-       "value": "94%"
+       "label": "Term-cycle identity fidelity",
+       "value": "95%"
       },
       {
-       "label": "Immutability coverage",
-       "value": "100%"
+       "label": "Research-segment isolation",
+       "value": "96%"
       },
       {
-       "label": "Integrity check pass",
-       "value": "100%"
+       "label": "Ransomware drill RTO adherence",
+       "value": "97%"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/education-research/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Academic-calendar JML",
+      "Research data segmentation",
+      "Ransomware clean rooms"
+     ],
+     "evidence": [
+      {
+       "title": "A K-12 school district",
+       "url": "/case-studies/edu-07/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Your product is the attack surface: model protection for AI features, posture gates in CI/CD, and SOC practice that scales with the customer count.",
      "plays": [
       "Immutable, isolated backups with integrity checks on every restore",
       "Clean-room restore drills with business-service RTOs timed and published",
@@ -905,25 +1021,36 @@
      ],
      "kpis": [
       {
-       "label": "Restore drill RTO adherence",
-       "value": "94%"
+       "label": "Model-layer defense coverage",
+       "value": "97%"
       },
       {
-       "label": "Immutability coverage",
-       "value": "100%"
+       "label": "Posture gates blocking bad deploys",
+       "value": "96%"
       },
       {
-       "label": "Integrity check pass",
-       "value": "100%"
+       "label": "MTTD on emulated intrusions",
+       "value": "27 min"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/technology-saas/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Model-protection guard stack",
+      "CI/CD posture gates",
+      "Cloud-native SOC tooling"
+     ],
+     "evidence": [
+      {
+       "title": "A collaboration software vendor",
+       "url": "/case-studies/tech-09/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means security here is architecture, not product sprawl — identity-first controls, segmented networks, and telemetry your SOC can act on the same hour.",
+     "hook": "Seasonal and dispersed estates: zero-trust for co-op networks, identity for field workforces, and provenance-system recovery that protects the certification calendar.",
      "plays": [
       "Immutable, isolated backups with integrity checks on every restore",
       "Clean-room restore drills with business-service RTOs timed and published",
@@ -931,26 +1058,32 @@
      ],
      "kpis": [
       {
-       "label": "Restore drill RTO adherence",
-       "value": "94%"
+       "label": "Co-op network segmentation",
+       "value": "78%"
       },
       {
-       "label": "Immutability coverage",
-       "value": "100%"
+       "label": "Field identity lifecycle fidelity",
+       "value": "98%"
       },
       {
-       "label": "Integrity check pass",
-       "value": "100%"
+       "label": "Certification-system recovery drills",
+       "value": "85%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/agriculture-food/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Co-op network segmentation",
+      "Field identity systems",
+      "Certification-system recovery"
+     ]
     }
    ],
    "practiceNote": "Cyber Resilience & Incident Recovery view: recovery that is rehearsed, not documented — immutable backups, clean-room restores and business-service RTOs you can actually meet on a bad Friday."
   },
   {
    "t": "h2",
-   "x": "Resilience defaults — and documented deviations"
+   "x": "Resilience defaults — and documented deviations",
+   "sub": "The default patterns, and where we sign deviations"
   },
   {
    "t": "p",
@@ -994,7 +1127,8 @@
   },
   {
    "t": "h2",
-   "x": "Resilience release gates — evidence before reliance"
+   "x": "Resilience release gates — evidence before reliance",
+   "sub": "What must be proven before a service is called recoverable"
   },
   {
    "t": "table",
@@ -1034,7 +1168,8 @@
   },
   {
    "t": "h2",
-   "x": "What the incident command team inherits"
+   "x": "What the incident command team inherits",
+   "sub": "Roles, playbooks, drill calendar and the evidence vault"
   },
   {
    "t": "bullets",
@@ -1067,7 +1202,8 @@
   },
   {
    "t": "h2",
-   "x": "Rehearsals in order, week by week"
+   "x": "Rehearsals in order, week by week",
+   "sub": "The drill sequence from backup test to full handback"
   },
   {
    "t": "bullets",
@@ -1100,7 +1236,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — backup estates and business services"
+   "x": "Integration surface — backup estates and business services",
+   "sub": "What restores touch, honestly named"
   },
   {
    "t": "p",
@@ -1133,7 +1270,8 @@
   },
   {
    "t": "h2",
-   "x": "Incident-command governance overlay"
+   "x": "Incident-command governance overlay",
+   "sub": "Decision thresholds and the communication plan, maintained"
   },
   {
    "t": "p",
@@ -1163,6 +1301,44 @@
   {
    "t": "note",
    "x": "Every drill produces findings with owners and dates, and the next drill re-tests them first — resilience programs compound by closing findings, not by running more drills."
+  },
+  {
+   "t": "h2",
+   "x": "The RTO is whatever the last drill proved",
+   "sub": "Immutable vaults, clean-room restores and timed rehearsals — recovery as measured fact",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Recovery plans are fictional until rehearsed: the runbook references a backup nobody tested, the vault shares identity with the domain the ransomware owns, and the RTO on the slide has never been measured. The discipline makes recovery a systems property — business services carry named RTO/RPO targets, snapshots are immutable and air-gapped, the vault sits on a separate identity plane (compromised domain credentials cannot reach it), and the clean-room restore rebuilds into a segregated network before anything touches production. Rehearsals are timed, per service tier, and the drill evidence — actual restore duration — is the only RTO anyone is allowed to state.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Incident command is trained like a fire drill: named roles, a communication plan with pre-drafted holding statements, and decision thresholds written while calm. The console reads drill results per business service; the review asks the hard question — which service's RTO slipped, and what changes before the next drill.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Drilled RTO only",
+     "Recovery claims come from timed drills; slides do not count."
+    ],
+    [
+     "Vault on a separate plane",
+     "Immutable, air-gapped, unreachable by compromised domain credentials."
+    ],
+    [
+     "Clean-room restore",
+     "Rebuild segregated first; production touch is a decision, not a default."
+    ],
+    [
+     "Trained incident command",
+     "Named roles and decision thresholds written while calm."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1288,6 +1464,23 @@
    "url": "/case-studies/bank-03/",
    "tag": "Evidence",
    "desc": "DORA-grade resilience posture — third-party and incident evidence automated."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A tier-1 US bank",
+   "url": "/case-studies/bank-03/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "An insurance group",
+   "url": "/case-studies/ins-10/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A tier-1 European telecom operator",
+   "url": "/case-studies/tel-04/",
+   "ind": "Telecom, Media & Entertainment"
   }
  ]
 }

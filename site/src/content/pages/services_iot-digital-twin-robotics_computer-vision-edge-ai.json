@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "Edge AI is a hardware contract wearing a model costume"
+   "x": "Edge AI is a hardware contract — wearing a model costume",
+   "sub": "Deadline engineering, scene-aware drift and hardware interlocks"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that make edge inference flaky"
+   "x": "Four failure modes that make edge inference flaky",
+   "sub": "Unfit models, unenforced deadlines, blind drift, model-only safety"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — model ops from lab to line"
+   "x": "Reference architecture — model ops from lab to line",
+   "sub": "Capture, accelerators, deadline checks and trains as one path"
   },
   {
    "t": "p",
@@ -105,7 +108,8 @@
      "id": "accel",
      "lane": 1,
      "label": "Edge accelerators",
-     "hot": true
+     "hot": true,
+     "sub": "quantized, deadline-fit"
     },
     {
      "id": "quant",
@@ -126,7 +130,8 @@
      "id": "lat",
      "lane": 2,
      "label": "Deadline check",
-     "hot": true
+     "hot": true,
+     "sub": "per frame, enforced"
     },
     {
      "id": "local",
@@ -137,7 +142,8 @@
      "id": "drift",
      "lane": 3,
      "label": "Drift monitors",
-     "hot": true
+     "hot": true,
+     "sub": "scene + model drift"
     },
     {
      "id": "eval",
@@ -153,7 +159,8 @@
      "id": "train",
      "lane": 4,
      "label": "Release trains",
-     "hot": true
+     "hot": true,
+     "sub": "canary devices first"
     },
     {
      "id": "canary",
@@ -169,7 +176,8 @@
      "id": "inter",
      "lane": 5,
      "label": "Safety interlock",
-     "hot": true
+     "hot": true,
+     "sub": "tested per change"
     },
     {
      "id": "esc",
@@ -279,11 +287,26 @@
      "label": "log"
     }
    ],
-   "note": "The interlock rule is absolute: model outputs are advisory to the safety system — when the deadline is missed or confidence is low, the interlock and a human decide."
+   "note": "The interlock rule is absolute: model outputs are advisory to the safety system — when the deadline is missed or confidence is low, the interlock and a human decide.",
+   "badges": [
+    {
+     "label": "Deadline adherence",
+     "value": "≥97%"
+    },
+    {
+     "label": "Model drift watch",
+     "value": "scene-aware"
+    },
+    {
+     "label": "Canary before line",
+     "value": "always"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "One frame, capture to decision inside the deadline"
+   "x": "One frame, capture to decision inside the deadline",
+   "sub": "The per-frame accounting, honestly measured"
   },
   {
    "t": "p",
@@ -306,7 +329,8 @@
   },
   {
    "t": "h2",
-   "x": "The edge-AI console — deadlines as the headline"
+   "x": "The edge-AI console — deadlines as the headline",
+   "sub": "Adherence, drift and currency per device, trended"
   },
   {
    "t": "p",
@@ -612,7 +636,8 @@
   },
   {
    "t": "h2",
-   "x": "Deadline performance across hardware generations"
+   "x": "Deadline performance across hardware generations",
+   "sub": "What the fleet mix means for the model plan"
   },
   {
    "t": "p",
@@ -670,7 +695,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": false,
-     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the work spans the stack: devices and gateways in the field, perception models in the middle, actuation plans on the board.",
+     "hook": "Smart-branch, vault and ATM estates: device fleets with identity-first security, twins for facilities operations, and sensor fabric that feeds both facilities and fraud signals.",
      "plays": [
       "Quantized models validated on-device before any line deployment",
       "Drift monitors on the live feed, retraining fed by discordant frames",
@@ -678,25 +703,30 @@
      ],
      "kpis": [
       {
-       "label": "Decision p99 (line A)",
-       "value": "84ms"
+       "label": "Device identity coverage",
+       "value": "96%"
       },
       {
-       "label": "Deadline misses",
-       "value": "0.3%"
+       "label": "Facilities twin fidelity",
+       "value": "92%"
       },
       {
-       "label": "Thermal throttling events",
-       "value": "2"
+       "label": "Sensor fabric freshness p95",
+       "value": "11s"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/banking-financial-services/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "ATM/branch device fleets",
+      "Facilities BMS feeds",
+      "Vault environment sensors"
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": false,
-     "hook": "The structural pressure will not be solved by another dashboard.",
+     "hook": "IoT as the underwriting and claims edge: telematics and sensor evidence feeding risk models, vision-based claims assessment, and twin-based scenario evidence for adjusters.",
      "plays": [
       "Quantized models validated on-device before any line deployment",
       "Drift monitors on the live feed, retraining fed by discordant frames",
@@ -704,25 +734,36 @@
      ],
      "kpis": [
       {
-       "label": "Decision p99 (line A)",
-       "value": "84ms"
+       "label": "Telematics evidence admissibility",
+       "value": "96%"
       },
       {
-       "label": "Deadline misses",
-       "value": "0.3%"
+       "label": "Vision claims assessment cycle cut",
+       "value": "36%"
       },
       {
-       "label": "Thermal throttling events",
-       "value": "2"
+       "label": "Cold-chain excursion alerts, on time",
+       "value": "92%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/insurance/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Telematics + event recorders",
+      "Claims vision intake",
+      "Risk-model feature feeds"
+     ],
+     "evidence": [
+      {
+       "title": "A crop insurer",
+       "url": "/case-studies/ins-09/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": false,
-     "hook": "The structural pressure will not be solved by another dashboard.",
+     "hook": "Clinical estates: connected medical devices under regulatory discipline, environment twins for facilities and cold chain, and sensor fabric with patient-safety interlocks.",
      "plays": [
       "Quantized models validated on-device before any line deployment",
       "Drift monitors on the live feed, retraining fed by discordant frames",
@@ -730,25 +771,36 @@
      ],
      "kpis": [
       {
-       "label": "Decision p99 (line A)",
-       "value": "84ms"
+       "label": "Device identity + patch currency",
+       "value": "92%"
       },
       {
-       "label": "Deadline misses",
-       "value": "0.3%"
+       "label": "Cold-chain twin fidelity",
+       "value": "96%"
       },
       {
-       "label": "Thermal throttling events",
-       "value": "2"
+       "label": "Safety interlock test pass rate",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Connected medical devices",
+      "Cold-chain monitors",
+      "Facilities BMS twins"
+     ],
+     "evidence": [
+      {
+       "title": "A medical device manufacturer",
+       "url": "/case-studies/hc-08/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": true,
-     "hook": "Ask what quality escapes and manual inspection costs Manufacturing & Industrial firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "The home ground: sensor fabric across lines, twins that hold fidelity under changeovers, predictive maintenance wired into SAP PM work orders, and robotics inside the safety case.",
      "plays": [
       "Quantized models validated on-device before any line deployment",
       "Drift monitors on the live feed, retraining fed by discordant frames",
@@ -756,25 +808,40 @@
      ],
      "kpis": [
       {
-       "label": "Decision p99 (line A)",
-       "value": "84ms"
+       "label": "Capture fidelity across lines",
+       "value": "96%"
       },
       {
-       "label": "Deadline misses",
-       "value": "0.3%"
+       "label": "Twin fidelity after changeover",
+       "value": "95%"
       },
       {
-       "label": "Thermal throttling events",
-       "value": "2"
+       "label": "Predicted-to-verified outcomes",
+       "value": "83%"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/manufacturing/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "PLC/historian fabric (OPC UA)",
+      "MES + ISA-95 context",
+      "CMMS work-order integration"
+     ],
+     "evidence": [
+      {
+       "title": "A global automotive OEM",
+       "url": "/case-studies/mfg-01/"
+      },
+      {
+       "title": "A specialty chemicals producer",
+       "url": "/case-studies/mfg-02/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": true,
-     "hook": "Retail & Consumer Goods operators recognize the pattern: shelf truth unknown, quarter after quarter.",
+     "hook": "Store and supply-chain sensing: computer vision for shelf and loss, cold-chain monitoring with provenance-grade evidence, and connected products that talk to loyalty.",
      "plays": [
       "Quantized models validated on-device before any line deployment",
       "Drift monitors on the live feed, retraining fed by discordant frames",
@@ -782,25 +849,36 @@
      ],
      "kpis": [
       {
-       "label": "Decision p99 (line A)",
-       "value": "84ms"
+       "label": "Shelf-vision accuracy at store",
+       "value": "89%"
       },
       {
-       "label": "Deadline misses",
-       "value": "0.3%"
+       "label": "Cold-chain evidence completeness",
+       "value": "98%"
       },
       {
-       "label": "Thermal throttling events",
-       "value": "2"
+       "label": "Connected-product opt-in rate",
+       "value": "43%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Shelf + checkout vision",
+      "Cold-chain telemetry",
+      "Connected product fleets"
+     ],
+     "evidence": [
+      {
+       "title": "A quick-service restaurant group",
+       "url": "/case-studies/ret-10/"
+      }
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": false,
-     "hook": "Ask what network telemetry underused costs Telecom, Media & Entertainment firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Network estates as IoT: site fleets with heartbeat SLOs, twins for capacity planning, and edge AI on the network edge where the latency actually lives.",
      "plays": [
       "Quantized models validated on-device before any line deployment",
       "Drift monitors on the live feed, retraining fed by discordant frames",
@@ -808,25 +886,40 @@
      ],
      "kpis": [
       {
-       "label": "Decision p99 (line A)",
-       "value": "84ms"
+       "label": "Site heartbeat compliance",
+       "value": "100%"
       },
       {
-       "label": "Deadline misses",
-       "value": "0.3%"
+       "label": "Capacity twin refresh SLA met",
+       "value": "92%"
       },
       {
-       "label": "Thermal throttling events",
-       "value": "2"
+       "label": "Edge AI latency within deadline",
+       "value": "96%"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/telecom-media/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Site telemetry (power/env)",
+      "Network edge compute",
+      "Capacity-planning twins"
+     ],
+     "evidence": [
+      {
+       "title": "A Middle East operator group",
+       "url": "/case-studies/tel-02/"
+      },
+      {
+       "title": "A domain infrastructure company",
+       "url": "/case-studies/tel-09/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": "Ask what asset fleets uninstrumented costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Grid-edge sensing at scale: substation IoT with OT-safe segmentation, asset twins for the network model, and predictive intelligence that feeds field crews' calendars.",
      "plays": [
       "Quantized models validated on-device before any line deployment",
       "Drift monitors on the live feed, retraining fed by discordant frames",
@@ -834,25 +927,40 @@
      ],
      "kpis": [
       {
-       "label": "Decision p99 (line A)",
-       "value": "84ms"
+       "label": "OT-safe sensor segmentation",
+       "value": "98%"
       },
       {
-       "label": "Deadline misses",
-       "value": "0.3%"
+       "label": "Asset twin state fidelity",
+       "value": "94%"
       },
       {
-       "label": "Thermal throttling events",
-       "value": "2"
+       "label": "Work-order auto-creation rate",
+       "value": "71%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/energy-utilities/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Substation IoT (OT-safe)",
+      "Asset performance feeds",
+      "Field-service calendars"
+     ],
+     "evidence": [
+      {
+       "title": "A national water utility",
+       "url": "/case-studies/en-03/"
+      },
+      {
+       "title": "A power generation company",
+       "url": "/case-studies/en-05/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": "Logistics & Supply Chain operators recognize the pattern: fleet and yard telemetry gaps, quarter after quarter.",
+     "hook": "The control tower's physical layer: telematics and door sensors as event streams, yard and hub twins, and robotics inside warehouse safety envelopes.",
      "plays": [
       "Quantized models validated on-device before any line deployment",
       "Drift monitors on the live feed, retraining fed by discordant frames",
@@ -860,25 +968,40 @@
      ],
      "kpis": [
       {
-       "label": "Decision p99 (line A)",
-       "value": "84ms"
+       "label": "Telematics event completeness",
+       "value": "98%"
       },
       {
-       "label": "Deadline misses",
-       "value": "0.3%"
+       "label": "Yard twin locational accuracy",
+       "value": "98%"
       },
       {
-       "label": "Thermal throttling events",
-       "value": "2"
+       "label": "Robot utilization (state-honest)",
+       "value": "66%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Telematics + door sensors",
+      "Yard/hub twins",
+      "Warehouse robotics (VDA-class)"
+     ],
+     "evidence": [
+      {
+       "title": "A container-terminal operator",
+       "url": "/case-studies/log-02/"
+      },
+      {
+       "title": "A third-party logistics provider",
+       "url": "/case-studies/log-04/"
+      }
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": false,
-     "hook": "Public Sector & Government operators recognize the pattern: urban assets unmanaged, quarter after quarter.",
+     "hook": "Smart infrastructure under public accountability: traffic and utilities sensing with privacy engines, twins for infrastructure planning, and fail-safe defaults everywhere.",
      "plays": [
       "Quantized models validated on-device before any line deployment",
       "Drift monitors on the live feed, retraining fed by discordant frames",
@@ -886,25 +1009,36 @@
      ],
      "kpis": [
       {
-       "label": "Decision p99 (line A)",
-       "value": "84ms"
+       "label": "Privacy-engine enforcement",
+       "value": "100%"
       },
       {
-       "label": "Deadline misses",
-       "value": "0.3%"
+       "label": "Infrastructure twin fidelity",
+       "value": "93%"
       },
       {
-       "label": "Thermal throttling events",
-       "value": "2"
+       "label": "Fail-safe default coverage",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/public-sector/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Traffic + utilities sensors",
+      "Infrastructure twins",
+      "Privacy engines"
+     ],
+     "evidence": [
+      {
+       "title": "A metropolitan city government",
+       "url": "/case-studies/pub-03/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — estates flying blind included — and prove it moved.",
+     "hook": "Campus and lab estates: environment sensing for buildings, lab-equipment twins for research uptime, and connected devices under student-privacy rules.",
      "plays": [
       "Quantized models validated on-device before any line deployment",
       "Drift monitors on the live feed, retraining fed by discordant frames",
@@ -912,25 +1046,30 @@
      ],
      "kpis": [
       {
-       "label": "Decision p99 (line A)",
-       "value": "84ms"
+       "label": "Lab equipment uptime visibility",
+       "value": "89%"
       },
       {
-       "label": "Deadline misses",
-       "value": "0.3%"
+       "label": "Campus environment freshness",
+       "value": "96%"
       },
       {
-       "label": "Thermal throttling events",
-       "value": "2"
+       "label": "Student-privacy compliance",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/education-research/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Campus BMS + lab sensors",
+      "Equipment telemetry",
+      "LMS/estate integrations"
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means we connect machines, fleets and facilities into one operational picture, then close the loop into maintenance, scheduling and control.",
+     "hook": "Connected products as your product: device fleets with OTA discipline, telemetry that feeds support and product analytics, and twin-based simulation for the roadmap.",
      "plays": [
       "Quantized models validated on-device before any line deployment",
       "Drift monitors on the live feed, retraining fed by discordant frames",
@@ -938,25 +1077,30 @@
      ],
      "kpis": [
       {
-       "label": "Decision p99 (line A)",
-       "value": "84ms"
+       "label": "Firmware currency across fleet",
+       "value": "97%"
       },
       {
-       "label": "Deadline misses",
-       "value": "0.3%"
+       "label": "OTA success rate",
+       "value": "97%"
       },
       {
-       "label": "Thermal throttling events",
-       "value": "2"
+       "label": "Telemetry within budget",
+       "value": "97%"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/technology-saas/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "OTA + device identity",
+      "Product telemetry pipelines",
+      "Simulation twins"
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": true,
-     "hook": "The work here has one job: move a named number — field data gap included — and prove it moved.",
+     "hook": "Field-to-shed sensing: agronomic sensor fabric, cold-chain monitoring with certification-grade evidence, and twins for season and yield planning.",
      "plays": [
       "Quantized models validated on-device before any line deployment",
       "Drift monitors on the live feed, retraining fed by discordant frames",
@@ -964,26 +1108,42 @@
      ],
      "kpis": [
       {
-       "label": "Decision p99 (line A)",
-       "value": "84ms"
+       "label": "Field sensor capture fidelity",
+       "value": "92%"
       },
       {
-       "label": "Deadline misses",
-       "value": "0.3%"
+       "label": "Cold-chain certification evidence",
+       "value": "98%"
       },
       {
-       "label": "Thermal throttling events",
-       "value": "2"
+       "label": "Season twin planning adoption",
+       "value": "67%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/agriculture-food/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Agronomic sensor fabric",
+      "Cold-chain monitors",
+      "Season planning twins"
+     ],
+     "evidence": [
+      {
+       "title": "A European agri-cooperative (4,200 farms)",
+       "url": "/case-studies/agr-01/"
+      },
+      {
+       "title": "A global coffee trader",
+       "url": "/case-studies/agr-02/"
+      }
+     ]
     }
    ],
    "practiceNote": "Computer Vision & Edge AI view: inference at the edge with model ops — constrained-hardware deployment, drift monitors on live feeds, and a hard rule that models never bypass interlocks."
   },
   {
    "t": "h2",
-   "x": "Edge-AI defaults — and documented deviations"
+   "x": "Edge-AI defaults — and documented deviations",
+   "sub": "The default stack, and where we sign deviations"
   },
   {
    "t": "p",
@@ -1027,7 +1187,8 @@
   },
   {
    "t": "h2",
-   "x": "Edge-AI release gates — evidence before line deployment"
+   "x": "Edge-AI release gates — evidence before line deployment",
+   "sub": "Canary evidence and interlock tests before rollout"
   },
   {
    "t": "table",
@@ -1067,7 +1228,8 @@
   },
   {
    "t": "h2",
-   "x": "What the operations and quality teams inherit"
+   "x": "What the operations and quality teams inherit",
+   "sub": "Consoles, retraining loop and the device calendar"
   },
   {
    "t": "bullets",
@@ -1100,7 +1262,8 @@
   },
   {
    "t": "h2",
-   "x": "Lab to line, week by week"
+   "x": "Lab to line, week by week",
+   "sub": "The build sequence from hardware audit to canary line"
   },
   {
    "t": "bullets",
@@ -1133,7 +1296,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — cameras, PLCs and the quality systems"
+   "x": "Integration surface — cameras, PLCs and the quality systems",
+   "sub": "What the vision path touches, honestly named"
   },
   {
    "t": "p",
@@ -1166,7 +1330,8 @@
   },
   {
    "t": "h2",
-   "x": "Model-drift governance overlay"
+   "x": "Model-drift governance overlay",
+   "sub": "The retrain cadence and the drift review"
   },
   {
    "t": "p",
@@ -1196,6 +1361,44 @@
   {
    "t": "note",
    "x": "Thermal budgets are enforced by the scheduler, not hoped for: sustained load beyond the signed envelope triggers model down-shift with an incident record — silent throttling is treated as a quality escape."
+  },
+  {
+   "t": "h2",
+   "x": "The deadline is the contract",
+   "sub": "Hardware-fit models, deadline checks and scene-aware drift — edge AI as an engineering discipline",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Edge vision fails when models are trained in the lab and deployed to hardware they do not fit: the quantized model misses its frame budget, the accelerator thermal-throttles at noon, and the line keeps moving while the QA gate goes blind. The discipline starts from the hardware contract — models quantized and shaped to the accelerator's budget, deadline checks enforced per frame (a late inference is a dropped inference, logged), and thermal/power envelopes tested under production conditions. The safety interlock path stays hardware-wired: vision may advise; it may never be the last line between a person and a hazard.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Drift at the edge is scene drift — lighting changes with seasons, product SKUs change with campaigns, camera lenses get dirty — so monitors watch scene statistics alongside model scores, and release trains stage canary devices before line-wide rollout. The console reads deadline adherence, drift alarms and per-device model currency; the retraining loop is fed from the hard negatives the deadline check and drift monitors surface.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Hardware-first model design",
+     "Quantized to the accelerator's real budget, tested under thermal load."
+    ],
+    [
+     "Deadline checks per frame",
+     "Late inferences are dropped and logged — the blind gate is visible."
+    ],
+    [
+     "Scene-aware drift watch",
+     "Lighting, SKU and lens drift monitored alongside model scores."
+    ],
+    [
+     "Hardware safety interlocks",
+     "Vision advises; hardware stops. The last line is not a model."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1321,6 +1524,23 @@
    "url": "/case-studies/agr-02/",
    "tag": "Evidence",
    "desc": "EUDR due-diligence automated — compliance evidence in hours, premium channels opened."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A crop insurer",
+   "url": "/case-studies/ins-09/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A container-terminal operator",
+   "url": "/case-studies/log-02/",
+   "ind": "Logistics & Supply Chain"
+  },
+  {
+   "title": "A Middle East operator group",
+   "url": "/case-studies/tel-02/",
+   "ind": "Telecom, Media & Entertainment"
   }
  ]
 }

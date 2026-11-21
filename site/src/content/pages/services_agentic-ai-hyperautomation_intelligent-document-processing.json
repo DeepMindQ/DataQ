@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "The queue is the product: what it says about your operation"
+   "x": "The queue is the product — and it is measured like one",
+   "sub": "Age bands, root causes and the shrinkage discipline that closes the backlog"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that keep document queues eternal"
+   "x": "Four failure modes that keep document queues eternal",
+   "sub": "Unrouted confidence, unproven posting, uncaptured corrections, unowned aging"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — adjudication wired into the process"
+   "x": "Reference architecture — adjudication wired into the process",
+   "sub": "Extraction, confidence gates, reconciliation and the correction loop as one flow"
   },
   {
    "t": "p",
@@ -110,7 +113,8 @@
      "id": "extr",
      "lane": 1,
      "label": "Field extraction",
-     "hot": true
+     "hot": true,
+     "sub": "model + rules ensemble"
     },
     {
      "id": "calc",
@@ -121,7 +125,8 @@
      "id": "gate",
      "lane": 2,
      "label": "Confidence gates",
-     "hot": true
+     "hot": true,
+     "sub": "route, do not guess"
     },
     {
      "id": "queue",
@@ -137,7 +142,8 @@
      "id": "match",
      "lane": 3,
      "label": "Process match (PO/ledger)",
-     "hot": true
+     "hot": true,
+     "sub": "3-way match before post"
     },
     {
      "id": "wf",
@@ -153,7 +159,8 @@
      "id": "ev",
      "lane": 4,
      "label": "Evidence store",
-     "hot": true
+     "hot": true,
+     "sub": "page-level provenance"
     },
     {
      "id": "audit",
@@ -169,7 +176,8 @@
      "id": "retrain",
      "lane": 5,
      "label": "Correction capture",
-     "hot": true
+     "hot": true,
+     "sub": "every fix trains the gate"
     },
     {
      "id": "eval",
@@ -267,11 +275,26 @@
      "label": "gate"
     }
    ],
-   "note": "EDI feeds bypass perception but never bypass the confidence gate — structured input can still be semantically wrong, and the gate is where that is caught."
+   "note": "EDI feeds bypass perception but never bypass the confidence gate — structured input can still be semantically wrong, and the gate is where that is caught.",
+   "badges": [
+    {
+     "label": "Straight-through target",
+     "value": "68%"
+    },
+    {
+     "label": "Queue age p90 trend",
+     "value": "down 64%"
+    },
+    {
+     "label": "Extraction provenance",
+     "value": "page-level"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "A document through the gate, the queue and the ledger"
+   "x": "A document through the gate, the queue and the ledger",
+   "sub": "The full journey from capture channel to posted, provable record"
   },
   {
    "t": "p",
@@ -295,7 +318,8 @@
   },
   {
    "t": "h2",
-   "x": "The document-ops console — queue age as the headline"
+   "x": "The document-ops console — queue age as the headline",
+   "sub": "Age bands, straight-through share and correction velocity on one surface"
   },
   {
    "t": "p",
@@ -636,7 +660,8 @@
   },
   {
    "t": "h2",
-   "x": "Queue shrinkage by root cause, month by month"
+   "x": "Queue shrinkage by root cause, month by month",
+   "sub": "The monthly review that kills the worst failure class each cycle"
   },
   {
    "t": "p",
@@ -702,7 +727,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": true,
-     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: orchestration is the discipline — dozens of small automations running as one auditable workforce, with escalations designed rather than improvised.",
+     "hook": "KYC refresh backlogs, sanctions-alert triage and reconcile-everything month-ends are high-volume, rule-bounded and examinable — exactly the workload where role-scoped agents out-perform both manual desks and brittle RPA.",
      "plays": [
       "Field-level confidence gates with adjudication wired into the process",
       "Root-cause logging that shrinks the human queue by design",
@@ -710,25 +735,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "78%"
+       "label": "STP rate, agent-handled ops",
+       "value": "70%"
       },
       {
-       "label": "Field accuracy (adjudicated)",
-       "value": "98.2%"
+       "label": "Checkpoint fidelity at audit sampling",
+       "value": "96%"
       },
       {
-       "label": "Queue age p90",
-       "value": "4.1h"
+       "label": "Cost per completed action",
+       "value": "$0.44"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "KYC/case suites and watchlist tools",
+      "SWIFT gpi and payment-rail events",
+      "SR 11-7 / OCC 2011-12 evidence"
+     ],
+     "evidence": [
+      {
+       "title": "A top-10 European retail bank",
+       "url": "/case-studies/bank-01/"
+      },
+      {
+       "title": "A multinational corporate bank",
+       "url": "/case-studies/bank-02/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": true,
-     "hook": "Ask what fraud industrialized against manual detection costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "FNOL intake, submission triage and reserve refresh run on ACORD-coded documents and PAS queues that surge at catastrophe season — agent pools absorb the surge while adjusters keep the judgment calls, with every step logged.",
      "plays": [
       "Field-level confidence gates with adjudication wired into the process",
       "Root-cause logging that shrinks the human queue by design",
@@ -736,25 +776,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "78%"
+       "label": "Claims auto-adjudicated to settlement",
+       "value": "65%"
       },
       {
-       "label": "Field accuracy (adjudicated)",
-       "value": "98.2%"
+       "label": "FNOL intake cycle time",
+       "value": "5 hrs"
       },
       {
-       "label": "Queue age p90",
-       "value": "4.1h"
+       "label": "Adjuster override rate",
+       "value": "8%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "PAS/claims suites (Guidewire-class)",
+      "ACORD forms and ISO claim codes",
+      "NAIC market-conduct evidence"
+     ],
+     "evidence": [
+      {
+       "title": "A top-5 global P&C insurer",
+       "url": "/case-studies/ins-01/"
+      },
+      {
+       "title": "A leading life insurer (North America)",
+       "url": "/case-studies/ins-02/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": false,
-     "hook": "Healthcare & Life Sciences operators recognize the pattern: prior authorization and RCM friction, quarter after quarter.",
+     "hook": "Prior authorization, claims status and denials follow-up drown coding and RCM teams in X12 278/837 transactions and payer-portal hunts — agents that read the rule set, assemble the packet and log every step give the queue an owner.",
      "plays": [
       "Field-level confidence gates with adjudication wired into the process",
       "Root-cause logging that shrinks the human queue by design",
@@ -762,25 +817,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "78%"
+       "label": "Prior-auth auto-approval share",
+       "value": "48%"
       },
       {
-       "label": "Field accuracy (adjudicated)",
-       "value": "98.2%"
+       "label": "Denials follow-up queue age p90",
+       "value": "6 days"
       },
       {
-       "label": "Queue age p90",
-       "value": "4.1h"
+       "label": "Action replay coverage",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "EHR/RCM estates (Epic-class)",
+      "HL7 FHIR + X12 278/837",
+      "HIPAA audit controls"
+     ],
+     "evidence": [
+      {
+       "title": "A national health insurer",
+       "url": "/case-studies/hc-02/"
+      },
+      {
+       "title": "A European biopharma group",
+       "url": "/case-studies/hc-03/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — maintenance planning reactive included — and prove it moved.",
+     "hook": "Maintenance planners and quality engineers live in SAP PM work orders, MES transactions and supplier ASN exceptions — automation earns its keep here only when it clears the backlog without touching the safety-rated path.",
      "plays": [
       "Field-level confidence gates with adjudication wired into the process",
       "Root-cause logging that shrinks the human queue by design",
@@ -788,25 +858,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "78%"
+       "label": "Work orders auto-dispositioned",
+       "value": "60%"
       },
       {
-       "label": "Field accuracy (adjudicated)",
-       "value": "98.2%"
+       "label": "NCR closure cycle",
+       "value": "15 days"
       },
       {
-       "label": "Queue age p90",
-       "value": "4.1h"
+       "label": "Actions with sealed evidence packet",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "SAP PM / CMMS work orders",
+      "MES context via ISA-95",
+      "IATF 16949 NCR-CAPA flows"
+     ],
+     "evidence": [
+      {
+       "title": "A global automotive OEM",
+       "url": "/case-studies/mfg-01/"
+      },
+      {
+       "title": "A packaging producer",
+       "url": "/case-studies/mfg-10/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": "Ask what supplier collaboration by email costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "EDI 850/855/856 exceptions, trade-promotion deduction disputes and supplier onboarding are pure document-and-decision churn across GS1 identifiers — the queue shrinks fastest when agents work the exception list under merchandiser-approved checkpoints.",
      "plays": [
       "Field-level confidence gates with adjudication wired into the process",
       "Root-cause logging that shrinks the human queue by design",
@@ -814,25 +899,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "78%"
+       "label": "PO exceptions auto-resolved",
+       "value": "74%"
       },
       {
-       "label": "Field accuracy (adjudicated)",
-       "value": "98.2%"
+       "label": "Deduction dispute cycle",
+       "value": "20 days"
       },
       {
-       "label": "Queue age p90",
-       "value": "4.1h"
+       "label": "Agent actions reconciled to ERP",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "EDI 850/855/856 + GS1 GTIN",
+      "ERP order ledgers (SAP Retail-class)",
+      "Trade-promotion deduction systems"
+     ],
+     "evidence": [
+      {
+       "title": "A top-3 grocery retailer (800+ stores)",
+       "url": "/case-studies/ret-01/"
+      },
+      {
+       "title": "A home-improvement retailer",
+       "url": "/case-studies/ret-08/"
+      }
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Order fallout between OSS/BSS layers, usage-dispute tickets and churn-save queues are where TM Forum Open API journeys break — durable orchestration re-drives the fallout and hands judgment calls to humans with context attached.",
      "plays": [
       "Field-level confidence gates with adjudication wired into the process",
       "Root-cause logging that shrinks the human queue by design",
@@ -840,25 +940,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "78%"
+       "label": "Order fallout auto-recovered",
+       "value": "70%"
       },
       {
-       "label": "Field accuracy (adjudicated)",
-       "value": "98.2%"
+       "label": "Repeat-fallout rate",
+       "value": "9%"
       },
       {
-       "label": "Queue age p90",
-       "value": "4.1h"
+       "label": "Usage disputes closed within SLA",
+       "value": "94%"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "OSS/BSS order orchestration",
+      "TM Forum Open APIs (TMF622/641)",
+      "Campaign and churn platforms"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-1 European operator",
+       "url": "/case-studies/tel-01/"
+      },
+      {
+       "title": "A North American cable operator",
+       "url": "/case-studies/tel-03/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — trading and scheduling decisions at market speed included — and prove it moved.",
+     "hook": "Outage tickets, switch-order packets, market-submission checks and billing exceptions stack across OMS/EMS and CIS estates — the wins sit in bounded, auditable workflows where a wrong write is recoverable and every action is logged.",
      "plays": [
       "Field-level confidence gates with adjudication wired into the process",
       "Root-cause logging that shrinks the human queue by design",
@@ -866,25 +981,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "78%"
+       "label": "Field work orders auto-routed",
+       "value": "65%"
       },
       {
-       "label": "Field accuracy (adjudicated)",
-       "value": "98.2%"
+       "label": "Outage-ticket backlog age p90",
+       "value": "32 hrs"
       },
       {
-       "label": "Queue age p90",
-       "value": "4.1h"
+       "label": "Switch-order packet completeness",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "OMS/EMS and CIS estates",
+      "NERC and market-submission calendars",
+      "Field-service scheduling"
+     ],
+     "evidence": [
+      {
+       "title": "A European TSO-DSO group",
+       "url": "/case-studies/en-01/"
+      },
+      {
+       "title": "A global integrated energy major",
+       "url": "/case-studies/en-02/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": true,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Missed appointments, failed EDI messages, customs holds and detention disputes across TMS/WMS/telematics feeds — agentic pools triage, re-drive and document exceptions so the control tower shows truth, not noise.",
      "plays": [
       "Field-level confidence gates with adjudication wired into the process",
       "Root-cause logging that shrinks the human queue by design",
@@ -892,25 +1022,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "78%"
+       "label": "Exceptions auto-triaged",
+       "value": "57%"
       },
       {
-       "label": "Field accuracy (adjudicated)",
-       "value": "98.2%"
+       "label": "Detention disputes resolved in",
+       "value": "8 days"
       },
       {
-       "label": "Queue age p90",
-       "value": "4.1h"
+       "label": "EDI messages re-driven in window",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "TMS/WMS/telematics event feeds",
+      "EDIFACT / X12 carrier messages",
+      "Customs and HS documentation"
+     ],
+     "evidence": [
+      {
+       "title": "A global 3PL (40+ countries)",
+       "url": "/case-studies/log-01/"
+      },
+      {
+       "title": "A parcel network operator",
+       "url": "/case-studies/log-06/"
+      }
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Permit, benefit and FOIA case backlogs move at the pace of document assembly and eligibility checks — agents that pre-fill, verify and route cut cycle time while every decision keeps a citable evidence trail for oversight bodies.",
      "plays": [
       "Field-level confidence gates with adjudication wired into the process",
       "Root-cause logging that shrinks the human queue by design",
@@ -918,25 +1063,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "78%"
+       "label": "Cases auto-assembled for review",
+       "value": "36%"
       },
       {
-       "label": "Field accuracy (adjudicated)",
-       "value": "98.2%"
+       "label": "Permit cycle-time reduction",
+       "value": "35%"
       },
       {
-       "label": "Queue age p90",
-       "value": "4.1h"
+       "label": "Decisions with citable evidence trail",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "Permit/benefit case systems",
+      "FOIA and records statutory clocks",
+      "Budget and procurement controls"
+     ],
+     "evidence": [
+      {
+       "title": "A national digital-government agency",
+       "url": "/case-studies/pub-01/"
+      },
+      {
+       "title": "A national tax administration",
+       "url": "/case-studies/pub-02/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "Ask what administrative burden on faculty costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Admissions processing, aid-verification packets and grant-administration reporting scale with enrollment cycles — role-scoped agents clear the routine files and route judgment calls to registrars and aid officers with full context.",
      "plays": [
       "Field-level confidence gates with adjudication wired into the process",
       "Root-cause logging that shrinks the human queue by design",
@@ -944,25 +1104,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "78%"
+       "label": "Applications auto-processed",
+       "value": "61%"
       },
       {
-       "label": "Field accuracy (adjudicated)",
-       "value": "98.2%"
+       "label": "Verification packet cycle",
+       "value": "11 days"
       },
       {
-       "label": "Queue age p90",
-       "value": "4.1h"
+       "label": "Staff hours returned per week",
+       "value": "220"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "SIS estates (Banner-class)",
+      "Aid verification workflows",
+      "Grant reporting portals"
+     ],
+     "evidence": [
+      {
+       "title": "A public research university (38,000 students)",
+       "url": "/case-studies/edu-01/"
+      },
+      {
+       "title": "An online university",
+       "url": "/case-studies/edu-06/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": false,
-     "hook": "Ask what support and success scale linearly costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Support triage, entitlement checks and renewal-desk workflows scale linearly with ARR unless an agent layer absorbs the repeatable steps — with checkpoints where account teams keep pricing judgment and CRM history stays structured.",
      "plays": [
       "Field-level confidence gates with adjudication wired into the process",
       "Root-cause logging that shrinks the human queue by design",
@@ -970,25 +1145,40 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "78%"
+       "label": "Tickets auto-triaged",
+       "value": "58%"
       },
       {
-       "label": "Field accuracy (adjudicated)",
-       "value": "98.2%"
+       "label": "First-response time",
+       "value": "12 min"
       },
       {
-       "label": "Queue age p90",
-       "value": "4.1h"
+       "label": "Entitlement checks automated",
+       "value": "91%"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "ITSM/CRM (ServiceNow-class)",
+      "CPQ and entitlement registries",
+      "SOC 2 evidence controls"
+     ],
+     "evidence": [
+      {
+       "title": "A consumer fintech (8M users)",
+       "url": "/case-studies/tech-02/"
+      },
+      {
+       "title": "An enterprise IT services firm",
+       "url": "/case-studies/tech-07/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "Ask what input and logistics planning manual costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Contract management, grading certificates, subsidy dossiers and harvest-logistics planning run on seasonal surges — agent pools absorb the surge with checkpoints where agronomists and traders keep commercial judgment.",
      "plays": [
       "Field-level confidence gates with adjudication wired into the process",
       "Root-cause logging that shrinks the human queue by design",
@@ -996,26 +1186,32 @@
      ],
      "kpis": [
       {
-       "label": "Straight-through rate",
-       "value": "78%"
+       "label": "Contract milestones auto-tracked",
+       "value": "65%"
       },
       {
-       "label": "Field accuracy (adjudicated)",
-       "value": "98.2%"
+       "label": "Certification doc prep time",
+       "value": "4 hrs"
       },
       {
-       "label": "Queue age p90",
-       "value": "4.1h"
+       "label": "Subsidy dossier completeness",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "Procurement and contract ledgers",
+      "Certification schemes (GLOBALG.A.P.-class)",
+      "Subsidy and traceability portals"
+     ]
     }
    ],
    "practiceNote": "Intelligent Document Processing view: extraction and adjudication inside the process — documents become decisions with confidence gates, evidence and a human queue that shrinks on measurement."
   },
   {
    "t": "h2",
-   "x": "Extraction defaults — and when we deviate"
+   "x": "Extraction defaults — and when we deviate",
+   "sub": "Model ensembles and rule overlays, and the deviations we sign"
   },
   {
    "t": "p",
@@ -1059,7 +1255,8 @@
   },
   {
    "t": "h2",
-   "x": "Document-processing gates — evidence before volume"
+   "x": "Document-processing gates — evidence before volume",
+   "sub": "What must be proven before full-estate volume"
   },
   {
    "t": "table",
@@ -1099,7 +1296,8 @@
   },
   {
    "t": "h2",
-   "x": "What the operations team inherits"
+   "x": "What the operations team inherits",
+   "sub": "Consoles, band definitions, root-cause taxonomy and the review calendar"
   },
   {
    "t": "bullets",
@@ -1132,7 +1330,8 @@
   },
   {
    "t": "h2",
-   "x": "From pilot volume to full estate, week by week"
+   "x": "From pilot volume to full estate, week by week",
+   "sub": "The scale-up sequence with evidence at every doubling"
   },
   {
    "t": "bullets",
@@ -1165,7 +1364,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — capture channels and systems of record"
+   "x": "Integration surface — capture channels and systems of record",
+   "sub": "Scanners, portals and EDI in; ERP ledgers out — typed throughout"
   },
   {
    "t": "p",
@@ -1198,7 +1398,8 @@
   },
   {
    "t": "h2",
-   "x": "Controls overlay — evidence and the money path"
+   "x": "Controls overlay — evidence and the money path",
+   "sub": "Page-level provenance, maker-checker and the audit extract"
   },
   {
    "t": "p",
@@ -1228,6 +1429,44 @@
   {
    "t": "note",
    "x": "Money-path documents carry mandatory dual review above signed value thresholds — automation stops there by design, and the stop is logged as a control, not a failure."
+  },
+  {
+   "t": "h2",
+   "x": "The confidence gate is the product",
+   "sub": "Route-don't-guess adjudication — and why correction capture is the compounding asset",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Document processing programs fail by optimizing extraction accuracy while ignoring the routing decision that actually protects the money path. The gate is the product: every extracted field carries a confidence score, and the gate routes on the score band — high confidence posts straight through after reconciliation, mid band goes to a human queue with the uncertain fields highlighted, low band goes back for recapture. The bands are set per document class from the risk matrix, because an invoice under $200 and a change order under $2M do not share a tolerance. Reconciliation against source — three-way match for PO flows, ledger match for accruals — runs before posting, so the queue measures exceptions, not errors.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Correction capture is the compounding asset. Every human fix is recorded as a labeled correction bound to the page region and the field, and the correction stream feeds the monthly gate recalibration — which is why straight-through share climbs for months after go-live instead of decaying. The queue itself is managed as a product: age bands, root-cause tags and a monthly shrinkage review that kills the worst extraction failure class each cycle, rather than a support inbox that quietly grows.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Route, do not guess",
+     "Confidence bands set per class from the risk matrix; nothing posts uncertain."
+    ],
+    [
+     "Reconcile before post",
+     "Three-way match on PO flows, ledger match on accruals — exceptions, not errors."
+    ],
+    [
+     "Correction capture",
+     "Every fix bound to page region and field; feeds monthly gate recalibration."
+    ],
+    [
+     "Queue as a product",
+     "Age bands, root-cause tags and a monthly shrinkage review with owners."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1353,6 +1592,23 @@
    "url": "/case-studies/hc-02/",
    "tag": "Evidence",
    "desc": "Prior authorization turnaround down 62% — clinical evidence assembled automatically."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A top-10 European retail bank",
+   "url": "/case-studies/bank-01/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A top-5 global P&C insurer",
+   "url": "/case-studies/ins-01/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A global 3PL (40+ countries)",
+   "url": "/case-studies/log-01/",
+   "ind": "Logistics & Supply Chain"
   }
  ]
 }

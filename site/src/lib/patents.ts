@@ -9,7 +9,7 @@ export type Patent = {
   title: string;
   oneLiner: string;
   capabilities: string[];
-  towers: string[]; // service tower slugs it powers
+  expertise: string[]; // expertise domain slugs it powers
   platforms: string[]; // platform slugs it powers
 };
 
@@ -26,7 +26,7 @@ export const PATENTS: Patent[] = [
       "Fractal graph compression for billion-node scale",
       "Deterministic micro-batch streaming with conflict resolution",
     ],
-    towers: ["data-analytics-lakehouse", "applied-ai-generative-ai"],
+    expertise: ["data-analytics-lakehouse", "applied-ai-generative-ai"],
     platforms: ["nexus", "quanta"],
   },
   {
@@ -41,7 +41,7 @@ export const PATENTS: Patent[] = [
       "Non-Euclidean (Riemannian) clustering and segmentation",
       "Abstract-interpretation + temporal-logic verification",
     ],
-    towers: ["quantum-advanced-compute", "cloud-edge-platform-engineering"],
+    expertise: ["quantum-advanced-compute", "cloud-edge-platform-engineering"],
     platforms: ["quanta", "forge"],
   },
   {
@@ -56,7 +56,7 @@ export const PATENTS: Patent[] = [
       "Blockchain-integrated self-healing workload recovery",
       "Neuromorphic accelerators for edge deployments",
     ],
-    towers: ["cybersecurity-zero-trust", "iot-digital-twin-robotics"],
+    expertise: ["cybersecurity-zero-trust", "iot-digital-twin-robotics"],
     platforms: ["sentinel", "ledger"],
   },
   {
@@ -71,7 +71,7 @@ export const PATENTS: Patent[] = [
       "Multi-modal explainability (DAG decision pathways)",
       "Synthetic adversarial resilience testing",
     ],
-    towers: ["agentic-ai-hyperautomation", "applied-ai-generative-ai"],
+    expertise: ["agentic-ai-hyperautomation", "applied-ai-generative-ai"],
     platforms: ["sentinel", "compass"],
   },
   {
@@ -86,7 +86,7 @@ export const PATENTS: Patent[] = [
       "Multi-agent RL with shared-reward credit assignment",
       "zk-SNARK validated decentralized execution",
     ],
-    towers: ["agentic-ai-hyperautomation", "applied-ai-generative-ai"],
+    expertise: ["agentic-ai-hyperautomation", "applied-ai-generative-ai"],
     platforms: ["swarm", "forge"],
   },
   {
@@ -101,7 +101,7 @@ export const PATENTS: Patent[] = [
       "Edge-cloud hybrid deployment with latency-aware routing",
       "Biometric, document and anomaly recognition at scale",
     ],
-    towers: ["iot-digital-twin-robotics", "applied-ai-generative-ai"],
+    expertise: ["iot-digital-twin-robotics", "applied-ai-generative-ai"],
     platforms: ["twinverse", "nexus"],
   },
   {
@@ -116,7 +116,7 @@ export const PATENTS: Patent[] = [
       "Photonic-electronic node arbitration",
       "Fault-tolerant checkpointing and recovery",
     ],
-    towers: ["cloud-edge-platform-engineering", "quantum-advanced-compute"],
+    expertise: ["cloud-edge-platform-engineering", "quantum-advanced-compute"],
     platforms: ["forge", "quanta"],
   },
   {
@@ -131,7 +131,7 @@ export const PATENTS: Patent[] = [
       "Raft-consensus distributed coherence",
       "Explainable AI (SHAP/LIME) stakeholder outputs",
     ],
-    towers: ["applied-ai-generative-ai", "data-analytics-lakehouse"],
+    expertise: ["applied-ai-generative-ai", "data-analytics-lakehouse"],
     platforms: ["compass", "nexus"],
   },
 ];
@@ -140,8 +140,8 @@ export function patentsForPage(url: string, title: string): Patent[] {
   const hay = (url + " " + title).toLowerCase();
   const scored = PATENTS.map((p) => {
     let score = 0;
-    for (const t of p.towers) if (hay.includes(t.replace(/-/g, "-"))) score += 2;
-    for (const t of p.towers) {
+    for (const t of p.expertise) if (hay.includes(t.replace(/-/g, "-"))) score += 2;
+    for (const t of p.expertise) {
       const words = t.split("-");
       if (words.every((w) => hay.includes(w))) score += 2;
     }

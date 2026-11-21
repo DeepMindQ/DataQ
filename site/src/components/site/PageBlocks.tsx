@@ -60,7 +60,7 @@ export function Breadcrumbs({ crumbs, dark = false }: { crumbs: Crumb[]; dark?: 
 
 /* ── Template kicker icon + v2 hero chrome (CHG-288/289/290/344) ─────── */
 const KICKER_ICON: Record<string, React.ComponentType<{ className?: string }>> = {
-  tower_hub: Layers,
+  expertise_hub: Layers,
   service_page: Cog,
   industry_hub: Factory,
   subindustry_page: Factory,
@@ -104,7 +104,7 @@ const NO_HERO_CTA = new Set(["contact_page", "legal_page", "leadership_profile",
 /* Per-template micro-chips shown ON the hero image (wave-2 hero redesign).
    Two short, factual lines — never repeated copy, just template semantics. */
 const HERO_CHIP: Record<string, { head: string; sub: string }> = {
-  tower_hub: { head: "8 services · 2 platforms", sub: "Expertise evidence pack" },
+  expertise_hub: { head: "8 services · 2 platforms", sub: "Expertise evidence pack" },
   service_page: { head: "Baseline → audited delta", sub: "Weekly evidence cadence" },
   sub_capability: { head: "Composable delivery", sub: "Signed baseline metric" },
   industry_capability: { head: "Sector-calibrated", sub: "Regime-aware controls" },
@@ -151,7 +151,7 @@ export function PageHero({
   const showVisual = page.url !== "/search" && page.url !== "/style-guide";
   const im = showVisual ? pickImagery(page) : null;
   const chip = HERO_CHIP[page.template];
-  const priority = page.template === "tower_hub" || page.template === "industry_hub";
+  const priority = page.template === "expertise_hub" || page.template === "industry_hub";
   return (
     <section className="dq-hero relative overflow-hidden grad-navy-field text-white">
       <div className="absolute inset-0 dot-grid" aria-hidden="true" />
@@ -289,6 +289,7 @@ export function Blocks({ blocks, skip = [] }: { blocks: Block[]; skip?: string[]
           lanes={b.lanes}
           nodes={b.nodes}
           edges={b.edges}
+          badges={b.badges}
           note={b.note}
         />,
       );
@@ -342,22 +343,28 @@ export function Blocks({ blocks, skip = [] }: { blocks: Block[]; skip?: string[]
     } else if (b.t === "h2") {
       h2Index += 1;
       const anchorId = `sec-${h2Index}`;
+      const h2b = b as { t: "h2"; x: string; sub?: string };
       out.push(
         <Reveal key={`h2-${h2Index}`}>
           <h2
             id={anchorId}
             className="dq-h2 group measure mt-12 flex scroll-mt-28 items-baseline gap-3 font-display text-[22px] font-semibold text-navy-800 sm:text-[24px]"
           >
-            {b.x}
+            {h2b.x}
             {/* anchor link on hover (CHG-328) */}
             <a
               href={`#${anchorId}`}
-              aria-label={`Link to section ${b.x}`}
+              aria-label={`Link to section ${h2b.x}`}
               className="text-[13px] font-medium text-slate-body/30 opacity-0 transition group-hover:opacity-100 hover:text-brand-deep"
             >
               #
             </a>
           </h2>
+          {h2b.sub && (
+            <p className="measure mt-2 border-l-2 border-brand/40 pl-3 text-[13.5px] leading-relaxed text-slate-body/70">
+              {h2b.sub}
+            </p>
+          )}
         </Reveal>,
       );
     } else if (b.t === "h3") {

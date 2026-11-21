@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "Public infrastructure fails publicly — the architecture has to assume it"
+   "x": "Public infrastructure fails publicly — assume it in the architecture",
+   "sub": "Segmented OT, fail-safe defaults and service SLOs for citizen-facing estate"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that make infrastructure programs fragile"
+   "x": "Four failure modes that make infrastructure programs fragile",
+   "sub": "Flat IT-OT, software-only safety, hidden degradations, privacy debt"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — segmented, SCADA-safe, SLO'd"
+   "x": "Reference architecture — segmented, SCADA-safe, SLO'd",
+   "sub": "Zones, crossings, safety systems and privacy as one structure"
   },
   {
    "t": "p",
@@ -105,7 +108,8 @@
      "id": "scada",
      "lane": 1,
      "label": "SCADA/DCS",
-     "hot": true
+     "hot": true,
+     "sub": "OT-grade, segmented"
     },
     {
      "id": "hist",
@@ -116,13 +120,15 @@
      "id": "safe",
      "lane": 1,
      "label": "Safety systems",
-     "hot": true
+     "hot": true,
+     "sub": "SIL-rated, separate"
     },
     {
      "id": "dmz",
      "lane": 2,
      "label": "Controlled crossing",
-     "hot": true
+     "hot": true,
+     "sub": "brokered IT-OT boundary"
     },
     {
      "id": "uni",
@@ -153,7 +159,8 @@
      "id": "slo",
      "lane": 4,
      "label": "Service SLOs",
-     "hot": true
+     "hot": true,
+     "sub": "continuity, per service"
     },
     {
      "id": "ops",
@@ -169,7 +176,8 @@
      "id": "priv",
      "lane": 5,
      "label": "Privacy engine",
-     "hot": true
+     "hot": true,
+     "sub": "anonymize at edge"
     },
     {
      "id": "portal",
@@ -269,11 +277,26 @@
      "label": "rules"
     }
    ],
-   "note": "The controlled crossing is where the architecture earns its name: analytics sees data through managed, often one-way gateways — optimization proposes, the OT zone decides."
+   "note": "The controlled crossing is where the architecture earns its name: analytics sees data through managed, often one-way gateways — optimization proposes, the OT zone decides.",
+   "badges": [
+    {
+     "label": "Public failure assumed",
+     "value": "in design"
+    },
+    {
+     "label": "IT-OT crossings",
+     "value": "brokered only"
+    },
+    {
+     "label": "Fail-safe defaults",
+     "value": "everywhere"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "One crossing, IT to OT and back, controlled"
+   "x": "One crossing, IT to OT and back, controlled",
+   "sub": "The brokered boundary, hop by hop"
   },
   {
    "t": "p",
@@ -296,7 +319,8 @@
   },
   {
    "t": "h2",
-   "x": "The infrastructure console — continuity as the headline"
+   "x": "The infrastructure console — continuity as the headline",
+   "sub": "Service SLOs and crossing posture, trended"
   },
   {
    "t": "p",
@@ -619,7 +643,8 @@
   },
   {
    "t": "h2",
-   "x": "Service continuity across the utility estate"
+   "x": "Service continuity across the utility estate",
+   "sub": "Where continuity holds and where it slips"
   },
   {
    "t": "p",
@@ -671,7 +696,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": false,
-     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the work spans the stack: devices and gateways in the field, perception models in the middle, actuation plans on the board.",
+     "hook": "Smart-branch, vault and ATM estates: device fleets with identity-first security, twins for facilities operations, and sensor fabric that feeds both facilities and fraud signals.",
      "plays": [
       "IT/OT segmentation with controlled, monitored crossings",
       "Service-continuity SLOs signed per utility — water, energy, measured",
@@ -679,25 +704,30 @@
      ],
      "kpis": [
       {
-       "label": "Water continuity",
-       "value": "99.97%"
+       "label": "Device identity coverage",
+       "value": "98%"
       },
       {
-       "label": "District energy continuity",
-       "value": "99.94%"
+       "label": "Facilities twin fidelity",
+       "value": "89%"
       },
       {
-       "label": "Crossing anomalies",
-       "value": "0"
+       "label": "Sensor fabric freshness p95",
+       "value": "9s"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/banking-financial-services/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "ATM/branch device fleets",
+      "Facilities BMS feeds",
+      "Vault environment sensors"
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": false,
-     "hook": "The structural pressure will not be solved by another dashboard.",
+     "hook": "IoT as the underwriting and claims edge: telematics and sensor evidence feeding risk models, vision-based claims assessment, and twin-based scenario evidence for adjusters.",
      "plays": [
       "IT/OT segmentation with controlled, monitored crossings",
       "Service-continuity SLOs signed per utility — water, energy, measured",
@@ -705,25 +735,36 @@
      ],
      "kpis": [
       {
-       "label": "Water continuity",
-       "value": "99.97%"
+       "label": "Telematics evidence admissibility",
+       "value": "99%"
       },
       {
-       "label": "District energy continuity",
-       "value": "99.94%"
+       "label": "Vision claims assessment cycle cut",
+       "value": "34%"
       },
       {
-       "label": "Crossing anomalies",
-       "value": "0"
+       "label": "Cold-chain excursion alerts, on time",
+       "value": "96%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/insurance/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Telematics + event recorders",
+      "Claims vision intake",
+      "Risk-model feature feeds"
+     ],
+     "evidence": [
+      {
+       "title": "A crop insurer",
+       "url": "/case-studies/ins-09/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": false,
-     "hook": "The structural pressure will not be solved by another dashboard.",
+     "hook": "Clinical estates: connected medical devices under regulatory discipline, environment twins for facilities and cold chain, and sensor fabric with patient-safety interlocks.",
      "plays": [
       "IT/OT segmentation with controlled, monitored crossings",
       "Service-continuity SLOs signed per utility — water, energy, measured",
@@ -731,25 +772,36 @@
      ],
      "kpis": [
       {
-       "label": "Water continuity",
-       "value": "99.97%"
+       "label": "Device identity + patch currency",
+       "value": "92%"
       },
       {
-       "label": "District energy continuity",
-       "value": "99.94%"
+       "label": "Cold-chain twin fidelity",
+       "value": "93%"
       },
       {
-       "label": "Crossing anomalies",
-       "value": "0"
+       "label": "Safety interlock test pass rate",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Connected medical devices",
+      "Cold-chain monitors",
+      "Facilities BMS twins"
+     ],
+     "evidence": [
+      {
+       "title": "A medical device manufacturer",
+       "url": "/case-studies/hc-08/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "Ask what quality escapes and manual inspection costs Manufacturing & Industrial firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "The home ground: sensor fabric across lines, twins that hold fidelity under changeovers, predictive maintenance wired into SAP PM work orders, and robotics inside the safety case.",
      "plays": [
       "IT/OT segmentation with controlled, monitored crossings",
       "Service-continuity SLOs signed per utility — water, energy, measured",
@@ -757,25 +809,40 @@
      ],
      "kpis": [
       {
-       "label": "Water continuity",
-       "value": "99.97%"
+       "label": "Capture fidelity across lines",
+       "value": "95%"
       },
       {
-       "label": "District energy continuity",
-       "value": "99.94%"
+       "label": "Twin fidelity after changeover",
+       "value": "97%"
       },
       {
-       "label": "Crossing anomalies",
-       "value": "0"
+       "label": "Predicted-to-verified outcomes",
+       "value": "70%"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/manufacturing/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "PLC/historian fabric (OPC UA)",
+      "MES + ISA-95 context",
+      "CMMS work-order integration"
+     ],
+     "evidence": [
+      {
+       "title": "A global automotive OEM",
+       "url": "/case-studies/mfg-01/"
+      },
+      {
+       "title": "A specialty chemicals producer",
+       "url": "/case-studies/mfg-02/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": "Retail & Consumer Goods operators recognize the pattern: shelf truth unknown, quarter after quarter.",
+     "hook": "Store and supply-chain sensing: computer vision for shelf and loss, cold-chain monitoring with provenance-grade evidence, and connected products that talk to loyalty.",
      "plays": [
       "IT/OT segmentation with controlled, monitored crossings",
       "Service-continuity SLOs signed per utility — water, energy, measured",
@@ -783,25 +850,36 @@
      ],
      "kpis": [
       {
-       "label": "Water continuity",
-       "value": "99.97%"
+       "label": "Shelf-vision accuracy at store",
+       "value": "91%"
       },
       {
-       "label": "District energy continuity",
-       "value": "99.94%"
+       "label": "Cold-chain evidence completeness",
+       "value": "99%"
       },
       {
-       "label": "Crossing anomalies",
-       "value": "0"
+       "label": "Connected-product opt-in rate",
+       "value": "68%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Shelf + checkout vision",
+      "Cold-chain telemetry",
+      "Connected product fleets"
+     ],
+     "evidence": [
+      {
+       "title": "A quick-service restaurant group",
+       "url": "/case-studies/ret-10/"
+      }
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": true,
-     "hook": "Ask what network telemetry underused costs Telecom, Media & Entertainment firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Network estates as IoT: site fleets with heartbeat SLOs, twins for capacity planning, and edge AI on the network edge where the latency actually lives.",
      "plays": [
       "IT/OT segmentation with controlled, monitored crossings",
       "Service-continuity SLOs signed per utility — water, energy, measured",
@@ -809,25 +887,40 @@
      ],
      "kpis": [
       {
-       "label": "Water continuity",
-       "value": "99.97%"
+       "label": "Site heartbeat compliance",
+       "value": "97%"
       },
       {
-       "label": "District energy continuity",
-       "value": "99.94%"
+       "label": "Capacity twin refresh SLA met",
+       "value": "95%"
       },
       {
-       "label": "Crossing anomalies",
-       "value": "0"
+       "label": "Edge AI latency within deadline",
+       "value": "97%"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/telecom-media/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Site telemetry (power/env)",
+      "Network edge compute",
+      "Capacity-planning twins"
+     ],
+     "evidence": [
+      {
+       "title": "A Middle East operator group",
+       "url": "/case-studies/tel-02/"
+      },
+      {
+       "title": "A domain infrastructure company",
+       "url": "/case-studies/tel-09/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": true,
-     "hook": "Ask what asset fleets uninstrumented costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Grid-edge sensing at scale: substation IoT with OT-safe segmentation, asset twins for the network model, and predictive intelligence that feeds field crews' calendars.",
      "plays": [
       "IT/OT segmentation with controlled, monitored crossings",
       "Service-continuity SLOs signed per utility — water, energy, measured",
@@ -835,25 +928,40 @@
      ],
      "kpis": [
       {
-       "label": "Water continuity",
-       "value": "99.97%"
+       "label": "OT-safe sensor segmentation",
+       "value": "99%"
       },
       {
-       "label": "District energy continuity",
-       "value": "99.94%"
+       "label": "Asset twin state fidelity",
+       "value": "92%"
       },
       {
-       "label": "Crossing anomalies",
-       "value": "0"
+       "label": "Work-order auto-creation rate",
+       "value": "79%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/energy-utilities/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Substation IoT (OT-safe)",
+      "Asset performance feeds",
+      "Field-service calendars"
+     ],
+     "evidence": [
+      {
+       "title": "A national water utility",
+       "url": "/case-studies/en-03/"
+      },
+      {
+       "title": "A power generation company",
+       "url": "/case-studies/en-05/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": "Logistics & Supply Chain operators recognize the pattern: fleet and yard telemetry gaps, quarter after quarter.",
+     "hook": "The control tower's physical layer: telematics and door sensors as event streams, yard and hub twins, and robotics inside warehouse safety envelopes.",
      "plays": [
       "IT/OT segmentation with controlled, monitored crossings",
       "Service-continuity SLOs signed per utility — water, energy, measured",
@@ -861,25 +969,40 @@
      ],
      "kpis": [
       {
-       "label": "Water continuity",
-       "value": "99.97%"
+       "label": "Telematics event completeness",
+       "value": "96%"
       },
       {
-       "label": "District energy continuity",
-       "value": "99.94%"
+       "label": "Yard twin locational accuracy",
+       "value": "89%"
       },
       {
-       "label": "Crossing anomalies",
-       "value": "0"
+       "label": "Robot utilization (state-honest)",
+       "value": "64%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Telematics + door sensors",
+      "Yard/hub twins",
+      "Warehouse robotics (VDA-class)"
+     ],
+     "evidence": [
+      {
+       "title": "A container-terminal operator",
+       "url": "/case-studies/log-02/"
+      },
+      {
+       "title": "A third-party logistics provider",
+       "url": "/case-studies/log-04/"
+      }
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": true,
-     "hook": "Public Sector & Government operators recognize the pattern: urban assets unmanaged, quarter after quarter.",
+     "hook": "Smart infrastructure under public accountability: traffic and utilities sensing with privacy engines, twins for infrastructure planning, and fail-safe defaults everywhere.",
      "plays": [
       "IT/OT segmentation with controlled, monitored crossings",
       "Service-continuity SLOs signed per utility — water, energy, measured",
@@ -887,25 +1010,36 @@
      ],
      "kpis": [
       {
-       "label": "Water continuity",
-       "value": "99.97%"
+       "label": "Privacy-engine enforcement",
+       "value": "100%"
       },
       {
-       "label": "District energy continuity",
-       "value": "99.94%"
+       "label": "Infrastructure twin fidelity",
+       "value": "88%"
       },
       {
-       "label": "Crossing anomalies",
-       "value": "0"
+       "label": "Fail-safe default coverage",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/public-sector/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Traffic + utilities sensors",
+      "Infrastructure twins",
+      "Privacy engines"
+     ],
+     "evidence": [
+      {
+       "title": "A metropolitan city government",
+       "url": "/case-studies/pub-03/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — estates flying blind included — and prove it moved.",
+     "hook": "Campus and lab estates: environment sensing for buildings, lab-equipment twins for research uptime, and connected devices under student-privacy rules.",
      "plays": [
       "IT/OT segmentation with controlled, monitored crossings",
       "Service-continuity SLOs signed per utility — water, energy, measured",
@@ -913,25 +1047,30 @@
      ],
      "kpis": [
       {
-       "label": "Water continuity",
-       "value": "99.97%"
+       "label": "Lab equipment uptime visibility",
+       "value": "91%"
       },
       {
-       "label": "District energy continuity",
-       "value": "99.94%"
+       "label": "Campus environment freshness",
+       "value": "92%"
       },
       {
-       "label": "Crossing anomalies",
-       "value": "0"
+       "label": "Student-privacy compliance",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/education-research/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Campus BMS + lab sensors",
+      "Equipment telemetry",
+      "LMS/estate integrations"
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means we connect machines, fleets and facilities into one operational picture, then close the loop into maintenance, scheduling and control.",
+     "hook": "Connected products as your product: device fleets with OTA discipline, telemetry that feeds support and product analytics, and twin-based simulation for the roadmap.",
      "plays": [
       "IT/OT segmentation with controlled, monitored crossings",
       "Service-continuity SLOs signed per utility — water, energy, measured",
@@ -939,25 +1078,30 @@
      ],
      "kpis": [
       {
-       "label": "Water continuity",
-       "value": "99.97%"
+       "label": "Firmware currency across fleet",
+       "value": "96%"
       },
       {
-       "label": "District energy continuity",
-       "value": "99.94%"
+       "label": "OTA success rate",
+       "value": "98%"
       },
       {
-       "label": "Crossing anomalies",
-       "value": "0"
+       "label": "Telemetry within budget",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/technology-saas/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "OTA + device identity",
+      "Product telemetry pipelines",
+      "Simulation twins"
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — field data gap included — and prove it moved.",
+     "hook": "Field-to-shed sensing: agronomic sensor fabric, cold-chain monitoring with certification-grade evidence, and twins for season and yield planning.",
      "plays": [
       "IT/OT segmentation with controlled, monitored crossings",
       "Service-continuity SLOs signed per utility — water, energy, measured",
@@ -965,26 +1109,42 @@
      ],
      "kpis": [
       {
-       "label": "Water continuity",
-       "value": "99.97%"
+       "label": "Field sensor capture fidelity",
+       "value": "96%"
       },
       {
-       "label": "District energy continuity",
-       "value": "99.94%"
+       "label": "Cold-chain certification evidence",
+       "value": "98%"
       },
       {
-       "label": "Crossing anomalies",
-       "value": "0"
+       "label": "Season twin planning adoption",
+       "value": "75%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/iot-digital-twin-robotics/"
+     "capUrl": "/industries/agriculture-food/capabilities/iot-digital-twin-robotics/",
+     "systems": [
+      "Agronomic sensor fabric",
+      "Cold-chain monitors",
+      "Season planning twins"
+     ],
+     "evidence": [
+      {
+       "title": "A European agri-cooperative (4,200 farms)",
+       "url": "/case-studies/agr-01/"
+      },
+      {
+       "title": "A global coffee trader",
+       "url": "/case-studies/agr-02/"
+      }
+     ]
     }
    ],
    "practiceNote": "Smart Infrastructure, Buildings & Cities view: city and utility scale on the same disciplines — segmented SCADA-safe architectures, service-continuity SLOs, and privacy-first public data."
   },
   {
    "t": "h2",
-   "x": "Infrastructure defaults — and documented deviations"
+   "x": "Infrastructure defaults — and documented deviations",
+   "sub": "The default patterns, and where we sign deviations"
   },
   {
    "t": "p",
@@ -1028,7 +1188,8 @@
   },
   {
    "t": "h2",
-   "x": "Infrastructure release gates — evidence before cutover"
+   "x": "Infrastructure release gates — evidence before cutover",
+   "sub": "Degraded-mode drills and crossing evidence before live traffic"
   },
   {
    "t": "table",
@@ -1068,7 +1229,8 @@
   },
   {
    "t": "h2",
-   "x": "What the utility operations team inherits"
+   "x": "What the utility operations team inherits",
+   "sub": "SLOs, consoles, drill calendar and the crossing register"
   },
   {
    "t": "bullets",
@@ -1101,7 +1263,8 @@
   },
   {
    "t": "h2",
-   "x": "Segments in order, week by week"
+   "x": "Segments in order, week by week",
+   "sub": "The build sequence across the estate"
   },
   {
    "t": "bullets",
@@ -1134,7 +1297,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — SCADA, vendor islands and the public layer"
+   "x": "Integration surface — SCADA, vendor islands and the public layer",
+   "sub": "What the estate touches, honestly named"
   },
   {
    "t": "p",
@@ -1167,7 +1331,8 @@
   },
   {
    "t": "h2",
-   "x": "Public-exposure governance overlay"
+   "x": "Public-exposure governance overlay",
+   "sub": "Privacy, transparency and the accountability file"
   },
   {
    "t": "p",
@@ -1197,6 +1362,44 @@
   {
    "t": "note",
    "x": "Vendor islands are inventoried with their protocols and support horizons: a vendor approaching end-of-support triggers an integration plan, because the island nobody can see into is the one that fails during the event."
+  },
+  {
+   "t": "h2",
+   "x": "Public infrastructure fails publicly",
+   "sub": "Segmented OT, brokered crossings and fail-safe defaults — the architecture for infrastructure that cannot hide its outages",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Infrastructure programs fail differently from factories: the failure is public, the stakeholders are citizens, and the outage makes the news before it makes the incident review. The architecture assumes it — OT segmentation with SCADA on segregated, OT-grade infrastructure, SIL-rated safety systems that stay separate from everything digital, and controlled IT-OT crossings brokered through a monitored boundary rather than firewalled folklore. Fail-safe defaults are designed per service: when the analytics layer is unreachable, the crossing gates, signals and public interfaces degrade to their safe state by construction, not by runbook heroics.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Continuity is measured as service SLOs per public service (crossings, pumps, signage, ticketing), the privacy engine anonymizes citizen sensing at the edge before data leaves the asset, and the console reads continuity and crossing posture. The release gate before cutover is a rehearsed degraded-mode drill — because the architecture is proven by what it does when the cloud layer is down, not by what it does when everything works.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "OT-grade segmentation",
+     "SCADA segregated, SIL-rated safety separate, crossings brokered."
+    ],
+    [
+     "Fail-safe by construction",
+     "Degraded modes are designed defaults, not runbook heroics."
+    ],
+    [
+     "Service SLOs, public-facing",
+     "Continuity measured per citizen service, trended."
+    ],
+    [
+     "Edge privacy",
+     "Citizen sensing anonymized before data leaves the asset."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1322,6 +1525,23 @@
    "url": "/case-studies/mfg-03/",
    "tag": "Evidence",
    "desc": "Connected machines to connected margin — service revenue attach up 3x."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A crop insurer",
+   "url": "/case-studies/ins-09/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A container-terminal operator",
+   "url": "/case-studies/log-02/",
+   "ind": "Logistics & Supply Chain"
+  },
+  {
+   "title": "A Middle East operator group",
+   "url": "/case-studies/tel-02/",
+   "ind": "Telecom, Media & Entertainment"
   }
  ]
 }

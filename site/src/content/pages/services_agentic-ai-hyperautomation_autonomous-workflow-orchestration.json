@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "Workflows fail on week three, not in the demo"
+   "x": "Long-running workflows fail on week three — by design, not by accident",
+   "sub": "Partial failure, duplicate triggers and calendar edges are normal operating events"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that turn orchestration into case debt"
+   "x": "Four failure modes that turn orchestration into case debt",
+   "sub": "How silent stranding, timer amnesia, double-firing and improvised undo compound into backlog"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — durable state and choreographed escalation"
+   "x": "Reference architecture — durable state and choreographed escalation",
+   "sub": "Durable executor, first-class timers, coded compensation and a hash-linked trail"
   },
   {
    "t": "p",
@@ -89,7 +92,8 @@
     {
      "id": "api",
      "lane": 0,
-     "label": "Case intake"
+     "label": "Case intake",
+     "sub": "typed request objects"
     },
     {
      "id": "bus",
@@ -105,19 +109,22 @@
      "id": "def",
      "lane": 1,
      "label": "Workflow definitions",
-     "hot": true
+     "hot": true,
+     "sub": "versioned, testable artifacts"
     },
     {
      "id": "exec",
      "lane": 1,
      "label": "Durable executor",
-     "hot": true
+     "hot": true,
+     "sub": "resumes past partial failure"
     },
     {
      "id": "state",
      "lane": 1,
      "label": "State store",
-     "hot": true
+     "hot": true,
+     "sub": "durable, versioned per case"
     },
     {
      "id": "retry",
@@ -133,13 +140,15 @@
      "id": "comp",
      "lane": 2,
      "label": "Compensation logic",
-     "hot": true
+     "hot": true,
+     "sub": "tested undo, not improvised"
     },
     {
      "id": "policy",
      "lane": 3,
      "label": "Escalation policy",
-     "hot": true
+     "hot": true,
+     "sub": "timers route, nothing strands"
     },
     {
      "id": "sla",
@@ -170,7 +179,8 @@
      "id": "trail",
      "lane": 5,
      "label": "State-transition trail",
-     "hot": true
+     "hot": true,
+     "sub": "every hop, hash-linked"
     },
     {
      "id": "query",
@@ -267,11 +277,26 @@
      "label": "reconstruct"
     }
    ],
-   "note": "Compensation logic is a first-class artifact: every non-idempotent step has a defined undo, tested in the chaos drills, not improvised during an incident."
+   "note": "Compensation logic is a first-class artifact: every non-idempotent step has a defined undo, tested in the chaos drills, not improvised during an incident.",
+   "badges": [
+    {
+     "label": "On-time completion",
+     "value": "93%"
+    },
+    {
+     "label": "Zombie cases after drills",
+     "value": "0"
+    },
+    {
+     "label": "Duplicate side effects",
+     "value": "0"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "A case under failure — the recovery path in motion"
+   "x": "A case under failure — the recovery path in motion",
+   "sub": "Injected partial failure, step-boundary resume and the escalation handoff"
   },
   {
    "t": "p",
@@ -294,7 +319,8 @@
   },
   {
    "t": "h2",
-   "x": "The orchestration console — recovery posture on one screen"
+   "x": "The orchestration console — recovery posture on one screen",
+   "sub": "Zombies, timer debt and retry budgets as the ops desk reads them"
   },
   {
    "t": "p",
@@ -597,7 +623,8 @@
   },
   {
    "t": "h2",
-   "x": "Completion and recovery under injected failure"
+   "x": "Completion and recovery under injected failure",
+   "sub": "Chaos-drill results: the release evidence a cohort carries"
   },
   {
    "t": "p",
@@ -650,7 +677,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": false,
-     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: orchestration is the discipline — dozens of small automations running as one auditable workforce, with escalations designed rather than improvised.",
+     "hook": "KYC refresh backlogs, sanctions-alert triage and reconcile-everything month-ends are high-volume, rule-bounded and examinable — exactly the workload where role-scoped agents out-perform both manual desks and brittle RPA.",
      "plays": [
       "Durable workflow state with replay from any checkpoint",
       "Idempotent side effects under duplicate triggers and partial failure",
@@ -658,25 +685,40 @@
      ],
      "kpis": [
       {
-       "label": "On-time completion",
-       "value": "93%"
+       "label": "STP rate, agent-handled ops",
+       "value": "58%"
       },
       {
-       "label": "Zombie cases",
-       "value": "4"
+       "label": "Checkpoint fidelity at audit sampling",
+       "value": "96%"
       },
       {
-       "label": "Duplicate side effects",
-       "value": "0"
+       "label": "Cost per completed action",
+       "value": "$0.35"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/banking-financial-services/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "KYC/case suites and watchlist tools",
+      "SWIFT gpi and payment-rail events",
+      "SR 11-7 / OCC 2011-12 evidence"
+     ],
+     "evidence": [
+      {
+       "title": "A top-10 European retail bank",
+       "url": "/case-studies/bank-01/"
+      },
+      {
+       "title": "A multinational corporate bank",
+       "url": "/case-studies/bank-02/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": false,
-     "hook": "Ask what fraud industrialized against manual detection costs Insurance & Risk firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "FNOL intake, submission triage and reserve refresh run on ACORD-coded documents and PAS queues that surge at catastrophe season — agent pools absorb the surge while adjusters keep the judgment calls, with every step logged.",
      "plays": [
       "Durable workflow state with replay from any checkpoint",
       "Idempotent side effects under duplicate triggers and partial failure",
@@ -684,25 +726,40 @@
      ],
      "kpis": [
       {
-       "label": "On-time completion",
-       "value": "93%"
+       "label": "Claims auto-adjudicated to settlement",
+       "value": "59%"
       },
       {
-       "label": "Zombie cases",
-       "value": "4"
+       "label": "FNOL intake cycle time",
+       "value": "7 hrs"
       },
       {
-       "label": "Duplicate side effects",
-       "value": "0"
+       "label": "Adjuster override rate",
+       "value": "10%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/insurance/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "PAS/claims suites (Guidewire-class)",
+      "ACORD forms and ISO claim codes",
+      "NAIC market-conduct evidence"
+     ],
+     "evidence": [
+      {
+       "title": "A top-5 global P&C insurer",
+       "url": "/case-studies/ins-01/"
+      },
+      {
+       "title": "A leading life insurer (North America)",
+       "url": "/case-studies/ins-02/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": true,
-     "hook": "Healthcare & Life Sciences operators recognize the pattern: prior authorization and RCM friction, quarter after quarter.",
+     "hook": "Prior authorization, claims status and denials follow-up drown coding and RCM teams in X12 278/837 transactions and payer-portal hunts — agents that read the rule set, assemble the packet and log every step give the queue an owner.",
      "plays": [
       "Durable workflow state with replay from any checkpoint",
       "Idempotent side effects under duplicate triggers and partial failure",
@@ -710,25 +767,40 @@
      ],
      "kpis": [
       {
-       "label": "On-time completion",
-       "value": "93%"
+       "label": "Prior-auth auto-approval share",
+       "value": "26%"
       },
       {
-       "label": "Zombie cases",
-       "value": "4"
+       "label": "Denials follow-up queue age p90",
+       "value": "7 days"
       },
       {
-       "label": "Duplicate side effects",
-       "value": "0"
+       "label": "Action replay coverage",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "EHR/RCM estates (Epic-class)",
+      "HL7 FHIR + X12 278/837",
+      "HIPAA audit controls"
+     ],
+     "evidence": [
+      {
+       "title": "A national health insurer",
+       "url": "/case-studies/hc-02/"
+      },
+      {
+       "title": "A European biopharma group",
+       "url": "/case-studies/hc-03/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — maintenance planning reactive included — and prove it moved.",
+     "hook": "Maintenance planners and quality engineers live in SAP PM work orders, MES transactions and supplier ASN exceptions — automation earns its keep here only when it clears the backlog without touching the safety-rated path.",
      "plays": [
       "Durable workflow state with replay from any checkpoint",
       "Idempotent side effects under duplicate triggers and partial failure",
@@ -736,25 +808,40 @@
      ],
      "kpis": [
       {
-       "label": "On-time completion",
-       "value": "93%"
+       "label": "Work orders auto-dispositioned",
+       "value": "42%"
       },
       {
-       "label": "Zombie cases",
-       "value": "4"
+       "label": "NCR closure cycle",
+       "value": "15 days"
       },
       {
-       "label": "Duplicate side effects",
-       "value": "0"
+       "label": "Actions with sealed evidence packet",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/manufacturing/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "SAP PM / CMMS work orders",
+      "MES context via ISA-95",
+      "IATF 16949 NCR-CAPA flows"
+     ],
+     "evidence": [
+      {
+       "title": "A global automotive OEM",
+       "url": "/case-studies/mfg-01/"
+      },
+      {
+       "title": "A packaging producer",
+       "url": "/case-studies/mfg-10/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": "Ask what supplier collaboration by email costs Retail & Consumer Goods firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "EDI 850/855/856 exceptions, trade-promotion deduction disputes and supplier onboarding are pure document-and-decision churn across GS1 identifiers — the queue shrinks fastest when agents work the exception list under merchandiser-approved checkpoints.",
      "plays": [
       "Durable workflow state with replay from any checkpoint",
       "Idempotent side effects under duplicate triggers and partial failure",
@@ -762,25 +849,40 @@
      ],
      "kpis": [
       {
-       "label": "On-time completion",
-       "value": "93%"
+       "label": "PO exceptions auto-resolved",
+       "value": "56%"
       },
       {
-       "label": "Zombie cases",
-       "value": "4"
+       "label": "Deduction dispute cycle",
+       "value": "13 days"
       },
       {
-       "label": "Duplicate side effects",
-       "value": "0"
+       "label": "Agent actions reconciled to ERP",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "EDI 850/855/856 + GS1 GTIN",
+      "ERP order ledgers (SAP Retail-class)",
+      "Trade-promotion deduction systems"
+     ],
+     "evidence": [
+      {
+       "title": "A top-3 grocery retailer (800+ stores)",
+       "url": "/case-studies/ret-01/"
+      },
+      {
+       "title": "A home-improvement retailer",
+       "url": "/case-studies/ret-08/"
+      }
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": true,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Order fallout between OSS/BSS layers, usage-dispute tickets and churn-save queues are where TM Forum Open API journeys break — durable orchestration re-drives the fallout and hands judgment calls to humans with context attached.",
      "plays": [
       "Durable workflow state with replay from any checkpoint",
       "Idempotent side effects under duplicate triggers and partial failure",
@@ -788,25 +890,40 @@
      ],
      "kpis": [
       {
-       "label": "On-time completion",
-       "value": "93%"
+       "label": "Order fallout auto-recovered",
+       "value": "50%"
       },
       {
-       "label": "Zombie cases",
-       "value": "4"
+       "label": "Repeat-fallout rate",
+       "value": "6%"
       },
       {
-       "label": "Duplicate side effects",
-       "value": "0"
+       "label": "Usage disputes closed within SLA",
+       "value": "89%"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/telecom-media/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "OSS/BSS order orchestration",
+      "TM Forum Open APIs (TMF622/641)",
+      "Campaign and churn platforms"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-1 European operator",
+       "url": "/case-studies/tel-01/"
+      },
+      {
+       "title": "A North American cable operator",
+       "url": "/case-studies/tel-03/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — trading and scheduling decisions at market speed included — and prove it moved.",
+     "hook": "Outage tickets, switch-order packets, market-submission checks and billing exceptions stack across OMS/EMS and CIS estates — the wins sit in bounded, auditable workflows where a wrong write is recoverable and every action is logged.",
      "plays": [
       "Durable workflow state with replay from any checkpoint",
       "Idempotent side effects under duplicate triggers and partial failure",
@@ -814,25 +931,40 @@
      ],
      "kpis": [
       {
-       "label": "On-time completion",
-       "value": "93%"
+       "label": "Field work orders auto-routed",
+       "value": "48%"
       },
       {
-       "label": "Zombie cases",
-       "value": "4"
+       "label": "Outage-ticket backlog age p90",
+       "value": "30 hrs"
       },
       {
-       "label": "Duplicate side effects",
-       "value": "0"
+       "label": "Switch-order packet completeness",
+       "value": "98%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/energy-utilities/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "OMS/EMS and CIS estates",
+      "NERC and market-submission calendars",
+      "Field-service scheduling"
+     ],
+     "evidence": [
+      {
+       "title": "A European TSO-DSO group",
+       "url": "/case-studies/en-01/"
+      },
+      {
+       "title": "A global integrated energy major",
+       "url": "/case-studies/en-02/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": true,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Missed appointments, failed EDI messages, customs holds and detention disputes across TMS/WMS/telematics feeds — agentic pools triage, re-drive and document exceptions so the control tower shows truth, not noise.",
      "plays": [
       "Durable workflow state with replay from any checkpoint",
       "Idempotent side effects under duplicate triggers and partial failure",
@@ -840,25 +972,40 @@
      ],
      "kpis": [
       {
-       "label": "On-time completion",
+       "label": "Exceptions auto-triaged",
+       "value": "59%"
+      },
+      {
+       "label": "Detention disputes resolved in",
+       "value": "9 days"
+      },
+      {
+       "label": "EDI messages re-driven in window",
        "value": "93%"
-      },
-      {
-       "label": "Zombie cases",
-       "value": "4"
-      },
-      {
-       "label": "Duplicate side effects",
-       "value": "0"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "TMS/WMS/telematics event feeds",
+      "EDIFACT / X12 carrier messages",
+      "Customs and HS documentation"
+     ],
+     "evidence": [
+      {
+       "title": "A global 3PL (40+ countries)",
+       "url": "/case-studies/log-01/"
+      },
+      {
+       "title": "A parcel network operator",
+       "url": "/case-studies/log-06/"
+      }
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Permit, benefit and FOIA case backlogs move at the pace of document assembly and eligibility checks — agents that pre-fill, verify and route cut cycle time while every decision keeps a citable evidence trail for oversight bodies.",
      "plays": [
       "Durable workflow state with replay from any checkpoint",
       "Idempotent side effects under duplicate triggers and partial failure",
@@ -866,25 +1013,40 @@
      ],
      "kpis": [
       {
-       "label": "On-time completion",
-       "value": "93%"
+       "label": "Cases auto-assembled for review",
+       "value": "34%"
       },
       {
-       "label": "Zombie cases",
-       "value": "4"
+       "label": "Permit cycle-time reduction",
+       "value": "45%"
       },
       {
-       "label": "Duplicate side effects",
-       "value": "0"
+       "label": "Decisions with citable evidence trail",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/public-sector/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "Permit/benefit case systems",
+      "FOIA and records statutory clocks",
+      "Budget and procurement controls"
+     ],
+     "evidence": [
+      {
+       "title": "A national digital-government agency",
+       "url": "/case-studies/pub-01/"
+      },
+      {
+       "title": "A national tax administration",
+       "url": "/case-studies/pub-02/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "Ask what administrative burden on faculty costs Education & Research firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Admissions processing, aid-verification packets and grant-administration reporting scale with enrollment cycles — role-scoped agents clear the routine files and route judgment calls to registrars and aid officers with full context.",
      "plays": [
       "Durable workflow state with replay from any checkpoint",
       "Idempotent side effects under duplicate triggers and partial failure",
@@ -892,25 +1054,40 @@
      ],
      "kpis": [
       {
-       "label": "On-time completion",
-       "value": "93%"
+       "label": "Applications auto-processed",
+       "value": "47%"
       },
       {
-       "label": "Zombie cases",
-       "value": "4"
+       "label": "Verification packet cycle",
+       "value": "5 days"
       },
       {
-       "label": "Duplicate side effects",
-       "value": "0"
+       "label": "Staff hours returned per week",
+       "value": "205"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/education-research/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "SIS estates (Banner-class)",
+      "Aid verification workflows",
+      "Grant reporting portals"
+     ],
+     "evidence": [
+      {
+       "title": "A public research university (38,000 students)",
+       "url": "/case-studies/edu-01/"
+      },
+      {
+       "title": "An online university",
+       "url": "/case-studies/edu-06/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": false,
-     "hook": "Ask what support and success scale linearly costs Technology & SaaS firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Support triage, entitlement checks and renewal-desk workflows scale linearly with ARR unless an agent layer absorbs the repeatable steps — with checkpoints where account teams keep pricing judgment and CRM history stays structured.",
      "plays": [
       "Durable workflow state with replay from any checkpoint",
       "Idempotent side effects under duplicate triggers and partial failure",
@@ -918,25 +1095,40 @@
      ],
      "kpis": [
       {
-       "label": "On-time completion",
-       "value": "93%"
+       "label": "Tickets auto-triaged",
+       "value": "67%"
       },
       {
-       "label": "Zombie cases",
-       "value": "4"
+       "label": "First-response time",
+       "value": "5 min"
       },
       {
-       "label": "Duplicate side effects",
-       "value": "0"
+       "label": "Entitlement checks automated",
+       "value": "90%"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/technology-saas/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "ITSM/CRM (ServiceNow-class)",
+      "CPQ and entitlement registries",
+      "SOC 2 evidence controls"
+     ],
+     "evidence": [
+      {
+       "title": "A consumer fintech (8M users)",
+       "url": "/case-studies/tech-02/"
+      },
+      {
+       "title": "An enterprise IT services firm",
+       "url": "/case-studies/tech-07/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "Ask what input and logistics planning manual costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Contract management, grading certificates, subsidy dossiers and harvest-logistics planning run on seasonal surges — agent pools absorb the surge with checkpoints where agronomists and traders keep commercial judgment.",
      "plays": [
       "Durable workflow state with replay from any checkpoint",
       "Idempotent side effects under duplicate triggers and partial failure",
@@ -944,26 +1136,32 @@
      ],
      "kpis": [
       {
-       "label": "On-time completion",
-       "value": "93%"
+       "label": "Contract milestones auto-tracked",
+       "value": "67%"
       },
       {
-       "label": "Zombie cases",
-       "value": "4"
+       "label": "Certification doc prep time",
+       "value": "10 hrs"
       },
       {
-       "label": "Duplicate side effects",
-       "value": "0"
+       "label": "Subsidy dossier completeness",
+       "value": "99%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/"
+     "capUrl": "/industries/agriculture-food/capabilities/agentic-ai-hyperautomation/",
+     "systems": [
+      "Procurement and contract ledgers",
+      "Certification schemes (GLOBALG.A.P.-class)",
+      "Subsidy and traceability portals"
+     ]
     }
    ],
    "practiceNote": "Autonomous Workflow Orchestration view: long-running workflows with durable state, recovery by design, escalation choreography and audit — orchestration that survives partial failure as a normal event."
   },
   {
    "t": "h2",
-   "x": "Orchestration defaults — and when we deviate"
+   "x": "Orchestration defaults — and when we deviate",
+   "sub": "The default engine and patterns, and the deviations we sign for"
   },
   {
    "t": "p",
@@ -1007,7 +1205,8 @@
   },
   {
    "t": "h2",
-   "x": "Orchestration release gates — evidence before production load"
+   "x": "Orchestration release gates — evidence before production load",
+   "sub": "What must be proven before production volume touches the workflow"
   },
   {
    "t": "table",
@@ -1047,7 +1246,8 @@
   },
   {
    "t": "h2",
-   "x": "What the platform and process teams inherit"
+   "x": "What the platform and process teams inherit",
+   "sub": "Definitions-as-code, drill calendar, escalation desk runbooks"
   },
   {
    "t": "bullets",
@@ -1080,7 +1280,8 @@
   },
   {
    "t": "h2",
-   "x": "Durability first, week by week"
+   "x": "Durability first, week by week",
+   "sub": "The build sequence, from state model to chaos certification"
   },
   {
    "t": "bullets",
@@ -1113,7 +1314,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — queues, systems and the escalation desk"
+   "x": "Integration surface — queues, systems and the escalation desk",
+   "sub": "Where workflows touch systems — and where they must not"
   },
   {
    "t": "p",
@@ -1146,7 +1348,8 @@
   },
   {
    "t": "h2",
-   "x": "Governance overlay — the audit trail of a running process"
+   "x": "Governance overlay — the audit trail of a running process",
+   "sub": "The state-transition trail as an examinable artifact"
   },
   {
    "t": "p",
@@ -1176,6 +1379,44 @@
   {
    "t": "note",
    "x": "Chaos drills are part of the gate evidence: injected failures at design load are run before promotion, and the recovery traces ship with the release."
+  },
+  {
+   "t": "h2",
+   "x": "Partial failure is a normal operating event",
+   "sub": "Durable execution semantics — and the compensation design that makes recovery boring",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "A workflow that spans an ERP, a document service and three human tasks will experience partial failure every week, and the design question is not whether to fail but what state means when it does. Durable execution is the answer: the orchestrator persists a versioned state record at every step boundary, and a crashed executor resumes from the last boundary with its inputs intact. Timers are first-class — an SLA clock that fires at 14:00 re-drives the case whether or not anyone remembered it — and duplicate triggers collapse through the same idempotency discipline the agent runtime uses.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Compensation is where amateur orchestrations die. Every non-idempotent step carries a defined undo: the reversal is coded, tested in chaos drills and rehearsed against production-shaped data before go-live. Zombie detection closes the loop — a case with no state transition for N hours is surfaced to the escalation desk with its trail attached, so nothing strands silently. The chaos drill is the release gate that matters: injected failures at every step boundary, and the recovery path must complete before the cohort advances.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Step-boundary persistence",
+     "Versioned state at every boundary; a crashed executor resumes, it does not restart."
+    ],
+    [
+     "First-class timers",
+     "SLA clocks re-drive cases without human memory; timers are tested, not configured."
+    ],
+    [
+     "Coded compensation",
+     "Every non-idempotent step has a tested undo — rehearsed, not improvised."
+    ],
+    [
+     "Zombie detection",
+     "No-transition-for-N-hours cases surface to the escalation desk with full trail."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1301,6 +1542,23 @@
    "url": "/case-studies/edu-01/",
    "tag": "Evidence",
    "desc": "Retention +4.1 points in target cohorts — early-warning to advising loop."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A top-10 European retail bank",
+   "url": "/case-studies/bank-01/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A top-5 global P&C insurer",
+   "url": "/case-studies/ins-01/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A global 3PL (40+ countries)",
+   "url": "/case-studies/log-01/",
+   "ind": "Logistics & Supply Chain"
   }
  ]
 }

@@ -1,0 +1,435 @@
+#!/usr/bin/env python3
+"""Pack: Quantum & Advanced Compute (dom=quantum-advanced-compute)."""
+
+DOM = "quantum-advanced-compute"
+
+HOOKS = {
+    "banking-financial-services": "Portfolio optimization and fraud-graph problems worth benchmarking — with PQC migration the urgent item, because harvest-now-decrypt-later already applies to your archives.",
+    "insurance": "Risk-pool optimization and catastrophe simulation on HPC today; quantum-assisted sampling benchmarked honestly against the classical baseline you already run.",
+    "healthcare-life-sciences": "Molecular simulation and clinical optimization on HPC estates today, with quantum chemistry screens run on paper before any hardware bill.",
+    "manufacturing": "Scheduling and materials simulation on HPC today — with hybrid optimization harnesses that prove advantage per instance, not per keynote.",
+    "retail-consumer-goods": "Assortment and network-flow optimization with classical-first discipline; PQC readiness for the payment and loyalty archives.",
+    "telecom-media": "Network optimization and signal workloads benchmarked classically; crypto-agility planning for the estate that must outlive the qubit timeline.",
+    "energy-utilities": "Grid optimization and materials modeling with verifiable benchmarks; PQC for OT estates whose components outlive the migration window.",
+    "logistics-supply-chain": "Routing and load-building optimization with honest hybrid benchmarks — and crypto inventory started before the migration deadline finds you.",
+    "public-sector": "Sovereign compute strategy with kill criteria: classical baselines required, PQC migration for citizen archives, and no roadmap without verifiable criteria.",
+    "education-research": "Research compute estates that serve science: benchmarked HPC ensembles, quantum-access programs with reproducibility discipline, and honest capability ledgers.",
+    "technology-saas": "Emerging-compute scouting with claim validation before spend; crypto-agility as a product requirement for everything you sign.",
+    "agriculture-food": "Yield and logistics optimization on classical baselines; PQC readiness for subsidy and certification archives that must stay confidential for decades.",
+}
+
+KPIS = {
+    "banking-financial-services": [
+        ("Instances with verified advantage", 0, 8, "num"),
+        ("PQC inventory coverage", 62, 92, "pct"),
+        ("Benchmark reproducibility", 95, 100, "pct"),
+    ],
+    "insurance": [
+        ("Simulation cost per scenario cut", 18, 45, "pct"),
+        ("Hybrid benchmark advantage", 0, 6, "num"),
+        ("Crypto inventory coverage", 58, 90, "pct"),
+    ],
+    "healthcare-life-sciences": [
+        ("Ensemble cost per solve cut", 15, 42, "pct"),
+        ("Quantum screens with validated claims", 100, 100, "pct"),
+        ("Reproducibility pass rate", 95, 100, "pct"),
+    ],
+    "manufacturing": [
+        ("Scheduling makespan improvement", 3, 14, "pct"),
+        ("Verified advantage instances", 0, 5, "num"),
+        ("PQC OT-estate coverage", 45, 85, "pct"),
+    ],
+    "retail-consumer-goods": [
+        ("Network-flow cost improvement", 2, 11, "pct"),
+        ("Classical baseline beaten, verified", 0, 4, "num"),
+        ("Crypto inventory coverage", 55, 88, "pct"),
+    ],
+    "telecom-media": [
+        ("Optimization benchmark wins, verified", 0, 4, "num"),
+        ("Crypto-agility coverage", 60, 92, "pct"),
+        ("Benchmark reproducibility", 95, 100, "pct"),
+    ],
+    "energy-utilities": [
+        ("Grid optimization improvement, verified", 2, 9, "pct"),
+        ("OT PQC inventory coverage", 50, 88, "pct"),
+        ("Benchmark harness coverage", 90, 100, "pct"),
+    ],
+    "logistics-supply-chain": [
+        ("Routing improvement, verified", 2, 10, "pct"),
+        ("Hybrid benchmark advantage", 0, 5, "num"),
+        ("Crypto inventory started", 60, 95, "pct"),
+    ],
+    "public-sector": [
+        ("Use cases passing classical baseline", 0, 3, "num"),
+        ("PQC migration waves on schedule", 85, 100, "pct"),
+        ("Evidence memos per decision", 100, 100, "pct"),
+    ],
+    "education-research": [
+        ("Application benchmark coverage", 88, 100, "pct"),
+        ("Ensemble reproducibility", 95, 100, "pct"),
+        ("Capability ledger currency", 90, 100, "pct"),
+    ],
+    "technology-saas": [
+        ("Vendor claims validated", 70, 100, "pct"),
+        ("Crypto-agility product coverage", 65, 95, "pct"),
+        ("Decision memos with revisit dates", 100, 100, "pct"),
+    ],
+    "agriculture-food": [
+        ("Logistics optimization improvement", 2, 9, "pct"),
+        ("Archive PQC coverage", 55, 90, "pct"),
+        ("Benchmark reproducibility", 95, 100, "pct"),
+    ],
+}
+
+SYSTEMS = {
+    "banking-financial-services": ["Portfolio optimization benchmarks", "Crypto inventory (CISA-class)", "HPC risk-simulation estates"],
+    "insurance": ["Catastrophe HPC ensembles", "Quantum access programs", "Crypto inventory"],
+    "healthcare-life-sciences": ["Molecular simulation stacks", "Quantum chemistry screens", "Reproducibility harnesses"],
+    "manufacturing": ["Scheduling solvers + harnesses", "Materials simulation", "OT crypto inventory"],
+    "retail-consumer-goods": ["Network-flow solvers", "Benchmark harness", "Crypto inventory"],
+    "telecom-media": ["Network optimization estates", "Crypto-agility registry", "Benchmark harnesses"],
+    "energy-utilities": ["Grid optimization harnesses", "Materials modeling", "OT crypto inventory"],
+    "logistics-supply-chain": ["Routing solvers + baselines", "QUBO/Ising builders", "Crypto inventory"],
+    "public-sector": ["Sovereign compute strategy", "PQC migration waves", "Evidence memo system"],
+    "education-research": ["HPC partitions + schedulers", "Quantum access programs", "Benchmark libraries"],
+    "technology-saas": ["Claim validation lab", "Crypto-agility registry", "Benchmark harness"],
+    "agriculture-food": ["Logistics solvers", "Archive crypto inventory", "Benchmark harness"],
+}
+
+COMMON_SUBS = {
+    "Problem library": "shaped, scored, owned",
+    "Hybrid job orchestrator": "classical + quantum, timed",
+    "HPC clusters": "partitioned, benchmarked",
+    "Benchmark harness": "pinned instances, replay",
+    "PQC migration": "waves with evidence",
+    "Crypto inventory": "discovered, not guessed",
+    "Tech landscape scan": "claims, not press releases",
+    "Claim validation": "reproduce or reject",
+    "Workload shapes": "typed, benchmarked",
+    "Decision memos": "verdict + revisit date",
+    "Revisit dates": "calendar-enforced",
+    "CPU/GPU partitions": "benchmarked per class",
+    "Solver library": "versioned, pinned",
+    "Ensemble orchestration": "reproducible, seeded",
+    "Application benchmarks": "per workload class",
+    "Cost per solve": "the headline number",
+    "Harvest-risk model": "exposure dated per asset",
+    "PQC algorithm rollout": "hybrid, standards-first",
+    "Interoperability tests": "before each wave",
+    "Algorithm registry": "approved set, versioned",
+    "Circuit design": "ansatz on paper first",
+    "Classical surrogates": "trained per problem",
+    "Sim-hardware check": "agreement, gated",
+    "vs-classical compare": "honest, pinned",
+    "Capability ledger": "what works, dated",
+    "Classical baseline": "formal challenger, always",
+    "QUBO/Ising builder": "encoding decided first",
+    "Hybrid iteration": "quantum + classical loop",
+    "Classical polish": "solvers finish the job",
+    "Pinned benchmark": "instances never change",
+    "Advantage ledger": "verified wins, only",
+    "Verifiable criteria": "written before spend",
+    "Independent benchmarks": "third-party, pinned",
+    "Evidence memos": "every claim, filed",
+}
+
+PAGES = {
+    "services_quantum-advanced-compute": {
+        "archsubs": {
+            "Problem library": "shaped, scored, owned",
+            "Hybrid job orchestrator": "classical + quantum, timed",
+            "HPC clusters": "partitioned, benchmarked",
+            "Benchmark harness": "pinned instances, replay",
+            "PQC migration": "waves with evidence",
+            "Crypto inventory": "discovered, not guessed",
+        },
+        "badges": [
+            ("Advantage claims", "verified only"),
+            ("PQC", "the urgent practice"),
+            ("Industries served", "12"),
+        ],
+        "deep": {
+            "h2": "Verifiability is the discipline; everything else is marketing",
+            "sub": "Pinned benchmarks, honest baselines and the PQC clock — how this domain earns trust",
+            "paras": [
+                "Quantum programs earn credibility through falsifiability: a pinned benchmark suite (instances that never change), a classical baseline treated as the formal challenger, and an advantage ledger that records verified wins and nothing else. The domain's working stance is classical-first — HPC and solver estates carry today's workload, hybrid harnesses test where quantum hardware helps, and the capability ledger says plainly what works, on what instance classes, as of what date. Vendor claims are validated by reproduction before they enter any roadmap; the ones that reproduce become benchmarks, the ones that do not become memos with revisit dates.",
+                "Post-quantum cryptography is the practice with a real clock: harvest-now-decrypt-later makes today's archives tomorrow's breach, so the crypto inventory starts now, migration waves are sequenced by exposure, and the deadline is regulatory and vendor-driven, not speculative. The six practices divide the work — readiness, optimization, simulation, HPC, PQC and horizon scanning — and the release gates bind them: no roadmap without verifiable criteria, no claim without a reproducible benchmark, no migration without inventory evidence.",
+            ],
+            "bullets": [
+                ("Classical first, always", "HPC and solvers carry today; quantum earns slots by benchmark."),
+                ("Pinned benchmark suite", "Instances never change; results compare across years."),
+                ("Advantage ledger", "Verified wins recorded; unverified claims become memos."),
+                ("PQC clock respected", "Inventory now, waves by exposure — the deadline is real."),
+            ],
+        },
+        "heads": {
+            "Six practices from triage to horizon scanning": ("Six practices, from triage to horizon scanning", "Readiness, optimization, simulation, HPC, PQC and advisory as one program"),
+            "Verifiability is the discipline; everything else is marketing": ("Verifiability is the discipline — everything else is marketing", "Pinned benchmarks, honest baselines and the ledger of verified advantage"),
+            "The domain reference architecture — classical first, quantum where proven": ("The domain reference architecture — classical first, quantum where proven", "Estates, harnesses and inventories in one governed map"),
+            "The program on one screen — verified advantage, not press releases": ("The program on one screen — verified advantage, not press releases", "Benchmarks, advantage and migration posture as one reading"),
+            "Where quantum actually helps — and where it does not yet": ("Where quantum actually helps — and where it does not yet", "The honest capability ledger, dated and instance-scoped"),
+            "Sector depth — where the compute practice runs deepest today": ("Sector depth — where the compute practice runs deepest today", "Twelve-industry lens with targets we sign against and the sector briefs behind them"),
+            "How compute engagements run": ("How compute engagements run", "Triage, baseline, harness, verify — the sequencing that survives"),
+            "Compute release gates — the domain contract": ("Compute release gates — the domain contract", "The evidence each gate demands; nothing advances on narrative"),
+        },
+    },
+
+    "services_quantum-advanced-compute_emerging-compute-advisory": {
+        "archsubs": {
+            "Tech landscape scan": "claims, not press releases",
+            "Claim validation": "reproduce or reject",
+            "Workload shapes": "typed, benchmarked",
+            "Decision memos": "verdict + revisit date",
+            "Revisit dates": "calendar-enforced",
+        },
+        "badges": [
+            ("Claims validated before spend", "always"),
+            ("Memos with revisit dates", "100%"),
+            ("Favorite word", "wait"),
+        ],
+        "deep": {
+            "h2": "The advisory's product is the memo — and its favorite word is 'wait'",
+            "sub": "Claim validation, workload shaping and dated revisit criteria that keep roadmaps honest",
+            "paras": [
+                "Emerging-compute advisories become procurement theater when they convert keynotes into roadmaps: the discipline runs the other direction — vendor claims are validated by reproduction (on your workload shapes, not their demo instances), landscape scans record claim provenance, and the decision memo's most common verdict is wait, with a revisit date and the criteria that would change the verdict. Workload shapes are typed and benchmarked so that when a technology does cross the threshold, the match to your actual problems is already known.",
+                "The independence overlay keeps the advisory honest: no vendor relationships that reward conclusions, evidence memos filed for every claim tested (including the ones that reproduced), and the architecture council reads verdicts with their criteria, not enthusiasm with its slide deck. The console reads claims tested, verdicts and upcoming revisit dates — the calendar is the governance.",
+            ],
+            "bullets": [
+                ("Reproduce before roadmap", "Claims tested on your workload shapes; reproduction is the entry ticket."),
+                ("Verdict 'wait' with criteria", "Every deferral carries the numbers that would change it."),
+                ("Dated revisits", "The calendar enforces reconsideration — drift-proof governance."),
+                ("Independence by design", "No rewards for conclusions; memos filed for every test."),
+            ],
+        },
+        "heads": {
+            "The advisory's product is the memo — and its favorite word is 'wait'": ("The advisory's product is the memo — and its favorite word is wait", "Claim validation, workload shaping and dated revisit criteria"),
+            "Four ways horizon scanning becomes procurement theater": ("Four ways horizon scanning becomes procurement theater", "Keynote roadmaps, untested claims, undated deferrals, vendor capture"),
+            "Reference architecture — claims testing to decision memos": ("Reference architecture — claims testing to decision memos", "Scans, validation and memos as one pipeline"),
+            "One vendor claim, from keynote to decision memo": ("One vendor claim, from keynote to decision memo", "The test path with the evidence each step files"),
+            "The advisory console — discipline as the headline": ("The advisory console — discipline as the headline", "Claims tested, verdicts and revisit dates, trended"),
+            "Claims tested and verdicts across the year": ("Claims tested and verdicts across the year", "The record the council reads"),
+            "Advisory defaults — and documented deviations": ("Advisory defaults — and documented deviations", "The default method, and where we sign deviations"),
+            "Advisory release gates — evidence before any memo": ("Advisory release gates — evidence before any memo", "What a memo must carry before it moves a decision"),
+            "What the technology office inherits": ("What the technology office inherits", "Memo library, revisit calendar and the claim registry"),
+            "Claims in order, week by week": ("Claims in order, week by week", "The operating rhythm of the advisory"),
+            "Integration surface — the estate, vendors and the architecture council": ("Integration surface — the estate, vendors and the architecture council", "What the advisory touches, honestly named"),
+            "Independence governance overlay": ("Independence governance overlay", "How the advisory stays buyable-proof"),
+        },
+    },
+
+    "services_quantum-advanced-compute_hpc-simulation-engineering": {
+        "archsubs": {
+            "CPU/GPU partitions": "benchmarked per class",
+            "Solver library": "versioned, pinned",
+            "Ensemble orchestration": "reproducible, seeded",
+            "Application benchmarks": "per workload class",
+            "Cost per solve": "the headline number",
+        },
+        "badges": [
+            ("Cost per solve", "trended down"),
+            ("Ensemble reproducibility", "seeded, pinned"),
+            ("Application benchmarks", "per class"),
+        ],
+        "deep": {
+            "h2": "Cost per solve is the headline",
+            "sub": "Benchmarked partitions, reproducible ensembles and the estate economics that fund science",
+            "paras": [
+                "HPC estates rot through folklore: partitions tuned by habit, solvers upgraded on vendor calendars, ensembles nobody can reproduce. The engineering disciplines them — partitions benchmarked per workload class with application benchmarks (not linpack alone), a solver library that is versioned and pinned with upgrade evidence, and ensemble orchestration that is seeded and reproducible: the same inputs produce the same ensemble, on demand, which is what makes simulation results citable.",
+                "Cost per solve is the headline metric because it is the number that funds the estate: per-solve cost trended by class, allocation decisions argued from it, and queue policies designed against it (a job that starves the partition for a weekend is a scheduling decision, not a right). The reproducibility overlay keeps the science honest — seeds archived, environments versioned, and the benchmark suite pinned so results compare across years rather than across press releases.",
+            ],
+            "bullets": [
+                ("Application benchmarks, not linpack", "Per-class benchmarks that reflect the workloads actually run."),
+                ("Pinned solver library", "Versioned with upgrade evidence; folklore replaced by record."),
+                ("Reproducible ensembles", "Seeded, archived, re-runnable — results stay citable."),
+                ("Cost per solve, trended", "The number that drives allocation and queue policy."),
+            ],
+        },
+        "heads": {
+            "Most 'we need quantum' conversations are really HPC conversations": ("Most quantum conversations are really HPC conversations", "Benchmarked partitions, reproducible ensembles and estate economics"),
+            "Four failure modes that rot compute estates": ("Four failure modes that rot compute estates", "Habit tuning, calendar upgrades, unreproducible ensembles, queue folklore"),
+            "Reference architecture — the benchmarked simulation estate": ("Reference architecture — the benchmarked simulation estate", "Partitions, solvers, ensembles and benchmarks as one structure"),
+            "One ensemble, from submission to verified ensemble result": ("One ensemble, from submission to verified result", "The run lifecycle with the evidence it keeps"),
+            "The HPC console — cost per solve as the headline": ("The HPC console — cost per solve as the headline", "Costs, benchmarks and queue posture as standing numbers"),
+            "Benchmark scores and cost across cluster generations": ("Benchmark scores and cost across cluster generations", "What the hardware refresh actually bought"),
+            "HPC defaults — and documented deviations": ("HPC defaults — and documented deviations", "The default patterns, and where we sign deviations"),
+            "HPC release gates — evidence before cluster changes": ("HPC release gates — evidence before cluster changes", "Benchmark evidence before any estate change"),
+            "What the computational engineering team inherits": ("What the computational engineering team inherits", "Libraries, benchmarks, consoles and the queue policy"),
+            "Benchmarks to ensembles, week by week": ("Benchmarks to ensembles, week by week", "The build sequence for the estate"),
+            "Integration surface — schedulers, storage and the simulation users": ("Integration surface — schedulers, storage and the simulation users", "What the estate touches, honestly named"),
+            "Reproducibility governance overlay": ("Reproducibility governance overlay", "Seeds, environments and the citability standard"),
+        },
+    },
+
+    "services_quantum-advanced-compute_post-quantum-cryptography": {
+        "archsubs": {
+            "Crypto inventory": "discovered, not guessed",
+            "Harvest-risk model": "exposure dated per asset",
+            "PQC algorithm rollout": "hybrid, standards-first",
+            "Interoperability tests": "before each wave",
+            "Algorithm registry": "approved set, versioned",
+        },
+        "badges": [
+            ("Inventory", "discovered, evidenced"),
+            ("Harvest-risk", "dated per asset"),
+            ("Waves", "sequenced by exposure"),
+        ],
+        "deep": {
+            "h2": "The migration deadline is real; the inventory is where programs die",
+            "sub": "Discovery, harvest-risk dating and wave sequencing — PQC as an engineering program",
+            "paras": [
+                "PQC programs fail at the inventory, not the algorithms: nobody can migrate what nobody can find, and the code estates, vendor products and PKI dependencies hide crypto the way technical debt hides — behind every interface. The program therefore starts with discovery as an engineering exercise: automated scanning of code estates, dependency graphs and vendor attestations, reconciled into a crypto inventory with named owners and dates. The harvest-risk model then dates the exposure per asset — how long the secret must stay confidential, and therefore when it must be migrated — because a signing key that expires next year and an archive that must stay secret for twenty years have different clocks.",
+                "Migration waves are sequenced by exposure, not by convenience: hybrid deployments (classical plus PQC) run standards-first from the approved algorithm registry, interoperability tests gate every wave (a vendor product that breaks under hybrid is found in the lab, not in production), and the console reads coverage by estate segment with the wave calendar. The vendor-dependency overlay tracks attestations and roadmap commitments, because your migration is hostage to theirs.",
+            ],
+            "bullets": [
+                ("Discovered, not guessed", "Automated crypto discovery across code, dependencies and vendor products."),
+                ("Harvest-risk dating", "Exposure dated per asset; archives and keys on different clocks."),
+                ("Hybrid, standards-first", "Classical plus PQC from the approved registry — no crypto inventing."),
+                ("Interoperability gates", "Vendor products proven in the lab before each wave."),
+            ],
+        },
+        "heads": {
+            "The migration deadline is real; the inventory is where programs die": ("The migration deadline is real — the inventory is where programs die", "Discovery, harvest-risk dating and waves sequenced by exposure"),
+            "Four failure modes that stall PQC migrations": ("Four failure modes that stall PQC migrations", "Hidden crypto, undated exposure, algorithm improvisation, vendor surprise"),
+            "Reference architecture — inventory to migration waves": ("Reference architecture — inventory to migration waves", "Discovery, risk model, rollout and the registry as one system"),
+            "One endpoint, from discovery to migrated": ("One endpoint, from discovery to migrated", "The path with the evidence each step keeps"),
+            "The PQC console — exposure as the headline": ("The PQC console — exposure as the headline", "Coverage by segment and exposure clocks, trended"),
+            "Migration coverage by estate segment": ("Migration coverage by estate segment", "Where the estate stands, segment by segment"),
+            "Migration defaults — and documented deviations": ("Migration defaults — and documented deviations", "The default patterns, and where we sign deviations"),
+            "Migration release gates — evidence before each wave": ("Migration release gates — evidence before each wave", "Interoperability evidence before production cutover"),
+            "What the crypto migration team inherits": ("What the crypto migration team inherits", "Inventory, waves, registry and the attestation tracker"),
+            "Waves sequenced, week by week": ("Waves sequenced, week by week", "The migration cadence"),
+            "Integration surface — code estates, vendor products and PKI": ("Integration surface — code estates, vendor products and PKI", "What migration touches, honestly named"),
+            "Vendor-dependency governance overlay": ("Vendor-dependency governance overlay", "Attestations and roadmaps, tracked to dates"),
+        },
+    },
+
+    "services_quantum-advanced-compute_quantum-ml-simulation": {
+        "archsubs": {
+            "Circuit design": "ansatz on paper first",
+            "Classical surrogates": "trained per problem",
+            "Sim-hardware check": "agreement, gated",
+            "vs-classical compare": "honest, pinned",
+            "Capability ledger": "what works, dated",
+        },
+        "badges": [
+            ("Trainability on paper first", "always"),
+            ("Hardware agreement", "gated"),
+            ("Claims", "ledger-backed only"),
+        ],
+        "deep": {
+            "h2": "Trainability is discovered on paper, not after the GPU bill",
+            "sub": "Ansatz screens, surrogates and the agreement gate — quantum simulation without the seduction",
+            "paras": [
+                "Quantum-ML programs get seduced when enthusiasm meets hardware access: circuits run before trainability is assessed, barren plateaus eat the budget, and the program has a notebook full of losses and no claim. The discipline screens on paper first — ansatz expressibility and trainability assessed analytically (scaling of gradients, parameter counts, noise sensitivity) before any hardware reservation. Classical surrogates are trained per problem as both baseline and triage: if the surrogate answers the question, the quantum run is unnecessary; if it cannot, the screen says why the quantum attempt might.",
+                "The agreement gate keeps claims honest: simulator and hardware results must agree within stated tolerances before any comparison to classical baselines counts, and the versus-classical compare runs on pinned instances with the honest benchmark discipline. The capability ledger records what demonstrably works — which problem classes, what tolerance, what date — and the claim gate means nothing leaves the lab as a claim without a ledger entry.",
+            ],
+            "bullets": [
+                ("Screens before hardware", "Trainability and expressibility assessed analytically first."),
+                ("Surrogates as baseline and triage", "If the classical surrogate answers, the quantum run is unnecessary."),
+                ("Agreement gate", "Simulator-hardware agreement before any classical comparison counts."),
+                ("Ledger-backed claims only", "Nothing leaves the lab without a dated capability entry."),
+            ],
+        },
+        "heads": {
+            "Trainability is discovered on paper, not after the GPU bill": ("Trainability is discovered on paper — not after the GPU bill", "Ansatz screens, classical surrogates and the agreement gate"),
+            "Four ways quantum-ML programs get seduced": ("Four ways quantum-ML programs get seduced", "Hardware-first runs, barren plateaus, baseline-skipping, claim leakage"),
+            "Reference architecture — the verification-first simulation pipeline": ("Reference architecture — the verification-first simulation pipeline", "Screens, surrogates, agreement gates and the ledger"),
+            "One chemistry problem, from ansatz to validated claim": ("One chemistry problem, from ansatz to validated claim", "The path with the evidence each step keeps"),
+            "The simulation console — agreement as the headline": ("The simulation console — agreement as the headline", "Agreement, compare results and ledger entries"),
+            "Hardware agreement across benchmark rounds": ("Hardware agreement across benchmark rounds", "The tolerance trend the review reads"),
+            "Simulation defaults — and documented deviations": ("Simulation defaults — and documented deviations", "The default method, and where we sign deviations"),
+            "Simulation release gates — evidence before claims": ("Simulation release gates — evidence before claims", "What must hold before a result becomes a claim"),
+            "What the research engineering team inherits": ("What the research engineering team inherits", "Screens, surrogates, harnesses and the ledger"),
+            "Screens first, week by week": ("Screens first, week by week", "The operating rhythm of the pipeline"),
+            "Integration surface — simulators, hardware access and the lab systems": ("Integration surface — simulators, hardware access and the lab systems", "What the pipeline touches, honestly named"),
+            "Research governance — the claim gate": ("Research governance — the claim gate", "How claims stay honest"),
+        },
+    },
+
+    "services_quantum-advanced-compute_quantum-optimization": {
+        "archsubs": {
+            "Classical baseline": "formal challenger, always",
+            "QUBO/Ising builder": "encoding decided first",
+            "Hybrid iteration": "quantum + classical loop",
+            "Classical polish": "solvers finish the job",
+            "Pinned benchmark": "instances never change",
+            "Advantage ledger": "verified wins, only",
+        },
+        "badges": [
+            ("Baseline as challenger", "formal"),
+            ("Encoding before hardware", "always"),
+            ("Advantage ledger", "verified only"),
+        ],
+        "deep": {
+            "h2": "The encoding decides the answer before the hardware runs",
+            "sub": "Formulation discipline, hybrid loops and the pinned benchmark — optimization without fake advantage",
+            "paras": [
+                "Optimization programs manufacture fake advantage through encoding: the QUBO is built so the quantum-friendly form loses information the classical solver keeps, and the comparison is theater. The discipline decides the encoding first — the formulation is validated against the business problem with constraint fidelity tested (does the encoded solution violate the real constraints?) — before any hardware runs. The classical baseline is a formal challenger: the best known solver on the pinned benchmark instances, tuned, not a strawman.",
+                "The hybrid loop is where realistic wins live: quantum iterates, classical solvers polish, and the result is compared on the pinned benchmark with the advantage ledger recording verified wins per instance class — and nothing else. The console reads advantage per class and benchmark reproducibility; the bake-off discipline (instances pinned, seeds recorded, runs replayable) is what makes a verified win worth signing a delivery against.",
+            ],
+            "bullets": [
+                ("Encoding validated first", "Constraint fidelity tested against the business problem before hardware."),
+                ("Classical as formal challenger", "The best tuned solver on pinned instances — never a strawman."),
+                ("Hybrid loop, classical polish", "Quantum iterates, solvers finish; the combination is the product."),
+                ("Verified wins only", "The advantage ledger records what replay can reproduce."),
+            ],
+        },
+        "heads": {
+            "The encoding decides the answer before the hardware runs": ("The encoding decides the answer before the hardware runs", "Formulation fidelity, formal baselines and the pinned benchmark"),
+            "Four ways optimization programs manufacture fake advantage": ("Four ways optimization programs manufacture fake advantage", "Lossy encodings, strawman baselines, moving benchmarks, unreplayable wins"),
+            "Reference architecture — the hybrid benchmarking harness": ("Reference architecture — the hybrid benchmarking harness", "Builders, loops, polish and the ledger as one system"),
+            "One instance, from formulation to verified verdict": ("One instance, from formulation to verified verdict", "The path with the evidence each step keeps"),
+            "The optimization console — verified wins as the headline": ("The optimization console — verified wins as the headline", "Advantage per class and reproducibility as standing numbers"),
+            "Verified advantage by problem class": ("Verified advantage by problem class", "Where hybrid actually wins, honestly scoped"),
+            "Optimization defaults — and documented deviations": ("Optimization defaults — and documented deviations", "The default methods, and where we sign deviations"),
+            "Optimization release gates — evidence before claims": ("Optimization release gates — evidence before claims", "What a win must prove before it is claimed"),
+            "What the optimization team inherits": ("What the optimization team inherits", "Harnesses, baselines, consoles and the ledger"),
+            "Bake-offs in order, week by week": ("Bake-offs in order, week by week", "The operating rhythm of the practice"),
+            "Integration surface — solvers, schedulers and the business systems": ("Integration surface — solvers, schedulers and the business systems", "What the loop touches, honestly named"),
+            "Benchmark governance — the instance ledger": ("Benchmark governance — the instance ledger", "How the benchmark stays pinned and honest"),
+        },
+    },
+
+    "services_quantum-advanced-compute_quantum-readiness-strategy": {
+        "archsubs": {
+            "Verifiable criteria": "written before spend",
+            "Classical baseline check": "the first gate",
+            "Independent benchmarks": "third-party, pinned",
+            "Crypto inventory": "the urgent track",
+            "Evidence memos": "every claim, filed",
+        },
+        "badges": [
+            ("Kill criteria at funding", "always"),
+            ("Classical gate first", "every use case"),
+            ("PQC track", "running in parallel"),
+        ],
+        "deep": {
+            "h2": "A quantum strategy is mostly a classical strategy with kill criteria",
+            "sub": "Verifiable triage, the classical gate and the PQC track that runs regardless",
+            "paras": [
+                "Quantum strategies get captured by hype when the roadmap leads with hardware: the honest strategy leads with triage — candidate use cases scored against verifiable criteria (where could advantage plausibly appear, what would it be worth, what is the classical state of the art) before any spend. The classical baseline check is the first gate: a use case that the best current solver already answers to tolerance is filed, dated and revisited — the memo's favorite word applies. Independent benchmarks anchor the evidence, and kill criteria are written at funding, not discovered at review.",
+                "The PQC track runs regardless of quantum optimism, because the clock is real: the crypto inventory, harvest-risk dating and migration waves proceed on regulatory and archival timelines that do not care about qubit counts. The console reads triage pass rates, pending revisits and PQC coverage; the governance overlay keeps the kill-criteria ledger — the record of what was tried, deferred and killed is the strategy's actual output, and it is what protects the budget from enthusiasm.",
+            ],
+            "bullets": [
+                ("Verifiable triage first", "Use cases scored against written criteria before any spend."),
+                ("Classical gate", "The best current solver answers; the use case waits, dated."),
+                ("Kill criteria at funding", "Written while calm; enforced at review, not renegotiated."),
+                ("PQC regardless", "The migration track runs on its own real clock."),
+            ],
+        },
+        "heads": {
+            "A quantum strategy is mostly a classical strategy with kill criteria": ("A quantum strategy is mostly a classical strategy with kill criteria", "Verifiable triage, the classical gate and the PQC track that runs regardless"),
+            "Four ways quantum strategies get captured by hype": ("Four ways quantum strategies get captured by hype", "Hardware-first roadmaps, unverifiable criteria, forgotten kill criteria, PQC delay"),
+            "Reference architecture — the triage-to-roadmap pipeline": ("Reference architecture — the triage-to-roadmap pipeline", "Criteria, baselines, benchmarks and the ledger as one pipeline"),
+            "One use case, from pitch to scored verdict": ("One use case, from pitch to scored verdict", "The path with the evidence each step files"),
+            "The readiness console — triage as the headline": ("The readiness console — triage as the headline", "Pass rates, revisits and PQC coverage as standing numbers"),
+            "Baseline pass rates across candidate use cases": ("Baseline pass rates across candidate use cases", "What the classical gate has already answered"),
+            "Readiness defaults — and documented deviations": ("Readiness defaults — and documented deviations", "The default method, and where we sign deviations"),
+            "Readiness release gates — evidence before roadmap": ("Readiness release gates — evidence before roadmap", "What a roadmap item must prove before it is scheduled"),
+            "What the strategy office inherits": ("What the strategy office inherits", "Criteria, ledgers, revisits and the PQC tracker"),
+            "Triage in order, week by week": ("Triage in order, week by week", "The operating rhythm of the strategy"),
+            "Integration surface — business units, security and procurement": ("Integration surface — business units, security and procurement", "What the strategy touches, honestly named"),
+            "Governance overlay — the kill-criteria ledger": ("Governance overlay — the kill-criteria ledger", "The record that protects the budget"),
+        },
+    },
+}

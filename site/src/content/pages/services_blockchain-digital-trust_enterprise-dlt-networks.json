@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "The network succeeds at the speed of its charter, not its consensus"
+   "x": "The network moves at the speed of its charter — not its consensus",
+   "sub": "Charter-first governance and operations that keep members signed in"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that stall consortium networks"
+   "x": "Four failure modes that stall consortium networks",
+   "sub": "Late charters, governance veto games, key drift, silent member decay"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — the governed permissioned network"
+   "x": "Reference architecture — the governed permissioned network",
+   "sub": "Charter, runtime, keys and privacy domains as one structure"
   },
   {
    "t": "p",
@@ -90,7 +93,8 @@
      "id": "charter",
      "lane": 0,
      "label": "Network charter",
-     "hot": true
+     "hot": true,
+     "sub": "rights, duties, exits"
     },
     {
      "id": "board",
@@ -100,18 +104,21 @@
     {
      "id": "member",
      "lane": 0,
-     "label": "Member onboarding"
+     "label": "Member onboarding",
+     "sub": "charter-signed, KYC'd"
     },
     {
      "id": "chain",
      "lane": 1,
      "label": "Ledger runtime",
-     "hot": true
+     "hot": true,
+     "sub": "BFT, sized to members"
     },
     {
      "id": "cons",
      "lane": 1,
-     "label": "Consensus (BFT-class)"
+     "label": "Consensus (BFT-class)",
+     "sub": "finality with quorum"
     },
     {
      "id": "msp",
@@ -122,7 +129,8 @@
      "id": "hsm",
      "lane": 2,
      "label": "HSM-backed keys",
-     "hot": true
+     "hot": true,
+     "sub": "FIPS-grade, dual control"
     },
     {
      "id": "cert",
@@ -138,7 +146,8 @@
      "id": "domain",
      "lane": 3,
      "label": "Privacy domains",
-     "hot": true
+     "hot": true,
+     "sub": "need-to-know channels"
     },
     {
      "id": "privdata",
@@ -153,12 +162,14 @@
     {
      "id": "off",
      "lane": 4,
-     "label": "Off-chain store"
+     "label": "Off-chain store",
+     "sub": "hashes on-chain only"
     },
     {
      "id": "anchor",
      "lane": 4,
-     "label": "Anchoring service"
+     "label": "Anchoring service",
+     "sub": "batch roots, external trust"
     },
     {
      "id": "events",
@@ -263,11 +274,26 @@
      "label": "version"
     }
    ],
-   "note": "Privacy domains are designed before the first transaction: who sees what is a charter question answered in configuration, not a dispute settled in court."
+   "note": "Privacy domains are designed before the first transaction: who sees what is a charter question answered in configuration, not a dispute settled in court.",
+   "badges": [
+    {
+     "label": "Charter signed before txns",
+     "value": "always"
+    },
+    {
+     "label": "Reconciliation breaks",
+     "value": "0 tolerated"
+    },
+    {
+     "label": "Member health on console",
+     "value": "live"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "One transaction, endorsed to finality"
+   "x": "One transaction, endorsed to finality",
+   "sub": "The endorsement path with the checks each step runs"
   },
   {
    "t": "p",
@@ -290,7 +316,8 @@
   },
   {
    "t": "h2",
-   "x": "The network console — member health as the headline"
+   "x": "The network console — member health as the headline",
+   "sub": "Participation, reconciliation and governance posture, live"
   },
   {
    "t": "p",
@@ -596,7 +623,8 @@
   },
   {
    "t": "h2",
-   "x": "Cost and throughput across network growth"
+   "x": "Cost and throughput across network growth",
+   "sub": "How the economics move as members join"
   },
   {
    "t": "p",
@@ -645,7 +673,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": true,
-     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "hook": "Tokenized collateral, interbank DLT settlement and digital-asset analytics under a supervisory lens — permissioned networks with reconciliation-first design and examination-grade evidence.",
      "plays": [
       "Membership charters with obligations, exit clauses and on-ledger governance",
       "Privacy domains that end the data-sharing standoff between members",
@@ -653,25 +681,36 @@
      ],
      "kpis": [
       {
-       "label": "Ledger txn cost",
-       "value": "$0.02"
-      },
-      {
-       "label": "Network uptime",
-       "value": "99.98%"
-      },
-      {
-       "label": "Members on current version",
+       "label": "Restricted transfers blocked by controls",
        "value": "100%"
+      },
+      {
+       "label": "Ledger-to-custody reconciliation breaks",
+       "value": "2"
+      },
+      {
+       "label": "Evidence pack production time",
+       "value": "18 min"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/banking-financial-services/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "Permissioned DLT (Fabric-class)",
+      "Qualified custody + HSM",
+      "Regulatory reporting (MiCA-class)"
+     ],
+     "evidence": [
+      {
+       "title": "The trade-finance unit of a pan-Asian bank",
+       "url": "/case-studies/bank-10/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": true,
-     "hook": "The work here has one job: move a named number — claims, policy and exposure data fragmented included — and prove it moved.",
+     "hook": "Parametric products, reinsurance trust and claims provenance — smart contracts that pay on verifiable events, with the legal wrapper standing in front of the token.",
      "plays": [
       "Membership charters with obligations, exit clauses and on-ledger governance",
       "Privacy domains that end the data-sharing standoff between members",
@@ -679,25 +718,36 @@
      ],
      "kpis": [
       {
-       "label": "Ledger txn cost",
-       "value": "$0.02"
+       "label": "Parametric payouts on attested events",
+       "value": "97%"
       },
       {
-       "label": "Network uptime",
-       "value": "99.98%"
+       "label": "Claims provenance coverage",
+       "value": "96%"
       },
       {
-       "label": "Members on current version",
-       "value": "100%"
+       "label": "Dispute resolution time cut",
+       "value": "40%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/insurance/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "Parametric oracles + attestation",
+      "Reinsurance trust frameworks",
+      "Claims evidence packs"
+     ],
+     "evidence": [
+      {
+       "title": "A European specialty reinsurer",
+       "url": "/case-studies/ins-03/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Credentialing, consent and provenance for drugs and devices — decentralized identity for clinicians, verifiable consent for patients, DSCSA-grade traceability across the chain.",
      "plays": [
       "Membership charters with obligations, exit clauses and on-ledger governance",
       "Privacy domains that end the data-sharing standoff between members",
@@ -705,25 +755,30 @@
      ],
      "kpis": [
       {
-       "label": "Ledger txn cost",
-       "value": "$0.02"
+       "label": "One-scan clinician credential checks",
+       "value": "95%"
       },
       {
-       "label": "Network uptime",
-       "value": "99.98%"
-      },
-      {
-       "label": "Members on current version",
+       "label": "Consent records verifiable",
        "value": "100%"
+      },
+      {
+       "label": "Recall reconstruction time",
+       "value": "30 min"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "DSCSA / EU FMD traceability",
+      "W3C Verifiable Credentials",
+      "EHR consent surfaces"
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the design question is what needs shared truth; the engineering answer is a governed ledger with the boring parts done properly.",
+     "hook": "Multi-tier supplier provenance, digital product passports and machine-trust networks — GS1/EPCIS events anchored so recalls reconstruct in hours, not weeks.",
      "plays": [
       "Membership charters with obligations, exit clauses and on-ledger governance",
       "Privacy domains that end the data-sharing standoff between members",
@@ -731,25 +786,36 @@
      ],
      "kpis": [
       {
-       "label": "Ledger txn cost",
-       "value": "$0.02"
+       "label": "Tier-2/3 capture coverage",
+       "value": "81%"
       },
       {
-       "label": "Network uptime",
-       "value": "99.98%"
+       "label": "Recall drill reconstruction",
+       "value": "69 min"
       },
       {
-       "label": "Members on current version",
-       "value": "100%"
+       "label": "Passport data completeness",
+       "value": "98%"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/manufacturing/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "GS1 EPCIS 2.0 events",
+      "Digital product passports",
+      "MES/ERP event capture"
+     ],
+     "evidence": [
+      {
+       "title": "An aerospace supplier",
+       "url": "/case-studies/mfg-09/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": "Retail & Consumer Goods operators recognize the pattern: provenance claims unverifiable, quarter after quarter.",
+     "hook": "Supply-chain trust consumers can scan: provenance claims, authenticity and duty-of-care evidence across GS1 identifiers, without exposing supplier commercial data.",
      "plays": [
       "Membership charters with obligations, exit clauses and on-ledger governance",
       "Privacy domains that end the data-sharing standoff between members",
@@ -758,25 +824,30 @@
      ],
      "kpis": [
       {
-       "label": "Ledger txn cost",
-       "value": "$0.02"
+       "label": "Provenance claims with anchored proof",
+       "value": "93%"
       },
       {
-       "label": "Network uptime",
-       "value": "99.98%"
+       "label": "POS authenticity check coverage",
+       "value": "96%"
       },
       {
-       "label": "Members on current version",
-       "value": "100%"
+       "label": "Supplier data-leak incidents",
+       "value": "0"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "GS1 GTIN / EPCIS anchoring",
+      "POS authenticity checks",
+      "Supplier privacy domains"
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": false,
-     "hook": "Telecom, Media & Entertainment operators recognize the pattern: interconnect and roaming reconciliation, quarter after quarter.",
+     "hook": "Number and identity trust (STIR/SHAKEN-class), roaming settlement reconciliation and consortium data sharing — boring, permissioned, auditable networks.",
      "plays": [
       "Membership charters with obligations, exit clauses and on-ledger governance",
       "Privacy domains that end the data-sharing standoff between members",
@@ -784,25 +855,30 @@
      ],
      "kpis": [
       {
-       "label": "Ledger txn cost",
-       "value": "$0.02"
+       "label": "Settlement breaks auto-reconciled",
+       "value": "96%"
       },
       {
-       "label": "Network uptime",
-       "value": "99.98%"
+       "label": "Number-trust enforcement coverage",
+       "value": "96%"
       },
       {
-       "label": "Members on current version",
-       "value": "100%"
+       "label": "Consortium disputes reaching legal",
+       "value": "2"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/telecom-media/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "STIR/SHAKEN-class trust registries",
+      "Roaming settlement (TAP-class)",
+      "Consortium governance boards"
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": "Ask what GO/REC certificate integrity costs Energy & Utilities firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Renewable-certificate provenance, grid-flexibility settlement and multi-party trading — anchored events that meters attest and regulators can reconstruct.",
      "plays": [
       "Membership charters with obligations, exit clauses and on-ledger governance",
       "Privacy domains that end the data-sharing standoff between members",
@@ -810,25 +886,30 @@
      ],
      "kpis": [
       {
-       "label": "Ledger txn cost",
-       "value": "$0.02"
+       "label": "Certificate events meter-attested",
+       "value": "94%"
       },
       {
-       "label": "Network uptime",
-       "value": "99.98%"
+       "label": "Settlement reconciliation breaks",
+       "value": "1"
       },
       {
-       "label": "Members on current version",
-       "value": "100%"
+       "label": "Regulatory reconstruction time",
+       "value": "40 min"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/energy-utilities/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "Meter attestation (MDM)",
+      "REC / certificate registries",
+      "Market settlement systems"
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — compliance-grade provenance missing included — and prove it moved.",
+     "hook": "The control tower's trust layer: EDI events anchored at source, customs documents verifiable in one scan, multi-party exception trails that survive a dispute.",
      "plays": [
       "Membership charters with obligations, exit clauses and on-ledger governance",
       "Privacy domains that end the data-sharing standoff between members",
@@ -836,25 +917,30 @@
      ],
      "kpis": [
       {
-       "label": "Ledger txn cost",
-       "value": "$0.02"
+       "label": "EDI events anchored at source",
+       "value": "92%"
       },
       {
-       "label": "Network uptime",
-       "value": "99.98%"
+       "label": "Customs docs verified one-scan",
+       "value": "89%"
       },
       {
-       "label": "Members on current version",
+       "label": "Dispute evidence pack coverage",
        "value": "100%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "EDI/X12 + anchoring service",
+      "Customs (HS) documentation",
+      "Carrier dispute evidence"
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": true,
-     "hook": "The work here has one job: move a named number — records integrity under dispute included — and prove it moved.",
+     "hook": "Land registries, licenses and benefits with verifiable credentials — citizen-held proof, issuer-grade audit, and privacy domains that pass DPA review.",
      "plays": [
       "Membership charters with obligations, exit clauses and on-ledger governance",
       "Privacy domains that end the data-sharing standoff between members",
@@ -862,25 +948,36 @@
      ],
      "kpis": [
       {
-       "label": "Ledger txn cost",
-       "value": "$0.02"
+       "label": "Credentials in citizen wallets",
+       "value": "63%"
       },
       {
-       "label": "Network uptime",
-       "value": "99.98%"
+       "label": "Issuer audit-trail completeness",
+       "value": "100%"
       },
       {
-       "label": "Members on current version",
+       "label": "Privacy-domain review pass",
        "value": "100%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/public-sector/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "W3C VC / DID suites",
+      "Land and license registries",
+      "DPA privacy review gates"
+     ],
+     "evidence": [
+      {
+       "title": "A customs agency",
+       "url": "/case-studies/pub-07/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": ": the operating one and the regulatory one.",
+     "hook": "Verifiable diplomas and micro-credentials — learner-held wallets, issuer governance and revocation that employers can check in one scan.",
      "plays": [
       "Membership charters with obligations, exit clauses and on-ledger governance",
       "Privacy domains that end the data-sharing standoff between members",
@@ -888,25 +985,30 @@
      ],
      "kpis": [
       {
-       "label": "Ledger txn cost",
-       "value": "$0.02"
+       "label": "Credentials issued to wallet",
+       "value": "99%"
       },
       {
-       "label": "Network uptime",
-       "value": "99.98%"
+       "label": "Employer verification one-scan",
+       "value": "94%"
       },
       {
-       "label": "Members on current version",
-       "value": "100%"
+       "label": "Revocation propagation time",
+       "value": "7 min"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/education-research/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "W3C Verifiable Credentials",
+      "SIS issuer systems",
+      "Learner wallet SDKs"
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the trust layer is engineered, not asserted: signed events, permissioned consensus, and a provenance graph every participant can verify.",
+     "hook": "Software provenance (SBOM anchoring), signing trust and customer data sharing under verifiable consent — the trust surfaces enterprise buyers now ask about.",
      "plays": [
       "Membership charters with obligations, exit clauses and on-ledger governance",
       "Privacy domains that end the data-sharing standoff between members",
@@ -914,25 +1016,30 @@
      ],
      "kpis": [
       {
-       "label": "Ledger txn cost",
-       "value": "$0.02"
+       "label": "SBOM anchored per release",
+       "value": "93%"
       },
       {
-       "label": "Network uptime",
-       "value": "99.98%"
+       "label": "Consent proofs verifiable",
+       "value": "97%"
       },
       {
-       "label": "Members on current version",
-       "value": "100%"
+       "label": "Key compromise blast radius",
+       "value": "1"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/technology-saas/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "SBOM (SPDX / CycloneDX)",
+      "Sigstore-class signing",
+      "Customer consent registries"
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "Ask what provenance claims unverifiable costs Agriculture & Food Systems firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Field-to-fork provenance: certification events, subsidy eligibility proofs and commodity-chain traceability anchored at the point of capture.",
      "plays": [
       "Membership charters with obligations, exit clauses and on-ledger governance",
       "Privacy domains that end the data-sharing standoff between members",
@@ -940,26 +1047,42 @@
      ],
      "kpis": [
       {
-       "label": "Ledger txn cost",
-       "value": "$0.02"
+       "label": "Certification events anchored",
+       "value": "90%"
       },
       {
-       "label": "Network uptime",
-       "value": "99.98%"
+       "label": "Subsidy proof completeness",
+       "value": "98%"
       },
       {
-       "label": "Members on current version",
-       "value": "100%"
+       "label": "Chain reconstruction time",
+       "value": "47 min"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/blockchain-digital-trust/"
+     "capUrl": "/industries/agriculture-food/capabilities/blockchain-digital-trust/",
+     "systems": [
+      "Certification schemes (GLOBALG.A.P.)",
+      "Subsidy eligibility proofs",
+      "Commodity chain events (EPCIS)"
+     ],
+     "evidence": [
+      {
+       "title": "A global coffee trader",
+       "url": "/case-studies/agr-02/"
+      },
+      {
+       "title": "A food processing group",
+       "url": "/case-studies/agr-06/"
+      }
+     ]
     }
    ],
    "practiceNote": "Enterprise DLT Network Engineering view: permissioned networks with real governance — membership charters, privacy domains, boring consensus, and operations that treat nodes like production systems."
   },
   {
    "t": "h2",
-   "x": "Network defaults — and documented deviations"
+   "x": "Network defaults — and documented deviations",
+   "sub": "The default platform choices, and the deviations we sign"
   },
   {
    "t": "p",
@@ -1003,7 +1126,8 @@
   },
   {
    "t": "h2",
-   "x": "Network release gates — evidence before member onboarding"
+   "x": "Network release gates — evidence before member onboarding",
+   "sub": "What must be proven before the next member signs"
   },
   {
    "t": "table",
@@ -1043,7 +1167,8 @@
   },
   {
    "t": "h2",
-   "x": "What the consortium inherits"
+   "x": "What the consortium inherits",
+   "sub": "Charter, runbooks, ceremonies and the health console"
   },
   {
    "t": "bullets",
@@ -1076,7 +1201,8 @@
   },
   {
    "t": "h2",
-   "x": "Charter to mainnet, week by week"
+   "x": "Charter to mainnet, week by week",
+   "sub": "The build sequence from negotiation to governed production"
   },
   {
    "t": "bullets",
@@ -1109,7 +1235,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — member systems and the shared ledger"
+   "x": "Integration surface — member systems and the shared ledger",
+   "sub": "Where member estates meet the network"
   },
   {
    "t": "p",
@@ -1142,7 +1269,8 @@
   },
   {
    "t": "h2",
-   "x": "Governance overlay — the on-ledger charter"
+   "x": "Governance overlay — the on-ledger charter",
+   "sub": "How governance changes themselves are governed"
   },
   {
    "t": "p",
@@ -1172,6 +1300,44 @@
   {
    "t": "note",
    "x": "Chain bloat is managed by design: archival policy, state pruning and evidence retention are charter clauses with technical enforcement — because a ledger that grows forever eventually stops serving anyone."
+  },
+  {
+   "t": "h2",
+   "x": "The charter is the load-bearing artifact",
+   "sub": "Membership economics, on-ledger governance and why boring consensus wins consortia",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Consortium networks stall at the speed of their charter: membership fees, data rights, exit terms and dispute paths written after go-live produce veto games that freeze the roadmap. The discipline is charter-first — the rights and duties are drafted, negotiated and (where the platform allows) held on-ledger, so governance changes are transactions with notice periods rather than meetings with minutes. Consensus is deliberately boring: BFT-class, sized to the member set, with performance targets set by the slowest governed member rather than the fastest node — because a consortium runs at the pace of its least-invested participant.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Operations carry the trust: HSM-backed keys under dual control, witnessed key ceremonies for root material, member onboarding that is KYC-checked and charter-signed, and a daily reconciliation gate between the ledger and every member's system of record. The console reads member health — block production, endorsement participation, reconciliation breaks — because a member silently falling behind is the first symptom of the exit nobody scheduled.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Charter before transactions",
+     "Rights, duties, fees and exits negotiated and signed first; governance changes are transactions."
+    ],
+    [
+     "Boring consensus, honestly sized",
+     "BFT-class tuned to the member set; pace set by the slowest governed member."
+    ],
+    [
+     "Dual-control key discipline",
+     "HSM-backed, witnessed ceremonies, rotation on schedule."
+    ],
+    [
+     "Daily reconciliation gate",
+     "Ledger versus each member's system of record; breaks stop the world."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1297,6 +1463,23 @@
    "url": "/case-studies/agr-02/",
    "tag": "Evidence",
    "desc": "EUDR due-diligence automated — compliance evidence in hours, premium channels opened."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "The trade-finance unit of a pan-Asian bank",
+   "url": "/case-studies/bank-10/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A European specialty reinsurer",
+   "url": "/case-studies/ins-03/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A global coffee trader",
+   "url": "/case-studies/agr-02/",
+   "ind": "Agriculture & Food Systems"
   }
  ]
 }

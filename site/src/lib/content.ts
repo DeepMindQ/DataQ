@@ -11,8 +11,8 @@ export type Card = { title: string; url: string; tag: string; desc: string };
 export type Block =
   | { t: "hero"; x: string }
   | { t: "p"; x: string }
-  | { t: "h2"; x: string }
-  | { t: "h3"; x: string }
+  | { t: "h2"; x: string; sub?: string }
+  | { t: "h3"; x: string; sub?: string }
   | { t: "bullets"; items: [string, string][] }
   | { t: "table"; caption?: string; headers: string[]; rows: string[][] }
   | { t: "note"; x: string }
@@ -21,6 +21,7 @@ export type Block =
       t: "arch";
       title: string;
       lanes: string[];
+      badges?: { label: string; value: string }[];
       nodes: { id: string; lane: number; label: string; sub?: string; hot?: boolean }[];
       edges: { a: string; b: string; label?: string }[];
       note?: string;
@@ -59,6 +60,8 @@ export type Block =
         flagship: boolean;
         hook: string;
         plays: string[];
+        systems?: string[];
+        evidence?: { title: string; url: string }[];
         kpis: { label: string; value: string }[];
         capUrl: string;
       }[];
@@ -99,6 +102,7 @@ export type PageData = {
   crumbs: Crumb[];
   related: Card[];
   cards: Card[];
+  evidence?: { title: string; url: string; ind: string }[];
   extras?: HomeExtras;
   profile?: { role: string; name: string; focus: string[]; placeholder: boolean };
   partner?: { name: string; focus: string; scenarios: string[] };
@@ -107,7 +111,7 @@ export type PageData = {
 
 export type HomeExtras = {
   stats: { value: string; label: string }[];
-  towers: { name: string; url: string; desc: string }[];
+  domains: { name: string; url: string; desc: string }[];
   industries: { name: string; url: string }[];
   cases: { title: string; url: string; desc: string; tag: string }[];
   insights: { title: string; url: string; desc: string; tag: string }[];

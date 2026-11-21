@@ -12,10 +12,6 @@
    "x": "Risk and forecasting models with signed baselines, time-based holdouts and governance that survives the quarter they are judged in: predictions built to be checked, not presentations built to be believed."
   },
   {
-   "t": "h2",
-   "x": "A forecast earns trust by being falsifiable"
-  },
-  {
    "t": "p",
    "x": "Predictive analytics fails quietly: the model was good in the notebook, decent at launch, and three quarters later nobody knows it drifted. We build risk and forecasting with the decision-domain's discipline — signed baselines, time-based holdouts, champion-challenger on live data — because a prediction that cannot be scored against reality is an opinion."
   },
@@ -29,7 +25,8 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that make analytics theater"
+   "x": "Four failure modes that make analytics theater",
+   "sub": "Leakage, unwalked holdouts, unbeaten baselines, unowned forecasts"
   },
   {
    "t": "p",
@@ -68,7 +65,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — baselines, holdouts and the action loop"
+   "x": "Reference architecture — baselines, holdouts and the action loop",
+   "sub": "Features, evaluation and accountability as one loop"
   },
   {
    "t": "p",
@@ -105,13 +103,15 @@
      "id": "pit",
      "lane": 1,
      "label": "Point-in-time joins",
-     "hot": true
+     "hot": true,
+     "sub": "no leakage, by construction"
     },
     {
      "id": "leak",
      "lane": 1,
      "label": "Leakage tests",
-     "hot": true
+     "hot": true,
+     "sub": "target-aware, CI"
     },
     {
      "id": "feats",
@@ -137,19 +137,22 @@
      "id": "hold",
      "lane": 3,
      "label": "Time-based holdouts",
-     "hot": true
+     "hot": true,
+     "sub": "future-blind evaluation"
     },
     {
      "id": "roll",
      "lane": 3,
      "label": "Rolling-origin eval",
-     "hot": true
+     "hot": true,
+     "sub": "walk-forward, honest"
     },
     {
      "id": "base",
      "lane": 3,
      "label": "Baseline compare",
-     "hot": true
+     "hot": true,
+     "sub": "naive beats model = kill"
     },
     {
      "id": "serve",
@@ -170,7 +173,8 @@
      "id": "gov",
      "lane": 5,
      "label": "Use-case governance",
-     "hot": true
+     "hot": true,
+     "sub": "owner, metric, review"
     },
     {
      "id": "act",
@@ -265,11 +269,26 @@
      "label": "ledger"
     }
    ],
-   "note": "A model that cannot beat its signed naive baseline does not serve — the baseline comparison is the most honest gate in analytics."
+   "note": "A model that cannot beat its signed naive baseline does not serve — the baseline comparison is the most honest gate in analytics.",
+   "badges": [
+    {
+     "label": "Leakage tests in CI",
+     "value": "every build"
+    },
+    {
+     "label": "Baselines beaten",
+     "value": "or killed"
+    },
+    {
+     "label": "Walk-forward eval",
+     "value": "standard"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "One forecast, from features to accountability"
+   "x": "One forecast, from features to accountability",
+   "sub": "The lifecycle with the evidence each step keeps"
   },
   {
    "t": "p",
@@ -292,7 +311,8 @@
   },
   {
    "t": "h2",
-   "x": "The risk console — skill against the baseline"
+   "x": "The risk console — skill against the baseline",
+   "sub": "Skill scores, deltas and owners as standing numbers"
   },
   {
    "t": "p",
@@ -559,7 +579,8 @@
   },
   {
    "t": "h2",
-   "x": "Forecast skill against baselines, horizon by horizon"
+   "x": "Forecast skill against baselines, horizon by horizon",
+   "sub": "Where the model actually earns its keep"
   },
   {
    "t": "p",
@@ -622,7 +643,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": false,
-     "hook": "Ask what fraud and AML decisions too slow costs Banking & Financial Services firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Risk and finance need point-in-time correct features, lineage that survives model-risk examinations, and metric contracts that end the credit-loss-number argument for good.",
      "plays": [
       "Signed baselines beside every model — skill is a recorded fact",
       "Time-based holdouts and leakage screens on every feature change",
@@ -630,25 +651,40 @@
      ],
      "kpis": [
       {
-       "label": "Forecast accuracy (MAPE)",
-       "value": "11.2%"
+       "label": "Feature point-in-time correctness",
+       "value": "99%"
       },
       {
-       "label": "Baseline beaten",
-       "value": "Yes"
+       "label": "Metric disputes resolved by contract",
+       "value": "97%"
       },
       {
-       "label": "Leakage findings",
-       "value": "0"
+       "label": "Model-risk lineage completeness",
+       "value": "96%"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/banking-financial-services/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Feature stores (point-in-time)",
+      "Model-risk lineage",
+      "Finance metric contracts"
+     ],
+     "evidence": [
+      {
+       "title": "A top-10 European retail bank",
+       "url": "/case-studies/bank-01/"
+      },
+      {
+       "title": "A multinational corporate bank",
+       "url": "/case-studies/bank-02/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": true,
-     "hook": "Insurance & Risk operators recognize the pattern: claims, policy and exposure data fragmented, quarter after quarter.",
+     "hook": "Actuarial reserving, claims analytics and pricing features on versioned, governed tables — with freshness SLAs the actuarial function signs and quarantine gates the examiners read.",
      "plays": [
       "Signed baselines beside every model — skill is a recorded fact",
       "Time-based holdouts and leakage screens on every feature change",
@@ -656,25 +692,40 @@
      ],
      "kpis": [
       {
-       "label": "Forecast accuracy (MAPE)",
-       "value": "11.2%"
+       "label": "Actuarial-table freshness SLA met",
+       "value": "99%"
       },
       {
-       "label": "Baseline beaten",
-       "value": "Yes"
+       "label": "Quarantine-gated loads",
+       "value": "100%"
       },
       {
-       "label": "Leakage findings",
-       "value": "0"
+       "label": "Pricing feature reuse rate",
+       "value": "52%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/insurance/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Actuarial data marts",
+      "Quarantine gates",
+      "Pricing feature registry"
+     ],
+     "evidence": [
+      {
+       "title": "A leading life insurer (North America)",
+       "url": "/case-studies/ins-02/"
+      },
+      {
+       "title": "A European specialty reinsurer",
+       "url": "/case-studies/ins-03/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": false,
-     "hook": "Healthcare & Life Sciences operators recognize the pattern: trial recruitment and RWE pipelines manual, quarter after quarter.",
+     "hook": "Clinical and operational analytics on PHI-governed estates: de-identified layers, purpose-limited access, and freshness that clinical operations and research both trust.",
      "plays": [
       "Signed baselines beside every model — skill is a recorded fact",
       "Time-based holdouts and leakage screens on every feature change",
@@ -682,25 +733,40 @@
      ],
      "kpis": [
       {
-       "label": "Forecast accuracy (MAPE)",
-       "value": "11.2%"
+       "label": "PHI-governed layer compliance",
+       "value": "100%"
       },
       {
-       "label": "Baseline beaten",
-       "value": "Yes"
-      },
-      {
-       "label": "Leakage findings",
+       "label": "Purpose-limit violations",
        "value": "0"
+      },
+      {
+       "label": "Clinical freshness SLA met",
+       "value": "98%"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "PHI-governed zones",
+      "De-identification pipeline",
+      "Clinical freshness SLAs"
+     ],
+     "evidence": [
+      {
+       "title": "A 12-hospital US health system",
+       "url": "/case-studies/hc-01/"
+      },
+      {
+       "title": "A national health insurer",
+       "url": "/case-studies/hc-02/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "The structural pressure will not be solved by another dashboard.",
+     "hook": "Sensor-to-decision pipelines across plants: ISA-95 context in the lakehouse, quality analytics with provenance, and unit-cost telemetry per line and lot.",
      "plays": [
       "Signed baselines beside every model — skill is a recorded fact",
       "Time-based holdouts and leakage screens on every feature change",
@@ -709,25 +775,40 @@
      ],
      "kpis": [
       {
-       "label": "Forecast accuracy (MAPE)",
-       "value": "11.2%"
+       "label": "Sensor event capture fidelity",
+       "value": "97%"
       },
       {
-       "label": "Baseline beaten",
-       "value": "Yes"
+       "label": "Lot-level traceability joins",
+       "value": "94%"
       },
       {
-       "label": "Leakage findings",
-       "value": "0"
+       "label": "Pipeline freshness p95",
+       "value": "3 min"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/manufacturing/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "ISA-95 context modeling",
+      "Historians + MES events",
+      "Lot traceability joins"
+     ],
+     "evidence": [
+      {
+       "title": "A construction-equipment manufacturer",
+       "url": "/case-studies/mfg-03/"
+      },
+      {
+       "title": "A consumer goods manufacturer",
+       "url": "/case-studies/mfg-06/"
+      }
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the work is pipeline and lakehouse engineering — modeled once, certified once, reused everywhere the decision appears.",
+     "hook": "Demand, pricing and promotion analytics at transaction scale — event-driven decisioning for the store hour, governed product data behind every dashboard.",
      "plays": [
       "Signed baselines beside every model — skill is a recorded fact",
       "Time-based holdouts and leakage screens on every feature change",
@@ -735,25 +816,40 @@
      ],
      "kpis": [
       {
-       "label": "Forecast accuracy (MAPE)",
-       "value": "11.2%"
+       "label": "Decision latency, store-hour events",
+       "value": "4s"
       },
       {
-       "label": "Baseline beaten",
-       "value": "Yes"
+       "label": "Governed metric coverage",
+       "value": "92%"
       },
       {
-       "label": "Leakage findings",
-       "value": "0"
+       "label": "Demand feature reuse rate",
+       "value": "72%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Event streams (commerce)",
+      "Governed semantic layer",
+      "Demand feature stores"
+     ],
+     "evidence": [
+      {
+       "title": "A top-3 grocery retailer (800+ stores)",
+       "url": "/case-studies/ret-01/"
+      },
+      {
+       "title": "A global fashion group",
+       "url": "/case-studies/ret-02/"
+      }
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": false,
-     "hook": "Telecom, Media & Entertainment operators recognize the pattern: network telemetry underused, quarter after quarter.",
+     "hook": "Network, care and subscriber analytics on streaming estates: real-time decisioning for care and activation, lakehouse history for capacity planning.",
      "plays": [
       "Signed baselines beside every model — skill is a recorded fact",
       "Time-based holdouts and leakage screens on every feature change",
@@ -761,25 +857,36 @@
      ],
      "kpis": [
       {
-       "label": "Forecast accuracy (MAPE)",
-       "value": "11.2%"
+       "label": "Streaming decision latency p99",
+       "value": "146 ms"
       },
       {
-       "label": "Baseline beaten",
-       "value": "Yes"
+       "label": "Exactly-once decision audit",
+       "value": "100%"
       },
       {
-       "label": "Leakage findings",
-       "value": "0"
+       "label": "Capacity-model freshness",
+       "value": "97%"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/telecom-media/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Kafka-class event backbone",
+      "OSS/BSS data feeds",
+      "Real-time decision tier"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-1 European operator",
+       "url": "/case-studies/tel-01/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": true,
-     "hook": "Energy & Utilities operators recognize the pattern: forecasting under intermittency, quarter after quarter.",
+     "hook": "Meter-to-market pipelines: settlement-grade event streams, outage analytics with provenance, and forecast features the trading desk signs against.",
      "plays": [
       "Signed baselines beside every model — skill is a recorded fact",
       "Time-based holdouts and leakage screens on every feature change",
@@ -787,25 +894,40 @@
      ],
      "kpis": [
       {
-       "label": "Forecast accuracy (MAPE)",
-       "value": "11.2%"
+       "label": "Settlement-grade stream completeness",
+       "value": "99%"
       },
       {
-       "label": "Baseline beaten",
-       "value": "Yes"
+       "label": "Outage event provenance coverage",
+       "value": "94%"
       },
       {
-       "label": "Leakage findings",
-       "value": "0"
+       "label": "Forecast feature point-in-time fidelity",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/energy-utilities/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "MDM + settlement streams",
+      "Outage event capture",
+      "Trading feature pipelines"
+     ],
+     "evidence": [
+      {
+       "title": "A European TSO-DSO group",
+       "url": "/case-studies/en-01/"
+      },
+      {
+       "title": "A national water utility",
+       "url": "/case-studies/en-03/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": "Logistics & Supply Chain operators recognize the pattern: visibility stitched from portals, quarter after quarter.",
+     "hook": "The control tower's data spine: TMS/WMS/telematics events conformed into decision-ready streams, with freshness priced against detention minutes.",
      "plays": [
       "Signed baselines beside every model — skill is a recorded fact",
       "Time-based holdouts and leakage screens on every feature change",
@@ -814,25 +936,40 @@
      ],
      "kpis": [
       {
-       "label": "Forecast accuracy (MAPE)",
-       "value": "11.2%"
+       "label": "Control-tower event freshness p95",
+       "value": "2s"
       },
       {
-       "label": "Baseline beaten",
-       "value": "Yes"
+       "label": "Exception-event completeness",
+       "value": "97%"
       },
       {
-       "label": "Leakage findings",
-       "value": "0"
+       "label": "Carrier-message conformance",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "TMS/WMS/telematics feeds",
+      "EDI conformance layer",
+      "Control-tower APIs"
+     ],
+     "evidence": [
+      {
+       "title": "A global 3PL (40+ countries)",
+       "url": "/case-studies/log-01/"
+      },
+      {
+       "title": "A container-terminal operator",
+       "url": "/case-studies/log-02/"
+      }
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": false,
-     "hook": "Public Sector & Government operators recognize the pattern: agency data islands, quarter after quarter.",
+     "hook": "Statutory reporting with lineage: benefit and permit analytics on governed estates, purpose-limited access, and evidence packs for oversight bodies.",
      "plays": [
       "Signed baselines beside every model — skill is a recorded fact",
       "Time-based holdouts and leakage screens on every feature change",
@@ -840,25 +977,40 @@
      ],
      "kpis": [
       {
-       "label": "Forecast accuracy (MAPE)",
-       "value": "11.2%"
+       "label": "Statutory report lineage coverage",
+       "value": "100%"
       },
       {
-       "label": "Baseline beaten",
-       "value": "Yes"
+       "label": "Purpose-limit enforcement",
+       "value": "100%"
       },
       {
-       "label": "Leakage findings",
-       "value": "0"
+       "label": "Oversight evidence pack time",
+       "value": "1 hrs"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/public-sector/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Statutory reporting marts",
+      "Purpose-limit enforcement",
+      "Oversight evidence portal"
+     ],
+     "evidence": [
+      {
+       "title": "A national tax administration",
+       "url": "/case-studies/pub-02/"
+      },
+      {
+       "title": "A national tax authority",
+       "url": "/case-studies/pub-04/"
+      }
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means we make the source systems agree: one governed definition per metric, streaming where the decision is time-critical, batch where it is not.",
+     "hook": "Enrollment, outcome and research analytics with FERPA-class governance: point-in-time cohorts for research, governed dashboards for the registrar.",
      "plays": [
       "Signed baselines beside every model — skill is a recorded fact",
       "Time-based holdouts and leakage screens on every feature change",
@@ -867,25 +1019,40 @@
      ],
      "kpis": [
       {
-       "label": "Forecast accuracy (MAPE)",
-       "value": "11.2%"
+       "label": "Cohort point-in-time correctness",
+       "value": "97%"
       },
       {
-       "label": "Baseline beaten",
-       "value": "Yes"
+       "label": "FERPA-class access compliance",
+       "value": "100%"
       },
       {
-       "label": "Leakage findings",
-       "value": "0"
+       "label": "Registrar metric trust score",
+       "value": "85%"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/education-research/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "SIS/LMS event pipelines",
+      "Research cohort builder",
+      "FERPA-class governance"
+     ],
+     "evidence": [
+      {
+       "title": "A public research university (38,000 students)",
+       "url": "/case-studies/edu-01/"
+      },
+      {
+       "title": "A national EdTech platform (2M learners)",
+       "url": "/case-studies/edu-02/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": false,
-     "hook": "Technology & SaaS operators recognize the pattern: data moat unrealized, quarter after quarter.",
+     "hook": "Product and customer analytics as the growth engine: event contracts from every service, feature stores for the models, usage metering that invoices.",
      "plays": [
       "Signed baselines beside every model — skill is a recorded fact",
       "Time-based holdouts and leakage screens on every feature change",
@@ -893,25 +1060,40 @@
      ],
      "kpis": [
       {
-       "label": "Forecast accuracy (MAPE)",
-       "value": "11.2%"
+       "label": "Event contract coverage per service",
+       "value": "100%"
       },
       {
-       "label": "Baseline beaten",
-       "value": "Yes"
+       "label": "Feature store freshness SLA met",
+       "value": "96%"
       },
       {
-       "label": "Leakage findings",
-       "value": "0"
+       "label": "Usage-to-invoice accuracy",
+       "value": "100%"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/technology-saas/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Service event contracts",
+      "Feature store + registry",
+      "Usage metering spine"
+     ],
+     "evidence": [
+      {
+       "title": "A consumer fintech (8M users)",
+       "url": "/case-studies/tech-02/"
+      },
+      {
+       "title": "A global gaming studio (live-service title, 15M MAU)",
+       "url": "/case-studies/tech-03/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": true,
-     "hook": "Agriculture & Food Systems operators recognize the pattern: chain data broken at every handoff, quarter after quarter.",
+     "hook": "Yield, quality and subsidy analytics from field events: certification-grade provenance in the data, seasonal freshness SLAs, and co-op dashboards growers trust.",
      "plays": [
       "Signed baselines beside every model — skill is a recorded fact",
       "Time-based holdouts and leakage screens on every feature change",
@@ -919,26 +1101,42 @@
      ],
      "kpis": [
       {
-       "label": "Forecast accuracy (MAPE)",
-       "value": "11.2%"
+       "label": "Provenance-grade field events",
+       "value": "91%"
       },
       {
-       "label": "Baseline beaten",
-       "value": "Yes"
+       "label": "Seasonal freshness SLA met",
+       "value": "98%"
       },
       {
-       "label": "Leakage findings",
-       "value": "0"
+       "label": "Grower dashboard trust score",
+       "value": "94%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/"
+     "capUrl": "/industries/agriculture-food/capabilities/data-analytics-lakehouse/",
+     "systems": [
+      "Field event capture",
+      "Certification-grade provenance",
+      "Seasonal SLA framework"
+     ],
+     "evidence": [
+      {
+       "title": "A food processor (dairy)",
+       "url": "/case-studies/agr-03/"
+      },
+      {
+       "title": "An agri-input company",
+       "url": "/case-studies/agr-07/"
+      }
+     ]
     }
    ],
    "practiceNote": "Advanced Risk & Predictive Analytics view: risk and forecasting models with signed baselines, time-based holdouts and governance — predictions that survive the quarter they were made in."
   },
   {
    "t": "h2",
-   "x": "Modeling defaults — and documented deviations"
+   "x": "Modeling defaults — and documented deviations",
+   "sub": "The default methods, and where we sign deviations"
   },
   {
    "t": "p",
@@ -982,7 +1180,8 @@
   },
   {
    "t": "h2",
-   "x": "Model release gates — evidence before the mandate"
+   "x": "Model release gates — evidence before the mandate",
+   "sub": "What a forecast must prove before decisions follow it"
   },
   {
    "t": "table",
@@ -1022,7 +1221,8 @@
   },
   {
    "t": "h2",
-   "x": "What the risk and planning teams inherit"
+   "x": "What the risk and planning teams inherit",
+   "sub": "Consoles, lineage, review cadence and the outcome ledger"
   },
   {
    "t": "bullets",
@@ -1055,7 +1255,8 @@
   },
   {
    "t": "h2",
-   "x": "Baseline to accountability, week by week"
+   "x": "Baseline to accountability, week by week",
+   "sub": "The build sequence from features to published outcomes"
   },
   {
    "t": "bullets",
@@ -1088,7 +1289,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — feature stores and planning systems"
+   "x": "Integration surface — feature stores and planning systems",
+   "sub": "Where forecasts land, honestly named"
   },
   {
    "t": "p",
@@ -1121,7 +1323,8 @@
   },
   {
    "t": "h2",
-   "x": "Model-risk governance overlay"
+   "x": "Model-risk governance overlay",
+   "sub": "Documentation and validation as pipeline by-products"
   },
   {
    "t": "p",
@@ -1151,6 +1354,44 @@
   {
    "t": "note",
    "x": "Leakage screens run on every feature change: temporal overlap, target proxies and group leakage are tested automatically, and a finding blocks promotion until explained."
+  },
+  {
+   "t": "h2",
+   "x": "A forecast earns trust by being falsifiable",
+   "sub": "Point-in-time discipline, walk-forward evals and the naive challenger",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Risk analytics loses trust through leakage: features that quietly encode the future make backtests brilliant and production embarrassing. The engineering answer is point-in-time correctness as a property of the feature store — every feature carries its as-of semantics, joins are enforced through the point-in-time layer, and leakage tests (target-aware, run in CI) block any feature set that peeks. Evaluation is walk-forward: rolling-origin splits that respect time, holdouts the model has structurally never seen, and a baseline comparison where a naive seasonal benchmark is a formal challenger — because a model that cannot beat naive does not ship, whatever its AUC.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "The accountability loop closes the trust: every forecast carries an owner, the metric it moves and a review date; outcomes are scored against the forecast with the deltas published on the console; and model-risk governance (documentation, validation, change control) is generated as a by-product of the pipeline rather than written after the fact. Falsifiability is the product: a forecast you can be wrong about publicly is a forecast the planning meeting can use.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Point-in-time by construction",
+     "As-of semantics enforced in the store; joins cannot peek."
+    ],
+    [
+     "Leakage tests in CI",
+     "Target-aware scans block peeking feature sets at build time."
+    ],
+    [
+     "Naive as formal challenger",
+     "Seasonal baselines are scored too; the model must beat them."
+    ],
+    [
+     "Outcomes published",
+     "Forecast-versus-actual deltas trended per use case, owner named."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1276,6 +1517,23 @@
    "url": "/case-studies/edu-02/",
    "tag": "Evidence",
    "desc": "Outcome evidence published — renewals secured with learning-gain pipelines."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A top-10 European retail bank",
+   "url": "/case-studies/bank-01/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "A leading life insurer (North America)",
+   "url": "/case-studies/ins-02/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A global 3PL (40+ countries)",
+   "url": "/case-studies/log-01/",
+   "ind": "Logistics & Supply Chain"
   }
  ]
 }

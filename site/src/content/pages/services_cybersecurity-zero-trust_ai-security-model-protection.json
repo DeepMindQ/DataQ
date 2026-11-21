@@ -13,7 +13,8 @@
   },
   {
    "t": "h2",
-   "x": "AI security is a new surface on the same old adversary"
+   "x": "AI security is a new surface on the same old adversary",
+   "sub": "Injection, poisoning, exfiltration and abuse — engineered as production surfaces"
   },
   {
    "t": "p",
@@ -29,7 +30,8 @@
   },
   {
    "t": "h2",
-   "x": "Four AI-specific failure modes classic frameworks never named"
+   "x": "Four AI-specific failure modes classic frameworks never named",
+   "sub": "The new failure classes, and the countermeasures that ship against each"
   },
   {
    "t": "p",
@@ -68,7 +70,8 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — defending the model layer"
+   "x": "Reference architecture — defending the model layer",
+   "sub": "Pre-model filters, model-data policy, output guards and abuse detection"
   },
   {
    "t": "p",
@@ -105,7 +108,8 @@
      "id": "inj",
      "lane": 1,
      "label": "Injection firewall",
-     "hot": true
+     "hot": true,
+     "sub": "pre-model filter chain"
     },
     {
      "id": "origin",
@@ -121,7 +125,8 @@
      "id": "poison",
      "lane": 2,
      "label": "Corpus integrity",
-     "hot": true
+     "hot": true,
+     "sub": "signed, versioned"
     },
     {
      "id": "mem",
@@ -132,13 +137,15 @@
      "id": "class",
      "lane": 2,
      "label": "Model-data policy",
-     "hot": true
+     "hot": true,
+     "sub": "classification-driven"
     },
     {
      "id": "out",
      "lane": 3,
      "label": "Output guards",
-     "hot": true
+     "hot": true,
+     "sub": "post-model redaction"
     },
     {
      "id": "dlp",
@@ -154,7 +161,8 @@
      "id": "abuse",
      "lane": 4,
      "label": "Abuse detection",
-     "hot": true
+     "hot": true,
+     "sub": "rate + intent signals"
     },
     {
      "id": "rate",
@@ -170,7 +178,8 @@
      "id": "red",
      "lane": 5,
      "label": "Red-team evals",
-     "hot": true
+     "hot": true,
+     "sub": "adversarial suite, CI"
     },
     {
      "id": "ci",
@@ -267,11 +276,26 @@
      "label": "packs"
     }
    ],
-   "note": "The instruction firewall is the core idea: retrieved content is data, never instructions — models are fine-tuned and scaffolded so document text cannot rewrite behavior."
+   "note": "The instruction firewall is the core idea: retrieved content is data, never instructions — models are fine-tuned and scaffolded so document text cannot rewrite behavior.",
+   "badges": [
+    {
+     "label": "Guard chain",
+     "value": "pre + post model"
+    },
+    {
+     "label": "Red-team suite",
+     "value": "CI-gated"
+    },
+    {
+     "label": "Model layer incidents",
+     "value": "0 tolerated"
+    }
+   ]
   },
   {
    "t": "h2",
-   "x": "One adversarial prompt, blocked in layers"
+   "x": "One adversarial prompt, blocked in layers",
+   "sub": "The layered defense, hop by hop"
   },
   {
    "t": "p",
@@ -294,7 +318,8 @@
   },
   {
    "t": "h2",
-   "x": "The AI-security console — defenses with measured rates"
+   "x": "The AI-security console — defenses with measured rates",
+   "sub": "Block rates, eval scores and abuse signals as standing numbers"
   },
   {
    "t": "p",
@@ -610,7 +635,8 @@
   },
   {
    "t": "h2",
-   "x": "Attack simulation results across the AI estate"
+   "x": "Attack simulation results across the AI estate",
+   "sub": "Per-layer scores and the trend the review reads"
   },
   {
    "t": "p",
@@ -665,7 +691,7 @@
      "slug": "banking-financial-services",
      "name": "Banking & Financial Services",
      "flagship": true,
-     "hook": "Banking & Financial Services operators recognize the pattern: genAI stuck between pilot and policy, quarter after quarter.",
+     "hook": "Supervisory scrutiny sets the bar: model-risk evidence for AI defenses, entitlement analytics that survive examinations, and containment drills timed against regulator expectations.",
      "plays": [
       "Prompt-injection defense with measured block rates at the boundary",
       "Jailbreak suites in CI — no defense change merges with an open gap",
@@ -673,25 +699,36 @@
      ],
      "kpis": [
       {
-       "label": "Injection block rate",
-       "value": "99.7%"
+       "label": "Containment time, critical threats",
+       "value": "34 min"
       },
       {
-       "label": "Jailbreak CI regressions",
-       "value": "0"
+       "label": "Entitlement review findings closed",
+       "value": "93%"
       },
       {
-       "label": "Corpus integrity alerts",
-       "value": "1"
+       "label": "Evidence pack prep time",
+       "value": "8 days"
       }
      ],
-     "capUrl": "/industries/banking-financial-services/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/banking-financial-services/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Supervisory evidence frameworks",
+      "Entitlement analytics",
+      "Purple-team programs"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-1 US bank",
+       "url": "/case-studies/bank-03/"
+      }
+     ]
     },
     {
      "slug": "insurance",
      "name": "Insurance & Risk",
      "flagship": false,
-     "hook": "Insurance & Risk operators recognize the pattern: sensitive data estate under pressure, quarter after quarter.",
+     "hook": "Policy and claims data under market-conduct rules — identity lifecycle that passes audit, posture gates on underwriting platforms, and recovery drills that prove the RTO.",
      "plays": [
       "Prompt-injection defense with measured block rates at the boundary",
       "Jailbreak suites in CI — no defense change merges with an open gap",
@@ -699,25 +736,36 @@
      ],
      "kpis": [
       {
-       "label": "Injection block rate",
-       "value": "99.7%"
+       "label": "Leaver revocation within SLA",
+       "value": "92%"
       },
       {
-       "label": "Jailbreak CI regressions",
-       "value": "0"
+       "label": "Critical posture findings dwell",
+       "value": "12 days"
       },
       {
-       "label": "Corpus integrity alerts",
-       "value": "1"
+       "label": "Recovery drill RTO vs target",
+       "value": "85%"
       }
      ],
-     "capUrl": "/industries/insurance/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/insurance/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "PAS/claims identity estates",
+      "CSPM + plan-time policy",
+      "Immutable backup vaults"
+     ],
+     "evidence": [
+      {
+       "title": "An insurance group",
+       "url": "/case-studies/ins-10/"
+      }
+     ]
     },
     {
      "slug": "healthcare-life-sciences",
      "name": "Healthcare & Life Sciences",
      "flagship": false,
-     "hook": "Ask what PHI concentration and ransomware exposure costs Healthcare & Life Sciences firms in a year and the honest answer is: more than anyone has measured.",
+     "hook": "Clinical uptime is patient safety: zero-trust segmentation around clinical networks, AI-model protection for diagnostic tools, and recovery rehearsals that respect HIPAA evidence.",
      "plays": [
       "Prompt-injection defense with measured block rates at the boundary",
       "Jailbreak suites in CI — no defense change merges with an open gap",
@@ -725,25 +773,36 @@
      ],
      "kpis": [
       {
-       "label": "Injection block rate",
-       "value": "99.7%"
+       "label": "Clinical network segmentation coverage",
+       "value": "89%"
       },
       {
-       "label": "Jailbreak CI regressions",
-       "value": "0"
+       "label": "Model-layer incidents contained",
+       "value": "100%"
       },
       {
-       "label": "Corpus integrity alerts",
-       "value": "1"
+       "label": "Restore drill RTO adherence",
+       "value": "91%"
       }
      ],
-     "capUrl": "/industries/healthcare-life-sciences/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/healthcare-life-sciences/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Clinical network segmentation",
+      "Model-layer guard stack",
+      "HIPAA evidence controls"
+     ],
+     "evidence": [
+      {
+       "title": "A national health service agency",
+       "url": "/case-studies/hc-09/"
+      }
+     ]
     },
     {
      "slug": "manufacturing",
      "name": "Manufacturing & Industrial",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — IT/OT convergence exposure included — and prove it moved.",
+     "hook": "The OT boundary is the perimeter: IEC 62443-informed segmentation, identity for machines and humans, and incident response that keeps the line running safely.",
      "plays": [
       "Prompt-injection defense with measured block rates at the boundary",
       "Jailbreak suites in CI — no defense change merges with an open gap",
@@ -751,25 +810,30 @@
      ],
      "kpis": [
       {
-       "label": "Injection block rate",
-       "value": "99.7%"
+       "label": "IT-OT crossings under control",
+       "value": "98%"
       },
       {
-       "label": "Jailbreak CI regressions",
-       "value": "0"
+       "label": "Machine identity coverage",
+       "value": "90%"
       },
       {
-       "label": "Corpus integrity alerts",
-       "value": "1"
+       "label": "Line-impact incidents per quarter",
+       "value": "2"
       }
      ],
-     "capUrl": "/industries/manufacturing/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/manufacturing/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "IEC 62443-informed zones",
+      "Machine identity (SPIFFE-class)",
+      "OT-safe incident playbooks"
+     ]
     },
     {
      "slug": "retail-consumer-goods",
      "name": "Retail & Consumer Goods",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone.",
+     "hook": "PCI-scoped estates and consumer trust: posture gates on commerce platforms, identity lifecycle across seasonal workforces, and fraud-adjacent detection tuned to checkout.",
      "plays": [
       "Prompt-injection defense with measured block rates at the boundary",
       "Jailbreak suites in CI — no defense change merges with an open gap",
@@ -777,25 +841,30 @@
      ],
      "kpis": [
       {
-       "label": "Injection block rate",
-       "value": "99.7%"
+       "label": "PCI-scoped asset posture compliance",
+       "value": "97%"
       },
       {
-       "label": "Jailbreak CI regressions",
-       "value": "0"
+       "label": "Seasonal-joiner provisioning fidelity",
+       "value": "91%"
       },
       {
-       "label": "Corpus integrity alerts",
-       "value": "1"
+       "label": "Checkout-path detections tuned",
+       "value": "98%"
       }
      ],
-     "capUrl": "/industries/retail-consumer-goods/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/retail-consumer-goods/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "PCI-scoped posture gates",
+      "Seasonal JML automation",
+      "Checkout-path detection"
+     ]
     },
     {
      "slug": "telecom-media",
      "name": "Telecom, Media & Entertainment",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means the design assumes breach: blast radii contained, lateral movement priced, and detection tuned to the attacks your sector actually sees.",
+     "hook": "Carrier-grade availability duties: zero-trust across OSS/BSS, threat intel tuned to telecom attack paths, and resilience drills that respect network change windows.",
      "plays": [
       "Prompt-injection defense with measured block rates at the boundary",
       "Jailbreak suites in CI — no defense change merges with an open gap",
@@ -803,25 +872,40 @@
      ],
      "kpis": [
       {
-       "label": "Injection block rate",
-       "value": "99.7%"
+       "label": "OSS/BSS enforcement-point coverage",
+       "value": "82%"
       },
       {
-       "label": "Jailbreak CI regressions",
+       "label": "Threat-path drill coverage",
+       "value": "80%"
+      },
+      {
+       "label": "Change-window incident rate",
        "value": "0"
-      },
-      {
-       "label": "Corpus integrity alerts",
-       "value": "1"
       }
      ],
-     "capUrl": "/industries/telecom-media/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/telecom-media/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "OSS/BSS enforcement points",
+      "Telecom threat intel feeds",
+      "Network change windows"
+     ],
+     "evidence": [
+      {
+       "title": "A tier-1 European telecom operator",
+       "url": "/case-studies/tel-04/"
+      },
+      {
+       "title": "A telecom infrastructure group",
+       "url": "/case-studies/tel-08/"
+      }
+     ]
     },
     {
      "slug": "energy-utilities",
      "name": "Energy & Utilities",
      "flagship": false,
-     "hook": "The work here has one job: move a named number — OT estate exposed by convergence included — and prove it moved.",
+     "hook": "NERC CIP-class obligations: segmented OT zones, controlled IT-OT crossings, identity for field workforces, and recovery drills rehearsed against grid scenarios.",
      "plays": [
       "Prompt-injection defense with measured block rates at the boundary",
       "Jailbreak suites in CI — no defense change merges with an open gap",
@@ -829,25 +913,36 @@
      ],
      "kpis": [
       {
-       "label": "Injection block rate",
-       "value": "99.7%"
+       "label": "OT-zone policy compliance",
+       "value": "100%"
       },
       {
-       "label": "Jailbreak CI regressions",
-       "value": "0"
+       "label": "Field identity lifecycle fidelity",
+       "value": "95%"
       },
       {
-       "label": "Corpus integrity alerts",
-       "value": "1"
+       "label": "Grid-scenario drill pass rate",
+       "value": "86%"
       }
      ],
-     "capUrl": "/industries/energy-utilities/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/energy-utilities/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "NERC CIP-informed zones",
+      "Field identity (MDM-linked)",
+      "Grid-scenario drills"
+     ],
+     "evidence": [
+      {
+       "title": "A gas transmission system operator",
+       "url": "/case-studies/en-08/"
+      }
+     ]
     },
     {
      "slug": "logistics-supply-chain",
      "name": "Logistics & Supply Chain",
      "flagship": false,
-     "hook": "; competition sets the pace.",
+     "hook": "Attack surface across EDI, carrier portals and partner APIs: zero-trust for the control tower, identity for 3PL partners, and recovery that protects the customs calendar.",
      "plays": [
       "Prompt-injection defense with measured block rates at the boundary",
       "Jailbreak suites in CI — no defense change merges with an open gap",
@@ -855,25 +950,30 @@
      ],
      "kpis": [
       {
-       "label": "Injection block rate",
-       "value": "99.7%"
+       "label": "Partner access via zero-trust gates",
+       "value": "94%"
       },
       {
-       "label": "Jailbreak CI regressions",
-       "value": "0"
+       "label": "EDI endpoint posture compliance",
+       "value": "99%"
       },
       {
-       "label": "Corpus integrity alerts",
+       "label": "Customs-calendar incidents",
        "value": "1"
       }
      ],
-     "capUrl": "/industries/logistics-supply-chain/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/logistics-supply-chain/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Partner zero-trust gates",
+      "EDI endpoint posture",
+      "Customs-calendar resilience"
+     ]
     },
     {
      "slug": "public-sector",
      "name": "Public Sector & Government",
      "flagship": true,
-     "hook": "; competition sets the pace.",
+     "hook": "Citizen trust and sovereign obligations: zero-trust architecture on legacy estates, evidence-ready compliance, and identity lifecycle across political turnover cycles.",
      "plays": [
       "Prompt-injection defense with measured block rates at the boundary",
       "Jailbreak suites in CI — no defense change merges with an open gap",
@@ -881,25 +981,30 @@
      ],
      "kpis": [
       {
-       "label": "Injection block rate",
-       "value": "99.7%"
+       "label": "Enforcement points on critical paths",
+       "value": "95%"
       },
       {
-       "label": "Jailbreak CI regressions",
-       "value": "0"
+       "label": "Assertion evidence freshness",
+       "value": "93%"
       },
       {
-       "label": "Corpus integrity alerts",
-       "value": "1"
+       "label": "Legacy-segment isolation coverage",
+       "value": "84%"
       }
      ],
-     "capUrl": "/industries/public-sector/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/public-sector/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Legacy-segment isolation",
+      "Continuous evidence collection",
+      "Sovereign identity policy"
+     ]
     },
     {
      "slug": "education-research",
      "name": "Education & Research",
      "flagship": false,
-     "hook": "Inverts the predictable failures — the baseline nobody signed, the scope nobody bounded, the evidence nobody can find: we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone.",
+     "hook": "Open estates with sensitive records: identity lifecycle across academic calendars, research-data segmentation, and ransomware resilience for the registrar's systems.",
      "plays": [
       "Prompt-injection defense with measured block rates at the boundary",
       "Jailbreak suites in CI — no defense change merges with an open gap",
@@ -908,25 +1013,36 @@
      ],
      "kpis": [
       {
-       "label": "Injection block rate",
-       "value": "99.7%"
+       "label": "Term-cycle identity fidelity",
+       "value": "97%"
       },
       {
-       "label": "Jailbreak CI regressions",
-       "value": "0"
+       "label": "Research-segment isolation",
+       "value": "90%"
       },
       {
-       "label": "Corpus integrity alerts",
-       "value": "1"
+       "label": "Ransomware drill RTO adherence",
+       "value": "86%"
       }
      ],
-     "capUrl": "/industries/education-research/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/education-research/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Academic-calendar JML",
+      "Research data segmentation",
+      "Ransomware clean rooms"
+     ],
+     "evidence": [
+      {
+       "title": "A K-12 school district",
+       "url": "/case-studies/edu-07/"
+      }
+     ]
     },
     {
      "slug": "technology-saas",
      "name": "Technology & SaaS",
      "flagship": true,
-     "hook": "; competition sets the pace.",
+     "hook": "Your product is the attack surface: model protection for AI features, posture gates in CI/CD, and SOC practice that scales with the customer count.",
      "plays": [
       "Prompt-injection defense with measured block rates at the boundary",
       "Jailbreak suites in CI — no defense change merges with an open gap",
@@ -934,25 +1050,36 @@
      ],
      "kpis": [
       {
-       "label": "Injection block rate",
-       "value": "99.7%"
+       "label": "Model-layer defense coverage",
+       "value": "98%"
       },
       {
-       "label": "Jailbreak CI regressions",
-       "value": "0"
+       "label": "Posture gates blocking bad deploys",
+       "value": "100%"
       },
       {
-       "label": "Corpus integrity alerts",
-       "value": "1"
+       "label": "MTTD on emulated intrusions",
+       "value": "30 min"
       }
      ],
-     "capUrl": "/industries/technology-saas/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/technology-saas/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Model-protection guard stack",
+      "CI/CD posture gates",
+      "Cloud-native SOC tooling"
+     ],
+     "evidence": [
+      {
+       "title": "A collaboration software vendor",
+       "url": "/case-studies/tech-09/"
+      }
+     ]
     },
     {
      "slug": "agriculture-food",
      "name": "Agriculture & Food Systems",
      "flagship": false,
-     "hook": "The work here does not chase announcements; it delivers audited change — which means security here is architecture, not product sprawl — identity-first controls, segmented networks, and telemetry your SOC can act on the same hour.",
+     "hook": "Seasonal and dispersed estates: zero-trust for co-op networks, identity for field workforces, and provenance-system recovery that protects the certification calendar.",
      "plays": [
       "Prompt-injection defense with measured block rates at the boundary",
       "Jailbreak suites in CI — no defense change merges with an open gap",
@@ -960,26 +1087,32 @@
      ],
      "kpis": [
       {
-       "label": "Injection block rate",
-       "value": "99.7%"
+       "label": "Co-op network segmentation",
+       "value": "93%"
       },
       {
-       "label": "Jailbreak CI regressions",
-       "value": "0"
+       "label": "Field identity lifecycle fidelity",
+       "value": "91%"
       },
       {
-       "label": "Corpus integrity alerts",
-       "value": "1"
+       "label": "Certification-system recovery drills",
+       "value": "94%"
       }
      ],
-     "capUrl": "/industries/agriculture-food/capabilities/cybersecurity-zero-trust/"
+     "capUrl": "/industries/agriculture-food/capabilities/cybersecurity-zero-trust/",
+     "systems": [
+      "Co-op network segmentation",
+      "Field identity systems",
+      "Certification-system recovery"
+     ]
     }
    ],
    "practiceNote": "AI Security & Model Protection view: security for the models themselves — prompt-injection defense, abuse containment, model theft resistance and eval-based red teams wired into the platform."
   },
   {
    "t": "h2",
-   "x": "AI-security defaults — and documented deviations"
+   "x": "AI-security defaults — and documented deviations",
+   "sub": "The default guard stack, and where we sign deviations"
   },
   {
    "t": "p",
@@ -1023,7 +1156,8 @@
   },
   {
    "t": "h2",
-   "x": "AI-security release gates — evidence before exposure"
+   "x": "AI-security release gates — evidence before exposure",
+   "sub": "Eval suite results and probe evidence before a model goes live"
   },
   {
    "t": "table",
@@ -1063,7 +1197,8 @@
   },
   {
    "t": "h2",
-   "x": "What the security engineering team inherits"
+   "x": "What the security engineering team inherits",
+   "sub": "Guard configs, eval suites, consoles and the drill calendar"
   },
   {
    "t": "bullets",
@@ -1096,7 +1231,8 @@
   },
   {
    "t": "h2",
-   "x": "Defenses in order, week by week"
+   "x": "Defenses in order, week by week",
+   "sub": "The build sequence from surface mapping to CI-gated defense"
   },
   {
    "t": "bullets",
@@ -1129,7 +1265,8 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — AI platform, corpora and agent tooling"
+   "x": "Integration surface — AI platform, corpora and agent tooling",
+   "sub": "Where the guards attach, honestly named"
   },
   {
    "t": "p",
@@ -1162,7 +1299,8 @@
   },
   {
    "t": "h2",
-   "x": "Agent-abuse containment overlay"
+   "x": "Agent-abuse containment overlay",
+   "sub": "Scoping, ceilings and blast radius for agentic systems"
   },
   {
    "t": "p",
@@ -1192,6 +1330,44 @@
   {
    "t": "note",
    "x": "Corpus integrity monitors hash and sample the retrieval index continuously: poisoning attempts surface as integrity alerts with source attribution, and any alert pauses the affected corpus until cleared."
+  },
+  {
+   "t": "h2",
+   "x": "Defend the model layer like a production service",
+   "sub": "Injection firewalls, corpus integrity and abuse detection — the new surface, engineered",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "AI security fails when the model is treated as a feature and defended as an afterthought: prompt injection walks through the retrieval layer, corpus poisoning waits weeks to be noticed, and exfiltration rides the tool calls nobody scoped. The defense is layered at the surfaces — an injection firewall before the model (filter chain, not a hopeful system prompt), corpus integrity with signed and versioned documents, a model-data policy that keeps classified data out of prompts by construction, and output guards that redact before tokens reach the user. Abuse detection treats the model endpoint like any other production service: rate signals, intent signals and anomaly detection on the traffic.",
+   "phase3_deep": true
+  },
+  {
+   "t": "p",
+   "x": "Measurement makes it credible: an adversarial red-team eval suite runs in CI (every prompt, guard or model change attacks the defenses), and attack simulations are scored and trended per defense layer. The agent-abuse containment overlay closes the loop for agentic surfaces — tool scoping, spend ceilings and blast-radius limits — because the newest attack surface is the one your own automation provides.",
+   "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Injection firewall, pre-model",
+     "A filter chain at the surface, not a system prompt's good intentions."
+    ],
+    [
+     "Signed corpus integrity",
+     "Documents versioned and signed; poisoning becomes detectable."
+    ],
+    [
+     "Adversarial evals in CI",
+     "Every change runs the attack suite; regressions block the release."
+    ],
+    [
+     "Agent blast-radius limits",
+     "Tool scoping and spend ceilings on your own automation."
+    ]
+   ],
+   "phase3_deep": true
   },
   {
    "t": "cta",
@@ -1317,6 +1493,23 @@
    "url": "/case-studies/bank-03/",
    "tag": "Evidence",
    "desc": "DORA-grade resilience posture — third-party and incident evidence automated."
+  }
+ ],
+ "evidence": [
+  {
+   "title": "A tier-1 US bank",
+   "url": "/case-studies/bank-03/",
+   "ind": "Banking & Financial Services"
+  },
+  {
+   "title": "An insurance group",
+   "url": "/case-studies/ins-10/",
+   "ind": "Insurance & Risk"
+  },
+  {
+   "title": "A tier-1 European telecom operator",
+   "url": "/case-studies/tel-04/",
+   "ind": "Telecom, Media & Entertainment"
   }
  ]
 }

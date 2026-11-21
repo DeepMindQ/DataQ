@@ -16,11 +16,11 @@ import { CountUp } from "./Motion";
    Pure SVG + CSS animation, static-export safe, reduced-motion aware. */
 
 const CL = {
-  bg: "rgba(255,255,255,0.045)",
+  bg: "#1a1630",
   bg2: "rgba(255,255,255,0.09)",
   stroke: "rgba(255,255,255,0.26)",
   edge: "rgba(255,255,255,0.20)",
-  hot: "rgba(254,87,34,0.18)",
+  hot: "#2c1e2d",
   hotStroke: "rgba(254,87,34,0.75)",
   orange: "#FE5722",
   txt: "rgba(255,255,255,0.95)",
@@ -53,55 +53,96 @@ export function ArchGraph({
   lanes,
   nodes,
   edges,
+  badges,
 }: {
   title: string;
   note?: string;
   lanes: string[];
   nodes: ArchNode[];
   edges?: ArchEdge[];
+  badges?: { label: string; value: string }[];
 }) {
   const edgeList = edges ?? [];
   const COL_W = 178;
   const GAP = 64;
-  const NODE_W = 158;
-  const NODE_H = 44;
+  const NODE_W = 164;
+  const NODE_H = 46;
+  const SUB_H = 64;
   const TOP = 66;
-  const ROW_GAP = 58;
-  const W = lanes.length * COL_W + (lanes.length - 1) * GAP + 32;
-  const maxRows = Math.max(2, ...lanes.map((_, li) => nodes.filter((n) => n.lane === li).length));
-  const H = TOP + maxRows * (NODE_H + ROW_GAP + 20) + 26;
+  const ROW_GAP = 26;
+
+  const boxH = (n: ArchNode) => (n.sub ? SUB_H : NODE_H);
+  const wrapSub = (sub: string): string[] => {
+    if (sub.length <= 26) return [sub];
+    const words = sub.split(" ");
+    const l1: string[] = [];
+    let i = 0;
+    while (i < words.length && [...l1, words[i]].join(" ").length <= 26) {
+      l1.push(words[i]);
+      i += 1;
+    }
+    const rest = words.slice(i).join(" ");
+    return rest ? [l1.join(" "), rest.slice(0, 30)] : [l1.join(" ")];
+  };
 
   // lane x origins
   const laneX = (li: number) => 16 + li * (COL_W + GAP);
-  // node positions per lane, stacked (sub-labeled boxes are 16px taller)
-  const pos: Record<string, { x: number; y: number }> = {};
-  const boxH = (n: ArchNode) => (n.sub ? NODE_H + 16 : NODE_H);
+  // node positions per lane, stacked with sub-aware heights
+  const pos: Record<string, { x: number; y: number; h: number }> = {};
   const perLaneCount: number[] = lanes.map(() => 0);
+  const laneHeights = lanes.map((_, li) => {
+    const ln = nodes.filter((m) => m.lane === li);
+    return ln.reduce((s, m) => s + boxH(m), 0) + Math.max(0, ln.length - 1) * ROW_GAP;
+  });
+  const maxLaneH = Math.max(1, ...laneHeights);
   for (const n of nodes) {
     const row = perLaneCount[n.lane]++;
     const laneNodes = nodes.filter((m) => m.lane === n.lane);
-    const laneNodeCount = laneNodes.length;
-    const totalH = laneNodes.reduce((s, m) => s + boxH(m), 0) + (laneNodeCount - 1) * ROW_GAP;
-    const startY = TOP + (maxRows * (NODE_H + ROW_GAP) - ROW_GAP - totalH) / 2;
-    pos[n.id] = { x: laneX(n.lane) + (COL_W - NODE_W) / 2, y: startY + laneNodes.slice(0, row).reduce((s, m) => s + boxH(m) + ROW_GAP, 0) };
+    const startY = TOP + 24 + (maxLaneH - laneHeights[n.lane]) / 2;
+    const y = startY + laneNodes.slice(0, row).reduce((s, m) => s + boxH(m) + ROW_GAP, 0);
+    pos[n.id] = { x: laneX(n.lane) + (COL_W - NODE_W) / 2, y, h: boxH(n) };
   }
+  const W = lanes.length * COL_W + (lanes.length - 1) * GAP + 32;
+  const H = TOP + 24 + maxLaneH + 30;
 
   const anchor = (id: string, side: "l" | "r") => {
     const p = pos[id];
-    if (!p) return { x: 0, y: 0 };
-    const n = nodes.find((m) => m.id === id);
-    const mid = (n && n.sub ? NODE_H + 16 : NODE_H) / 2;
-    return { x: side === "l" ? p.x : p.x + NODE_W, y: p.y + mid };
+    if (!p) return null;
+    return { x: side === "l" ? p.x : p.x + NODE_W, y: p.y + p.h / 2 };
   };
+
+  // node rect for label collision tests
+  const rects = Object.entries(pos).map(([id, p]) => ({ id, x: p.x, y: p.y, w: NODE_W, h: p.h }));
+  const insideAnyRect = (x: number, y: number, pad = 4) =>
+    rects.some((r) => x > r.x - pad && x < r.x + r.w + pad && y > r.y - pad && y < r.y + r.h + pad);
 
   return (
     <Reveal className="mt-6">
       <figure className="overflow-hidden rounded-2xl border border-white/10 grad-navy-field shadow-3">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 px-5 py-3">
           <p className="text-[12.5px] font-semibold text-white">{title}</p>
-          <span className="rounded-full border border-brand/40 bg-brand/15 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-brand-300">
-            Architecture
-          </span>
+          {badges && badges.length > 0 ? (
+            <div className="flex flex-wrap items-center gap-1.5">
+              {badges.map((bd) => (
+                <span
+                  key={bd.label}
+                  className="inline-flex items-baseline gap-1.5 rounded-lg border border-brand/35 bg-brand/10 px-2.5 py-1"
+                  title={bd.label}
+                >
+                  <span className="font-display text-[13px] font-bold leading-none tabular-nums text-brand-300">
+                    {bd.value}
+                  </span>
+                  <span className="text-[9.5px] font-semibold uppercase tracking-[0.1em] text-white/60">
+                    {bd.label}
+                  </span>
+                </span>
+              ))}
+            </div>
+          ) : (
+            <span className="rounded-full border border-brand/40 bg-brand/15 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-brand-300">
+              Architecture
+            </span>
+          )}
         </div>
         <div className="overflow-x-auto px-2 py-3">
           <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full min-w-[720px]" role="img" aria-label={title}>
@@ -150,12 +191,26 @@ export function ArchGraph({
                     strokeLinecap="round"
                     style={{ animationDelay: `${(i % 6) * 0.35}s`, animationDuration: `${2 + (i % 4) * 0.4}s`, opacity: 0.85 }}
                   />
-                  {e.label && (
-                    <text x={mx} y={(a.y + b.y) / 2 - 5} fontSize={9.5} fill={CL.dim} textAnchor="middle">
-                      {e.label}
-                    </text>
-                  )}
                 </g>
+              );
+            })}
+            {/* edge labels — only where they do not collide with nodes */}
+            {edgeList.map((e, i) => {
+              const a = anchor(e.a, "r");
+              const b = anchor(e.b, "l");
+              if (!a || !b || !e.label) return null;
+              const mx = (a.x + b.x) / 2;
+              let my = (a.y + b.y) / 2 - 5;
+              let ok = !insideAnyRect(mx, my, 6);
+              if (!ok) {
+                my = my - 26;
+                ok = !insideAnyRect(mx, my, 4);
+              }
+              if (!ok) return null;
+              return (
+                <text key={`el${i}`} x={mx} y={my} fontSize={9} fill={CL.dim} textAnchor="middle">
+                  {e.label}
+                </text>
               );
             })}
             {/* nodes */}
@@ -163,15 +218,16 @@ export function ArchGraph({
               const p = pos[n.id];
               if (!p) return null;
               const lines = wrapLabel(n.label);
-              const hasSub = !!n.sub;
-              const boxH = hasSub ? NODE_H + 16 : NODE_H;
+              const subLines = n.sub ? wrapSub(n.sub) : [];
+              const hasSub = subLines.length > 0;
+              const labelBase = hasSub ? p.y + 19 : p.y + p.h / 2 + 4;
               return (
                 <g key={n.id}>
                   <rect
                     x={p.x}
                     y={p.y}
                     width={NODE_W}
-                    height={boxH}
+                    height={p.h}
                     rx={9}
                     fill={n.hot ? CL.hot : CL.bg}
                     stroke={n.hot ? CL.hotStroke : CL.stroke}
@@ -181,7 +237,7 @@ export function ArchGraph({
                     <text
                       key={k}
                       x={p.x + NODE_W / 2}
-                      y={p.y + (hasSub ? 17 : NODE_H / 2 + 4) + (k - (lines.length - 1) / 2) * 13}
+                      y={labelBase + (k - (lines.length - 1) / 2) * 13}
                       fontSize={10.5}
                       fontWeight={600}
                       fill={n.hot ? "rgba(255,255,255,0.97)" : CL.txt}
@@ -190,17 +246,18 @@ export function ArchGraph({
                       {ln}
                     </text>
                   ))}
-                  {hasSub && (
+                  {subLines.map((sl, k) => (
                     <text
+                      key={`s${k}`}
                       x={p.x + NODE_W / 2}
-                      y={p.y + 35}
-                      fontSize={8.5}
-                      fill="rgba(254,87,34,0.85)"
+                      y={p.y + 36 + k * 10.5}
+                      fontSize={8}
+                      fill="rgba(254,87,34,0.9)"
                       textAnchor="middle"
                     >
-                      {n.sub}
+                      {sl}
                     </text>
-                  )}
+                  ))}
                 </g>
               );
             })}
