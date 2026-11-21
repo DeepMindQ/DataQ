@@ -17,7 +17,7 @@
   },
   {
    "t": "p",
-   "x": "The economics of Applied AI & GenAI for Banking & Financial Services flipped in the last two years: runtimes got durable, evaluation became routine, and orchestration frameworks matured into something you can run under change control. What separates winners now is integration discipline — how cleanly the capability plugs into core banking rails without inventing a shadow estate. In Banking & Financial Services the constraints are structural, not cosmetic: DORA operational resilience shapes what data may move, instant rails dominates the economics, and any capability that cannot explain its own decisions will be switched off by risk committees. The architecture reflects all three from the first commit."
+   "x": "The hidden cost of Applied AI & GenAI for Banking & Financial Services is never the model; it is the scaffolding — data contracts, evaluation harnesses, rollback machinery, audit evidence. We price and build that scaffolding explicitly, on core banking rails, because that is where programs actually succeed or die. The Banking & Financial Services operating reality gives this work its shape: instant rails pressure at event speed, DORA operational resilience obligations on every artifact, and practitioners who will not accept recommendations they cannot interrogate. The pattern below is calibrated to those three forces."
   },
   {
    "t": "h2",
@@ -56,23 +56,6 @@
   {
    "t": "h2",
    "x": "Pressure points we attack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "GenAI stuck between pilot and policy",
-     "At operating tempo, the properties that carry the load are structural: each stage owns its latency budget and its failure policy in Banking & Financial Services, so drift shows up as a ticket with an owner, not as a mystery."
-    ],
-    [
-     "Service deflection without resolution",
-     "Chatbots deflect contact volume but not intent; repeat contact within seven days rises while CSAT falls. Front-line teams inherit escalations stripped of context."
-    ],
-    [
-     "KYC and periodic-review backlog",
-     "Nothing in this topology is accidental: each stage owns its latency budget and its failure policy for Banking & Financial Services at scale, so drift shows up as a ticket with an owner, not as a mystery."
-    ]
-   ]
   },
   {
    "t": "h2",
@@ -137,15 +120,15 @@
     ],
     [
      "PII redaction fence",
-     "PII redaction fence in this pattern: entity-level masking before any model call, reviewed with your platform team before cutover"
+     "PII redaction fence: entity-level masking before any model call; the runbook ships with the first working slice"
     ],
     [
      "Ragas eval harness",
-     "Ragas eval harness — groundedness and faithfulness scored per release, owned by a named engineer on both sides of the fence"
+     "Ragas eval harness — groundedness and faithfulness scored per release; wired so your engineers can trace every decision to its inputs"
     ],
     [
      "OpenTelemetry traces",
-     "OpenTelemetry traces: per-span token cost and latency attribution; the runbook ships with the first working slice"
+     "OpenTelemetry traces carries the control path — per-span token cost and latency attribution"
     ]
    ]
   },
@@ -158,15 +141,15 @@
    "items": [
     [
      "KYC/AML case managers",
-     "KYC/AML case managers: periodic review queues with evidence hooks; contracts are agreed with your system owners in week one"
+     "KYC/AML case managers — periodic review queues with evidence hooks; the adapter is part of the deliverable, not a future phase"
     ],
     [
      "core banking rails",
-     "core banking rails — ledger, payments and interest engines with CDC ingest; changes there raise events here, so the pattern never silently diverges"
+     "core banking rails: ledger, payments and interest engines with CDC ingest; contracts are agreed with your system owners in week one"
     ],
     [
      "trade & treasury systems",
-     "trade & treasury systems, where position and liquidity feeds under sub-second SLOs — with replay possible for any window your auditors name"
+     "trade & treasury systems — position and liquidity feeds under sub-second SLOs; we integrate read-first, write only through policy-checked commands"
     ],
     [
      "regulatory reporting hub",
@@ -180,7 +163,7 @@
   },
   {
    "t": "p",
-   "x": "What we watch so you do not have to ask:"
+   "x": "The program dashboard tracks these by default, wired to your channels:"
   },
   {
    "t": "bullets",
@@ -191,11 +174,11 @@
     ],
     [
      "grounded-answer rate",
-     "Up 88–93.9% of responses citing retrieved evidence — the gate compares the live value to baseline every quarter"
+     "Up 88–93.9% of responses citing retrieved evidence, with the method note attached so your analysts can reproduce it"
     ],
     [
      "reviewer override rate",
-     "Down 35–47.2% on drafted knowledge work — the gate compares the live value to baseline every quarter"
+     "Down 35–47.2% on drafted knowledge work on the first working slice; deeper scope moves it further"
     ]
    ]
   },
@@ -205,7 +188,7 @@
   },
   {
    "t": "p",
-   "x": "What usually goes wrong, and the specific guard in this build:"
+   "x": "The ways programs like this die — and the guard we ship against each:"
   },
   {
    "t": "bullets",
@@ -230,7 +213,7 @@
   },
   {
    "t": "p",
-   "x": "What the delivery actually looks like week to week: What holds the build together is discipline at the boundaries: identity is short-lived and authorization is deny-by-default across Banking & Financial Services, so drift shows up as a ticket with an owner, not as a mystery.. the middle block runs the pilot against live card switch & fraud stores data at deliberately small scope: one path, one team, one site, expanded only after its eval gate holds. What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later in Banking & Financial Services, and rollback is rehearsed before go-live rather than after the incident.. The design principle here is simple: the decision path and the audit path share one timeline in Applied AI & Generative AI delivery, and rollback is rehearsed before go-live rather than after the incident."
+   "x": "The cadence, without the ceremony: before any build work, we spend 2 weeks proving the measurement: if two analysts cannot reproduce cost per resolved query the same way, nothing else starts. the middle block runs the pilot against live card switch & fraud stores data at deliberately small scope: one path, one team, one site, expanded only after its eval gate holds. What holds the build together is discipline at the boundaries: evidence is captured where the work happens, not reconstructed later in Banking & Financial Services, and rollback is rehearsed before go-live rather than after the incident.. The design principle here is simple: the decision path and the audit path share one timeline in Applied AI & Generative AI delivery, and rollback is rehearsed before go-live rather than after the incident."
   },
   {
    "t": "h2",
@@ -295,24 +278,24 @@
    "items": [
     [
      "cost per resolved query",
-     "Down 25–37.9% after cache and routing tuning in current programs; the gate reviews the live number, not a projection"
+     "cost per resolved query carries the program: if the delta stalls, the gate redirects scope toward it before anything else (25–37.9% in current programs)"
     ],
     [
      "grounded-answer rate",
-     "Up 88–93.5% of responses citing retrieved evidence on the first working slice, with the method note attached"
+     "grounded-answer rate moves first here — the gate reviews the measured delta against the signed baseline before any scope expands (88–93.5% in current programs)"
     ],
     [
      "citation precision",
-     "Up 90–94.4% of citations pointing to the right passage on the first working slice, with the method note attached"
+     "citation precision is reported with its method note attached, so the delta is reproducible by your analysts, not just ours (90–94.4% in current programs)"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Under the hood this pattern runs on one rule: every state change is replayable from the signed baseline across Banking & Financial Services, so a regression is a cohort, never an estate."
+   "x": "Start with a value assessment: two weeks, your cost per resolved query measured and signed, a delivery plan priced from evidence."
   }
  ],
- "words": 1677,
+ "words": 1538,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Banking & Financial Services",

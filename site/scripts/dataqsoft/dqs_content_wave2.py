@@ -230,7 +230,7 @@ class Page:
             clash = False
             for x in split_sents(s2):
                 n2 = norm(x)
-                if len(n2.split()) >= 14 and n2 in SENT_SEEN and SENT_SEEN[n2] != self.key:
+                if len(n2.split()) >= 14 and n2 in SENT_SEEN:
                     clash = True
                     break
             if not clash:
@@ -247,7 +247,7 @@ class Page:
         out = []
         for x in split_sents(s):
             n = norm(x)
-            if len(n.split()) >= 14 and n in SENT_SEEN and SENT_SEEN[n] != self.key:
+            if len(n.split()) >= 14 and n in SENT_SEEN:
                 x = x.rstrip(". ") + f" — applied to {subj} in this program."
                 SENT_SEEN[norm(x)] = self.key
             elif len(n.split()) >= 14:
@@ -1129,10 +1129,11 @@ def register_sentences(p: Page, text: str):
 
 
 def enrich_editorial(p: Page):
-    """keep voice; replace boilerplate/duplicated paragraphs, notes, CTAs; inject 1 diagram"""
+    """keep voice; replace boilerplate/duplicated paragraphs, notes, CTAs; inject 1 diagram.
+    Idempotent: pages that already carry a diagram keep exactly one (no stacking)."""
     d = p.d
     blocks = []
-    diagram_done = False
+    diagram_done = any(b["t"] == "diagram" for b in d["blocks"])
     last_h2 = None
     m = p.mapping()
     is_case = d["template"] == "case_study"
@@ -1188,6 +1189,12 @@ def enrich_editorial(p: Page):
                 ))
                 diagram_done = True
         else:
+            # pass-through: keep at most ONE diagram on editorial pages
+            if b["t"] == "diagram":
+                if not diagram_done:
+                    diagram_done = True
+                    blocks.append(b)
+                continue
             blocks.append(b)
     return blocks
 

@@ -17,7 +17,7 @@
   },
   {
    "t": "p",
-   "x": "The part that survives audit is the boring part: the decision path and the audit path share one timeline on Cybersecurity & Zero-Trust programs, which keeps the blast radius of any change inside one lane. In Energy & Utilities the constraints are structural, not cosmetic: NERC CIP standards shapes what data may move, grid state dominates the economics, and any capability that cannot explain its own decisions will be switched off by risk committees. The architecture reflects all three from the first commit."
+   "x": "The part that survives audit is the boring part: the decision path and the audit path share one timeline on Cybersecurity & Zero-Trust programs, which keeps the blast radius of any change inside one lane. For Energy & Utilities, the design tension is specific — grid state on one side, NERC CIP standards on the other, and a control environment that must survive both internal audit and external inspection. We build for that tension explicitly rather than discovering it at gate review."
   },
   {
    "t": "h2",
@@ -56,23 +56,6 @@
   {
    "t": "h2",
    "x": "Pressure points we attack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "OT estate exposed by convergence",
-     "The build earns trust the same way every gate does: evidence is captured where the work happens, not reconstructed later in Energy & Utilities, and rollback is rehearsed before go-live rather than after the incident."
-    ],
-    [
-     "Forecasting under intermittency",
-     "At operating tempo, the properties that carry the load are structural: every state change is replayable from the signed baseline in Cybersecurity & Zero-Trust delivery, so a regression is a cohort, never an estate."
-    ],
-    [
-     "Asset fleets uninstrumented",
-     "Nothing in this topology is accidental: cost and quality telemetry land in the same view your owners read in Energy & Utilities, so your control owners can interrogate any number we publish."
-    ]
-   ]
   },
   {
    "t": "h2",
@@ -133,11 +116,11 @@
    "items": [
     [
      "SPIFFE/SPIRE workload identity",
-     "The build earns trust the same way every gate does: models, agents and rules move through versioned, evaluated releases in Energy & Utilities, so your control owners can interrogate any number we publish."
+     "SPIFFE/SPIRE workload identity — short-lived SVIDs instead of shared secrets; swaps are versioned and rehearsed, never improvised"
     ],
     [
      "OPA sidecar authorization",
-     "The build earns trust the same way every gate does: cost and quality telemetry land in the same view your owners read in Cybersecurity & Zero-Trust delivery, so the question of how we know gets a pointer, not a paragraph."
+     "OPA sidecar authorization carries the decision path — deny-by-default decisions logged per call"
     ],
     [
      "micro-segmentation",
@@ -158,19 +141,19 @@
    "items": [
     [
      "work & asset management",
-     "work & asset management — field crews synchronized to network state; changes there raise events here, so the pattern never silently diverges"
+     "work & asset management — field crews synchronized to network state; the adapter is part of the deliverable, not a future phase"
     ],
     [
      "weather & generation feeds",
-     "weather & generation feeds, where forecast ensembles for unit commitment — with replay possible for any window your auditors name"
+     "weather & generation feeds — forecast ensembles for unit commitment; changes there raise events here, so the pattern never silently diverges"
     ],
     [
      "SCADA / EMS cores",
-     "SCADA / EMS cores — grid state under hardened OT zoning; changes there raise events here, so the pattern never silently diverges"
+     "SCADA / EMS cores: grid state under hardened OT zoning; contracts are agreed with your system owners in week one"
     ],
     [
      "asset health registries",
-     "asset health registries — condition monitoring joined to work management; changes there raise events here, so the pattern never silently diverges"
+     "asset health registries — condition monitoring joined to work management; the adapter is part of the deliverable, not a future phase"
     ]
    ]
   },
@@ -180,22 +163,22 @@
   },
   {
    "t": "p",
-   "x": "The measures that decide gate outcomes, generated in-flight:"
+   "x": "Telemetry your control owner sees weekly — the same numbers at every gate:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "mean time to contain",
-     "Down 45–59.8% with pre-approved playbooks per feeder, reported weekly against the signed baseline"
+     "Down 45–59.8% with pre-approved playbooks — the gate compares the live value to baseline every quarter"
     ],
     [
      "audit finding closure",
-     "Up 20–34.4% faster with evidence-as-code — the gate compares the live value to baseline every quarter"
+     "Up 20–34.4% faster with evidence-as-code on the first working slice; deeper scope moves it further"
     ],
     [
      "lateral-movement dwell time",
-     "Down 55–72.5% after segmentation — the gate compares the live value to baseline every quarter"
+     "Down 55–72.5% after segmentation in current programs; measured, not modeled"
     ]
    ]
   },
@@ -205,7 +188,7 @@
   },
   {
    "t": "p",
-   "x": "What usually goes wrong, and the specific guard in this build:"
+   "x": "Failure modes we design against, with the guard shipped for each:"
   },
   {
    "t": "bullets",
@@ -230,7 +213,7 @@
   },
   {
    "t": "p",
-   "x": "Here is the working rhythm, stated so you can hold us to it: What holds the build together is discipline at the boundaries: cost and quality telemetry land in the same view your owners read for Energy & Utilities at scale, so drift shows up as a ticket with an owner, not as a mystery.. Nothing in this topology is accidental: evidence is captured where the work happens, not reconstructed later on Cybersecurity & Zero-Trust programs, so the question of how we know gets a pointer, not a paragraph.. The design principle here is simple: every state change is replayable from the signed baseline in Energy & Utilities, so your control owners can interrogate any number we publish.. The design principle here is simple: signals cross boundaries only through typed contracts on Cybersecurity & Zero-Trust programs, so the question of how we know gets a pointer, not a paragraph."
+   "x": "The operating cadence, concretely: before any build work, we spend 2 weeks proving the measurement: if two analysts cannot reproduce audit finding closure the same way, nothing else starts. Nothing in this topology is accidental: evidence is captured where the work happens, not reconstructed later on Cybersecurity & Zero-Trust programs, so the question of how we know gets a pointer, not a paragraph.. The design principle here is simple: every state change is replayable from the signed baseline in Energy & Utilities, so your control owners can interrogate any number we publish.. The design principle here is simple: signals cross boundaries only through typed contracts on Cybersecurity & Zero-Trust programs, so the question of how we know gets a pointer, not a paragraph."
   },
   {
    "t": "h2",
@@ -263,7 +246,7 @@
   },
   {
    "t": "p",
-   "x": "Artifacts, not anecdotes — at the first-quarter close your team holds:"
+   "x": "What changes hands at quarter close, with a guided walkthrough per item:"
   },
   {
    "t": "bullets",
@@ -295,24 +278,24 @@
    "items": [
     [
      "audit finding closure",
-     "Up 20–36.5% faster with evidence-as-code in current programs; the gate reviews the live number, not a projection"
+     "audit finding closure moves first here — the gate reviews the measured delta against the signed baseline before any scope expands (20–36.5% in current programs)"
     ],
     [
      "privileged session coverage",
-     "Up 95–99.1% of admin paths brokered and recorded per feeder, measured against the week-two baseline"
+     "privileged session coverage defines success for this pattern and is audited against the week-two baseline at every gate (95–99.1% in current programs)"
     ],
     [
      "alert false-positive rate",
-     "Down 40–52.2% with tuned detections and policy context per feeder, measured against the week-two baseline"
+     "alert false-positive rate is tracked weekly to your control owner; the number at gate three is the number finance sees (40–52.2% in current programs)"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Under the hood this pattern runs on one rule: every state change is replayable from the signed baseline in Energy & Utilities, so your control owners can interrogate any number we publish."
+   "x": "Put your audit finding closure in front of the practice lead — bring the baseline, leave with a scoped plan."
   }
  ],
- "words": 1630,
+ "words": 1462,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Energy & Utilities",

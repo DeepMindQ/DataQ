@@ -241,7 +241,7 @@ def blocks_ch8():
         {"t": "h2", "x": "Placeholder checklist (fill before build freeze)"},
         {"t": "table", "caption": "【…】 placeholders by area", "headers": ["Area", "Placeholder", "Owner"],
          "rows": [
-             ["Global offices", "Street addresses for Tysons Corner, London, Hyderabad, Riyadh", "Operations"],
+             ["Global offices", "Street addresses for Tysons Corner, London, India execution core, Riyadh", "Operations"],
              ["Leadership", "Executive names and bios (8 roles)", "Communications"],
              ["Contact", "Contact, press, careers emails; switchboard phone; careers portal link", "Marketing"],
              ["Legal", "Privacy, Terms, Cookies text per jurisdiction; document-control owners and dates", "Legal"],

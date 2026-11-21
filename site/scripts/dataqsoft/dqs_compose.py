@@ -693,7 +693,7 @@ def _company_blocks(page):
             B_bullets([
                 ["US — Tysons Corner", "quantum and advanced compute practice, board advisory, outcome-linked commercial design."],
                 ["UK — London", "DORA and regulatory programs, financial-services delivery, European data-residency patterns."],
-                ["India — Hyderabad", "data and platform factories, agentic engineering pods, 24/7 operations depth."],
+                ["India — Global Execution Core", "data and platform factories, agentic engineering pods, 24/7 operations depth."],
                 ["KSA — Riyadh", "Vision 2030 programs, sovereign delivery models, energy and smart-city practices."],
             ]),
             B_h2("Security zoning across centers"),

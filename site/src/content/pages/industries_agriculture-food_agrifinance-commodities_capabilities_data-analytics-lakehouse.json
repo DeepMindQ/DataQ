@@ -9,7 +9,7 @@
  "blocks": [
   {
    "t": "hero",
-   "x": "The contract behind Data & Lakehouse for AgriFinance & Commodity Markets: signed baseline in week two, working slice by week eight, industrialized controls by week twelve, and evidence flowing to your control owner throughout."
+   "x": "How Data & Lakehouse for AgriFinance & Commodity Markets runs when it is engineered for Agriculture & Food Systems: bounded scope per gate, platform evidence generated in-flight, and outcomes stated as deltas against the number we signed together."
   },
   {
    "t": "h2",
@@ -17,7 +17,7 @@
   },
   {
    "t": "p",
-   "x": "There is a reason Data & Lakehouse for AgriFinance & Commodity Markets pilots stall between demo and production: nobody owns the seam between the clever part and the operational estate. Our builds assign that seam a named owner from day one, wrap it in contracts and telemetry, and make the first quarter produce artifacts — not slideware. Agriculture & Food Systems punishes generic deployments. yield per hectare moves faster than batch cycles, EU deforestation rules demands evidence chains most tools cannot produce, and the estate is heterogeneous — which is why every engagement starts with the seams named above rather than a platform-first rollout."
+   "x": "Data & Lakehouse for AgriFinance & Commodity Markets earns its budget only when it changes a number on someone's scorecard. So we invert the usual sequence: lock the metric and its baseline first, then work backwards to the smallest architecture that moves it — usually composed from farm management systems and the tower platform rather than built from scratch. What makes Agriculture & Food Systems different is not the math; it is the operating context: EU deforestation rules governs the data, yield per hectare governs the economics, and the people accountable for outcomes answer to regulators as well as customers. Every design choice below is downstream of that context."
   },
   {
    "t": "h2",
@@ -43,7 +43,7 @@
   },
   {
    "t": "p",
-   "x": "At operating tempo, the properties that carry the load are structural: the decision path and the audit path share one timeline in AgriFinance & Commodity Markets, so drift shows up as a ticket with an owner, not as a mystery."
+   "x": "The part that survives audit is the boring part: identity is short-lived and authorization is deny-by-default in AgriFinance & Commodity Markets, so a regression is a cohort, never an estate."
   },
   {
    "t": "h2",
@@ -51,24 +51,11 @@
   },
   {
    "t": "p",
-   "x": "In Agriculture & Food Systems, Data & Lakehouse for AgriFinance & Commodity Markets pays for itself where the seam is busiest: yield per hectare. That is where we instrument first, because a percentage point there compounds across every upstream process that feeds it."
+   "x": "Operators in Agriculture & Food Systems do not need convincing that Data & Lakehouse for AgriFinance & Commodity Markets matters; they need proof it will hold under yield per hectare pressure at quarter close. The sections below are organized around exactly that proof: what breaks today, what we deploy, and what number moves."
   },
   {
    "t": "h2",
    "x": "Pressure points we attack"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Practice data absent",
-     "At operating tempo, the properties that carry the load are structural: models, agents and rules move through versioned, evaluated releases across the AgriFinance & Commodity Markets estate, which keeps the blast radius of any change inside one lane."
-    ],
-    [
-     "Provenance collateral weak",
-     "Nothing in this topology is accidental: signals cross boundaries only through typed contracts in AgriFinance & Commodity Markets, so the question of how we know gets a pointer, not a paragraph."
-    ]
-   ]
   },
   {
    "t": "h2",
@@ -101,19 +88,6 @@
   },
   {
    "t": "h2",
-   "x": "Proof patterns in this industry"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Practice-based scoring",
-     "Under the hood this pattern runs on one rule: cost and quality telemetry land in the same view your owners read in AgriFinance & Commodity Markets, so your control owners can interrogate any number we publish."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
    "x": "Engineering standards & stack"
   },
   {
@@ -121,15 +95,15 @@
    "items": [
     [
      "cost-aware clustering",
-     "cost-aware clustering in this pattern: partition and Z-order plans reviewed per load, reviewed with your platform team before cutover"
+     "cost-aware clustering — partition and Z-order plans reviewed per load; wired so your engineers can trace every decision to its inputs"
     ],
     [
      "Delta / Iceberg tables",
-     "Delta / Iceberg tables — ACID guarantees with time travel and schema enforcement; wired so your engineers can trace every decision to its inputs"
+     "Delta / Iceberg tables carries the decision path — ACID guarantees with time travel and schema enforcement"
     ],
     [
      "Unity Catalog governance",
-     "Unity Catalog governance in this pattern: tag-based access control inherited end to end, reviewed with your platform team before cutover"
+     "Unity Catalog governance — tag-based access control inherited end to end; swaps are versioned and rehearsed, never improvised"
     ],
     [
      "streaming ingest",
@@ -154,7 +128,7 @@
     ],
     [
      "food-safety labs",
-     "food-safety labs, where test results with lot linkage — with replay possible for any window your auditors name"
+     "food-safety labs — test results with lot linkage; we integrate read-first, write only through policy-checked commands"
     ],
     [
      "traceability ledgers",
@@ -175,15 +149,15 @@
    "items": [
     [
      "warehouse spend per query",
-     "Down 20–38.2% after clustering and pruning — the gate compares the live value to baseline every quarter"
+     "Down 20–38.2% after clustering and pruning, with the method note attached so your analysts can reproduce it"
     ],
     [
      "batch window",
-     "Down 50–63.5% after re-architecture in current programs; measured, not modeled"
+     "Down 50–63.5% after re-architecture per field, reported weekly against the signed baseline"
     ],
     [
      "freshness SLO attainment",
-     "Up 97–98.7% of tables inside their declared window, with the method note attached so your analysts can reproduce it"
+     "Up 97–98.7% of tables inside their declared window in current programs; measured, not modeled"
     ]
    ]
   },
@@ -193,22 +167,22 @@
   },
   {
    "t": "p",
-   "x": "Failure modes we design against, with the guard shipped for each:"
+   "x": "What usually goes wrong, and the specific guard in this build:"
   },
   {
    "t": "bullets",
    "items": [
     [
      "Metric anarchy",
-     "Metric anarchy: one certified semantic layer owns definitions — dashboards that shadow it lose endorsement and budget; the guard is part of the first slice, not a hardening phase"
+     "Metric anarchy — one certified semantic layer owns definitions — dashboards that shadow it lose endorsement and budget, enforced by the platform rather than by discipline alone"
     ],
     [
      "Cost creep",
-     "Cost creep — guarded because per-team chargeback with query tags; untagged compute is quarantined at the queue level"
+     "Cost creep, the classic killer; here per-team chargeback with query tags; untagged compute is quarantined at the queue level"
     ],
     [
      "Silent schema drift",
-     "Silent schema drift: producer contracts fail loudly at ingest; downstream models refuse to build on drifted sources; the guard is part of the first slice, not a hardening phase"
+     "Silent schema drift — guarded because producer contracts fail loudly at ingest; downstream models refuse to build on drifted sources"
     ]
    ]
   },
@@ -244,7 +218,7 @@
   },
   {
    "t": "p",
-   "x": "Here is the working rhythm, stated so you can hold us to it: The build earns trust the same way every gate does: identity is short-lived and authorization is deny-by-default across Agriculture & Food Systems, which keeps the blast radius of any change inside one lane.. At operating tempo, the properties that carry the load are structural: evidence is captured where the work happens, not reconstructed later for Agriculture & Food Systems at scale, and rollback is rehearsed before go-live rather than after the incident.. At operating tempo, the properties that carry the load are structural: signals cross boundaries only through typed contracts in Data, Analytics & Lakehouse delivery, which is what makes the reported delta defensible in audit.. The build earns trust the same way every gate does: identity is short-lived and authorization is deny-by-default in AgriFinance & Commodity Markets, which is what makes the reported delta defensible in audit."
+   "x": "The cadence, without the ceremony: The build earns trust the same way every gate does: identity is short-lived and authorization is deny-by-default across Agriculture & Food Systems, which keeps the blast radius of any change inside one lane.. At operating tempo, the properties that carry the load are structural: evidence is captured where the work happens, not reconstructed later for Agriculture & Food Systems at scale, and rollback is rehearsed before go-live rather than after the incident.. At operating tempo, the properties that carry the load are structural: signals cross boundaries only through typed contracts in Data, Analytics & Lakehouse delivery, which is what makes the reported delta defensible in audit.. The build earns trust the same way every gate does: identity is short-lived and authorization is deny-by-default in AgriFinance & Commodity Markets, which is what makes the reported delta defensible in audit."
   },
   {
    "t": "h2",
@@ -252,7 +226,7 @@
   },
   {
    "t": "p",
-   "x": "In delivery this work composes with the capabilities listed below; each link is a pattern we have run alongside it, with the interface between them already designed."
+   "x": "No capability ships alone: the links below are the compositions this capability pattern most often travels with, chosen by observed delivery patterns rather than menu logic."
   },
   {
    "t": "bullets",
@@ -313,16 +287,16 @@
     ],
     [
      "Parametric payouts",
-     "Parametric payouts carries the program: if the delta stalls, the gate redirects scope toward it before anything else"
+     "Parametric payouts defines success for this pattern and is audited against the week-two baseline at every gate"
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Take this pattern to a briefing with your baseline — the first meeting ends with a measurement plan, not a proposal document."
+   "x": "Under the hood this pattern runs on one rule: every state change is replayable from the signed baseline across Agriculture & Food Systems, which keeps the blast radius of any change inside one lane."
   }
  ],
- "words": 1521,
+ "words": 1392,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Agriculture & Food Systems",

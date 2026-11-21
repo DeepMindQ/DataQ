@@ -27,8 +27,8 @@ BRAND = {
          "Strategic leadership, board advisory, quantum and advanced compute practices.", "【street address, Tysons Corner】"),
         ("United Kingdom — European Hub", "London, United Kingdom",
          "European delivery, DORA and regulatory programs, financial services practice.", "【street address, London】"),
-        ("India — Global Execution Core", "Hyderabad (HITEC City), India",
-         "Engineering depth: data, platform, agentic and delivery factories at scale.", "【street address, Hyderabad】"),
+        ("India — Global Execution Core", "India (Global Execution Core)",
+         "Engineering depth: data, platform, agentic and delivery factories at scale.", "【street address, India execution core】"),
         ("Kingdom of Saudi Arabia — Growth Engine", "Riyadh (KAFD), Saudi Arabia",
          "Vision 2030 programs, sovereign delivery, smart-city and energy practices.", "【street address, Riyadh】"),
     ],
@@ -189,7 +189,7 @@ APPROACH_PAGES = {
         "elements": [
             ("US — Tysons Corner", "Strategic leadership, quantum/advanced compute, board advisory."),
             ("UK — London", "European delivery hub, DORA/regulatory practices, financial services."),
-            ("India — Hyderabad", "Execution core: data, platform, agentic and delivery factories."),
+            ("India — Global Execution Core", "Execution core: data, platform, agentic and delivery factories."),
             ("KSA — Riyadh", "Vision 2030 programs, sovereign delivery, energy and smart-city practices."),
             ("Named pods", "Per-program pods with a named quality owner and named control owner."),
             ("Follow-the-sun operations", "Managed SOC, platform operations and agent-fleet operations across time zones."),
@@ -203,7 +203,7 @@ CONTACT_PAGES = {
         "title": "Contact DataQ Soft",
         "paras": [
             "Tell us the metric you need to move and the constraint you operate under — regulatory, security, capital. A practice lead (not a call center) responds within one business day with the relevant domain pod.",
-            "General inquiries: 【contact email】 · Press: 【press email】 · Careers: 【careers email】 · Global switchboard: 【phone】. Offices in the US (Tysons Corner), UK (London), India (Hyderabad) and KSA (Riyadh).",
+            "General inquiries: 【contact email】 · Press: 【press email】 · Careers: 【careers email】 · Global switchboard: 【phone】. Offices in the US (Tysons Corner), UK (London), India (execution core) and KSA (Riyadh).",
         ],
     },
     "briefing": {

@@ -88,7 +88,7 @@ ITEMS_E = [
     ("E", "Cases", "Case card visuals (36)", "Generate the 36 case visuals from the template with sector icon + headline metric.", "Case presentation", "P1", "H", "M"),
     ("E", "Leadership", "Monogram avatars (8)", "Brand-gradient monogram avatars for leadership profiles until photos are supplied.", "Identity system", "P1", "M", "S"),
     ("E", "Team", "Placeholder avatar system", "Consistent monogram treatment for any future team grid.", "Identity system", "P2", "M", "S"),
-    ("E", "Offices", "Office visual cards (4)", "Abstract skyline marks for Tysons Corner, London, Hyderabad, Riyadh on contact/about.", "Global presence", "P2", "M", "M"),
+    ("E", "Offices", "Office visual cards (4)", "Abstract skyline marks for Tysons Corner, London, India execution core, Riyadh on contact/about.", "Global presence", "P2", "M", "M"),
     ("E", "Global", "World map with pins", "Stylized SVG world map with four delivery-center pins and local times.", "Global presence", "P1", "H", "M"),
     ("E", "SEO", "OG image template set (10)", "One OG design per template type (tower, service, industry, capability, solution, platform, case, insight, company, legal).", "Share standard", "P1", "H", "M"),
     ("E", "SEO", "Per-page OG generator", "Script emits per-page OG PNGs from page JSON metadata into /public/og.", "Share standard", "P1", "H", "M"),
