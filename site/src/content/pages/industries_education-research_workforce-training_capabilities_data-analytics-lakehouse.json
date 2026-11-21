@@ -57,30 +57,133 @@
    "x": "In Workforce & Vocational Training, the pattern is skills intelligence — HRIS/LMS/performance unified to skills graph. Gaps visible sits on top as the measured result, tracked from the signed baseline onward. Around it, underneath it sits the data spine: contracts, lineage and freshness SLAs that make the number trustworthy before anyone models it. That is the engineering behind Workforce & Vocational Training."
   },
   {
-   "t": "table",
-   "caption": "What changes in the workforce & vocational training workflow",
-   "headers": [
-    "Workflow",
-    "Before",
-    "After this capability lands"
+   "t": "arch",
+   "title": "The operating loop — Data & Lakehouse × Workforce & Vocational Training",
+   "lanes": [
+    "Estates",
+    "Contracts",
+    "Lakehouse",
+    "Governance",
+    "Consumers",
+    "Actions"
    ],
-   "rows": [
-    [
-     "Skills taxonomy management",
-     "manual checks, batch updates, unverifiable timing",
-     "instrumented path with gates and evidence"
-    ],
-    [
-     "Pathway personalization",
-     "queue-driven, exceptions found late",
-     "decision-ready, exceptions surfaced in-flight"
-    ],
-    [
-     "Assessment/verification",
-     "reconciled by hand",
-     "certified once, reused everywhere"
-    ]
-   ]
+   "nodes": [
+    {
+     "id": "es0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "es1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "ct2",
+     "lane": 1,
+     "label": "Schema registry",
+     "hot": false
+    },
+    {
+     "id": "ct3",
+     "lane": 1,
+     "label": "Quality gates",
+     "hot": false
+    },
+    {
+     "id": "lh4",
+     "lane": 2,
+     "label": "Medallion lakehouse",
+     "hot": true
+    },
+    {
+     "id": "lh5",
+     "lane": 2,
+     "label": "Cost-aware storage",
+     "hot": false
+    },
+    {
+     "id": "gv6",
+     "lane": 3,
+     "label": "Lineage & catalog",
+     "hot": false
+    },
+    {
+     "id": "gv7",
+     "lane": 3,
+     "label": "Access policies",
+     "hot": false
+    },
+    {
+     "id": "cs8",
+     "lane": 4,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "cs9",
+     "lane": 4,
+     "label": "Fraud ops workbench",
+     "hot": false
+    },
+    {
+     "id": "ac10",
+     "lane": 5,
+     "label": "Owned decisions",
+     "hot": false
+    },
+    {
+     "id": "ac11",
+     "lane": 5,
+     "label": "Metric disputes closed",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "es0",
+     "b": "ct2"
+    },
+    {
+     "a": "es1",
+     "b": "ct3"
+    },
+    {
+     "a": "ct2",
+     "b": "lh4"
+    },
+    {
+     "a": "ct3",
+     "b": "lh5"
+    },
+    {
+     "a": "lh4",
+     "b": "gv6"
+    },
+    {
+     "a": "lh5",
+     "b": "gv7"
+    },
+    {
+     "a": "gv6",
+     "b": "cs8"
+    },
+    {
+     "a": "gv7",
+     "b": "cs9"
+    },
+    {
+     "a": "cs8",
+     "b": "ac10"
+    },
+    {
+     "a": "cs9",
+     "b": "ac11"
+    }
+   ],
+   "note": "Workforce & Vocational Training, drawn as it runs after the build."
   },
   {
    "t": "h2",
@@ -137,7 +240,7 @@
    "x": "The next step is small and real: one working session on Data & Lakehouse for Workforce & Vocational Training, your data, and a written feasibility read you can circulate."
   }
  ],
- "words": 498,
+ "words": 456,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Education & Research",

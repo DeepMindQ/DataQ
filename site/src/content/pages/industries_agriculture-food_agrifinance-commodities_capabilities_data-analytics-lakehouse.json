@@ -57,6 +57,135 @@
    "x": "In AgriFinance & Commodity Markets, the pattern is practice-based scoring — verified agronomic data into credit/insurance models. Losses down sits on top as the measured result, tracked from the signed baseline onward. Around it, we make the source systems agree: one governed definition per metric, streaming where the decision is time-critical, batch where it is not."
   },
   {
+   "t": "arch",
+   "title": "How the work flows once built — Data & Lakehouse × AgriFinance & Commodity Markets",
+   "lanes": [
+    "Events",
+    "Real-time core",
+    "Analytics store",
+    "Decision surfaces",
+    "Observability",
+    "Business"
+   ],
+   "nodes": [
+    {
+     "id": "ev0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "ev1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "rt2",
+     "lane": 1,
+     "label": "Kafka / Flink core",
+     "hot": true
+    },
+    {
+     "id": "rt3",
+     "lane": 1,
+     "label": "Stream processors",
+     "hot": false
+    },
+    {
+     "id": "an4",
+     "lane": 2,
+     "label": "Lakehouse tables",
+     "hot": false
+    },
+    {
+     "id": "an5",
+     "lane": 2,
+     "label": "Online store",
+     "hot": false
+    },
+    {
+     "id": "ds6",
+     "lane": 3,
+     "label": "Executive BI",
+     "hot": false
+    },
+    {
+     "id": "ds7",
+     "lane": 3,
+     "label": "Embedded analytics",
+     "hot": true
+    },
+    {
+     "id": "ob8",
+     "lane": 4,
+     "label": "Freshness SLOs",
+     "hot": false
+    },
+    {
+     "id": "ob9",
+     "lane": 4,
+     "label": "Lineage alerts",
+     "hot": false
+    },
+    {
+     "id": "bs10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "bs11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "ev0",
+     "b": "rt2"
+    },
+    {
+     "a": "ev1",
+     "b": "rt3"
+    },
+    {
+     "a": "rt2",
+     "b": "an4"
+    },
+    {
+     "a": "rt3",
+     "b": "an5"
+    },
+    {
+     "a": "an4",
+     "b": "ds6"
+    },
+    {
+     "a": "an5",
+     "b": "ds7"
+    },
+    {
+     "a": "rt2",
+     "b": "ob8"
+    },
+    {
+     "a": "ob8",
+     "b": "ob9"
+    },
+    {
+     "a": "ds6",
+     "b": "bs10"
+    },
+    {
+     "a": "ds7",
+     "b": "bs11"
+    }
+   ],
+   "note": "AgriFinance & Commodity Markets, drawn as it runs after the build."
+  },
+  {
    "t": "h2",
    "x": "The delivery rhythm"
   },

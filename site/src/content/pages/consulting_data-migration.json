@@ -1,0 +1,245 @@
+{
+ "id": "CONS-data-migration",
+ "title": "Data Migration & Platform Moves",
+ "url": "/consulting/data-migration/",
+ "template": "consulting_service",
+ "breadcrumb": "Consulting",
+ "seo_title": "Data Migration & Platform Moves — Consulting | Dataq Software",
+ "meta_description": "Data Migration & Platform Moves: Move estates without losing a row, an audit trail or a night's sleep. Method, toolchain and delivered artifacts — engineered under outcome-gated engagement.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Data Migration & Platform Moves: Move estates without losing a row, an audit trail or a night's sleep. This page is the practice as it works — method, toolchain, artifacts and the architecture we deploy."
+  },
+  {
+   "t": "h2",
+   "x": "What this practice does"
+  },
+  {
+   "t": "p",
+   "x": "Data migration fails in the planning, not the pipeline. Estates that look simple on a slide hold decades of undocumented logic: spreadsheets that became systems, triggers nobody owns, and reference data that three applications interpret three different ways. We start every migration with discovery that reads the estate the way the estate actually behaves — dependency mapping at column level, profile-driven data quality baselines, and a reconciliation contract agreed before anything moves."
+  },
+  {
+   "t": "p",
+   "x": "Execution runs in waves with reversible cutovers: each wave carries its own rehearsal, row-level reconciliation (counts, sums, spot business keys, hashed payloads), and a rollback plan your operations team has already rehearsed. Cutover decisions are made against pre-agreed evidence — reconciliation deltas, latency budgets, dual-run comparisons — never against a date on a program charter."
+  },
+  {
+   "t": "h2",
+   "x": "The method, named"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Discovery & dependency mapping",
+     "Column-level lineage across every source; undocumented logic surfaced and priced"
+    ],
+    [
+     "Target architecture & contracts",
+     "Schema contracts, quality rules and reconciliation math agreed with owners"
+    ],
+    [
+     "Wave rehearsal",
+     "Full-volume dry runs in isolated lanes with timed cutovers"
+    ],
+    [
+     "Execution & reconciliation",
+     "Row-level checks at every boundary; deltas explained, not accepted"
+    ],
+    [
+     "Cutover & stabilization",
+     "Reversible cutovers, hypercare war-room, decommission with archival"
+    ]
+   ]
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — Data Migration & Platform Moves",
+   "lanes": [
+    "Source estate",
+    "Discovery & contracts",
+    "Migration lanes",
+    "Reconciliation",
+    "Target platform"
+   ],
+   "nodes": [
+    {
+     "id": "src0",
+     "lane": 0,
+     "label": "Legacy databases & files",
+     "hot": true
+    },
+    {
+     "id": "src1",
+     "lane": 0,
+     "label": "SaaS & flat-file estates",
+     "hot": false
+    },
+    {
+     "id": "dc0",
+     "lane": 1,
+     "label": "Column-level lineage",
+     "hot": true
+    },
+    {
+     "id": "dc1",
+     "lane": 1,
+     "label": "Quality baseline",
+     "hot": false
+    },
+    {
+     "id": "ml0",
+     "lane": 2,
+     "label": "Wave pipelines (CDC + batch)",
+     "hot": true
+    },
+    {
+     "id": "ml1",
+     "lane": 2,
+     "label": "Transformation codegen",
+     "hot": false
+    },
+    {
+     "id": "rc0",
+     "lane": 3,
+     "label": "Row-hash reconciliation",
+     "hot": true
+    },
+    {
+     "id": "rc1",
+     "lane": 3,
+     "label": "Dual-run comparator",
+     "hot": false
+    },
+    {
+     "id": "tp0",
+     "lane": 4,
+     "label": "Azure / Databricks / Snowflake target",
+     "hot": true
+    },
+    {
+     "id": "tp1",
+     "lane": 4,
+     "label": "Archival & decommission",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "src0",
+     "b": "dc0"
+    },
+    {
+     "a": "src1",
+     "b": "dc1"
+    },
+    {
+     "a": "dc0",
+     "b": "ml0"
+    },
+    {
+     "a": "dc1",
+     "b": "ml1"
+    },
+    {
+     "a": "ml0",
+     "b": "rc0"
+    },
+    {
+     "a": "ml1",
+     "b": "rc1"
+    },
+    {
+     "a": "rc0",
+     "b": "tp0"
+    },
+    {
+     "a": "rc1",
+     "b": "tp1"
+    }
+   ],
+   "note": "Nodes and lanes are this practice's actual build — drawn once, per service, not shared."
+  },
+  {
+   "t": "h2",
+   "x": "The toolchain we bring"
+  },
+  {
+   "t": "table",
+   "caption": "Tooling by layer",
+   "headers": [
+    "Layer",
+    "Tools & frameworks"
+   ],
+   "rows": [
+    [
+     "Movement",
+     "Azure Data Factory / SSIS, AWS DMS & Glue, Kafka Connect, Informatica / Talend, Custom CDC frameworks"
+    ],
+    [
+     "Assurance",
+     "Great Expectations / dbt tests, Row-hash reconciliation harnesses, Collibra / Purview lineage, Dual-run comparators"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "What changes hands"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Dependency map & migration blueprint (column-level)",
+     "Named artifact with a walkthrough when it lands."
+    ],
+    [
+     "Reconciliation contract with signed thresholds",
+     "Named artifact with a walkthrough when it lands."
+    ],
+    [
+     "Wave plan with rehearsed cutovers and rollback drills",
+     "Named artifact with a walkthrough when it lands."
+    ],
+    [
+     "Hypercare runbook with named owners",
+     "Named artifact with a walkthrough when it lands."
+    ],
+    [
+     "Decommission & archival plan for the old estate",
+     "Named artifact with a walkthrough when it lands."
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "The specifics behind data migration & platform moves:"
+  },
+  {
+   "t": "cta",
+   "x": "Book a Data Migration & Platform Moves briefing — 45 minutes with the practice lead, your estate, and a straight answer on feasibility."
+  }
+ ],
+ "words": 376,
+ "section": "Consulting",
+ "l1": "Consulting",
+ "l2": "Data Migration & Platform Moves",
+ "l3": "",
+ "l4": "",
+ "crumbs": [
+  {
+   "name": "Home",
+   "url": "/"
+  },
+  {
+   "name": "Consulting",
+   "url": "/consulting/"
+  },
+  {
+   "name": "Data Migration & Platform Moves",
+   "url": "/consulting/data-migration/"
+  }
+ ],
+ "related": [],
+ "cards": []
+}

@@ -61,16 +61,104 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "The governed path, end to end — Supply Chain Risk & Continuity",
-   "labels": [
-    "Multi-tier visibility",
-    "Disruption sensing",
-    "Scenario playbooks",
-    "Autonomous re-planning"
+   "t": "arch",
+   "title": "Supply Chain Risk & Continuity — solution topology",
+   "lanes": [
+    "Estate",
+    "Composition core",
+    "Platform rails",
+    "Controls",
+    "Consumers"
    ],
-   "note": "Named stages, not generic boxes — this is the Supply Chain Risk & Continuity path as built."
+   "nodes": [
+    {
+     "id": "estate",
+     "lane": 0,
+     "label": "Client estate",
+     "hot": false
+    },
+    {
+     "id": "c0",
+     "lane": 1,
+     "label": "Multi-tier visibility",
+     "hot": true
+    },
+    {
+     "id": "c1",
+     "lane": 1,
+     "label": "Disruption sensing",
+     "hot": false
+    },
+    {
+     "id": "c2",
+     "lane": 1,
+     "label": "Scenario playbooks",
+     "hot": false
+    },
+    {
+     "id": "c3",
+     "lane": 1,
+     "label": "Autonomous re-planning",
+     "hot": false
+    },
+    {
+     "id": "p0",
+     "lane": 2,
+     "label": "Dataq Nexus",
+     "hot": true
+    },
+    {
+     "id": "p1",
+     "lane": 2,
+     "label": "Dataq Ledger",
+     "hot": true
+    },
+    {
+     "id": "ctl",
+     "lane": 3,
+     "label": "Control & evidence pack"
+    },
+    {
+     "id": "bus",
+     "lane": 4,
+     "label": "Logistics & Supply Chain"
+    }
+   ],
+   "edges": [
+    {
+     "a": "estate",
+     "b": "c0"
+    },
+    {
+     "a": "estate",
+     "b": "c1"
+    },
+    {
+     "a": "estate",
+     "b": "c2"
+    },
+    {
+     "a": "estate",
+     "b": "c3"
+    },
+    {
+     "a": "c0",
+     "b": "p0"
+    },
+    {
+     "a": "c1",
+     "b": "p1"
+    },
+    {
+     "a": "p0",
+     "b": "ctl"
+    },
+    {
+     "a": "ctl",
+     "b": "bus"
+    }
+   ],
+   "note": "Components and platforms are the named pieces of this solution, drawn in their architectural position."
   },
   {
    "t": "h2",
@@ -118,7 +206,7 @@
    "x": "Start with the diagnostic, not the contract: Supply Chain Risk & Continuity baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 385,
+ "words": 373,
  "section": "Solutions",
  "l1": "Solutions",
  "l2": "Risk & Resilience",

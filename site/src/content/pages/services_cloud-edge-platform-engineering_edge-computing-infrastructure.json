@@ -65,16 +65,133 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "edge-topology",
-   "title": "The governed path, end to end — Edge Computing & Distributed Infrastructure",
-   "labels": [
-    "Hardware engineering",
-    "Edge orchestration",
-    "Offline-first patterns",
-    "Model OTA pipeline"
+   "t": "arch",
+   "title": "Reference architecture — Edge Computing & Distributed Infrastructure",
+   "lanes": [
+    "Estates",
+    "Migration waves",
+    "Modern runtimes",
+    "Observability",
+    "Governance",
+    "Products"
    ],
-   "note": "The stages are the workflow names above; nothing on this diagram is decorative."
+   "nodes": [
+    {
+     "id": "es0",
+     "lane": 0,
+     "label": "MES & line historians",
+     "hot": false
+    },
+    {
+     "id": "es1",
+     "lane": 0,
+     "label": "SCADA / OT telemetry",
+     "hot": false
+    },
+    {
+     "id": "mw2",
+     "lane": 1,
+     "label": "Edge Computing & Distributed Infrastructure",
+     "hot": true
+    },
+    {
+     "id": "mw3",
+     "lane": 1,
+     "label": "Cutover runbooks",
+     "hot": false
+    },
+    {
+     "id": "mr4",
+     "lane": 2,
+     "label": "Containers & IaC",
+     "hot": false
+    },
+    {
+     "id": "mr5",
+     "lane": 2,
+     "label": "Managed data services",
+     "hot": true
+    },
+    {
+     "id": "ob6",
+     "lane": 3,
+     "label": "Golden signals",
+     "hot": false
+    },
+    {
+     "id": "ob7",
+     "lane": 3,
+     "label": "Incident automation",
+     "hot": false
+    },
+    {
+     "id": "gv8",
+     "lane": 4,
+     "label": "Cloud posture (CNAPP)",
+     "hot": false
+    },
+    {
+     "id": "gv9",
+     "lane": 4,
+     "label": "IEC 62443 posture",
+     "hot": false
+    },
+    {
+     "id": "pr10",
+     "lane": 5,
+     "label": "Production scheduling",
+     "hot": false
+    },
+    {
+     "id": "pr11",
+     "lane": 5,
+     "label": "Maintenance planner",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "es0",
+     "b": "mw2"
+    },
+    {
+     "a": "es1",
+     "b": "mw3"
+    },
+    {
+     "a": "mw2",
+     "b": "mr4"
+    },
+    {
+     "a": "mw3",
+     "b": "mr5"
+    },
+    {
+     "a": "mr4",
+     "b": "ob6"
+    },
+    {
+     "a": "mr5",
+     "b": "ob7"
+    },
+    {
+     "a": "ob6",
+     "b": "gv8"
+    },
+    {
+     "a": "gv8",
+     "b": "gv9"
+    },
+    {
+     "a": "mr4",
+     "b": "pr10"
+    },
+    {
+     "a": "mr5",
+     "b": "pr11"
+    }
+   ],
+   "note": "Topology inherited from the Cloud, Edge & Platform tower; the highlighted core is this service's build."
   },
   {
    "t": "h2",
@@ -139,7 +256,7 @@
    "x": "Talk to the team that runs Edge Computing & Distributed Infrastructure in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 523,
+ "words": 511,
  "section": "Services",
  "l1": "Services",
  "l2": "Cloud, Edge & Platform Engineering",

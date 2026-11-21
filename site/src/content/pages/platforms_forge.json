@@ -57,16 +57,95 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "From signal to decision to evidence — Dataq Forge",
-   "labels": [
-    "Pipeline framework",
-    "Governance baseline",
-    "Streaming core",
-    "AI data layer"
+   "t": "arch",
+   "title": "Dataq Forge — module topology",
+   "lanes": [
+    "Ingest",
+    "Core",
+    "Delivery",
+    "Trust"
    ],
-   "note": "Dataq Forge, drawn as it runs after the build."
+   "nodes": [
+    {
+     "id": "in1",
+     "lane": 0,
+     "label": "Adapters & contracts",
+     "hot": false
+    },
+    {
+     "id": "in2",
+     "lane": 0,
+     "label": "Databricks",
+     "hot": false
+    },
+    {
+     "id": "c1",
+     "lane": 1,
+     "label": "Pipeline framework",
+     "hot": true
+    },
+    {
+     "id": "c2",
+     "lane": 1,
+     "label": "Governance baseline",
+     "hot": false
+    },
+    {
+     "id": "d1",
+     "lane": 2,
+     "label": "Streaming core",
+     "hot": false
+    },
+    {
+     "id": "d2",
+     "lane": 2,
+     "label": "AI data layer",
+     "hot": false
+    },
+    {
+     "id": "t1",
+     "lane": 3,
+     "label": "Evidence packs",
+     "hot": false
+    },
+    {
+     "id": "t2",
+     "lane": 3,
+     "label": "Privacy tags",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "in1",
+     "b": "c1"
+    },
+    {
+     "a": "in2",
+     "b": "c1"
+    },
+    {
+     "a": "c1",
+     "b": "c2"
+    },
+    {
+     "a": "c1",
+     "b": "d1"
+    },
+    {
+     "a": "c2",
+     "b": "d2"
+    },
+    {
+     "a": "d1",
+     "b": "t1"
+    },
+    {
+     "a": "d2",
+     "b": "t2"
+    }
+   ],
+   "note": "Modules are the platform's named components; trust lane is what the audit reads."
   },
   {
    "t": "h2",
@@ -118,7 +197,7 @@
    "x": "The next step is small and real: one working session on Dataq Forge, your data, and a written feasibility read you can circulate."
   }
  ],
- "words": 339,
+ "words": 330,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Forge",

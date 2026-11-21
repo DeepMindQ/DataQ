@@ -57,30 +57,143 @@
    "x": "In Capital Markets & Wealth Management, the pattern is advisor copilot — portfolio context, research and market moves summarized with citations pre-meeting. Prep time down 40-60% sits on top as the measured result, tracked from the signed baseline onward. Around it, the work is model and retrieval engineering with evaluation wired in from the first sprint — grounded answers, cited sources, and a cost line somebody actually owns."
   },
   {
-   "t": "table",
-   "caption": "What changes in the capital markets & wealth management workflow",
-   "headers": [
-    "Workflow",
-    "Before",
-    "After this capability lands"
+   "t": "arch",
+   "title": "From signal to decision to evidence — Applied AI & GenAI × Capital Markets & Wealth Management",
+   "lanes": [
+    "Estate",
+    "Ingest",
+    "Knowledge spine",
+    "Task services",
+    "Governance",
+    "Users"
    ],
-   "rows": [
-    [
-     "Advisor research and prep",
-     "manual checks, batch updates, unverifiable timing",
-     "instrumented path with gates and evidence"
-    ],
-    [
-     "Reconciliation and breaks",
-     "queue-driven, exceptions found late",
-     "decision-ready, exceptions surfaced in-flight"
-    ],
-    [
-     "Client reporting",
-     "reconciled by hand",
-     "certified once, reused everywhere"
-    ]
-   ]
+   "nodes": [
+    {
+     "id": "src0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "src1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "src2",
+     "lane": 0,
+     "label": "KYC / AML case manager",
+     "hot": false
+    },
+    {
+     "id": "in3",
+     "lane": 1,
+     "label": "Event & batch intake",
+     "hot": false
+    },
+    {
+     "id": "in4",
+     "lane": 1,
+     "label": "PII minimization",
+     "hot": false
+    },
+    {
+     "id": "ks5",
+     "lane": 2,
+     "label": "Decision hub (policy + models)",
+     "hot": true
+    },
+    {
+     "id": "ks6",
+     "lane": 2,
+     "label": "Citations & provenance",
+     "hot": false
+    },
+    {
+     "id": "ts7",
+     "lane": 3,
+     "label": "Classify & extract",
+     "hot": false
+    },
+    {
+     "id": "ts8",
+     "lane": 3,
+     "label": "Summarize & draft",
+     "hot": false
+    },
+    {
+     "id": "gv9",
+     "lane": 4,
+     "label": "Eval gates",
+     "hot": false
+    },
+    {
+     "id": "gv10",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "us11",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "us12",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "src0",
+     "b": "in3"
+    },
+    {
+     "a": "src1",
+     "b": "in3"
+    },
+    {
+     "a": "src2",
+     "b": "in4"
+    },
+    {
+     "a": "in3",
+     "b": "ks5"
+    },
+    {
+     "a": "in4",
+     "b": "ks5"
+    },
+    {
+     "a": "ks5",
+     "b": "ts7"
+    },
+    {
+     "a": "ks5",
+     "b": "ts8"
+    },
+    {
+     "a": "ts7",
+     "b": "gv9"
+    },
+    {
+     "a": "gv9",
+     "b": "gv10"
+    },
+    {
+     "a": "ts7",
+     "b": "us11"
+    },
+    {
+     "a": "ts8",
+     "b": "us12"
+    }
+   ],
+   "note": "The stages are the workflow names above; nothing on this diagram is decorative."
   },
   {
    "t": "h2",
@@ -137,7 +250,7 @@
    "x": "A value assessment prices the delta in your estate before anything is signed: Applied AI & GenAI for Capital Markets & Wealth Management, measured against your baseline, in two weeks."
   }
  ],
- "words": 574,
+ "words": 528,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Banking & Financial Services",

@@ -65,16 +65,133 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "optimization-funnel",
-   "title": "The flow your team would run — Post-Quantum Cryptography Migration",
-   "labels": [
-    "Cryptographic discovery",
-    "Exposure ranking",
-    "Crypto-agility architecture",
-    "Transition engineering"
+   "t": "arch",
+   "title": "Reference architecture — Post-Quantum Cryptography Migration",
+   "lanes": [
+    "Domains",
+    "Encodings",
+    "Compute",
+    "Validation",
+    "Explanation",
+    "Decisions"
    ],
-   "note": "The stages are the workflow names above; nothing on this diagram is decorative."
+   "nodes": [
+    {
+     "id": "dm0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "dm1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "en2",
+     "lane": 1,
+     "label": "Hilbert-space encodings",
+     "hot": false
+    },
+    {
+     "id": "en3",
+     "lane": 1,
+     "label": "Post-Quantum Cryptography Migration",
+     "hot": true
+    },
+    {
+     "id": "cp4",
+     "lane": 2,
+     "label": "CPU/GPU/accelerator mix",
+     "hot": true
+    },
+    {
+     "id": "cp5",
+     "lane": 2,
+     "label": "Quantum services (managed)",
+     "hot": false
+    },
+    {
+     "id": "vl6",
+     "lane": 3,
+     "label": "Statistical validation",
+     "hot": false
+    },
+    {
+     "id": "vl7",
+     "lane": 3,
+     "label": "Cross-method comparison",
+     "hot": false
+    },
+    {
+     "id": "ex8",
+     "lane": 4,
+     "label": "Explain reports",
+     "hot": false
+    },
+    {
+     "id": "ex9",
+     "lane": 4,
+     "label": "Sensitivity analysis",
+     "hot": false
+    },
+    {
+     "id": "dc10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "dc11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "dm0",
+     "b": "en2"
+    },
+    {
+     "a": "dm1",
+     "b": "en3"
+    },
+    {
+     "a": "en2",
+     "b": "cp4"
+    },
+    {
+     "a": "en3",
+     "b": "cp5"
+    },
+    {
+     "a": "cp4",
+     "b": "vl6"
+    },
+    {
+     "a": "cp5",
+     "b": "vl7"
+    },
+    {
+     "a": "vl6",
+     "b": "ex8"
+    },
+    {
+     "a": "vl7",
+     "b": "ex9"
+    },
+    {
+     "a": "ex8",
+     "b": "dc10"
+    },
+    {
+     "a": "ex9",
+     "b": "dc11"
+    }
+   ],
+   "note": "Topology inherited from the Quantum & Advanced Compute tower; the highlighted core is this service's build."
   },
   {
    "t": "h2",
@@ -139,7 +256,7 @@
    "x": "The next step is small and real: one working session on Post-Quantum Cryptography Migration, your data, and a written feasibility read you can circulate."
   }
  ],
- "words": 516,
+ "words": 506,
  "section": "Services",
  "l1": "Services",
  "l2": "Quantum & Advanced Compute",

@@ -49,14 +49,131 @@
    "x": "The pattern that repeats in Insurance & Risk: underwriting workbench assistant — submissions summarized with citations to loss runs, exposure data and appetite rules. Quote turnaround down 50% for sme lines is the measured outcome the gate checks. The engineering follows the pressure, not the fashion."
   },
   {
-   "t": "diagram",
-   "kind": "decision-fabric",
-   "title": "The operating loop — Insurance & Risk, Applied AI & GenAI",
-   "labels": [
-    "Pricing sophistication outrunning governance",
-    "Distribution partners need embedded rails",
-    "Applied AI & GenAI decision layer",
-    "signed baseline"
+   "t": "arch",
+   "title": "The operating loop — Applied AI & GenAI × Insurance & Risk",
+   "lanes": [
+    "Systems of record",
+    "Contracted inputs",
+    "Retrieval core",
+    "Guarded generation",
+    "Controls",
+    "Surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "src0",
+     "lane": 0,
+     "label": "Policy admin system",
+     "hot": false
+    },
+    {
+     "id": "src1",
+     "lane": 0,
+     "label": "Claims document intake",
+     "hot": false
+    },
+    {
+     "id": "ct2",
+     "lane": 1,
+     "label": "Schema contracts",
+     "hot": false
+    },
+    {
+     "id": "ct3",
+     "lane": 1,
+     "label": "Freshness SLAs",
+     "hot": false
+    },
+    {
+     "id": "rc4",
+     "lane": 2,
+     "label": "Permission-aware index",
+     "hot": true
+    },
+    {
+     "id": "rc5",
+     "lane": 2,
+     "label": "Embedding pipeline",
+     "hot": false
+    },
+    {
+     "id": "gg6",
+     "lane": 3,
+     "label": "Grounded answering",
+     "hot": true
+    },
+    {
+     "id": "gg7",
+     "lane": 3,
+     "label": "Prompt & cost router",
+     "hot": false
+    },
+    {
+     "id": "co8",
+     "lane": 4,
+     "label": "Eval harness",
+     "hot": false
+    },
+    {
+     "id": "co9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "su10",
+     "lane": 5,
+     "label": "Underwriting workbench",
+     "hot": false
+    },
+    {
+     "id": "su11",
+     "lane": 5,
+     "label": "Claims adjudication",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "src0",
+     "b": "ct2"
+    },
+    {
+     "a": "src1",
+     "b": "ct2"
+    },
+    {
+     "a": "ct2",
+     "b": "rc4"
+    },
+    {
+     "a": "ct3",
+     "b": "rc5"
+    },
+    {
+     "a": "rc4",
+     "b": "gg6"
+    },
+    {
+     "a": "rc5",
+     "b": "gg7"
+    },
+    {
+     "a": "gg6",
+     "b": "co8"
+    },
+    {
+     "a": "co8",
+     "b": "co9"
+    },
+    {
+     "a": "gg6",
+     "b": "su10"
+    },
+    {
+     "a": "gg7",
+     "b": "su11"
+    }
    ],
    "note": "The path your operators would actually recognize."
   },
@@ -118,7 +235,7 @@
    "x": "Bring Applied AI & GenAI in Insurance & Risk to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
   }
  ],
- "words": 582,
+ "words": 571,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Insurance & Risk",

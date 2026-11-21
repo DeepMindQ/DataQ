@@ -57,14 +57,131 @@
    "x": "In Food Safety & Food Retail, the pattern is cold-chain fabric — store/warehouse/transport telemetry. Evidence continuous sits on top as the measured result, tracked from the signed baseline onward. Around it, the work spans the stack: devices and gateways in the field, perception models in the middle, actuation plans on the board."
   },
   {
-   "t": "diagram",
-   "kind": "twin-loop",
-   "title": "How the work flows once built — Food Safety & Food Retail, IoT, Twin & Robotics",
-   "labels": [
-    "Cold-chain management",
-    "Cold-chain fabric",
-    "Supplier verification",
-    "value ledger"
+   "t": "arch",
+   "title": "How the work flows once built — IoT, Twin & Robotics × Food Safety & Food Retail",
+   "lanes": [
+    "Sites",
+    "Connectivity",
+    "Fleet services",
+    "Simulation",
+    "What-if",
+    "Planners"
+   ],
+   "nodes": [
+    {
+     "id": "st0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "st1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "cn2",
+     "lane": 1,
+     "label": "LTE/5G backhaul",
+     "hot": false
+    },
+    {
+     "id": "cn3",
+     "lane": 1,
+     "label": "Store & forward",
+     "hot": false
+    },
+    {
+     "id": "fs4",
+     "lane": 2,
+     "label": "Device management",
+     "hot": true
+    },
+    {
+     "id": "fs5",
+     "lane": 2,
+     "label": "OTA updates",
+     "hot": false
+    },
+    {
+     "id": "sm6",
+     "lane": 3,
+     "label": "Physics + ML simulation",
+     "hot": true
+    },
+    {
+     "id": "sm7",
+     "lane": 3,
+     "label": "Scenario engine",
+     "hot": false
+    },
+    {
+     "id": "wi8",
+     "lane": 4,
+     "label": "What-if console",
+     "hot": false
+    },
+    {
+     "id": "wi9",
+     "lane": 4,
+     "label": "Sensitivity runs",
+     "hot": false
+    },
+    {
+     "id": "pl10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "pl11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "st0",
+     "b": "cn2"
+    },
+    {
+     "a": "st1",
+     "b": "cn3"
+    },
+    {
+     "a": "cn2",
+     "b": "fs4"
+    },
+    {
+     "a": "cn3",
+     "b": "fs5"
+    },
+    {
+     "a": "fs4",
+     "b": "sm6"
+    },
+    {
+     "a": "fs5",
+     "b": "sm7"
+    },
+    {
+     "a": "sm6",
+     "b": "wi8"
+    },
+    {
+     "a": "sm7",
+     "b": "wi9"
+    },
+    {
+     "a": "wi8",
+     "b": "pl10"
+    },
+    {
+     "a": "wi9",
+     "b": "pl11"
+    }
    ],
    "note": "Food Safety & Food Retail, drawn as it runs after the build."
   },
@@ -97,7 +214,7 @@
    "x": "If IoT, Twin & Robotics for Food Safety & Food Retail is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
   }
  ],
- "words": 439,
+ "words": 423,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Agriculture & Food Systems",

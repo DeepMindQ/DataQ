@@ -40,8 +40,143 @@
    "x": "The prior-auth agent maps policy criteria to chart evidence, assembles submissions and appeals with citations, and routes true judgment calls to clinicians. Claims-clinical reconciliation on Forge now feeds coding-integrity and quality reporting with lineage; coverage decisions cite policy passages with provenance on Nexus."
   },
   {
+   "t": "arch",
+   "title": "What went into production — A national health insurer",
+   "lanes": [
+    "Bedside signals",
+    "Streaming core",
+    "Deterioration models",
+    "Clinical response",
+    "Governance",
+    "Care teams"
+   ],
+   "nodes": [
+    {
+     "id": "bs0",
+     "lane": 0,
+     "label": "Monitor & ward telemetry",
+     "hot": true
+    },
+    {
+     "id": "bs1",
+     "lane": 0,
+     "label": "Lab results stream",
+     "hot": false
+    },
+    {
+     "id": "sc0",
+     "lane": 1,
+     "label": "Streaming clinical bus",
+     "hot": false
+    },
+    {
+     "id": "dm0",
+     "lane": 2,
+     "label": "Early-warning models",
+     "hot": true
+    },
+    {
+     "id": "dm1",
+     "lane": 2,
+     "label": "Sepsis & fall risk",
+     "hot": true
+    },
+    {
+     "id": "cr0",
+     "lane": 3,
+     "label": "Rapid-response alerts",
+     "hot": false
+    },
+    {
+     "id": "cr1",
+     "lane": 3,
+     "label": "Care-path triggers",
+     "hot": false
+    },
+    {
+     "id": "gv0",
+     "lane": 4,
+     "label": "Clinical governance board",
+     "hot": false
+    },
+    {
+     "id": "gv1",
+     "lane": 4,
+     "label": "Alarm-burden tuning",
+     "hot": false
+    },
+    {
+     "id": "ct0",
+     "lane": 5,
+     "label": "Charge nurse console",
+     "hot": false
+    },
+    {
+     "id": "ct1",
+     "lane": 5,
+     "label": "Quality reporting",
+     "hot": false
+    }
+   ],
+   "edges": [],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
    "t": "h2",
    "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A national health insurer",
+   "kpis": [
+    {
+     "label": "Prior-auth turnaround",
+     "value": "-62%",
+     "delta": "down 62%",
+     "dir": "down"
+    },
+    {
+     "label": "Denial overturn rate",
+     "value": "24%",
+     "delta": "up 24%",
+     "dir": "up"
+    },
+    {
+     "label": "Coding-integrity audit findings",
+     "value": "-40%",
+     "delta": "down 40%",
+     "dir": "down"
+    },
+    {
+     "label": "Clinician touch time per case",
+     "value": "-58%",
+     "delta": "down 58%",
+     "dir": "down"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed — prior-auth turnaround locked with finance",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 08",
+     "msg": "Working slice live on the client estate",
+     "tag": "build"
+    },
+    {
+     "t": "wk 12",
+     "msg": "Gate review passed against the signed baseline",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Evidence pack handed to audit; runbooks with named owners",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
   },
   {
    "t": "table",

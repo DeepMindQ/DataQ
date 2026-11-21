@@ -65,16 +65,133 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "ledger-chain",
-   "title": "The governed path, end to end — Provenance, Traceability & Supply Chain Trust",
-   "labels": [
-    "Capture at source",
-    "Custody anchoring",
-    "Participant identity",
-    "Role-based verification"
+   "t": "arch",
+   "title": "Reference architecture — Provenance, Traceability & Supply Chain Trust",
+   "lanes": [
+    "Counterparties",
+    "Contracts",
+    "Ledger",
+    "Settlement",
+    "Audit",
+    "Networks"
    ],
-   "note": "Provenance, Traceability & Supply Chain Trust, drawn as it runs after the build."
+   "nodes": [
+    {
+     "id": "cp0",
+     "lane": 0,
+     "label": "Farm management records",
+     "hot": false
+    },
+    {
+     "id": "cp1",
+     "lane": 0,
+     "label": "Weather & soil feeds",
+     "hot": false
+    },
+    {
+     "id": "ct2",
+     "lane": 1,
+     "label": "Provenance, Traceability & Supply Chain Trust",
+     "hot": true
+    },
+    {
+     "id": "ct3",
+     "lane": 1,
+     "label": "Contract testing",
+     "hot": false
+    },
+    {
+     "id": "lg4",
+     "lane": 2,
+     "label": "Immutable event log",
+     "hot": true
+    },
+    {
+     "id": "lg5",
+     "lane": 2,
+     "label": "Byzantine tolerance",
+     "hot": false
+    },
+    {
+     "id": "st6",
+     "lane": 3,
+     "label": "Atomic settlement",
+     "hot": false
+    },
+    {
+     "id": "st7",
+     "lane": 3,
+     "label": "Netting engines",
+     "hot": false
+    },
+    {
+     "id": "au8",
+     "lane": 4,
+     "label": "Shared audit views",
+     "hot": false
+    },
+    {
+     "id": "au9",
+     "lane": 4,
+     "label": "FSMA traceability log",
+     "hot": false
+    },
+    {
+     "id": "nw10",
+     "lane": 5,
+     "label": "Agronomy console",
+     "hot": false
+    },
+    {
+     "id": "nw11",
+     "lane": 5,
+     "label": "Procurement desk",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "cp0",
+     "b": "ct2"
+    },
+    {
+     "a": "cp1",
+     "b": "ct3"
+    },
+    {
+     "a": "ct2",
+     "b": "lg4"
+    },
+    {
+     "a": "ct3",
+     "b": "lg5"
+    },
+    {
+     "a": "lg4",
+     "b": "st6"
+    },
+    {
+     "a": "lg5",
+     "b": "st7"
+    },
+    {
+     "a": "st6",
+     "b": "au8"
+    },
+    {
+     "a": "au8",
+     "b": "au9"
+    },
+    {
+     "a": "st7",
+     "b": "nw10"
+    },
+    {
+     "a": "au9",
+     "b": "nw11"
+    }
+   ],
+   "note": "Topology inherited from the Blockchain & Digital Trust tower; the highlighted core is this service's build."
   },
   {
    "t": "h2",
@@ -139,7 +256,7 @@
    "x": "A value assessment prices the delta in your estate before anything is signed: Provenance, Traceability & Supply Chain Trust, measured against your baseline, in two weeks."
   }
  ],
- "words": 523,
+ "words": 510,
  "section": "Services",
  "l1": "Services",
  "l2": "Blockchain & Digital Trust",

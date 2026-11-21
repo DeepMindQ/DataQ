@@ -57,6 +57,135 @@
    "x": "In Property & Casualty, the pattern is portfolio pricing lakehouse — exposure + claims unified with lineage for actuaries. Steering analytics real sits on top as the measured result, tracked from the signed baseline onward. Around it, the work is pipeline and lakehouse engineering — modeled once, certified once, reused everywhere the decision appears. For Property & Casualty, this is the standard the build is held to."
   },
   {
+   "t": "arch",
+   "title": "How the work flows once built — Data & Lakehouse × Property & Casualty",
+   "lanes": [
+    "Estates",
+    "Contracts",
+    "Lakehouse",
+    "Governance",
+    "Consumers",
+    "Actions"
+   ],
+   "nodes": [
+    {
+     "id": "es0",
+     "lane": 0,
+     "label": "Policy admin system",
+     "hot": false
+    },
+    {
+     "id": "es1",
+     "lane": 0,
+     "label": "Claims document intake",
+     "hot": false
+    },
+    {
+     "id": "ct2",
+     "lane": 1,
+     "label": "Schema registry",
+     "hot": false
+    },
+    {
+     "id": "ct3",
+     "lane": 1,
+     "label": "Quality gates",
+     "hot": false
+    },
+    {
+     "id": "lh4",
+     "lane": 2,
+     "label": "Medallion lakehouse",
+     "hot": true
+    },
+    {
+     "id": "lh5",
+     "lane": 2,
+     "label": "Cost-aware storage",
+     "hot": false
+    },
+    {
+     "id": "gv6",
+     "lane": 3,
+     "label": "Lineage & catalog",
+     "hot": false
+    },
+    {
+     "id": "gv7",
+     "lane": 3,
+     "label": "Access policies",
+     "hot": false
+    },
+    {
+     "id": "cs8",
+     "lane": 4,
+     "label": "Underwriting workbench",
+     "hot": false
+    },
+    {
+     "id": "cs9",
+     "lane": 4,
+     "label": "Claims adjudication",
+     "hot": false
+    },
+    {
+     "id": "ac10",
+     "lane": 5,
+     "label": "Owned decisions",
+     "hot": false
+    },
+    {
+     "id": "ac11",
+     "lane": 5,
+     "label": "Metric disputes closed",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "es0",
+     "b": "ct2"
+    },
+    {
+     "a": "es1",
+     "b": "ct3"
+    },
+    {
+     "a": "ct2",
+     "b": "lh4"
+    },
+    {
+     "a": "ct3",
+     "b": "lh5"
+    },
+    {
+     "a": "lh4",
+     "b": "gv6"
+    },
+    {
+     "a": "lh5",
+     "b": "gv7"
+    },
+    {
+     "a": "gv6",
+     "b": "cs8"
+    },
+    {
+     "a": "gv7",
+     "b": "cs9"
+    },
+    {
+     "a": "cs8",
+     "b": "ac10"
+    },
+    {
+     "a": "cs9",
+     "b": "ac11"
+    }
+   ],
+   "note": "The stages are the workflow names above; nothing on this diagram is decorative."
+  },
+  {
    "t": "h2",
    "x": "How we run the build"
   },

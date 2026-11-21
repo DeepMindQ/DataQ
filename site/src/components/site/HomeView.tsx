@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BrainCircuit, Bot, Database, ShieldCheck, CloudCog, Atom, Blocks, Radar, Crosshair, UserCheck, Gauge as GaugeIcon } from "lucide-react";
+import { ArrowRight, BrainCircuit, Bot, Database, ShieldCheck, CloudCog, Atom, Blocks, Radar, Crosshair, UserCheck, Gauge as GaugeIcon, Wrench, Handshake } from "lucide-react";
 import Reveal from "@/components/site/Reveal";
 import { Marquee } from "@/components/site/Motion";
 import { PATENTS } from "@/lib/patents";
@@ -7,6 +7,7 @@ import { SpotlightSlider, IndustryFinder, PlatformTabs } from "@/components/site
 import NewsletterForm from "./NewsletterForm";
 import { CtaBand, Quote, StatsStrip } from "@/components/site/PagePieces";
 import { readPage, fileForUrl, type PageData } from "@/lib/content";
+import OpsConsole from "@/components/site/OpsConsole";
 
 const PILLARS = [
   {
@@ -27,6 +28,23 @@ const PILLARS = [
 ];
 
 const TOWER_ICONS = [BrainCircuit, Bot, Database, ShieldCheck, CloudCog, Atom, Blocks, Radar];
+
+/* consulting groups — mirrored from the consulting data (4 groups × practices) */
+const CONSULTING_GROUPS = [
+  { name: "Data & Analytics", services: [
+    { name: "Data Analytics & Decision Products" }, { name: "Data Migration & Platform Moves" }, { name: "Digital Transformation Programs" },
+  ] },
+  { name: "Engineering & Quality", services: [
+    { name: "Software Development & Engineering Pods" }, { name: "Testing & Quality Engineering" }, { name: "Application Services & Modernization" }, { name: "UI/UX Design & Product Experience" },
+  ] },
+  { name: "Cloud & Operations", services: [
+    { name: "Cloud Development & Azure Services" }, { name: "IT Services & Managed Operations" }, { name: "IT Support & End-User Services" },
+  ] },
+  { name: "Advisory & Enterprise", services: [
+    { name: "IT Consulting & Managed Capacity" }, { name: "Cybersecurity Consulting & Zero-Trust" }, { name: "ERP Services & Enterprise Core" },
+  ] },
+];
+const ConsultIcons = [Database, Wrench, CloudCog, Handshake];
 
 /* the eight reporting panels of the steering pack — what leadership receives,
    described in words. No sample figures: the pack is generated from the
@@ -63,19 +81,19 @@ export default function HomeView() {
               </p>
               <h1 className="text-display-1 mt-4 max-w-3xl text-white">
                 <span className="line-mask block" style={{ ["--rise-delay" as string]: "120ms" }}>
-                  <span className="line-mask-inner block">Enterprise AI, data and automation,</span>
+                  <span className="line-mask-inner block">We build the systems institutions</span>
                 </span>
                 <span className="line-mask block" style={{ ["--rise-delay" as string]: "260ms" }}>
                   <span className="line-mask-inner block">
-                    delivered against a <span className="grad-text">signed baseline.</span>
+                    run on — <span className="grad-text">and prove every decision.</span>
                   </span>
                 </span>
               </h1>
               <p className="rise-item measure mt-5 text-body-lg leading-relaxed text-white/70" style={{ ["--rise-delay" as string]: "560ms" }}>
-                Dataq Software builds and runs the AI, agentic automation, data platform,
-                cybersecurity and advanced compute systems large organizations depend on:
-                eight proprietary platforms in production, 2,400+ engineers, and every
-                engagement gated on a metric your board already tracks.
+                Fraud decided in milliseconds with the evidence attached. KYC backlogs cleared by governed agents.
+                Data estates your auditors can walk alone. We build, run and prove the intelligence layer of the
+                enterprise — eight proprietary platforms in production, every engagement gated on a metric your
+                board already tracks.
               </p>
               <div className="rise-item mt-8 flex flex-wrap gap-3" style={{ ["--rise-delay" as string]: "680ms" }}>
                 <Link
@@ -88,7 +106,7 @@ export default function HomeView() {
                   href="/services/"
                   className="inline-flex items-center rounded-[10px] border border-white/25 px-6 py-3 text-[14px] font-medium text-white/85 transition hover:border-brand-300 hover:text-brand-300"
                 >
-                  Explore the eight towers
+                  Explore the capability map
                 </Link>
               </div>
               {/* compliance line (kept lean — company figures live in the stats band below) */}
@@ -103,32 +121,10 @@ export default function HomeView() {
               <StatsStrip stats={brand.stats} />
             </div>
           </div>
-          {/* engagement charter panel — the delivery contract stated plainly.
-              No sample metrics: baselines belong to clients, not brochures. */}
+          {/* the operations console — what a program reports, rendered live */}
           <div className="hidden lg:block">
-            <Reveal delay={500}>
-              <div className="rounded-2xl border border-white/12 bg-white/[0.05] p-7 shadow-3 backdrop-blur">
-                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-300">The engagement charter</p>
-                <p className="mt-2 font-display text-[20px] font-semibold leading-snug text-white">
-                  Three names, signed before delivery begins
-                </p>
-                <ul className="mt-6 space-y-5">
-                  {PILLARS.map((p) => (
-                    <li key={p.title} className="flex items-start gap-4">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand/15 text-brand-300">
-                        <p.icon className="h-5 w-5" aria-hidden="true" />
-                      </span>
-                      <span>
-                        <span className="block text-[14.5px] font-semibold text-white">{p.title}</span>
-                        <span className="mt-1 block text-[12.5px] leading-relaxed text-white/60">{p.desc}</span>
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-7 border-t border-white/10 pt-4 text-[11.5px] leading-relaxed text-white/50">
-                  Reported every fortnight. Audited at every gate. Handed over with the evidence your auditors ask for.
-                </p>
-              </div>
+            <Reveal delay={400}>
+              <OpsConsole />
             </Reveal>
           </div>
         </div>
@@ -160,15 +156,14 @@ export default function HomeView() {
         <div className="absolute inset-0 pattern-noise" aria-hidden="true" />
         <div className="relative container-dq section-y-sm">
           <Reveal>
-            <p className="kicker-bar-dark text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-300">What a delivery produces</p>
+            <p className="kicker-bar-dark text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-300">What delivery produces</p>
             <h2 className="text-display-3 mt-1 max-w-4xl text-white sm:text-[28px]">
-              The steering pack your leadership receives from week two
+              Leadership reads the same panel every fortnight — against your baseline, not our brochure
             </h2>
             <p className="mt-2 max-w-4xl text-[14.5px] leading-relaxed text-white/65">
-              Every engagement reports the same eight panels against a baseline locked with your team —
-              a named owner on each metric, and no figure published that your own baseline has not
-              produced. The pack is generated from your estate, so what leadership reads in week two
-              is already about your business, not a template.
+              Eight panels, one per decision surface: latency, autonomous coverage, where the value lands,
+              gate-by-gate deltas, the cost walk, control coverage, maturity, and who owns what. Generated
+              from your estate — so week two already reads like your business.
             </p>
           </Reveal>
           <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -195,11 +190,12 @@ export default function HomeView() {
                   Services
                 </p>
                 <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[30px]">
-                  Eight deep technology towers
+                  Eight towers. One engineering standard.
                 </h2>
                 <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-                  These are the capability layers enterprise programs are built on. Every tower
-                  carries named services, committed outcomes and the platform rails it deploys on.
+                  Applied AI, agentic automation, data platforms, cybersecurity, cloud, quantum,
+                  digital trust and IoT — each tower carries named services, an architecture you can
+                  interrogate, and gates that stop the program when the evidence is missing.
                 </p>
               </div>
               <Link
@@ -238,6 +234,63 @@ export default function HomeView() {
                 </Reveal>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* consulting practices (new section) */}
+      <section id="consulting" className="scroll-mt-24 border-y border-line bg-white">
+        <div className="container-dq section-y-sm">
+          <Reveal>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">
+                  Consulting practices
+                </p>
+                <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
+                  Thirteen practices for the work every enterprise still has to do
+                </h2>
+                <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
+                  Data migration without a lost row. Software that ships into your controls. Quality
+                  engineered in, not tested after. Azure estates end to end. ERP programs that land
+                  process and controls. Same contract everywhere: two-week diagnostic, signed baseline, evidence or stop.
+                </p>
+              </div>
+              <Link
+                href="/consulting/"
+                className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-deep"
+              >
+                All consulting practices <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </Reveal>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {CONSULTING_GROUPS.slice(0, 4).map((g, i) => (
+              <Reveal key={g.name} delay={i * 40}>
+                <Link
+                  href="/consulting/"
+                  className="tilt-card group flex h-full flex-col rounded-2xl border border-line bg-mist/60 p-5 transition hover:-translate-y-0.5 hover:border-brand/60 hover:bg-white shadow-1 hover:shadow-2"
+                >
+                  <span className="flex items-center justify-between">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-navy-800 text-brand-300 transition group-hover:bg-brand group-hover:text-white">
+                      {(() => { const Ic = ConsultIcons[i % ConsultIcons.length]; return <Ic className="h-5 w-5" aria-hidden="true" />; })()}
+                    </span>
+                    <span className="font-display text-[12px] font-bold text-brand-deep/70">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                  </span>
+                  <p className="mt-3 font-display text-[15.5px] font-semibold leading-snug text-navy-800 group-hover:text-brand-deep">
+                    {g.name}
+                  </p>
+                  <p className="mt-2 flex-1 text-[12.5px] leading-relaxed text-slate-body/75">
+                    {g.services.map((sv) => sv.name).join(" · ")}
+                  </p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-[12px] font-semibold text-brand-deep">
+                    Open the group <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
@@ -302,12 +355,12 @@ export default function HomeView() {
                   Industries
                 </p>
                 <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
-                  Twelve industries, one operating discipline
+                  Built where you operate — under the rules you are held to
                 </h2>
                 <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-                  Every industry hub maps its regulatory reality, decision pressure and data estate
-                  to the towers — so you can see exactly how each technology applies where you live,
-                  under the rules you are held to.
+                  DORA in banking. HIPAA in health. IEC 62443 on the plant floor. Every industry hub
+                  maps its regulatory reality and decision pressure to the towers, with named workflows
+                  and the systems of record your programs will touch.
                 </p>
               </div>
               <Link
@@ -401,11 +454,12 @@ export default function HomeView() {
                   Evidence
                 </p>
                 <h2 className="text-display-3 mt-1 text-white sm:text-[28px]">
-                  Evidence, not adjectives
+                  The numbers are the client's. The method is on the page.
                 </h2>
                 <p className="mt-2 max-w-2xl text-[14.5px] text-white/65">
-                  Anonymized engagements with baselines locked in diagnosis and methods available
-                  under NDA — because claims without measurement are just marketing.
+                  Thirty-six anonymized engagements, each with the measured delta, the system that
+                  produced it, and the architecture as deployed — baselines locked in diagnosis,
+                  methods available under NDA.
                 </p>
               </div>
               <Link

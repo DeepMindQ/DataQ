@@ -65,16 +65,123 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "zero-trust-mesh",
-   "title": "How the work flows once built — Cloud Security & Posture Management",
-   "labels": [
-    "Landing-zone guardrails",
-    "CSPM & CNAPP operations",
-    "Secrets & key management",
-    "Data security"
+   "t": "arch",
+   "title": "Reference architecture — Cloud Security & Posture Management",
+   "lanes": [
+    "Users",
+    "Devices",
+    "Brokers",
+    "Workloads",
+    "Data",
+    "Auditors"
    ],
-   "note": "Named stages, not generic boxes — this is the Cloud Security & Posture Management path as built."
+   "nodes": [
+    {
+     "id": "us0",
+     "lane": 0,
+     "label": "Phishing-resistant MFA",
+     "hot": false
+    },
+    {
+     "id": "us1",
+     "lane": 0,
+     "label": "SSO & lifecycle",
+     "hot": false
+    },
+    {
+     "id": "dv2",
+     "lane": 1,
+     "label": "Posture-checked endpoints",
+     "hot": false
+    },
+    {
+     "id": "dv3",
+     "lane": 1,
+     "label": "Product telemetry",
+     "hot": false
+    },
+    {
+     "id": "br4",
+     "lane": 2,
+     "label": "Cloud Security & Posture Management",
+     "hot": true
+    },
+    {
+     "id": "wl5",
+     "lane": 3,
+     "label": "Workload enforcement",
+     "hot": false
+    },
+    {
+     "id": "wl6",
+     "lane": 3,
+     "label": "Segmented access fabric",
+     "hot": false
+    },
+    {
+     "id": "dt7",
+     "lane": 4,
+     "label": "Classification-aware DLP",
+     "hot": true
+    },
+    {
+     "id": "dt8",
+     "lane": 4,
+     "label": "Field-level encryption",
+     "hot": false
+    },
+    {
+     "id": "au9",
+     "lane": 5,
+     "label": "Continuous audit export",
+     "hot": false
+    },
+    {
+     "id": "au10",
+     "lane": 5,
+     "label": "SOC 2 evidence pack",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "us0",
+     "b": "br4"
+    },
+    {
+     "a": "dv2",
+     "b": "br4"
+    },
+    {
+     "a": "us1",
+     "b": "br4"
+    },
+    {
+     "a": "br4",
+     "b": "wl5"
+    },
+    {
+     "a": "br4",
+     "b": "wl6"
+    },
+    {
+     "a": "wl5",
+     "b": "dt7"
+    },
+    {
+     "a": "wl6",
+     "b": "dt8"
+    },
+    {
+     "a": "dt7",
+     "b": "au9"
+    },
+    {
+     "a": "dt8",
+     "b": "au10"
+    }
+   ],
+   "note": "Topology inherited from the Cyber & Zero-Trust tower; the highlighted core is this service's build."
   },
   {
    "t": "h2",
@@ -139,7 +246,7 @@
    "x": "The next step is small and real: one working session on Cloud Security & Posture Management, your data, and a written feasibility read you can circulate."
   }
  ],
- "words": 498,
+ "words": 486,
  "section": "Services",
  "l1": "Services",
  "l2": "Cybersecurity & Zero-Trust",

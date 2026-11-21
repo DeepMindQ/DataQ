@@ -57,14 +57,131 @@
    "x": "In Maritime, Ports & Shipping, the pattern is stowage tournaments — stowage/berth formulations across solvers. Planning gains evidenced sits on top as the measured result, tracked from the signed baseline onward. Around it, we treat advanced compute as a tool with a contract — bounded problem classes, measured speedups, and a classical baseline the CFO can read."
   },
   {
-   "t": "diagram",
-   "kind": "optimization-funnel",
-   "title": "The governed path, end to end — Maritime, Ports & Shipping, Quantum & Advanced Compute",
-   "labels": [
-    "Berth/vessel planning",
-    "Stowage tournaments",
-    "Yard/gate orchestration",
-    "replay log"
+   "t": "arch",
+   "title": "The governed path, end to end — Quantum & Advanced Compute × Maritime, Ports & Shipping",
+   "lanes": [
+    "Problems",
+    "Formulation",
+    "Solver stack",
+    "Classical baseline",
+    "Verification",
+    "Owners"
+   ],
+   "nodes": [
+    {
+     "id": "pb0",
+     "lane": 0,
+     "label": "Maritime, Ports & Shipping",
+     "hot": false
+    },
+    {
+     "id": "pb1",
+     "lane": 0,
+     "label": "Reporting",
+     "hot": false
+    },
+    {
+     "id": "fm2",
+     "lane": 1,
+     "label": "QUBO / Ising mapping",
+     "hot": true
+    },
+    {
+     "id": "fm3",
+     "lane": 1,
+     "label": "Constraint linter",
+     "hot": false
+    },
+    {
+     "id": "ss4",
+     "lane": 2,
+     "label": "Quantum-inspired solvers",
+     "hot": true
+    },
+    {
+     "id": "ss5",
+     "lane": 2,
+     "label": "Annealing & walks",
+     "hot": false
+    },
+    {
+     "id": "cb6",
+     "lane": 3,
+     "label": "Best classical solver",
+     "hot": false
+    },
+    {
+     "id": "cb7",
+     "lane": 3,
+     "label": "Fair benchmark harness",
+     "hot": false
+    },
+    {
+     "id": "vf8",
+     "lane": 4,
+     "label": "Optimality bounds",
+     "hot": false
+    },
+    {
+     "id": "vf9",
+     "lane": 4,
+     "label": "Reproducibility checks",
+     "hot": false
+    },
+    {
+     "id": "ow10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "ow11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "pb0",
+     "b": "fm2"
+    },
+    {
+     "a": "pb1",
+     "b": "fm3"
+    },
+    {
+     "a": "fm2",
+     "b": "ss4"
+    },
+    {
+     "a": "fm3",
+     "b": "ss5"
+    },
+    {
+     "a": "ss4",
+     "b": "cb6"
+    },
+    {
+     "a": "ss5",
+     "b": "cb7"
+    },
+    {
+     "a": "cb6",
+     "b": "vf8"
+    },
+    {
+     "a": "vf8",
+     "b": "vf9"
+    },
+    {
+     "a": "ss4",
+     "b": "ow10"
+    },
+    {
+     "a": "vf9",
+     "b": "ow11"
+    }
    ],
    "note": "The path your operators would actually recognize."
   },
@@ -123,7 +240,7 @@
    "x": "A value assessment prices the delta in your estate before anything is signed: Quantum & Advanced Compute for Maritime, Ports & Shipping, measured against your baseline, in two weeks."
   }
  ],
- "words": 467,
+ "words": 452,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Logistics & Supply Chain",

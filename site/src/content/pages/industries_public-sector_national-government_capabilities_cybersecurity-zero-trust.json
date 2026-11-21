@@ -57,14 +57,131 @@
    "x": "In National Government & Digital Services, the pattern is zero-trust estate — identity-centric access across agencies. Threat surface reduced sits on top as the measured result, tracked from the signed baseline onward. Around it, we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone. That is the engineering behind National Government & Digital Services."
   },
   {
-   "t": "diagram",
-   "kind": "zero-trust-mesh",
-   "title": "The flow your team would run — National Government & Digital Services, Cyber & Zero-Trust",
-   "labels": [
-    "Citizen service delivery",
-    "Zero-trust estate",
-    "Benefits/licensing casework",
-    "signed baseline"
+   "t": "arch",
+   "title": "The flow your team would run — Cyber & Zero-Trust × National Government & Digital Services",
+   "lanes": [
+    "Attack surface",
+    "Telemetry lake",
+    "Analytics",
+    "Containment",
+    "Evidence",
+    "Owners"
+   ],
+   "nodes": [
+    {
+     "id": "as0",
+     "lane": 0,
+     "label": "Case & registry systems",
+     "hot": false
+    },
+    {
+     "id": "as1",
+     "lane": 0,
+     "label": "Citizen service portals",
+     "hot": false
+    },
+    {
+     "id": "tlk2",
+     "lane": 1,
+     "label": "Unified telemetry lake",
+     "hot": true
+    },
+    {
+     "id": "tlk3",
+     "lane": 1,
+     "label": "Threat intel feeds",
+     "hot": false
+    },
+    {
+     "id": "an4",
+     "lane": 2,
+     "label": "Behavioral analytics",
+     "hot": false
+    },
+    {
+     "id": "an5",
+     "lane": 2,
+     "label": "Lateral-movement models",
+     "hot": false
+    },
+    {
+     "id": "cn6",
+     "lane": 3,
+     "label": "Blast-radius isolation",
+     "hot": true
+    },
+    {
+     "id": "cn7",
+     "lane": 3,
+     "label": "Playbook execution",
+     "hot": false
+    },
+    {
+     "id": "evd8",
+     "lane": 4,
+     "label": "Audit-ready trails",
+     "hot": false
+    },
+    {
+     "id": "evd9",
+     "lane": 4,
+     "label": "Algorithmic transparency log",
+     "hot": false
+    },
+    {
+     "id": "ow10",
+     "lane": 5,
+     "label": "Caseworker console",
+     "hot": false
+    },
+    {
+     "id": "ow11",
+     "lane": 5,
+     "label": "Benefits adjudication",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "as0",
+     "b": "tlk2"
+    },
+    {
+     "a": "as1",
+     "b": "tlk2"
+    },
+    {
+     "a": "tlk2",
+     "b": "an4"
+    },
+    {
+     "a": "tlk3",
+     "b": "an5"
+    },
+    {
+     "a": "an4",
+     "b": "cn6"
+    },
+    {
+     "a": "an5",
+     "b": "cn7"
+    },
+    {
+     "a": "cn6",
+     "b": "evd8"
+    },
+    {
+     "a": "evd8",
+     "b": "evd9"
+    },
+    {
+     "a": "cn7",
+     "b": "ow10"
+    },
+    {
+     "a": "evd9",
+     "b": "ow11"
+    }
    ],
    "note": "The path your operators would actually recognize."
   },
@@ -97,7 +214,7 @@
    "x": "If Cyber & Zero-Trust for National Government & Digital Services is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
   }
  ],
- "words": 477,
+ "words": 462,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Public Sector & Government",

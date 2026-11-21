@@ -57,14 +57,131 @@
    "x": "In Maritime, Ports & Shipping, the pattern is port resilience — IT/OT segmentation and recovery drills. Restart proven sits on top as the measured result, tracked from the signed baseline onward. Around it, the design assumes breach: blast radii contained, lateral movement priced, and detection tuned to the attacks your sector actually sees."
   },
   {
-   "t": "diagram",
-   "kind": "zero-trust-mesh",
-   "title": "The governed path, end to end — Maritime, Ports & Shipping, Cyber & Zero-Trust",
-   "labels": [
-    "Berth/vessel planning",
-    "Port resilience",
-    "Yard/gate orchestration",
-    "owner-signed gates"
+   "t": "arch",
+   "title": "The governed path, end to end — Cyber & Zero-Trust × Maritime, Ports & Shipping",
+   "lanes": [
+    "Attack surface",
+    "Telemetry lake",
+    "Analytics",
+    "Containment",
+    "Evidence",
+    "Owners"
+   ],
+   "nodes": [
+    {
+     "id": "as0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "as1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "tlk2",
+     "lane": 1,
+     "label": "Unified telemetry lake",
+     "hot": true
+    },
+    {
+     "id": "tlk3",
+     "lane": 1,
+     "label": "Threat intel feeds",
+     "hot": false
+    },
+    {
+     "id": "an4",
+     "lane": 2,
+     "label": "Behavioral analytics",
+     "hot": false
+    },
+    {
+     "id": "an5",
+     "lane": 2,
+     "label": "Lateral-movement models",
+     "hot": false
+    },
+    {
+     "id": "cn6",
+     "lane": 3,
+     "label": "Blast-radius isolation",
+     "hot": true
+    },
+    {
+     "id": "cn7",
+     "lane": 3,
+     "label": "Playbook execution",
+     "hot": false
+    },
+    {
+     "id": "evd8",
+     "lane": 4,
+     "label": "Audit-ready trails",
+     "hot": false
+    },
+    {
+     "id": "evd9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "ow10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "ow11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "as0",
+     "b": "tlk2"
+    },
+    {
+     "a": "as1",
+     "b": "tlk2"
+    },
+    {
+     "a": "tlk2",
+     "b": "an4"
+    },
+    {
+     "a": "tlk3",
+     "b": "an5"
+    },
+    {
+     "a": "an4",
+     "b": "cn6"
+    },
+    {
+     "a": "an5",
+     "b": "cn7"
+    },
+    {
+     "a": "cn6",
+     "b": "evd8"
+    },
+    {
+     "a": "evd8",
+     "b": "evd9"
+    },
+    {
+     "a": "cn7",
+     "b": "ow10"
+    },
+    {
+     "a": "evd9",
+     "b": "ow11"
+    }
    ],
    "note": "The stages are the workflow names above; nothing on this diagram is decorative."
   },
@@ -97,7 +214,7 @@
    "x": "If Cyber & Zero-Trust for Maritime, Ports & Shipping is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
   }
  ],
- "words": 456,
+ "words": 442,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Logistics & Supply Chain",

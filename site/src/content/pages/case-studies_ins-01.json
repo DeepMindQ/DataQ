@@ -40,8 +40,149 @@
    "x": "We deployed the claims decision pipeline: document intelligence (classification, extraction, validation) feeding Dataq Nexus decision policies with confidence-threshold routing, network fraud analytics scoring claims pre-settlement, and a portfolio lakehouse unifying exposure and claims for steering. Adjusters work a review queue of pre-assembled cases with citations."
   },
   {
+   "t": "arch",
+   "title": "What went into production — A top-5 global P&C insurer",
+   "lanes": [
+    "Documents & feeds",
+    "Intake AI",
+    "Triage engine",
+    "Adjudication",
+    "Controls",
+    "Claims ops"
+   ],
+   "nodes": [
+    {
+     "id": "dc0",
+     "lane": 0,
+     "label": "FNOL document intake",
+     "hot": true
+    },
+    {
+     "id": "dc1",
+     "lane": 0,
+     "label": "Adjuster notes & photos",
+     "hot": false
+    },
+    {
+     "id": "ia0",
+     "lane": 1,
+     "label": "IDP extraction pipeline",
+     "hot": true
+    },
+    {
+     "id": "ia1",
+     "lane": 1,
+     "label": "Vision damage scoring",
+     "hot": false
+    },
+    {
+     "id": "te0",
+     "lane": 2,
+     "label": "Severity triage models",
+     "hot": true
+    },
+    {
+     "id": "te1",
+     "lane": 2,
+     "label": "Fraud signal fusion",
+     "hot": false
+    },
+    {
+     "id": "ad0",
+     "lane": 3,
+     "label": "Straight-through rules",
+     "hot": true
+    },
+    {
+     "id": "ad1",
+     "lane": 3,
+     "label": "Human adjudication queue",
+     "hot": false
+    },
+    {
+     "id": "ctl0",
+     "lane": 4,
+     "label": "Model-risk pack",
+     "hot": false
+    },
+    {
+     "id": "ctl1",
+     "lane": 4,
+     "label": "Outcome fairness monitor",
+     "hot": false
+    },
+    {
+     "id": "ops0",
+     "lane": 5,
+     "label": "Claims workbench",
+     "hot": false
+    },
+    {
+     "id": "ops1",
+     "lane": 5,
+     "label": "Customer status API",
+     "hot": false
+    }
+   ],
+   "edges": [],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
    "t": "h2",
    "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A top-5 global P&C insurer",
+   "kpis": [
+    {
+     "label": "FNOL-to-decision",
+     "value": "-55%",
+     "delta": "down 55%",
+     "dir": "down"
+    },
+    {
+     "label": "Straight-through rate",
+     "value": "from 19% to 61% on target flows",
+     "delta": "",
+     "dir": "flat"
+    },
+    {
+     "label": "Fraud capture",
+     "value": "27%",
+     "delta": "up 27% at stable SIU capacity",
+     "dir": "up"
+    },
+    {
+     "label": "Leakage on automated flows",
+     "value": "-18%",
+     "delta": "down 18%",
+     "dir": "down"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed — fnol-to-decision locked with finance",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 08",
+     "msg": "Working slice live on the client estate",
+     "tag": "build"
+    },
+    {
+     "t": "wk 12",
+     "msg": "Gate review passed against the signed baseline",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Evidence pack handed to audit; runbooks with named owners",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
   },
   {
    "t": "table",

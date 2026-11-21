@@ -57,14 +57,131 @@
    "x": "In 3PL & Freight Forwarding, the pattern is custody network — anchored custody events for regulated goods. Disputes collapse sits on top as the measured result, tracked from the signed baseline onward. Around it, the trust layer is engineered, not asserted: signed events, permissioned consensus, and a provenance graph every participant can verify. That is the engineering behind 3PL & Freight Forwarding."
   },
   {
-   "t": "diagram",
-   "kind": "ledger-chain",
-   "title": "How the work flows once built — 3PL & Freight Forwarding, Blockchain & Digital Trust",
-   "labels": [
-    "Quoting and booking",
-    "Custody network",
-    "Shipment visibility",
-    "owner-signed gates"
+   "t": "arch",
+   "title": "How the work flows once built — Blockchain & Digital Trust × 3PL & Freight Forwarding",
+   "lanes": [
+    "Event sources",
+    "Signing layer",
+    "Ledger core",
+    "Provenance",
+    "Disclosure",
+    "Participants"
+   ],
+   "nodes": [
+    {
+     "id": "evs0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "evs1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "sg2",
+     "lane": 1,
+     "label": "Signed events & schemas",
+     "hot": true
+    },
+    {
+     "id": "sg3",
+     "lane": 1,
+     "label": "Stream validation",
+     "hot": false
+    },
+    {
+     "id": "lc4",
+     "lane": 2,
+     "label": "Permissioned consensus",
+     "hot": true
+    },
+    {
+     "id": "lc5",
+     "lane": 2,
+     "label": "DAG ordering",
+     "hot": false
+    },
+    {
+     "id": "pg6",
+     "lane": 3,
+     "label": "Provenance graph",
+     "hot": false
+    },
+    {
+     "id": "pg7",
+     "lane": 3,
+     "label": "Attribution & lineage",
+     "hot": false
+    },
+    {
+     "id": "di8",
+     "lane": 4,
+     "label": "Selective disclosure",
+     "hot": false
+    },
+    {
+     "id": "di9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "pt10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "pt11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "evs0",
+     "b": "sg2"
+    },
+    {
+     "a": "evs1",
+     "b": "sg3"
+    },
+    {
+     "a": "sg2",
+     "b": "lc4"
+    },
+    {
+     "a": "sg3",
+     "b": "lc5"
+    },
+    {
+     "a": "lc4",
+     "b": "pg6"
+    },
+    {
+     "a": "lc5",
+     "b": "pg7"
+    },
+    {
+     "a": "pg6",
+     "b": "di8"
+    },
+    {
+     "a": "di8",
+     "b": "di9"
+    },
+    {
+     "a": "pg7",
+     "b": "pt10"
+    },
+    {
+     "a": "di9",
+     "b": "pt11"
+    }
    ],
    "note": "3PL & Freight Forwarding, drawn as it runs after the build."
   },
@@ -97,7 +214,7 @@
    "x": "Bring Blockchain & Digital Trust for 3PL & Freight Forwarding to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
   }
  ],
- "words": 489,
+ "words": 474,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Logistics & Supply Chain",

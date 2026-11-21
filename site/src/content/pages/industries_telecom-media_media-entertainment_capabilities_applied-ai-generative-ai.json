@@ -57,14 +57,131 @@
    "x": "In Media & Entertainment, the pattern is content-ops automation — metadata/localization/compliance pipelines with human QC. Cycle down 40-60% sits on top as the measured result, tracked from the signed baseline onward. Around it, the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use. For Media & Entertainment, this is the standard the build is held to."
   },
   {
-   "t": "diagram",
-   "kind": "decision-fabric",
-   "title": "From signal to decision to evidence — Media & Entertainment, Applied AI & GenAI",
-   "labels": [
-    "Commissioning and audience analysis",
-    "Content-ops automation",
-    "Content localization/ops",
-    "signed baseline"
+   "t": "arch",
+   "title": "From signal to decision to evidence — Applied AI & GenAI × Media & Entertainment",
+   "lanes": [
+    "Systems of record",
+    "Contracted inputs",
+    "Retrieval core",
+    "Guarded generation",
+    "Controls",
+    "Surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "src0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "src1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "ct2",
+     "lane": 1,
+     "label": "Schema contracts",
+     "hot": false
+    },
+    {
+     "id": "ct3",
+     "lane": 1,
+     "label": "Freshness SLAs",
+     "hot": false
+    },
+    {
+     "id": "rc4",
+     "lane": 2,
+     "label": "Permission-aware index",
+     "hot": true
+    },
+    {
+     "id": "rc5",
+     "lane": 2,
+     "label": "Embedding pipeline",
+     "hot": false
+    },
+    {
+     "id": "gg6",
+     "lane": 3,
+     "label": "Grounded answering",
+     "hot": true
+    },
+    {
+     "id": "gg7",
+     "lane": 3,
+     "label": "Prompt & cost router",
+     "hot": false
+    },
+    {
+     "id": "co8",
+     "lane": 4,
+     "label": "Eval harness",
+     "hot": false
+    },
+    {
+     "id": "co9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "su10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "su11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "src0",
+     "b": "ct2"
+    },
+    {
+     "a": "src1",
+     "b": "ct2"
+    },
+    {
+     "a": "ct2",
+     "b": "rc4"
+    },
+    {
+     "a": "ct3",
+     "b": "rc5"
+    },
+    {
+     "a": "rc4",
+     "b": "gg6"
+    },
+    {
+     "a": "rc5",
+     "b": "gg7"
+    },
+    {
+     "a": "gg6",
+     "b": "co8"
+    },
+    {
+     "a": "co8",
+     "b": "co9"
+    },
+    {
+     "a": "gg6",
+     "b": "su10"
+    },
+    {
+     "a": "gg7",
+     "b": "su11"
+    }
    ],
    "note": "The stages are the workflow names above; nothing on this diagram is decorative."
   },
@@ -97,7 +214,7 @@
    "x": "Talk to the team that runs Applied AI & GenAI for Media & Entertainment in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 500,
+ "words": 486,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Telecom, Media & Entertainment",

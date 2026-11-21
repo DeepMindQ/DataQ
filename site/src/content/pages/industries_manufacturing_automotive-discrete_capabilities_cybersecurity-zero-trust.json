@@ -57,14 +57,131 @@
    "x": "In Automotive & Discrete Manufacturing, the pattern is OT segmentation — IEC 62443 zones with monitoring. Line-stopping risk contained sits on top as the measured result, tracked from the signed baseline onward. Around it, we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone. That is the engineering behind Automotive & Discrete Manufacturing."
   },
   {
-   "t": "diagram",
-   "kind": "zero-trust-mesh",
-   "title": "The operating loop — Automotive & Discrete Manufacturing, Cyber & Zero-Trust",
-   "labels": [
-    "Line changeover sequencing",
-    "OT segmentation",
-    "Vision inspection",
-    "weekly evidence pack"
+   "t": "arch",
+   "title": "The operating loop — Cyber & Zero-Trust × Automotive & Discrete Manufacturing",
+   "lanes": [
+    "Identity signals",
+    "Network fabric",
+    "Encrypted compute",
+    "Detection & response",
+    "Trust layer",
+    "Estate"
+   ],
+   "nodes": [
+    {
+     "id": "id0",
+     "lane": 0,
+     "label": "Workload identity (SPIFFE)",
+     "hot": true
+    },
+    {
+     "id": "id1",
+     "lane": 0,
+     "label": "Human identities",
+     "hot": false
+    },
+    {
+     "id": "nf2",
+     "lane": 1,
+     "label": "Micro-segmentation",
+     "hot": false
+    },
+    {
+     "id": "nf3",
+     "lane": 1,
+     "label": "Zero-trust edges",
+     "hot": false
+    },
+    {
+     "id": "ec4",
+     "lane": 2,
+     "label": "Encrypted computation",
+     "hot": true
+    },
+    {
+     "id": "ec5",
+     "lane": 2,
+     "label": "Key governance",
+     "hot": false
+    },
+    {
+     "id": "dr6",
+     "lane": 3,
+     "label": "Managed SOC / XDR",
+     "hot": false
+    },
+    {
+     "id": "dr7",
+     "lane": 3,
+     "label": "Automated response",
+     "hot": false
+    },
+    {
+     "id": "tl8",
+     "lane": 4,
+     "label": "Policy consensus",
+     "hot": false
+    },
+    {
+     "id": "tl9",
+     "lane": 4,
+     "label": "IEC 62443 posture",
+     "hot": false
+    },
+    {
+     "id": "es10",
+     "lane": 5,
+     "label": "Production scheduling",
+     "hot": false
+    },
+    {
+     "id": "es11",
+     "lane": 5,
+     "label": "Maintenance planner",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "id0",
+     "b": "nf2"
+    },
+    {
+     "a": "id1",
+     "b": "nf3"
+    },
+    {
+     "a": "nf2",
+     "b": "ec4"
+    },
+    {
+     "a": "nf3",
+     "b": "ec5"
+    },
+    {
+     "a": "ec4",
+     "b": "dr6"
+    },
+    {
+     "a": "dr6",
+     "b": "dr7"
+    },
+    {
+     "a": "dr6",
+     "b": "tl8"
+    },
+    {
+     "a": "tl8",
+     "b": "tl9"
+    },
+    {
+     "a": "tl8",
+     "b": "es10"
+    },
+    {
+     "a": "dr7",
+     "b": "es11"
+    }
    ],
    "note": "Automotive & Discrete Manufacturing, drawn as it runs after the build."
   },
@@ -123,7 +240,7 @@
    "x": "Talk to the team that runs Cyber & Zero-Trust for Automotive & Discrete Manufacturing in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 517,
+ "words": 506,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Manufacturing & Industrial",

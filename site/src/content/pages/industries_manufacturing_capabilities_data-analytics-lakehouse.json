@@ -45,14 +45,131 @@
    "x": "The pattern that repeats in Manufacturing & Industrial: plant data backbone — OPC UA/Sparkplug telemetry, MES and quality records unified with lineage. Root cause in hours, not weeks is the measured outcome the gate checks. The engineering follows the pressure, not the fashion."
   },
   {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "The governed path, end to end — Manufacturing & Industrial, Data & Lakehouse",
-   "labels": [
-    "MES/ERP/quality data silos",
-    "MES/ERP/quality data silos",
-    "Data & Lakehouse decision layer",
-    "signed baseline"
+   "t": "arch",
+   "title": "The governed path, end to end — Data & Lakehouse × Manufacturing & Industrial",
+   "lanes": [
+    "Estates",
+    "Contracts",
+    "Lakehouse",
+    "Governance",
+    "Consumers",
+    "Actions"
+   ],
+   "nodes": [
+    {
+     "id": "es0",
+     "lane": 0,
+     "label": "MES & line historians",
+     "hot": false
+    },
+    {
+     "id": "es1",
+     "lane": 0,
+     "label": "SCADA / OT telemetry",
+     "hot": false
+    },
+    {
+     "id": "ct2",
+     "lane": 1,
+     "label": "Schema registry",
+     "hot": false
+    },
+    {
+     "id": "ct3",
+     "lane": 1,
+     "label": "Quality gates",
+     "hot": false
+    },
+    {
+     "id": "lh4",
+     "lane": 2,
+     "label": "Medallion lakehouse",
+     "hot": true
+    },
+    {
+     "id": "lh5",
+     "lane": 2,
+     "label": "Cost-aware storage",
+     "hot": false
+    },
+    {
+     "id": "gv6",
+     "lane": 3,
+     "label": "Lineage & catalog",
+     "hot": false
+    },
+    {
+     "id": "gv7",
+     "lane": 3,
+     "label": "Access policies",
+     "hot": false
+    },
+    {
+     "id": "cs8",
+     "lane": 4,
+     "label": "Production scheduling",
+     "hot": false
+    },
+    {
+     "id": "cs9",
+     "lane": 4,
+     "label": "Maintenance planner",
+     "hot": false
+    },
+    {
+     "id": "ac10",
+     "lane": 5,
+     "label": "Owned decisions",
+     "hot": false
+    },
+    {
+     "id": "ac11",
+     "lane": 5,
+     "label": "Metric disputes closed",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "es0",
+     "b": "ct2"
+    },
+    {
+     "a": "es1",
+     "b": "ct3"
+    },
+    {
+     "a": "ct2",
+     "b": "lh4"
+    },
+    {
+     "a": "ct3",
+     "b": "lh5"
+    },
+    {
+     "a": "lh4",
+     "b": "gv6"
+    },
+    {
+     "a": "lh5",
+     "b": "gv7"
+    },
+    {
+     "a": "gv6",
+     "b": "cs8"
+    },
+    {
+     "a": "gv7",
+     "b": "cs9"
+    },
+    {
+     "a": "cs8",
+     "b": "ac10"
+    },
+    {
+     "a": "cs9",
+     "b": "ac11"
+    }
    ],
    "note": "Named stages, not generic boxes — this is the Manufacturing & Industrial path as built."
   },
@@ -114,7 +231,7 @@
    "x": "Start with the diagnostic, not the contract: Data & Lakehouse in Manufacturing & Industrial baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 548,
+ "words": 535,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Manufacturing & Industrial",

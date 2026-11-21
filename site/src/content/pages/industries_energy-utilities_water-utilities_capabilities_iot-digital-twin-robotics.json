@@ -57,14 +57,131 @@
    "x": "In Water, Waste & City Utilities, the pattern is district metering fabric — flow/pressure/quality sensing with governance. Leaks located sits on top as the measured result, tracked from the signed baseline onward. Around it, we connect machines, fleets and facilities into one operational picture, then close the loop into maintenance, scheduling and control."
   },
   {
-   "t": "diagram",
-   "kind": "twin-loop",
-   "title": "From signal to decision to evidence — Water, Waste & City Utilities, IoT, Twin & Robotics",
-   "labels": [
-    "Leak detection",
-    "District metering fabric",
-    "Network monitoring",
-    "value ledger"
+   "t": "arch",
+   "title": "From signal to decision to evidence — IoT, Twin & Robotics × Water, Waste & City Utilities",
+   "lanes": [
+    "Robots & sensors",
+    "Real-time layer",
+    "Perception stack",
+    "Orchestration",
+    "Safety",
+    "Floor"
+   ],
+   "nodes": [
+    {
+     "id": "rs0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "rs1",
+     "lane": 0,
+     "label": "AMR / robot fleets",
+     "hot": false
+    },
+    {
+     "id": "rtl2",
+     "lane": 1,
+     "label": "Sub-second control bus",
+     "hot": true
+    },
+    {
+     "id": "rtl3",
+     "lane": 1,
+     "label": "Time sync",
+     "hot": false
+    },
+    {
+     "id": "pst4",
+     "lane": 2,
+     "label": "Vision inspection",
+     "hot": false
+    },
+    {
+     "id": "pst5",
+     "lane": 2,
+     "label": "Localization",
+     "hot": false
+    },
+    {
+     "id": "orc6",
+     "lane": 3,
+     "label": "Task orchestration",
+     "hot": true
+    },
+    {
+     "id": "orc7",
+     "lane": 3,
+     "label": "Fleet scheduler",
+     "hot": false
+    },
+    {
+     "id": "sf8",
+     "lane": 4,
+     "label": "Human-in-the-loop stops",
+     "hot": false
+    },
+    {
+     "id": "sf9",
+     "lane": 4,
+     "label": "Safety cases",
+     "hot": false
+    },
+    {
+     "id": "fl10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "fl11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "rs0",
+     "b": "rtl2"
+    },
+    {
+     "a": "rs1",
+     "b": "rtl3"
+    },
+    {
+     "a": "rtl2",
+     "b": "pst4"
+    },
+    {
+     "a": "rtl3",
+     "b": "pst5"
+    },
+    {
+     "a": "pst4",
+     "b": "orc6"
+    },
+    {
+     "a": "pst5",
+     "b": "orc7"
+    },
+    {
+     "a": "orc6",
+     "b": "sf8"
+    },
+    {
+     "a": "sf8",
+     "b": "sf9"
+    },
+    {
+     "a": "orc7",
+     "b": "fl10"
+    },
+    {
+     "a": "sf9",
+     "b": "fl11"
+    }
    ],
    "note": "The stages are the workflow names above; nothing on this diagram is decorative."
   },
@@ -123,7 +240,7 @@
    "x": "A value assessment prices the delta in your estate before anything is signed: IoT, Twin & Robotics for Water, Waste & City Utilities, measured against your baseline, in two weeks."
   }
  ],
- "words": 469,
+ "words": 453,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Energy & Utilities",

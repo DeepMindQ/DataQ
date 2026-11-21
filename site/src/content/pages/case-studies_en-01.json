@@ -40,8 +40,137 @@
    "x": "The forecasting platform couples weather to asset-level generation and demand with uncertainty bands feeding the scheduling hub; substation telemetry (transformer/breaker condition) now predicts failures; and the OT security program delivered 62443 zoning with continuous evidence — security preceded every instrumentation wave."
   },
   {
+   "t": "arch",
+   "title": "What went into production — A European TSO-DSO group",
+   "lanes": [
+    "Grid signals",
+    "Forecasting",
+    "Balancing brain",
+    "Dispatch",
+    "Compliance",
+    "Grid ops"
+   ],
+   "nodes": [
+    {
+     "id": "gs0",
+     "lane": 0,
+     "label": "SCADA & PMU streams",
+     "hot": true
+    },
+    {
+     "id": "gs1",
+     "lane": 0,
+     "label": "Meter data",
+     "hot": false
+    },
+    {
+     "id": "fc0",
+     "lane": 1,
+     "label": "Load & renewables forecast",
+     "hot": true
+    },
+    {
+     "id": "bb0",
+     "lane": 2,
+     "label": "Balancing optimizer",
+     "hot": true
+    },
+    {
+     "id": "bb1",
+     "lane": 2,
+     "label": "Congestion models",
+     "hot": false
+    },
+    {
+     "id": "dp0",
+     "lane": 3,
+     "label": "Dispatch recommendations",
+     "hot": false
+    },
+    {
+     "id": "dp1",
+     "lane": 3,
+     "label": "Market submissions",
+     "hot": false
+    },
+    {
+     "id": "cm0",
+     "lane": 4,
+     "label": "Reliability compliance log",
+     "hot": true
+    },
+    {
+     "id": "go0",
+     "lane": 5,
+     "label": "Grid control room",
+     "hot": false
+    },
+    {
+     "id": "go1",
+     "lane": 5,
+     "label": "Market desk",
+     "hot": false
+    }
+   ],
+   "edges": [],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
    "t": "h2",
    "x": "What changed"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A European TSO-DSO group",
+   "kpis": [
+    {
+     "label": "Forecast error",
+     "value": "-31%",
+     "delta": "down 31%",
+     "dir": "down"
+    },
+    {
+     "label": "Imbalance cost",
+     "value": "down €11M annualized equivalent",
+     "delta": "",
+     "dir": "flat"
+    },
+    {
+     "label": "Substation outages",
+     "value": "-34%",
+     "delta": "down 34%",
+     "dir": "down"
+    },
+    {
+     "label": "OT compliance evidence",
+     "value": "continuous, audit accepted",
+     "delta": "",
+     "dir": "flat"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed — forecast error locked with finance",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 08",
+     "msg": "Working slice live on the client estate",
+     "tag": "build"
+    },
+    {
+     "t": "wk 12",
+     "msg": "Gate review passed against the signed baseline",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Evidence pack handed to audit; runbooks with named owners",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
   },
   {
    "t": "table",

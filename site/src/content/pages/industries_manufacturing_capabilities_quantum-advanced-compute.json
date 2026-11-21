@@ -45,14 +45,131 @@
    "x": "The pattern that repeats in Manufacturing & Industrial: changeover sequence optimization — solver tournament on job-shop/changeover formulations. Makespan improvements where hybrid solvers win is the measured outcome the gate checks. The engineering follows the pressure, not the fashion."
   },
   {
-   "t": "diagram",
-   "kind": "optimization-funnel",
-   "title": "The governed path, end to end — Manufacturing & Industrial, Quantum & Advanced Compute",
-   "labels": [
-    "Scheduling at combinatorial scale",
-    "Scheduling at combinatorial scale",
-    "Quantum & Advanced Compute decision layer",
-    "weekly evidence pack"
+   "t": "arch",
+   "title": "The governed path, end to end — Quantum & Advanced Compute × Manufacturing & Industrial",
+   "lanes": [
+    "Problems",
+    "Formulation",
+    "Solver stack",
+    "Classical baseline",
+    "Verification",
+    "Owners"
+   ],
+   "nodes": [
+    {
+     "id": "pb0",
+     "lane": 0,
+     "label": "Highest-volume workflow",
+     "hot": false
+    },
+    {
+     "id": "pb1",
+     "lane": 0,
+     "label": "Second workflow",
+     "hot": false
+    },
+    {
+     "id": "fm2",
+     "lane": 1,
+     "label": "QUBO / Ising mapping",
+     "hot": true
+    },
+    {
+     "id": "fm3",
+     "lane": 1,
+     "label": "Constraint linter",
+     "hot": false
+    },
+    {
+     "id": "ss4",
+     "lane": 2,
+     "label": "Quantum-inspired solvers",
+     "hot": true
+    },
+    {
+     "id": "ss5",
+     "lane": 2,
+     "label": "Annealing & walks",
+     "hot": false
+    },
+    {
+     "id": "cb6",
+     "lane": 3,
+     "label": "Best classical solver",
+     "hot": false
+    },
+    {
+     "id": "cb7",
+     "lane": 3,
+     "label": "Fair benchmark harness",
+     "hot": false
+    },
+    {
+     "id": "vf8",
+     "lane": 4,
+     "label": "Optimality bounds",
+     "hot": false
+    },
+    {
+     "id": "vf9",
+     "lane": 4,
+     "label": "Reproducibility checks",
+     "hot": false
+    },
+    {
+     "id": "ow10",
+     "lane": 5,
+     "label": "Production scheduling",
+     "hot": false
+    },
+    {
+     "id": "ow11",
+     "lane": 5,
+     "label": "Maintenance planner",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "pb0",
+     "b": "fm2"
+    },
+    {
+     "a": "pb1",
+     "b": "fm3"
+    },
+    {
+     "a": "fm2",
+     "b": "ss4"
+    },
+    {
+     "a": "fm3",
+     "b": "ss5"
+    },
+    {
+     "a": "ss4",
+     "b": "cb6"
+    },
+    {
+     "a": "ss5",
+     "b": "cb7"
+    },
+    {
+     "a": "cb6",
+     "b": "vf8"
+    },
+    {
+     "a": "vf8",
+     "b": "vf9"
+    },
+    {
+     "a": "ss4",
+     "b": "ow10"
+    },
+    {
+     "a": "vf9",
+     "b": "ow11"
+    }
    ],
    "note": "Named stages, not generic boxes — this is the Manufacturing & Industrial path as built."
   },
@@ -114,7 +231,7 @@
    "x": "Talk to the team that runs Quantum & Advanced Compute in Manufacturing & Industrial in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 550,
+ "words": 536,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Manufacturing & Industrial",

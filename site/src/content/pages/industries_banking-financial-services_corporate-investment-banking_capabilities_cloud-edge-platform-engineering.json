@@ -57,14 +57,131 @@
    "x": "In Corporate & Investment Banking, the pattern is front-office platform modernization — strangler decomposition with parallel-run equivalence. Product launch lead time halved sits on top as the measured result, tracked from the signed baseline onward. Around it, the platform work decides the unit economics: right-sized runtimes, automated environments, and FinOps telemetry from the first workload."
   },
   {
-   "t": "diagram",
-   "kind": "edge-topology",
-   "title": "The flow your team would run — Corporate & Investment Banking, Cloud, Edge & Platform",
-   "labels": [
-    "Credit memo production",
-    "Front-office platform modernization",
-    "Trade document handling",
-    "replay log"
+   "t": "arch",
+   "title": "The flow your team would run — Cloud, Edge & Platform × Corporate & Investment Banking",
+   "lanes": [
+    "Workloads",
+    "Landing zones",
+    "Runtime fabric",
+    "Edge & capacity",
+    "SRE & FinOps",
+    "Teams"
+   ],
+   "nodes": [
+    {
+     "id": "wl0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "wl1",
+     "lane": 0,
+     "label": "New services",
+     "hot": false
+    },
+    {
+     "id": "lz2",
+     "lane": 1,
+     "label": "Guardrailed landing zones",
+     "hot": true
+    },
+    {
+     "id": "lz3",
+     "lane": 1,
+     "label": "Policy-as-code",
+     "hot": false
+    },
+    {
+     "id": "rf4",
+     "lane": 2,
+     "label": "Kubernetes platforms",
+     "hot": true
+    },
+    {
+     "id": "rf5",
+     "lane": 2,
+     "label": "Serverless runtimes",
+     "hot": false
+    },
+    {
+     "id": "ec6",
+     "lane": 3,
+     "label": "Edge compute & CDN",
+     "hot": false
+    },
+    {
+     "id": "ec7",
+     "lane": 3,
+     "label": "Capacity planners",
+     "hot": false
+    },
+    {
+     "id": "sf8",
+     "lane": 4,
+     "label": "SLO dashboards",
+     "hot": false
+    },
+    {
+     "id": "sf9",
+     "lane": 4,
+     "label": "Unit-cost telemetry",
+     "hot": false
+    },
+    {
+     "id": "tm10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "tm11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "wl0",
+     "b": "lz2"
+    },
+    {
+     "a": "wl1",
+     "b": "lz3"
+    },
+    {
+     "a": "lz2",
+     "b": "rf4"
+    },
+    {
+     "a": "lz3",
+     "b": "rf5"
+    },
+    {
+     "a": "rf4",
+     "b": "ec6"
+    },
+    {
+     "a": "rf5",
+     "b": "ec7"
+    },
+    {
+     "a": "rf4",
+     "b": "sf8"
+    },
+    {
+     "a": "rf5",
+     "b": "sf9"
+    },
+    {
+     "a": "sf8",
+     "b": "tm10"
+    },
+    {
+     "a": "ec6",
+     "b": "tm11"
+    }
    ],
    "note": "The path your operators would actually recognize."
   },
@@ -123,7 +240,7 @@
    "x": "Start with the diagnostic, not the contract: Cloud, Edge & Platform for Corporate & Investment Banking baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 544,
+ "words": 529,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Banking & Financial Services",

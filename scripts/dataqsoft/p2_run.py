@@ -32,6 +32,25 @@ BUILDERS = {
 PLACEHOLDER_TITLES = {"Deliverable", "Challenge", "Point 1", "Point 2", "Point 3",
                       "Question 1", "Question 2", "Question 3"}
 
+import re as _re
+_BRAND = [
+    (_re.compile(r"DataQ\s*Soft(ware)?"), "Dataq Software"),
+    (_re.compile(r"DataQSoft"), "Dataq Software"),
+    (_re.compile(r"(?<![A-Za-z])DataQ(?![A-Za-z])"), "Dataq"),
+]
+
+def brand_fix(obj):
+    """Enforce brand naming inside any JSON structure."""
+    if isinstance(obj, str):
+        for c, rep in _BRAND:
+            obj = c.sub(rep, obj)
+        return obj
+    if isinstance(obj, dict):
+        return {k: brand_fix(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [brand_fix(v) for v in obj]
+    return obj
+
 def key10(s):
     words = re.findall(r"[a-z0-9']+", s.lower())
     return " ".join(words[:10])
@@ -120,8 +139,8 @@ def main():
     for fp in files:
         page = json.load(open(fp))
         pid = page["id"]; prefix = pid.split("-")[0]
-        if prefix == "HOME":
-            skipped.append(pid)
+        if prefix in ("HOME", "CONS", "CONSHUB"):
+            skipped.append(pid)  # home renders via HomeView; consulting written by p2_consulting
             continue
 
         if prefix in BUILDERS:
@@ -154,6 +173,7 @@ def main():
             page["blocks"] = blocks
             page["words"] = wc
             rebuilt.append(pid)
+            page = brand_fix(page)
         else:
             blocks = B2.repair_page(page, set(corpus_p.keys()))
             probs, wc = lint_page(page, blocks)
@@ -162,6 +182,7 @@ def main():
             page["blocks"] = blocks
             page["words"] = wc
             repaired.append(pid)
+            page = brand_fix(page)
 
         # register keys in corpus
         pk, hk = block_keys(page["blocks"])

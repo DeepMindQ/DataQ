@@ -57,30 +57,133 @@
    "x": "In Corporate & Investment Banking, the pattern is risk-grid acceleration — HPC/quantum-inspired benchmarking on VaR grids. Stress-day coverage restored sits on top as the measured result, tracked from the signed baseline onward. Around it, we treat advanced compute as a tool with a contract — bounded problem classes, measured speedups, and a classical baseline the CFO can read."
   },
   {
-   "t": "table",
-   "caption": "What changes in the corporate & investment banking workflow",
-   "headers": [
-    "Workflow",
-    "Before",
-    "After this capability lands"
+   "t": "arch",
+   "title": "From signal to decision to evidence — Quantum & Advanced Compute × Corporate & Investment Banking",
+   "lanes": [
+    "Domains",
+    "Encodings",
+    "Compute",
+    "Validation",
+    "Explanation",
+    "Decisions"
    ],
-   "rows": [
-    [
-     "Credit memo production",
-     "manual checks, batch updates, unverifiable timing",
-     "instrumented path with gates and evidence"
-    ],
-    [
-     "Trade document handling",
-     "queue-driven, exceptions found late",
-     "decision-ready, exceptions surfaced in-flight"
-    ],
-    [
-     "Intraday risk aggregation",
-     "reconciled by hand",
-     "certified once, reused everywhere"
-    ]
-   ]
+   "nodes": [
+    {
+     "id": "dm0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "dm1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "en2",
+     "lane": 1,
+     "label": "Hilbert-space encodings",
+     "hot": false
+    },
+    {
+     "id": "en3",
+     "lane": 1,
+     "label": "Spectral decomposition",
+     "hot": true
+    },
+    {
+     "id": "cp4",
+     "lane": 2,
+     "label": "CPU/GPU/accelerator mix",
+     "hot": true
+    },
+    {
+     "id": "cp5",
+     "lane": 2,
+     "label": "Quantum services (managed)",
+     "hot": false
+    },
+    {
+     "id": "vl6",
+     "lane": 3,
+     "label": "Statistical validation",
+     "hot": false
+    },
+    {
+     "id": "vl7",
+     "lane": 3,
+     "label": "Cross-method comparison",
+     "hot": false
+    },
+    {
+     "id": "ex8",
+     "lane": 4,
+     "label": "Explain reports",
+     "hot": false
+    },
+    {
+     "id": "ex9",
+     "lane": 4,
+     "label": "Sensitivity analysis",
+     "hot": false
+    },
+    {
+     "id": "dc10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "dc11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "dm0",
+     "b": "en2"
+    },
+    {
+     "a": "dm1",
+     "b": "en3"
+    },
+    {
+     "a": "en2",
+     "b": "cp4"
+    },
+    {
+     "a": "en3",
+     "b": "cp5"
+    },
+    {
+     "a": "cp4",
+     "b": "vl6"
+    },
+    {
+     "a": "cp5",
+     "b": "vl7"
+    },
+    {
+     "a": "vl6",
+     "b": "ex8"
+    },
+    {
+     "a": "vl7",
+     "b": "ex9"
+    },
+    {
+     "a": "ex8",
+     "b": "dc10"
+    },
+    {
+     "a": "ex9",
+     "b": "dc11"
+    }
+   ],
+   "note": "The stages are the workflow names above; nothing on this diagram is decorative."
   },
   {
    "t": "h2",
@@ -137,7 +240,7 @@
    "x": "A value assessment prices the delta in your estate before anything is signed: Quantum & Advanced Compute for Corporate & Investment Banking, measured against your baseline, in two weeks."
   }
  ],
- "words": 574,
+ "words": 529,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Banking & Financial Services",

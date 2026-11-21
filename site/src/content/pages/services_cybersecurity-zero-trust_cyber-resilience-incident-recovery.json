@@ -65,16 +65,133 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "zero-trust-mesh",
-   "title": "The operating loop — Cyber Resilience & Incident Recovery",
-   "labels": [
-    "Crown-jewel recovery design",
-    "Clean-room recovery",
-    "Crisis playbook",
-    "Exercise program"
+   "t": "arch",
+   "title": "Reference architecture — Cyber Resilience & Incident Recovery",
+   "lanes": [
+    "Attack surface",
+    "Telemetry lake",
+    "Analytics",
+    "Containment",
+    "Evidence",
+    "Owners"
    ],
-   "note": "The path your operators would actually recognize."
+   "nodes": [
+    {
+     "id": "as0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "as1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "tlk2",
+     "lane": 1,
+     "label": "Cyber Resilience & Incident Recovery",
+     "hot": true
+    },
+    {
+     "id": "tlk3",
+     "lane": 1,
+     "label": "Threat intel feeds",
+     "hot": false
+    },
+    {
+     "id": "an4",
+     "lane": 2,
+     "label": "Behavioral analytics",
+     "hot": false
+    },
+    {
+     "id": "an5",
+     "lane": 2,
+     "label": "Lateral-movement models",
+     "hot": false
+    },
+    {
+     "id": "cn6",
+     "lane": 3,
+     "label": "Blast-radius isolation",
+     "hot": true
+    },
+    {
+     "id": "cn7",
+     "lane": 3,
+     "label": "Playbook execution",
+     "hot": false
+    },
+    {
+     "id": "evd8",
+     "lane": 4,
+     "label": "Audit-ready trails",
+     "hot": false
+    },
+    {
+     "id": "evd9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "ow10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "ow11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "as0",
+     "b": "tlk2"
+    },
+    {
+     "a": "as1",
+     "b": "tlk2"
+    },
+    {
+     "a": "tlk2",
+     "b": "an4"
+    },
+    {
+     "a": "tlk3",
+     "b": "an5"
+    },
+    {
+     "a": "an4",
+     "b": "cn6"
+    },
+    {
+     "a": "an5",
+     "b": "cn7"
+    },
+    {
+     "a": "cn6",
+     "b": "evd8"
+    },
+    {
+     "a": "evd8",
+     "b": "evd9"
+    },
+    {
+     "a": "cn7",
+     "b": "ow10"
+    },
+    {
+     "a": "evd9",
+     "b": "ow11"
+    }
+   ],
+   "note": "Topology inherited from the Cyber & Zero-Trust tower; the highlighted core is this service's build."
   },
   {
    "t": "h2",
@@ -139,7 +256,7 @@
    "x": "Start with the diagnostic, not the contract: Cyber Resilience & Incident Recovery baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 514,
+ "words": 505,
  "section": "Services",
  "l1": "Services",
  "l2": "Cybersecurity & Zero-Trust",

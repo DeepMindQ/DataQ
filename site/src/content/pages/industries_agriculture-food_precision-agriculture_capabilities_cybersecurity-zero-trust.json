@@ -57,14 +57,131 @@
    "x": "In Precision Agriculture & Agronomy, the pattern is rural security — farm OT segmentation + recovery. Operations protected sits on top as the measured result, tracked from the signed baseline onward. Around it, the design assumes breach: blast radii contained, lateral movement priced, and detection tuned to the attacks your sector actually sees."
   },
   {
-   "t": "diagram",
-   "kind": "zero-trust-mesh",
-   "title": "From signal to decision to evidence — Precision Agriculture & Agronomy, Cyber & Zero-Trust",
-   "labels": [
-    "Variable-rate input planning",
-    "Rural security",
-    "Yield/quality forecasting",
-    "signed baseline"
+   "t": "arch",
+   "title": "From signal to decision to evidence — Cyber & Zero-Trust × Precision Agriculture & Agronomy",
+   "lanes": [
+    "Attack surface",
+    "Telemetry lake",
+    "Analytics",
+    "Containment",
+    "Evidence",
+    "Owners"
+   ],
+   "nodes": [
+    {
+     "id": "as0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "as1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "tlk2",
+     "lane": 1,
+     "label": "Unified telemetry lake",
+     "hot": true
+    },
+    {
+     "id": "tlk3",
+     "lane": 1,
+     "label": "Threat intel feeds",
+     "hot": false
+    },
+    {
+     "id": "an4",
+     "lane": 2,
+     "label": "Behavioral analytics",
+     "hot": false
+    },
+    {
+     "id": "an5",
+     "lane": 2,
+     "label": "Lateral-movement models",
+     "hot": false
+    },
+    {
+     "id": "cn6",
+     "lane": 3,
+     "label": "Blast-radius isolation",
+     "hot": true
+    },
+    {
+     "id": "cn7",
+     "lane": 3,
+     "label": "Playbook execution",
+     "hot": false
+    },
+    {
+     "id": "evd8",
+     "lane": 4,
+     "label": "Audit-ready trails",
+     "hot": false
+    },
+    {
+     "id": "evd9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "ow10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "ow11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "as0",
+     "b": "tlk2"
+    },
+    {
+     "a": "as1",
+     "b": "tlk2"
+    },
+    {
+     "a": "tlk2",
+     "b": "an4"
+    },
+    {
+     "a": "tlk3",
+     "b": "an5"
+    },
+    {
+     "a": "an4",
+     "b": "cn6"
+    },
+    {
+     "a": "an5",
+     "b": "cn7"
+    },
+    {
+     "a": "cn6",
+     "b": "evd8"
+    },
+    {
+     "a": "evd8",
+     "b": "evd9"
+    },
+    {
+     "a": "cn7",
+     "b": "ow10"
+    },
+    {
+     "a": "evd9",
+     "b": "ow11"
+    }
    ],
    "note": "The path your operators would actually recognize."
   },
@@ -123,7 +240,7 @@
    "x": "Bring Cyber & Zero-Trust for Precision Agriculture & Agronomy to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
   }
  ],
- "words": 446,
+ "words": 432,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Agriculture & Food Systems",

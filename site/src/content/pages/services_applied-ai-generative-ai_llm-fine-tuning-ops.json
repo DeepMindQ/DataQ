@@ -65,16 +65,133 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "decision-fabric",
-   "title": "From signal to decision to evidence — LLM Fine-Tuning & Model Operations",
-   "labels": [
-    "Corpus curation & licensing",
-    "Adaptation pipeline",
-    "Distillation & right-sizing",
-    "Evaluation engineering"
+   "t": "arch",
+   "title": "Reference architecture — LLM Fine-Tuning & Model Operations",
+   "lanes": [
+    "Signals",
+    "Fabric",
+    "Models",
+    "Decision API",
+    "Audit",
+    "Products"
    ],
-   "note": "Named stages, not generic boxes — this is the LLM Fine-Tuning & Model Operations path as built."
+   "nodes": [
+    {
+     "id": "sg0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "sg1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "fb2",
+     "lane": 1,
+     "label": "LLM Fine-Tuning & Model Operations",
+     "hot": true
+    },
+    {
+     "id": "fb3",
+     "lane": 1,
+     "label": "Vector & graph indexes",
+     "hot": false
+    },
+    {
+     "id": "mo4",
+     "lane": 2,
+     "label": "Domain models",
+     "hot": false
+    },
+    {
+     "id": "mo5",
+     "lane": 2,
+     "label": "Foundation adapters",
+     "hot": false
+    },
+    {
+     "id": "da6",
+     "lane": 3,
+     "label": "Decision API",
+     "hot": true
+    },
+    {
+     "id": "da7",
+     "lane": 3,
+     "label": "Champion / challenger",
+     "hot": false
+    },
+    {
+     "id": "au8",
+     "lane": 4,
+     "label": "Decision replay",
+     "hot": false
+    },
+    {
+     "id": "au9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "pr10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "pr11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "sg0",
+     "b": "fb2"
+    },
+    {
+     "a": "sg1",
+     "b": "fb3"
+    },
+    {
+     "a": "fb2",
+     "b": "mo4"
+    },
+    {
+     "a": "fb3",
+     "b": "mo5"
+    },
+    {
+     "a": "mo4",
+     "b": "da6"
+    },
+    {
+     "a": "mo5",
+     "b": "da7"
+    },
+    {
+     "a": "da6",
+     "b": "au8"
+    },
+    {
+     "a": "da7",
+     "b": "au9"
+    },
+    {
+     "a": "da6",
+     "b": "pr10"
+    },
+    {
+     "a": "da7",
+     "b": "pr11"
+    }
+   ],
+   "note": "Topology inherited from the Applied AI & GenAI tower; the highlighted core is this service's build."
   },
   {
    "t": "h2",
@@ -139,7 +256,7 @@
    "x": "Talk to the team that runs LLM Fine-Tuning & Model Operations in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 545,
+ "words": 533,
  "section": "Services",
  "l1": "Services",
  "l2": "Applied AI & Generative AI",

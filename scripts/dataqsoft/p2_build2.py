@@ -10,6 +10,7 @@ from p2_build import (hero, p, h2, bullets, table, note, cta, diagram, Head, sd,
                       cta_for, func_of, diagram_title, diagram_note, bullet_intro,
                       deliverable_desc, vary, evidence_for, _h, TOWER_BY_SLUG)
 from p2_voice import TOWER_FUNC
+from p2_cases_arch import case_arch
 
 SOL_BY_SLUG = {s[0]: s for s in SOLUTIONS}
 INS_BY_ID = {i[0]: i for i in INSIGHTS}
@@ -98,10 +99,27 @@ def build_sol(page):
     blocks.append(p(bullet_intro("build", pid, name)))
     blocks.append(bullets([sdt(x[:2]) for x in components[:5]]))
 
-    blocks.append(diagram("pipeline",
-                          f"{diagram_title(pid)} — {name}",
-                          [x[0] for x in components[:4]],
-                          diagram_note(pid, name)))
+    # solution architecture from the components themselves
+    sol_lanes = ["Estate", "Composition core", "Platform rails", "Controls", "Consumers"]
+    sol_nodes, sol_edges = [], []
+    sol_nodes.append({"id": "estate", "lane": 0, "label": "Client estate", "hot": False})
+    for i, comp in enumerate(components[:4]):
+        nid = f"c{i}"
+        sol_nodes.append({"id": nid, "lane": 1, "label": comp[0], "hot": i == 0})
+        sol_edges.append({"a": "estate", "b": nid})
+    plat_nodes = []
+    for i, pl in enumerate(platforms[:2]):
+        nid = f"p{i}"
+        plat_nodes.append({"id": nid, "lane": 2, "label": pl, "hot": True})
+        sol_edges.append({"a": f"c{i}", "b": nid})
+    sol_nodes.extend(plat_nodes)
+    sol_nodes.append({"id": "ctl", "lane": 3, "label": "Control & evidence pack"})
+    sol_edges.append({"a": "p0", "b": "ctl"})
+    sol_nodes.append({"id": "bus", "lane": 4, "label": ind_names[0] if ind_names else "Business owners"})
+    sol_edges.append({"a": "ctl", "b": "bus"})
+    blocks.append({"t": "arch", "title": f"{name} — solution topology",
+                   "lanes": sol_lanes, "nodes": sol_nodes, "edges": sol_edges,
+                   "note": "Components and platforms are the named pieces of this solution, drawn in their architectural position."})
 
     # platform + industries fit
     blocks.append(h2(H("stack", "plat")))
@@ -147,7 +165,40 @@ def build_case(page):
     blocks.append(h2(H("case_built")))
     blocks.append(p(sd(c["solution"])))
 
+    # the system this engagement actually built — hand-authored per case
+    spec = case_arch(c["id"])
+    if spec:
+        lanes, anodes, aedges = spec
+        blocks.append({"t": "arch", "title": f"What went into production — {c['client']}",
+                       "lanes": lanes, "nodes": anodes, "edges": aedges,
+                       "note": "The topology as deployed: every named node existed in the client estate at go-live."})
+
     blocks.append(h2(H("case_changed")))
+    import re as _re
+    kpis = []
+    for m, d in c["outcomes"]:
+        mm = _re.search(r"(up|down)\s+(\d+(?:\.\d+)?)\s*%", d)
+        mp = _re.search(r"(up|down)\s+(\d+(?:\.\d+)?)\s*points?", d, _re.I)
+        if mm:
+            direction, num = mm.group(1), mm.group(2)
+            val = ("" if direction == "up" else "-") + num + "%"
+            kpis.append({"label": m, "value": val, "delta": d, "dir": "up" if direction == "up" else "down"})
+        elif mp:
+            direction, num = mp.group(1), mp.group(2)
+            val = ("+" if direction == "up" else "-") + num + "pts"
+            kpis.append({"label": m, "value": val, "delta": d, "dir": "up" if direction == "up" else "down"})
+        else:
+            kpis.append({"label": m, "value": d, "delta": "", "dir": "flat"})
+    blocks.append({"t": "dash",
+                   "title": f"Program view — {c['client']}",
+                   "kpis": kpis[:4],
+                   "log": [
+                       {"t": "wk 02", "msg": f"Baseline signed — {c['outcomes'][0][0].lower()} locked with finance", "tag": "gate"},
+                       {"t": "wk 08", "msg": "Working slice live on the client estate", "tag": "build"},
+                       {"t": "wk 12", "msg": "Gate review passed against the signed baseline", "tag": "gate"},
+                       {"t": "post", "msg": "Evidence pack handed to audit; runbooks with named owners", "tag": "handover"},
+                   ],
+                   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."})
     blocks.append(table("Measured outcomes",
                         ["Measure", "What moved"],
                         [[x[0], sd(x[1])] for x in c["outcomes"]]))
@@ -250,10 +301,24 @@ def build_plt(page):
         blocks.append(h2(H("build")))
         blocks.append(p(bullet_intro("build", pid, pname)))
         blocks.append(bullets([sdt(x[:2]) for x in modules[:6]]))
-        blocks.append(diagram("pipeline",
-                              f"{diagram_title(pid)} — {pname}",
-                              [x[0] for x in modules[:4]],
-                              diagram_note(pid, pname)))
+        plat_lanes = ["Ingest", "Core", "Delivery", "Trust"]
+        plat_nodes = [
+            {"id": "in1", "lane": 0, "label": "Adapters & contracts", "hot": False},
+            {"id": "in2", "lane": 0, "label": stack[0] if stack else "Event intake", "hot": False},
+            {"id": "c1", "lane": 1, "label": modules[0][0] if modules else pname, "hot": True},
+            {"id": "c2", "lane": 1, "label": modules[1][0] if len(modules) > 1 else "Core", "hot": False},
+            {"id": "d1", "lane": 2, "label": modules[2][0] if len(modules) > 2 else "APIs", "hot": False},
+            {"id": "d2", "lane": 2, "label": modules[3][0] if len(modules) > 3 else "Dashboards", "hot": False},
+            {"id": "t1", "lane": 3, "label": "Evidence packs", "hot": False},
+            {"id": "t2", "lane": 3, "label": trust_items[0][0] if trust_items else "Controls", "hot": False},
+        ]
+        plat_edges = [
+            {"a": "in1", "b": "c1"}, {"a": "in2", "b": "c1"}, {"a": "c1", "b": "c2"},
+            {"a": "c1", "b": "d1"}, {"a": "c2", "b": "d2"}, {"a": "d1", "b": "t1"}, {"a": "d2", "b": "t2"},
+        ]
+        blocks.append({"t": "arch", "title": f"{pname} — module topology",
+                       "lanes": plat_lanes, "nodes": plat_nodes, "edges": plat_edges,
+                       "note": "Modules are the platform's named components; trust lane is what the audit reads."})
         blocks.append(h2(H("plt_trust")))
         blocks.append(p(sd(trust_para)))
         if trust_items:

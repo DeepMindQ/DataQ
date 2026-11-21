@@ -57,30 +57,133 @@
    "x": "In Semiconductors & Hardware, the pattern is IP protection — classification-aware controls + monitoring. Exfiltration closed sits on top as the measured result, tracked from the signed baseline onward. Around it, security here is architecture, not product sprawl — identity-first controls, segmented networks, and telemetry your SOC can act on the same hour."
   },
   {
-   "t": "table",
-   "caption": "What changes in the semiconductors & hardware workflow",
-   "headers": [
-    "Workflow",
-    "Before",
-    "After this capability lands"
+   "t": "arch",
+   "title": "The flow your team would run — Cyber & Zero-Trust × Semiconductors & Hardware",
+   "lanes": [
+    "Attack surface",
+    "Telemetry lake",
+    "Analytics",
+    "Containment",
+    "Evidence",
+    "Owners"
    ],
-   "rows": [
-    [
-     "Design/simulation",
-     "manual checks, batch updates, unverifiable timing",
-     "instrumented path with gates and evidence"
-    ],
-    [
-     "Supply-chain visibility",
-     "queue-driven, exceptions found late",
-     "decision-ready, exceptions surfaced in-flight"
-    ],
-    [
-     "Yield analytics",
-     "reconciled by hand",
-     "certified once, reused everywhere"
-    ]
-   ]
+   "nodes": [
+    {
+     "id": "as0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "as1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "tlk2",
+     "lane": 1,
+     "label": "Unified telemetry lake",
+     "hot": true
+    },
+    {
+     "id": "tlk3",
+     "lane": 1,
+     "label": "Threat intel feeds",
+     "hot": false
+    },
+    {
+     "id": "an4",
+     "lane": 2,
+     "label": "Behavioral analytics",
+     "hot": false
+    },
+    {
+     "id": "an5",
+     "lane": 2,
+     "label": "Lateral-movement models",
+     "hot": false
+    },
+    {
+     "id": "cn6",
+     "lane": 3,
+     "label": "Blast-radius isolation",
+     "hot": true
+    },
+    {
+     "id": "cn7",
+     "lane": 3,
+     "label": "Playbook execution",
+     "hot": false
+    },
+    {
+     "id": "evd8",
+     "lane": 4,
+     "label": "Audit-ready trails",
+     "hot": false
+    },
+    {
+     "id": "evd9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "ow10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "ow11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "as0",
+     "b": "tlk2"
+    },
+    {
+     "a": "as1",
+     "b": "tlk2"
+    },
+    {
+     "a": "tlk2",
+     "b": "an4"
+    },
+    {
+     "a": "tlk3",
+     "b": "an5"
+    },
+    {
+     "a": "an4",
+     "b": "cn6"
+    },
+    {
+     "a": "an5",
+     "b": "cn7"
+    },
+    {
+     "a": "cn6",
+     "b": "evd8"
+    },
+    {
+     "a": "evd8",
+     "b": "evd9"
+    },
+    {
+     "a": "cn7",
+     "b": "ow10"
+    },
+    {
+     "a": "evd9",
+     "b": "ow11"
+    }
+   ],
+   "note": "The path your operators would actually recognize."
   },
   {
    "t": "h2",
@@ -111,7 +214,7 @@
    "x": "Start with the diagnostic, not the contract: Cyber & Zero-Trust for Semiconductors & Hardware baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 458,
+ "words": 418,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Technology & SaaS",

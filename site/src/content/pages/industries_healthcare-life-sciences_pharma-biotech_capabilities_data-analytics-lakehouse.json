@@ -57,30 +57,143 @@
    "x": "In Pharmaceuticals & Biotech, the pattern is eligibility engine — protocol criteria translated to EHR queries with evidence. Matching at 10x manual rate sits on top as the measured result, tracked from the signed baseline onward. Around it, the work is pipeline and lakehouse engineering — modeled once, certified once, reused everywhere the decision appears. That is the engineering behind Pharmaceuticals & Biotech."
   },
   {
-   "t": "table",
-   "caption": "What changes in the pharmaceuticals & biotech workflow",
-   "headers": [
-    "Workflow",
-    "Before",
-    "After this capability lands"
+   "t": "arch",
+   "title": "The flow your team would run — Data & Lakehouse × Pharmaceuticals & Biotech",
+   "lanes": [
+    "Source estates",
+    "Streaming ingest",
+    "Lakehouse core",
+    "Certified products",
+    "Serving",
+    "Decisions"
    ],
-   "rows": [
-    [
-     "Discovery screening",
-     "manual checks, batch updates, unverifiable timing",
-     "instrumented path with gates and evidence"
-    ],
-    [
-     "Protocol eligibility matching",
-     "queue-driven, exceptions found late",
-     "decision-ready, exceptions surfaced in-flight"
-    ],
-    [
-     "Pharmacovigilance intake",
-     "reconciled by hand",
-     "certified once, reused everywhere"
-    ]
-   ]
+   "nodes": [
+    {
+     "id": "se0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "se1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "se2",
+     "lane": 0,
+     "label": "KYC / AML case manager",
+     "hot": false
+    },
+    {
+     "id": "si3",
+     "lane": 1,
+     "label": "CDC & event streams",
+     "hot": true
+    },
+    {
+     "id": "si4",
+     "lane": 1,
+     "label": "Batch pipelines",
+     "hot": false
+    },
+    {
+     "id": "lc5",
+     "lane": 2,
+     "label": "Bronze → silver → gold",
+     "hot": true
+    },
+    {
+     "id": "lc6",
+     "lane": 2,
+     "label": "Data contracts",
+     "hot": false
+    },
+    {
+     "id": "cp7",
+     "lane": 3,
+     "label": "Metric definitions",
+     "hot": false
+    },
+    {
+     "id": "cp8",
+     "lane": 3,
+     "label": "Data products",
+     "hot": false
+    },
+    {
+     "id": "sv9",
+     "lane": 4,
+     "label": "BI & semantic layer",
+     "hot": false
+    },
+    {
+     "id": "sv10",
+     "lane": 4,
+     "label": "Feature serving",
+     "hot": false
+    },
+    {
+     "id": "de11",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "de12",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "se0",
+     "b": "si3"
+    },
+    {
+     "a": "se1",
+     "b": "si3"
+    },
+    {
+     "a": "se2",
+     "b": "si4"
+    },
+    {
+     "a": "si3",
+     "b": "lc5"
+    },
+    {
+     "a": "si4",
+     "b": "lc5"
+    },
+    {
+     "a": "lc5",
+     "b": "cp7"
+    },
+    {
+     "a": "lc6",
+     "b": "cp8"
+    },
+    {
+     "a": "cp7",
+     "b": "sv9"
+    },
+    {
+     "a": "cp8",
+     "b": "sv10"
+    },
+    {
+     "a": "sv9",
+     "b": "de11"
+    },
+    {
+     "a": "sv10",
+     "b": "de12"
+    }
+   ],
+   "note": "Pharmaceuticals & Biotech, drawn as it runs after the build."
   },
   {
    "t": "h2",
@@ -137,7 +250,7 @@
    "x": "Talk to the team that runs Data & Lakehouse for Pharmaceuticals & Biotech in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 545,
+ "words": 503,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Healthcare & Life Sciences",

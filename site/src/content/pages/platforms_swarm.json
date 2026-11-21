@@ -57,16 +57,95 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "From signal to decision to evidence — Dataq Swarm",
-   "labels": [
-    "Fleet control tower",
-    "Role & queue engine",
-    "Policy engine",
-    "Durable execution"
+   "t": "arch",
+   "title": "Dataq Swarm — module topology",
+   "lanes": [
+    "Ingest",
+    "Core",
+    "Delivery",
+    "Trust"
    ],
-   "note": "Named stages, not generic boxes — this is the Dataq Swarm path as built."
+   "nodes": [
+    {
+     "id": "in1",
+     "lane": 0,
+     "label": "Adapters & contracts",
+     "hot": false
+    },
+    {
+     "id": "in2",
+     "lane": 0,
+     "label": "Temporal",
+     "hot": false
+    },
+    {
+     "id": "c1",
+     "lane": 1,
+     "label": "Fleet control tower",
+     "hot": true
+    },
+    {
+     "id": "c2",
+     "lane": 1,
+     "label": "Role & queue engine",
+     "hot": false
+    },
+    {
+     "id": "d1",
+     "lane": 2,
+     "label": "Policy engine",
+     "hot": false
+    },
+    {
+     "id": "d2",
+     "lane": 2,
+     "label": "Durable execution",
+     "hot": false
+    },
+    {
+     "id": "t1",
+     "lane": 3,
+     "label": "Evidence packs",
+     "hot": false
+    },
+    {
+     "id": "t2",
+     "lane": 3,
+     "label": "Scoped tool access",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "in1",
+     "b": "c1"
+    },
+    {
+     "a": "in2",
+     "b": "c1"
+    },
+    {
+     "a": "c1",
+     "b": "c2"
+    },
+    {
+     "a": "c1",
+     "b": "d1"
+    },
+    {
+     "a": "c2",
+     "b": "d2"
+    },
+    {
+     "a": "d1",
+     "b": "t1"
+    },
+    {
+     "a": "d2",
+     "b": "t2"
+    }
+   ],
+   "note": "Modules are the platform's named components; trust lane is what the audit reads."
   },
   {
    "t": "h2",
@@ -118,7 +197,7 @@
    "x": "Bring Dataq Swarm to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
   }
  ],
- "words": 333,
+ "words": 324,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Swarm",

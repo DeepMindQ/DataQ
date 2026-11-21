@@ -40,8 +40,143 @@
    "x": "Dataq Swarm agents now assemble each review file — registries, screening, financials, relationship notes — under a policy envelope that routes only genuine judgment calls to analysts. The evidence trail (who saw what, when, why) is written as the work happens, and the risk-data spine on Forge keeps customer master data clean enough for the agents to trust."
   },
   {
+   "t": "arch",
+   "title": "What went into production — A multinational corporate bank",
+   "lanes": [
+    "Triggers & registries",
+    "Assembly layer",
+    "Agent fleet",
+    "Policy envelope",
+    "Evidence",
+    "Reviewers"
+   ],
+   "nodes": [
+    {
+     "id": "tr0",
+     "lane": 0,
+     "label": "Regulatory calendar",
+     "hot": false
+    },
+    {
+     "id": "tr1",
+     "lane": 0,
+     "label": "Registry extracts",
+     "hot": true
+    },
+    {
+     "id": "as0",
+     "lane": 1,
+     "label": "Document assembly service",
+     "hot": false
+    },
+    {
+     "id": "ag0",
+     "lane": 2,
+     "label": "KYC file agents",
+     "hot": true
+    },
+    {
+     "id": "ag1",
+     "lane": 2,
+     "label": "Screening & PEP checks",
+     "hot": false
+    },
+    {
+     "id": "pe0",
+     "lane": 3,
+     "label": "Autonomy tiers",
+     "hot": true
+    },
+    {
+     "id": "pe1",
+     "lane": 3,
+     "label": "Escalation rules",
+     "hot": false
+    },
+    {
+     "id": "ev0",
+     "lane": 4,
+     "label": "Who-saw-what trail",
+     "hot": true
+    },
+    {
+     "id": "ev1",
+     "lane": 4,
+     "label": "Review rationale capture",
+     "hot": false
+    },
+    {
+     "id": "rv0",
+     "lane": 5,
+     "label": "Analyst review desk",
+     "hot": false
+    },
+    {
+     "id": "rv1",
+     "lane": 5,
+     "label": "Audit & regulators",
+     "hot": false
+    }
+   ],
+   "edges": [],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
    "t": "h2",
    "x": "Outcomes, as the client reported them"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A multinational corporate bank",
+   "kpis": [
+    {
+     "label": "Refresh cycle time",
+     "value": "-70%",
+     "delta": "down 70%",
+     "dir": "down"
+    },
+    {
+     "label": "Analyst time on judgment",
+     "value": "up 3x as share of day",
+     "delta": "",
+     "dir": "flat"
+    },
+    {
+     "label": "Backlog",
+     "value": "cleared and held at zero",
+     "delta": "",
+     "dir": "flat"
+    },
+    {
+     "label": "Audit evidence",
+     "value": "generated per file, continuously",
+     "delta": "",
+     "dir": "flat"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed — refresh cycle time locked with finance",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 08",
+     "msg": "Working slice live on the client estate",
+     "tag": "build"
+    },
+    {
+     "t": "wk 12",
+     "msg": "Gate review passed against the signed baseline",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Evidence pack handed to audit; runbooks with named owners",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
   },
   {
    "t": "table",

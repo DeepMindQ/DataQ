@@ -57,30 +57,143 @@
    "x": "In Reinsurance & Commercial Lines, the pattern is submission triage — broker submissions summarized with appetite matching. Turnaround in hours sits on top as the measured result, tracked from the signed baseline onward. Around it, the work is model and retrieval engineering with evaluation wired in from the first sprint — grounded answers, cited sources, and a cost line somebody actually owns."
   },
   {
-   "t": "table",
-   "caption": "What changes in the reinsurance & commercial lines workflow",
-   "headers": [
-    "Workflow",
-    "Before",
-    "After this capability lands"
+   "t": "arch",
+   "title": "The operating loop — Applied AI & GenAI × Reinsurance & Commercial Lines",
+   "lanes": [
+    "Estate",
+    "Ingest",
+    "Knowledge spine",
+    "Task services",
+    "Governance",
+    "Users"
    ],
-   "rows": [
-    [
-     "Bordereaux intake/reconciliation",
-     "manual checks, batch updates, unverifiable timing",
-     "instrumented path with gates and evidence"
-    ],
-    [
-     "Treaty settlement",
-     "queue-driven, exceptions found late",
-     "decision-ready, exceptions surfaced in-flight"
-    ],
-    [
-     "Retro/capacity optimization",
-     "reconciled by hand",
-     "certified once, reused everywhere"
-    ]
-   ]
+   "nodes": [
+    {
+     "id": "src0",
+     "lane": 0,
+     "label": "Policy admin system",
+     "hot": false
+    },
+    {
+     "id": "src1",
+     "lane": 0,
+     "label": "Claims document intake",
+     "hot": false
+    },
+    {
+     "id": "src2",
+     "lane": 0,
+     "label": "Telematics & IoT feeds",
+     "hot": false
+    },
+    {
+     "id": "in3",
+     "lane": 1,
+     "label": "Event & batch intake",
+     "hot": false
+    },
+    {
+     "id": "in4",
+     "lane": 1,
+     "label": "PII minimization",
+     "hot": false
+    },
+    {
+     "id": "ks5",
+     "lane": 2,
+     "label": "Claims triage models",
+     "hot": true
+    },
+    {
+     "id": "ks6",
+     "lane": 2,
+     "label": "Citations & provenance",
+     "hot": false
+    },
+    {
+     "id": "ts7",
+     "lane": 3,
+     "label": "Classify & extract",
+     "hot": false
+    },
+    {
+     "id": "ts8",
+     "lane": 3,
+     "label": "Summarize & draft",
+     "hot": false
+    },
+    {
+     "id": "gv9",
+     "lane": 4,
+     "label": "Eval gates",
+     "hot": false
+    },
+    {
+     "id": "gv10",
+     "lane": 4,
+     "label": "Actuarial control pack",
+     "hot": false
+    },
+    {
+     "id": "us11",
+     "lane": 5,
+     "label": "Underwriting workbench",
+     "hot": false
+    },
+    {
+     "id": "us12",
+     "lane": 5,
+     "label": "Claims adjudication",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "src0",
+     "b": "in3"
+    },
+    {
+     "a": "src1",
+     "b": "in3"
+    },
+    {
+     "a": "src2",
+     "b": "in4"
+    },
+    {
+     "a": "in3",
+     "b": "ks5"
+    },
+    {
+     "a": "in4",
+     "b": "ks5"
+    },
+    {
+     "a": "ks5",
+     "b": "ts7"
+    },
+    {
+     "a": "ks5",
+     "b": "ts8"
+    },
+    {
+     "a": "ts7",
+     "b": "gv9"
+    },
+    {
+     "a": "gv9",
+     "b": "gv10"
+    },
+    {
+     "a": "ts7",
+     "b": "us11"
+    },
+    {
+     "a": "ts8",
+     "b": "us12"
+    }
+   ],
+   "note": "Named stages, not generic boxes — this is the Reinsurance & Commercial Lines path as built."
   },
   {
    "t": "h2",
@@ -111,7 +224,7 @@
    "x": "Start with the diagnostic, not the contract: Applied AI & GenAI for Reinsurance & Commercial Lines baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 540,
+ "words": 498,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Insurance & Risk",

@@ -57,16 +57,95 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "From signal to decision to evidence — Dataq Ledger",
-   "labels": [
-    "Network engineering",
-    "Governance charter",
-    "Tokenization stack",
-    "Contract factory"
+   "t": "arch",
+   "title": "Dataq Ledger — module topology",
+   "lanes": [
+    "Ingest",
+    "Core",
+    "Delivery",
+    "Trust"
    ],
-   "note": "Dataq Ledger, drawn as it runs after the build."
+   "nodes": [
+    {
+     "id": "in1",
+     "lane": 0,
+     "label": "Adapters & contracts",
+     "hot": false
+    },
+    {
+     "id": "in2",
+     "lane": 0,
+     "label": "Hyperledger Fabric/Besu",
+     "hot": false
+    },
+    {
+     "id": "c1",
+     "lane": 1,
+     "label": "Network engineering",
+     "hot": true
+    },
+    {
+     "id": "c2",
+     "lane": 1,
+     "label": "Governance charter",
+     "hot": false
+    },
+    {
+     "id": "d1",
+     "lane": 2,
+     "label": "Tokenization stack",
+     "hot": false
+    },
+    {
+     "id": "d2",
+     "lane": 2,
+     "label": "Contract factory",
+     "hot": false
+    },
+    {
+     "id": "t1",
+     "lane": 3,
+     "label": "Evidence packs",
+     "hot": false
+    },
+    {
+     "id": "t2",
+     "lane": 3,
+     "label": "HSM custody",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "in1",
+     "b": "c1"
+    },
+    {
+     "a": "in2",
+     "b": "c1"
+    },
+    {
+     "a": "c1",
+     "b": "c2"
+    },
+    {
+     "a": "c1",
+     "b": "d1"
+    },
+    {
+     "a": "c2",
+     "b": "d2"
+    },
+    {
+     "a": "d1",
+     "b": "t1"
+    },
+    {
+     "a": "d2",
+     "b": "t2"
+    }
+   ],
+   "note": "Modules are the platform's named components; trust lane is what the audit reads."
   },
   {
    "t": "h2",
@@ -118,7 +197,7 @@
    "x": "A value assessment prices the delta in your estate before anything is signed: Dataq Ledger, measured against your baseline, in two weeks."
   }
  ],
- "words": 320,
+ "words": 311,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Ledger",

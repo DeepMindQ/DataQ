@@ -57,6 +57,135 @@
    "x": "In Payments & Cards, the pattern is context-aware decline recovery — good-customer signals rescoring borderline declines with policy. False declines recovered sits on top as the measured result, tracked from the signed baseline onward. Around it, the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use."
   },
   {
+   "t": "arch",
+   "title": "The governed path, end to end — Applied AI & GenAI × Payments & Cards",
+   "lanes": [
+    "Systems of record",
+    "Contracted inputs",
+    "Retrieval core",
+    "Guarded generation",
+    "Controls",
+    "Surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "src0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "src1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "ct2",
+     "lane": 1,
+     "label": "Schema contracts",
+     "hot": false
+    },
+    {
+     "id": "ct3",
+     "lane": 1,
+     "label": "Freshness SLAs",
+     "hot": false
+    },
+    {
+     "id": "rc4",
+     "lane": 2,
+     "label": "Permission-aware index",
+     "hot": true
+    },
+    {
+     "id": "rc5",
+     "lane": 2,
+     "label": "Embedding pipeline",
+     "hot": false
+    },
+    {
+     "id": "gg6",
+     "lane": 3,
+     "label": "Grounded answering",
+     "hot": true
+    },
+    {
+     "id": "gg7",
+     "lane": 3,
+     "label": "Prompt & cost router",
+     "hot": false
+    },
+    {
+     "id": "co8",
+     "lane": 4,
+     "label": "Eval harness",
+     "hot": false
+    },
+    {
+     "id": "co9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "su10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "su11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "src0",
+     "b": "ct2"
+    },
+    {
+     "a": "src1",
+     "b": "ct2"
+    },
+    {
+     "a": "ct2",
+     "b": "rc4"
+    },
+    {
+     "a": "ct3",
+     "b": "rc5"
+    },
+    {
+     "a": "rc4",
+     "b": "gg6"
+    },
+    {
+     "a": "rc5",
+     "b": "gg7"
+    },
+    {
+     "a": "gg6",
+     "b": "co8"
+    },
+    {
+     "a": "co8",
+     "b": "co9"
+    },
+    {
+     "a": "gg6",
+     "b": "su10"
+    },
+    {
+     "a": "gg7",
+     "b": "su11"
+    }
+   ],
+   "note": "The path your operators would actually recognize."
+  },
+  {
    "t": "h2",
    "x": "How the work actually runs"
   },

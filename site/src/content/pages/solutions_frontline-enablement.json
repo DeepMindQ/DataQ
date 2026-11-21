@@ -61,16 +61,104 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "The operating loop — Frontline Mobile & Field Enablement",
-   "labels": [
-    "Mobile work hub",
-    "Field assistant",
-    "Task intelligence",
-    "Capture-in-flow"
+   "t": "arch",
+   "title": "Frontline Mobile & Field Enablement — solution topology",
+   "lanes": [
+    "Estate",
+    "Composition core",
+    "Platform rails",
+    "Controls",
+    "Consumers"
    ],
-   "note": "Named stages, not generic boxes — this is the Frontline Mobile & Field Enablement path as built."
+   "nodes": [
+    {
+     "id": "estate",
+     "lane": 0,
+     "label": "Client estate",
+     "hot": false
+    },
+    {
+     "id": "c0",
+     "lane": 1,
+     "label": "Mobile work hub",
+     "hot": true
+    },
+    {
+     "id": "c1",
+     "lane": 1,
+     "label": "Field assistant",
+     "hot": false
+    },
+    {
+     "id": "c2",
+     "lane": 1,
+     "label": "Task intelligence",
+     "hot": false
+    },
+    {
+     "id": "c3",
+     "lane": 1,
+     "label": "Capture-in-flow",
+     "hot": false
+    },
+    {
+     "id": "p0",
+     "lane": 2,
+     "label": "Dataq Swarm",
+     "hot": true
+    },
+    {
+     "id": "p1",
+     "lane": 2,
+     "label": "Dataq Twinverse",
+     "hot": true
+    },
+    {
+     "id": "ctl",
+     "lane": 3,
+     "label": "Control & evidence pack"
+    },
+    {
+     "id": "bus",
+     "lane": 4,
+     "label": "Logistics & Supply Chain"
+    }
+   ],
+   "edges": [
+    {
+     "a": "estate",
+     "b": "c0"
+    },
+    {
+     "a": "estate",
+     "b": "c1"
+    },
+    {
+     "a": "estate",
+     "b": "c2"
+    },
+    {
+     "a": "estate",
+     "b": "c3"
+    },
+    {
+     "a": "c0",
+     "b": "p0"
+    },
+    {
+     "a": "c1",
+     "b": "p1"
+    },
+    {
+     "a": "p0",
+     "b": "ctl"
+    },
+    {
+     "a": "ctl",
+     "b": "bus"
+    }
+   ],
+   "note": "Components and platforms are the named pieces of this solution, drawn in their architectural position."
   },
   {
    "t": "h2",
@@ -118,7 +206,7 @@
    "x": "The next step is small and real: one working session on Frontline Mobile & Field Enablement, your data, and a written feasibility read you can circulate."
   }
  ],
- "words": 389,
+ "words": 380,
  "section": "Solutions",
  "l1": "Solutions",
  "l2": "Workforce & Experience",

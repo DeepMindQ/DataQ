@@ -57,14 +57,131 @@
    "x": "In Medical Devices & MedTech, the pattern is device security program — SBOMs, signed firmware and vulnerability SLAs. Cra/mdr duties evidenced sits on top as the measured result, tracked from the signed baseline onward. Around it, we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone."
   },
   {
-   "t": "diagram",
-   "kind": "zero-trust-mesh",
-   "title": "The operating loop — Medical Devices & MedTech, Cyber & Zero-Trust",
-   "labels": [
-    "Device provisioning/OTA",
-    "Device security program",
-    "Service dispatch",
-    "weekly evidence pack"
+   "t": "arch",
+   "title": "The operating loop — Cyber & Zero-Trust × Medical Devices & MedTech",
+   "lanes": [
+    "Attack surface",
+    "Telemetry lake",
+    "Analytics",
+    "Containment",
+    "Evidence",
+    "Owners"
+   ],
+   "nodes": [
+    {
+     "id": "as0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "as1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "tlk2",
+     "lane": 1,
+     "label": "Unified telemetry lake",
+     "hot": true
+    },
+    {
+     "id": "tlk3",
+     "lane": 1,
+     "label": "Threat intel feeds",
+     "hot": false
+    },
+    {
+     "id": "an4",
+     "lane": 2,
+     "label": "Behavioral analytics",
+     "hot": false
+    },
+    {
+     "id": "an5",
+     "lane": 2,
+     "label": "Lateral-movement models",
+     "hot": false
+    },
+    {
+     "id": "cn6",
+     "lane": 3,
+     "label": "Blast-radius isolation",
+     "hot": true
+    },
+    {
+     "id": "cn7",
+     "lane": 3,
+     "label": "Playbook execution",
+     "hot": false
+    },
+    {
+     "id": "evd8",
+     "lane": 4,
+     "label": "Audit-ready trails",
+     "hot": false
+    },
+    {
+     "id": "evd9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "ow10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "ow11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "as0",
+     "b": "tlk2"
+    },
+    {
+     "a": "as1",
+     "b": "tlk2"
+    },
+    {
+     "a": "tlk2",
+     "b": "an4"
+    },
+    {
+     "a": "tlk3",
+     "b": "an5"
+    },
+    {
+     "a": "an4",
+     "b": "cn6"
+    },
+    {
+     "a": "an5",
+     "b": "cn7"
+    },
+    {
+     "a": "cn6",
+     "b": "evd8"
+    },
+    {
+     "a": "evd8",
+     "b": "evd9"
+    },
+    {
+     "a": "cn7",
+     "b": "ow10"
+    },
+    {
+     "a": "evd9",
+     "b": "ow11"
+    }
    ],
    "note": "Medical Devices & MedTech, drawn as it runs after the build."
   },
@@ -123,7 +240,7 @@
    "x": "Start with the diagnostic, not the contract: Cyber & Zero-Trust for Medical Devices & MedTech baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 516,
+ "words": 505,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Healthcare & Life Sciences",

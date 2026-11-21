@@ -40,8 +40,143 @@
    "x": "Dataq Swarm agents classify, extract and assemble underwriting evidence with confidence routing; the actuarial data workbench on Forge unified valuation and experience pipelines with lineage for LDTI reporting; sensitive health data moved under classification-aware controls. Lapse models now trigger retention actions within weeks of drift signals."
   },
   {
+   "t": "arch",
+   "title": "What went into production — A leading life insurer (North America)",
+   "lanes": [
+    "Ratings inputs",
+    "Pricing spine",
+    "Price engine",
+    "Governance",
+    "Distribution",
+    "Actuarial"
+   ],
+   "nodes": [
+    {
+     "id": "ri0",
+     "lane": 0,
+     "label": "Telematics & credit feeds",
+     "hot": true
+    },
+    {
+     "id": "ri1",
+     "lane": 0,
+     "label": "Claims history",
+     "hot": false
+    },
+    {
+     "id": "ps0",
+     "lane": 1,
+     "label": "Reference data spine",
+     "hot": false
+    },
+    {
+     "id": "pe0",
+     "lane": 2,
+     "label": "Elasticity & risk models",
+     "hot": true
+    },
+    {
+     "id": "pe1",
+     "lane": 2,
+     "label": "Rate rule engine",
+     "hot": true
+    },
+    {
+     "id": "gv0",
+     "lane": 3,
+     "label": "Rate filing pack",
+     "hot": true
+    },
+    {
+     "id": "gv1",
+     "lane": 3,
+     "label": "Deviation monitor",
+     "hot": false
+    },
+    {
+     "id": "di0",
+     "lane": 4,
+     "label": "Agent quoting API",
+     "hot": false
+    },
+    {
+     "id": "di1",
+     "lane": 4,
+     "label": "Direct channels",
+     "hot": false
+    },
+    {
+     "id": "ac0",
+     "lane": 5,
+     "label": "Actuarial review board",
+     "hot": false
+    },
+    {
+     "id": "ac1",
+     "lane": 5,
+     "label": "Regulators",
+     "hot": false
+    }
+   ],
+   "edges": [],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
    "t": "h2",
    "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A leading life insurer (North America)",
+   "kpis": [
+    {
+     "label": "Case cycle time",
+     "value": "-44%",
+     "delta": "down 44%",
+     "dir": "down"
+    },
+    {
+     "label": "Evidence assembly effort",
+     "value": "-65%",
+     "delta": "down 65%",
+     "dir": "down"
+    },
+    {
+     "label": "Sensitive-data access violations",
+     "value": "zero since cutover",
+     "delta": "",
+     "dir": "flat"
+    },
+    {
+     "label": "Lapse-save actions",
+     "value": "triggered 6-8 weeks earlier",
+     "delta": "",
+     "dir": "flat"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed — case cycle time locked with finance",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 08",
+     "msg": "Working slice live on the client estate",
+     "tag": "build"
+    },
+    {
+     "t": "wk 12",
+     "msg": "Gate review passed against the signed baseline",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Evidence pack handed to audit; runbooks with named owners",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
   },
   {
    "t": "table",

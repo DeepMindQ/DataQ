@@ -49,14 +49,141 @@
    "x": "In Healthcare & Life Sciences, the working pattern is ambient clinical documentation: visit audio to structured draft notes in EHR templates with clinician sign-off. Documentation time down 25%+ is the measured outcome the gate checks. Everything upstream of it — data, identity, access — is built to keep that pattern honest."
   },
   {
-   "t": "diagram",
-   "kind": "decision-fabric",
-   "title": "The operating loop — Healthcare & Life Sciences, Applied AI & GenAI",
-   "labels": [
-    "Imaging and diagnostic backlogs",
-    "Clinician burden and documentation debt",
-    "Applied AI & GenAI decision layer",
-    "replay log"
+   "t": "arch",
+   "title": "The operating loop — Applied AI & GenAI × Healthcare & Life Sciences",
+   "lanes": [
+    "Estate",
+    "Ingest",
+    "Knowledge spine",
+    "Task services",
+    "Governance",
+    "Users"
+   ],
+   "nodes": [
+    {
+     "id": "src0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "src1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "src2",
+     "lane": 0,
+     "label": "KYC / AML case manager",
+     "hot": false
+    },
+    {
+     "id": "in3",
+     "lane": 1,
+     "label": "Event & batch intake",
+     "hot": false
+    },
+    {
+     "id": "in4",
+     "lane": 1,
+     "label": "PII minimization",
+     "hot": false
+    },
+    {
+     "id": "ks5",
+     "lane": 2,
+     "label": "Decision hub (policy + models)",
+     "hot": true
+    },
+    {
+     "id": "ks6",
+     "lane": 2,
+     "label": "Citations & provenance",
+     "hot": false
+    },
+    {
+     "id": "ts7",
+     "lane": 3,
+     "label": "Classify & extract",
+     "hot": false
+    },
+    {
+     "id": "ts8",
+     "lane": 3,
+     "label": "Summarize & draft",
+     "hot": false
+    },
+    {
+     "id": "gv9",
+     "lane": 4,
+     "label": "Eval gates",
+     "hot": false
+    },
+    {
+     "id": "gv10",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "us11",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "us12",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "src0",
+     "b": "in3"
+    },
+    {
+     "a": "src1",
+     "b": "in3"
+    },
+    {
+     "a": "src2",
+     "b": "in4"
+    },
+    {
+     "a": "in3",
+     "b": "ks5"
+    },
+    {
+     "a": "in4",
+     "b": "ks5"
+    },
+    {
+     "a": "ks5",
+     "b": "ts7"
+    },
+    {
+     "a": "ks5",
+     "b": "ts8"
+    },
+    {
+     "a": "ts7",
+     "b": "gv9"
+    },
+    {
+     "a": "gv9",
+     "b": "gv10"
+    },
+    {
+     "a": "ts7",
+     "b": "us11"
+    },
+    {
+     "a": "ts8",
+     "b": "us12"
+    }
    ],
    "note": "Healthcare & Life Sciences, drawn as it runs after the build."
   },
@@ -118,7 +245,7 @@
    "x": "Talk to the team that runs Applied AI & GenAI in Healthcare & Life Sciences in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 601,
+ "words": 589,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Healthcare & Life Sciences",

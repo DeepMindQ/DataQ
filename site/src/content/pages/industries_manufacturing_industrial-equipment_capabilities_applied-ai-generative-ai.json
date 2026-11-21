@@ -57,14 +57,131 @@
    "x": "In Industrial Equipment & Machinery, the pattern is reliability models — failure-mode models from fleet telemetry. Warranty leakage down sits on top as the measured result, tracked from the signed baseline onward. Around it, the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use."
   },
   {
-   "t": "diagram",
-   "kind": "decision-fabric",
-   "title": "The flow your team would run — Industrial Equipment & Machinery, Applied AI & GenAI",
-   "labels": [
-    "Fleet connectivity/OTA",
-    "Reliability models",
-    "Service dispatch and parts",
-    "replay log"
+   "t": "arch",
+   "title": "The flow your team would run — Applied AI & GenAI × Industrial Equipment & Machinery",
+   "lanes": [
+    "Signals",
+    "Fabric",
+    "Models",
+    "Decision API",
+    "Audit",
+    "Products"
+   ],
+   "nodes": [
+    {
+     "id": "sg0",
+     "lane": 0,
+     "label": "MES & line historians",
+     "hot": false
+    },
+    {
+     "id": "sg1",
+     "lane": 0,
+     "label": "SCADA / OT telemetry",
+     "hot": false
+    },
+    {
+     "id": "fb2",
+     "lane": 1,
+     "label": "Feature store (online/offline)",
+     "hot": true
+    },
+    {
+     "id": "fb3",
+     "lane": 1,
+     "label": "Vector & graph indexes",
+     "hot": false
+    },
+    {
+     "id": "mo4",
+     "lane": 2,
+     "label": "Domain models",
+     "hot": false
+    },
+    {
+     "id": "mo5",
+     "lane": 2,
+     "label": "Foundation adapters",
+     "hot": false
+    },
+    {
+     "id": "da6",
+     "lane": 3,
+     "label": "Decision API",
+     "hot": true
+    },
+    {
+     "id": "da7",
+     "lane": 3,
+     "label": "Champion / challenger",
+     "hot": false
+    },
+    {
+     "id": "au8",
+     "lane": 4,
+     "label": "Decision replay",
+     "hot": false
+    },
+    {
+     "id": "au9",
+     "lane": 4,
+     "label": "IEC 62443 posture",
+     "hot": false
+    },
+    {
+     "id": "pr10",
+     "lane": 5,
+     "label": "Production scheduling",
+     "hot": false
+    },
+    {
+     "id": "pr11",
+     "lane": 5,
+     "label": "Maintenance planner",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "sg0",
+     "b": "fb2"
+    },
+    {
+     "a": "sg1",
+     "b": "fb3"
+    },
+    {
+     "a": "fb2",
+     "b": "mo4"
+    },
+    {
+     "a": "fb3",
+     "b": "mo5"
+    },
+    {
+     "a": "mo4",
+     "b": "da6"
+    },
+    {
+     "a": "mo5",
+     "b": "da7"
+    },
+    {
+     "a": "da6",
+     "b": "au8"
+    },
+    {
+     "a": "da7",
+     "b": "au9"
+    },
+    {
+     "a": "da6",
+     "b": "pr10"
+    },
+    {
+     "a": "da7",
+     "b": "pr11"
+    }
    ],
    "note": "The stages are the workflow names above; nothing on this diagram is decorative."
   },
@@ -123,7 +240,7 @@
    "x": "Talk to the team that runs Applied AI & GenAI for Industrial Equipment & Machinery in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 503,
+ "words": 488,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Manufacturing & Industrial",

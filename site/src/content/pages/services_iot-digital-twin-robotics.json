@@ -61,17 +61,133 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "twin-loop",
-   "title": "The flow your team would run — IoT, Twin & Robotics",
-   "labels": [
-    "Industrial IoT & Sensor Fabric",
-    "Digital Twin Platform Engineering",
-    "Computer Vision & Edge AI",
-    "Predictive Maintenance & Asset Intelligence",
-    "evidence & gates"
+   "t": "arch",
+   "title": "IoT, Twin & Robotics — reference topology",
+   "lanes": [
+    "Physical assets",
+    "Edge gateways",
+    "Perception",
+    "Twin core",
+    "Actuation",
+    "Operations"
    ],
-   "note": "The stages are the workflow names above; nothing on this diagram is decorative."
+   "nodes": [
+    {
+     "id": "pa0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "pa1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "eg2",
+     "lane": 1,
+     "label": "Industrial IoT & Sensor Fabric",
+     "hot": true
+    },
+    {
+     "id": "eg3",
+     "lane": 1,
+     "label": "OPC-UA / MQTT",
+     "hot": false
+    },
+    {
+     "id": "pp4",
+     "lane": 2,
+     "label": "Digital Twin Platform Engineering",
+     "hot": true
+    },
+    {
+     "id": "pp5",
+     "lane": 2,
+     "label": "Noise suppression",
+     "hot": false
+    },
+    {
+     "id": "tc6",
+     "lane": 3,
+     "label": "Computer Vision & Edge AI",
+     "hot": true
+    },
+    {
+     "id": "tc7",
+     "lane": 3,
+     "label": "State estimators",
+     "hot": false
+    },
+    {
+     "id": "ac8",
+     "lane": 4,
+     "label": "Maintenance plans",
+     "hot": false
+    },
+    {
+     "id": "ac9",
+     "lane": 4,
+     "label": "Closed-loop control",
+     "hot": false
+    },
+    {
+     "id": "op10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "op11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "pa0",
+     "b": "eg2"
+    },
+    {
+     "a": "pa1",
+     "b": "eg3"
+    },
+    {
+     "a": "eg2",
+     "b": "pp4"
+    },
+    {
+     "a": "eg3",
+     "b": "pp5"
+    },
+    {
+     "a": "pp4",
+     "b": "tc6"
+    },
+    {
+     "a": "pp5",
+     "b": "tc7"
+    },
+    {
+     "a": "tc6",
+     "b": "ac8"
+    },
+    {
+     "a": "tc7",
+     "b": "ac9"
+    },
+    {
+     "a": "ac8",
+     "b": "op10"
+    },
+    {
+     "a": "ac9",
+     "b": "op11"
+    }
+   ],
+   "note": "Highlighted nodes are the tower's named services in their architectural position."
   },
   {
    "t": "h2",
@@ -119,7 +235,7 @@
    "x": "Talk to the team that runs IoT, Digital Twin & Robotics in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 475,
+ "words": 464,
  "section": "Services",
  "l1": "Services",
  "l2": "IoT, Digital Twin & Robotics",

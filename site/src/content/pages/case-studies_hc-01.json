@@ -40,8 +40,149 @@
    "x": "We deployed ambient documentation integrated into the EHR with clinician sign-off, grounded on specialty-specific note templates and governed by the clinical AI board on Compass (model cards, evaluations, oversight gates). A parallel security program segmented medical devices and rehearsed clinical-continuity recovery — including a manual-fallback drill per department."
   },
   {
+   "t": "arch",
+   "title": "What went into production — A 12-hospital US health system",
+   "lanes": [
+    "Clinical sources",
+    "NLP pipeline",
+    "Auth decisioning",
+    "Reviewer loop",
+    "Safety",
+    "Revenue ops"
+   ],
+   "nodes": [
+    {
+     "id": "cs0",
+     "lane": 0,
+     "label": "EHR notes & orders",
+     "hot": true
+    },
+    {
+     "id": "cs1",
+     "lane": 0,
+     "label": "Payer policy documents",
+     "hot": false
+    },
+    {
+     "id": "np0",
+     "lane": 1,
+     "label": "Clinical NLP extraction",
+     "hot": true
+    },
+    {
+     "id": "np1",
+     "lane": 1,
+     "label": "Guideline grounding",
+     "hot": false
+    },
+    {
+     "id": "ad0",
+     "lane": 2,
+     "label": "Prior-auth decision service",
+     "hot": true
+    },
+    {
+     "id": "ad1",
+     "lane": 2,
+     "label": "Coverage rule engine",
+     "hot": false
+    },
+    {
+     "id": "rl0",
+     "lane": 3,
+     "label": "Clinician review UI",
+     "hot": false
+    },
+    {
+     "id": "rl1",
+     "lane": 3,
+     "label": "Appeal assembly",
+     "hot": false
+    },
+    {
+     "id": "sf0",
+     "lane": 4,
+     "label": "Clinical safety case",
+     "hot": true
+    },
+    {
+     "id": "sf1",
+     "lane": 4,
+     "label": "PHI access controls",
+     "hot": false
+    },
+    {
+     "id": "ro0",
+     "lane": 5,
+     "label": "Auth status API",
+     "hot": false
+    },
+    {
+     "id": "ro1",
+     "lane": 5,
+     "label": "Denial analytics",
+     "hot": false
+    }
+   ],
+   "edges": [],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
    "t": "h2",
    "x": "What changed"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A 12-hospital US health system",
+   "kpis": [
+    {
+     "label": "Documentation time per clinician",
+     "value": "down 88 minutes/day average",
+     "delta": "",
+     "dir": "flat"
+    },
+    {
+     "label": "Note quality (audit sample)",
+     "value": "up with sign-off discipline",
+     "delta": "",
+     "dir": "flat"
+    },
+    {
+     "label": "Ransomware tabletop restart",
+     "value": "proven at 4 hours for EHR read-only",
+     "delta": "",
+     "dir": "flat"
+    },
+    {
+     "label": "Unmanaged device surface",
+     "value": "from unknown to fully zoned",
+     "delta": "",
+     "dir": "flat"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed — documentation time per clinician locked with finance",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 08",
+     "msg": "Working slice live on the client estate",
+     "tag": "build"
+    },
+    {
+     "t": "wk 12",
+     "msg": "Gate review passed against the signed baseline",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Evidence pack handed to audit; runbooks with named owners",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
   },
   {
    "t": "table",

@@ -45,14 +45,131 @@
    "x": "The pattern that repeats in Energy & Utilities: asset condition sensing — turbine/transformer/pipeline telemetry with retrofit engineering. Condition-based maintenance enabled is the measured outcome the gate checks. The engineering follows the pressure, not the fashion."
   },
   {
-   "t": "diagram",
-   "kind": "twin-loop",
-   "title": "The governed path, end to end — Energy & Utilities, IoT, Twin & Robotics",
-   "labels": [
-    "Asset fleets uninstrumented",
-    "Asset fleets uninstrumented",
-    "IoT, Twin & Robotics decision layer",
-    "value ledger"
+   "t": "arch",
+   "title": "The governed path, end to end — IoT, Twin & Robotics × Energy & Utilities",
+   "lanes": [
+    "Physical assets",
+    "Edge gateways",
+    "Perception",
+    "Twin core",
+    "Actuation",
+    "Operations"
+   ],
+   "nodes": [
+    {
+     "id": "pa0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "pa1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "eg2",
+     "lane": 1,
+     "label": "Edge gateways",
+     "hot": true
+    },
+    {
+     "id": "eg3",
+     "lane": 1,
+     "label": "OPC-UA / MQTT",
+     "hot": false
+    },
+    {
+     "id": "pp4",
+     "lane": 2,
+     "label": "Vision & signal models",
+     "hot": true
+    },
+    {
+     "id": "pp5",
+     "lane": 2,
+     "label": "Noise suppression",
+     "hot": false
+    },
+    {
+     "id": "tc6",
+     "lane": 3,
+     "label": "Digital twin sync",
+     "hot": true
+    },
+    {
+     "id": "tc7",
+     "lane": 3,
+     "label": "State estimators",
+     "hot": false
+    },
+    {
+     "id": "ac8",
+     "lane": 4,
+     "label": "Maintenance plans",
+     "hot": false
+    },
+    {
+     "id": "ac9",
+     "lane": 4,
+     "label": "Closed-loop control",
+     "hot": false
+    },
+    {
+     "id": "op10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "op11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "pa0",
+     "b": "eg2"
+    },
+    {
+     "a": "pa1",
+     "b": "eg3"
+    },
+    {
+     "a": "eg2",
+     "b": "pp4"
+    },
+    {
+     "a": "eg3",
+     "b": "pp5"
+    },
+    {
+     "a": "pp4",
+     "b": "tc6"
+    },
+    {
+     "a": "pp5",
+     "b": "tc7"
+    },
+    {
+     "a": "tc6",
+     "b": "ac8"
+    },
+    {
+     "a": "tc7",
+     "b": "ac9"
+    },
+    {
+     "a": "ac8",
+     "b": "op10"
+    },
+    {
+     "a": "ac9",
+     "b": "op11"
+    }
    ],
    "note": "The stages are the workflow names above; nothing on this diagram is decorative."
   },
@@ -114,7 +231,7 @@
    "x": "Bring IoT, Twin & Robotics in Energy & Utilities to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
   }
  ],
- "words": 537,
+ "words": 523,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Energy & Utilities",

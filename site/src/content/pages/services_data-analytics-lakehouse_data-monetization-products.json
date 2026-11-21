@@ -65,16 +65,133 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "The operating loop — Data Monetization & Analytics Products",
-   "labels": [
-    "Asset & market assessment",
-    "Product design",
-    "Delivery stack",
-    "Privacy architecture"
+   "t": "arch",
+   "title": "Reference architecture — Data Monetization & Analytics Products",
+   "lanes": [
+    "Estates",
+    "Contracts",
+    "Lakehouse",
+    "Governance",
+    "Consumers",
+    "Actions"
    ],
-   "note": "The path your operators would actually recognize."
+   "nodes": [
+    {
+     "id": "es0",
+     "lane": 0,
+     "label": "Product telemetry",
+     "hot": false
+    },
+    {
+     "id": "es1",
+     "lane": 0,
+     "label": "Billing & entitlements",
+     "hot": false
+    },
+    {
+     "id": "ct2",
+     "lane": 1,
+     "label": "Schema registry",
+     "hot": false
+    },
+    {
+     "id": "ct3",
+     "lane": 1,
+     "label": "Quality gates",
+     "hot": false
+    },
+    {
+     "id": "lh4",
+     "lane": 2,
+     "label": "Data Monetization & Analytics Products",
+     "hot": true
+    },
+    {
+     "id": "lh5",
+     "lane": 2,
+     "label": "Cost-aware storage",
+     "hot": false
+    },
+    {
+     "id": "gv6",
+     "lane": 3,
+     "label": "Lineage & catalog",
+     "hot": false
+    },
+    {
+     "id": "gv7",
+     "lane": 3,
+     "label": "Access policies",
+     "hot": false
+    },
+    {
+     "id": "cs8",
+     "lane": 4,
+     "label": "Growth & pricing console",
+     "hot": false
+    },
+    {
+     "id": "cs9",
+     "lane": 4,
+     "label": "Customer-success cockpit",
+     "hot": false
+    },
+    {
+     "id": "ac10",
+     "lane": 5,
+     "label": "Owned decisions",
+     "hot": false
+    },
+    {
+     "id": "ac11",
+     "lane": 5,
+     "label": "Metric disputes closed",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "es0",
+     "b": "ct2"
+    },
+    {
+     "a": "es1",
+     "b": "ct3"
+    },
+    {
+     "a": "ct2",
+     "b": "lh4"
+    },
+    {
+     "a": "ct3",
+     "b": "lh5"
+    },
+    {
+     "a": "lh4",
+     "b": "gv6"
+    },
+    {
+     "a": "lh5",
+     "b": "gv7"
+    },
+    {
+     "a": "gv6",
+     "b": "cs8"
+    },
+    {
+     "a": "gv7",
+     "b": "cs9"
+    },
+    {
+     "a": "cs8",
+     "b": "ac10"
+    },
+    {
+     "a": "cs9",
+     "b": "ac11"
+    }
+   ],
+   "note": "Topology inherited from the Data & Lakehouse tower; the highlighted core is this service's build."
   },
   {
    "t": "h2",
@@ -139,7 +256,7 @@
    "x": "Bring Data Monetization & Analytics Products to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
   }
  ],
- "words": 511,
+ "words": 502,
  "section": "Services",
  "l1": "Services",
  "l2": "Data, Analytics & Lakehouse",

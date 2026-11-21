@@ -57,14 +57,121 @@
    "x": "In Smart Cities & Infrastructure, the pattern is urban OT security — segmentation and monitoring for public systems. Resilience evidenced sits on top as the measured result, tracked from the signed baseline onward. Around it, we harden the paths the work takes: workload identity, least-privilege access, encrypted data in use, and an evidence trail the auditor can walk alone."
   },
   {
-   "t": "diagram",
-   "kind": "zero-trust-mesh",
-   "title": "The governed path, end to end — Smart Cities & Infrastructure, Cyber & Zero-Trust",
-   "labels": [
-    "Urban asset management",
-    "Urban OT security",
-    "Mobility optimization",
-    "gate evidence"
+   "t": "arch",
+   "title": "The governed path, end to end — Cyber & Zero-Trust × Smart Cities & Infrastructure",
+   "lanes": [
+    "Users",
+    "Devices",
+    "Brokers",
+    "Workloads",
+    "Data",
+    "Auditors"
+   ],
+   "nodes": [
+    {
+     "id": "us0",
+     "lane": 0,
+     "label": "Phishing-resistant MFA",
+     "hot": false
+    },
+    {
+     "id": "us1",
+     "lane": 0,
+     "label": "SSO & lifecycle",
+     "hot": false
+    },
+    {
+     "id": "dv2",
+     "lane": 1,
+     "label": "Posture-checked endpoints",
+     "hot": false
+    },
+    {
+     "id": "dv3",
+     "lane": 1,
+     "label": "Case & registry systems",
+     "hot": false
+    },
+    {
+     "id": "br4",
+     "lane": 2,
+     "label": "Policy engine (deny·verify·sign)",
+     "hot": true
+    },
+    {
+     "id": "wl5",
+     "lane": 3,
+     "label": "Workload enforcement",
+     "hot": false
+    },
+    {
+     "id": "wl6",
+     "lane": 3,
+     "label": "Segmented access fabric",
+     "hot": false
+    },
+    {
+     "id": "dt7",
+     "lane": 4,
+     "label": "Classification-aware DLP",
+     "hot": true
+    },
+    {
+     "id": "dt8",
+     "lane": 4,
+     "label": "Field-level encryption",
+     "hot": false
+    },
+    {
+     "id": "au9",
+     "lane": 5,
+     "label": "Continuous audit export",
+     "hot": false
+    },
+    {
+     "id": "au10",
+     "lane": 5,
+     "label": "Algorithmic transparency log",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "us0",
+     "b": "br4"
+    },
+    {
+     "a": "dv2",
+     "b": "br4"
+    },
+    {
+     "a": "us1",
+     "b": "br4"
+    },
+    {
+     "a": "br4",
+     "b": "wl5"
+    },
+    {
+     "a": "br4",
+     "b": "wl6"
+    },
+    {
+     "a": "wl5",
+     "b": "dt7"
+    },
+    {
+     "a": "wl6",
+     "b": "dt8"
+    },
+    {
+     "a": "dt7",
+     "b": "au9"
+    },
+    {
+     "a": "dt8",
+     "b": "au10"
+    }
    ],
    "note": "Smart Cities & Infrastructure, drawn as it runs after the build."
   },
@@ -123,7 +230,7 @@
    "x": "Talk to the team that runs Cyber & Zero-Trust for Smart Cities & Infrastructure in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 480,
+ "words": 466,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Public Sector & Government",

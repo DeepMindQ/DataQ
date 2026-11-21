@@ -57,16 +57,95 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "The flow your team would run — Dataq Sentinel",
-   "labels": [
-    "Zero-trust enforcement",
-    "Detection-as-code",
-    "Posture guardrails",
-    "AI defense layer"
+   "t": "arch",
+   "title": "Dataq Sentinel — module topology",
+   "lanes": [
+    "Ingest",
+    "Core",
+    "Delivery",
+    "Trust"
    ],
-   "note": "The path your operators would actually recognize."
+   "nodes": [
+    {
+     "id": "in1",
+     "lane": 0,
+     "label": "Adapters & contracts",
+     "hot": false
+    },
+    {
+     "id": "in2",
+     "lane": 0,
+     "label": "SIEM/XDR",
+     "hot": false
+    },
+    {
+     "id": "c1",
+     "lane": 1,
+     "label": "Zero-trust enforcement",
+     "hot": true
+    },
+    {
+     "id": "c2",
+     "lane": 1,
+     "label": "Detection-as-code",
+     "hot": false
+    },
+    {
+     "id": "d1",
+     "lane": 2,
+     "label": "Posture guardrails",
+     "hot": false
+    },
+    {
+     "id": "d2",
+     "lane": 2,
+     "label": "AI defense layer",
+     "hot": false
+    },
+    {
+     "id": "t1",
+     "lane": 3,
+     "label": "Evidence packs",
+     "hot": false
+    },
+    {
+     "id": "t2",
+     "lane": 3,
+     "label": "Purple-team validated",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "in1",
+     "b": "c1"
+    },
+    {
+     "a": "in2",
+     "b": "c1"
+    },
+    {
+     "a": "c1",
+     "b": "c2"
+    },
+    {
+     "a": "c1",
+     "b": "d1"
+    },
+    {
+     "a": "c2",
+     "b": "d2"
+    },
+    {
+     "a": "d1",
+     "b": "t1"
+    },
+    {
+     "a": "d2",
+     "b": "t2"
+    }
+   ],
+   "note": "Modules are the platform's named components; trust lane is what the audit reads."
   },
   {
    "t": "h2",
@@ -118,7 +197,7 @@
    "x": "The next step is small and real: one working session on Dataq Sentinel, your data, and a written feasibility read you can circulate."
   }
  ],
- "words": 313,
+ "words": 304,
  "section": "Platforms",
  "l1": "Platforms",
  "l2": "Dataq Sentinel",

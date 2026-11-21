@@ -65,16 +65,133 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "ledger-chain",
-   "title": "The operating loop — Asset Tokenization & Digital Assets",
-   "labels": [
-    "Instrument structuring",
-    "Permissioned transfer controls",
-    "Custody & onboarding",
-    "Lifecycle automation"
+   "t": "arch",
+   "title": "Reference architecture — Asset Tokenization & Digital Assets",
+   "lanes": [
+    "Counterparties",
+    "Contracts",
+    "Ledger",
+    "Settlement",
+    "Audit",
+    "Networks"
    ],
-   "note": "Named stages, not generic boxes — this is the Asset Tokenization & Digital Assets path as built."
+   "nodes": [
+    {
+     "id": "cp0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "cp1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "ct2",
+     "lane": 1,
+     "label": "Asset Tokenization & Digital Assets",
+     "hot": true
+    },
+    {
+     "id": "ct3",
+     "lane": 1,
+     "label": "Contract testing",
+     "hot": false
+    },
+    {
+     "id": "lg4",
+     "lane": 2,
+     "label": "Immutable event log",
+     "hot": true
+    },
+    {
+     "id": "lg5",
+     "lane": 2,
+     "label": "Byzantine tolerance",
+     "hot": false
+    },
+    {
+     "id": "st6",
+     "lane": 3,
+     "label": "Atomic settlement",
+     "hot": false
+    },
+    {
+     "id": "st7",
+     "lane": 3,
+     "label": "Netting engines",
+     "hot": false
+    },
+    {
+     "id": "au8",
+     "lane": 4,
+     "label": "Shared audit views",
+     "hot": false
+    },
+    {
+     "id": "au9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "nw10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "nw11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "cp0",
+     "b": "ct2"
+    },
+    {
+     "a": "cp1",
+     "b": "ct3"
+    },
+    {
+     "a": "ct2",
+     "b": "lg4"
+    },
+    {
+     "a": "ct3",
+     "b": "lg5"
+    },
+    {
+     "a": "lg4",
+     "b": "st6"
+    },
+    {
+     "a": "lg5",
+     "b": "st7"
+    },
+    {
+     "a": "st6",
+     "b": "au8"
+    },
+    {
+     "a": "au8",
+     "b": "au9"
+    },
+    {
+     "a": "st7",
+     "b": "nw10"
+    },
+    {
+     "a": "au9",
+     "b": "nw11"
+    }
+   ],
+   "note": "Topology inherited from the Blockchain & Digital Trust tower; the highlighted core is this service's build."
   },
   {
    "t": "h2",
@@ -139,7 +256,7 @@
    "x": "Talk to the team that runs Asset Tokenization & Digital Assets in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 502,
+ "words": 493,
  "section": "Services",
  "l1": "Services",
  "l2": "Blockchain & Digital Trust",

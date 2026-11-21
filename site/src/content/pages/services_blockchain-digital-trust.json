@@ -57,17 +57,133 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "ledger-chain",
-   "title": "The flow your team would run — Blockchain & Digital Trust",
-   "labels": [
-    "Enterprise DLT Network Engineering",
-    "Asset Tokenization & Digital Assets",
-    "Smart Contract Engineering & Audit",
-    "Provenance, Traceability & Supply Chain Trust",
-    "evidence & gates"
+   "t": "arch",
+   "title": "Blockchain & Digital Trust — reference topology",
+   "lanes": [
+    "Event sources",
+    "Signing layer",
+    "Ledger core",
+    "Provenance",
+    "Disclosure",
+    "Participants"
    ],
-   "note": "Named stages, not generic boxes — this is the Blockchain & Digital Trust programs path as built."
+   "nodes": [
+    {
+     "id": "evs0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "evs1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "sg2",
+     "lane": 1,
+     "label": "Enterprise DLT Network Engineering",
+     "hot": true
+    },
+    {
+     "id": "sg3",
+     "lane": 1,
+     "label": "Stream validation",
+     "hot": false
+    },
+    {
+     "id": "lc4",
+     "lane": 2,
+     "label": "Asset Tokenization & Digital Assets",
+     "hot": true
+    },
+    {
+     "id": "lc5",
+     "lane": 2,
+     "label": "DAG ordering",
+     "hot": false
+    },
+    {
+     "id": "pg6",
+     "lane": 3,
+     "label": "Provenance graph",
+     "hot": false
+    },
+    {
+     "id": "pg7",
+     "lane": 3,
+     "label": "Attribution & lineage",
+     "hot": false
+    },
+    {
+     "id": "di8",
+     "lane": 4,
+     "label": "Selective disclosure",
+     "hot": false
+    },
+    {
+     "id": "di9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "pt10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "pt11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "evs0",
+     "b": "sg2"
+    },
+    {
+     "a": "evs1",
+     "b": "sg3"
+    },
+    {
+     "a": "sg2",
+     "b": "lc4"
+    },
+    {
+     "a": "sg3",
+     "b": "lc5"
+    },
+    {
+     "a": "lc4",
+     "b": "pg6"
+    },
+    {
+     "a": "lc5",
+     "b": "pg7"
+    },
+    {
+     "a": "pg6",
+     "b": "di8"
+    },
+    {
+     "a": "di8",
+     "b": "di9"
+    },
+    {
+     "a": "pg7",
+     "b": "pt10"
+    },
+    {
+     "a": "di9",
+     "b": "pt11"
+    }
+   ],
+   "note": "Highlighted nodes are the tower's named services in their architectural position."
   },
   {
    "t": "h2",
@@ -115,7 +231,7 @@
    "x": "A value assessment prices the delta in your estate before anything is signed: Blockchain & Digital Trust, measured against your baseline, in two weeks."
   }
  ],
- "words": 412,
+ "words": 401,
  "section": "Services",
  "l1": "Services",
  "l2": "Blockchain & Digital Trust",

@@ -57,14 +57,131 @@
    "x": "In Care Management & Population Health, the pattern is program matching models — engagement likelihood + clinical need into assignment. Economics measured sits on top as the measured result, tracked from the signed baseline onward. Around it, the work is model and retrieval engineering with evaluation wired in from the first sprint — grounded answers, cited sources, and a cost line somebody actually owns."
   },
   {
-   "t": "diagram",
-   "kind": "decision-fabric",
-   "title": "The operating loop — Care Management & Population Health, Applied AI & GenAI",
-   "labels": [
-    "Risk stratification",
-    "Program matching models",
-    "Care outreach and scheduling",
-    "value ledger"
+   "t": "arch",
+   "title": "The operating loop — Applied AI & GenAI × Care Management & Population Health",
+   "lanes": [
+    "Signals",
+    "Fabric",
+    "Models",
+    "Decision API",
+    "Audit",
+    "Products"
+   ],
+   "nodes": [
+    {
+     "id": "sg0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "sg1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "fb2",
+     "lane": 1,
+     "label": "Feature store (online/offline)",
+     "hot": true
+    },
+    {
+     "id": "fb3",
+     "lane": 1,
+     "label": "Vector & graph indexes",
+     "hot": false
+    },
+    {
+     "id": "mo4",
+     "lane": 2,
+     "label": "Domain models",
+     "hot": false
+    },
+    {
+     "id": "mo5",
+     "lane": 2,
+     "label": "Foundation adapters",
+     "hot": false
+    },
+    {
+     "id": "da6",
+     "lane": 3,
+     "label": "Decision API",
+     "hot": true
+    },
+    {
+     "id": "da7",
+     "lane": 3,
+     "label": "Champion / challenger",
+     "hot": false
+    },
+    {
+     "id": "au8",
+     "lane": 4,
+     "label": "Decision replay",
+     "hot": false
+    },
+    {
+     "id": "au9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "pr10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "pr11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "sg0",
+     "b": "fb2"
+    },
+    {
+     "a": "sg1",
+     "b": "fb3"
+    },
+    {
+     "a": "fb2",
+     "b": "mo4"
+    },
+    {
+     "a": "fb3",
+     "b": "mo5"
+    },
+    {
+     "a": "mo4",
+     "b": "da6"
+    },
+    {
+     "a": "mo5",
+     "b": "da7"
+    },
+    {
+     "a": "da6",
+     "b": "au8"
+    },
+    {
+     "a": "da7",
+     "b": "au9"
+    },
+    {
+     "a": "da6",
+     "b": "pr10"
+    },
+    {
+     "a": "da7",
+     "b": "pr11"
+    }
    ],
    "note": "Care Management & Population Health, drawn as it runs after the build."
   },
@@ -97,7 +214,7 @@
    "x": "If Applied AI & GenAI for Care Management & Population Health is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
   }
  ],
- "words": 509,
+ "words": 496,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Healthcare & Life Sciences",

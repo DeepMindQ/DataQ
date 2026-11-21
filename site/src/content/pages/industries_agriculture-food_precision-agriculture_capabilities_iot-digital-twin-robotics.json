@@ -57,14 +57,131 @@
    "x": "In Precision Agriculture & Agronomy, the pattern is field fabric — soil/weather/crop sensing with governance. Vra enabled sits on top as the measured result, tracked from the signed baseline onward. Around it, the work spans the stack: devices and gateways in the field, perception models in the middle, actuation plans on the board."
   },
   {
-   "t": "diagram",
-   "kind": "twin-loop",
-   "title": "The operating loop — Precision Agriculture & Agronomy, IoT, Twin & Robotics",
-   "labels": [
-    "Variable-rate input planning",
-    "Field fabric",
-    "Yield/quality forecasting",
-    "replay log"
+   "t": "arch",
+   "title": "The operating loop — IoT, Twin & Robotics × Precision Agriculture & Agronomy",
+   "lanes": [
+    "Physical assets",
+    "Edge gateways",
+    "Perception",
+    "Twin core",
+    "Actuation",
+    "Operations"
+   ],
+   "nodes": [
+    {
+     "id": "pa0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "pa1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "eg2",
+     "lane": 1,
+     "label": "Edge gateways",
+     "hot": true
+    },
+    {
+     "id": "eg3",
+     "lane": 1,
+     "label": "OPC-UA / MQTT",
+     "hot": false
+    },
+    {
+     "id": "pp4",
+     "lane": 2,
+     "label": "Vision & signal models",
+     "hot": true
+    },
+    {
+     "id": "pp5",
+     "lane": 2,
+     "label": "Noise suppression",
+     "hot": false
+    },
+    {
+     "id": "tc6",
+     "lane": 3,
+     "label": "Digital twin sync",
+     "hot": true
+    },
+    {
+     "id": "tc7",
+     "lane": 3,
+     "label": "State estimators",
+     "hot": false
+    },
+    {
+     "id": "ac8",
+     "lane": 4,
+     "label": "Maintenance plans",
+     "hot": false
+    },
+    {
+     "id": "ac9",
+     "lane": 4,
+     "label": "Closed-loop control",
+     "hot": false
+    },
+    {
+     "id": "op10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "op11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "pa0",
+     "b": "eg2"
+    },
+    {
+     "a": "pa1",
+     "b": "eg3"
+    },
+    {
+     "a": "eg2",
+     "b": "pp4"
+    },
+    {
+     "a": "eg3",
+     "b": "pp5"
+    },
+    {
+     "a": "pp4",
+     "b": "tc6"
+    },
+    {
+     "a": "pp5",
+     "b": "tc7"
+    },
+    {
+     "a": "tc6",
+     "b": "ac8"
+    },
+    {
+     "a": "tc7",
+     "b": "ac9"
+    },
+    {
+     "a": "ac8",
+     "b": "op10"
+    },
+    {
+     "a": "ac9",
+     "b": "op11"
+    }
    ],
    "note": "Named stages, not generic boxes — this is the Precision Agriculture & Agronomy path as built."
   },
@@ -97,7 +214,7 @@
    "x": "Talk to the team that runs IoT, Twin & Robotics for Precision Agriculture & Agronomy in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 449,
+ "words": 437,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Agriculture & Food Systems",

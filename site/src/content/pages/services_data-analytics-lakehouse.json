@@ -61,17 +61,133 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "The governed path, end to end — Data & Lakehouse",
-   "labels": [
-    "Data Engineering & Pipeline Modernization",
-    "Lakehouse Architecture & Migration",
-    "Real-Time Streaming & Event-Driven Decisioning",
-    "Enterprise BI & Executive Analytics",
-    "evidence & gates"
+   "t": "arch",
+   "title": "Data & Lakehouse — reference topology",
+   "lanes": [
+    "Events",
+    "Real-time core",
+    "Analytics store",
+    "Decision surfaces",
+    "Observability",
+    "Business"
    ],
-   "note": "Data & Lakehouse programs, drawn as it runs after the build."
+   "nodes": [
+    {
+     "id": "ev0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "ev1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "rt2",
+     "lane": 1,
+     "label": "Data Engineering & Pipeline Modernization",
+     "hot": true
+    },
+    {
+     "id": "rt3",
+     "lane": 1,
+     "label": "Stream processors",
+     "hot": false
+    },
+    {
+     "id": "an4",
+     "lane": 2,
+     "label": "Lakehouse tables",
+     "hot": false
+    },
+    {
+     "id": "an5",
+     "lane": 2,
+     "label": "Online store",
+     "hot": false
+    },
+    {
+     "id": "ds6",
+     "lane": 3,
+     "label": "Executive BI",
+     "hot": false
+    },
+    {
+     "id": "ds7",
+     "lane": 3,
+     "label": "Lakehouse Architecture & Migration",
+     "hot": true
+    },
+    {
+     "id": "ob8",
+     "lane": 4,
+     "label": "Freshness SLOs",
+     "hot": false
+    },
+    {
+     "id": "ob9",
+     "lane": 4,
+     "label": "Lineage alerts",
+     "hot": false
+    },
+    {
+     "id": "bs10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "bs11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "ev0",
+     "b": "rt2"
+    },
+    {
+     "a": "ev1",
+     "b": "rt3"
+    },
+    {
+     "a": "rt2",
+     "b": "an4"
+    },
+    {
+     "a": "rt3",
+     "b": "an5"
+    },
+    {
+     "a": "an4",
+     "b": "ds6"
+    },
+    {
+     "a": "an5",
+     "b": "ds7"
+    },
+    {
+     "a": "rt2",
+     "b": "ob8"
+    },
+    {
+     "a": "ob8",
+     "b": "ob9"
+    },
+    {
+     "a": "ds6",
+     "b": "bs10"
+    },
+    {
+     "a": "ds7",
+     "b": "bs11"
+    }
+   ],
+   "note": "Highlighted nodes are the tower's named services in their architectural position."
   },
   {
    "t": "h2",
@@ -119,7 +235,7 @@
    "x": "Talk to the team that runs Data, Analytics & Lakehouse in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 462,
+ "words": 452,
  "section": "Services",
  "l1": "Services",
  "l2": "Data, Analytics & Lakehouse",

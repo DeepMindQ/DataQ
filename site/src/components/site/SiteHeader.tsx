@@ -20,7 +20,7 @@ import {
   ChevronDown, ChevronRight, Menu, X, ArrowRight, Search, Sparkles, Bot, Database, ShieldCheck,
   Cloud, Atom, Link2, Factory, Landmark, HeartPulse, Building2, TrendingUp,
   ShieldAlert, Gauge, Users, Boxes, Compass as CompassIcon, BookOpen, Newspaper,
-  Handshake, Layers, BrainCircuit, CircleDot,
+  Handshake, Layers, BrainCircuit, CircleDot, Wrench,
 } from "lucide-react";
 import Logo from "./Logo";
 import { SearchOverlay, SkipLink, AnnouncementBar, StickyMobileCTA, PLATFORM_EXTRAS } from "./Wave3";
@@ -28,6 +28,11 @@ import type { Brand, Nav } from "@/lib/content";
 
 /* ── icon + blurb per mega group ─────────────────────────────────────────── */
 const COL_META: Record<string, { icon: React.ComponentType<{ className?: string }>; blurb: string }> = {
+  // consulting
+  "Data & Analytics": { icon: Database, blurb: "Analytics products, migration factories and transformation programs — the decision substrate, engineered." },
+  "Engineering & Quality": { icon: Wrench, blurb: "Software pods, quality engineering, application modernization and product design that ships." },
+  "Cloud & Operations": { icon: Cloud, blurb: "Azure estates end to end, managed operations with named owners, and support measured on resolution." },
+  "Advisory & Enterprise": { icon: Handshake, blurb: "Governed capacity, zero-trust security architecture and ERP programs that land process and controls." },
   // services
   "Applied AI & Generative AI": { icon: BrainCircuit, blurb: "Production AI measured on the P&L — strategy, platform build-out, retrieval and multimodal systems under one governance fabric." },
   "Agentic AI & Hyperautomation": { icon: Bot, blurb: "Governed digital workers at scale — process mining, decision intelligence and orchestration with human checkpoints by design." },
@@ -73,6 +78,7 @@ function platformKey(label: string): string {
 }
 /* singular kicker word above the preview title */
 const PREVIEW_KICKER: Record<string, string> = {
+  Consulting: "Consulting practice",
   Services: "Service tower",
   Industries: "Industry group",
   Solutions: "Solution group",
@@ -112,7 +118,7 @@ function MegaPanel({
     /* Anchored to the full-width header bar (inset-x-0), NOT the nav item.
        When the fit-guard forces drawer mode, panels never render. */
     <div
-      className={`absolute inset-x-0 top-full hidden xl:block ${forceDrawer ? "!hidden" : ""} ${open ? "" : "pointer-events-none"}`}
+      className={`absolute inset-x-0 top-full hidden lg:block ${forceDrawer ? "!hidden" : ""} ${open ? "" : "pointer-events-none"}`}
       style={{ visibility: open ? "visible" : "hidden" }}
       onMouseEnter={onCancelClose}
       onMouseLeave={onScheduleClose}
@@ -123,7 +129,7 @@ function MegaPanel({
         aria-label={`${item.label} menu`}
       >
         <div className="container-dq py-6">
-          <div className="grid gap-7 lg:grid-cols-[368px_minmax(0,1fr)]">
+          <div className="grid gap-7 lg:grid-cols-[288px_minmax(0,1fr)] xl:grid-cols-[368px_minmax(0,1fr)]">
             {/* ── index rail ─────────────────────────────────────────── */}
             <div
               className="flex flex-col gap-1 lg:border-r lg:border-line lg:pr-6"
@@ -442,10 +448,12 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
           {/* desktop nav — the fit-guard force-collapses it to the drawer whenever
               the row overflows, so on laptops, zoom or unusual font metrics the
               menu can never leave the viewport — the drawer takes over instead. */}
+          {/* NOTE: no overflow-clip on the nav itself — the fit-guard measures
+              scrollWidth, and clip() would mask the overflow it exists to catch. */}
           <nav
             ref={navRef}
             aria-label="Primary"
-            className={`hidden xl:flex items-center gap-0.5 min-w-0 overflow-x-clip ${forceDrawer ? "!hidden" : ""}`}
+            className={`hidden lg:flex items-center gap-0.5 min-w-0 ${forceDrawer ? "!hidden" : ""}`}
           >
             {nav.primary.map((item) => {
               const isOpen = openItem === item.label;
@@ -474,7 +482,7 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
                         setOpenItem(item.label);
                       }
                     }}
-                    className={`nav-link flex items-center gap-1 px-3.5 py-2.5 text-[13.5px] font-medium whitespace-nowrap rounded-md transition-colors ${
+                    className={`nav-link flex items-center gap-1 px-2.5 py-2.5 text-[12.75px] xl:px-3.5 xl:text-[13.5px] font-medium whitespace-nowrap rounded-md transition-colors ${
                       pathname.startsWith(item.url)
                         ? "text-brand-deep"
                         : "text-navy-800 hover:text-brand-deep"
@@ -513,7 +521,7 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
               {nav.cta.label}
             </Link>
             <button
-              className={`xl:hidden inline-flex h-10 w-10 items-center justify-center rounded-[10px] border border-line ${forceDrawer ? "!inline-flex" : ""}`}
+              className={`lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-[10px] border border-line ${forceDrawer ? "!inline-flex" : ""}`}
               aria-label="Open menu"
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((v) => !v)}
@@ -543,7 +551,7 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
           mobile browser toolbars. Accordion groups with 2-col child grids. */}
       {mobileOpen && (
         <div
-          className={`drawer-scroll xl:hidden border-b border-line bg-white shadow-3 overflow-y-auto ${forceDrawer ? "!block" : ""}`}
+          className={`drawer-scroll lg:hidden border-b border-line bg-white shadow-3 overflow-y-auto ${forceDrawer ? "!block" : ""}`}
         >
           <div className="container-dq space-y-1 pt-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
             {nav.primary.map((item) => (

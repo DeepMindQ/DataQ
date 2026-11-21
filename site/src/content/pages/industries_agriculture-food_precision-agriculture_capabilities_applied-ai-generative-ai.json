@@ -57,30 +57,143 @@
    "x": "In Precision Agriculture & Agronomy, the pattern is yield models — satellite+sensor agronomy models with uncertainty. Decisions early sits on top as the measured result, tracked from the signed baseline onward. Around it, the work is model and retrieval engineering with evaluation wired in from the first sprint — grounded answers, cited sources, and a cost line somebody actually owns."
   },
   {
-   "t": "table",
-   "caption": "What changes in the precision agriculture & agronomy workflow",
-   "headers": [
-    "Workflow",
-    "Before",
-    "After this capability lands"
+   "t": "arch",
+   "title": "The operating loop — Applied AI & GenAI × Precision Agriculture & Agronomy",
+   "lanes": [
+    "Estate",
+    "Ingest",
+    "Knowledge spine",
+    "Task services",
+    "Governance",
+    "Users"
    ],
-   "rows": [
-    [
-     "Variable-rate input planning",
-     "manual checks, batch updates, unverifiable timing",
-     "instrumented path with gates and evidence"
-    ],
-    [
-     "Yield/quality forecasting",
-     "queue-driven, exceptions found late",
-     "decision-ready, exceptions surfaced in-flight"
-    ],
-    [
-     "Harvest logistics",
-     "reconciled by hand",
-     "certified once, reused everywhere"
-    ]
-   ]
+   "nodes": [
+    {
+     "id": "src0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "src1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "src2",
+     "lane": 0,
+     "label": "KYC / AML case manager",
+     "hot": false
+    },
+    {
+     "id": "in3",
+     "lane": 1,
+     "label": "Event & batch intake",
+     "hot": false
+    },
+    {
+     "id": "in4",
+     "lane": 1,
+     "label": "PII minimization",
+     "hot": false
+    },
+    {
+     "id": "ks5",
+     "lane": 2,
+     "label": "Decision hub (policy + models)",
+     "hot": true
+    },
+    {
+     "id": "ks6",
+     "lane": 2,
+     "label": "Citations & provenance",
+     "hot": false
+    },
+    {
+     "id": "ts7",
+     "lane": 3,
+     "label": "Classify & extract",
+     "hot": false
+    },
+    {
+     "id": "ts8",
+     "lane": 3,
+     "label": "Summarize & draft",
+     "hot": false
+    },
+    {
+     "id": "gv9",
+     "lane": 4,
+     "label": "Eval gates",
+     "hot": false
+    },
+    {
+     "id": "gv10",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "us11",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "us12",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "src0",
+     "b": "in3"
+    },
+    {
+     "a": "src1",
+     "b": "in3"
+    },
+    {
+     "a": "src2",
+     "b": "in4"
+    },
+    {
+     "a": "in3",
+     "b": "ks5"
+    },
+    {
+     "a": "in4",
+     "b": "ks5"
+    },
+    {
+     "a": "ks5",
+     "b": "ts7"
+    },
+    {
+     "a": "ks5",
+     "b": "ts8"
+    },
+    {
+     "a": "ts7",
+     "b": "gv9"
+    },
+    {
+     "a": "gv9",
+     "b": "gv10"
+    },
+    {
+     "a": "ts7",
+     "b": "us11"
+    },
+    {
+     "a": "ts8",
+     "b": "us12"
+    }
+   ],
+   "note": "The stages are the workflow names above; nothing on this diagram is decorative."
   },
   {
    "t": "h2",
@@ -137,7 +250,7 @@
    "x": "If Applied AI & GenAI for Precision Agriculture & Agronomy is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
   }
  ],
- "words": 518,
+ "words": 475,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Agriculture & Food Systems",

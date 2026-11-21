@@ -57,30 +57,133 @@
    "x": "In Health Insurance & Benefits, the pattern is policy-grounded decisions — coverage logic citing medical policy passages with provenance. Appeals overturn rate down sits on top as the measured result, tracked from the signed baseline onward. Around it, the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use. That is the engineering behind Health Insurance & Benefits."
   },
   {
-   "t": "table",
-   "caption": "What changes in the health insurance & benefits workflow",
-   "headers": [
-    "Workflow",
-    "Before",
-    "After this capability lands"
+   "t": "arch",
+   "title": "The governed path, end to end — Applied AI & GenAI × Health Insurance & Benefits",
+   "lanes": [
+    "Signals",
+    "Fabric",
+    "Models",
+    "Decision API",
+    "Audit",
+    "Products"
    ],
-   "rows": [
-    [
-     "Prior authorization",
-     "manual checks, batch updates, unverifiable timing",
-     "instrumented path with gates and evidence"
-    ],
-    [
-     "Claims coding integrity",
-     "queue-driven, exceptions found late",
-     "decision-ready, exceptions surfaced in-flight"
-    ],
-    [
-     "Quality/HEDIS reporting",
-     "reconciled by hand",
-     "certified once, reused everywhere"
-    ]
-   ]
+   "nodes": [
+    {
+     "id": "sg0",
+     "lane": 0,
+     "label": "Policy admin system",
+     "hot": false
+    },
+    {
+     "id": "sg1",
+     "lane": 0,
+     "label": "Claims document intake",
+     "hot": false
+    },
+    {
+     "id": "fb2",
+     "lane": 1,
+     "label": "Feature store (online/offline)",
+     "hot": true
+    },
+    {
+     "id": "fb3",
+     "lane": 1,
+     "label": "Vector & graph indexes",
+     "hot": false
+    },
+    {
+     "id": "mo4",
+     "lane": 2,
+     "label": "Domain models",
+     "hot": false
+    },
+    {
+     "id": "mo5",
+     "lane": 2,
+     "label": "Foundation adapters",
+     "hot": false
+    },
+    {
+     "id": "da6",
+     "lane": 3,
+     "label": "Decision API",
+     "hot": true
+    },
+    {
+     "id": "da7",
+     "lane": 3,
+     "label": "Champion / challenger",
+     "hot": false
+    },
+    {
+     "id": "au8",
+     "lane": 4,
+     "label": "Decision replay",
+     "hot": false
+    },
+    {
+     "id": "au9",
+     "lane": 4,
+     "label": "Actuarial control pack",
+     "hot": false
+    },
+    {
+     "id": "pr10",
+     "lane": 5,
+     "label": "Underwriting workbench",
+     "hot": false
+    },
+    {
+     "id": "pr11",
+     "lane": 5,
+     "label": "Claims adjudication",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "sg0",
+     "b": "fb2"
+    },
+    {
+     "a": "sg1",
+     "b": "fb3"
+    },
+    {
+     "a": "fb2",
+     "b": "mo4"
+    },
+    {
+     "a": "fb3",
+     "b": "mo5"
+    },
+    {
+     "a": "mo4",
+     "b": "da6"
+    },
+    {
+     "a": "mo5",
+     "b": "da7"
+    },
+    {
+     "a": "da6",
+     "b": "au8"
+    },
+    {
+     "a": "da7",
+     "b": "au9"
+    },
+    {
+     "a": "da6",
+     "b": "pr10"
+    },
+    {
+     "a": "da7",
+     "b": "pr11"
+    }
+   ],
+   "note": "The path your operators would actually recognize."
   },
   {
    "t": "h2",
@@ -137,7 +240,7 @@
    "x": "Start with the diagnostic, not the contract: Applied AI & GenAI for Health Insurance & Benefits baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 578,
+ "words": 535,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Insurance & Risk",

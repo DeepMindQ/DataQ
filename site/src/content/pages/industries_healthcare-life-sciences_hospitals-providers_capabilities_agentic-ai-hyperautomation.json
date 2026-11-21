@@ -57,14 +57,131 @@
    "x": "In Hospitals & Provider Networks, the pattern is prior-auth agent — criteria mapped to chart evidence; submissions assembled. Turnaround down 60% sits on top as the measured result, tracked from the signed baseline onward. Around it, orchestration is the discipline — dozens of small automations running as one auditable workforce, with escalations designed rather than improvised."
   },
   {
-   "t": "diagram",
-   "kind": "orchestration-loop",
-   "title": "The flow your team would run — Hospitals & Provider Networks, Agentic AI & Hyperautomation",
-   "labels": [
-    "Clinical documentation",
-    "Prior-auth agent",
-    "Prior authorization",
-    "replay log"
+   "t": "arch",
+   "title": "The flow your team would run — Agentic AI & Hyperautomation × Hospitals & Provider Networks",
+   "lanes": [
+    "Queues",
+    "Orchestrator",
+    "Digital workers",
+    "Evidence",
+    "Exceptions",
+    "Estates"
+   ],
+   "nodes": [
+    {
+     "id": "qu0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "qu1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "or2",
+     "lane": 1,
+     "label": "Durable orchestration",
+     "hot": true
+    },
+    {
+     "id": "or3",
+     "lane": 1,
+     "label": "SLA timers",
+     "hot": false
+    },
+    {
+     "id": "dw4",
+     "lane": 2,
+     "label": "Document workers",
+     "hot": false
+    },
+    {
+     "id": "dw5",
+     "lane": 2,
+     "label": "API workers",
+     "hot": true
+    },
+    {
+     "id": "ev6",
+     "lane": 3,
+     "label": "Replay log",
+     "hot": false
+    },
+    {
+     "id": "ev7",
+     "lane": 3,
+     "label": "Cost accounting",
+     "hot": false
+    },
+    {
+     "id": "ex8",
+     "lane": 4,
+     "label": "Exception desk",
+     "hot": false
+    },
+    {
+     "id": "ex9",
+     "lane": 4,
+     "label": "Root-cause loop",
+     "hot": false
+    },
+    {
+     "id": "es10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "es11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "qu0",
+     "b": "or2"
+    },
+    {
+     "a": "qu1",
+     "b": "or2"
+    },
+    {
+     "a": "or2",
+     "b": "dw4"
+    },
+    {
+     "a": "or3",
+     "b": "dw5"
+    },
+    {
+     "a": "dw4",
+     "b": "ev6"
+    },
+    {
+     "a": "dw5",
+     "b": "ev7"
+    },
+    {
+     "a": "dw4",
+     "b": "ex8"
+    },
+    {
+     "a": "ex8",
+     "b": "ex9"
+    },
+    {
+     "a": "dw5",
+     "b": "es10"
+    },
+    {
+     "a": "ev6",
+     "b": "es11"
+    }
    ],
    "note": "Hospitals & Provider Networks, drawn as it runs after the build."
   },
@@ -97,7 +214,7 @@
    "x": "Start with the diagnostic, not the contract: Agentic AI & Hyperautomation for Hospitals & Provider Networks baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 488,
+ "words": 473,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Healthcare & Life Sciences",

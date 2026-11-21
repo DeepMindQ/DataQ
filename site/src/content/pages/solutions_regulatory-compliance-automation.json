@@ -61,16 +61,104 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "The governed path, end to end — Regulatory Compliance Automation",
-   "labels": [
-    "Unified control register",
-    "Continuous testing",
-    "Evidence automation",
-    "Regime packs"
+   "t": "arch",
+   "title": "Regulatory Compliance Automation — solution topology",
+   "lanes": [
+    "Estate",
+    "Composition core",
+    "Platform rails",
+    "Controls",
+    "Consumers"
    ],
-   "note": "The path your operators would actually recognize."
+   "nodes": [
+    {
+     "id": "estate",
+     "lane": 0,
+     "label": "Client estate",
+     "hot": false
+    },
+    {
+     "id": "c0",
+     "lane": 1,
+     "label": "Unified control register",
+     "hot": true
+    },
+    {
+     "id": "c1",
+     "lane": 1,
+     "label": "Continuous testing",
+     "hot": false
+    },
+    {
+     "id": "c2",
+     "lane": 1,
+     "label": "Evidence automation",
+     "hot": false
+    },
+    {
+     "id": "c3",
+     "lane": 1,
+     "label": "Regime packs",
+     "hot": false
+    },
+    {
+     "id": "p0",
+     "lane": 2,
+     "label": "Dataq Compass",
+     "hot": true
+    },
+    {
+     "id": "p1",
+     "lane": 2,
+     "label": "Dataq Sentinel",
+     "hot": true
+    },
+    {
+     "id": "ctl",
+     "lane": 3,
+     "label": "Control & evidence pack"
+    },
+    {
+     "id": "bus",
+     "lane": 4,
+     "label": "Banking & Financial Services"
+    }
+   ],
+   "edges": [
+    {
+     "a": "estate",
+     "b": "c0"
+    },
+    {
+     "a": "estate",
+     "b": "c1"
+    },
+    {
+     "a": "estate",
+     "b": "c2"
+    },
+    {
+     "a": "estate",
+     "b": "c3"
+    },
+    {
+     "a": "c0",
+     "b": "p0"
+    },
+    {
+     "a": "c1",
+     "b": "p1"
+    },
+    {
+     "a": "p0",
+     "b": "ctl"
+    },
+    {
+     "a": "ctl",
+     "b": "bus"
+    }
+   ],
+   "note": "Components and platforms are the named pieces of this solution, drawn in their architectural position."
   },
   {
    "t": "h2",
@@ -118,7 +206,7 @@
    "x": "A value assessment prices the delta in your estate before anything is signed: Regulatory Compliance Automation, measured against your baseline, in two weeks."
   }
  ],
- "words": 399,
+ "words": 389,
  "section": "Solutions",
  "l1": "Solutions",
  "l2": "Risk & Resilience",

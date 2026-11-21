@@ -57,14 +57,141 @@
    "x": "In Advertising & MarTech, the pattern is first-party identity spine — consent-scoped identity graphs with clean-room activation. Match rates sustained sits on top as the measured result, tracked from the signed baseline onward. Around it, underneath it sits the data spine: contracts, lineage and freshness SLAs that make the number trustworthy before anyone models it."
   },
   {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "The flow your team would run — Advertising & MarTech, Data & Lakehouse",
-   "labels": [
-    "Identity resolution",
-    "First-party identity spine",
-    "Audience activation",
-    "gate evidence"
+   "t": "arch",
+   "title": "The flow your team would run — Data & Lakehouse × Advertising & MarTech",
+   "lanes": [
+    "Source estates",
+    "Streaming ingest",
+    "Lakehouse core",
+    "Certified products",
+    "Serving",
+    "Decisions"
+   ],
+   "nodes": [
+    {
+     "id": "se0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "se1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "se2",
+     "lane": 0,
+     "label": "KYC / AML case manager",
+     "hot": false
+    },
+    {
+     "id": "si3",
+     "lane": 1,
+     "label": "CDC & event streams",
+     "hot": true
+    },
+    {
+     "id": "si4",
+     "lane": 1,
+     "label": "Batch pipelines",
+     "hot": false
+    },
+    {
+     "id": "lc5",
+     "lane": 2,
+     "label": "Bronze → silver → gold",
+     "hot": true
+    },
+    {
+     "id": "lc6",
+     "lane": 2,
+     "label": "Data contracts",
+     "hot": false
+    },
+    {
+     "id": "cp7",
+     "lane": 3,
+     "label": "Metric definitions",
+     "hot": false
+    },
+    {
+     "id": "cp8",
+     "lane": 3,
+     "label": "Data products",
+     "hot": false
+    },
+    {
+     "id": "sv9",
+     "lane": 4,
+     "label": "BI & semantic layer",
+     "hot": false
+    },
+    {
+     "id": "sv10",
+     "lane": 4,
+     "label": "Feature serving",
+     "hot": false
+    },
+    {
+     "id": "de11",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "de12",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "se0",
+     "b": "si3"
+    },
+    {
+     "a": "se1",
+     "b": "si3"
+    },
+    {
+     "a": "se2",
+     "b": "si4"
+    },
+    {
+     "a": "si3",
+     "b": "lc5"
+    },
+    {
+     "a": "si4",
+     "b": "lc5"
+    },
+    {
+     "a": "lc5",
+     "b": "cp7"
+    },
+    {
+     "a": "lc6",
+     "b": "cp8"
+    },
+    {
+     "a": "cp7",
+     "b": "sv9"
+    },
+    {
+     "a": "cp8",
+     "b": "sv10"
+    },
+    {
+     "a": "sv9",
+     "b": "de11"
+    },
+    {
+     "a": "sv10",
+     "b": "de12"
+    }
    ],
    "note": "The stages are the workflow names above; nothing on this diagram is decorative."
   },
@@ -97,7 +224,7 @@
    "x": "A value assessment prices the delta in your estate before anything is signed: Data & Lakehouse for Advertising & MarTech, measured against your baseline, in two weeks."
   }
  ],
- "words": 445,
+ "words": 432,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Telecom, Media & Entertainment",

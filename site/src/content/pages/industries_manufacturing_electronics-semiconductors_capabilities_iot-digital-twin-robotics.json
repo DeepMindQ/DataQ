@@ -57,14 +57,131 @@
    "x": "In Electronics & Semiconductors, the pattern is tool health sensing — tool telemetry into predictive maintenance. Tool-down down 25-40% sits on top as the measured result, tracked from the signed baseline onward. Around it, the work spans the stack: devices and gateways in the field, perception models in the middle, actuation plans on the board."
   },
   {
-   "t": "diagram",
-   "kind": "twin-loop",
-   "title": "From signal to decision to evidence — Electronics & Semiconductors, IoT, Twin & Robotics",
-   "labels": [
-    "Yield analytics/excursion RCA",
-    "Tool health sensing",
-    "Defect classification",
-    "replay log"
+   "t": "arch",
+   "title": "From signal to decision to evidence — IoT, Twin & Robotics × Electronics & Semiconductors",
+   "lanes": [
+    "Robots & sensors",
+    "Real-time layer",
+    "Perception stack",
+    "Orchestration",
+    "Safety",
+    "Floor"
+   ],
+   "nodes": [
+    {
+     "id": "rs0",
+     "lane": 0,
+     "label": "MES & line historians",
+     "hot": false
+    },
+    {
+     "id": "rs1",
+     "lane": 0,
+     "label": "AMR / robot fleets",
+     "hot": false
+    },
+    {
+     "id": "rtl2",
+     "lane": 1,
+     "label": "Sub-second control bus",
+     "hot": true
+    },
+    {
+     "id": "rtl3",
+     "lane": 1,
+     "label": "Time sync",
+     "hot": false
+    },
+    {
+     "id": "pst4",
+     "lane": 2,
+     "label": "Vision inspection",
+     "hot": false
+    },
+    {
+     "id": "pst5",
+     "lane": 2,
+     "label": "Localization",
+     "hot": false
+    },
+    {
+     "id": "orc6",
+     "lane": 3,
+     "label": "Task orchestration",
+     "hot": true
+    },
+    {
+     "id": "orc7",
+     "lane": 3,
+     "label": "Fleet scheduler",
+     "hot": false
+    },
+    {
+     "id": "sf8",
+     "lane": 4,
+     "label": "Human-in-the-loop stops",
+     "hot": false
+    },
+    {
+     "id": "sf9",
+     "lane": 4,
+     "label": "Safety cases",
+     "hot": false
+    },
+    {
+     "id": "fl10",
+     "lane": 5,
+     "label": "Production scheduling",
+     "hot": false
+    },
+    {
+     "id": "fl11",
+     "lane": 5,
+     "label": "Maintenance planner",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "rs0",
+     "b": "rtl2"
+    },
+    {
+     "a": "rs1",
+     "b": "rtl3"
+    },
+    {
+     "a": "rtl2",
+     "b": "pst4"
+    },
+    {
+     "a": "rtl3",
+     "b": "pst5"
+    },
+    {
+     "a": "pst4",
+     "b": "orc6"
+    },
+    {
+     "a": "pst5",
+     "b": "orc7"
+    },
+    {
+     "a": "orc6",
+     "b": "sf8"
+    },
+    {
+     "a": "sf8",
+     "b": "sf9"
+    },
+    {
+     "a": "orc7",
+     "b": "fl10"
+    },
+    {
+     "a": "sf9",
+     "b": "fl11"
+    }
    ],
    "note": "Electronics & Semiconductors, drawn as it runs after the build."
   },
@@ -97,7 +214,7 @@
    "x": "Bring IoT, Twin & Robotics for Electronics & Semiconductors to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
   }
  ],
- "words": 476,
+ "words": 462,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Manufacturing & Industrial",

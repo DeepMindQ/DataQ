@@ -40,8 +40,143 @@
    "x": "We retrofitted sensor fabric on live lines (OPC UA/Sparkplug with data contracts), deployed vision inspection closing loops into andon/MES, and gave planners a Swarm scheduling assistant proposing changeover-aware sequences. IEC 62443 zoning preceded instrumentation — security first, then telemetry, then decisions on Forge."
   },
   {
+   "t": "arch",
+   "title": "What went into production — A global automotive OEM",
+   "lanes": [
+    "Line systems",
+    "Edge layer",
+    "Vision & models",
+    "Quality decisions",
+    "Controls",
+    "Plant ops"
+   ],
+   "nodes": [
+    {
+     "id": "ls0",
+     "lane": 0,
+     "label": "Line historians",
+     "hot": true
+    },
+    {
+     "id": "ls1",
+     "lane": 0,
+     "label": "PLCs & SCADA",
+     "hot": false
+    },
+    {
+     "id": "ed0",
+     "lane": 1,
+     "label": "Edge inference gateways",
+     "hot": true
+    },
+    {
+     "id": "vm0",
+     "lane": 2,
+     "label": "Defect-detection vision",
+     "hot": true
+    },
+    {
+     "id": "vm1",
+     "lane": 2,
+     "label": "SPC models",
+     "hot": false
+    },
+    {
+     "id": "qd0",
+     "lane": 3,
+     "label": "Hold / release decisioning",
+     "hot": true
+    },
+    {
+     "id": "qd1",
+     "lane": 3,
+     "label": "Root-cause analytics",
+     "hot": false
+    },
+    {
+     "id": "ctl0",
+     "lane": 4,
+     "label": "Change-control board",
+     "hot": false
+    },
+    {
+     "id": "ctl1",
+     "lane": 4,
+     "label": "Traceability log",
+     "hot": false
+    },
+    {
+     "id": "po0",
+     "lane": 5,
+     "label": "Plant dashboards",
+     "hot": false
+    },
+    {
+     "id": "po1",
+     "lane": 5,
+     "label": "Quality lab",
+     "hot": false
+    }
+   ],
+   "edges": [],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
    "t": "h2",
    "x": "The measured delta"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A global automotive OEM",
+   "kpis": [
+    {
+     "label": "OEE",
+     "value": "+7.2 points across instrumented plants",
+     "delta": "",
+     "dir": "flat"
+    },
+    {
+     "label": "Defect escape rate",
+     "value": "-71%",
+     "delta": "down 71% on instrumented stations",
+     "dir": "down"
+    },
+    {
+     "label": "Changeover losses",
+     "value": "-30%",
+     "delta": "down 30%",
+     "dir": "down"
+    },
+    {
+     "label": "OT segmentation",
+     "value": "complete with purple-team validation",
+     "delta": "",
+     "dir": "flat"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed — oee locked with finance",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 08",
+     "msg": "Working slice live on the client estate",
+     "tag": "build"
+    },
+    {
+     "t": "wk 12",
+     "msg": "Gate review passed against the signed baseline",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Evidence pack handed to audit; runbooks with named owners",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
   },
   {
    "t": "table",

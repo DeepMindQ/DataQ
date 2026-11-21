@@ -45,14 +45,131 @@
    "x": "In Insurance & Risk, the working pattern is policy admin modernization: strangler decomposition of core wrappers with parallel-run equivalence testing. Product change lead time cut in half is the measured outcome the gate checks. Everything upstream of it — data, identity, access — is built to keep that pattern honest."
   },
   {
-   "t": "diagram",
-   "kind": "edge-topology",
-   "title": "The governed path, end to end — Insurance & Risk, Cloud, Edge & Platform",
-   "labels": [
-    "Legacy policy admin drag",
-    "Legacy policy admin drag",
-    "Cloud, Edge & Platform decision layer",
-    "value ledger"
+   "t": "arch",
+   "title": "The governed path, end to end — Cloud, Edge & Platform × Insurance & Risk",
+   "lanes": [
+    "Workloads",
+    "Landing zones",
+    "Runtime fabric",
+    "Edge & capacity",
+    "SRE & FinOps",
+    "Teams"
+   ],
+   "nodes": [
+    {
+     "id": "wl0",
+     "lane": 0,
+     "label": "Policy admin system",
+     "hot": false
+    },
+    {
+     "id": "wl1",
+     "lane": 0,
+     "label": "New services",
+     "hot": false
+    },
+    {
+     "id": "lz2",
+     "lane": 1,
+     "label": "Guardrailed landing zones",
+     "hot": true
+    },
+    {
+     "id": "lz3",
+     "lane": 1,
+     "label": "Policy-as-code",
+     "hot": false
+    },
+    {
+     "id": "rf4",
+     "lane": 2,
+     "label": "Kubernetes platforms",
+     "hot": true
+    },
+    {
+     "id": "rf5",
+     "lane": 2,
+     "label": "Serverless runtimes",
+     "hot": false
+    },
+    {
+     "id": "ec6",
+     "lane": 3,
+     "label": "Edge compute & CDN",
+     "hot": false
+    },
+    {
+     "id": "ec7",
+     "lane": 3,
+     "label": "Capacity planners",
+     "hot": false
+    },
+    {
+     "id": "sf8",
+     "lane": 4,
+     "label": "SLO dashboards",
+     "hot": false
+    },
+    {
+     "id": "sf9",
+     "lane": 4,
+     "label": "Unit-cost telemetry",
+     "hot": false
+    },
+    {
+     "id": "tm10",
+     "lane": 5,
+     "label": "Underwriting workbench",
+     "hot": false
+    },
+    {
+     "id": "tm11",
+     "lane": 5,
+     "label": "Claims adjudication",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "wl0",
+     "b": "lz2"
+    },
+    {
+     "a": "wl1",
+     "b": "lz3"
+    },
+    {
+     "a": "lz2",
+     "b": "rf4"
+    },
+    {
+     "a": "lz3",
+     "b": "rf5"
+    },
+    {
+     "a": "rf4",
+     "b": "ec6"
+    },
+    {
+     "a": "rf5",
+     "b": "ec7"
+    },
+    {
+     "a": "rf4",
+     "b": "sf8"
+    },
+    {
+     "a": "rf5",
+     "b": "sf9"
+    },
+    {
+     "a": "sf8",
+     "b": "tm10"
+    },
+    {
+     "a": "ec6",
+     "b": "tm11"
+    }
    ],
    "note": "The path your operators would actually recognize."
   },
@@ -114,7 +231,7 @@
    "x": "A value assessment prices the delta in your estate before anything is signed: Cloud, Edge & Platform in Insurance & Risk, measured against your baseline, in two weeks."
   }
  ],
- "words": 562,
+ "words": 548,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Insurance & Risk",

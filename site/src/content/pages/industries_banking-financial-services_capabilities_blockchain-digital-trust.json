@@ -45,14 +45,131 @@
    "x": "The build starts from one governed path: interbank reconciliation network in Banking & Financial Services, where permissioned DLT with shared custody-event evidence replacing file exchange. Reconciliation effort down 70% is the measured outcome the gate checks."
   },
   {
-   "t": "diagram",
-   "kind": "ledger-chain",
-   "title": "How the work flows once built — Banking & Financial Services, Blockchain & Digital Trust",
-   "labels": [
-    "Settlement and reconciliation friction",
-    "Settlement and reconciliation friction",
-    "Blockchain & Digital Trust decision layer",
-    "replay log"
+   "t": "arch",
+   "title": "How the work flows once built — Blockchain & Digital Trust × Banking & Financial Services",
+   "lanes": [
+    "Event sources",
+    "Signing layer",
+    "Ledger core",
+    "Provenance",
+    "Disclosure",
+    "Participants"
+   ],
+   "nodes": [
+    {
+     "id": "evs0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "evs1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "sg2",
+     "lane": 1,
+     "label": "Signed events & schemas",
+     "hot": true
+    },
+    {
+     "id": "sg3",
+     "lane": 1,
+     "label": "Stream validation",
+     "hot": false
+    },
+    {
+     "id": "lc4",
+     "lane": 2,
+     "label": "Permissioned consensus",
+     "hot": true
+    },
+    {
+     "id": "lc5",
+     "lane": 2,
+     "label": "DAG ordering",
+     "hot": false
+    },
+    {
+     "id": "pg6",
+     "lane": 3,
+     "label": "Provenance graph",
+     "hot": false
+    },
+    {
+     "id": "pg7",
+     "lane": 3,
+     "label": "Attribution & lineage",
+     "hot": false
+    },
+    {
+     "id": "di8",
+     "lane": 4,
+     "label": "Selective disclosure",
+     "hot": false
+    },
+    {
+     "id": "di9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "pt10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "pt11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "evs0",
+     "b": "sg2"
+    },
+    {
+     "a": "evs1",
+     "b": "sg3"
+    },
+    {
+     "a": "sg2",
+     "b": "lc4"
+    },
+    {
+     "a": "sg3",
+     "b": "lc5"
+    },
+    {
+     "a": "lc4",
+     "b": "pg6"
+    },
+    {
+     "a": "lc5",
+     "b": "pg7"
+    },
+    {
+     "a": "pg6",
+     "b": "di8"
+    },
+    {
+     "a": "di8",
+     "b": "di9"
+    },
+    {
+     "a": "pg7",
+     "b": "pt10"
+    },
+    {
+     "a": "di9",
+     "b": "pt11"
+    }
    ],
    "note": "Named stages, not generic boxes — this is the Banking & Financial Services path as built."
   },
@@ -114,7 +231,7 @@
    "x": "Talk to the team that runs Blockchain & Digital Trust in Banking & Financial Services in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 594,
+ "words": 579,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Banking & Financial Services",

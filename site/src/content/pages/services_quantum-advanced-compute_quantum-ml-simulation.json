@@ -65,16 +65,133 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "optimization-funnel",
-   "title": "From signal to decision to evidence — Quantum Machine Learning & Simulation",
-   "labels": [
-    "Pilot design",
-    "QML experimentation",
-    "Simulation benchmarking",
-    "Verdict discipline"
+   "t": "arch",
+   "title": "Reference architecture — Quantum Machine Learning & Simulation",
+   "lanes": [
+    "Domains",
+    "Encodings",
+    "Compute",
+    "Validation",
+    "Explanation",
+    "Decisions"
    ],
-   "note": "The stages are the workflow names above; nothing on this diagram is decorative."
+   "nodes": [
+    {
+     "id": "dm0",
+     "lane": 0,
+     "label": "EHR / EMR records",
+     "hot": false
+    },
+    {
+     "id": "dm1",
+     "lane": 0,
+     "label": "Claims & remittance feeds",
+     "hot": false
+    },
+    {
+     "id": "en2",
+     "lane": 1,
+     "label": "Hilbert-space encodings",
+     "hot": false
+    },
+    {
+     "id": "en3",
+     "lane": 1,
+     "label": "Quantum Machine Learning & Simulation",
+     "hot": true
+    },
+    {
+     "id": "cp4",
+     "lane": 2,
+     "label": "CPU/GPU/accelerator mix",
+     "hot": true
+    },
+    {
+     "id": "cp5",
+     "lane": 2,
+     "label": "Quantum services (managed)",
+     "hot": false
+    },
+    {
+     "id": "vl6",
+     "lane": 3,
+     "label": "Statistical validation",
+     "hot": false
+    },
+    {
+     "id": "vl7",
+     "lane": 3,
+     "label": "Cross-method comparison",
+     "hot": false
+    },
+    {
+     "id": "ex8",
+     "lane": 4,
+     "label": "Explain reports",
+     "hot": false
+    },
+    {
+     "id": "ex9",
+     "lane": 4,
+     "label": "Sensitivity analysis",
+     "hot": false
+    },
+    {
+     "id": "dc10",
+     "lane": 5,
+     "label": "Care-management console",
+     "hot": false
+    },
+    {
+     "id": "dc11",
+     "lane": 5,
+     "label": "Prior-auth queue",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "dm0",
+     "b": "en2"
+    },
+    {
+     "a": "dm1",
+     "b": "en3"
+    },
+    {
+     "a": "en2",
+     "b": "cp4"
+    },
+    {
+     "a": "en3",
+     "b": "cp5"
+    },
+    {
+     "a": "cp4",
+     "b": "vl6"
+    },
+    {
+     "a": "cp5",
+     "b": "vl7"
+    },
+    {
+     "a": "vl6",
+     "b": "ex8"
+    },
+    {
+     "a": "vl7",
+     "b": "ex9"
+    },
+    {
+     "a": "ex8",
+     "b": "dc10"
+    },
+    {
+     "a": "ex9",
+     "b": "dc11"
+    }
+   ],
+   "note": "Topology inherited from the Quantum & Advanced Compute tower; the highlighted core is this service's build."
   },
   {
    "t": "h2",
@@ -139,7 +256,7 @@
    "x": "Start with the diagnostic, not the contract: Quantum Machine Learning & Simulation baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 510,
+ "words": 498,
  "section": "Services",
  "l1": "Services",
  "l2": "Quantum & Advanced Compute",

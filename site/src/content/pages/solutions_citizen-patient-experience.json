@@ -61,16 +61,104 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "How the work flows once built — Citizen & Patient Experience Orchestration",
-   "labels": [
-    "Journey redesign",
-    "Shared rails",
-    "Event-fabric orchestration",
-    "Experience instrumentation"
+   "t": "arch",
+   "title": "Citizen & Patient Experience Orchestration — solution topology",
+   "lanes": [
+    "Estate",
+    "Composition core",
+    "Platform rails",
+    "Controls",
+    "Consumers"
    ],
-   "note": "Named stages, not generic boxes — this is the Citizen & Patient Experience Orchestration path as built."
+   "nodes": [
+    {
+     "id": "estate",
+     "lane": 0,
+     "label": "Client estate",
+     "hot": false
+    },
+    {
+     "id": "c0",
+     "lane": 1,
+     "label": "Journey redesign",
+     "hot": true
+    },
+    {
+     "id": "c1",
+     "lane": 1,
+     "label": "Shared rails",
+     "hot": false
+    },
+    {
+     "id": "c2",
+     "lane": 1,
+     "label": "Event-fabric orchestration",
+     "hot": false
+    },
+    {
+     "id": "c3",
+     "lane": 1,
+     "label": "Experience instrumentation",
+     "hot": false
+    },
+    {
+     "id": "p0",
+     "lane": 2,
+     "label": "Dataq Swarm",
+     "hot": true
+    },
+    {
+     "id": "p1",
+     "lane": 2,
+     "label": "Dataq Nexus",
+     "hot": true
+    },
+    {
+     "id": "ctl",
+     "lane": 3,
+     "label": "Control & evidence pack"
+    },
+    {
+     "id": "bus",
+     "lane": 4,
+     "label": "Public Sector & Government"
+    }
+   ],
+   "edges": [
+    {
+     "a": "estate",
+     "b": "c0"
+    },
+    {
+     "a": "estate",
+     "b": "c1"
+    },
+    {
+     "a": "estate",
+     "b": "c2"
+    },
+    {
+     "a": "estate",
+     "b": "c3"
+    },
+    {
+     "a": "c0",
+     "b": "p0"
+    },
+    {
+     "a": "c1",
+     "b": "p1"
+    },
+    {
+     "a": "p0",
+     "b": "ctl"
+    },
+    {
+     "a": "ctl",
+     "b": "bus"
+    }
+   ],
+   "note": "Components and platforms are the named pieces of this solution, drawn in their architectural position."
   },
   {
    "t": "h2",
@@ -118,7 +206,7 @@
    "x": "The next step is small and real: one working session on Citizen & Patient Experience Orchestration, your data, and a written feasibility read you can circulate."
   }
  ],
- "words": 366,
+ "words": 354,
  "section": "Solutions",
  "l1": "Solutions",
  "l2": "Workforce & Experience",

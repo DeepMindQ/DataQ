@@ -57,14 +57,131 @@
    "x": "In Care Management & Population Health, the pattern is integration spine — event-driven care workflows replacing file exports. Handoffs reliable sits on top as the measured result, tracked from the signed baseline onward. Around it, we engineer the estate the workload runs on — landing zones, edge capacity, SRE discipline — so scaling never becomes the incident."
   },
   {
-   "t": "diagram",
-   "kind": "edge-topology",
-   "title": "From signal to decision to evidence — Care Management & Population Health, Cloud, Edge & Platform",
-   "labels": [
-    "Risk stratification",
-    "Integration spine",
-    "Care outreach and scheduling",
-    "owner-signed gates"
+   "t": "arch",
+   "title": "From signal to decision to evidence — Cloud, Edge & Platform × Care Management & Population Health",
+   "lanes": [
+    "Devices",
+    "Edge layer",
+    "Regional core",
+    "Data plane",
+    "Ops",
+    "Experience"
+   ],
+   "nodes": [
+    {
+     "id": "dv0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "dv1",
+     "lane": 0,
+     "label": "OT & IoT fleets",
+     "hot": false
+    },
+    {
+     "id": "ed2",
+     "lane": 1,
+     "label": "Edge gateways",
+     "hot": true
+    },
+    {
+     "id": "ed3",
+     "lane": 1,
+     "label": "Local inference",
+     "hot": false
+    },
+    {
+     "id": "rc4",
+     "lane": 2,
+     "label": "Regional clusters",
+     "hot": false
+    },
+    {
+     "id": "rc5",
+     "lane": 2,
+     "label": "Global control plane",
+     "hot": false
+    },
+    {
+     "id": "dp6",
+     "lane": 3,
+     "label": "Streaming bus",
+     "hot": false
+    },
+    {
+     "id": "dp7",
+     "lane": 3,
+     "label": "Cold & warm tiers",
+     "hot": false
+    },
+    {
+     "id": "op8",
+     "lane": 4,
+     "label": "Chaos drills",
+     "hot": false
+    },
+    {
+     "id": "op9",
+     "lane": 4,
+     "label": "Cost guardrails",
+     "hot": false
+    },
+    {
+     "id": "ex10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "ex11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "dv0",
+     "b": "ed2"
+    },
+    {
+     "a": "dv1",
+     "b": "ed3"
+    },
+    {
+     "a": "ed2",
+     "b": "rc4"
+    },
+    {
+     "a": "ed3",
+     "b": "rc5"
+    },
+    {
+     "a": "rc4",
+     "b": "dp6"
+    },
+    {
+     "a": "rc5",
+     "b": "dp7"
+    },
+    {
+     "a": "ed2",
+     "b": "op8"
+    },
+    {
+     "a": "op8",
+     "b": "op9"
+    },
+    {
+     "a": "dp6",
+     "b": "ex10"
+    },
+    {
+     "a": "dp7",
+     "b": "ex11"
+    }
    ],
    "note": "Care Management & Population Health, drawn as it runs after the build."
   },
@@ -123,7 +240,7 @@
    "x": "The next step is small and real: one working session on Cloud, Edge & Platform for Care Management & Population Health, your data, and a written feasibility read you can circulate."
   }
  ],
- "words": 510,
+ "words": 494,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Healthcare & Life Sciences",

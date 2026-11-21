@@ -57,30 +57,123 @@
    "x": "In Defense & National Security, the pattern is assurance automation — continuous evidence mapped to accreditation schemes. Cycles compressed sits on top as the measured result, tracked from the signed baseline onward. Around it, the design assumes breach: blast radii contained, lateral movement priced, and detection tuned to the attacks your sector actually sees. Defense & National Security is where this discipline pays."
   },
   {
-   "t": "table",
-   "caption": "What changes in the defense & national security workflow",
-   "headers": [
-    "Workflow",
-    "Before",
-    "After this capability lands"
+   "t": "arch",
+   "title": "The operating loop — Cyber & Zero-Trust × Defense & National Security",
+   "lanes": [
+    "Users",
+    "Devices",
+    "Brokers",
+    "Workloads",
+    "Data",
+    "Auditors"
    ],
-   "rows": [
-    [
-     "Mission data fusion",
-     "manual checks, batch updates, unverifiable timing",
-     "instrumented path with gates and evidence"
-    ],
-    [
-     "Accreditation evidence",
-     "queue-driven, exceptions found late",
-     "decision-ready, exceptions surfaced in-flight"
-    ],
-    [
-     "PQ migration",
-     "reconciled by hand",
-     "certified once, reused everywhere"
-    ]
-   ]
+   "nodes": [
+    {
+     "id": "us0",
+     "lane": 0,
+     "label": "Phishing-resistant MFA",
+     "hot": false
+    },
+    {
+     "id": "us1",
+     "lane": 0,
+     "label": "SSO & lifecycle",
+     "hot": false
+    },
+    {
+     "id": "dv2",
+     "lane": 1,
+     "label": "Posture-checked endpoints",
+     "hot": false
+    },
+    {
+     "id": "dv3",
+     "lane": 1,
+     "label": "Case & registry systems",
+     "hot": false
+    },
+    {
+     "id": "br4",
+     "lane": 2,
+     "label": "Policy engine (deny·verify·sign)",
+     "hot": true
+    },
+    {
+     "id": "wl5",
+     "lane": 3,
+     "label": "Workload enforcement",
+     "hot": false
+    },
+    {
+     "id": "wl6",
+     "lane": 3,
+     "label": "Segmented access fabric",
+     "hot": false
+    },
+    {
+     "id": "dt7",
+     "lane": 4,
+     "label": "Classification-aware DLP",
+     "hot": true
+    },
+    {
+     "id": "dt8",
+     "lane": 4,
+     "label": "Field-level encryption",
+     "hot": false
+    },
+    {
+     "id": "au9",
+     "lane": 5,
+     "label": "Continuous audit export",
+     "hot": false
+    },
+    {
+     "id": "au10",
+     "lane": 5,
+     "label": "Algorithmic transparency log",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "us0",
+     "b": "br4"
+    },
+    {
+     "a": "dv2",
+     "b": "br4"
+    },
+    {
+     "a": "us1",
+     "b": "br4"
+    },
+    {
+     "a": "br4",
+     "b": "wl5"
+    },
+    {
+     "a": "br4",
+     "b": "wl6"
+    },
+    {
+     "a": "wl5",
+     "b": "dt7"
+    },
+    {
+     "a": "wl6",
+     "b": "dt8"
+    },
+    {
+     "a": "dt7",
+     "b": "au9"
+    },
+    {
+     "a": "dt8",
+     "b": "au10"
+    }
+   ],
+   "note": "Named stages, not generic boxes — this is the Defense & National Security path as built."
   },
   {
    "t": "h2",
@@ -111,7 +204,7 @@
    "x": "Talk to the team that runs Cyber & Zero-Trust for Defense & National Security in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 490,
+ "words": 447,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Public Sector & Government",

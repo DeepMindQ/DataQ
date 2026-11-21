@@ -57,30 +57,133 @@
    "x": "In Food Safety & Food Retail, the pattern is sourcing evidence — claim-bearing SKUs anchored. Claims proven sits on top as the measured result, tracked from the signed baseline onward. Around it, we put the record on rails — immutable event history, selective disclosure, and integrations your counterparties' auditors accept."
   },
   {
-   "t": "table",
-   "caption": "What changes in the food safety & food retail workflow",
-   "headers": [
-    "Workflow",
-    "Before",
-    "After this capability lands"
+   "t": "arch",
+   "title": "The flow your team would run — Blockchain & Digital Trust × Food Safety & Food Retail",
+   "lanes": [
+    "Counterparties",
+    "Contracts",
+    "Ledger",
+    "Settlement",
+    "Audit",
+    "Networks"
    ],
-   "rows": [
-    [
-     "Cold-chain management",
-     "manual checks, batch updates, unverifiable timing",
-     "instrumented path with gates and evidence"
-    ],
-    [
-     "Supplier verification",
-     "queue-driven, exceptions found late",
-     "decision-ready, exceptions surfaced in-flight"
-    ],
-    [
-     "Recall response",
-     "reconciled by hand",
-     "certified once, reused everywhere"
-    ]
-   ]
+   "nodes": [
+    {
+     "id": "cp0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "cp1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "ct2",
+     "lane": 1,
+     "label": "Smart-contract layer",
+     "hot": true
+    },
+    {
+     "id": "ct3",
+     "lane": 1,
+     "label": "Contract testing",
+     "hot": false
+    },
+    {
+     "id": "lg4",
+     "lane": 2,
+     "label": "Immutable event log",
+     "hot": true
+    },
+    {
+     "id": "lg5",
+     "lane": 2,
+     "label": "Byzantine tolerance",
+     "hot": false
+    },
+    {
+     "id": "st6",
+     "lane": 3,
+     "label": "Atomic settlement",
+     "hot": false
+    },
+    {
+     "id": "st7",
+     "lane": 3,
+     "label": "Netting engines",
+     "hot": false
+    },
+    {
+     "id": "au8",
+     "lane": 4,
+     "label": "Shared audit views",
+     "hot": false
+    },
+    {
+     "id": "au9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "nw10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "nw11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "cp0",
+     "b": "ct2"
+    },
+    {
+     "a": "cp1",
+     "b": "ct3"
+    },
+    {
+     "a": "ct2",
+     "b": "lg4"
+    },
+    {
+     "a": "ct3",
+     "b": "lg5"
+    },
+    {
+     "a": "lg4",
+     "b": "st6"
+    },
+    {
+     "a": "lg5",
+     "b": "st7"
+    },
+    {
+     "a": "st6",
+     "b": "au8"
+    },
+    {
+     "a": "au8",
+     "b": "au9"
+    },
+    {
+     "a": "st7",
+     "b": "nw10"
+    },
+    {
+     "a": "au9",
+     "b": "nw11"
+    }
+   ],
+   "note": "The path your operators would actually recognize."
   },
   {
    "t": "h2",
@@ -137,7 +240,7 @@
    "x": "Talk to the team that runs Blockchain & Digital Trust for Food Safety & Food Retail in production — the briefing is technical by design, and the first one costs nothing but the hour."
   }
  ],
- "words": 494,
+ "words": 451,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Agriculture & Food Systems",

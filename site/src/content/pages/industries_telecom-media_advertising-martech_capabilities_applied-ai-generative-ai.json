@@ -57,14 +57,131 @@
    "x": "In Advertising & MarTech, the pattern is creative automation — variant generation under brand guardrails with QC. Cycle down 50% sits on top as the measured result, tracked from the signed baseline onward. Around it, the engineering is unglamorous on purpose: governed retrieval, guarded generation, measured quality — shipped into the tools people already use."
   },
   {
-   "t": "diagram",
-   "kind": "decision-fabric",
-   "title": "From signal to decision to evidence — Advertising & MarTech, Applied AI & GenAI",
-   "labels": [
-    "Identity resolution",
-    "Creative automation",
-    "Audience activation",
-    "weekly evidence pack"
+   "t": "arch",
+   "title": "From signal to decision to evidence — Applied AI & GenAI × Advertising & MarTech",
+   "lanes": [
+    "Signals",
+    "Fabric",
+    "Models",
+    "Decision API",
+    "Audit",
+    "Products"
+   ],
+   "nodes": [
+    {
+     "id": "sg0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "sg1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "fb2",
+     "lane": 1,
+     "label": "Feature store (online/offline)",
+     "hot": true
+    },
+    {
+     "id": "fb3",
+     "lane": 1,
+     "label": "Vector & graph indexes",
+     "hot": false
+    },
+    {
+     "id": "mo4",
+     "lane": 2,
+     "label": "Domain models",
+     "hot": false
+    },
+    {
+     "id": "mo5",
+     "lane": 2,
+     "label": "Foundation adapters",
+     "hot": false
+    },
+    {
+     "id": "da6",
+     "lane": 3,
+     "label": "Decision API",
+     "hot": true
+    },
+    {
+     "id": "da7",
+     "lane": 3,
+     "label": "Champion / challenger",
+     "hot": false
+    },
+    {
+     "id": "au8",
+     "lane": 4,
+     "label": "Decision replay",
+     "hot": false
+    },
+    {
+     "id": "au9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "pr10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "pr11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "sg0",
+     "b": "fb2"
+    },
+    {
+     "a": "sg1",
+     "b": "fb3"
+    },
+    {
+     "a": "fb2",
+     "b": "mo4"
+    },
+    {
+     "a": "fb3",
+     "b": "mo5"
+    },
+    {
+     "a": "mo4",
+     "b": "da6"
+    },
+    {
+     "a": "mo5",
+     "b": "da7"
+    },
+    {
+     "a": "da6",
+     "b": "au8"
+    },
+    {
+     "a": "da7",
+     "b": "au9"
+    },
+    {
+     "a": "da6",
+     "b": "pr10"
+    },
+    {
+     "a": "da7",
+     "b": "pr11"
+    }
    ],
    "note": "Named stages, not generic boxes — this is the Advertising & MarTech path as built."
   },
@@ -123,7 +240,7 @@
    "x": "Start with the diagnostic, not the contract: Applied AI & GenAI for Advertising & MarTech baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 495,
+ "words": 481,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Telecom, Media & Entertainment",

@@ -40,8 +40,143 @@
    "x": "Day-part demand models per SKU-store feed ordering agents proposing quantities within policy; cold-chain telemetry made compliance continuous; markdown intelligence times reductions against sell-through curves. Store managers approve exceptions; the system learns from every override."
   },
   {
+   "t": "arch",
+   "title": "What went into production — A top-3 grocery retailer (800+ stores)",
+   "lanes": [
+    "Store signals",
+    "Demand models",
+    "Ordering agents",
+    "Execution",
+    "Measures",
+    "Commercial"
+   ],
+   "nodes": [
+    {
+     "id": "ss0",
+     "lane": 0,
+     "label": "POS & loyalty streams",
+     "hot": true
+    },
+    {
+     "id": "ss1",
+     "lane": 0,
+     "label": "Waste & shrink logs",
+     "hot": false
+    },
+    {
+     "id": "dm0",
+     "lane": 1,
+     "label": "Day-part demand models",
+     "hot": true
+    },
+    {
+     "id": "dm1",
+     "lane": 1,
+     "label": "Weather & events",
+     "hot": false
+    },
+    {
+     "id": "oa0",
+     "lane": 2,
+     "label": "Ordering agents",
+     "hot": true
+    },
+    {
+     "id": "oa1",
+     "lane": 2,
+     "label": "Markdown policies",
+     "hot": false
+    },
+    {
+     "id": "ex0",
+     "lane": 3,
+     "label": "Replenishment execution",
+     "hot": false
+    },
+    {
+     "id": "ex1",
+     "lane": 3,
+     "label": "Fresh-stock rotation",
+     "hot": false
+    },
+    {
+     "id": "me0",
+     "lane": 4,
+     "label": "Waste & OOS telemetry",
+     "hot": true
+    },
+    {
+     "id": "cm0",
+     "lane": 5,
+     "label": "Category managers",
+     "hot": false
+    },
+    {
+     "id": "cm1",
+     "lane": 5,
+     "label": "Store ops",
+     "hot": false
+    }
+   ],
+   "edges": [],
+   "note": "The topology as deployed: every named node existed in the client estate at go-live."
+  },
+  {
    "t": "h2",
    "x": "What changed"
+  },
+  {
+   "t": "dash",
+   "title": "Program view — A top-3 grocery retailer (800+ stores)",
+   "kpis": [
+    {
+     "label": "Fresh waste",
+     "value": "-28%",
+     "delta": "down 28%",
+     "dir": "down"
+    },
+    {
+     "label": "OOS on top sellers",
+     "value": "-31%",
+     "delta": "down 31%",
+     "dir": "down"
+    },
+    {
+     "label": "Cold-chain compliance",
+     "value": "continuous evidence, zero findings in audit",
+     "delta": "",
+     "dir": "flat"
+    },
+    {
+     "label": "Markdown margin recovery",
+     "value": "up 120 bps",
+     "delta": "",
+     "dir": "flat"
+    }
+   ],
+   "log": [
+    {
+     "t": "wk 02",
+     "msg": "Baseline signed — fresh waste locked with finance",
+     "tag": "gate"
+    },
+    {
+     "t": "wk 08",
+     "msg": "Working slice live on the client estate",
+     "tag": "build"
+    },
+    {
+     "t": "wk 12",
+     "msg": "Gate review passed against the signed baseline",
+     "tag": "gate"
+    },
+    {
+     "t": "post",
+     "msg": "Evidence pack handed to audit; runbooks with named owners",
+     "tag": "handover"
+    }
+   ],
+   "note": "Tiles are the client's measured outcomes; the log is the delivery cadence, not a mock."
   },
   {
    "t": "table",

@@ -65,16 +65,133 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "ledger-chain",
-   "title": "The operating loop — Enterprise DLT Network Engineering",
-   "labels": [
-    "Governance design",
-    "Network build",
-    "Off-chain architecture",
-    "Legacy integration"
+   "t": "arch",
+   "title": "Reference architecture — Enterprise DLT Network Engineering",
+   "lanes": [
+    "Claims",
+    "Verifiable records",
+    "Trust fabric",
+    "Verification",
+    "Portals",
+    "Ecosystem"
    ],
-   "note": "The path your operators would actually recognize."
+   "nodes": [
+    {
+     "id": "cl0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "cl1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "vr2",
+     "lane": 1,
+     "label": "Enterprise DLT Network Engineering",
+     "hot": true
+    },
+    {
+     "id": "vr3",
+     "lane": 1,
+     "label": "Hash anchoring",
+     "hot": false
+    },
+    {
+     "id": "tf4",
+     "lane": 2,
+     "label": "Governed ledger fabric",
+     "hot": true
+    },
+    {
+     "id": "tf5",
+     "lane": 2,
+     "label": "Consent scopes",
+     "hot": false
+    },
+    {
+     "id": "vf6",
+     "lane": 3,
+     "label": "Zero-knowledge checks",
+     "hot": false
+    },
+    {
+     "id": "vf7",
+     "lane": 3,
+     "label": "Attestation service",
+     "hot": false
+    },
+    {
+     "id": "po8",
+     "lane": 4,
+     "label": "Counterparty portals",
+     "hot": false
+    },
+    {
+     "id": "po9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "ec10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "ec11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "cl0",
+     "b": "vr2"
+    },
+    {
+     "a": "cl1",
+     "b": "vr3"
+    },
+    {
+     "a": "vr2",
+     "b": "tf4"
+    },
+    {
+     "a": "vr3",
+     "b": "tf5"
+    },
+    {
+     "a": "tf4",
+     "b": "vf6"
+    },
+    {
+     "a": "tf5",
+     "b": "vf7"
+    },
+    {
+     "a": "vf6",
+     "b": "po8"
+    },
+    {
+     "a": "po8",
+     "b": "po9"
+    },
+    {
+     "a": "vf7",
+     "b": "ec10"
+    },
+    {
+     "a": "tf5",
+     "b": "ec11"
+    }
+   ],
+   "note": "Topology inherited from the Blockchain & Digital Trust tower; the highlighted core is this service's build."
   },
   {
    "t": "h2",
@@ -139,7 +256,7 @@
    "x": "Start with the diagnostic, not the contract: Enterprise DLT Network Engineering baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 512,
+ "words": 504,
  "section": "Services",
  "l1": "Services",
  "l2": "Blockchain & Digital Trust",

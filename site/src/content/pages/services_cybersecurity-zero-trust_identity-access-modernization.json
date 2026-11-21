@@ -65,16 +65,133 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "zero-trust-mesh",
-   "title": "How the work flows once built — Identity & Access Modernization",
-   "labels": [
-    "Workforce IAM",
-    "CIAM",
-    "Machine identity management",
-    "Entitlement analytics"
+   "t": "arch",
+   "title": "Reference architecture — Identity & Access Modernization",
+   "lanes": [
+    "Identity signals",
+    "Network fabric",
+    "Encrypted compute",
+    "Detection & response",
+    "Trust layer",
+    "Estate"
    ],
-   "note": "The stages are the workflow names above; nothing on this diagram is decorative."
+   "nodes": [
+    {
+     "id": "id0",
+     "lane": 0,
+     "label": "Identity & Access Modernization",
+     "hot": true
+    },
+    {
+     "id": "id1",
+     "lane": 0,
+     "label": "Human identities",
+     "hot": false
+    },
+    {
+     "id": "nf2",
+     "lane": 1,
+     "label": "Micro-segmentation",
+     "hot": false
+    },
+    {
+     "id": "nf3",
+     "lane": 1,
+     "label": "Zero-trust edges",
+     "hot": false
+    },
+    {
+     "id": "ec4",
+     "lane": 2,
+     "label": "Encrypted computation",
+     "hot": true
+    },
+    {
+     "id": "ec5",
+     "lane": 2,
+     "label": "Key governance",
+     "hot": false
+    },
+    {
+     "id": "dr6",
+     "lane": 3,
+     "label": "Managed SOC / XDR",
+     "hot": false
+    },
+    {
+     "id": "dr7",
+     "lane": 3,
+     "label": "Automated response",
+     "hot": false
+    },
+    {
+     "id": "tl8",
+     "lane": 4,
+     "label": "Policy consensus",
+     "hot": false
+    },
+    {
+     "id": "tl9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "es10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "es11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "id0",
+     "b": "nf2"
+    },
+    {
+     "a": "id1",
+     "b": "nf3"
+    },
+    {
+     "a": "nf2",
+     "b": "ec4"
+    },
+    {
+     "a": "nf3",
+     "b": "ec5"
+    },
+    {
+     "a": "ec4",
+     "b": "dr6"
+    },
+    {
+     "a": "dr6",
+     "b": "dr7"
+    },
+    {
+     "a": "dr6",
+     "b": "tl8"
+    },
+    {
+     "a": "tl8",
+     "b": "tl9"
+    },
+    {
+     "a": "tl8",
+     "b": "es10"
+    },
+    {
+     "a": "dr7",
+     "b": "es11"
+    }
+   ],
+   "note": "Topology inherited from the Cyber & Zero-Trust tower; the highlighted core is this service's build."
   },
   {
    "t": "h2",
@@ -139,7 +256,7 @@
    "x": "The next step is small and real: one working session on Identity & Access Modernization, your data, and a written feasibility read you can circulate."
   }
  ],
- "words": 510,
+ "words": 499,
  "section": "Services",
  "l1": "Services",
  "l2": "Cybersecurity & Zero-Trust",

@@ -6,6 +6,7 @@ import { CountUp } from "./Motion";
 import { PatentStrip, OfficesMap } from "./PageAugment";
 import { pick as pickImagery } from "./PageImagery";
 import { TechDiagram, DIAGRAM_KINDS, type DiagramKind } from "./TechDiagrams";
+import { ArchGraph, MetricsDash, DashStyles } from "./ArchDash";
 import { brandData, pageIndex } from "@/lib/content";
 import type { Block, Card, Crumb, PageData } from "@/lib/content";
 
@@ -276,6 +277,28 @@ export function Blocks({ blocks, skip = [] }: { blocks: Block[]; skip?: string[]
           title={b.title}
         />,
       );
+    } else if (b.t === "arch") {
+      out.push(
+        <ArchGraph
+          key={`a-${out.length}`}
+          title={b.title}
+          lanes={b.lanes}
+          nodes={b.nodes}
+          edges={b.edges}
+          note={b.note}
+        />,
+      );
+    } else if (b.t === "dash") {
+      out.push(
+        <MetricsDash
+          key={`m-${out.length}`}
+          title={b.title}
+          kpis={b.kpis}
+          gates={b.gates}
+          log={b.log}
+          caption={b.note}
+        />,
+      );
     } else if (b.t === "h2") {
       h2Index += 1;
       const anchorId = `sec-${h2Index}`;
@@ -536,6 +559,7 @@ function siblingPages(page: PageData) {
   return { prev: at(idx - 1), next: at(idx + 1), position: idx + 1, total: group.length };
 }
 const NEXT_STEP: Record<string, { label: string; blurb: string; url: string }> = {
+  consulting_service: { label: "Book a practice briefing", blurb: "45 minutes with the practice lead — your estate, the method, a straight feasibility read.", url: "/book-a-briefing/" },
   service_page: { label: "Value assessment", blurb: "Price the delta in your estate before anything is signed.", url: "/value-assessment/" },
   tower_hub: { label: "Book a briefing", blurb: "45 minutes with the tower lead — your metric, our method.", url: "/book-a-briefing/" },
   solution_page: { label: "Book a briefing", blurb: "Map this solution to the metric you own.", url: "/book-a-briefing/" },
@@ -570,6 +594,7 @@ export function ContentPage({ page }: { page: PageData }) {
   return (
     <>
       {faq && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faq) }} />}
+      <DashStyles />
       <PageHero page={page} kicker={kicker}>
         {page.published && (
           <p className="mt-3 inline-flex rounded-full border border-white/20 px-3 py-1 text-[11.5px] text-white/70">
@@ -703,6 +728,8 @@ function sectionKicker(page: PageData): string | undefined {
     insights_category: "Insights Library",
     company_page: "Company",
     approach_page: "Our Approach",
+    consulting_hub: "Consulting Services",
+    consulting_service: "Consulting Practice",
     legal_page: "Legal & Compliance",
     contact_page: "Contact",
     leadership_profile: "Leadership",

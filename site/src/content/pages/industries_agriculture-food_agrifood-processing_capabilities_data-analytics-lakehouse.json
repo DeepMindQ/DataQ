@@ -57,14 +57,141 @@
    "x": "In Agri-Food Processing, the pattern is yield analytics — line/lot yield with loss decomposition. Recovery targeted sits on top as the measured result, tracked from the signed baseline onward. Around it, underneath it sits the data spine: contracts, lineage and freshness SLAs that make the number trustworthy before anyone models it."
   },
   {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "The operating loop — Agri-Food Processing, Data & Lakehouse",
-   "labels": [
-    "Intake grading",
-    "Yield analytics",
-    "Process yield analytics",
-    "gate evidence"
+   "t": "arch",
+   "title": "The operating loop — Data & Lakehouse × Agri-Food Processing",
+   "lanes": [
+    "Source estates",
+    "Streaming ingest",
+    "Lakehouse core",
+    "Certified products",
+    "Serving",
+    "Decisions"
+   ],
+   "nodes": [
+    {
+     "id": "se0",
+     "lane": 0,
+     "label": "Core banking ledger",
+     "hot": false
+    },
+    {
+     "id": "se1",
+     "lane": 0,
+     "label": "Card switch & fraud stores",
+     "hot": false
+    },
+    {
+     "id": "se2",
+     "lane": 0,
+     "label": "KYC / AML case manager",
+     "hot": false
+    },
+    {
+     "id": "si3",
+     "lane": 1,
+     "label": "CDC & event streams",
+     "hot": true
+    },
+    {
+     "id": "si4",
+     "lane": 1,
+     "label": "Batch pipelines",
+     "hot": false
+    },
+    {
+     "id": "lc5",
+     "lane": 2,
+     "label": "Bronze → silver → gold",
+     "hot": true
+    },
+    {
+     "id": "lc6",
+     "lane": 2,
+     "label": "Data contracts",
+     "hot": false
+    },
+    {
+     "id": "cp7",
+     "lane": 3,
+     "label": "Metric definitions",
+     "hot": false
+    },
+    {
+     "id": "cp8",
+     "lane": 3,
+     "label": "Data products",
+     "hot": false
+    },
+    {
+     "id": "sv9",
+     "lane": 4,
+     "label": "BI & semantic layer",
+     "hot": false
+    },
+    {
+     "id": "sv10",
+     "lane": 4,
+     "label": "Feature serving",
+     "hot": false
+    },
+    {
+     "id": "de11",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "de12",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "se0",
+     "b": "si3"
+    },
+    {
+     "a": "se1",
+     "b": "si3"
+    },
+    {
+     "a": "se2",
+     "b": "si4"
+    },
+    {
+     "a": "si3",
+     "b": "lc5"
+    },
+    {
+     "a": "si4",
+     "b": "lc5"
+    },
+    {
+     "a": "lc5",
+     "b": "cp7"
+    },
+    {
+     "a": "lc6",
+     "b": "cp8"
+    },
+    {
+     "a": "cp7",
+     "b": "sv9"
+    },
+    {
+     "a": "cp8",
+     "b": "sv10"
+    },
+    {
+     "a": "sv9",
+     "b": "de11"
+    },
+    {
+     "a": "sv10",
+     "b": "de12"
+    }
    ],
    "note": "Named stages, not generic boxes — this is the Agri-Food Processing path as built."
   },
@@ -123,7 +250,7 @@
    "x": "Start with the diagnostic, not the contract: Data & Lakehouse for Agri-Food Processing baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 439,
+ "words": 430,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Agriculture & Food Systems",

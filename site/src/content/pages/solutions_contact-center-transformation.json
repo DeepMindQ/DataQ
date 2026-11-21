@@ -61,16 +61,104 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "pipeline",
-   "title": "How the work flows once built — Contact Center & Conversational Transformation",
-   "labels": [
-    "Grounded voice/chat agents",
-    "Agent assist",
-    "Escalation design",
-    "Compliance pack"
+   "t": "arch",
+   "title": "Contact Center & Conversational Transformation — solution topology",
+   "lanes": [
+    "Estate",
+    "Composition core",
+    "Platform rails",
+    "Controls",
+    "Consumers"
    ],
-   "note": "Contact Center & Conversational Transformation, drawn as it runs after the build."
+   "nodes": [
+    {
+     "id": "estate",
+     "lane": 0,
+     "label": "Client estate",
+     "hot": false
+    },
+    {
+     "id": "c0",
+     "lane": 1,
+     "label": "Grounded voice/chat agents",
+     "hot": true
+    },
+    {
+     "id": "c1",
+     "lane": 1,
+     "label": "Agent assist",
+     "hot": false
+    },
+    {
+     "id": "c2",
+     "lane": 1,
+     "label": "Escalation design",
+     "hot": false
+    },
+    {
+     "id": "c3",
+     "lane": 1,
+     "label": "Compliance pack",
+     "hot": false
+    },
+    {
+     "id": "p0",
+     "lane": 2,
+     "label": "Dataq Swarm",
+     "hot": true
+    },
+    {
+     "id": "p1",
+     "lane": 2,
+     "label": "Dataq Nexus",
+     "hot": true
+    },
+    {
+     "id": "ctl",
+     "lane": 3,
+     "label": "Control & evidence pack"
+    },
+    {
+     "id": "bus",
+     "lane": 4,
+     "label": "Banking & Financial Services"
+    }
+   ],
+   "edges": [
+    {
+     "a": "estate",
+     "b": "c0"
+    },
+    {
+     "a": "estate",
+     "b": "c1"
+    },
+    {
+     "a": "estate",
+     "b": "c2"
+    },
+    {
+     "a": "estate",
+     "b": "c3"
+    },
+    {
+     "a": "c0",
+     "b": "p0"
+    },
+    {
+     "a": "c1",
+     "b": "p1"
+    },
+    {
+     "a": "p0",
+     "b": "ctl"
+    },
+    {
+     "a": "ctl",
+     "b": "bus"
+    }
+   ],
+   "note": "Components and platforms are the named pieces of this solution, drawn in their architectural position."
   },
   {
    "t": "h2",
@@ -118,7 +206,7 @@
    "x": "The next step is small and real: one working session on Contact Center & Conversational Transformation, your data, and a written feasibility read you can circulate."
   }
  ],
- "words": 376,
+ "words": 364,
  "section": "Solutions",
  "l1": "Solutions",
  "l2": "Workforce & Experience",

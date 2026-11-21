@@ -65,16 +65,133 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "twin-loop",
-   "title": "The operating loop — Connected Products & Smart Devices",
-   "labels": [
-    "Device fleet platform",
-    "Fleet security",
-    "Telemetry productization",
-    "Commercial instrumentation"
+   "t": "arch",
+   "title": "Reference architecture — Connected Products & Smart Devices",
+   "lanes": [
+    "Sites",
+    "Connectivity",
+    "Fleet services",
+    "Simulation",
+    "What-if",
+    "Planners"
    ],
-   "note": "Connected Products & Smart Devices, drawn as it runs after the build."
+   "nodes": [
+    {
+     "id": "st0",
+     "lane": 0,
+     "label": "MES & line historians",
+     "hot": false
+    },
+    {
+     "id": "st1",
+     "lane": 0,
+     "label": "SCADA / OT telemetry",
+     "hot": false
+    },
+    {
+     "id": "cn2",
+     "lane": 1,
+     "label": "LTE/5G backhaul",
+     "hot": false
+    },
+    {
+     "id": "cn3",
+     "lane": 1,
+     "label": "Store & forward",
+     "hot": false
+    },
+    {
+     "id": "fs4",
+     "lane": 2,
+     "label": "Connected Products & Smart Devices",
+     "hot": true
+    },
+    {
+     "id": "fs5",
+     "lane": 2,
+     "label": "OTA updates",
+     "hot": false
+    },
+    {
+     "id": "sm6",
+     "lane": 3,
+     "label": "Physics + ML simulation",
+     "hot": true
+    },
+    {
+     "id": "sm7",
+     "lane": 3,
+     "label": "Scenario engine",
+     "hot": false
+    },
+    {
+     "id": "wi8",
+     "lane": 4,
+     "label": "What-if console",
+     "hot": false
+    },
+    {
+     "id": "wi9",
+     "lane": 4,
+     "label": "Sensitivity runs",
+     "hot": false
+    },
+    {
+     "id": "pl10",
+     "lane": 5,
+     "label": "Production scheduling",
+     "hot": false
+    },
+    {
+     "id": "pl11",
+     "lane": 5,
+     "label": "Maintenance planner",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "st0",
+     "b": "cn2"
+    },
+    {
+     "a": "st1",
+     "b": "cn3"
+    },
+    {
+     "a": "cn2",
+     "b": "fs4"
+    },
+    {
+     "a": "cn3",
+     "b": "fs5"
+    },
+    {
+     "a": "fs4",
+     "b": "sm6"
+    },
+    {
+     "a": "fs5",
+     "b": "sm7"
+    },
+    {
+     "a": "sm6",
+     "b": "wi8"
+    },
+    {
+     "a": "sm7",
+     "b": "wi9"
+    },
+    {
+     "a": "wi8",
+     "b": "pl10"
+    },
+    {
+     "a": "wi9",
+     "b": "pl11"
+    }
+   ],
+   "note": "Topology inherited from the IoT, Twin & Robotics tower; the highlighted core is this service's build."
   },
   {
    "t": "h2",
@@ -139,7 +256,7 @@
    "x": "A value assessment prices the delta in your estate before anything is signed: Connected Products & Smart Devices, measured against your baseline, in two weeks."
   }
  ],
- "words": 508,
+ "words": 499,
  "section": "Services",
  "l1": "Services",
  "l2": "IoT, Digital Twin & Robotics",

@@ -15,6 +15,22 @@ export type Block =
   | { t: "table"; caption?: string; headers: string[]; rows: string[][] }
   | { t: "note"; x: string }
   | { t: "diagram"; kind: string; title?: string; labels?: string[]; note?: string }
+  | {
+      t: "arch";
+      title: string;
+      lanes: string[];
+      nodes: { id: string; lane: number; label: string; hot?: boolean }[];
+      edges: { a: string; b: string; label?: string }[];
+      note?: string;
+    }
+  | {
+      t: "dash";
+      title: string;
+      kpis: { label: string; value: string; delta?: string; dir?: "up" | "down" | "flat" }[];
+      gates?: { name: string; pct: number }[];
+      log?: { t: string; msg: string; tag: string }[];
+      note?: string;
+    }
   | { t: "cta"; x: string };
 
 export type PageData = {

@@ -65,16 +65,133 @@
    ]
   },
   {
-   "t": "diagram",
-   "kind": "decision-fabric",
-   "title": "From signal to decision to evidence — Generative AI Platform Engineering",
-   "labels": [
-    "Model gateway & routing",
-    "Managed retrieval service",
-    "Guardrail layer",
-    "Evaluation harness"
+   "t": "arch",
+   "title": "Reference architecture — Generative AI Platform Engineering",
+   "lanes": [
+    "Systems of record",
+    "Contracted inputs",
+    "Retrieval core",
+    "Guarded generation",
+    "Controls",
+    "Surfaces"
    ],
-   "note": "Generative AI Platform Engineering, drawn as it runs after the build."
+   "nodes": [
+    {
+     "id": "src0",
+     "lane": 0,
+     "label": "Product telemetry",
+     "hot": false
+    },
+    {
+     "id": "src1",
+     "lane": 0,
+     "label": "Billing & entitlements",
+     "hot": false
+    },
+    {
+     "id": "ct2",
+     "lane": 1,
+     "label": "Schema contracts",
+     "hot": false
+    },
+    {
+     "id": "ct3",
+     "lane": 1,
+     "label": "Freshness SLAs",
+     "hot": false
+    },
+    {
+     "id": "rc4",
+     "lane": 2,
+     "label": "Generative AI Platform Engineering",
+     "hot": true
+    },
+    {
+     "id": "rc5",
+     "lane": 2,
+     "label": "Embedding pipeline",
+     "hot": false
+    },
+    {
+     "id": "gg6",
+     "lane": 3,
+     "label": "Grounded answering",
+     "hot": true
+    },
+    {
+     "id": "gg7",
+     "lane": 3,
+     "label": "Prompt & cost router",
+     "hot": false
+    },
+    {
+     "id": "co8",
+     "lane": 4,
+     "label": "Eval harness",
+     "hot": false
+    },
+    {
+     "id": "co9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "su10",
+     "lane": 5,
+     "label": "Growth & pricing console",
+     "hot": false
+    },
+    {
+     "id": "su11",
+     "lane": 5,
+     "label": "Customer-success cockpit",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "src0",
+     "b": "ct2"
+    },
+    {
+     "a": "src1",
+     "b": "ct2"
+    },
+    {
+     "a": "ct2",
+     "b": "rc4"
+    },
+    {
+     "a": "ct3",
+     "b": "rc5"
+    },
+    {
+     "a": "rc4",
+     "b": "gg6"
+    },
+    {
+     "a": "rc5",
+     "b": "gg7"
+    },
+    {
+     "a": "gg6",
+     "b": "co8"
+    },
+    {
+     "a": "co8",
+     "b": "co9"
+    },
+    {
+     "a": "gg6",
+     "b": "su10"
+    },
+    {
+     "a": "gg7",
+     "b": "su11"
+    }
+   ],
+   "note": "Topology inherited from the Applied AI & GenAI tower; the highlighted core is this service's build."
   },
   {
    "t": "h2",
@@ -139,7 +256,7 @@
    "x": "A value assessment prices the delta in your estate before anything is signed: Generative AI Platform Engineering, measured against your baseline, in two weeks."
   }
  ],
- "words": 527,
+ "words": 516,
  "section": "Services",
  "l1": "Services",
  "l2": "Applied AI & Generative AI",

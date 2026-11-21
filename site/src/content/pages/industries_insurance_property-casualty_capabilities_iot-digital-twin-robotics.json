@@ -57,6 +57,135 @@
    "x": "In Property & Casualty, the pattern is commercial risk telemetry — water/freeze/telematics sensors feeding prevention and pricing. Peril frequency down on covered sites sits on top as the measured result, tracked from the signed baseline onward. Around it, the work spans the stack: devices and gateways in the field, perception models in the middle, actuation plans on the board. For Property & Casualty, this is the standard the build is held to."
   },
   {
+   "t": "arch",
+   "title": "How the work flows once built — IoT, Twin & Robotics × Property & Casualty",
+   "lanes": [
+    "Physical assets",
+    "Edge gateways",
+    "Perception",
+    "Twin core",
+    "Actuation",
+    "Operations"
+   ],
+   "nodes": [
+    {
+     "id": "pa0",
+     "lane": 0,
+     "label": "Policy admin system",
+     "hot": false
+    },
+    {
+     "id": "pa1",
+     "lane": 0,
+     "label": "Claims document intake",
+     "hot": false
+    },
+    {
+     "id": "eg2",
+     "lane": 1,
+     "label": "Edge gateways",
+     "hot": true
+    },
+    {
+     "id": "eg3",
+     "lane": 1,
+     "label": "OPC-UA / MQTT",
+     "hot": false
+    },
+    {
+     "id": "pp4",
+     "lane": 2,
+     "label": "Vision & signal models",
+     "hot": true
+    },
+    {
+     "id": "pp5",
+     "lane": 2,
+     "label": "Noise suppression",
+     "hot": false
+    },
+    {
+     "id": "tc6",
+     "lane": 3,
+     "label": "Digital twin sync",
+     "hot": true
+    },
+    {
+     "id": "tc7",
+     "lane": 3,
+     "label": "State estimators",
+     "hot": false
+    },
+    {
+     "id": "ac8",
+     "lane": 4,
+     "label": "Maintenance plans",
+     "hot": false
+    },
+    {
+     "id": "ac9",
+     "lane": 4,
+     "label": "Closed-loop control",
+     "hot": false
+    },
+    {
+     "id": "op10",
+     "lane": 5,
+     "label": "Underwriting workbench",
+     "hot": false
+    },
+    {
+     "id": "op11",
+     "lane": 5,
+     "label": "Claims adjudication",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "pa0",
+     "b": "eg2"
+    },
+    {
+     "a": "pa1",
+     "b": "eg3"
+    },
+    {
+     "a": "eg2",
+     "b": "pp4"
+    },
+    {
+     "a": "eg3",
+     "b": "pp5"
+    },
+    {
+     "a": "pp4",
+     "b": "tc6"
+    },
+    {
+     "a": "pp5",
+     "b": "tc7"
+    },
+    {
+     "a": "tc6",
+     "b": "ac8"
+    },
+    {
+     "a": "tc7",
+     "b": "ac9"
+    },
+    {
+     "a": "ac8",
+     "b": "op10"
+    },
+    {
+     "a": "ac9",
+     "b": "op11"
+    }
+   ],
+   "note": "The path your operators would actually recognize."
+  },
+  {
    "t": "h2",
    "x": "Sequencing, honestly"
   },

@@ -57,14 +57,131 @@
    "x": "In Advertising & MarTech, the pattern is fraud verification — IVT detection with independent verification. Budgets defended sits on top as the measured result, tracked from the signed baseline onward. Around it, the design assumes breach: blast radii contained, lateral movement priced, and detection tuned to the attacks your sector actually sees. For Advertising & MarTech, this is the standard the build is held to."
   },
   {
-   "t": "diagram",
-   "kind": "zero-trust-mesh",
-   "title": "From signal to decision to evidence — Advertising & MarTech, Cyber & Zero-Trust",
-   "labels": [
-    "Identity resolution",
-    "Fraud verification",
-    "Audience activation",
-    "owner-signed gates"
+   "t": "arch",
+   "title": "From signal to decision to evidence — Cyber & Zero-Trust × Advertising & MarTech",
+   "lanes": [
+    "Identity signals",
+    "Network fabric",
+    "Encrypted compute",
+    "Detection & response",
+    "Trust layer",
+    "Estate"
+   ],
+   "nodes": [
+    {
+     "id": "id0",
+     "lane": 0,
+     "label": "Workload identity (SPIFFE)",
+     "hot": true
+    },
+    {
+     "id": "id1",
+     "lane": 0,
+     "label": "Human identities",
+     "hot": false
+    },
+    {
+     "id": "nf2",
+     "lane": 1,
+     "label": "Micro-segmentation",
+     "hot": false
+    },
+    {
+     "id": "nf3",
+     "lane": 1,
+     "label": "Zero-trust edges",
+     "hot": false
+    },
+    {
+     "id": "ec4",
+     "lane": 2,
+     "label": "Encrypted computation",
+     "hot": true
+    },
+    {
+     "id": "ec5",
+     "lane": 2,
+     "label": "Key governance",
+     "hot": false
+    },
+    {
+     "id": "dr6",
+     "lane": 3,
+     "label": "Managed SOC / XDR",
+     "hot": false
+    },
+    {
+     "id": "dr7",
+     "lane": 3,
+     "label": "Automated response",
+     "hot": false
+    },
+    {
+     "id": "tl8",
+     "lane": 4,
+     "label": "Policy consensus",
+     "hot": false
+    },
+    {
+     "id": "tl9",
+     "lane": 4,
+     "label": "Model-risk registry",
+     "hot": false
+    },
+    {
+     "id": "es10",
+     "lane": 5,
+     "label": "Origination & servicing",
+     "hot": false
+    },
+    {
+     "id": "es11",
+     "lane": 5,
+     "label": "Fraud ops workbench",
+     "hot": false
+    }
+   ],
+   "edges": [
+    {
+     "a": "id0",
+     "b": "nf2"
+    },
+    {
+     "a": "id1",
+     "b": "nf3"
+    },
+    {
+     "a": "nf2",
+     "b": "ec4"
+    },
+    {
+     "a": "nf3",
+     "b": "ec5"
+    },
+    {
+     "a": "ec4",
+     "b": "dr6"
+    },
+    {
+     "a": "dr6",
+     "b": "dr7"
+    },
+    {
+     "a": "dr6",
+     "b": "tl8"
+    },
+    {
+     "a": "tl8",
+     "b": "tl9"
+    },
+    {
+     "a": "tl8",
+     "b": "es10"
+    },
+    {
+     "a": "dr7",
+     "b": "es11"
+    }
    ],
    "note": "Advertising & MarTech, drawn as it runs after the build."
   },
@@ -97,7 +214,7 @@
    "x": "Start with the diagnostic, not the contract: Cyber & Zero-Trust for Advertising & MarTech baselined in two weeks, and a scoped proposal only if the delta justifies it."
   }
  ],
- "words": 474,
+ "words": 461,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Telecom, Media & Entertainment",

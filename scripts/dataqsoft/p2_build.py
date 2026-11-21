@@ -11,6 +11,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from dqs_ia import TOWERS, SERVICES, INDUSTRIES, SUBS, CASES, TOWER_ORDER, IND_ORDER
 from p2_voice import (TOWER_FUNC, SCAP_LEADS, CAP_LEADS, SVC_LEADS,
                       HEADS, CTAS, DIAGRAM_KIND, pick)
+from p2_arch import compose_arch_by_ref
 
 # ── tower slug → key ─────────────────────────────────────────────────────────
 TOWER_BY_SLUG = {v["slug"]: k for k, v in TOWERS.items()}
@@ -441,14 +442,13 @@ def build_scap(page):
         blocks.append(p(
             f"In {sub['name']}, the pattern: {wf1} becomes instrumented and decision-ready first, then {wf2}, then the reporting layer above them. "
             f"{func[0].upper()}{func[1:]}"))
-    tail = DIAGRAM_TAIL[_h(pid + "tail", len(DIAGRAM_TAIL))]
-    seed = _h(pid + "diag", 5)
-    if seed < 2 and use:
-        blocks.append(diagram(DIAGRAM_KIND[tower],
-                              f"{diagram_title(pid)} — {sub['name']}, {T['short']}",
-                              [wf1, use[0], wf2, tail],
-                              diagram_note(pid, sub["name"])))
-    elif seed == 2:
+    seed = _h(pid + "diag", 10)
+    if seed < 7:
+        lanes, anodes, aedges = compose_arch_by_ref(tower, parts[1], pid, sub_name=sub["name"])
+        blocks.append({"t": "arch", "title": f"{diagram_title(pid)} — {T['short']} × {sub['name']}",
+                       "lanes": lanes, "nodes": anodes, "edges": aedges,
+                       "note": diagram_note(pid, sub["name"])})
+    elif use:
         blocks.append(table(
             f"What changes in the {sub['name'].lower()} workflow",
             ["Workflow", "Before", "After this capability lands"],
@@ -528,14 +528,13 @@ def build_cap(page):
     else:
         blocks.append(p(
             f"The pattern: start where the decision volume is highest in {ind['name'].lower()}, instrument it, and let the evidence decide what scales. {func[0].upper()}{func[1:]}"))
-    seed = _h(pid + "diag", 5)
-    if seed < 2:
-        tail = DIAGRAM_TAIL[_h(pid + "tail", len(DIAGRAM_TAIL))]
-        blocks.append(diagram(DIAGRAM_KIND[tower],
-                              f"{diagram_title(pid)} — {ind['name']}, {T['short']}",
-                              [pressures[0][1], pressures[1 % len(pressures)][1], T["short"] + " decision layer", tail],
-                              diagram_note(pid, ind["name"])))
-    elif seed == 2 and use_list and len(use_list) > 1:
+    seed = _h(pid + "diag", 10)
+    if seed < 7:
+        lanes, anodes, aedges = compose_arch_by_ref(tower, parts[1], pid + "cap")
+        blocks.append({"t": "arch", "title": f"{diagram_title(pid)} — {T['short']} × {ind['name']}",
+                       "lanes": lanes, "nodes": anodes, "edges": aedges,
+                       "note": diagram_note(pid, ind["name"])})
+    elif use_list and len(use_list) > 1:
         blocks.append(bullets([sdt(u[:2]) for u in use_list[:3]]))
 
     # delivery
@@ -600,6 +599,14 @@ def build_sub(page):
     else:
         blocks.append(p(
             f"The builds follow the pressures: the highest-volume workflow is instrumented first, the decision layer second, the evidence spine throughout."))
+
+    # unique architecture for this sub-industry
+    sub_parts = page["url"].strip("/").split("/")
+    uc_tower = list(uc.keys())[0] if uc else "data"
+    lanes, anodes, aedges = compose_arch_by_ref(uc_tower, sub_parts[1], pid + "sub", sub_name=sub["name"])
+    blocks.append({"t": "arch", "title": f"Reference architecture — {sub['name']}",
+                   "lanes": lanes, "nodes": anodes, "edges": aedges,
+                   "note": f"Lanes and nodes are named for {sub['name']} systems and workflows — not a generic stack."})
 
     # regulatory frame
     regs = sub.get("regs", [])
@@ -703,13 +710,19 @@ def build_svc(page):
              "The components, as they land:"][_h(pid + "bi", 3)]))
         blocks.append(bullets([sdt(x[:2]) for x in caps[:5]]))
 
-    # one diagram when it clarifies — labels from this service's capabilities
-    seed = _h(pid + "diag", 5)
-    if seed < 3 and caps:
-        blocks.append(diagram(DIAGRAM_KIND[svc["tower"]],
-                              f"{diagram_title(pid)} — {svc['name']}",
-                              [x[0] for x in caps[:4]],
-                              diagram_note(pid, svc["name"])))
+    # unique architecture per service: tower topology, core node renamed
+    svc_parts = page["url"].strip("/").split("/")
+    lanes, anodes, aedges = compose_arch_by_ref(
+        svc["tower"], svc.get("focus")[0] if svc.get("focus") else "banking", pid + "svc")
+    core_lane = 2 if len(lanes) > 2 else 1
+    renamed = False
+    for nd in anodes:
+        if nd.get("hot") and not renamed:
+            nd["label"] = svc["name"]
+            renamed = True
+    blocks.append({"t": "arch", "title": f"Reference architecture — {svc['name']}",
+                   "lanes": lanes, "nodes": anodes, "edges": aedges,
+                   "note": f"Topology inherited from the {T['short']} tower; the highlighted core is this service's build."})
 
     # deliverables — real artifacts from data
     dels = svc.get("deliverables", [])
@@ -758,11 +771,17 @@ def build_twr(page):
     blocks.append(p(vary("twr_intro", pid, T["short"])))
     blocks.append(bullets([[s["name"], sd(s["promise"])] for s in svc]))
 
-    # one diagram: the tower's service sequence (labels = service names)
-    blocks.append(diagram(DIAGRAM_KIND[tower],
-                          f"{diagram_title(pid + 'twr')} — {T['short']}",
-                          [s["name"] for s in svc[:4]] + ["evidence & gates"],
-                          diagram_note(pid, T["short"] + " programs")))
+    # tower architecture: hot nodes renamed to the tower's services
+    lanes, anodes, aedges = compose_arch_by_ref(tower, "banking", pid + "twr")
+    svc_names = [sv["name"] for sv in svc[:4]]
+    si = 0
+    for nd in anodes:
+        if nd.get("hot") and si < len(svc_names):
+            nd["label"] = svc_names[si]
+            si += 1
+    blocks.append({"t": "arch", "title": f"{T['short']} — reference topology",
+                   "lanes": lanes, "nodes": anodes, "edges": aedges,
+                   "note": "Highlighted nodes are the tower's named services in their architectural position."})
 
     # delivery habit
     blocks.append(h2(H("deliver")))
