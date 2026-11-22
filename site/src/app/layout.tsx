@@ -26,11 +26,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://www.dataqsoft.com"),
   title: {
-    default: "Dataq Software — decision intelligence with evidence | AI, data, security, cloud",
+    default: "Dataq Software — IT services & consulting with patented IP | AI, cloud, data, security, ERP",
     template: "%s",
   },
   description:
-    "Eight expertise domains, 54 practices. Every engagement gated on a signed metric, every decision carrying evidence. SOC 2 · ISO 27001.",
+    "IT services and consulting: 8 deep-tech expertise domains and 13 consulting practices, every engagement powered by 8 patented method families and 8 proprietary platforms — gated on signed metrics. SOC 2 · ISO 27001.",
   robots: { index: true, follow: true },
   manifest: "/manifest.json",
   icons: {

@@ -107,6 +107,16 @@ const ROUTER_OPTIONS: RouterOption[] = [
       { label: "Hybrid & Multicloud Architecture", url: "/services/cloud-edge-platform-engineering/hybrid-multicloud-architecture/" },
     ],
   },
+  {
+    key: "operations",
+    label: "Operations",
+    blurb: "Capacity, cutover, ERP cores or a helpdesk that has to answer.",
+    domain: { label: "Consulting & IT Services", url: "/consulting/" },
+    practices: [
+      { label: "IT Services & Managed Operations", url: "/consulting/it-services/" },
+      { label: "ERP Services & Enterprise Core", url: "/consulting/erp-services/" },
+    ],
+  },
 ];
 
 const PILLARS = [
@@ -177,7 +187,7 @@ const STEERING_PANELS: { name: string; desc: string; sample: string; owner: stri
   { name: "Owner map", desc: "Who is on the program, what they own, and how the team changes as value scales.", sample: "1 named owner per control", owner: "Sponsor", cadence: "signed week two" },
 ];
 
-/* A-58: the three objections a buyer raises before the final CTA */
+/* A-58: the objections a buyer raises before the final CTA */
 const HOME_FAQ = [
   {
     q: "What if the provability sprint kills our idea?",
@@ -190,6 +200,10 @@ const HOME_FAQ = [
   {
     q: "Who owns the baseline?",
     a: "Your side does. The baseline is signed by your metric owner in week two and stays in your estate — we report against it every fortnight and never move it. If the metric owner changes, the baseline is re-signed before work continues; the audit trail shows every signature.",
+  },
+  {
+    q: "How does the patented-IP differential work commercially?",
+    a: "The method families and platforms are licensed inside the engagement fee — there is no separate IP purchase to start. You get the pre-configured baseline, the evidence generation and the delivery patterns from day one. Accelerators we build specifically for you can carry co-ownership terms, and your baseline, gates and audit trail stay in your estate throughout.",
   },
 ];
 
@@ -266,13 +280,13 @@ export default function HomeView() {
 
   const SECTION_NAV = [
     { id: "output", label: "Delivery output" },
-    { id: "services", label: "Expertise" },
+    { id: "services", label: "Services" },
+    { id: "consulting", label: "Consulting" },
+    { id: "patents", label: "IP differential" },
+    { id: "platforms", label: "Platforms" },
     { id: "evidence", label: "Evidence" },
     { id: "value", label: "Charter" },
-    { id: "patents", label: "Patents" },
-    { id: "platforms", label: "Platforms" },
     { id: "industries", label: "Industries" },
-    { id: "consulting", label: "Consulting" },
     { id: "insights", label: "Insights" },
     { id: "faq", label: "FAQ" },
   ];
@@ -302,29 +316,32 @@ export default function HomeView() {
             <Reveal className="hero-choreo">
               {/* A-02: positioning eyebrow, not a category label */}
               <p className="rise-item text-[12px] font-semibold uppercase tracking-[0.22em] text-brand-300" style={{ ["--rise-delay" as string]: "40ms" }}>
-                Decision intelligence · delivered with evidence
+                IT services · consulting · patented IP
               </p>
               {/* A-01: buyer + mechanism + proof, orange emphasis on "evidenced" */}
               <h1 className="text-display-1 mt-4 max-w-3xl text-white">
                 <span className="line-mask block" style={{ ["--rise-delay" as string]: "120ms" }}>
-                  <span className="line-mask-inner block">The decision layer regulated</span>
+                  <span className="line-mask-inner block">IT services and consulting —</span>
                 </span>
                 <span className="line-mask block" style={{ ["--rise-delay" as string]: "260ms" }}>
                   <span className="line-mask-inner block">
-                    enterprises run on — built, operated and <span className="grad-text">evidenced</span> by Dataq.
+                    built on <span className="grad-text">patented IP</span>, proven with evidence.
                   </span>
                 </span>
               </h1>
               {/* A-03: one promise sentence + one proof sentence */}
               <p className="rise-item measure mt-5 text-body-lg leading-relaxed text-white/70" style={{ ["--rise-delay" as string]: "560ms" }}>
-                We build and run the decision layer of the enterprise — and prove every decision it makes.
-                Every program is gated on a metric your board already tracks.
+                Dataq Software is an IT services and consulting company. We advise on strategy, build the systems and
+                run the operations — from ERP and cloud to AI and data — and prove every outcome against a metric your
+                board already tracks. The heavy lifting is done by patented IP, not just billable hours.
               </p>
               {/* A-03: the three delivery vignettes, as a rotating proof line */}
               <div className="rise-item" style={{ ["--rise-delay" as string]: "620ms" }}>
                 <RotatingProof
                   lines={[
                     "Fraud decided in milliseconds — with the evidence attached.",
+                    "ERP rollouts that land process, controls and cutover on one plan.",
+                    "Cloud estates re-platformed without a season of downtime.",
                     "KYC backlogs cleared by governed agents.",
                     "Data estates your auditors can walk alone.",
                   ]}
@@ -342,7 +359,7 @@ export default function HomeView() {
                   href="/services/"
                   className="inline-flex items-center rounded-[10px] border border-white/25 px-6 py-3 text-[14px] font-medium text-white/85 transition hover:border-brand-300 hover:text-brand-300"
                 >
-                  Browse the 54 practices
+                  Explore services &amp; consulting
                 </Link>
               </div>
               <p className="rise-item mt-2 text-[12px] text-white/45" style={{ ["--rise-delay" as string]: "720ms" }}>
@@ -385,7 +402,7 @@ export default function HomeView() {
           items={[
             "SOC 2 Type II", "ISO 27001", "ISO 9001", "GDPR & CCPA aligned", "Evidence-gated releases",
             "Dataq Nexus", "Dataq Forge", "Dataq Swarm", "Dataq Sentinel", "Dataq Twinverse", "Dataq Quanta", "Dataq Ledger", "Dataq Compass",
-            "8 patented method families", "4 global delivery centers",
+            "8 patented method families", "13 consulting practices", "IP-led delivery", "4 global delivery centers",
           ]}
         />
       </div>
@@ -407,8 +424,8 @@ export default function HomeView() {
             </h2>
             {/* A-13: the intro carries a sample panel row, labeled illustrative */}
             <p className="mt-2 max-w-4xl text-[14.5px] leading-relaxed text-white/65">
-              Eight panels, one per decision surface — generated from your estate, so week two already reads like your
-              business. A sample row, illustrative reference program:{" "}
+              Eight panels, one per program surface — consulting or deep-tech, generated from your estate, so week two
+              already reads like your business. A sample row, illustrative reference program:{" "}
               <span className="rounded-md border border-white/20 bg-white/[0.07] px-2 py-0.5 font-mono text-[11.5px] text-white/85">
                 Decision p95 148 ms · owner: COO · refreshed 14 days · evidence: replay pack
               </span>
@@ -445,24 +462,34 @@ export default function HomeView() {
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
                 <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">
-                  Services
+                  Services &amp; consulting
                 </p>
                 {/* A-17 */}
                 <h2 className="text-display-3 mt-1 max-w-4xl text-navy-800 sm:text-[30px]">
-                  Eight expertise domains — enter at the seam where your business bleeds
+                  Eight expertise domains and thirteen consulting practices — one delivery system
                 </h2>
                 {/* A-18 */}
                 <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
                   Decision, action, data, trust, platform, compute, records, field — one of these seams is where your
-                  P&amp;L leaks today. Every domain ships with release gates, an operating console and named evidence.
+                  P&amp;L leaks today, and deep-tech programs enter through a domain. Classic-estate work — migration,
+                  engineering pods, Azure, ERP, managed operations — enters through consulting. Both tracks run the same
+                  release gates on the same patented platforms.
                 </p>
               </div>
-              <Link
-                href="/services/"
-                className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-deep"
-              >
-                All services <ArrowRight className="h-4 w-4" />
-              </Link>
+              <div className="flex flex-col items-start gap-1.5">
+                <Link
+                  href="/services/"
+                  className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-deep"
+                >
+                  All services <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  href="/consulting/"
+                  className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-deep"
+                >
+                  All consulting practices <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
             </div>
           </Reveal>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -524,7 +551,214 @@ export default function HomeView() {
         </div>
       </section>
 
-      {/* evidence library — buyer-path position 2 (A-40..A-43, A-53) */}
+      {/* consulting practices (A-23..A-27) — co-equal offer track, repositioned after services */}
+      <section id="consulting" className="scroll-mt-24 border-y border-line bg-white">
+        <div className="container-dq section-y-sm">
+          <Reveal>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">
+                  Consulting &amp; IT services
+                </p>
+                {/* A-23 */}
+                <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
+                  Thirteen consulting practices — the advisor is the builder, under the same gate contract
+                </h2>
+                {/* A-24 */}
+                <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
+                  Transformation programs, migration factories, engineering pods, quality engineering, Azure estates,
+                  ERP cores, managed operations and end-user support. The team that recommends is the team that builds
+                  it — the same two-week diagnostic, signed baseline and evidence-or-stop contract as every expertise
+                  domain.
+                </p>
+              </div>
+              <Link
+                href="/consulting/"
+                className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-deep"
+              >
+                All consulting practices <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </Reveal>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {CONSULTING_GROUPS.slice(0, 4).map((g, i) => (
+              <Reveal key={g.name} delay={i * 40}>
+                <Link
+                  href="/consulting/"
+                  className="tilt-card group flex h-full flex-col rounded-2xl border border-line bg-mist/60 p-5 transition hover:-translate-y-0.5 hover:border-brand/60 hover:bg-white shadow-1 hover:shadow-2"
+                >
+                  <span className="flex items-center justify-between">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-navy-800 text-brand-300 transition group-hover:bg-brand group-hover:text-white">
+                      {(() => { const Ic = ConsultIcons[i % ConsultIcons.length]; return <Ic className="h-5 w-5" aria-hidden="true" />; })()}
+                    </span>
+                    {/* A-25: practice-count chip */}
+                    <span className="rounded-full bg-brand-tint px-2.5 py-0.5 text-[10.5px] font-bold text-brand-deep">
+                      {g.services.length} practices
+                    </span>
+                  </span>
+                  <p className="mt-3 font-display text-[15.5px] font-semibold leading-snug text-navy-800 group-hover:text-brand-deep">
+                    {g.name}
+                  </p>
+                  {/* A-25: a real description, not a name list */}
+                  <p className="mt-2 flex-1 text-[12.5px] leading-relaxed text-slate-body/75">{g.desc}</p>
+                  <span className="mt-2 flex flex-wrap gap-1.5">
+                    {g.services.map((sv) => (
+                      <span key={sv.name} className="rounded-full border border-line bg-white px-2 py-0.5 text-[10.5px] font-medium text-navy-800/80">
+                        {sv.name}
+                      </span>
+                    ))}
+                  </span>
+                  {/* A-26: count CTA */}
+                  <span className="mt-3 inline-flex items-center gap-1 text-[12px] font-semibold text-brand-deep">
+                    See the {g.services.length} practices <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+          {/* A-27: the bridge between the two taxonomies */}
+          <Reveal>
+            <p className="mt-6 flex flex-wrap items-center gap-1.5 text-[13px] text-slate-body/70">
+              <Scale className="h-4 w-4 shrink-0 text-brand-deep" aria-hidden="true" />
+              <span className="font-semibold text-navy-800">Where consulting meets expertise:</span>
+              <span>platform moves land in</span>
+              <Link href="/services/cloud-edge-platform-engineering/" className="link-animated font-semibold text-brand-deep">
+                Cloud, Edge &amp; Platform Engineering
+              </Link>
+              <span>· decision products in</span>
+              <Link href="/services/data-analytics-lakehouse/" className="link-animated font-semibold text-brand-deep">
+                Data, Analytics &amp; Lakehouse
+              </Link>
+              <span>· zero-trust advisory in</span>
+              <Link href="/services/cybersecurity-zero-trust/" className="link-animated font-semibold text-brand-deep">
+                Cybersecurity &amp; Zero-Trust
+              </Link>
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* patented intelligence (A-28..A-32) */}
+      <section id="patents" className="scroll-mt-24 container-dq section-y-sm">
+        <Reveal>
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">
+                The IP differential
+              </p>
+              <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
+                Our differential is intellectual property — eight patented method families that ship with the team
+              </h2>
+              {/* A-32: the platforms named · A-28: the four-of-eight affordance */}
+              <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
+                Every engagement starts from configured IP, not a blank page and a staffing plan: graph-native
+                contextual intelligence, quantum-inspired optimization, federated trust, validated ethical decisions and
+                self-evolving learning — developed by our research programme and in production inside Nexus, Quanta,
+                Forge, Sentinel and Ledger.{" "}
+                <Link href="/patented-intelligence/" className="link-animated font-semibold text-brand-deep">
+                  Four of the eight are shown — the method map lists all eight with their gates.
+                </Link>
+              </p>
+            </div>
+            <Link
+              href="/patented-intelligence/"
+              className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-deep"
+            >
+              The method map <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </Reveal>
+        {/* the three IP strategies — how the differential lands commercially */}
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {[
+            {
+              t: "Start from configured IP",
+              d: "Method families arrive pre-configured inside our platforms — controls, evidence generation and delivery patterns already standardized. Budget goes to the 20% that is genuinely yours.",
+            },
+            {
+              t: "Fewer hours to the same outcome",
+              d: "With the heavy lifting in licensed IP, teams start near 80% readiness. The gates then prove the delta against your signed baseline — speed you can audit, not a claim.",
+            },
+            {
+              t: "IP models that fit the deal",
+              d: "License, embed or co-develop: accelerators built specifically for you can carry co-ownership terms, so the IP advantage compounds on your side of the table too.",
+            },
+          ].map((s) => (
+            <Reveal key={s.t}>
+              <div className="h-full rounded-2xl border border-brand/25 bg-brand-tint/40 p-5">
+                <p className="font-display text-[15px] font-semibold text-navy-800">{s.t}</p>
+                <p className="mt-2 text-[12.5px] leading-relaxed text-slate-body/75">{s.d}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {PATENTS.slice(0, 4).map((p, i) => (
+            <Reveal key={p.ref} delay={i * 50}>
+              <Link
+                href="/patented-intelligence/"
+                className="tilt-card group flex h-full flex-col rounded-2xl border border-line bg-white p-5 transition hover:-translate-y-0.5 hover:border-brand/60 shadow-1 hover:shadow-2"
+              >
+                <span className="w-fit rounded-full bg-brand-tint px-2.5 py-0.5 text-[10.5px] font-bold uppercase tracking-wider text-brand-deep">
+                  {p.ref}
+                </span>
+                <p className="mt-3 font-display text-[14.5px] font-semibold leading-snug text-navy-800 group-hover:text-brand-deep">
+                  {p.title}
+                </p>
+                <p className="mt-2 flex-1 text-[12.5px] leading-relaxed text-slate-body/75">{p.oneLiner}</p>
+                {/* A-29: the outcome line — what the method buys you */}
+                <p className="mt-2.5 rounded-lg bg-brand-tint/60 px-3 py-2 text-[12px] font-medium leading-snug text-brand-deep">
+                  {p.outcome}
+                </p>
+                {/* A-31: the service pages the family reinforces */}
+                <span className="mt-2.5 flex flex-wrap gap-1.5">
+                  {p.expertise.slice(0, 2).map((slug) => (
+                    <span key={slug} className="rounded-full border border-line bg-mist/70 px-2 py-0.5 text-[10.5px] font-medium text-navy-800/80">
+                      reinforces: {HUB_BY_SLUG[slug] ?? slug}
+                    </span>
+                  ))}
+                </span>
+                {/* A-30: CTA names the family */}
+                <span className="mt-3 inline-flex items-center gap-1 text-[12px] font-semibold text-brand-deep">
+                  Read {p.ref} <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
+                </span>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* platforms (A-37/38/39 in PlatformTabs) */}
+      <section id="platforms" className="scroll-mt-24 container-dq section-y-sm">
+        <Reveal>
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">
+                Platforms
+              </p>
+              <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
+                Eight proprietary platforms — the productized form of the IP
+              </h2>
+              {/* A-37: the role line under the row */}
+              <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
+                Nexus runs decisions · Forge runs data · Swarm runs agents · Sentinel guards access · Twinverse mirrors
+                operations · Quanta readies compute · Ledger anchors trust · Compass keeps AI inspectable.
+              </p>
+            </div>
+            <Link
+              href="/platforms/"
+              className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-deep"
+            >
+              Platform portfolio <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </Reveal>
+        <div className="mt-8">
+          <PlatformTabs platforms={brand.platforms} />
+        </div>
+      </section>
+
+      {/* evidence library (A-40..A-43, A-53) — proof, after the two offer tracks */}
       <section id="evidence" className="scroll-mt-24 relative overflow-hidden border-y border-line grad-navy-field text-white">
         <div className="bg-field-drift absolute inset-0 dot-grid" aria-hidden="true" />
         <div className="container-dq section-y-sm">
@@ -648,101 +882,6 @@ export default function HomeView() {
         </div>
       </section>
 
-      {/* patented intelligence (A-28..A-32) */}
-      <section id="patents" className="scroll-mt-24 container-dq section-y-sm">
-        <Reveal>
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">
-                Patented intelligence
-              </p>
-              <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
-                Eight patented method families behind every delivery
-              </h2>
-              {/* A-32: the platforms named · A-28: the four-of-eight affordance */}
-              <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-                Graph-native contextual intelligence, quantum-inspired optimization, federated trust, validated ethical
-                decisions and self-evolving learning — developed by our research programme and in production inside
-                Nexus, Quanta, Forge, Sentinel and Ledger.{" "}
-                <Link href="/patented-intelligence/" className="link-animated font-semibold text-brand-deep">
-                  Four of the eight are shown — the method map lists all eight with their gates.
-                </Link>
-              </p>
-            </div>
-            <Link
-              href="/patented-intelligence/"
-              className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-deep"
-            >
-              The method map <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </Reveal>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {PATENTS.slice(0, 4).map((p, i) => (
-            <Reveal key={p.ref} delay={i * 50}>
-              <Link
-                href="/patented-intelligence/"
-                className="tilt-card group flex h-full flex-col rounded-2xl border border-line bg-white p-5 transition hover:-translate-y-0.5 hover:border-brand/60 shadow-1 hover:shadow-2"
-              >
-                <span className="w-fit rounded-full bg-brand-tint px-2.5 py-0.5 text-[10.5px] font-bold uppercase tracking-wider text-brand-deep">
-                  {p.ref}
-                </span>
-                <p className="mt-3 font-display text-[14.5px] font-semibold leading-snug text-navy-800 group-hover:text-brand-deep">
-                  {p.title}
-                </p>
-                <p className="mt-2 flex-1 text-[12.5px] leading-relaxed text-slate-body/75">{p.oneLiner}</p>
-                {/* A-29: the outcome line — what the method buys you */}
-                <p className="mt-2.5 rounded-lg bg-brand-tint/60 px-3 py-2 text-[12px] font-medium leading-snug text-brand-deep">
-                  {p.outcome}
-                </p>
-                {/* A-31: the service pages the family reinforces */}
-                <span className="mt-2.5 flex flex-wrap gap-1.5">
-                  {p.expertise.slice(0, 2).map((slug) => (
-                    <span key={slug} className="rounded-full border border-line bg-mist/70 px-2 py-0.5 text-[10.5px] font-medium text-navy-800/80">
-                      reinforces: {HUB_BY_SLUG[slug] ?? slug}
-                    </span>
-                  ))}
-                </span>
-                {/* A-30: CTA names the family */}
-                <span className="mt-3 inline-flex items-center gap-1 text-[12px] font-semibold text-brand-deep">
-                  Read {p.ref} <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
-                </span>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* platforms (A-37/38/39 in PlatformTabs) */}
-      <section id="platforms" className="scroll-mt-24 container-dq section-y-sm">
-        <Reveal>
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">
-                Platforms
-              </p>
-              <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
-                Eight proprietary platforms in production
-              </h2>
-              {/* A-37: the role line under the row */}
-              <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-                Nexus runs decisions · Forge runs data · Swarm runs agents · Sentinel guards access · Twinverse mirrors
-                operations · Quanta readies compute · Ledger anchors trust · Compass keeps AI inspectable.
-              </p>
-            </div>
-            <Link
-              href="/platforms/"
-              className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-deep"
-            >
-              Platform portfolio <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </Reveal>
-        <div className="mt-8">
-          <PlatformTabs platforms={brand.platforms} />
-        </div>
-      </section>
-
       {/* industries — regime chips + sector explorer (A-33/34/42/56) */}
       <section id="industries" className="scroll-mt-24 border-y border-line bg-mist/60 dot-grid-light">
         <div className="container-dq section-y-sm">
@@ -803,91 +942,6 @@ export default function HomeView() {
           </div>
           {/* A-56: industry → top practices explorer */}
           <HomeIndustryExplorer industries={explorerIndustries} />
-        </div>
-      </section>
-
-      {/* consulting practices (A-23..A-27) */}
-      <section id="consulting" className="scroll-mt-24 border-y border-line bg-white">
-        <div className="container-dq section-y-sm">
-          <Reveal>
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">
-                  Consulting practices
-                </p>
-                {/* A-23 */}
-                <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
-                  Thirteen delivery practices — migration, engineering, cloud, ERP — under the same gate contract
-                </h2>
-                {/* A-24 */}
-                <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-                  Four practice groups cover the classic estate: data, engineering, cloud and ERP. Same contract as the
-                  expertise domains — two-week diagnostic, signed baseline, evidence or stop.
-                </p>
-              </div>
-              <Link
-                href="/consulting/"
-                className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-deep"
-              >
-                All consulting practices <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </Reveal>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {CONSULTING_GROUPS.slice(0, 4).map((g, i) => (
-              <Reveal key={g.name} delay={i * 40}>
-                <Link
-                  href="/consulting/"
-                  className="tilt-card group flex h-full flex-col rounded-2xl border border-line bg-mist/60 p-5 transition hover:-translate-y-0.5 hover:border-brand/60 hover:bg-white shadow-1 hover:shadow-2"
-                >
-                  <span className="flex items-center justify-between">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-navy-800 text-brand-300 transition group-hover:bg-brand group-hover:text-white">
-                      {(() => { const Ic = ConsultIcons[i % ConsultIcons.length]; return <Ic className="h-5 w-5" aria-hidden="true" />; })()}
-                    </span>
-                    {/* A-25: practice-count chip */}
-                    <span className="rounded-full bg-brand-tint px-2.5 py-0.5 text-[10.5px] font-bold text-brand-deep">
-                      {g.services.length} practices
-                    </span>
-                  </span>
-                  <p className="mt-3 font-display text-[15.5px] font-semibold leading-snug text-navy-800 group-hover:text-brand-deep">
-                    {g.name}
-                  </p>
-                  {/* A-25: a real description, not a name list */}
-                  <p className="mt-2 flex-1 text-[12.5px] leading-relaxed text-slate-body/75">{g.desc}</p>
-                  <span className="mt-2 flex flex-wrap gap-1.5">
-                    {g.services.map((sv) => (
-                      <span key={sv.name} className="rounded-full border border-line bg-white px-2 py-0.5 text-[10.5px] font-medium text-navy-800/80">
-                        {sv.name}
-                      </span>
-                    ))}
-                  </span>
-                  {/* A-26: count CTA */}
-                  <span className="mt-3 inline-flex items-center gap-1 text-[12px] font-semibold text-brand-deep">
-                    See the {g.services.length} practices <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
-                  </span>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-          {/* A-27: the bridge between the two taxonomies */}
-          <Reveal>
-            <p className="mt-6 flex flex-wrap items-center gap-1.5 text-[13px] text-slate-body/70">
-              <Scale className="h-4 w-4 shrink-0 text-brand-deep" aria-hidden="true" />
-              <span className="font-semibold text-navy-800">Where consulting meets expertise:</span>
-              <span>platform moves land in</span>
-              <Link href="/services/cloud-edge-platform-engineering/" className="link-animated font-semibold text-brand-deep">
-                Cloud, Edge &amp; Platform Engineering
-              </Link>
-              <span>· decision products in</span>
-              <Link href="/services/data-analytics-lakehouse/" className="link-animated font-semibold text-brand-deep">
-                Data, Analytics &amp; Lakehouse
-              </Link>
-              <span>· zero-trust advisory in</span>
-              <Link href="/services/cybersecurity-zero-trust/" className="link-animated font-semibold text-brand-deep">
-                Cybersecurity &amp; Zero-Trust
-              </Link>
-            </p>
-          </Reveal>
         </div>
       </section>
 
