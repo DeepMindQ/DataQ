@@ -5,7 +5,7 @@
  "template": "service_page",
  "breadcrumb": "Services > Applied AI & Generative AI > LLM Fine-Tuning & Model Operations",
  "seo_title": "LLM Fine-Tuning & Model Operations | Dataq Software",
- "meta_description": "LLM Fine-Tuning & Model Operations from Dataq Software: scope, delivery pattern, platforms and committed outcomes.",
+ "meta_description": "LLM fine-tuning as a factory, not a notebook: decontaminated datasets, multi-task eval gates that block silent regressions, distillation economics and canary-gated promotion.",
  "blocks": [
   {
    "t": "hero",
@@ -30,7 +30,7 @@
   },
   {
    "t": "h2",
-   "x": "Four ways tuning programs produce quietly bad models",
+   "x": "Contamination to silent regressions — how tuning goes quietly bad",
    "sub": "Contamination, off-task regressions, unsigned lineage, no canary"
   },
   {
@@ -39,7 +39,7 @@
   },
   {
    "t": "table",
-   "caption": "LLM Fine-Tuning & Model Operations: failure modes we design against — and the countermeasure that ships with the build",
+   "caption": "Quiet-bad mode with the factory gate that catches it — before it canaries",
    "headers": [
     "Failure mode",
     "What it looks like in production",
@@ -70,7 +70,7 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — the tuning factory from dataset to canary",
+   "x": "Dataset to canary: the tuning factory line",
    "sub": "Curate, decontaminate, train, evaluate, canary — as one pipeline"
   },
   {
@@ -79,7 +79,7 @@
   },
   {
    "t": "arch",
-   "title": "Reference architecture — tuning factory and model ops loop",
+   "title": "Tuning factory and model-ops loop",
    "lanes": [
     "Source data",
     "Dataset factory",
@@ -315,7 +315,7 @@
   },
   {
    "t": "h2",
-   "x": "The model-ops console for tuned fleets",
+   "x": "The model-ops console for the tuned fleet",
    "sub": "Scores, costs and drift for every tuned candidate"
   },
   {
@@ -704,7 +704,8 @@
     }
    ],
    "yMax": 110,
-   "note": ""
+   "note": "",
+   "caption": "A tuned 14B holds 94% of frontier quality at a serving-cost index of 24, and the distilled 8B holds 91% at 11 — the multi-task eval gates decide which size earns production traffic per task, not habit."
   },
   {
    "t": "explorer",
@@ -1198,7 +1199,7 @@
   },
   {
    "t": "h2",
-   "x": "Training and serving defaults — and when we deviate",
+   "x": "What the factory runs as standard — training, serving and the signed exceptions",
    "sub": "The default factory config, and the deviations we sign"
   },
   {
@@ -1207,7 +1208,7 @@
   },
   {
    "t": "table",
-   "caption": "LLM Fine-Tuning & Model Operations: default stack and the conditions under which we deviate",
+   "caption": "Training and serving defaults — deviation condition and signer",
    "headers": [
     "Layer",
     "Default choice",
@@ -1248,12 +1249,12 @@
   },
   {
    "t": "h2",
-   "x": "Model promotion gates — what evidence blocks a bad tune",
+   "x": "What blocks a bad tune: the promotion evidence",
    "sub": "The matrix results a promotion carries"
   },
   {
    "t": "table",
-   "caption": "Release gates for LLM Fine-Tuning & Model Operations — the evidence each demands",
+   "caption": "Promotion evidence per gate — eval deltas, contamination proof, canary scope",
    "headers": [
     "Gate",
     "Question it answers",
@@ -1323,7 +1324,7 @@
   },
   {
    "t": "h2",
-   "x": "Factory build-out, week by week",
+   "x": "Factory build-out: data pipeline to canary cadence",
    "sub": "From dataset audit to canary ring, sequenced"
   },
   {
@@ -1357,7 +1358,7 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — data platform to serving mesh",
+   "x": "Data platform to serving mesh — the factory’s seams",
    "sub": "Where the factory touches the estate"
   },
   {
@@ -1461,6 +1462,31 @@
     ]
    ],
    "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "How do you prevent training-data contamination?",
+     "Decontamination is the first gate: datasets are deduplicated against the eval suite and screened for benchmark leakage before a run starts. A tune that cannot prove a clean dataset does not reach the eval gates."
+    ],
+    [
+     "What stops a tune from quietly regressing on tasks we did not test?",
+     "The eval suite is multi-task and versioned — a candidate must hold the floor on every task family, not just average well. Regressions below the floor block promotion, and the console shows the per-task deltas."
+    ],
+    [
+     "Is fine-tuning always better than prompting a frontier model?",
+     "No — the chart is the argument: we size the smallest model whose quality holds the floor for the task, and distillation happens only where the eval deltas justify it. The factory prices quality against serving cost per task."
+    ],
+    [
+     "Can our team run the factory after handover?",
+     "Yes — dataset lineage, eval harness, canary cadence and the promotion gates are documented and owned by your team at handover; we support the first two promotion cycles."
+    ],
+    [
+     "How do you handle regulated data in training sets?",
+     "The data path inherits the platform’s controls: consent and retention are checked at dataset admission, lineage runs from source to canary, and the governance overlay names what an examiner can reconstruct."
+    ]
+   ]
   },
   {
    "t": "cta",
@@ -1604,5 +1630,9 @@
    "url": "/case-studies/tel-03/",
    "ind": "Telecom, Media & Entertainment"
   }
- ]
+ ],
+ "hero_chip": {
+  "head": "Tuning factory · eval-gated",
+  "sub": "14B tuned: 94% quality at 24% cost index"
+ }
 }

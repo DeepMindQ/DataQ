@@ -5,7 +5,7 @@
  "template": "service_page",
  "breadcrumb": "Services > Agentic AI & Hyperautomation > Hyperautomation & Systems Integration",
  "seo_title": "Hyperautomation & Systems Integration | Dataq Software",
- "meta_description": "Hyperautomation & Systems Integration from Dataq Software: scope, delivery pattern, platforms and committed outcomes.",
+ "meta_description": "Contract-first integration seams for automation: typed contracts, exactly-once writes with receipts, drift monitors and month-end rehearsals that prove the close holds.",
  "blocks": [
   {
    "t": "hero",
@@ -30,7 +30,7 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that break seams at month-end",
+   "x": "Schema drift to unkeyed writes — what breaks seams at month-end",
    "sub": "Schema drift, semantic drift, volume cliffs and the unkeyed write"
   },
   {
@@ -39,7 +39,7 @@
   },
   {
    "t": "table",
-   "caption": "Hyperautomation & Systems Integration: failure modes we design against — and the countermeasure that ships with the build",
+   "caption": "Seam failure mode, shipped countermeasure, and the rehearsal that proves it holds",
    "headers": [
     "Failure mode",
     "What it looks like in production",
@@ -70,7 +70,7 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — typed seams with replay and drift monitors",
+   "x": "Typed seams with replay: registry, gateway, ledger, monitors",
    "sub": "Registry, gateway, ledger and monitors as the load-bearing structure"
   },
   {
@@ -79,7 +79,7 @@
   },
   {
    "t": "arch",
-   "title": "Reference architecture — contracted integration plane",
+   "title": "Contracted integration plane",
    "lanes": [
     "Consumers",
     "Contract layer",
@@ -702,7 +702,8 @@
     }
    ],
    "yMax": 800,
-   "note": ""
+   "note": "",
+   "caption": "Success rate dips only to 99.1% on close day while p95 latency peaks at 780ms and replay depth crests at 41 — the back-pressure design absorbing the close instead of dropping writes."
   },
   {
    "t": "explorer",
@@ -1197,7 +1198,7 @@
   },
   {
    "t": "h2",
-   "x": "Integration defaults — and documented deviations",
+   "x": "Standard seam patterns by class — and the case where a seam earns an exception",
    "sub": "The default patterns, and where we sign deviations"
   },
   {
@@ -1206,7 +1207,7 @@
   },
   {
    "t": "table",
-   "caption": "Hyperautomation & Systems Integration: default stack and the conditions under which we deviate",
+   "caption": "Pattern defaults per seam class — deviation condition and accountable signer",
    "headers": [
     "Layer",
     "Default choice",
@@ -1242,12 +1243,12 @@
   },
   {
    "t": "h2",
-   "x": "Seam release gates — evidence before the next close",
+   "x": "Evidence before the next close: what a seam must prove",
    "sub": "What a seam must prove before month-end load"
   },
   {
    "t": "table",
-   "caption": "Release gates for Hyperautomation & Systems Integration — the evidence each demands",
+   "caption": "Pre-close evidence per gate — drift, replay and latency proof",
    "headers": [
     "Gate",
     "Question it answers",
@@ -1317,7 +1318,7 @@
   },
   {
    "t": "h2",
-   "x": "Seam by seam, week by week",
+   "x": "Contract to rehearsal — the seam-by-seam build order",
    "sub": "The build sequence from contract to rehearsal"
   },
   {
@@ -1351,7 +1352,7 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — the systems list, honestly named",
+   "x": "The systems list, honestly named — ERP to queues",
    "sub": "ERP, CRM, ITSM, comms and queues — named, typed, owned"
   },
   {
@@ -1454,6 +1455,31 @@
     ]
    ],
    "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "How do you handle schema changes in the ERP we integrate with?",
+     "Drift monitors diff every contract against live schemas. A detected drift freezes the seam, the registry serves the migration path, and the change is rehearsed against production-shaped volume before the next close."
+    ],
+    [
+     "Can you guarantee exactly-once writes across three systems?",
+     "Yes — typed contracts with idempotency keys and a hash-linked ledger give every write a receipt. Replay returns the receipt, never a duplicate, and the ledger reconstructs the write path for audit."
+    ],
+    [
+     "What happens when month-end volume spikes?",
+     "The close is replayed as a rehearsal before it is trusted. Back-pressure and replay queues are sized from that rehearsal, so D-day runs on evidence — the chart shows the target shape under load."
+    ],
+    [
+     "Do we need to replace our existing middleware?",
+     "No. The seam layer sits on your existing middleware where it qualifies; the defaults table names exactly when a gateway deviation is worth signing and who signs it."
+    ],
+    [
+     "How is integration debt made visible to management?",
+     "Every seam carries a fragility index in the console — drift count, key coverage, replay depth — so debt is priced and scheduled rather than discovered at close."
+    ]
+   ]
   },
   {
    "t": "cta",
@@ -1597,5 +1623,9 @@
    "url": "/case-studies/log-01/",
    "ind": "Logistics & Supply Chain"
   }
- ]
+ ],
+ "hero_chip": {
+  "head": "Typed seams · exactly-once",
+  "sub": "99.1% success at D-day · receipts on every write"
+ }
 }

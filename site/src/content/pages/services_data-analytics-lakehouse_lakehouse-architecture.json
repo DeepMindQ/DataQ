@@ -5,7 +5,7 @@
  "template": "service_page",
  "breadcrumb": "Services > Data, Analytics & Lakehouse > Lakehouse Architecture & Migration",
  "seo_title": "Lakehouse Architecture & Migration | Dataq Software",
- "meta_description": "Lakehouse Architecture & Migration from Dataq Software: scope, delivery pattern, platforms and committed outcomes.",
+ "meta_description": "Lakehouse architecture as a governance decision: gated promotion from immutable bronze to accountable gold, freshness and cost on one console, and formats signed per estate.",
  "blocks": [
   {
    "t": "hero",
@@ -39,7 +39,7 @@
   },
   {
    "t": "table",
-   "caption": "Lakehouse Architecture & Migration: failure modes we design against — and the countermeasure that ships with the build",
+   "caption": "Swamp mode with the promotion or format control that prevents it",
    "headers": [
     "Failure mode",
     "What it looks like in production",
@@ -70,7 +70,7 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — the promotion path from bronze to gold",
+   "x": "The promotion path: bronze to gold, gate by gate",
    "sub": "Validator, conformance, gates and marts as one path"
   },
   {
@@ -79,7 +79,7 @@
   },
   {
    "t": "arch",
-   "title": "Reference architecture — lakehouse with gated promotion",
+   "title": "Lakehouse with gated promotion",
    "lanes": [
     "Producers",
     "Landing",
@@ -321,7 +321,7 @@
   },
   {
    "t": "h2",
-   "x": "The lakehouse console — freshness and cost on one screen",
+   "x": "Freshness and cost on one screen — the lakehouse console",
    "sub": "Per-tier freshness and cost as standing numbers"
   },
   {
@@ -633,8 +633,8 @@
      ]
     }
    ],
-   "badge": "Interactive · ratchet model",
-   "note": "Reference program model: wave bands and reconciliation targets from delivery benchmarks, not client telemetry."
+   "badge": "Interactive · promotion model",
+   "note": "Reference program model: promotion thresholds and freshness bands from delivery history, not client data."
   },
   {
    "t": "h2",
@@ -676,7 +676,8 @@
     }
    ],
    "yMax": 50,
-   "note": ""
+   "note": "",
+   "caption": "Latency falls with every promotion — 42s raw bronze to 2s gold aggregates — while compression climbs to 6.5x: the gated path pays for itself in both query economics and the honesty of what gold actually means."
   },
   {
    "t": "explorer",
@@ -1180,7 +1181,7 @@
   },
   {
    "t": "h2",
-   "x": "Table-format defaults — and documented deviations",
+   "x": "Table formats by tier — the standard choice and the case for the alternative",
    "sub": "The default formats, and where we sign deviations"
   },
   {
@@ -1189,7 +1190,7 @@
   },
   {
    "t": "table",
-   "caption": "Lakehouse Architecture & Migration: default stack and the conditions under which we deviate",
+   "caption": "Format and layout defaults per tier — deviation condition and signer",
    "headers": [
     "Layer",
     "Default choice",
@@ -1225,12 +1226,12 @@
   },
   {
    "t": "h2",
-   "x": "Lakehouse release gates — evidence before promotion",
+   "x": "Evidence before promotion: the lakehouse gates",
    "sub": "What a tier must prove before consumers rely on it"
   },
   {
    "t": "table",
-   "caption": "Release gates for Lakehouse Architecture & Migration — the evidence each demands",
+   "caption": "Promotion evidence per gate — quality, lineage and consumer contract",
    "headers": [
     "Gate",
     "Question it answers",
@@ -1300,7 +1301,7 @@
   },
   {
    "t": "h2",
-   "x": "Layers in order, week by week",
+   "x": "Layers in order: the build sequence",
    "sub": "The build sequence from bronze policy to certified gold"
   },
   {
@@ -1334,7 +1335,7 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — sources, catalogs and consumers",
+   "x": "Sources, catalogs, consumers — the promotion path’s endpoints",
    "sub": "What the platform touches, honestly named"
   },
   {
@@ -1438,6 +1439,31 @@
     ]
    ],
    "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Why do lakehouses become swamps?",
+     "Because everything landed and nothing was promoted: no gates between bronze and gold, no contracts to consumers, no freshness honesty. The swamp is a governance failure before it is a technology one — the promotion path is the fix."
+    ],
+    [
+     "What does \"bronze is immutable, gold is accountable\" mean?",
+     "Bronze preserves the source of record exactly, append-only, for replay and audit; gold carries certified, contracted tables with named owners and SLOs. The gates between them decide what deserves to be trusted."
+    ],
+    [
+     "How do you choose the table format?",
+     "The defaults table names the format per tier with the conditions under which we deviate — the decision is about concurrency, time travel and ecosystem fit, signed per estate rather than a fashion choice."
+    ],
+    [
+     "What happens to existing warehouses during migration?",
+     "They become consumers of gold: marts are rebuilt on the promotion path with parity checks, and the migration console tracks freshness and cost as the legacy warehouse shrinks."
+    ],
+    [
+     "What does the platform team inherit?",
+     "The gated promotion path, the format decisions with their signatures, the console and the lineage overlay — a lakehouse where every gold table can explain why it deserves trust."
+    ]
+   ]
   },
   {
    "t": "cta",
@@ -1581,5 +1607,9 @@
    "url": "/case-studies/log-01/",
    "ind": "Logistics & Supply Chain"
   }
- ]
+ ],
+ "hero_chip": {
+  "head": "Bronze immutable · gold accountable",
+  "sub": "p95 scans 42→2s by tier · compression to 6.5x"
+ }
 }

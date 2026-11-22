@@ -5,7 +5,7 @@
  "template": "service_page",
  "breadcrumb": "Services > Applied AI & Generative AI > RAG & Enterprise Knowledge Systems",
  "seo_title": "RAG & Enterprise Knowledge Systems | Dataq Software",
- "meta_description": "RAG & Enterprise Knowledge Systems from Dataq Software: scope, delivery pattern, platforms and committed outcomes.",
+ "meta_description": "Permission-aware RAG that cites or refuses: corpus engineering, versioned adversarial eval suites, citation precision you can audit and retrieval that respects your ACLs.",
  "blocks": [
   {
    "t": "hero",
@@ -30,7 +30,7 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that quietly kill enterprise RAG",
+   "x": "The four quiet killers of enterprise RAG",
    "sub": "Permission leaks, stale canon, multi-hop pretense, unsampled eval"
   },
   {
@@ -39,7 +39,7 @@
   },
   {
    "t": "table",
-   "caption": "RAG & Enterprise Knowledge Systems: failure modes we design against — and the countermeasure that ships with the build",
+   "caption": "Quiet-killer mode with the corpus or permission control that closes it",
    "headers": [
     "Failure mode",
     "What it looks like in production",
@@ -70,7 +70,7 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — permission-aware retrieval with citations",
+   "x": "Permission-aware retrieval — citations or refusal",
    "sub": "Index, permission fold, planner and grounded generation as one path"
   },
   {
@@ -79,7 +79,7 @@
   },
   {
    "t": "arch",
-   "title": "Reference architecture — permission-aware RAG with citations",
+   "title": "Permission-aware RAG with citations",
    "lanes": [
     "Estate",
     "Ingest & contracts",
@@ -337,7 +337,7 @@
   },
   {
    "t": "h2",
-   "x": "The operating console for a retrieval estate",
+   "x": "Operating the retrieval estate: the console",
    "sub": "Permission probes, freshness and citation coverage as headlines"
   },
   {
@@ -697,7 +697,8 @@
    ],
    "unit": "%",
    "yMax": 100,
-   "note": ""
+   "note": "",
+   "caption": "Across four eval-suite generations recall@5 climbs 78→88%, groundedness 86→94% and citation precision 84→93% — and each suite generation includes the adversarial queries the previous one fooled."
   },
   {
    "t": "explorer",
@@ -1200,7 +1201,7 @@
   },
   {
    "t": "table",
-   "caption": "RAG & Enterprise Knowledge Systems: default stack and the conditions under which we deviate",
+   "caption": "Stack defaults — the deviation condition and the signer",
    "headers": [
     "Layer",
     "Default choice",
@@ -1246,7 +1247,7 @@
   },
   {
    "t": "table",
-   "caption": "Release gates for RAG & Enterprise Knowledge Systems — the evidence each demands",
+   "caption": "Promotion evidence per gate — recall, groundedness, citation precision",
    "headers": [
     "Gate",
     "Question it answers",
@@ -1316,7 +1317,7 @@
   },
   {
    "t": "h2",
-   "x": "How the build runs, week by week",
+   "x": "The build sequence: corpus, eval suite, then scale",
    "sub": "Corpus first, permissions second, generation last"
   },
   {
@@ -1453,6 +1454,31 @@
     ]
    ],
    "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "How do you stop the assistant from answering beyond a user’s permissions?",
+     "Permission fidelity is enforced at retrieval, not at the prompt: the index carries ACLs from the source systems, and a query only retrieves what the requesting user could have opened. Every answer traces to the documents it cited."
+    ],
+    [
+     "What does the assistant do when the corpus does not contain the answer?",
+     "It refuses. Groundedness gates force a refusal when retrieval cannot support an answer with citations — a measured refusal is the correct output, and refusal rates are a console metric, not a failure to hide."
+    ],
+    [
+     "How do you keep answer quality from degrading as documents change?",
+     "The eval suite is versioned and adversarial: each generation includes the queries that fooled the last one, and corpus changes re-run the suite before promotion. Quality is tracked per suite generation, which the chart shows."
+    ],
+    [
+     "Can this work with our existing document stores and ACLs?",
+     "Yes — the connector layer ingests from your stores with their ACLs intact; corpus engineering (dedup, staleness, canonical docs) is the first workstream because it decides answer quality before any model choice does."
+    ],
+    [
+     "What does our team own at handover?",
+     "The corpus pipeline, the eval suite, the console and the promotion gates. Your team can add a document family, re-run the suite and promote — we support the first two cycles, then step back."
+    ]
+   ]
   },
   {
    "t": "cta",
@@ -1596,5 +1622,9 @@
    "url": "/case-studies/tel-03/",
    "ind": "Telecom, Media & Entertainment"
   }
- ]
+ ],
+ "hero_chip": {
+  "head": "Cites or refuses · permission-aware",
+  "sub": "88% recall@5 · 93% citation precision at suite v4"
+ }
 }

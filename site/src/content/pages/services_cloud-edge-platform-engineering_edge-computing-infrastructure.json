@@ -5,7 +5,7 @@
  "template": "service_page",
  "breadcrumb": "Services > Cloud, Edge & Platform Engineering > Edge Computing & Distributed Infrastructure",
  "seo_title": "Edge Computing & Distributed Infrastructure | Dataq Software",
- "meta_description": "Edge Computing & Distributed Infrastructure from Dataq Software: scope, delivery pattern, platforms and committed outcomes.",
+ "meta_description": "Edge infrastructure designed for the partition: regional clusters with store-and-forward, autonomy budgets per site class, rehearsed reconciliation and rollout waves with drill evidence.",
  "blocks": [
   {
    "t": "hero",
@@ -30,7 +30,7 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that make edge estates fragile",
+   "x": "Fragile by default: the four edge failure modes",
    "sub": "Unbounded autonomy, silent sites, firmware drift, fleet-wide rollouts"
   },
   {
@@ -39,7 +39,7 @@
   },
   {
    "t": "table",
-   "caption": "Edge Computing & Distributed Infrastructure: failure modes we design against — and the countermeasure that ships with the build",
+   "caption": "Fragility mode with the site control that prevents it — and the drill that proves it",
    "headers": [
     "Failure mode",
     "What it looks like in production",
@@ -70,7 +70,7 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — regional clusters with store-and-forward",
+   "x": "Regional clusters with store-and-forward — the edge spine",
    "sub": "The topology from site to regional cluster to cloud"
   },
   {
@@ -79,7 +79,7 @@
   },
   {
    "t": "arch",
-   "title": "Reference architecture — edge infrastructure stack",
+   "title": "Edge infrastructure stack",
    "lanes": [
     "Sites",
     "Site runtime",
@@ -319,7 +319,7 @@
   },
   {
    "t": "h2",
-   "x": "The edge console — sites as individuals",
+   "x": "Sites as individuals — the edge console",
    "sub": "Per-site posture, not fleet averages"
   },
   {
@@ -698,7 +698,8 @@
     }
    ],
    "yMax": 180,
-   "note": ""
+   "note": "",
+   "caption": "Regional round-trips hold 12ms at metro edge and 90ms at remote gateways, while autonomous operation stretches from 4 hours (metro) to a full week (remote) — each site class carries its own partition budget."
   },
   {
    "t": "explorer",
@@ -1139,7 +1140,7 @@
   },
   {
    "t": "h2",
-   "x": "Edge defaults — and documented deviations",
+   "x": "Site-class standards — autonomy budgets, updates and the signed exceptions",
    "sub": "The default stack, and the deviations we sign"
   },
   {
@@ -1148,7 +1149,7 @@
   },
   {
    "t": "table",
-   "caption": "Edge Computing & Distributed Infrastructure: default stack and the conditions under which we deviate",
+   "caption": "Edge defaults per site class — deviation condition and signer",
    "headers": [
     "Layer",
     "Default choice",
@@ -1184,12 +1185,12 @@
   },
   {
    "t": "h2",
-   "x": "Edge release gates — evidence before a wave",
+   "x": "Evidence before a wave: the rollout gates",
    "sub": "Autonomy tests and canary evidence before fleet rollout"
   },
   {
    "t": "table",
-   "caption": "Release gates for Edge Computing & Distributed Infrastructure — the evidence each demands",
+   "caption": "Rollout evidence per gate — partition drills, autonomy, reconciliation",
    "headers": [
     "Gate",
     "Question it answers",
@@ -1259,7 +1260,7 @@
   },
   {
    "t": "h2",
-   "x": "Waves and windows, week by week",
+   "x": "Waves and windows: the rollout sequence",
    "sub": "The rollout cadence against site maintenance windows"
   },
   {
@@ -1293,7 +1294,7 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — sites, backends and the device fleet",
+   "x": "Sites, backends, device fleet — built for the partition",
    "sub": "What talks to what, across the store-and-forward seam"
   },
   {
@@ -1396,6 +1397,31 @@
     ]
    ],
    "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "How do sites keep operating when the network drops?",
+     "Store-and-forward is the default: each site class carries an autonomy budget — 4 hours at metro edge, a week at remote gateways — and reconciliation is rehearsed, so a partition is an operating event, not an outage."
+    ],
+    [
+     "How do you update software on thousands of scattered sites?",
+     "In waves with windows: staged rollout per site class, canary sites first, rollback rehearsed per wave. The gates before a wave demand partition-drill evidence, not just a green build."
+    ],
+    [
+     "What happens to data written during a partition?",
+     "It queues locally with ordering and idempotency guarantees, then reconciles at reconnect — duplicate writes are absorbed by keys, and the console shows reconciliation depth per site as it drains."
+    ],
+    [
+     "Can you handle heterogeneous hardware at the edge?",
+     "Heterogeneity is the norm, so the platform pins a device contract per site class: what runs, what observes, what updates. The fleet-security overlay covers identity, attestation and update signing per class."
+    ],
+    [
+     "Who operates the fleet day to day?",
+     "Fleet operations runs the console — sites as individuals with their own state, versions and autonomy posture — plus the drill calendar. We operate alongside through the first waves, then hand over."
+    ]
+   ]
   },
   {
    "t": "cta",
@@ -1539,5 +1565,9 @@
    "url": "/case-studies/tel-02/",
    "ind": "Telecom, Media & Entertainment"
   }
- ]
+ ],
+ "hero_chip": {
+  "head": "Partition-first design",
+  "sub": "12–90ms regional RTT · 4–168h autonomous operation"
+ }
 }

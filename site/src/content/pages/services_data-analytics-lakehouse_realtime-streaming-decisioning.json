@@ -5,7 +5,7 @@
  "template": "service_page",
  "breadcrumb": "Services > Data, Analytics & Lakehouse > Real-Time Streaming & Event-Driven Decisioning",
  "seo_title": "Real-Time Streaming & Event-Driven Decisioning | Dataq Software",
- "meta_description": "Real-Time Streaming & Event-Driven Decisioning from Dataq Software: scope, delivery pattern, platforms and committed outcomes.",
+ "meta_description": "Real-time decisioning as a budget: 150ms across six hops with p99 headroom measured, exactly-once actions proven by replay, and decisions auditable hop by hop.",
  "blocks": [
   {
    "t": "hero",
@@ -39,7 +39,7 @@
   },
   {
    "t": "table",
-   "caption": "Real-Time Streaming & Event-Driven Decisioning: failure modes we design against — and the countermeasure that ships with the build",
+   "caption": "Lie mode with the budget or exactly-once control that prevents it",
    "headers": [
     "Failure mode",
     "What it looks like in production",
@@ -70,7 +70,7 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — the decision path and its budget",
+   "x": "The decision path and its budget: six hops, 150ms",
    "sub": "Bus, state, rules and actions under one budget"
   },
   {
@@ -79,7 +79,7 @@
   },
   {
    "t": "arch",
-   "title": "Reference architecture — streaming decision fabric",
+   "title": "Streaming decision fabric",
    "lanes": [
     "Producers",
     "Transport",
@@ -314,7 +314,7 @@
   },
   {
    "t": "h2",
-   "x": "The streaming console — p99 and exactly-once as the headline",
+   "x": "p99 and exactly-once as the headline — the streaming console",
    "sub": "Budgets, drops and parity as standing numbers"
   },
   {
@@ -758,7 +758,8 @@
     }
    ],
    "yMax": 50,
-   "note": ""
+   "note": "",
+   "caption": "The 150ms budget allocates across six hops — 15ms consume, 40ms decide, 30ms act — and measured p99 holds 3–9ms headroom on every hop; the console also proves exactly-once, because a fast lie is still a lie."
   },
   {
    "t": "explorer",
@@ -1262,7 +1263,7 @@
   },
   {
    "t": "h2",
-   "x": "Streaming defaults — and documented deviations",
+   "x": "The streaming standard — budgets, exactly-once and the deviations",
    "sub": "The default stack, and where we sign deviations"
   },
   {
@@ -1271,7 +1272,7 @@
   },
   {
    "t": "table",
-   "caption": "Real-Time Streaming & Event-Driven Decisioning: default stack and the conditions under which we deviate",
+   "caption": "Streaming defaults per hop — deviation condition and signer",
    "headers": [
     "Layer",
     "Default choice",
@@ -1307,12 +1308,12 @@
   },
   {
    "t": "h2",
-   "x": "Streaming release gates — evidence before live decisions",
+   "x": "Evidence before live decisions: the streaming gates",
    "sub": "What a decision path must prove before production"
   },
   {
    "t": "table",
-   "caption": "Release gates for Real-Time Streaming & Event-Driven Decisioning — the evidence each demands",
+   "caption": "Live-decision evidence per gate — p99 budget adherence, replay proof, state consistency",
    "headers": [
     "Gate",
     "Question it answers",
@@ -1382,7 +1383,7 @@
   },
   {
    "t": "h2",
-   "x": "Budget first, then hops, week by week",
+   "x": "Budget first, then hops: the build sequence",
    "sub": "The build sequence from budget to live decisioning"
   },
   {
@@ -1416,7 +1417,7 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — streams, state and the action systems",
+   "x": "Streams, state, action systems — six hops, one budget",
    "sub": "What the path touches, honestly named"
   },
   {
@@ -1519,6 +1520,31 @@
     ]
    ],
    "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "What does \"real-time is a budget\" mean?",
+     "A number per hop: 150ms allocated across consume, validate, state update, enrich, decide and act. Measured p99 must hold headroom on each hop — a path without a budget is marketing, and the console shows where the money goes."
+    ],
+    [
+     "How do you guarantee exactly-once decisions?",
+     "Idempotent state updates and transactional sinks: a replayed event produces the same decision once, and the gates require replay proof before live decisions. Duplicate actions are a correctness failure, not a volume footnote."
+    ],
+    [
+     "How are decisions made auditable?",
+     "Every decision carries its inputs, the policy version and the state snapshot it saw — incident review reconstructs the decision path hop by hop, which the governance overlay treats as a first-class artifact."
+    ],
+    [
+     "What happens when a hop exceeds its budget?",
+     "The budget degrades gracefully: degrade paths — skip enrichment, cached decisions — are pre-built and rehearsed, and sustained breach is a gate metric. Real-time that quietly becomes batch-at-scale is the failure the budget prevents."
+    ],
+    [
+     "Can this overlay our existing streaming stack?",
+     "Yes — the integration surface names your streams, state stores and action systems; budgets overlay the existing topology, and the defaults table names where a hop earns a deviation."
+    ]
+   ]
   },
   {
    "t": "cta",
@@ -1662,5 +1688,9 @@
    "url": "/case-studies/log-01/",
    "ind": "Logistics & Supply Chain"
   }
- ]
+ ],
+ "hero_chip": {
+  "head": "150ms budget · six hops",
+  "sub": "p99 holds headroom on every hop · exactly-once"
+ }
 }

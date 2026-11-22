@@ -5,7 +5,7 @@
  "template": "service_page",
  "breadcrumb": "Services > Cloud, Edge & Platform Engineering > High-Performance & Mission-Critical Systems",
  "seo_title": "High-Performance & Mission-Critical Systems | Dataq Software",
- "meta_description": "High-Performance & Mission-Critical Systems from Dataq Software: scope, delivery pattern, platforms and committed outcomes.",
+ "meta_description": "Mission-critical systems run on budgeted tails: p99 allocated per hop, failover timed and evidenced in drills, and release gates that read the evidence before traffic moves.",
  "blocks": [
   {
    "t": "hero",
@@ -30,7 +30,7 @@
   },
   {
    "t": "h2",
-   "x": "Four failure modes that make high availability paper",
+   "x": "Paper availability: the four failure modes behind it",
    "sub": "Untested redundancy, ignored tails, unmodeled capacity, unowned budgets"
   },
   {
@@ -39,7 +39,7 @@
   },
   {
    "t": "table",
-   "caption": "High-Performance & Mission-Critical Systems: failure modes we design against — and the countermeasure that ships with the build",
+   "caption": "Paper-availability mode with the budget or drill control that prevents it",
    "headers": [
     "Failure mode",
     "What it looks like in production",
@@ -70,7 +70,7 @@
   },
   {
    "t": "h2",
-   "x": "Reference architecture — the budgeted mission-critical tier",
+   "x": "The budgeted mission-critical tier: budgets to drills",
    "sub": "SLAs, hop tables, redundancy fabric and the load program as one tier"
   },
   {
@@ -79,7 +79,7 @@
   },
   {
    "t": "arch",
-   "title": "Reference architecture — mission-critical tier",
+   "title": "The mission-critical tier",
    "lanes": [
     "Business commitments",
     "Latency engineering",
@@ -324,7 +324,7 @@
   },
   {
    "t": "h2",
-   "x": "The mission-critical console — availability with its tail",
+   "x": "Availability with its tail — the mission-critical console",
    "sub": "p99.9 next to uptime, with the hop that eats the tail named"
   },
   {
@@ -663,7 +663,8 @@
     }
    ],
    "yMax": 70,
-   "note": ""
+   "note": "",
+   "caption": "The p99 budget allocates 200ms down the stack — 60ms for core logic, 40 for data read — and measured latency holds headroom on every hop, which is what mission-critical means when the tail is budgeted like a contract."
   },
   {
    "t": "explorer",
@@ -1104,7 +1105,7 @@
   },
   {
    "t": "h2",
-   "x": "Performance defaults — and documented deviations",
+   "x": "The tier standard — budgets, drills and the deviations we sign",
    "sub": "The default tier patterns, and where we sign deviations"
   },
   {
@@ -1113,7 +1114,7 @@
   },
   {
    "t": "table",
-   "caption": "High-Performance & Mission-Critical Systems: default stack and the conditions under which we deviate",
+   "caption": "Tier defaults — deviation condition, tail tolerance and signer",
    "headers": [
     "Layer",
     "Default choice",
@@ -1149,12 +1150,12 @@
   },
   {
    "t": "h2",
-   "x": "Tier release gates — evidence before traffic",
+   "x": "Evidence before traffic: the tier gates",
    "sub": "Drill evidence and capacity proof before production load"
   },
   {
    "t": "table",
-   "caption": "Release gates for High-Performance & Mission-Critical Systems — the evidence each demands",
+   "caption": "Traffic evidence per gate — budget adherence, failover timing, drill results",
    "headers": [
     "Gate",
     "Question it answers",
@@ -1224,7 +1225,7 @@
   },
   {
    "t": "h2",
-   "x": "Budgets to drills, week by week",
+   "x": "Budgets to drills: the build sequence",
    "sub": "The build sequence from SLA signing to drill certification"
   },
   {
@@ -1258,7 +1259,7 @@
   },
   {
    "t": "h2",
-   "x": "Integration surface — network, data and the client estate",
+   "x": "Network, data, client estate — where the budgets land",
    "sub": "Every hop the budget pays for, honestly named"
   },
   {
@@ -1362,6 +1363,31 @@
     ]
    ],
    "phase3_deep": true
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "What makes availability \"paper\" versus real?",
+     "Paper availability has no tail budget and no drills: a 99.9% claim with unmeasured p99 hides the one-in-a-thousand experience. We allocate latency budgets per hop, measure against them, and prove failover in timed drills."
+    ],
+    [
+     "How do you set latency budgets across teams?",
+     "Budgets are contracts: 200ms allocates down the stack — 25ms edge, 15 auth, 60 core logic, 40 read, 40 write, 20 response — each hop owning its number, and a breach consumes budget the way an SLO consumes error budget."
+    ],
+    [
+     "What does a failover drill actually prove?",
+     "Timing and evidence: the drill measures time-to-standby, data-loss window and client behavior under failover, producing the artifact the release gate reads — \"we have redundancy\" becomes a number."
+    ],
+    [
+     "Can you work with our existing infrastructure?",
+     "Yes — the integration surface names the network, data and client estates; budgets overlay the existing topology, and the defaults table names where a component earns a deviation from the tier standard."
+    ],
+    [
+     "Who owns the tier after handover?",
+     "The mission-critical platform team inherits the budgets, the drill calendar, the console and the gate evidence — the operating rhythm continues without us, on the same numbers."
+    ]
+   ]
   },
   {
    "t": "cta",
@@ -1505,5 +1531,9 @@
    "url": "/case-studies/tel-02/",
    "ind": "Telecom, Media & Entertainment"
   }
- ]
+ ],
+ "hero_chip": {
+  "head": "Budgeted tails · drill-proven",
+  "sub": "p99 budgets per hop · failover evidenced, not assumed"
+ }
 }
