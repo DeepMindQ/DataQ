@@ -314,26 +314,27 @@ export default function HomeView() {
         <div className="relative container-dq grid gap-10 pb-14 pt-16 sm:pt-24 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center">
           <div>
             <Reveal className="hero-choreo">
-              {/* A-02: positioning eyebrow, not a category label */}
+              {/* A-02: category chips, TCS-boilerplate vocabulary — the descriptor lives here, not in the H1 */}
               <p className="rise-item text-[12px] font-semibold uppercase tracking-[0.22em] text-brand-300" style={{ ["--rise-delay" as string]: "40ms" }}>
-                IT services · consulting · patented IP
+                IT services · consulting · business solutions
               </p>
-              {/* A-01: buyer + mechanism + proof, orange emphasis on "evidenced" */}
+              {/* A-01: brand line, not a category sentence — Infosys/TCS pattern (aspiration up top, category below) */}
               <h1 className="text-display-1 mt-4 max-w-3xl text-white">
                 <span className="line-mask block" style={{ ["--rise-delay" as string]: "120ms" }}>
-                  <span className="line-mask-inner block">IT services and consulting —</span>
+                  <span className="line-mask-inner block">Ambition, engineered.</span>
                 </span>
                 <span className="line-mask block" style={{ ["--rise-delay" as string]: "260ms" }}>
                   <span className="line-mask-inner block">
-                    built on <span className="grad-text">patented IP</span>, proven with evidence.
+                    Outcomes, <span className="grad-text">proven</span>.
                   </span>
                 </span>
               </h1>
               {/* A-03: one promise sentence + one proof sentence */}
               <p className="rise-item measure mt-5 text-body-lg leading-relaxed text-white/70" style={{ ["--rise-delay" as string]: "560ms" }}>
-                Dataq Software is an IT services and consulting company. We advise on strategy, build the systems and
-                run the operations — from ERP and cloud to AI and data — and prove every outcome against a metric your
-                board already tracks. The heavy lifting is done by patented IP, not just billable hours.
+                Dataq&rsquo;s thirteen consulting practices and fifty-four deep-tech expertise domains — from ERP and
+                cloud to AI and data — are powered by eight patented method families pre-configured in eight proprietary
+                platforms. Every program is gated on a metric your board already tracks; every claim carried on evidence
+                your auditors can walk.
               </p>
               {/* A-03: the three delivery vignettes, as a rotating proof line */}
               <div className="rise-item" style={{ ["--rise-delay" as string]: "620ms" }}>
@@ -359,7 +360,7 @@ export default function HomeView() {
                   href="/services/"
                   className="inline-flex items-center rounded-[10px] border border-white/25 px-6 py-3 text-[14px] font-medium text-white/85 transition hover:border-brand-300 hover:text-brand-300"
                 >
-                  Explore services &amp; consulting
+                  Explore what we do
                 </Link>
               </div>
               <p className="rise-item mt-2 text-[12px] text-white/45" style={{ ["--rise-delay" as string]: "720ms" }}>
@@ -647,14 +648,14 @@ export default function HomeView() {
                 The IP differential
               </p>
               <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
-                Our differential is intellectual property — eight patented method families that ship with the team
+                Eight patented method families — proven in production before they reach your program
               </h2>
               {/* A-32: the platforms named · A-28: the four-of-eight affordance */}
               <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-                Every engagement starts from configured IP, not a blank page and a staffing plan: graph-native
-                contextual intelligence, quantum-inspired optimization, federated trust, validated ethical decisions and
-                self-evolving learning — developed by our research programme and in production inside Nexus, Quanta,
-                Forge, Sentinel and Ledger.{" "}
+                Ambition is common in this industry; proof is not. Every engagement starts from configured IP, not a
+                blank page and a staffing plan: graph-native contextual intelligence, quantum-inspired optimization,
+                federated trust, validated ethical decisions and self-evolving learning — developed by our research
+                programme and in production inside Nexus, Quanta, Forge, Sentinel and Ledger.{" "}
                 <Link href="/patented-intelligence/" className="link-animated font-semibold text-brand-deep">
                   Four of the eight are shown — the method map lists all eight with their gates.
                 </Link>
@@ -737,7 +738,7 @@ export default function HomeView() {
                 Platforms
               </p>
               <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
-                Eight proprietary platforms — the productized form of the IP
+                The platforms that put the patented methods to work
               </h2>
               {/* A-37: the role line under the row */}
               <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
