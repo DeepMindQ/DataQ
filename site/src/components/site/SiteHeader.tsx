@@ -358,7 +358,7 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
     <header className="sticky top-0 z-50">
       <SkipLink />
       {/* announcement bar (CHG-381) */}
-      <AnnouncementBar message="Eight patented method families now power every Dataq engagement — see how" href="/patented-intelligence/" />
+      <AnnouncementBar message="Patented method families now power every Dataq engagement — see how" href="/patented-intelligence/" />
       {/* utility bar — brand navy (CHG-010) */}
       <div className="bg-navy-900 text-white/70 text-[11.5px]">
         <div className="container-dq flex h-8 items-center justify-between">

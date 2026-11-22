@@ -647,7 +647,7 @@ export function EvidenceGrid({
             filter === "All" ? "bg-brand text-white" : "border border-white/20 bg-white/[0.06] text-white/75 hover:border-brand-300 hover:text-brand-300"
           }`}
         >
-          All <span className="opacity-60">{cards.length}</span>
+          All
         </button>
         {industries.map((ind) => (
           <button
@@ -658,7 +658,7 @@ export function EvidenceGrid({
               filter === ind.name ? "bg-brand text-white" : "border border-white/20 bg-white/[0.06] text-white/75 hover:border-brand-300 hover:text-brand-300"
             }`}
           >
-            {ind.name} <span className="opacity-60">{ind.count}</span>
+            {ind.name} 
           </button>
         ))}
       </div>
@@ -737,7 +737,7 @@ export function HomeIndustryExplorer({ industries }: { industries: HomeExplorerI
             )}
           </p>
           <p className="mt-1.5 text-[12.5px] leading-relaxed text-slate-body/70">
-            {sel.notes} published engagement notes in this sector — these are the practices the notes credit.
+            Published engagement notes in this sector — these are the practices the notes credit.
           </p>
           <div className="mt-3 flex flex-col gap-2">
             {sel.practices.map((p) => (

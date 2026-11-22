@@ -331,10 +331,9 @@ export default function HomeView() {
               </h1>
               {/* A-03: one promise sentence + one proof sentence */}
               <p className="rise-item measure mt-5 text-body-lg leading-relaxed text-white/70" style={{ ["--rise-delay" as string]: "560ms" }}>
-                Dataq&rsquo;s thirteen consulting practices and fifty-four deep-tech expertise domains — from ERP and
-                cloud to AI and data — are powered by eight patented method families pre-configured in eight proprietary
-                platforms. Every program is gated on a metric your board already tracks; every claim carried on evidence
-                your auditors can walk.
+                Dataq Software partners with enterprises to consult, build and run the technology their business
+                depends on — from ERP and cloud to AI and data. Our own patented methods and platforms do the heavy
+                lifting from day one, and every program is measured on a metric your board already tracks.
               </p>
               {/* A-03: the three delivery vignettes, as a rotating proof line */}
               <div className="rise-item" style={{ ["--rise-delay" as string]: "620ms" }}>
@@ -403,7 +402,7 @@ export default function HomeView() {
           items={[
             "SOC 2 Type II", "ISO 27001", "ISO 9001", "GDPR & CCPA aligned", "Evidence-gated releases",
             "Dataq Nexus", "Dataq Forge", "Dataq Swarm", "Dataq Sentinel", "Dataq Twinverse", "Dataq Quanta", "Dataq Ledger", "Dataq Compass",
-            "8 patented method families", "13 consulting practices", "IP-led delivery", "4 global delivery centers",
+            "Patented method families", "Consulting · build · run", "IP-led delivery", "Global delivery centers",
           ]}
         />
       </div>
@@ -421,11 +420,11 @@ export default function HomeView() {
             <p className="kicker-bar-dark text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-300">What delivery produces</p>
             {/* A-12 */}
             <h2 className="text-display-3 mt-1 max-w-4xl text-white sm:text-[28px]">
-              The eight numbers your leadership signs off — refreshed every fortnight, against the baseline you signed
+              The numbers your leadership signs off — refreshed every fortnight, against the baseline you signed
             </h2>
             {/* A-13: the intro carries a sample panel row, labeled illustrative */}
             <p className="mt-2 max-w-4xl text-[14.5px] leading-relaxed text-white/65">
-              Eight panels, one per program surface — consulting or deep-tech, generated from your estate, so week two
+              One panel per program surface — consulting or deep-tech, generated from your estate, so week two
               already reads like your business. A sample row, illustrative reference program:{" "}
               <span className="rounded-md border border-white/20 bg-white/[0.07] px-2 py-0.5 font-mono text-[11.5px] text-white/85">
                 Decision p95 148 ms · owner: COO · refreshed 14 days · evidence: replay pack
@@ -456,7 +455,7 @@ export default function HomeView() {
         </div>
       </section>
 
-      {/* the eight expertise domains (A-17..A-22 + A-52 router) */}
+      {/* the expertise domains (A-17..A-22 + A-52 router) */}
       <section id="services" className="scroll-mt-24 border-y border-line bg-mist/60 dot-grid-light">
         <div className="container-dq section-y-sm">
           <Reveal>
@@ -467,7 +466,7 @@ export default function HomeView() {
                 </p>
                 {/* A-17 */}
                 <h2 className="text-display-3 mt-1 max-w-4xl text-navy-800 sm:text-[30px]">
-                  Eight expertise domains and thirteen consulting practices — one delivery system
+                  The expertise your next move needs — under one accountable delivery system
                 </h2>
                 {/* A-18 */}
                 <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
@@ -540,7 +539,7 @@ export default function HomeView() {
                     )}
                     {/* A-20: count CTA */}
                     <span className="mt-3 inline-flex items-center gap-1 text-[12px] font-semibold text-brand-deep">
-                      See the {domainCount(t.name)} practices <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
+                      Explore practices <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
                     </span>
                   </Link>
                 </Reveal>
@@ -563,7 +562,7 @@ export default function HomeView() {
                 </p>
                 {/* A-23 */}
                 <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
-                  Thirteen consulting practices — the advisor is the builder, under the same gate contract
+                  Consulting that ends in delivery — the advisor is the builder
                 </h2>
                 {/* A-24 */}
                 <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
@@ -592,26 +591,16 @@ export default function HomeView() {
                     <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-navy-800 text-brand-300 transition group-hover:bg-brand group-hover:text-white">
                       {(() => { const Ic = ConsultIcons[i % ConsultIcons.length]; return <Ic className="h-5 w-5" aria-hidden="true" />; })()}
                     </span>
-                    {/* A-25: practice-count chip */}
-                    <span className="rounded-full bg-brand-tint px-2.5 py-0.5 text-[10.5px] font-bold text-brand-deep">
-                      {g.services.length} practices
-                    </span>
+                    <ArrowRight className="h-4 w-4 text-brand-deep/40 transition group-hover:translate-x-0.5 group-hover:text-brand-deep" aria-hidden="true" />
                   </span>
                   <p className="mt-3 font-display text-[15.5px] font-semibold leading-snug text-navy-800 group-hover:text-brand-deep">
                     {g.name}
                   </p>
                   {/* A-25: a real description, not a name list */}
                   <p className="mt-2 flex-1 text-[12.5px] leading-relaxed text-slate-body/75">{g.desc}</p>
-                  <span className="mt-2 flex flex-wrap gap-1.5">
-                    {g.services.map((sv) => (
-                      <span key={sv.name} className="rounded-full border border-line bg-white px-2 py-0.5 text-[10.5px] font-medium text-navy-800/80">
-                        {sv.name}
-                      </span>
-                    ))}
-                  </span>
-                  {/* A-26: count CTA */}
+                  {/* A-26: CTA names the action, not the count */}
                   <span className="mt-3 inline-flex items-center gap-1 text-[12px] font-semibold text-brand-deep">
-                    See the {g.services.length} practices <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
+                    Explore the practices <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
                   </span>
                 </Link>
               </Reveal>
@@ -648,7 +637,7 @@ export default function HomeView() {
                 The IP differential
               </p>
               <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
-                Eight patented method families — proven in production before they reach your program
+                Patented methods — proven in production before they reach your program
               </h2>
               {/* A-32: the platforms named · A-28: the four-of-eight affordance */}
               <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
@@ -657,7 +646,7 @@ export default function HomeView() {
                 federated trust, validated ethical decisions and self-evolving learning — developed by our research
                 programme and in production inside Nexus, Quanta, Forge, Sentinel and Ledger.{" "}
                 <Link href="/patented-intelligence/" className="link-animated font-semibold text-brand-deep">
-                  Four of the eight are shown — the method map lists all eight with their gates.
+                  A few of the method families are shown here — the method map lists them all with their gates.
                 </Link>
               </p>
             </div>
@@ -774,8 +763,8 @@ export default function HomeView() {
                 </h2>
                 {/* A-08: reconciled count language */}
                 <p className="mt-2 max-w-2xl text-[14.5px] text-white/65">
-                  350+ engagements delivered · 116 published with measured deltas — each note carries the measured
-                  delta, the system that produced it, and the gates that governed the build.
+                  A track record you can audit: every published engagement note carries the measured delta, the system
+                  that produced it and the gates that governed the build.
                 </p>
               </div>
               <Link
@@ -833,7 +822,7 @@ export default function HomeView() {
           <Reveal>
             <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">The operating discipline</p>
             <h2 className="text-display-3 mt-1 max-w-3xl text-navy-800 sm:text-[28px]">
-              Three names signed before delivery begins — the engagement charter
+              The names signed before delivery begins — the engagement charter
             </h2>
           </Reveal>
           <div className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
@@ -897,7 +886,7 @@ export default function HomeView() {
                 </h2>
                 {/* A-42: the list is named for what it is */}
                 <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-                  12 sector briefs — each hub maps its regulatory reality and decision pressure to the expertise
+                  Each sector brief maps the industry&rsquo;s regulatory reality and decision pressure to our expertise
                   domains, with named workflows and the systems of record your programs will touch.
                 </p>
               </div>
@@ -933,7 +922,7 @@ export default function HomeView() {
                     </span>
                     {/* A-34: the second line */}
                     <span className="mt-0.5 block text-[11px] text-slate-body/60">
-                      {notes} published engagement notes
+                      Published engagement notes
                     </span>
                   </span>
                   <ArrowRight className="h-3.5 w-3.5 shrink-0 text-brand-deep transition group-hover:translate-x-0.5" aria-hidden="true" />
@@ -1022,7 +1011,7 @@ export default function HomeView() {
         <Reveal>
           <div className="max-w-3xl">
             <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">Before you commit</p>
-            <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">The three questions every buyer asks</h2>
+            <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">The questions every buyer asks</h2>
           </div>
         </Reveal>
         <Reveal delay={80}>
@@ -1034,7 +1023,7 @@ export default function HomeView() {
 
       {/* closing CTA */}
       <section className="container-dq pb-16 pt-12">
-        <CtaBand message="Book an executive briefing — 45 minutes with a practice lead, your metric, and three reference engagements." />
+        <CtaBand message="Bring the metric you need to move — we will show you the method, the platform and the baseline we would sign." />
       </section>
     </>
   );
