@@ -15,7 +15,7 @@ export type Block =
   | { t: "h3"; x: string; sub?: string }
   | { t: "bullets"; items: [string, string][] }
   | { t: "table"; caption?: string; headers: string[]; rows: string[][] }
-  | { t: "note"; x: string }
+  | { t: "note"; x: string; variant?: "insight" | "compliance" | "warning" | "success" }
   | { t: "diagram"; kind: string; title?: string; labels?: string[]; note?: string }
   | {
       t: "arch";

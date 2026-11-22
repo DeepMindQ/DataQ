@@ -29,15 +29,26 @@ const NEXT_STEP: Record<string, { label: string; blurb: string; url: string }> =
 };
 
 function faqJsonLd(page: PageData): object | null {
-  if (page.template !== "service_page" && page.template !== "expertise_hub") return null;
-  const bullets = page.blocks
-    .filter((b) => b.t === "bullets")
-    .flatMap((b) => (b as { items: [string, string][] }).items.slice(0, 4));
-  if (bullets.length < 3) return null;
+  const eligible =
+    page.template === "service_page" ||
+    page.template === "expertise_hub" ||
+    page.template === "services_hub";
+  if (!eligible) return null;
+  // FAQ = the last bullets block whose items are question-shaped (>= 3).
+  // Non-question bullets (rungs, clauses, principles) must never leak into FAQ markup.
+  const faqBlock = [...page.blocks]
+    .reverse()
+    .find(
+      (b) =>
+        b.t === "bullets" &&
+        (b as { items: [string, string][] }).items.length >= 3 &&
+        (b as { items: [string, string][] }).items.filter(([q]) => q.trimEnd().endsWith("?")).length >= 3,
+    ) as { items: [string, string][] } | undefined;
+  if (!faqBlock) return null;
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: bullets.map(([q, a]) => ({
+    mainEntity: faqBlock.items.slice(0, 6).map(([q, a]) => ({
       "@type": "Question",
       name: q,
       acceptedAnswer: { "@type": "Answer", text: a },
@@ -381,6 +392,7 @@ function cardsHeading(template: string): string {
 
 function cardsSub(template: string): string {
   const map: Record<string, string> = {
+    services_hub: "Each domain card opens its hub — the practices, the reference architectures, the sector briefs and the metric the domain is managed on.",
     cases_hub: "Indexed by industry and service area — every case carries its measured delta and the gates that governed the build.",
     insights_hub: "Practitioner theses from the delivery floor — published with vendor questions included.",
   };

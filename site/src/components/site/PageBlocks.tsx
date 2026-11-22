@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, ChevronRight, Info, Layers, Cog, Factory, FileBarChart2, BookOpen, Boxes, Building2, Compass, UserRound, Mail, Scale, Briefcase, Newspaper, Wrench, MapPin, Handshake, ShieldCheck } from "lucide-react";
+import { ArrowRight, ArrowUpRight, ChevronRight, CircleCheck, Info, Layers, Cog, Factory, FileBarChart2, BookOpen, Boxes, Building2, Compass, UserRound, Mail, Scale, Briefcase, Newspaper, Wrench, MapPin, Handshake, ShieldCheck, TriangleAlert } from "lucide-react";
 import Reveal from "./Reveal";
 import { CountUp } from "./Motion";
 import { pick as pickImagery } from "./PageImagery";
@@ -391,6 +391,15 @@ export function Blocks({ blocks, skip = [] }: { blocks: Block[]; skip?: string[]
         </Reveal>,
       );
     } else if (b.t === "table") {
+      // CHG-063: numeric columns right-aligned with tabular figures; two-column
+      // tables collapse to stacked cards on mobile instead of horizontal scroll.
+      const numericCol = b.headers.map((_, ci) =>
+        ci > 0 &&
+        b.rows.length > 0 &&
+        b.rows.every((r) => r[ci] === undefined || r[ci] === "" || /^[\s]*[+\-−−]?[$€₹£]?[\d.,]+[\s%°]?\S*\s*$/.test(r[ci] ?? "")),
+      );
+      const twoCol = b.headers.length === 2;
+      const cellAlign = (ci: number) => (numericCol[ci] ? "text-right tabular-nums" : "text-left");
       out.push(
         <Reveal key={`t-${out.length}`}>
           <figure className="mt-8 overflow-hidden rounded-xl border border-line shadow-1">
@@ -399,12 +408,12 @@ export function Blocks({ blocks, skip = [] }: { blocks: Block[]; skip?: string[]
                 {b.caption}
               </figcaption>
             )}
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[480px] text-left text-[13px]">
+            <div className={twoCol ? "hidden md:block" : "overflow-x-auto"}>
+              <table className={`w-full ${twoCol ? "" : "min-w-[480px]"} text-left text-[13px]`}>
                 <thead>
                   <tr className="bg-navy-800 text-white">
-                    {b.headers.map((h) => (
-                      <th key={h} className="px-4 py-2.5 font-semibold">
+                    {b.headers.map((h, ci) => (
+                      <th key={h} className={`px-4 py-2.5 font-semibold ${cellAlign(ci)}`}>
                         {h}
                       </th>
                     ))}
@@ -416,7 +425,7 @@ export function Blocks({ blocks, skip = [] }: { blocks: Block[]; skip?: string[]
                       {row.map((cell, ci) => (
                         <td
                           key={ci}
-                          className={`px-4 py-2.5 align-top ${
+                          className={`px-4 py-2.5 align-top ${cellAlign(ci)} ${
                             ci === 0
                               ? "sticky left-0 bg-inherit font-semibold text-navy-800 min-w-[132px]"
                               : "text-slate-body/85"
@@ -430,14 +439,45 @@ export function Blocks({ blocks, skip = [] }: { blocks: Block[]; skip?: string[]
                 </tbody>
               </table>
             </div>
+            {twoCol && (
+              <div className="md:hidden">
+                {b.rows.map((row, ri) => (
+                  <div
+                    key={ri}
+                    className={`flex items-baseline justify-between gap-4 px-4 py-3 ${ri % 2 ? "bg-mist/60" : "bg-white"}`}
+                  >
+                    <span className="text-[13px] font-semibold text-navy-800">{row[0]}</span>
+                    <span className={`text-[13px] ${numericCol[1] ? "text-right tabular-nums" : "text-right"} ${
+                      numericCol[1] ? "text-navy-800" : "text-slate-body/85"
+                    }`}>
+                      {row[1]}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
           </figure>
         </Reveal>,
       );
     } else if (b.t === "note") {
+      // CHG-082: four callout variants replace the single note style —
+      // insight (orange, default) · compliance (navy) · warning (amber) · success (green)
+      const v = b.variant ?? "insight";
+      const skin = {
+        insight: "border border-brand/30 bg-brand-tint text-slate-body/90",
+        compliance: "border border-navy-800/25 bg-[#EEF0F7] text-slate-body/90",
+        warning: "border border-amber-600/35 bg-amber-50 text-slate-body/90",
+        success: "border border-emerald-700/35 bg-emerald-50 text-slate-body/90",
+      }[v];
+      const Icon =
+        v === "compliance" ? ShieldCheck : v === "warning" ? TriangleAlert : v === "success" ? CircleCheck : Info;
+      const iconColor =
+        v === "compliance" ? "text-navy-800" : v === "warning" ? "text-amber-700" : v === "success" ? "text-emerald-700" : "text-brand-deep";
+      const role = v === "warning" ? "status" : undefined;
       out.push(
         <Reveal key={`n-${out.length}`}>
-          <p className="mt-6 flex items-start gap-2.5 rounded-xl border border-brand/30 bg-brand-tint px-4 py-3 text-[12.5px] leading-relaxed text-slate-body/90">
-            <Info className="mt-0.5 h-4 w-4 shrink-0 text-brand-deep" aria-hidden="true" />
+          <p role={role} className={`mt-6 flex items-start gap-2.5 rounded-xl px-4 py-3 text-[12.5px] leading-relaxed ${skin}`}>
+            <Icon className={`mt-0.5 h-4 w-4 shrink-0 ${iconColor}`} aria-hidden="true" />
             {b.x}
           </p>
         </Reveal>,

@@ -195,7 +195,7 @@ export function ServiceIndustryExplorer({
         {/* footer strip */}
         <div className="flex flex-wrap items-center justify-between gap-2 border-t border-white/10 px-5 py-3 text-[10.5px] text-white/45 sm:px-6">
           <span>
-            Orange dot marks flagship sectors where {service} carries our deepest delivery record.
+            Orange dot marks flagship sectors — our deepest delivery record for {service}.
           </span>
           <Link href="/industries/" className="inline-flex items-center gap-1 font-semibold text-white/65 transition hover:text-brand-300">
             All industries <ArrowRight className="h-3 w-3" aria-hidden="true" />
