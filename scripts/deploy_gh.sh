@@ -34,8 +34,9 @@ cd ..
 
 # 4. commit + push
 MAIN_TIP=$(git rev-parse --short main)
+LABEL="${WAVE_LABEL:-site update}"
 git -C .gh-deploy add -A
-git -C .gh-deploy commit -m "Deploy Wave 0+1 (main tip ${MAIN_TIP}): trust guards + homepage rebuild per change register" --quiet
+git -C .gh-deploy commit -m "Deploy ${LABEL} (main tip ${MAIN_TIP})" --quiet
 git push origin gh-pages 2>&1 | tail -2
 git worktree remove --force .gh-deploy
 echo "DEPLOY DONE — verify https://deepmindq.github.io/DataQ/services/"

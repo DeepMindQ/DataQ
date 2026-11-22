@@ -103,6 +103,7 @@ export type PageData = {
   related: Card[];
   cards: Card[];
   evidence?: { title: string; url: string; ind: string }[];
+  hero_chip?: { head: string; sub: string };
   extras?: HomeExtras;
   profile?: { role: string; name: string; focus: string[]; placeholder: boolean };
   partner?: { name: string; focus: string; scenarios: string[] };

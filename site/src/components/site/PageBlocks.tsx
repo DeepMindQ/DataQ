@@ -150,7 +150,7 @@ export function PageHero({
   const chips = [page.l1, page.l2, page.l3].filter(Boolean) as string[];
   const showVisual = page.url !== "/search" && page.url !== "/style-guide";
   const im = showVisual ? pickImagery(page) : null;
-  const chip = HERO_CHIP[page.template];
+  const chip = page.hero_chip ?? HERO_CHIP[page.template];
   const priority = page.template === "expertise_hub" || page.template === "industry_hub";
   return (
     <section className="dq-hero relative overflow-hidden grad-navy-field text-white">

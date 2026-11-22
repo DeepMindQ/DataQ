@@ -115,7 +115,9 @@ function ServiceNetwork({ page }: { page: PageData }) {
     ? rows.filter((r) => r.template === "service_page" && r.l2 === page.l2 && r.url !== page.url)
     : isRoot
       ? rows.filter((r) => r.template === "expertise_hub" && r.l1 === "Services")
-      : [];
+      : isDomainHub
+        ? rows.filter((r) => r.template === "expertise_hub" && r.l1 === "Services" && r.url !== page.url)
+        : [];
   const pairs = isRoot || isDomainHub ? [] : DOMAIN_PAIRS[page.l2] ?? [];
   const evidence = page.evidence ?? [];
   if (!siblings.length && !pairs.length && !evidence.length) return null;
@@ -141,7 +143,11 @@ function ServiceNetwork({ page }: { page: PageData }) {
           <div className="rounded-2xl border border-line bg-white p-5 shadow-1">
             <p className={`flex items-center gap-1.5 ${groupHead}`}>
               <GitBranch className="h-3.5 w-3.5 text-brand-deep" aria-hidden="true" />
-              {isRoot ? "The eight expertise domains" : "Continue across this expertise"}
+              {isRoot
+                ? "The eight expertise domains"
+                : isDomainHub
+                  ? "The other seven expertise domains"
+                  : "Continue across this expertise"}
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               {siblings.map((s) => (
@@ -150,12 +156,20 @@ function ServiceNetwork({ page }: { page: PageData }) {
                 </Link>
               ))}
             </div>
-            {!isRoot && page.l2 && (
+            {!isRoot && !isDomainHub && page.l2 && (
               <Link
                 href={`/services/${page.l2.toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "")}/`}
                 className="mt-4 inline-flex items-center gap-1 text-[12px] font-semibold text-brand-deep hover:underline"
               >
                 {page.l2} domain overview <ArrowRight className="h-3 w-3" aria-hidden="true" />
+              </Link>
+            )}
+            {isDomainHub && (
+              <Link
+                href="/services/"
+                className="mt-4 inline-flex items-center gap-1 text-[12px] font-semibold text-brand-deep hover:underline"
+              >
+                All services and practices <ArrowRight className="h-3 w-3" aria-hidden="true" />
               </Link>
             )}
           </div>
