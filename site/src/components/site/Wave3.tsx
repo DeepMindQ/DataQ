@@ -317,42 +317,68 @@ export function IndustryFinder({
 
 /* ── Interactive platform showcase tabs (CHG-240/241) ─────────────────── */
 /* ── Interactive platform showcase tabs (CHG-240/241 + BG-046 dense rebuild) ──
-   PLATFORM_EXTRAS is also consumed by the header mega-menu (platform preview). */
+   PLATFORM_EXTRAS is also consumed by the header mega-menu (platform preview).
+   A-37 role (what the platform runs) · A-38 facts (measured, reference estate)
+   · A-39 serves (the expertise domain the platform pairs with).           */
 export const PLATFORM_EXTRAS: Record<
   string,
-  { caps: string[]; method: string }
+  { caps: string[]; method: string; role: string; facts: string; serves: { label: string; url: string }[] }
 > = {
   Nexus: {
     caps: ["Streaming graph ingestion", "Replayable decision trail", "Contextual scoring at read time", "Policy-gated actions", "Board-ready evidence packs"],
     method: "Graph-native contextual core",
+    role: "Runs decisions — in milliseconds, with the evidence attached",
+    facts: "p95 148 ms · 100% of decisions replayable",
+    serves: [{ label: "Applied AI & Generative AI", url: "/services/applied-ai-generative-ai/" }, { label: "Agentic AI & Hyperautomation", url: "/services/agentic-ai-hyperautomation/" }],
   },
   Forge: {
     caps: ["Tensor-manifold scheduling", "Log-complexity workload routing", "Energy-aware orchestration", "Fault-tolerant checkpointing", "Cost-per-decision economics"],
     method: "Quantum-inspired optimization core",
+    role: "Runs the governed data estate every program depends on",
+    facts: "0 lost rows across migration gates · 99.4% freshness SLA",
+    serves: [{ label: "Data, Analytics & Lakehouse", url: "/services/data-analytics-lakehouse/" }, { label: "Cloud, Edge & Platform Engineering", url: "/services/cloud-edge-platform-engineering/" }],
   },
   Swarm: {
     caps: ["Multi-agent fleet control", "Shared-reward credit assignment", "Policy envelopes per agent", "Human handoff rails", "Validated decentralized execution"],
     method: "Generative knowledge-workflow blueprints",
+    role: "Runs the agent workforce — hundreds of agents, one governed fleet",
+    facts: "216 automations governed · 78% portfolio containment",
+    serves: [{ label: "Agentic AI & Hyperautomation", url: "/services/agentic-ai-hyperautomation/" }],
   },
   Sentinel: {
     caps: ["Encrypted collaborative intelligence", "Byzantine-consensus trust fabric", "Zero-exposure defaults", "Continuous control validation", "Cross-party workflows"],
     method: "Privacy-preserving federated learning",
+    role: "Guards access — for humans, machines and models",
+    facts: "97.4% evidence freshness · 41/41 controls live",
+    serves: [{ label: "Cybersecurity & Zero-Trust", url: "/services/cybersecurity-zero-trust/" }],
   },
   Twinverse: {
     caps: ["Multimodal sensor fusion", "Recalibration without retraining", "Edge-cloud latency routing", "Scenario replay", "Anomaly recognition at scale"],
     method: "Multimodal perception layer",
+    role: "Mirrors physical operations — sense, simulate, act",
+    facts: "1,842 assets instrumented · 99.7% fleet OTA success",
+    serves: [{ label: "IoT, Digital Twin & Robotics", url: "/services/iot-digital-twin-robotics/" }],
   },
   Quanta: {
     caps: ["Quantum-walk state-space exploration", "Tensor processing units", "Riemannian clustering", "Temporal-logic verification", "Hybrid quantum-classical routing"],
     method: "Quantum-inspired optimization core",
+    role: "Readies emerging compute with investor discipline",
+    facts: "82% parallel efficiency · 100% benchmark honesty",
+    serves: [{ label: "Quantum & Advanced Compute", url: "/services/quantum-advanced-compute/" }],
   },
   Ledger: {
     caps: ["Immutable audit chains", "Blockchain-integrated recovery", "Self-healing clusters", "zk-validated execution", "Consensus-gated releases"],
     method: "Byzantine-consensus trust fabric",
+    role: "Anchors shared truth with regulatory teeth",
+    facts: "0 reconciliation deltas · 412k credentials issued",
+    serves: [{ label: "Blockchain & Digital Trust", url: "/services/blockchain-digital-trust/" }],
   },
   Compass: {
     caps: ["Self-evolving decision loops", "Reinforcement-optimized orchestration", "Knowledge-graph decision support", "Explainable stakeholder outputs", "Coherent distributed state"],
     method: "Multi-layer decision validation",
+    role: "Keeps AI inspectable — approved by the model-risk committee",
+    facts: "87% eval coverage · 68% PoC kill rate enforced",
+    serves: [{ label: "Applied AI & Generative AI", url: "/services/applied-ai-generative-ai/" }],
   },
 };
 
@@ -376,6 +402,7 @@ export function PlatformTabs({
             role="tab"
             aria-selected={k === i}
             onClick={() => setI(k)}
+            title={pl.desc /* A-37: role line per chip on hover/focus */}
             className={`rounded-lg px-3 py-1.5 text-[12px] font-semibold transition ${
               k === i ? "bg-navy-800 text-white" : "text-navy-800/70 hover:bg-white hover:text-brand-deep"
             }`}
@@ -391,7 +418,32 @@ export function PlatformTabs({
           <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-brand-deep">
             {extra?.method ?? "Patented method underneath"}
           </p>
+          {/* A-37: role line — what this platform runs, in plain language */}
+          <p className="mt-2 text-[12.5px] font-medium leading-snug text-slate-body/70">{extra?.role ?? p.desc}</p>
           <p className="mt-3 text-[13.5px] leading-relaxed text-slate-body/80">{p.desc}</p>
+          {/* A-38: measured facts + provenance (E-05) */}
+          {extra?.facts && (
+            <p className="mt-3 flex flex-wrap items-center gap-2 text-[12.5px] font-semibold text-navy-800">
+              <span className="rounded-md bg-navy-800 px-2 py-1 font-display text-[11.5px] text-white">{extra.facts}</span>
+              <span className="rounded-full border border-line bg-mist/70 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.12em] text-slate-body/60">
+                Illustrative · reference program
+              </span>
+            </p>
+          )}
+          {/* A-39: reverse link — the expertise domain this platform serves */}
+          {extra?.serves && (
+            <p className="mt-2.5 flex flex-wrap items-center gap-1.5 text-[12px] text-slate-body/70">
+              <span className="font-semibold text-navy-800">Serves:</span>
+              {extra.serves.map((s, si) => (
+                <span key={s.url} className="inline-flex items-center gap-1.5">
+                  {si > 0 && <span className="text-slate-body/40">·</span>}
+                  <Link href={s.url} className="link-animated font-medium text-brand-deep hover:underline">
+                    {s.label}
+                  </Link>
+                </span>
+              ))}
+            </p>
+          )}
           <div className="mt-5 flex flex-wrap gap-2.5">
             <Link
               href={p.url}
@@ -426,4 +478,295 @@ export function PlatformTabs({
   );
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   Wave 1 homepage systems (A-03/40/41/43/52/54/56)
+   ═══════════════════════════════════════════════════════════════════════════ */
 
+/* ── RotatingProof (A-03): the three delivery vignettes, rotated ────────── */
+export function RotatingProof({ lines }: { lines: string[] }) {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const iv = setInterval(() => setI((v) => (v + 1) % lines.length), 3800);
+    return () => clearInterval(iv);
+  }, [lines.length]);
+  return (
+    <p className="mt-4 flex min-h-[20px] items-center gap-2 text-[12.5px] text-white/50" aria-live="polite">
+      <style>{`@keyframes dq-rot-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }`}</style>
+      <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />
+      <span key={i} style={{ animation: "dq-rot-in .5s both" }} className="inline-block">{lines[i]}</span>
+    </p>
+  );
+}
+
+/* ── SectionRail (A-54): sticky right-edge section nav for the long page ── */
+export function SectionRail({ items }: { items: { id: string; label: string }[] }) {
+  const [active, setActive] = useState(items[0]?.id ?? "");
+  const [hover, setHover] = useState<string | null>(null);
+  useEffect(() => {
+    const els = items.map((s) => document.getElementById(s.id)).filter(Boolean) as HTMLElement[];
+    if (!els.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) if (e.isIntersecting) setActive(e.target.id);
+      },
+      { rootMargin: "-30% 0px -55% 0px" },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [items]);
+  return (
+    <nav
+      aria-label="Page sections"
+      className="fixed right-4 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-end gap-2.5 xl:flex"
+    >
+      {items.map((s) => {
+        const on = active === s.id;
+        const show = on || hover === s.id;
+        return (
+          <a
+            key={s.id}
+            href={`#${s.id}`}
+            onMouseEnter={() => setHover(s.id)}
+            onMouseLeave={() => setHover(null)}
+            className="group flex items-center gap-2"
+            aria-label={s.label}
+            aria-current={on ? "true" : undefined}
+          >
+            <span
+              className={`rounded-full bg-navy-800 px-2.5 py-1 text-[10.5px] font-semibold text-white shadow-2 transition-all duration-200 ${
+                show ? "block opacity-100" : "hidden opacity-0"
+              }`}
+            >
+              {s.label}
+            </span>
+            <span
+              aria-hidden="true"
+              className={`block rounded-full transition-all duration-200 ${
+                on ? "h-2.5 w-2.5 bg-brand" : "h-1.5 w-1.5 bg-navy-800/25 group-hover:bg-brand/60"
+              }`}
+            />
+          </a>
+        );
+      })}
+    </nav>
+  );
+}
+
+/* ── DomainRouter (A-52): three-question self-qualification path ───────── */
+export type RouterOption = {
+  key: string;
+  label: string;
+  blurb: string;
+  domain: { label: string; url: string };
+  practices: { label: string; url: string }[];
+};
+
+export function DomainRouter({ options }: { options: RouterOption[] }) {
+  const [pick, setPick] = useState<string | null>(null);
+  const sel = options.find((o) => o.key === pick) ?? null;
+  return (
+    <div className="mt-8 rounded-2xl border border-line bg-white p-5 shadow-1 sm:p-6">
+      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-deep">Where does it hurt today?</p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {options.map((o) => (
+          <button
+            key={o.key}
+            onClick={() => setPick(pick === o.key ? null : o.key)}
+            aria-pressed={pick === o.key}
+            className={`rounded-full px-4 py-2 text-[13px] font-semibold transition ${
+              pick === o.key
+                ? "bg-brand text-white"
+                : "border border-line bg-mist/60 text-navy-800 hover:border-brand hover:text-brand-deep"
+            }`}
+          >
+            {o.label}
+          </button>
+        ))}
+      </div>
+      {sel && (
+        <div className="mt-4 rounded-xl border border-brand/30 bg-brand-tint/40 px-4 py-3.5">
+          <p className="text-[13px] text-navy-800">
+            <span className="font-semibold">{sel.blurb}</span> Start in{" "}
+            <Link href={sel.domain.url} className="link-animated font-semibold text-brand-deep hover:underline">
+              {sel.domain.label}
+            </Link>
+            :
+          </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {sel.practices.map((p) => (
+              <Link
+                key={p.url}
+                href={p.url}
+                className="inline-flex items-center gap-1 rounded-full border border-line bg-white px-3 py-1.5 text-[12.5px] font-medium text-navy-800 transition hover:border-brand hover:text-brand-deep"
+              >
+                {p.label} <ArrowRight className="h-3 w-3 text-brand-deep" aria-hidden="true" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+      {!sel && (
+        <p className="mt-3 text-[12px] leading-relaxed text-slate-body/60">
+          Pick the surface that bleeds — the router links the matching domain and the two practices that fix it first.
+        </p>
+      )}
+    </div>
+  );
+}
+
+/* ── EvidenceGrid (A-40/41/43): filterable engagement-note grid ────────── */
+export type EvidenceCard = {
+  title: string;
+  url: string;
+  desc: string;
+  tag: string;
+  industry: string;
+  service?: string;
+  service_url?: string;
+  gate?: string;
+};
+
+export function EvidenceGrid({
+  cards,
+  industries,
+}: {
+  cards: EvidenceCard[];
+  industries: { name: string; count: number }[];
+}) {
+  const [filter, setFilter] = useState<string>("All");
+  const shown = filter === "All" ? cards : cards.filter((c) => c.industry === filter);
+  return (
+    <div>
+      {/* A-40: industry filter chips */}
+      <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="Filter engagements by industry">
+        <button
+          onClick={() => setFilter("All")}
+          aria-pressed={filter === "All"}
+          className={`rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold transition ${
+            filter === "All" ? "bg-brand text-white" : "border border-white/20 bg-white/[0.06] text-white/75 hover:border-brand-300 hover:text-brand-300"
+          }`}
+        >
+          All <span className="opacity-60">{cards.length}</span>
+        </button>
+        {industries.map((ind) => (
+          <button
+            key={ind.name}
+            onClick={() => setFilter(ind.name)}
+            aria-pressed={filter === ind.name}
+            className={`rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold transition ${
+              filter === ind.name ? "bg-brand text-white" : "border border-white/20 bg-white/[0.06] text-white/75 hover:border-brand-300 hover:text-brand-300"
+            }`}
+          >
+            {ind.name} <span className="opacity-60">{ind.count}</span>
+          </button>
+        ))}
+      </div>
+      {/* A-40: grid of engagement notes */}
+      <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+        {shown.map((c) => (
+          <Link
+            key={c.url}
+            href={c.url}
+            className="group flex flex-col rounded-xl border border-white/12 bg-white/[0.05] p-4 transition hover:border-brand-300/60 hover:bg-white/[0.09]"
+          >
+            <span className="w-fit rounded-full bg-brand/15 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-brand-300">
+              {c.tag}
+            </span>
+            <p className="mt-2.5 font-display text-[14.5px] font-semibold leading-snug text-white group-hover:text-brand-300">
+              {c.title}
+            </p>
+            <p className="mt-1.5 flex-1 text-[12px] leading-relaxed text-white/60">{c.desc}</p>
+            {/* A-41: the gates that governed the build */}
+            {c.gate && (
+              <span className="mt-3 w-fit rounded-md border border-white/15 px-2 py-1 text-[10.5px] font-semibold text-white/70">
+                Gates: {c.gate}
+              </span>
+            )}
+            {/* A-43: the delivering practice, named and linked */}
+            {c.service && c.service_url && (
+              <span className="mt-2 inline-flex items-center gap-1 text-[11.5px] font-medium text-white/50 group-hover:text-brand-300">
+                Delivered by {c.service} <ArrowRight className="h-3 w-3" aria-hidden="true" />
+              </span>
+            )}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── HomeIndustryExplorer (A-56): industry → top practices, compact ────── */
+export type HomeExplorerIndustry = {
+  name: string;
+  url: string;
+  regime: string;
+  notes: number;
+  practices: { label: string; url: string }[];
+};
+
+export function HomeIndustryExplorer({ industries }: { industries: HomeExplorerIndustry[] }) {
+  const [i, setI] = useState(0);
+  const sel = industries[i];
+  if (!sel) return null;
+  return (
+    <div className="mt-8 overflow-hidden rounded-2xl border border-line bg-white shadow-2">
+      <div className="flex flex-wrap gap-1.5 border-b border-line bg-mist/60 px-3 py-2.5" role="tablist" aria-label="Choose your industry">
+        {industries.map((ind, k) => (
+          <button
+            key={ind.url}
+            role="tab"
+            aria-selected={k === i}
+            onClick={() => setI(k)}
+            className={`rounded-lg px-3 py-1.5 text-[12px] font-semibold transition ${
+              k === i ? "bg-navy-800 text-white" : "text-navy-800/70 hover:bg-white hover:text-brand-deep"
+            }`}
+          >
+            {ind.name.replace(" & ", " & ")}
+          </button>
+        ))}
+      </div>
+      <div className="grid gap-5 px-5 py-4 sm:px-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+        <div>
+          <p className="flex flex-wrap items-center gap-2 font-display text-[15.5px] font-semibold text-navy-800">
+            {sel.name}
+            {sel.regime && (
+              <span className="rounded-full bg-brand-tint px-2.5 py-0.5 text-[10.5px] font-bold uppercase tracking-wider text-brand-deep">
+                {sel.regime}
+              </span>
+            )}
+          </p>
+          <p className="mt-1.5 text-[12.5px] leading-relaxed text-slate-body/70">
+            {sel.notes} published engagement notes in this sector — these are the practices the notes credit.
+          </p>
+          <div className="mt-3 flex flex-col gap-2">
+            {sel.practices.map((p) => (
+              <Link
+                key={p.url}
+                href={p.url}
+                className="group flex items-center justify-between gap-3 rounded-lg border border-line bg-mist/50 px-3.5 py-2.5 transition hover:border-brand/60 hover:bg-white"
+              >
+                <span className="text-[12.5px] font-medium text-navy-800 group-hover:text-brand-deep">{p.label}</span>
+                <ArrowRight className="h-3.5 w-3.5 shrink-0 text-brand-deep transition group-hover:translate-x-0.5" aria-hidden="true" />
+              </Link>
+            ))}
+          </div>
+        </div>
+        <div className="flex flex-col justify-between gap-3 border-line lg:border-l lg:pl-6">
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-body/60">The sector brief</p>
+            <p className="mt-2 text-[12.5px] leading-relaxed text-slate-body/75">
+              Regulatory reality, decision pressure and the systems of record — mapped to the expertise domains on the industry hub.
+            </p>
+          </div>
+          <Link
+            href={sel.url}
+            className="btn-sheen w-fit inline-flex items-center gap-1.5 rounded-[10px] bg-brand px-4 py-2 text-[12.5px] font-semibold text-white hover:bg-brand-hover"
+          >
+            Open the {sel.name.split(" ")[0].replace(",", "")} hub <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -85,7 +85,10 @@ export default function SiteFooter({ brand, footer }: { brand: Brand; footer: Fo
           ))}
           <div>
             <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-white/50">
-              Intelligence briefing
+              The Delivery Floor — monthly
+            </p>
+            <p className="mt-1 text-[11.5px] leading-snug text-white/45">
+              One email a month. The delivery-floor thesis and the vendor questions.
             </p>
             <div className="mt-3">
               <NewsletterForm />
@@ -139,7 +142,7 @@ export default function SiteFooter({ brand, footer }: { brand: Brand; footer: Fo
               ))}
             </div>
             <p className="text-[12px] text-white/45">
-              © {new Date().getFullYear()} {brand.legalName}. Zero critical data-exposure incidents since inception.
+              © {new Date().getFullYear()} {brand.legalName}. Every release gated on signed evidence · SOC 2 Type II · ISO 27001.
             </p>
           </div>
         </div>

@@ -12,9 +12,9 @@ export function generateStaticParams(): { slug: string[] }[] {
 }
 
 const HOME_META: Metadata = {
-  title: "Dataq Software | IT Services & Consulting for the Intelligence Era",
+  title: "Dataq Software — decision intelligence with evidence | AI, data, security, cloud",
   description:
-    "Dataq Software engineers the intelligence layer of the enterprise — applied AI, agentic automation, data platforms, cybersecurity and emerging compute with outcome-linked engagements.",
+    "Eight expertise domains, 54 practices. Every engagement gated on a signed metric, every decision carrying evidence. SOC 2 · ISO 27001.",
   alternates: { canonical: "/" },
 };
 

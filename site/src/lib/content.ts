@@ -111,7 +111,7 @@ export type PageData = {
 
 export type HomeExtras = {
   stats: { value: string; label: string }[];
-  domains: { name: string; url: string; desc: string }[];
+  domains: { name: string; url: string; desc: string; metric?: string; plat?: string; start?: boolean }[];
   industries: { name: string; url: string }[];
   cases: { title: string; url: string; desc: string; tag: string }[];
   insights: { title: string; url: string; desc: string; tag: string }[];

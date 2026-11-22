@@ -155,6 +155,9 @@ export function Marquee({
         >
           <span aria-hidden="true" className={`h-1.5 w-1.5 rounded-full ${dark ? "bg-brand" : "bg-brand-deep/70"}`} />
           {it}
+          {/* E-01: linear-text separator so reader mode / no-CSS reads
+              "SOC 2 Type II · ISO 27001 · …" instead of run-on concatenation */}
+          <span className="sr-only"> · </span>
         </li>
       ))}
     </ul>

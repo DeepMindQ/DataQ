@@ -138,7 +138,7 @@ export function PatentStrip({ page, dark }: { page: PageData; dark?: boolean }) 
                   href="/patented-intelligence/"
                   className={`text-[11px] font-medium hover:underline ${dark ? "text-brand-300" : "text-brand-deep"}`}
                 >
-                  {p.ref} — see the patent map
+                  {p.ref} — see the method map
                 </Link>
               </div>
             </div>

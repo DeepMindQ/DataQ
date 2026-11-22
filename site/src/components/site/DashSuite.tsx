@@ -49,6 +49,10 @@ export function DashSuite({
               {badge}
             </span>
           )}
+          {/* E-05: provenance chip — every numeric panel states its source */}
+          <span className="rounded-full border border-white/20 bg-white/[0.06] px-3 py-1 text-[9.5px] font-bold uppercase tracking-[0.14em] text-white/55">
+            Illustrative · reference program
+          </span>
         </div>
 
         {/* KPI strip */}

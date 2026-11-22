@@ -8,6 +8,7 @@ export type Patent = {
   ref: string; // short cite, e.g. "Patent 2 / GNN contextual core"
   title: string;
   oneLiner: string;
+  outcome: string; // A-29: the buyer-facing "what this buys you" line
   capabilities: string[];
   expertise: string[]; // expertise domain slugs it powers
   platforms: string[]; // platform slugs it powers
@@ -19,6 +20,8 @@ export const PATENTS: Patent[] = [
     title: "Contextual Intelligence Processing Using Graph Neural Networks",
     oneLiner:
       "The graph core of Dataq Nexus: dynamic heterogeneous graphs, hypergraph tensors, quantum-inspired embedding and deterministic streaming for real-time contextual reasoning.",
+    outcome:
+      "Means: decisions that cite their full context — the replay trail your auditor asks for.",
     capabilities: [
       "Dynamic graph representations with continuous edge rewiring",
       "Hypergraph tensor encoding (CANDECOMP/PARAFAC, Tucker)",
@@ -34,6 +37,8 @@ export const PATENTS: Patent[] = [
     title: "Optimizing Computational Workflows Using Quantum-Inspired Algorithms",
     oneLiner:
       "Tensor-manifold processing, quantum-walk exploration and logarithmic-complexity scheduling executed across TPU/FPGA fabric — the Dataq Quanta and Forge optimization core.",
+    outcome:
+      "Means: scheduling and optimization that stays near-log-cost as the estate grows.",
     capabilities: [
       "Tensor manifold processing units (TMPUs)",
       "Quantum-walk state-space exploration",
@@ -49,6 +54,8 @@ export const PATENTS: Patent[] = [
     title: "Distributed Intelligence Using Federated Learning in Enterprise Networks",
     oneLiner:
       "Privacy-preserving collaborative intelligence: ZHNE homomorphic encryption, Multi-Scale Asynchronous Byzantine Consensus and swarm-based self-healing clusters — the Dataq Sentinel trust fabric.",
+    outcome:
+      "Means: partner analytics without sharing raw data — the control your DPO will ask about.",
     capabilities: [
       "Zero-Knowledge Homomorphic Neural Encryption (ZHNE)",
       "Multi-Scale Asynchronous Byzantine Consensus (MABC)",
@@ -64,6 +71,8 @@ export const PATENTS: Patent[] = [
     title: "Ethical Decision Processing With Multi-Layer Algorithmic Validation",
     oneLiner:
       "Hierarchical validation — rule graphs, Bayesian refinement and cascading-impact simulation — that makes every automated decision explainable, auditable and bias-tested.",
+    outcome:
+      "Means: every automated decision explainable and bias-tested — the answer when the regulator asks why.",
     capabilities: [
       "Hierarchical ethical-graph ontology validation",
       "Bayesian probabilistic refinement of decision vectors",
@@ -79,6 +88,8 @@ export const PATENTS: Patent[] = [
     title: "Automating Knowledge Workflows Using Generative Artificial Intelligence",
     oneLiner:
       "Self-improving orchestration: transformer workflow blueprints, temporal reasoning, knowledge-liquidity protocols and multi-agent reinforcement learning — the Dataq Swarm engine.",
+    outcome:
+      "Means: digital workers that improve on the job under guardrails — every action logged and reversible.",
     capabilities: [
       "Generative AI orchestration blueprints (DAG synthesis)",
       "Probabilistic temporal-logic scheduling",
@@ -94,6 +105,8 @@ export const PATENTS: Patent[] = [
     title: "Adaptive Pattern Recognition Using Quantum-Enhanced Neural Networks",
     oneLiner:
       "Real-time multimodal perception — vision, audio, text and sensor fusion with quantum feedback loops and probabilistic ensemble learning — the Dataq Twinverse perception layer.",
+    outcome:
+      "Means: one perception layer across sensor, video and text — recalibrated without retraining pauses.",
     capabilities: [
       "Multimodal fusion across sensor, video, text and audio streams",
       "Quantum feedback loop recalibration without retraining",
@@ -109,6 +122,8 @@ export const PATENTS: Patent[] = [
     title: "AI-Driven Energy-Efficient Workload Optimization in Distributed Computing",
     oneLiner:
       "Grid-aware orchestration: tensor workload decomposition, reinforcement-learned scheduling and power-state modulation that cut datacenter energy per decision — the Dataq Forge economics engine.",
+    outcome:
+      "Means: compute cost and energy per decision fall together — visible on your infrastructure bill.",
     capabilities: [
       "Tensor-based workload decomposition (SVD, low-rank)",
       "Double-Q-learning execution scheduling",
@@ -124,6 +139,8 @@ export const PATENTS: Patent[] = [
     title: "Adaptive Learning Using Reinforcement Optimization and Self-Evolving Frameworks",
     oneLiner:
       "Self-evolving decision systems: neural architecture search, temporal-spatial feature extraction and knowledge-graph decision support synced by Raft consensus — the Dataq Compass intelligence loop.",
+    outcome:
+      "Means: systems that keep learning under governance — explained to stakeholders, synced by consensus.",
     capabilities: [
       "Dynamic reinforcement learning framework (DRLF)",
       "Temporal Fusion Transformers + Fourier cyclical modeling",

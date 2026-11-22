@@ -303,9 +303,8 @@ export function MetricsDash({
             <span className="h-2.5 w-2.5 rounded-full bg-brand/70" />
             <p className="ml-2 text-[12.5px] font-semibold text-white">{title}</p>
           </div>
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-brand/40 bg-brand/15 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-brand-300">
-            <span className="hv-pulse inline-block h-1.5 w-1.5 rounded-full bg-brand" aria-hidden="true" />
-            Program view
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/[0.06] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white/60">
+            Illustrative · reference program
           </span>
         </div>
         <div className="px-5 py-4">
@@ -465,9 +464,13 @@ export function ChartPanel({
               donut: "Composition",
               funnel: "Stage conversion",
               heatmap: "Intensity matrix",
-              gauge: "Live indicator",
+              gauge: "Gauge read",
               network: "Topology",
             }[variant]}
+          </span>
+          {/* E-05: provenance chip on every chart panel */}
+          <span className="rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.14em] text-white/60">
+            Illustrative · reference program
           </span>
         </div>
 
