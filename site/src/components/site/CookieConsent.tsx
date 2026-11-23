@@ -75,7 +75,9 @@ export default function CookieConsent() {
           <div className="mt-2.5 flex flex-wrap gap-2">
             <button
               onClick={() => decide("all")}
-              className="rounded-[10px] bg-brand px-3.5 py-1.5 text-[12px] font-semibold text-white hover:bg-brand-hover"
+              /* brand-deep, not brand: 12px white text needs 4.5:1 and white on
+                 #fe5722 is 3.18:1 (axe color-contrast). #c2410c = 5.18:1. */
+              className="rounded-[10px] bg-brand-deep px-3.5 py-1.5 text-[12px] font-semibold text-white hover:brightness-90"
             >
               Accept analytics
             </button>

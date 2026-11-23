@@ -35,7 +35,9 @@ export function AnnouncementBar({ message, href }: { message: string; href: stri
   }, []);
   if (hidden) return null;
   return (
-    <div className="relative bg-brand text-white">
+    /* brand-deep, not brand: the 12.5px white link needs 4.5:1 and white on
+       #fe5722 is 3.18:1 (axe color-contrast). #c2410c = 5.18:1, same family. */
+    <div className="relative bg-brand-deep text-white">
       <div className="container-dq flex h-9 items-center justify-center gap-2 text-[12.5px] font-medium">
         <Sparkles className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
         <Link href={href} className="min-w-0 truncate underline-offset-2 hover:underline">
@@ -44,7 +46,7 @@ export function AnnouncementBar({ message, href }: { message: string; href: stri
         <button
           type="button"
           aria-label="Dismiss announcement"
-          className="absolute right-3 rounded-md p-1 hover:bg-white/15"
+          className="absolute right-3 flex h-6 w-6 items-center justify-center rounded-md hover:bg-white/15"
           onClick={() => {
             setHidden(true);
             try {

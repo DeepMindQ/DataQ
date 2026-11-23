@@ -10,6 +10,11 @@
      capability list so the menu itself teaches the product.
    • Interaction: 60ms hover-intent open, 220ms close grace, Esc closes,
      focus opens, first click opens (second navigates), full keyboard path.
+   • Weight policy (perf budget): a panel's DOM mounts ONLY while it is the
+     open item (CHG-P11). The old always-rendered variant shipped ~103KB of
+     hidden mega markup + 126 inline SVGs on EVERY page (609KB homepage).
+     Closed panels contribute nothing to LCP; every destination stays
+     discoverable via the hub pages, the footer and sitemap.xml.
    Laptop policy (hard rule): from 1024px up the full top navigation is
    ALWAYS visible — the old JS fit-guard that swapped laptops to a hamburger
    is gone. A deterministic CSS band compresses type/padding on 1024–1279px
@@ -277,7 +282,7 @@ function MegaPanel({
               <Link
                 href="/book-a-briefing/"
                 tabIndex={open ? 0 : -1}
-                className="inline-flex items-center gap-1 rounded-lg bg-brand px-3 py-1.5 text-[11.5px] font-semibold text-white transition hover:bg-brand-hover"
+                className="inline-flex items-center gap-1 rounded-lg bg-brand-deep px-3 py-1.5 text-[11.5px] font-semibold text-white transition hover:brightness-90"
               >
                 Book a briefing <ArrowRight className="h-3 w-3" aria-hidden="true" />
               </Link>
@@ -475,14 +480,16 @@ export default function SiteHeader({ nav, brand }: { nav: Nav; brand: Brand }) {
           </div>
         </div>
 
-        {/* megamenu — one full-width rail+preview panel per mega item */}
+        {/* megamenu — mount ONLY the open item's full-width rail+preview
+            panel (weight policy, see file header). The 220ms close-grace
+            timer in scheduleClose keeps it mounted through the fade-out. */}
         {nav.primary
-          .filter((item) => item.mega)
+          .filter((item) => item.mega && openItem === item.label)
           .map((item) => (
             <MegaPanel
               key={item.label}
               item={item}
-              open={openItem === item.label}
+              open
               onCancelClose={cancelClose}
               onScheduleClose={scheduleClose}
             />

@@ -129,7 +129,7 @@ export default function SiteFooter({ brand, footer }: { brand: Brand; footer: Fo
                reopens the consent dialog so the choice is revocable (#17). */}
             <div className="flex items-center gap-2">
               <a
-                href="/insights/"
+                href={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/insights/`}
                 aria-label="Insights RSS and library"
                 title="Insights"
                 className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/15 text-white/60 transition hover:border-brand hover:text-brand-300"

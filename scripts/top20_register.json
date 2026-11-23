@@ -14,7 +14,8 @@
     "Sitemap: lastmod = build timestamp for all URLs; changeFrequency monthly.",
     "Deploy: manual scripts/deploy_gh.sh with /tmp/.ghtoken; no .github/workflows CI. Token missing after sandbox reset.",
     "404 status correct on Pages; page <title> falls back to site-default meta.",
-    "Search UX: pagefind index exists in out (npx pagefind --site out runs in export script)."
+    "Search UX: pagefind index exists in out (npx pagefind --site out runs in export script).",
+    "2026-11-23 follow-up: sandbox reset wiped site/node_modules (npm ci restored) and out-gh (re-exported, 733 pages). Homepage slimming landed via mega-panel lazy mount; Lighthouse caught + fixed basePath 404s on manifest/icons, list nesting, 4 contrast nodes, 1 target-size; all verified runtime (search 20 results, form mailto fallback, mega menu mount/switch/Esc)."
   ],
   "items": [
     {
@@ -33,7 +34,7 @@
       "change": "Set NEXT_PUBLIC_FORM_ACCESS_KEY in the export environment (real web3forms key), rebuild, then verify ContactForm + NewsletterForm with a live submission; add visible error/success states and a mailto fallback when the key is absent",
       "why": "Every Book-a-Briefing CTA funnels into a form that silently cannot submit; entire lead pipeline is dead",
       "effort": "S",
-      "status": "Code done \u2014 web3forms key pending at export"
+      "status": "Code done — no-key mailto fallback verified live (submit -> honest handoff, prefilled info@dataqsoft.com); web3forms key still pending from owner at export"
     },
     {
       "id": 3,
@@ -60,7 +61,7 @@
       "change": "Add privacy-friendly analytics (Plausible or PostHog) loaded ONLY after 'Accept analytics' consent; log search queries and form submissions as conversion events",
       "why": "CookieConsent offers analytics consent but nothing loads; zero visibility on traffic, funnels, dead pages",
       "effort": "S",
-      "status": "Code done \u2014 Plausible env pending account"
+      "status": "Code done — Plausible env pending account"
     },
     {
       "id": 6,
@@ -84,7 +85,7 @@
       "id": 8,
       "priority": "P1",
       "area": "Images",
-      "change": "Execute remaining P0-Images backlog: per-industry hero sets (12 industries), product-style platform mockups (8 platforms), seeded case-study visual generator (37 cases), insight header system (33 articles) \u2014 from 29 images today toward unique visuals per section",
+      "change": "Execute remaining P0-Images backlog: per-industry hero sets (12 industries), product-style platform mockups (8 platforms), seeded case-study visual generator (37 cases), insight header system (33 articles) — from 29 images today toward unique visuals per section",
       "why": "29 images for 727 pages keeps the recycled-visual problem; biggest remaining credibility gap",
       "effort": "L",
       "status": "Done in tree (179 seeded case/insight visuals + 38 OGs)"
@@ -96,7 +97,7 @@
       "change": "Stand up info@dataqsoft.com inbox (MX + deliverability + SPF/DKIM) consistent with item-3 decision; add a second contact route (calendly/booking) on Book a Briefing",
       "why": "Topbar email is the only contact route once forms work; unverifiable today",
       "effort": "S",
-      "status": "External \u2014 inbox/booking setup pending"
+      "status": "External — inbox/booking setup pending"
     },
     {
       "id": 10,
@@ -111,10 +112,10 @@
       "id": 11,
       "priority": "P2",
       "area": "Performance",
-      "change": "Slim homepage: 552KB HTML \u2014 audit inlined RSC payload, deduplicate repeated SVG defs, defer below-fold hydration, set LCP image priority",
+      "change": "Slim homepage: 552KB HTML — audit inlined RSC payload, deduplicate repeated SVG defs, defer below-fold hydration, set LCP image priority",
       "why": "Largest page in the site carries the most repeated markup",
       "effort": "M",
-      "status": "Deferred \u2014 assess after Lighthouse run"
+      "status": "Done in tree — mega menu lazy-mount saves 103KB on every page (homepage 624->519KB, services 523->420KB, site ~46MB lighter); Lighthouse compressed run: A11y 100, BP 100, SEO 100, Perf 69-79 (mobile-throttled local), FCP 1.4s / LCP 2.7-3.5s / 480KiB transfer; console errors 0"
     },
     {
       "id": 12,
@@ -132,7 +133,7 @@
       "change": "A11y sweep: alt text for content-bearing images in PageImagery/PageBlocks, focus-visible ring audit, contrast pass on orange-on-dark chips, aria-labels on chart containers with text summaries",
       "why": "Charts are pure SVG without accessible text; 1 alt attribute total in imagery components",
       "effort": "M",
-      "status": "Done in tree (aria/alt/focus sweep)"
+      "status": "Done in tree — Lighthouse a11y 100: Reveal-in-li list nesting fixed (RPA stages), white-on-orange small buttons moved to brand-deep 5.18:1 (cookie accept, announcement bar+link, 404 search, mega strip), announcement dismiss 24x24 target"
     },
     {
       "id": 14,
@@ -177,13 +178,13 @@
       "change": "Static-site hygiene: add security.txt, verify manifest icons + apple-touch, remove dead runtime paths (prisma/db scripts, standalone server bits) from package.json for the export target, document GHPAGES=1 export command in README",
       "why": "Scaffold leftovers confuse the build story; manifest completeness affects PWA signals",
       "effort": "S",
-      "status": "Done in tree (security.txt, img guard, redirect stub)"
+      "status": "Done in tree — manifest/icon/apple-touch links now basePath-prefixed (were root-absolute 404s on Pages), redirect stub refresh keyed to GHPAGES env, footer insights + contact privacy anchors prefixed"
     },
     {
       "id": 19,
       "priority": "P2",
       "area": "Naming",
-      "change": "Brand-string consistency pass: 'dataqsoft' appears in env defaults/emails/domain while brand rule is 'Dataq Software'; keep domain as infra but ensure visible copy, alt text, og metadata all read 'Dataq Software' (naming_ci.py already enforces src/public \u2014 extend to generated out/ HTML)",
+      "change": "Brand-string consistency pass: 'dataqsoft' appears in env defaults/emails/domain while brand rule is 'Dataq Software'; keep domain as infra but ensure visible copy, alt text, og metadata all read 'Dataq Software' (naming_ci.py already enforces src/public — extend to generated out/ HTML)",
       "why": "Mixed strings in metadata undermine the naming gate's guarantee",
       "effort": "S",
       "status": "Done in tree (naming_ci --scan-out wired)"
@@ -195,8 +196,8 @@
       "change": "Refresh the 500+ backlog XLSX: mark Waves 0-7 delivered, re-baseline metrics, import this Top-20 as the active queue with owners and wave numbers",
       "why": "Ledger drifts from reality; next session should execute from one source of truth",
       "effort": "S",
-      "status": "Done \u2014 ledger regenerated"
+      "status": "Done — ledger regenerated"
     }
   ],
-  "verified_build": "2026-11-23: export green \u2014 733 pages, linkcheck 732 clean, pagefind indexed, search E2E verified (pills+URLs), gates passed"
+  "verified_build": "2026-11-23: export green — 733 pages, linkcheck 732 clean, pagefind indexed, search E2E verified (pills+URLs), gates passed"
 }

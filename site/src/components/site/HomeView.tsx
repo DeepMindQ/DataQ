@@ -941,8 +941,10 @@ export default function HomeView() {
             </Reveal>
             <ol className="grid gap-7 sm:grid-cols-2 lg:grid-cols-5 lg:gap-4">
               {RPA_STAGES.map((st, i) => (
-                <Reveal key={st.t} delay={i * 120}>
-                  <li className="relative flex h-full flex-col">
+                /* Reveal INSIDE the li: a wrapper div between <ol> and <li>
+                   breaks list semantics (axe listitem rule, Lighthouse a11y). */
+                <li key={st.t} className="relative flex h-full flex-col">
+                  <Reveal delay={i * 120} className="flex h-full flex-col">
                     <span className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border border-brand/40 bg-white text-brand-deep shadow-1 transition duration-300 hover:scale-110 hover:bg-brand hover:text-white">
                       <st.icon className="h-5 w-5" aria-hidden="true" />
                     </span>
@@ -951,8 +953,8 @@ export default function HomeView() {
                     </p>
                     <p className="mt-0.5 text-[14.5px] font-semibold text-navy-800">{st.t}</p>
                     <p className="mt-1 flex-1 text-[12.5px] leading-relaxed text-slate-body/75">{st.d}</p>
-                  </li>
-                </Reveal>
+                  </Reveal>
+                </li>
               ))}
             </ol>
           </div>

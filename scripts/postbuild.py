@@ -8,7 +8,11 @@ import os, re, sys
 out = sys.argv[1] if len(sys.argv) > 1 else '/home/z/my-project/site/out'
 
 # 1. redirect stub (basePath-aware)
-bp = '/DataQ' if os.path.basename(os.path.normpath(out)) == 'out-gh' else ''
+# NOTE: key off the GHPAGES build flag, not the output dir name — the export
+# pipeline runs postbuild against `out` BEFORE the copy to out-gh, so a
+# dirname-based check always saw '' and shipped root-absolute refresh URLs
+# (404 on GitHub Pages). Caught by the Lighthouse/anchor basePath audit.
+bp = '/DataQ' if os.environ.get('GHPAGES') == '1' else ''
 rd = os.path.join(out, 'why-dataq-soft')
 os.makedirs(rd, exist_ok=True)
 with open(os.path.join(rd, 'index.html'), 'w', encoding='utf-8') as f:

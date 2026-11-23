@@ -39,13 +39,16 @@ export const metadata: Metadata = {
   description:
     "Dataq Software is a global IT services, consulting and business solutions partner — from ERP and cloud to AI and data — powered by patented delivery IP and gated on signed metrics. SOC 2 · ISO 27001.",
   robots: { index: true, follow: true },
-  manifest: "/manifest.json",
+  // Icons/manifest: Next 16 does NOT prefix metadata icon/manifest hrefs with
+  // the router basePath, so on GitHub Pages "/manifest.json" would resolve to
+  // deepmindq.github.io/manifest.json and 404. Prefix explicitly (Top-20 #18).
+  manifest: `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/manifest.json`,
   icons: {
     icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico", sizes: "48x48", type: "image/x-icon" },
+      { url: `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/icon.svg`, type: "image/svg+xml" },
+      { url: `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/favicon.ico`, sizes: "48x48", type: "image/x-icon" },
     ],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    apple: [{ url: `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/apple-touch-icon.png`, sizes: "180x180" }],
   },
   openGraph: {
     type: "website",

@@ -10,7 +10,7 @@ const shared = {
   // Pin Turbopack's workspace root to site/ — without this, the stray bun.lock
   // in the parent repo makes Turbopack trace the whole parent tree (uploads,
   // second node_modules) and OOM the sandbox during the production build.
-  turbopack: { root: __dirname, memoryLimit: 1536 },
+  turbopack: { root: __dirname },
 } satisfies Partial<NextConfig>;
 
 const nextConfig: NextConfig = isExport

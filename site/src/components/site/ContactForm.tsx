@@ -187,7 +187,7 @@ export default function ContactForm({ compact = false }: { compact?: boolean }) 
         />
         <label htmlFor="cf-consent" className="text-[11.5px] leading-snug text-slate-body/70">
           I consent to Dataq Software storing this message to respond to my inquiry, in line with the{" "}
-          <a href="/privacy-policy/" className="underline hover:text-navy-800">
+          <a href={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/privacy-policy/`} className="underline hover:text-navy-800">
             Privacy Policy
           </a>
           . Client data is never used for model training.
