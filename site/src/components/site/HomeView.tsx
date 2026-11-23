@@ -218,21 +218,6 @@ const CONSULTING_GROUPS = [
 ];
 const ConsultIcons = [Database, Wrench, CloudCog, Handshake];
 
-/* the eight reporting panels of the steering pack — A-12/14/15/16:
-   every card now carries a sample value + owner + cadence chip (A-14),
-   anchored on values already published across the site. Sample row values
-   are from the illustrative reference program (E-05 provenance rule). */
-const STEERING_PANELS: { name: string; desc: string; sample: string; owner: string; cadence: string }[] = [
-  { name: "Decision latency", desc: "How long the decision takes, end to end, against the baseline signed in week two.", sample: "p95 148 ms", owner: "COO", cadence: "fortnightly" },
-  { name: "Autonomous coverage", desc: "Which decisions now run without a human touch — and which deliberately keep one.", sample: "63% · +8 pts", owner: "COO", cadence: "monthly" },
-  { name: "Value attribution", desc: "Cost released, revenue protected, risk reduced — every figure lands on a ledger line the CFO already owns.", sample: "−38% fraud losses", owner: "CFO", cadence: "quarterly" },
-  { name: "Gate-by-gate delta", desc: "The measured move at every delivery gate, with the evidence behind each figure.", sample: "0.00% reconciliation delta", owner: "Delivery lead", cadence: "per gate" },
-  { name: "Year-one cost walk", desc: "Run cost before, during and after — so finance sees the same numbers delivery does.", sample: "−23.4% estate waste", owner: "CFO", cadence: "quarterly" },
-  { name: "Control coverage", desc: "Controls live and tested versus the committed target, owned by a named person.", sample: "41/41 controls live", owner: "CISO", cadence: "monthly" },
-  { name: "Maturity to outcome", desc: "Where the estate sits on the maturity curve and what the next gate requires.", sample: "5 of 6 gates passed", owner: "Program board", cadence: "per gate" },
-  { name: "Owner map", desc: "Who is on the program, what they own, and how the team changes as value scales.", sample: "1 named owner per control", owner: "Sponsor", cadence: "signed week two" },
-];
-
 /* A-58: the objections a buyer raises before the final CTA */
 const HOME_FAQ = [
   {
@@ -326,14 +311,11 @@ export default function HomeView() {
 
   const SECTION_NAV = [
     { id: "identity", label: "Who we are" },
-    { id: "output", label: "Delivery output" },
-    { id: "services", label: "Services" },
-    { id: "consulting", label: "Consulting" },
+    { id: "services", label: "What we do" },
     { id: "delivery", label: "Delivery model" },
-    { id: "rpa", label: "RPA" },
-    { id: "patents", label: "IP differential" },
-    { id: "platforms", label: "Platforms" },
-    { id: "evidence", label: "Evidence" },
+    { id: "rpa", label: "Automation" },
+    { id: "patents", label: "IP & platforms" },
+    { id: "evidence", label: "Results" },
     { id: "value", label: "Charter" },
     { id: "industries", label: "Industries" },
     { id: "insights", label: "Insights" },
@@ -383,9 +365,9 @@ export default function HomeView() {
               </h1>
               {/* A-03: one promise sentence + one proof sentence */}
               <p className="rise-item measure mt-5 text-body-lg leading-relaxed text-white/70" style={{ ["--rise-delay" as string]: "560ms" }}>
-                We consult, build and run the technology your business runs on — from ERP and cloud to AI and data.
-                Our patented platforms do the heavy lifting from day one. And every program is measured on a metric
-                your board already tracks.
+                We consult, build and run the technology your business runs on — ERP, cloud, data, AI and security.
+                Every program starts from patented platforms and is measured against the metric your board already
+                tracks.
               </p>
               {/* A-03: the three delivery vignettes, as a rotating proof line */}
               <div className="rise-item" style={{ ["--rise-delay" as string]: "620ms" }}>
@@ -415,7 +397,7 @@ export default function HomeView() {
                 </Link>
               </div>
               <p className="rise-item mt-2 text-[12px] text-white/45" style={{ ["--rise-delay" as string]: "720ms" }}>
-                45 minutes with a practice lead — you leave with a scored gate map, not a follow-up deck.
+                A working session with a practice lead — bring your metric, leave with a plan.
               </p>
               {/* A-05: outcome proof instead of compliance badges, linking to the evidence */}
               <p className="rise-item mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[12.5px] text-white/65" style={{ ["--rise-delay" as string]: "780ms" }}>
@@ -425,7 +407,7 @@ export default function HomeView() {
                   <span className="text-white/45">— see the engagements</span>
                 </Link>
                 <span className="rounded-full border border-white/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white/45">
-                  Published engagement deltas
+                  Published results
                 </span>
               </p>
             </Reveal>
@@ -559,54 +541,6 @@ export default function HomeView() {
         </div>
       </section>
 
-      {/* steering pack — what delivery produces (A-12/13/14) */}
-      <section id="output" className="vignette-section relative scroll-mt-24 overflow-hidden grad-navy-field text-white">
-        <div className="orb-field" aria-hidden="true">
-          <span className="orb" />
-          <span className="orb" />
-        </div>
-        <div className="bg-field-drift absolute inset-0 dot-grid" aria-hidden="true" />
-        <div className="absolute inset-0 pattern-noise" aria-hidden="true" />
-        <div className="relative container-dq section-y-sm">
-          <Reveal>
-            <p className="kicker-bar-dark text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-300">What delivery produces</p>
-            {/* A-12 */}
-            <h2 className="text-display-3 mt-1 max-w-4xl text-white sm:text-[28px]">
-              The numbers your leadership signs off — refreshed every fortnight, against the baseline you signed
-            </h2>
-            {/* A-13: the intro carries a sample panel row, labeled illustrative */}
-            <p className="mt-2 max-w-4xl text-[14.5px] leading-relaxed text-white/65">
-              One panel per program surface — consulting or deep-tech — generated from your estate, so week two
-              already reads like your business. Below: a sample row from the illustrative reference program.{" "}
-              <span className="rounded-md border border-white/20 bg-white/[0.07] px-2 py-0.5 font-mono text-[11.5px] text-white/85">
-                Decision p95 148 ms · owner: COO · refreshed 14 days · evidence: replay pack
-              </span>
-            </p>
-          </Reveal>
-          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {STEERING_PANELS.map((p, i) => (
-              <Reveal key={p.name} delay={i * 40}>
-                {/* A-14: every card carries sample value + owner + cadence */}
-                <div className="flex h-full flex-col rounded-xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur transition hover:border-brand/40 hover:bg-white/[0.07]">
-                  <p className="flex items-center justify-between font-display text-[11px] font-bold text-brand-300/90">
-                    {String(i + 1).padStart(2, "0")}
-                    <span className="rounded-full border border-white/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white/50">
-                      {p.cadence}
-                    </span>
-                  </p>
-                  <p className="mt-2 text-[14.5px] font-semibold text-white">{p.name}</p>
-                  <p className="mt-1 flex-1 text-[12.5px] leading-relaxed text-white/55">{p.desc}</p>
-                  <p className="mt-3 rounded-md bg-navy-800/80 px-2 py-1.5 text-[11.5px] font-semibold text-white/90">
-                    <span className="font-display">{p.sample}</span>
-                    <span className="ml-1.5 text-[10px] font-medium text-white/45">owner: {p.owner}</span>
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* the expertise domains (A-17..A-22 + A-52 router) */}
       <section id="services" className="scroll-mt-24 border-y border-line bg-mist/60 dot-grid-light">
         <div className="container-dq section-y-sm">
@@ -618,14 +552,13 @@ export default function HomeView() {
                 </p>
                 {/* A-17 */}
                 <h2 className="text-display-3 mt-1 max-w-4xl text-navy-800 sm:text-[30px]">
-                  The expertise your next move needs — under one accountable delivery system
+                  The expertise your next move needs
                 </h2>
                 {/* A-18 */}
                 <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-                  Deep-tech programs enter through a domain — decisions, data, trust, platform, compute, records or
-                  field. Classic-estate work — migration, engineering pods, Azure, ERP, managed operations — enters
-                  through consulting. Whichever door you use, the same release gates and the same patented platforms
-                  govern the build.
+                  Eight deep-tech domains and a full consulting practice, run as one accountable delivery system.
+                  Whichever door you enter, the same discipline governs the build: named owners, measured gates,
+                  results reported against your baseline.
                 </p>
               </div>
               <div className="flex flex-col items-start gap-1.5">
@@ -634,12 +567,6 @@ export default function HomeView() {
                   className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-deep"
                 >
                   All services <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/consulting/"
-                  className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-deep"
-                >
-                  All consulting practices <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>
@@ -701,11 +628,9 @@ export default function HomeView() {
           {/* A-52: the self-qualification router */}
           <DomainRouter options={ROUTER_OPTIONS} />
         </div>
-      </section>
 
-      {/* consulting practices (A-23..A-27) — co-equal offer track, repositioned after services */}
-      <section id="consulting" className="scroll-mt-24 border-y border-line bg-white">
-        <div className="container-dq section-y-sm">
+        {/* consulting practices (A-23..A-27) — merged into the services band */}
+        <div className="container-dq section-y-sm border-t border-line">
           <Reveal>
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
@@ -713,15 +638,14 @@ export default function HomeView() {
                   Consulting &amp; IT services
                 </p>
                 {/* A-23 */}
-                <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
-                  Consulting that ends in delivery — the advisor is the builder
-                </h2>
+                <h3 className="mt-1 font-display text-[22px] font-semibold text-navy-800">
+                  Consulting that ends in delivery
+                </h3>
                 {/* A-24 */}
                 <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
                   Transformation programs, migration factories, engineering pods, quality engineering, Azure estates,
-                  ERP cores, managed operations and end-user support. The team that recommends is the team that builds
-                  it — the same two-week diagnostic, signed baseline and evidence-or-stop contract as every expertise
-                  domain.
+                  ERP cores, managed operations and end-user support. The team that recommends is the team that
+                  builds it.
                 </p>
               </div>
               <Link
@@ -737,7 +661,7 @@ export default function HomeView() {
               <Reveal key={g.name} delay={i * 40}>
                 <Link
                   href="/consulting/"
-                  className="tilt-card group flex h-full flex-col rounded-2xl border border-line bg-mist/60 p-5 transition hover:-translate-y-0.5 hover:border-brand/60 hover:bg-white shadow-1 hover:shadow-2"
+                  className="tilt-card group flex h-full flex-col rounded-2xl border border-line bg-white p-5 transition hover:-translate-y-0.5 hover:border-brand/60 shadow-1 hover:shadow-2"
                 >
                   <span className="flex items-center justify-between">
                     <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-navy-800 text-brand-300 transition group-hover:bg-brand group-hover:text-white">
@@ -760,7 +684,7 @@ export default function HomeView() {
           </div>
           {/* Wave 7 — the enterprise-systems practice: maintain · upgrade · migrate */}
           <Reveal>
-            <div className="mt-10 rounded-2xl border border-line bg-mist/60 p-5 sm:p-6">
+            <div className="mt-10 rounded-2xl border border-line bg-white p-5 sm:p-6">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-deep">
                   Enterprise systems practice — maintain · upgrade · migrate
@@ -918,12 +842,11 @@ export default function HomeView() {
                   Automation partnership
                 </p>
                 <h2 className="text-display-3 mt-1 max-w-4xl text-navy-800 sm:text-[30px]">
-                  End-to-end RPA — from process analysis to 24x7 managed support
+                  Automation that ends in managed support
                 </h2>
                 <p className="mt-2 max-w-3xl text-[14.5px] leading-relaxed text-slate-body/75">
-                  Our partnership with Automation Anywhere has led to successful global RPA implementations — and it
-                  keeps enabling us to put robots to work where they benefit customers most. Every stage of the
-                  lifecycle below is owned, measured and handed over with evidence.
+                  Our Automation Anywhere partnership has delivered global RPA implementations — robots put to work
+                  where they pay back fastest, every stage owned, measured and handed over with evidence.
                 </p>
               </div>
               <Link
@@ -970,16 +893,16 @@ export default function HomeView() {
                 The IP differential
               </p>
               <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
-                Patented methods — proven in production before they reach your program
+                Ambition is common. Proof is not.
               </h2>
               {/* A-32: the platforms named · A-28: the four-of-eight affordance */}
               <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-                Ambition is common in this industry; proof is not. Every engagement starts from configured IP, not a
-                blank page and a staffing plan: graph-native contextual intelligence, quantum-inspired optimization,
-                federated trust, validated ethical decisions and self-evolving learning — developed by our research
-                programme and in production inside Nexus, Quanta, Forge, Sentinel and Ledger.{" "}
+                Every engagement starts from configured IP, not a blank page and a staffing plan: graph-native
+                contextual intelligence, quantum-inspired optimization, federated trust, validated ethical decisions
+                and self-evolving learning — developed by our research programme, in production inside the platforms,
+                and governed by the gates each method ships with.{" "}
                 <Link href="/patented-intelligence/" className="link-animated font-semibold text-brand-deep">
-                  A few of the method families are shown here — the method map lists them all with their gates.
+                  The method map lists every family with its gates.
                 </Link>
               </p>
             </div>
@@ -1049,36 +972,35 @@ export default function HomeView() {
             </Reveal>
           ))}
         </div>
-      </section>
 
-      {/* platforms (A-37/38/39 in PlatformTabs) */}
-      <section id="platforms" className="scroll-mt-24 container-dq section-y-sm">
-        <Reveal>
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">
-                Platforms
-              </p>
-              <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
-                The platforms that put the patented methods to work
-              </h2>
-              {/* A-37: the role line under the row */}
-              <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-                Nexus runs decisions · Forge runs data · Swarm runs agents · Sentinel guards access · Twinverse mirrors
-                operations · Quanta readies compute · Ledger anchors trust · Compass keeps AI inspectable.
-              </p>
-            </div>
-            <Link
-              href="/platforms/"
-              className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-deep"
-            >
-              Platform portfolio <ArrowRight className="h-4 w-4" />
-            </Link>
+          {/* platforms (A-37/38/39 in PlatformTabs) — merged into the IP band */}
+          <div className="mt-10 border-t border-line pt-8">
+            <Reveal>
+              <div className="flex flex-wrap items-end justify-between gap-4">
+                <div>
+                  <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">
+                    Platforms
+                  </p>
+                  <h3 className="mt-1 font-display text-[22px] font-semibold text-navy-800">
+                    Eight platforms, one job each
+                  </h3>
+                  <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
+                    Nexus runs decisions · Forge runs data · Swarm runs agents · Sentinel guards access · Twinverse
+                    mirrors operations · Quanta readies compute · Ledger anchors trust · Compass keeps AI inspectable.
+                  </p>
+                </div>
+                <Link
+                  href="/platforms/"
+                  className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-deep"
+                >
+                  Platform portfolio <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </Reveal>
+          <div className="mt-8">
+            <PlatformTabs platforms={brand.platforms} />
           </div>
-        </Reveal>
-        <div className="mt-8">
-          <PlatformTabs platforms={brand.platforms} />
-        </div>
+          </div>
       </section>
 
       {/* evidence library (A-40..A-43, A-53) — proof, after the two offer tracks */}
@@ -1092,7 +1014,7 @@ export default function HomeView() {
                   Evidence library
                 </p>
                 <h2 className="text-display-3 mt-1 text-white sm:text-[28px]">
-                  The numbers are the client&rsquo;s. The method is on the page.
+                  Results you can audit
                 </h2>
                 {/* A-08: reconciled count language */}
                 <p className="mt-2 max-w-2xl text-[14.5px] text-white/65">
@@ -1153,10 +1075,14 @@ export default function HomeView() {
       <section id="value" className="scroll-mt-24 border-y border-line bg-mist/60 dot-grid-light">
         <div className="container-dq section-y-sm">
           <Reveal>
-            <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">The operating discipline</p>
+            <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">Before delivery begins</p>
             <h2 className="text-display-3 mt-1 max-w-3xl text-navy-800 sm:text-[28px]">
-              The names signed before delivery begins — the engagement charter
+              How an engagement starts
             </h2>
+            <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
+              One page, signed in week two: the metric to move, the owner of each control, the envelope of acceptable
+              risk. Your auditors and your board read the same page delivery runs on.
+            </p>
           </Reveal>
           <div className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
             <div className="grid gap-4 md:grid-cols-3">

@@ -442,8 +442,8 @@ export default function OpsConsole() {
 
         {/* E-05: provenance caption */}
         <p className="mt-2 text-[9.5px] leading-relaxed text-white/40">
-          The proof is not a slide — it is this panel, generated from your estate from week two. Values shown are the
-          illustrative reference program.
+          What a live program reports, refreshed from your estate from week two. Values shown are the illustrative
+          reference program.
         </p>
       </div>
     </div>
