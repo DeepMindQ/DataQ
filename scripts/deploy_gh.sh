@@ -30,6 +30,10 @@ git -C .gh-deploy reset --hard origin/gh-pages 2>/dev/null || true
 cd .gh-deploy
 find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
 cp -r ../site/out-gh/. .
+# guard: Jekyll on GitHub Pages excludes _next/ and .well-known/ without this
+# marker (regression 2026-11-23: rm-all dropped the hand-added file)
+touch .nojekyll
+[ -f .well-known/security.txt ] || { echo "WARN: security.txt missing from export"; }
 cd ..
 
 # 4. commit + push

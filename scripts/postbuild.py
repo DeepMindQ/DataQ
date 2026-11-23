@@ -54,4 +54,12 @@ for h in htmls:
             print('BROKEN:', h.replace(out, ''), '->', s)
 print(f'img src check: {checked} refs, {bad} broken')
 assert bad == 0
+
+# 4. .nojekyll guard — GitHub Pages runs Jekyll without this marker file,
+#    which excludes underscore-prefixed paths (_next/ assets, __next.* RSC
+#    payloads) and dot-directories (.well-known/security.txt) => unstyled
+#    site. Regression caught live on 2026-11-23 when the deploy script's
+#    rm-all dropped the previously hand-added marker.
+open(os.path.join(out, '.nojekyll'), 'w').close()
+print('nojekyll marker written')
 print('POSTBUILD OK')
