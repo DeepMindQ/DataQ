@@ -25,7 +25,7 @@ const nextConfig: NextConfig = isExport
       // because next/image does NOT prefix under unoptimized+basePath.
       ...(process.env.GHPAGES === "1" ? { basePath: "/DataQ" } : {}),
       env: {
-        NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || "https://www.dataqsoft.com",
+        NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || "https://deepmindq.github.io/DataQ",
         NEXT_PUBLIC_BASE_PATH: process.env.GHPAGES === "1" ? "/DataQ" : "",
       },
     }

@@ -7,7 +7,7 @@ import { CheckCircle2, Loader2 } from "lucide-react";
    Posts to the same web3forms endpoint when NEXT_PUBLIC_FORM_ACCESS_KEY is set;
    demo mode otherwise. */
 export default function NewsletterForm() {
-  const [state, setState] = useState<"idle" | "sending" | "done">("idle");
+  const [state, setState] = useState<"idle" | "sending" | "done" | "fallback">("idle");
   const [email, setEmail] = useState("");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -17,7 +17,7 @@ export default function NewsletterForm() {
     const accessKey = process.env.NEXT_PUBLIC_FORM_ACCESS_KEY;
     try {
       if (accessKey) {
-        await fetch("https://api.web3forms.com/submit", {
+        const res = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
           headers: { "Content-Type": "application/json", Accept: "application/json" },
           body: JSON.stringify({
@@ -27,13 +27,34 @@ export default function NewsletterForm() {
             from_name: "Dataq Software website",
           }),
         });
+        const json = await res.json();
+        if (!json.success) throw new Error(json.message || "Subscription failed");
       } else {
-        await new Promise((r) => setTimeout(r, 500));
+        // No endpoint configured at build time: honest handoff, never a fake
+        // confirmation. One click prefills the subscription email.
+        setState("fallback");
+        return;
       }
     } catch {
-      /* even if the endpoint fails, confirm opt-in received — handled by ops */
+      setState("fallback");
+      return;
     }
     setState("done");
+  }
+
+  if (state === "fallback") {
+    return (
+      <p className="text-[12.5px] leading-snug text-white/70" role="status">
+        The subscription desk is not connected on this build yet — email{" "}
+        <a
+          className="underline text-brand-300"
+          href={`mailto:info@dataqsoft.com?subject=${encodeURIComponent("Newsletter subscription")}&body=${encodeURIComponent("Please add " + email + " to the intelligence briefing.")}`}
+        >
+          info@dataqsoft.com
+        </a>{" "}
+        with subject “Newsletter” and we will add you manually.
+      </p>
+    );
   }
 
   if (state === "done") {

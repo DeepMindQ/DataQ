@@ -40,13 +40,19 @@ const PLATFORM_IMG: Record<string, Img> = {
   compass: gen("plat-compass", "Dataq Compass — governance needle steering regulated delivery"),
 };
 
-/* Industry motifs, matched by keyword anywhere in the page path. */
+/* Industry motifs, matched by keyword anywhere in the page path.
+   Specific sector rules FIRST — the generic industry-group rules below would
+   otherwise swallow them (e.g. 'utilit' inside the manufacturing group). */
 const INDUSTRY_RULES: [RegExp, Img][] = [
+  [/education|edtech|k12|higher-ed|workforce-training|research/, gen("ind-education", "Campus knowledge network — amber threads linking learning systems")],
+  [/technology-saas|saas|semiconductor|software/, gen("ind-technology", "Stacked glass service layers receiving code streams")],
+  [/agriculture|food|agrifood|precision-ag/, gen("ind-agriculture", "Sensor mesh over ordered crop rows — precision agriculture")],
+  [/energy|utilit|power-grid|renewables|oil-gas|water/, gen("ind-energy", "Grid load-flow arcs converging on a glowing substation core")],
   [/banking|financial|insurance|fintech|capital-markets|payments/, gen("ind-banking", "Value streams compounding across a financial estate")],
   [/healthcare|pharma|life-science|medical/, gen("ind-health", "Live clinical signal drawn through a monitored network")],
   [/retail|consumer|e-?commerce|cpg/, gen("ind-retail", "Demand curve rising across retail channels")],
-  [/manufacturing|energy|utilit|industrial|automotive|logistics|supply/, gen("ind-manufacturing", "Industrial grid with power flowing between plants")],
-  [/government|public-sector|education|defense/, gen("ind-gov", "Public-service dome with governed service arcs")],
+  [/manufacturing|industrial|automotive|logistics|supply/, gen("ind-manufacturing", "Industrial grid with power flowing between plants")],
+  [/government|public-sector|defense/, gen("ind-gov", "Public-service dome with governed service arcs")],
   [/telecom|media|travel|hospitality|sports/, gen("ind-telecom", "Global mesh linking markets across continents")],
 ];
 
@@ -98,6 +104,17 @@ function firstRule(rules: [RegExp, Img][], haystack: string): Img | null {
 export function pick(page: { url: string; template: string; l1?: string | null; l2?: string | null }): Img {
   const url = page.url || "/";
   const hay = `${url} ${page.l1 ?? ""} ${page.l2 ?? ""}`.toLowerCase();
+  const segs = url.split("/").filter(Boolean);
+
+  /* Top-20 #8: seeded per-page visuals for the long tail. Hub URLs keep hub
+     art; every case-study and insight slug maps to its own generated file
+     (scripts/gen_seeded_visuals.py reads the same page list at build time). */
+  if (segs[0] === "case-studies" && segs[1]) {
+    return gen(`case-${segs[1]}`, `Seeded engagement visual for the ${segs[1]} program note`);
+  }
+  if (segs[0] === "insights" && segs[1]) {
+    return gen(`insight-${segs[1]}`, `Seeded visual for the ${segs[1]} practitioner thesis`);
+  }
 
   // hub + company pages first (exact-ish prefixes)
   for (const prefix of Object.keys(HUB_IMG).sort((a, b) => b.length - a.length)) {
@@ -107,20 +124,20 @@ export function pick(page: { url: string; template: string; l1?: string | null; 
     }
   }
 
-  const segs = url.split("/").filter(Boolean);
-  if (segs[0] === "services") {
+  const segs0 = segs;
+  if (segs0[0] === "services") {
     for (const s of segs) if (DOMAIN_IMG[s]) return DOMAIN_IMG[s];
     const r = firstRule(SOLUTION_RULES, hay);
     if (r) return r;
     return DOMAIN_IMG["applied-ai-generative-ai"];
   }
-  if (segs[0] === "platforms") {
-    return PLATFORM_IMG[segs[segs.length - 1]] ?? PLATFORM_IMG.nexus;
+  if (segs0[0] === "platforms") {
+    return PLATFORM_IMG[segs0[segs0.length - 1]] ?? PLATFORM_IMG.nexus;
   }
-  if (segs[0] === "solutions") {
+  if (segs0[0] === "solutions") {
     return firstRule(SOLUTION_RULES, hay) ?? gen("co-home", "Solution field composing intelligence");
   }
-  if (segs[0] === "industries") {
+  if (segs0[0] === "industries") {
     return firstRule(INDUSTRY_RULES, hay) ?? INDUSTRY_IMG;
   }
   const r = firstRule(SOLUTION_RULES, hay) ?? firstRule(INDUSTRY_RULES, hay);

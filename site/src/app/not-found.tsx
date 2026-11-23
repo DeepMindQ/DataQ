@@ -1,9 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Search } from "lucide-react";
 import Logo from "@/components/site/Logo";
 
 /* Branded animated 404 (Wave 1 CHG-030 + Wave 2 CHG-162 + BG-020):
    brand line, search box, top-8 destination links, closing CTA — no dead ends. */
+export const metadata: Metadata = {
+  title: "Page not found (404) | Dataq Software",
+  robots: { index: false, follow: true },
+};
+
 export default function NotFound() {
   const top8 = [
     { label: "Services — eight expertise domains", url: "/services/" },

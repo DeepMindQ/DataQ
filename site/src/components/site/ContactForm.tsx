@@ -20,8 +20,9 @@ const INTERESTS = [
 /* Input system per Wave 1 CHG-054/055/056: labels, focus ring orange,
    custom select arrow, orange checked states, error/success states. */
 export default function ContactForm({ compact = false }: { compact?: boolean }) {
-  const [state, setState] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [state, setState] = useState<"idle" | "sending" | "success" | "error" | "fallback">("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [mailto, setMailto] = useState("");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -34,13 +35,17 @@ export default function ContactForm({ compact = false }: { compact?: boolean }) 
     }
     setState("sending");
     const accessKey = process.env.NEXT_PUBLIC_FORM_ACCESS_KEY;
+    const interest = (data.get("interest") as string) || "general";
+    const name = (data.get("name") as string) || "";
+    const email = (data.get("email") as string) || "";
+    const message = (data.get("message") as string) || "";
     const payload: Record<string, string> = {
-      name: (data.get("name") as string) || "",
-      email: (data.get("email") as string) || "",
-      interest: (data.get("interest") as string) || "",
-      message: (data.get("message") as string) || "",
+      name,
+      email,
+      interest,
+      message,
       consent: (data.get("consent") as string) || "",
-      subject: "Website contact — " + ((data.get("interest") as string) || "general"),
+      subject: "Website contact — " + interest,
       from_name: "Dataq Software website",
     };
     try {
@@ -54,8 +59,16 @@ export default function ContactForm({ compact = false }: { compact?: boolean }) 
         const json = await res.json();
         if (!json.success) throw new Error(json.message || "Submission failed");
       } else {
-        // demo mode: no endpoint configured yet — simulate a short delay
-        await new Promise((r) => setTimeout(r, 600));
+        // No endpoint configured at build time: NEVER fake success. Offer an
+        // honest handoff — a prefilled mailto so the message still reaches us.
+        const body = ["Name: " + name, "Work email: " + email, "Area: " + interest, "", message]
+          .map((l) => encodeURIComponent(l))
+          .join("%0A");
+        setMailto(
+          `mailto:info@dataqsoft.com?subject=${encodeURIComponent("Website contact — " + interest)}&body=${body}`
+        );
+        setState("fallback");
+        return;
       }
       setState("success");
       form.reset();
@@ -63,6 +76,29 @@ export default function ContactForm({ compact = false }: { compact?: boolean }) 
       setErrorMsg(err instanceof Error ? err.message : "Submission failed");
       setState("error");
     }
+  }
+
+  if (state === "fallback") {
+    return (
+      <div className="rounded-xl border border-brand/40 bg-brand-tint p-6" role="status">
+        <div className="flex items-start gap-3">
+          <AlertCircle className="mt-0.5 h-5 w-5 text-brand-deep" />
+          <div>
+            <p className="font-semibold text-navy-800">One step remains — hand this message to us by email.</p>
+            <p className="mt-1 text-sm text-slate-body/80">
+              Our message desk is not connected on this build yet. Your note is ready to send — one click hands it to
+              our practice lead, who replies within one business day.
+            </p>
+            <a
+              href={mailto}
+              className="mt-3 inline-flex items-center gap-2 rounded-[10px] bg-brand px-4 py-2 text-[13px] font-semibold text-white hover:bg-brand-hover"
+            >
+              Open email with my message
+            </a>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (state === "success") {

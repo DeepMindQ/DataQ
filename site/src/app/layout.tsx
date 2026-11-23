@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import SiteHeader from "@/components/site/SiteHeader";
 import SiteFooter from "@/components/site/SiteFooter";
 import CookieConsent from "@/components/site/CookieConsent";
+import ConsentAnalytics from "@/components/site/ConsentAnalytics";
 import { ScrollProgress, BackToTop } from "@/components/site/Motion";
 import MotionRuntime from "@/components/site/MotionRuntime";
 import { brandData, navData } from "@/lib/content";
@@ -23,8 +24,14 @@ const inter = Inter({
   weight: "variable",
 });
 
+/* og:image must be absolute, and the Pages base path must survive — build it
+   from the same root the canonicals use (Top-20 #3/#4). */
+const SITE_ROOT = (
+  process.env.NEXT_PUBLIC_SITE_URL || "https://deepmindq.github.io/DataQ"
+).replace(/\/$/, "");
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://www.dataqsoft.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://deepmindq.github.io/DataQ"),
   title: {
     default: "Dataq Software — IT services, consulting & business solutions | AI, cloud, data, security, ERP",
     template: "%s",
@@ -43,11 +50,11 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "Dataq Software",
-    images: [{ url: "/og-default.png", width: 1200, height: 630, alt: "Dataq Software — Intelligence, engineered for outcomes." }],
+    images: [{ url: SITE_ROOT + "/og/home.png", width: 1200, height: 630, alt: "Dataq Software — Intelligence, engineered for outcomes." }],
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/og-default.png"],
+    images: [SITE_ROOT + "/og/home.png"],
   },
 };
 
@@ -115,6 +122,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteFooter brand={brand} footer={footer} />
         <BackToTop />
         <CookieConsent />
+        <ConsentAnalytics />
         <Toaster />
       </body>
     </html>

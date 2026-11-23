@@ -7,11 +7,7 @@
     "build": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
     "start": "NODE_ENV=production bun .next/standalone/server.js 2>&1 | tee server.log",
     "lint": "eslint .",
-    "db:push": "prisma db push --accept-data-loss",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:reset": "prisma migrate reset",
-    "export": "python3 ../scripts/naming_ci.py && NEXT_STATIC_EXPORT=1 next build && rm -rf out && cp -r .next-export out && npx pagefind --site out && echo \"STATIC EXPORT OK -> ./out\"",
+    "export": "python3 ../scripts/naming_ci.py && python3 ../scripts/gen_lastmod.py && python3 ../scripts/gen_seeded_visuals.py && GHPAGES=1 NEXT_STATIC_EXPORT=1 next build && rm -rf out out-gh && cp -r .next-export out && python3 ../scripts/postbuild.py out && cp -r out out-gh && python3 ../scripts/naming_ci.py --scan-out && python3 ../scripts/linkcheck.py out-gh && npx pagefind --site out-gh && echo \"STATIC EXPORT OK -> ./out-gh\"",
     "serve:static": "npx serve out"
   },
   "dependencies": {

@@ -15,7 +15,7 @@ with open(os.path.join(rd, 'index.html'), 'w', encoding='utf-8') as f:
     f.write(f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <title>Redirecting… | Dataq Software</title>
 <meta name="robots" content="noindex,follow">
-<link rel="canonical" href="https://www.dataqsoft.com/why-dataq/">
+<link rel="canonical" href="https://deepmindq.github.io/DataQ/why-dataq/">
 <meta http-equiv="refresh" content="0; url={bp}/why-dataq/">
 <script>window.location.replace('{bp}/why-dataq/');</script>
 </head><body>
@@ -26,7 +26,7 @@ print('redirect stub written:', os.path.join(rd, 'index.html'))
 # 2. gen image guard
 gen = os.path.join(out, 'images', 'gen')
 pngs = [f for f in os.listdir(gen) if f.endswith('.png')] if os.path.isdir(gen) else []
-assert len(pngs) >= 25, f'gen images missing in {out}: found {len(pngs)}'
+assert len(pngs) >= 150, f'gen images missing in {out}: found {len(pngs)}'
 print(f'gen image guard OK ({len(pngs)} images)')
 
 # 3. all internal HTML img srcs resolve (regression: images-not-rendering bug)

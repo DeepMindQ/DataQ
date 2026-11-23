@@ -20,14 +20,40 @@ type Dark = { dark?: boolean };
 export { hashStr, mulberry32 };
 
 /* ── shared frame ─────────────────────────────────────────────────────── */
+/* ── a11y: data-aware chart summary (Top-20 #13) ──────────────────────────
+   Screen readers get the title PLUS the named series, not just a bare title. */
+function chartSummary(
+  title: string,
+  series?: { name: string; values?: number[] }[],
+  unit?: string
+): string {
+  const parts = [title];
+  if (series?.length) {
+    parts.push(
+      "Series: " +
+        series
+          .map((s) => {
+            const v = s.values?.filter((n) => Number.isFinite(n)) ?? [];
+            const range = v.length ? ` (${Math.min(...v).toLocaleString("en-US")}–${Math.max(...v).toLocaleString("en-US")}${unit || ""})` : "";
+            return `${s.name}${range}`;
+          })
+          .join(", ")
+    );
+  }
+  return parts.join(". ");
+}
+
 function Frame({
   title,
   caption,
   dark,
+  summary,
   children,
-}: { title: string; caption?: string; dark?: boolean } & Dark & { children: React.ReactNode }) {
+}: { title: string; caption?: string; dark?: boolean; summary?: string } & Dark & { children: React.ReactNode }) {
   return (
     <figure
+      role="group"
+      aria-label={summary || title}
       className={`dv-card overflow-hidden rounded-2xl border shadow-2 ${
         dark ? "border-white/10 bg-white/[0.05] backdrop-blur" : "border-line bg-white"
       }`}
@@ -99,7 +125,7 @@ export function BarChart({
   const max = Math.max(...series.flatMap((s) => values1(s.values))) * 1.15 || 1;
   return (
     <div ref={ref}>
-      <Frame title={title} caption={caption} dark={dark}>
+      <Frame title={title} caption={caption} dark={dark} summary={ chartSummary(title, series, unit) }>
         <div style={{ height }} className="flex items-end">
           <div className="relative flex h-full flex-1 flex-col">
             {hi !== null && (
@@ -233,7 +259,7 @@ export function LineArea({
   };
   return (
     <div ref={ref}>
-      <Frame title={title} caption={caption} dark={dark}>
+      <Frame title={title} caption={caption} dark={dark} summary={ chartSummary(title, series, unit) }>
         <div className="relative">
           {hi !== null && labels[hi] !== undefined && (
             <ChartTip left={((x(hi, nPts) - pad.l) / (W - pad.l - pad.r)) * 100} dark={dark}>
@@ -364,7 +390,7 @@ export function Donut({
   const palette = [BRAND, NAVY, BRAND_SOFT, NAVY_SOFT, "#8A82A6"];
   return (
     <div ref={ref}>
-      <Frame title={title} caption={caption} dark={dark}>
+      <Frame title={title} caption={caption} dark={dark} summary={ chartSummary(title, segments.map(s => ({ name: s.name, values: [s.value] }))) }>
         <div className="flex flex-col items-center gap-5 sm:flex-row">
           <svg viewBox="0 0 110 110" className="h-[132px] w-[132px] shrink-0 -rotate-90" role="img" aria-label={title}>
             <circle cx="55" cy="55" r="40" fill="none" stroke={dark ? "rgba(255,255,255,.1)" : "#EEEAF5"} strokeWidth="13" />
@@ -444,7 +470,7 @@ export function Radar({
   };
   return (
     <div ref={ref}>
-      <Frame title={title} caption={caption} dark={dark}>
+      <Frame title={title} caption={caption} dark={dark} summary={ chartSummary(title, series) }>
         <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start">
           <svg viewBox="0 0 220 220" className="h-[200px] w-[200px] shrink-0" role="img" aria-label={title}>
             {[25, 50, 75, 100].map((g) => (
@@ -520,7 +546,7 @@ export function Funnel({
   const max = Math.max(...stages.map((s) => s.value)) || 1;
   return (
     <div ref={ref}>
-      <Frame title={title} caption={caption} dark={dark}>
+      <Frame title={title} caption={caption} dark={dark} summary={ chartSummary(title, stages.map(s => ({ name: s.name, values: [s.value] }))) }>
         <div className="space-y-2.5">
           {stages.map((s, i) => (
             <div key={s.name} className="flex items-center gap-3">
@@ -570,7 +596,7 @@ export function NetworkGraph({
   const py = (n: { y: number }) => 20 + n.y * (H - 40);
   return (
     <div ref={ref}>
-      <Frame title={title} caption={caption} dark={dark}>
+      <Frame title={title} caption={caption} dark={dark} summary={ chartSummary(title, [{ name: `${nodes.length} nodes mapped` }]) }>
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={title}>
           {links.map(([a, b], i) => (
             <line
@@ -635,7 +661,7 @@ export function Heatmap({
   const max = Math.max(...matrix.flat()) || 1;
   return (
     <div ref={ref}>
-      <Frame title={title} caption={caption} dark={dark}>
+      <Frame title={title} caption={caption} dark={dark} summary={ chartSummary(title, [{ name: `${rows.length} rows × ${cols.length} columns`, values: matrix.flat() }], unit) }>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[420px] border-separate border-spacing-[3px] text-[10.5px]">
             <thead>
@@ -696,7 +722,7 @@ export function Gauge({
   const C = Math.PI * 42;
   return (
     <div ref={ref}>
-      <Frame title={title} caption={caption} dark={dark}>
+      <Frame title={title} caption={caption} dark={dark} summary={ chartSummary(title, [{ name: `current ${value.toLocaleString("en-US")}${unit}` }], unit) }>
         <div className="flex flex-col items-center">
           <svg viewBox="0 0 110 66" className="w-[190px]" role="img" aria-label={title}>
             <path d="M 13 58 A 42 42 0 0 1 97 58" fill="none" stroke={dark ? "rgba(255,255,255,.12)" : "#EEEAF5"} strokeWidth="11" strokeLinecap="round" />
@@ -762,7 +788,7 @@ export function ArchitectureFlow({
   const { ref, inView } = useInView<HTMLDivElement>(0.22);
   return (
     <div ref={ref}>
-      <Frame title={title} caption={caption} dark={dark}>
+      <Frame title={title} caption={caption} dark={dark} summary={ chartSummary(title, layers.map(l => ({ name: `${l.name}: ${l.nodes.length} nodes` }))) }>
         <div className="relative">
           {layers.map((l, i) => (
             <div key={l.name} className="relative">
@@ -832,7 +858,7 @@ export function WorldPins({
   for (let i = 0; i < 420; i++) dots.push({ x: rng(), y: 0.12 + rng() * 0.72 });
   return (
     <div ref={ref}>
-      <Frame title={title} caption={caption} dark={dark}>
+      <Frame title={title} caption={caption} dark={dark} summary={ chartSummary(title, [{ name: `${pins.length} delivery locations` }]) }>
         <div className="relative overflow-hidden rounded-xl" style={{ aspectRatio: "2.1 / 1" }}>
           <svg viewBox="0 0 100 48" className="absolute inset-0 h-full w-full" aria-hidden="true">
             {dots.map((d, i) => (

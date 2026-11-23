@@ -4,6 +4,7 @@ import { ContentPage } from "@/components/site/PagePieces";
 import HomeView from "@/components/site/HomeView";
 import { CaseHubView, CaseStudyView } from "@/components/site/CaseStudies";
 import { brandData, fileForUrl, pageIndex, readPage, urlToSlugSegments, type PageData } from "@/lib/content";
+import { ogImageFor } from "@/lib/og";
 
 export const dynamicParams = false;
 
@@ -16,6 +17,21 @@ const HOME_META: Metadata = {
   description:
     "Dataq Software is a global IT services, consulting and business solutions partner — from ERP and cloud to AI and data — powered by patented delivery IP and gated on signed metrics. SOC 2 · ISO 27001.",
   alternates: { canonical: "/" },
+  openGraph: {
+    title: "Dataq Software — IT services, consulting & business solutions",
+    description:
+      "Consulting, build and run under one accountable delivery system — powered by patented IP, measured on signed baselines.",
+    url: "/",
+    siteName: "Dataq Software",
+    type: "website",
+    images: [{ url: ogImageFor("/"), width: 1200, height: 630, alt: "Dataq Software — enterprise AI, data and automation delivered against a signed baseline." }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dataq Software — IT services, consulting & business solutions",
+    description: "Powered by patented delivery IP, measured on signed baselines.",
+    images: [ogImageFor("/")],
+  },
 };
 
 export async function generateMetadata({
@@ -42,11 +58,13 @@ export async function generateMetadata({
       url,
       siteName: brand.name,
       type: "website",
+      images: [{ url: ogImageFor(url), width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [ogImageFor(url)],
     },
   };
 }

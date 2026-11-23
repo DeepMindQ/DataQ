@@ -1,0 +1,54 @@
+# DataQ CI/CD (Top-20 #10): naming gate → static export → linkcheck → deploy.
+# Replaces the manual token deploy script for pushes to main.
+# The GitHub token stays in Actions secrets (GITHUB_TOKEN) — never printed.
+name: build-and-deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gh-pages
+  cancel-in-progress: false
+
+jobs:
+  export-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history — sitemap lastmod is git-derived
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        working-directory: site
+        run: npm ci
+
+      - name: Naming + confidentiality gate
+        run: python3 scripts/naming_ci.py
+
+      - name: Static export (basePath build, seeded visuals, git lastmod, linkcheck, pagefind)
+        working-directory: site
+        run: npm run export
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: site/out-gh
+          publish_branch: gh-pages
+          force_orphan: false
+          keep_files: false
+          commit_message: "Deploy from main@${{ github.sha }} (CI)"

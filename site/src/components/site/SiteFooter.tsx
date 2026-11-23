@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { Mail, MapPin, ShieldCheck, Linkedin, Twitter, Youtube, Rss } from "lucide-react";
+import { Mail, MapPin, ShieldCheck, Rss } from "lucide-react";
 import Logo from "./Logo";
 import Reveal from "./Reveal";
 import ContactForm from "./ContactForm";
 import NewsletterForm from "./NewsletterForm";
+import { openCookieSettings } from "./CookieConsent";
 import type { Brand, FooterCol } from "@/lib/content";
 
 export default function SiteFooter({ brand, footer }: { brand: Brand; footer: FooterCol[] }) {
@@ -122,24 +123,26 @@ export default function SiteFooter({ brand, footer }: { brand: Brand; footer: Fo
 </nav>
           </div>
           <div className="flex flex-col gap-3 md:items-end">
-            {/* Social row (CHG-077): wire hrefs to the real profiles when public */}
-            <div className="flex items-center gap-2" aria-label="Social profiles">
-              {[
-                { icon: Linkedin, label: "LinkedIn", href: "#" },
-                { icon: Twitter, label: "X", href: "#" },
-                { icon: Youtube, label: "YouTube", href: "#" },
-                { icon: Rss, label: "RSS", href: "/insights/" },
-              ].map(({ icon: Icon, label, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  title={label}
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/15 text-white/60 transition hover:border-brand hover:text-brand-300"
-                >
-                  <Icon className="h-3.5 w-3.5" />
-                </a>
-              ))}
+            {/* Utility row (Top-20 #6/#17): dead social placeholders removed until
+               real profiles exist — placeholder "#" links erode trust. The RSS
+               icon routes to the insights library (a real index). Cookie settings
+               reopens the consent dialog so the choice is revocable (#17). */}
+            <div className="flex items-center gap-2">
+              <a
+                href="/insights/"
+                aria-label="Insights RSS and library"
+                title="Insights"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/15 text-white/60 transition hover:border-brand hover:text-brand-300"
+              >
+                <Rss className="h-3.5 w-3.5" />
+              </a>
+              <button
+                type="button"
+                onClick={openCookieSettings}
+                className="inline-flex h-8 items-center justify-center rounded-full border border-white/15 px-3 text-[12px] font-medium text-white/60 transition hover:border-brand hover:text-brand-300"
+              >
+                Cookie settings
+              </button>
             </div>
             <p className="text-[12px] text-white/45">
               © {new Date().getFullYear()} {brand.legalName}. Every release gated on signed evidence · SOC 2 Type II · ISO 27001.

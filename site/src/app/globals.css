@@ -311,18 +311,6 @@
   .mega-preview-in { animation: none; }
 }
 
-/* preview pane: fades up when the rail switches group (remount-keyed) */
-@keyframes mega-preview-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: none; }
-}
-.mega-preview-in {
-  animation: mega-preview-in 0.22s var(--ease-out-expo) both;
-}
-@media (prefers-reduced-motion: reduce) {
-  .mega-preview-in { animation: none; }
-}
-
 /* ── Mobile drawer scroll area (hotfix 2026-11-20) ─────────────────────
    100vh on iOS Safari / Android Chrome is the LARGE viewport: with the
    browser toolbars visible the drawer bottom (and its Book-a-Briefing CTA)
@@ -981,12 +969,12 @@
   from { transform: rotate(0deg) translateX(250px) scaleY(0.14) rotate(0deg); }
   to { transform: rotate(360deg) translateX(250px) scaleY(0.14) rotate(-360deg); }
 }
-/* evaluation fill ticks */
-.td-eval { animation: td-eval 3s cubic-bezier(0.2, 0.6, 0.3, 1) infinite alternate; }
-@keyframes td-eval { from { width: 0; } to { width: 44px; } }
-/* phase progress bars */
-.td-prog { width: 0; animation: td-prog 5.6s cubic-bezier(0.25, 0.6, 0.3, 1) infinite; }
-@keyframes td-prog { 0% { width: 0; } 55% { width: 100%; } 78% { width: 100%; opacity: 0.85; } 100% { width: 100%; opacity: 0.2; } }
+/* evaluation fill ticks — transform-based (perf budget: no width animation) */
+.td-eval { width: 44px; transform-origin: left; animation: td-eval 3s cubic-bezier(0.2, 0.6, 0.3, 1) infinite alternate; }
+@keyframes td-eval { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+/* phase progress bars — scaleX instead of width (GPU-composited, no layout) */
+.td-prog { width: 100%; transform-origin: left; transform: scaleX(0); animation: td-prog 5.6s cubic-bezier(0.25, 0.6, 0.3, 1) infinite; }
+@keyframes td-prog { 0% { transform: scaleX(0); } 55% { transform: scaleX(1); } 78% { transform: scaleX(1); opacity: 0.85; } 100% { transform: scaleX(1); opacity: 0.2; } }
 /* LIVE chip */
 .td-live { animation: td-live 1.8s ease-in-out infinite; }
 @keyframes td-live { 0%, 100% { box-shadow: 0 0 0 0 rgba(254, 87, 34, 0.5); } 50% { box-shadow: 0 0 0 5px rgba(254, 87, 34, 0); } }
@@ -1525,4 +1513,20 @@ a:hover > .dq-link,
   .w9-bridge-line { animation: none; }
   .w9-travel-dot::after { animation: none; opacity: 0; }
   .w9-step-line { transform: scaleX(1); transition: none; }
+}
+
+/* ── Reduced-motion parity blanket (Top-20 #12) ─────────────────────────
+   Closes the parity gap for every effect not covered by a per-component
+   fallback: all animations/transitions collapse to ~instant while the JS
+   runtime (MotionRuntime) already skips its choreography. Functional states
+   (visibility, position) are preserved — only the movement is removed. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

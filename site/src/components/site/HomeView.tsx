@@ -383,9 +383,9 @@ export default function HomeView() {
               </h1>
               {/* A-03: one promise sentence + one proof sentence */}
               <p className="rise-item measure mt-5 text-body-lg leading-relaxed text-white/70" style={{ ["--rise-delay" as string]: "560ms" }}>
-                Dataq Software partners with enterprises to consult, build and run the technology their business
-                depends on — from ERP and cloud to AI and data. Our own patented methods and platforms do the heavy
-                lifting from day one, and every program is measured on a metric your board already tracks.
+                We consult, build and run the technology your business runs on — from ERP and cloud to AI and data.
+                Our patented platforms do the heavy lifting from day one. And every program is measured on a metric
+                your board already tracks.
               </p>
               {/* A-03: the three delivery vignettes, as a rotating proof line */}
               <div className="rise-item" style={{ ["--rise-delay" as string]: "620ms" }}>
@@ -415,7 +415,7 @@ export default function HomeView() {
                 </Link>
               </div>
               <p className="rise-item mt-2 text-[12px] text-white/45" style={{ ["--rise-delay" as string]: "720ms" }}>
-                45 minutes with a practice lead — leave with your gate map scored.
+                45 minutes with a practice lead — you leave with a scored gate map, not a follow-up deck.
               </p>
               {/* A-05: outcome proof instead of compliance badges, linking to the evidence */}
               <p className="rise-item mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[12.5px] text-white/65" style={{ ["--rise-delay" as string]: "780ms" }}>
@@ -576,8 +576,8 @@ export default function HomeView() {
             </h2>
             {/* A-13: the intro carries a sample panel row, labeled illustrative */}
             <p className="mt-2 max-w-4xl text-[14.5px] leading-relaxed text-white/65">
-              One panel per program surface — consulting or deep-tech, generated from your estate, so week two
-              already reads like your business. A sample row, illustrative reference program:{" "}
+              One panel per program surface — consulting or deep-tech — generated from your estate, so week two
+              already reads like your business. Below: a sample row from the illustrative reference program.{" "}
               <span className="rounded-md border border-white/20 bg-white/[0.07] px-2 py-0.5 font-mono text-[11.5px] text-white/85">
                 Decision p95 148 ms · owner: COO · refreshed 14 days · evidence: replay pack
               </span>
@@ -622,10 +622,10 @@ export default function HomeView() {
                 </h2>
                 {/* A-18 */}
                 <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-                  Decision, action, data, trust, platform, compute, records, field — one of these seams is where your
-                  P&amp;L leaks today, and deep-tech programs enter through a domain. Classic-estate work — migration,
-                  engineering pods, Azure, ERP, managed operations — enters through consulting. Both tracks run the same
-                  release gates on the same patented platforms.
+                  Deep-tech programs enter through a domain — decisions, data, trust, platform, compute, records or
+                  field. Classic-estate work — migration, engineering pods, Azure, ERP, managed operations — enters
+                  through consulting. Whichever door you use, the same release gates and the same patented platforms
+                  govern the build.
                 </p>
               </div>
               <div className="flex flex-col items-start gap-1.5">
@@ -1278,8 +1278,8 @@ export default function HomeView() {
                 From the delivery floor
               </h2>
               <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-                Practitioner theses on the retrieval layer, decision hubs, policy envelopes and the
-                economics of GenAI — with the vendor questions you should be asking.
+                What we are learning on live programs — retrieval layers, decision hubs, policy envelopes and the
+                economics of GenAI — with the vendor questions worth asking.
               </p>
             </div>
             {/* A-45: the library button is a visible button */}

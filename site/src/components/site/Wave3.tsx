@@ -112,14 +112,21 @@ export function SearchOverlay({ close }: { close: () => void }) {
     }
     setStatus("loading");
     try {
-      const pf = await import(/* webpackIgnore: true */ "/pagefind/pagefind.js" as string).catch(() => null);
+      // basePath-aware: a root-absolute loader URL 404s on the GitHub Pages
+      // project site (Top-20 #1). Falls back to the /search page on failure.
+      const bp = process.env.NEXT_PUBLIC_BASE_PATH || "";
+      const pf = await import(/* webpackIgnore: true */ `${bp}/pagefind/pagefind.js` as string).catch(() => null);
       if (!pf) throw new Error("no pagefind");
       await pf.options({ ranking: { pageLength: 12 } });
       const search = await pf.search(query);
       const out: PfdResult[] = [];
       for (const r of search.results.slice(0, 8)) {
         const d = await r.data();
-        out.push({ url: d.url, meta: { title: d.meta?.title || d.url }, excerpt: d.excerpt?.replace(/<[^>]+>/g, "") || "" });
+        if (typeof d.url !== "string" || !d.url) continue;
+        // pagefind auto-prefixes result URLs with its own directory's parent
+        // path (on the GitHub Pages project site) — strip it; <Link> re-applies basePath.
+        const url = bp && d.url.startsWith(bp + "/") ? d.url.slice(bp.length) : d.url;
+        out.push({ url, meta: { title: d.meta?.title || d.url }, excerpt: d.excerpt?.replace(/<[^>]+>/g, "") || "" });
       }
       setResults(out);
       setStatus(out.length ? "ready" : "none");

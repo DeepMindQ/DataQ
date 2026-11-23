@@ -28,6 +28,7 @@ Usage: python3 scripts/naming_ci.py [--fix] [--bless]
       --fix attempts safe replacements for the brand-naming violations only.
       --bless rewrites the sameness baseline to the current measured values.
 """
+import os
 import re
 import sys
 from pathlib import Path
@@ -67,24 +68,31 @@ def main() -> int:
     brand_viol = []          # (path, label, count)
     confid_viol = []         # (path, label, count)
     brand_ok_count = 0
+    # The GitHub Pages project path is literally /DataQ (repo name) — a URL
+    # infrastructure string, NOT brand text. Strip it before brand scanning
+    # so canonical/sitemap URLs and basePath asset URLs don't trip the
+    # bare-"DataQ" rule (Top-20 #19).
+    DEPLOY_PATH = re.compile(r"deepmindq\.github\.io/DataQ")
+    DEPLOY_ASSET = re.compile(r'(?<![\w])/DataQ(?=/|")')  # "/DataQ/...", "/DataQ"
     for f in iter_files():
         try:
             s = f.read_text(encoding="utf-8")
         except Exception:
             continue
         orig = s
+        scan = DEPLOY_ASSET.sub("/DEPLOY-ROOT", DEPLOY_PATH.sub("DEPLOY-ROOT", s))
         # confidentiality first (higher severity, no auto-fix in CI)
         for pat, _repl, label in CONFIDENTIAL_RULES:
-            n = len(pat.findall(s))
+            n = len(pat.findall(scan))
             if n:
                 confid_viol.append((str(f.relative_to(SITE)), label, n))
         for pat, repl, label in BRAND_RULES:
-            n = len(pat.findall(s))
+            n = len(pat.findall(scan))
             if n:
                 brand_viol.append((str(f.relative_to(SITE)), label, n))
                 if fix:
                     s = pat.sub(repl, s)
-        brand_ok_count += len(re.findall(r"Dataq Software", s))
+        brand_ok_count += len(re.findall(r"Dataq Software", scan))
         if fix and s != orig:
             f.write_text(s, encoding="utf-8")
 
@@ -103,6 +111,36 @@ def main() -> int:
     if brand_viol or confid_viol:
         print("[naming_ci] GATE FAILED — export blocked.")
         return 1
+
+    # Post-build scan (--scan-out): verify the GENERATED HTML carries the same
+    # guarantees. Catches violations introduced by build-time transforms
+    # (Top-20 #19). The deploy-path URL stays exempt.
+    out_dir = SITE / "out-gh"
+    if "--scan-out" in sys.argv and out_dir.is_dir():
+        import glob as _glob
+        out_viol = []
+        htmls = _glob.glob(str(out_dir / "**" / "*.html"), recursive=True)
+        for h in htmls:
+            s = open(h, encoding="utf-8", errors="ignore").read()
+            scan = DEPLOY_ASSET.sub("/DEPLOY-ROOT", DEPLOY_PATH.sub("DEPLOY-ROOT", s))
+            # visible text only: strip tags first
+            visible = re.sub(r"<[^>]+>", " ", scan)
+            for pat, _repl, label in BRAND_RULES:
+                n = len(pat.findall(visible))
+                if n:
+                    out_viol.append((os.path.relpath(h, out_dir), label, n))
+            for pat, _repl, label in CONFIDENTIAL_RULES:
+                n = len(pat.findall(visible))
+                if n:
+                    out_viol.append((os.path.relpath(h, out_dir), label + " [OUT]", n))
+        if out_viol:
+            print(f"[naming_ci] OUT HTML VIOLATIONS across {len(htmls)} pages:")
+            for path, label, n in sorted(out_viol)[:20]:
+                print(f"  {path}: {label} x{n}")
+            print("[naming_ci] GATE FAILED — export blocked (generated HTML).")
+            return 1
+        print(f"[naming_ci] OUT HTML scan clean across {len(htmls)} pages.")
+
     print("[naming_ci] GATE PASSED — brand naming + confidentiality clean.")
     return 0
 
