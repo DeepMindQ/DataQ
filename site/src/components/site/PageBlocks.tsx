@@ -351,14 +351,6 @@ export function Blocks({ blocks, skip = [] }: { blocks: Block[]; skip?: string[]
             className="dq-h2 group measure mt-12 flex scroll-mt-28 items-baseline gap-3 font-display text-[22px] font-semibold text-navy-800 sm:text-[24px]"
           >
             {h2b.x}
-            {/* anchor link on hover (CHG-328) */}
-            <a
-              href={`#${anchorId}`}
-              aria-label={`Link to section ${h2b.x}`}
-              className="text-[13px] font-medium text-slate-body/30 opacity-0 transition group-hover:opacity-100 hover:text-brand-deep"
-            >
-              #
-            </a>
           </h2>
           {h2b.sub && (
             <p className="measure mt-2 border-l-2 border-brand/40 pl-3 text-[13.5px] leading-relaxed text-slate-body/70">

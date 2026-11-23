@@ -311,6 +311,9 @@ export default function HomeView() {
         <div className="bg-field-drift absolute inset-0 dot-grid" aria-hidden="true" />
         <div className="bg-glow-pulse absolute inset-0 grad-orange-glow" aria-hidden="true" />
         <div className="absolute inset-0 pattern-noise" aria-hidden="true" />
+        {/* light beams sweeping the hero — ambient motion, GPU-cheap */}
+        <span className="dq-beam" aria-hidden="true" />
+        <span className="dq-beam dq-beam-2" aria-hidden="true" />
         <div className="relative container-dq grid gap-10 pb-14 pt-16 sm:pt-24 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center">
           <div>
             <Reveal className="hero-choreo">
@@ -503,7 +506,7 @@ export default function HomeView() {
                     className="tilt-card group flex h-full flex-col rounded-2xl border border-line bg-white p-5 transition hover:-translate-y-0.5 hover:border-brand/60 shadow-1 hover:shadow-2"
                   >
                     <span className="flex items-center justify-between">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-navy-800 text-brand-300 transition group-hover:bg-brand group-hover:text-white">
+                      <span className="float-slow flex h-10 w-10 items-center justify-center rounded-xl bg-navy-800 text-brand-300 transition group-hover:bg-brand group-hover:text-white group-hover:animate-none">
                         <Icon className="h-5 w-5" aria-hidden="true" />
                       </span>
                       {/* A-21: entry-intent tag on the two most-entered domains */}

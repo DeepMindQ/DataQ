@@ -399,6 +399,7 @@ function cardsHeading(template: string): string {
     subindustry_page: "Capabilities for this sub-industry",
     industry_capability: "Sub-industry depth",
     solution_page: "Related solutions",
+    insights_category: "The articles",
     platforms_hub_alt: "",
   };
   return map[template] ?? "Explore further";
@@ -408,7 +409,7 @@ function cardsSub(template: string): string {
   const map: Record<string, string> = {
     services_hub: "Each domain card opens its hub — the practices, the reference architectures, the sector briefs and the metric the domain is managed on.",
     cases_hub: "Indexed by industry and service area — every case carries its measured delta and the gates that governed the build.",
-    insights_hub: "Practitioner theses from the delivery floor — published with vendor questions included.",
+    insights_hub: "Eight categories, each argued from programs in flight — the articles name what shipped and what it took.",
   };
   return map[template] ?? "";
 }
