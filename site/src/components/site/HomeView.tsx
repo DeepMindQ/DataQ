@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { ArrowRight, BrainCircuit, Bot, Database, ShieldCheck, CloudCog, Atom, Blocks, Radar, Crosshair, UserCheck, Gauge as GaugeIcon, Wrench, Handshake, FileSignature, Scale } from "lucide-react";
+import { ArrowRight, ArrowLeftRight, BrainCircuit, Building2, Bot, Cog, Compass, Database, FileSearch, Network, ShieldCheck, Smartphone, Sparkles, RefreshCw, CloudCog, Atom, Blocks, Radar, Crosshair, UserCheck, Gauge as GaugeIcon, Wrench, Handshake, FileSignature, Scale } from "lucide-react";
 import Reveal from "@/components/site/Reveal";
-import { Marquee } from "@/components/site/Motion";
+import { Marquee, CountUp } from "@/components/site/Motion";
 import { PATENTS } from "@/lib/patents";
 import {
   SpotlightSlider,
@@ -35,6 +35,52 @@ const HUB_BY_SLUG: Record<string, string> = {
   "agentic-ai-hyperautomation": "Agentic AI & Hyperautomation",
   "blockchain-digital-trust": "Blockchain & Digital Trust",
 };
+
+/* Wave 7 — company identity facts, animated with CountUp on reveal */
+const IDENTITY_STATS = [
+  { value: "350+", label: "enterprise engagements delivered" },
+  { value: "40+", label: "countries served from 4 global delivery centers" },
+  { value: "2,400+", label: "engineers, data scientists and domain specialists" },
+];
+
+/* Wave 7 — the enterprise-systems practice: the maintained IT-services suite */
+const ENTERPRISE_SYSTEMS = [
+  { icon: Database, name: "Data Analytics", desc: "Decision-ready reporting and analytics on the estate you already run.", url: "/services/data-analytics-lakehouse/" },
+  { icon: Smartphone, name: "Mobility", desc: "Mobile front-ends that put enterprise systems in every pocket.", url: "/services/" },
+  { icon: RefreshCw, name: "SAP upgrades", desc: "SAP 3.X or 7.0 lifted to SAP BI 7.3 — without freezing the business.", url: "/consulting/erp-services/" },
+  { icon: ArrowLeftRight, name: "BW → HANA", desc: "BW objects migrated and transformed onto HANA, with parity proven.", url: "/consulting/erp-services/" },
+  { icon: Network, name: "EAI migrations", desc: "Enterprise application integration carried forward, interface by interface.", url: "/consulting/it-services/" },
+];
+
+/* Wave 7 — the global delivery bridge: onsite command, offshore capability,
+   one governance standard across the span. */
+const BRIDGE_NODES = [
+  {
+    icon: Building2,
+    t: "Your onsite team",
+    points: ["Direct collaboration in your time zones", "Business context stays where it lives", "One accountable counterpart per program"],
+  },
+  {
+    icon: Network,
+    t: "Dataq offshore pods",
+    points: ["Qualified engineers as added capability", "Capacity that scales without new overhead", "24x7 coverage across the delivery centers"],
+  },
+  {
+    icon: Scale,
+    t: "One delivery standard",
+    points: ["Named owners and audited SLAs", "The same gates on both sides of the bridge", "Consistent, harmonious handovers — every geography"],
+  },
+];
+
+/* Wave 7 — the end-to-end RPA lifecycle delivered with our Automation
+   Anywhere partnership */
+const RPA_STAGES = [
+  { icon: FileSearch, t: "Process Analysis", d: "Which processes are worth automating — measured before anything is built." },
+  { icon: Compass, t: "RPA Vision & Strategy", d: "Where robots pay for themselves first, and how the program scales from there." },
+  { icon: Sparkles, t: "Proof of Concept", d: "A working robot on your real process, the business case proven on live data." },
+  { icon: Cog, t: "Implementation", d: "Bots deployed into production under the same release gates as every build." },
+  { icon: ShieldCheck, t: "24x7 Managed Support", d: "Bots monitored, maintained and improved around the clock, across geographies." },
+];
 
 /* A-33: the regime each industry is held to — sourced from the industry hubs */
 const INDUSTRY_REGIME: Record<string, string> = {
@@ -279,9 +325,12 @@ export default function HomeView() {
   /* A-49/50 metadata lives in HOME_META + layout; home.json carries the same strings */
 
   const SECTION_NAV = [
+    { id: "identity", label: "Who we are" },
     { id: "output", label: "Delivery output" },
     { id: "services", label: "Services" },
     { id: "consulting", label: "Consulting" },
+    { id: "delivery", label: "Delivery model" },
+    { id: "rpa", label: "RPA" },
     { id: "patents", label: "IP differential" },
     { id: "platforms", label: "Platforms" },
     { id: "evidence", label: "Evidence" },
@@ -409,6 +458,106 @@ export default function HomeView() {
           ]}
         />
       </div>
+
+      {/* Wave 7 — who we are: the company's positioning statement, in first person */}
+      <section id="identity" className="scroll-mt-24 border-b border-line bg-white">
+        <div className="container-dq section-y-sm">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-start">
+            <Reveal>
+              <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">Who we are</p>
+              <h2 className="text-display-3 mt-1 max-w-3xl text-navy-800 sm:text-[30px]">
+                <span className="line-mask block">
+                  <span className="line-mask-inner block">A technology consulting organization,</span>
+                </span>
+                <span className="line-mask block" style={{ ["--rise-delay" as string]: "160ms" }}>
+                  <span className="line-mask-inner block">
+                    built for <span className="grad-text">application transformation</span>.
+                  </span>
+                </span>
+              </h2>
+              <div className="mt-5 space-y-4 text-[14.5px] leading-relaxed text-slate-body/80">
+                <p className="rise-item" style={{ ["--rise-delay" as string]: "300ms" }}>
+                  Dataq Software specializes in application transformation products and services. We work with leading
+                  companies to maintain their application support and apply technology innovations that enhance
+                  deliverable and product efficiency — the work we do day in, day out, for clients whose systems
+                  cannot afford to stand still.
+                </p>
+                <p className="rise-item" style={{ ["--rise-delay" as string]: "420ms" }}>
+                  Our enterprise transformation portfolio provides a range of modern tools, tailored to achieve
+                  digital transformation and ease people&rsquo;s role in each enterprise — so the technology carries the
+                  weight, and your people keep the decisions.
+                </p>
+                <p className="rise-item" style={{ ["--rise-delay" as string]: "540ms" }}>
+                  The offering is catered towards meeting the client&rsquo;s immediate needs — responding to the SMAC
+                  shift (social, mobile, analytics and cloud) in a very cost-efficient way — complemented by a full
+                  suite of maintained IT services, from data analytics and mobility to enterprise system upgrades,
+                  migrations and wide digital transformation.
+                </p>
+              </div>
+              {/* identity facts — count up on reveal */}
+              <div className="mt-7 grid max-w-xl grid-cols-3 gap-4">
+                {IDENTITY_STATS.map((s, i) => (
+                  <div
+                    key={s.value}
+                    className="rise-item rounded-xl border border-line bg-mist/70 px-4 py-3"
+                    style={{ ["--rise-delay" as string]: `${620 + i * 90}ms` }}
+                  >
+                    <p className="font-display text-[22px] font-bold leading-none text-navy-800">
+                      <CountUp value={s.value} />
+                    </p>
+                    <p className="mt-1.5 text-[11.5px] leading-snug text-slate-body/65">{s.label}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+            {/* right column — the positioning quote + how an engagement runs */}
+            <div className="grid gap-4">
+              <Reveal delay={140}>
+                <figure className="card-sheen relative overflow-hidden rounded-2xl border border-brand/25 bg-brand-tint/50 p-6 shadow-1">
+                  <svg aria-hidden="true" viewBox="0 0 48 48" className="float-slow h-9 w-9 text-brand-deep/25">
+                    <path
+                      fill="currentColor"
+                      d="M10 34c-2.2 0-4-1.8-4-4V22c0-6.6 4.4-12 10-14l1.6 3.2c-3.2 1.4-5.4 4-5.9 7.3.5-.2 1.1-.3 1.8-.3 3.1 0 5.5 2.5 5.5 5.9S16.6 34 10 34Zm18 0c-2.2 0-4-1.8-4-4V22c0-6.6 4.4-12 10-14l1.6 3.2c-3.2 1.4-5.4 4-5.9 7.3.5-.2 1.1-.3 1.8-.3 3.1 0 5.5 2.5 5.5 5.9S31.6 34 28 34Z"
+                    />
+                  </svg>
+                  <blockquote className="mt-3 font-display text-[17.5px] font-semibold leading-snug text-navy-800">
+                    &ldquo;Our offering is catered towards meeting the client&rsquo;s immediate needs in responding to
+                    the SMAC trends in a very cost-efficient way.&rdquo;
+                  </blockquote>
+                  <figcaption className="mt-4 text-[11.5px] font-bold uppercase tracking-[0.16em] text-brand-deep">
+                    Dataq Software — company positioning
+                  </figcaption>
+                </figure>
+              </Reveal>
+              <Reveal delay={230}>
+                <div className="rounded-2xl border border-line bg-mist/70 p-5">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-body/55">How an engagement runs</p>
+                  <ul className="mt-3 space-y-2.5 text-[13px] leading-relaxed text-slate-body/80">
+                    <li className="flex items-start gap-2.5">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />
+                      Your onsite team stays in command — direct collaboration, your time zones.
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />
+                      Qualified offshore pods extend capacity under one delivery standard.
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />
+                      Named owners and audited SLAs govern every program.
+                    </li>
+                  </ul>
+                  <Link
+                    href="#delivery"
+                    className="link-animated mt-4 inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-brand-deep"
+                  >
+                    See the delivery model <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* steering pack — what delivery produces (A-12/13/14) */}
       <section id="output" className="vignette-section relative scroll-mt-24 overflow-hidden grad-navy-field text-white">
@@ -609,6 +758,38 @@ export default function HomeView() {
               </Reveal>
             ))}
           </div>
+          {/* Wave 7 — the enterprise-systems practice: maintain · upgrade · migrate */}
+          <Reveal>
+            <div className="mt-10 rounded-2xl border border-line bg-mist/60 p-5 sm:p-6">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-deep">
+                  Enterprise systems practice — maintain · upgrade · migrate
+                </p>
+                <Link
+                  href="/consulting/erp-services/"
+                  className="link-animated inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-brand-deep"
+                >
+                  ERP &amp; enterprise core <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+                {ENTERPRISE_SYSTEMS.map((s, i) => (
+                  <Link
+                    key={s.name}
+                    href={s.url}
+                    className="tilt-card group flex h-full flex-col rounded-xl border border-line bg-white p-4 transition hover:-translate-y-0.5 hover:border-brand/60 shadow-1 hover:shadow-2"
+                    style={{ transitionDelay: `${i * 30}ms` }}
+                  >
+                    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-navy-800 text-brand-300 transition group-hover:bg-brand group-hover:text-white">
+                      <s.icon className="h-4.5 w-4.5" aria-hidden="true" />
+                    </span>
+                    <p className="mt-2.5 text-[13.5px] font-semibold text-navy-800 group-hover:text-brand-deep">{s.name}</p>
+                    <p className="mt-1 flex-1 text-[11.5px] leading-relaxed text-slate-body/70">{s.desc}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </Reveal>
           {/* A-27: the bridge between the two taxonomies */}
           <Reveal>
             <p className="mt-6 flex flex-wrap items-center gap-1.5 text-[13px] text-slate-body/70">
@@ -628,6 +809,153 @@ export default function HomeView() {
               </Link>
             </p>
           </Reveal>
+        </div>
+      </section>
+
+      {/* Wave 7 — global delivery model: the offshore capability headline, verbatim */}
+      <section id="delivery" className="scroll-mt-24 relative overflow-hidden border-y border-line grad-navy-field text-white">
+        <div className="bg-field-drift absolute inset-0 dot-grid" aria-hidden="true" />
+        <div className="bg-glow-pulse absolute inset-0 grad-orange-glow-soft" aria-hidden="true" />
+        <div className="absolute inset-0 pattern-noise" aria-hidden="true" />
+        <div className="relative container-dq section-y-sm">
+          <Reveal>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="kicker-bar-dark text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-300">
+                  Global delivery model
+                </p>
+                <h2 className="text-display-3 mt-1 max-w-4xl text-white sm:text-[30px]">
+                  <span className="line-mask block">
+                    <span className="line-mask-inner block">Use qualified offshore IT resources as</span>
+                  </span>
+                  <span className="line-mask block" style={{ ["--rise-delay" as string]: "170ms" }}>
+                    <span className="line-mask-inner block">
+                      additional capabilities to your <span className="grad-text">onsite team</span>
+                    </span>
+                  </span>
+                </h2>
+              </div>
+              <Link
+                href="/consulting/it-services/"
+                className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-300"
+              >
+                IT services &amp; managed operations <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <p className="rise-item mt-3 max-w-3xl text-[14.5px] leading-relaxed text-white/70" style={{ ["--rise-delay" as string]: "420ms" }}>
+              Dataq delivers with teams located at on-shore and off-shore locations — qualified engineers who plug
+              into your organization as added capability, not added overhead. One delivery standard governs both
+              sides of the bridge, so deliveries stay consistent and harmonious across all geographies.
+            </p>
+          </Reveal>
+          {/* the delivery bridge — onsite command ↔ offshore pods, one standard across the span */}
+          <div className="relative mt-10">
+            {/* animated connector — desktop only, travels behind the node row */}
+            <div className="absolute left-[8%] right-[8%] top-10 hidden lg:block" aria-hidden="true">
+              <div className="w9-bridge-line w-full" />
+              <div className="w9-travel-dot absolute inset-x-0 top-0 h-0" />
+            </div>
+            <div className="grid gap-4 lg:grid-cols-3">
+              {BRIDGE_NODES.map((n, i) => (
+                <Reveal key={n.t} delay={i * 140}>
+                  <div className="relative flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur transition hover:border-brand/50 hover:bg-white/[0.07]">
+                    <span className="relative z-10 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand text-white shadow-2">
+                      <n.icon className="h-5.5 w-5.5" aria-hidden="true" />
+                    </span>
+                    <p className="mt-4 font-display text-[16.5px] font-semibold text-white">{n.t}</p>
+                    <ul className="mt-3 space-y-2 text-[13px] leading-relaxed text-white/70">
+                      {n.points.map((pt) => (
+                        <li key={pt} className="flex items-start gap-2.5">
+                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-300" aria-hidden="true" />
+                          {pt}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+          {/* cross-industry AMS proof point — carried across sectors via EAI + tooling */}
+          <Reveal>
+            <div className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:items-center">
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { value: "4", label: "global delivery centers — one standard" },
+                  { value: "24x7", label: "operations coverage" },
+                  { value: "40+", label: "countries served" },
+                ].map((s, i) => (
+                  <div
+                    key={s.label}
+                    className="rise-item rounded-xl border border-white/10 bg-white/[0.05] px-3.5 py-3 text-center backdrop-blur"
+                    style={{ ["--rise-delay" as string]: `${i * 90}ms` }}
+                  >
+                    <p className="font-display text-[20px] font-bold leading-none text-white">
+                      <CountUp value={s.value} />
+                    </p>
+                    <p className="mt-1.5 text-[10.5px] leading-snug text-white/55">{s.label}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="text-[13.5px] leading-relaxed text-white/65">
+                An enduring tell-tale sign is our ability to carry application maintenance and support practices from
+                one industry to another — significant experience in the support and maintenance of complex
+                applications, platforms and solutions, delivered through EAI migrations and a wide range of
+                application development tools, with 24x7 managed operations behind every pod.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Wave 7 — RPA partnership: Automation Anywhere, end to end */}
+      <section id="rpa" className="scroll-mt-24 border-b border-line bg-white">
+        <div className="container-dq section-y-sm">
+          <Reveal>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">
+                  Automation partnership
+                </p>
+                <h2 className="text-display-3 mt-1 max-w-4xl text-navy-800 sm:text-[30px]">
+                  End-to-end RPA — from process analysis to 24x7 managed support
+                </h2>
+                <p className="mt-2 max-w-3xl text-[14.5px] leading-relaxed text-slate-body/75">
+                  Our partnership with Automation Anywhere has led to successful global RPA implementations — and it
+                  keeps enabling us to put robots to work where they benefit customers most. Every stage of the
+                  lifecycle below is owned, measured and handed over with evidence.
+                </p>
+              </div>
+              <Link
+                href="/services/agentic-ai-hyperautomation/"
+                className="link-animated inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-deep"
+              >
+                Agentic AI &amp; hyperautomation <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </Reveal>
+          {/* the five-stage lifecycle — connected line draws itself on reveal */}
+          <div className="relative mt-10">
+            <Reveal className="absolute left-[6%] right-[6%] top-6 hidden lg:block">
+              <div className="w9-step-line h-0.5 w-full rounded-full bg-brand/40" aria-hidden="true" />
+            </Reveal>
+            <ol className="grid gap-7 sm:grid-cols-2 lg:grid-cols-5 lg:gap-4">
+              {RPA_STAGES.map((st, i) => (
+                <Reveal key={st.t} delay={i * 120}>
+                  <li className="relative flex h-full flex-col">
+                    <span className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border border-brand/40 bg-white text-brand-deep shadow-1 transition duration-300 hover:scale-110 hover:bg-brand hover:text-white">
+                      <st.icon className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                    <p className="mt-3 font-display text-[10.5px] font-bold uppercase tracking-[0.16em] text-brand-deep/70">
+                      Stage {i + 1}
+                    </p>
+                    <p className="mt-0.5 text-[14.5px] font-semibold text-navy-800">{st.t}</p>
+                    <p className="mt-1 flex-1 text-[12.5px] leading-relaxed text-slate-body/75">{st.d}</p>
+                  </li>
+                </Reveal>
+              ))}
+            </ol>
+          </div>
         </div>
       </section>
 
