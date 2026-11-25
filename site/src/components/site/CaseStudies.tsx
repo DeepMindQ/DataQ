@@ -98,7 +98,7 @@ export function CaseHubView({ page }: { page: PageData }) {
               {services.length} service areas
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.06] px-3.5 py-1.5 text-[12px] text-white/70">
-              <ShieldCheck className="h-3.5 w-3.5 text-brand-300" aria-hidden="true" /> Measured against signed baselines
+              <ShieldCheck className="h-3.5 w-3.5 text-brand-300" aria-hidden="true" /> Measured against your own numbers
             </span>
           </div>
           <div className="mt-7 flex flex-wrap gap-3">

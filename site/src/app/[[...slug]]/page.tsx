@@ -15,21 +15,21 @@ export function generateStaticParams(): { slug: string[] }[] {
 const HOME_META: Metadata = {
   title: "Dataq Software — IT services, consulting & business solutions | AI, cloud, data, security, ERP",
   description:
-    "Dataq Software is a global IT services, consulting and business solutions partner — from ERP and cloud to AI and data — powered by patented delivery IP and gated on signed metrics. SOC 2 · ISO 27001.",
+    "Dataq Software is a global IT services and consulting partner. We build, run and modernize the ERP, cloud, data, AI and security systems enterprises depend on. SOC 2 Type II, ISO 27001.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "Dataq Software — IT services, consulting & business solutions",
     description:
-      "Consulting, build and run under one accountable delivery system — powered by patented IP, measured on signed baselines.",
+      "We build, run and modernize the systems your business depends on: ERP, cloud, data, AI and security, delivered on patented platforms in 40+ countries.",
     url: "/",
     siteName: "Dataq Software",
     type: "website",
-    images: [{ url: ogImageFor("/"), width: 1200, height: 630, alt: "Dataq Software — enterprise AI, data and automation delivered against a signed baseline." }],
+    images: [{ url: ogImageFor("/"), width: 1200, height: 630, alt: "Dataq Software — enterprise AI, data and automation delivered with proof." }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Dataq Software — IT services, consulting & business solutions",
-    description: "Powered by patented delivery IP, measured on signed baselines.",
+    description: "We build, run and modernize the systems your business depends on.",
     images: [ogImageFor("/")],
   },
 };

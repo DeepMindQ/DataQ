@@ -766,7 +766,7 @@ export function DomainRouter({ options }: { options: RouterOption[] }) {
       )}
       {!sel && (
         <p className="mt-3 text-[12px] leading-relaxed text-slate-body/60">
-          Pick the surface that bleeds — the router links the matching domain and the two practices that fix it first.
+          Pick the area that hurts. The router links the matching domain and the two practices that fix it first.
         </p>
       )}
     </div>

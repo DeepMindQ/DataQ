@@ -36,18 +36,20 @@ const HUB_BY_SLUG: Record<string, string> = {
   "blockchain-digital-trust": "Blockchain & Digital Trust",
 };
 
-/* Wave 7 — company identity facts, animated with CountUp on reveal */
+/* Wave 7 — company identity facts, animated with CountUp on reveal.
+   Deliberately different facts from the hero strip, so the page adds
+   information instead of repeating itself. */
 const IDENTITY_STATS = [
-  { value: "350+", label: "enterprise engagements delivered" },
-  { value: "40+", label: "countries served from 4 global delivery centers" },
-  { value: "2,400+", label: "engineers, data scientists and domain specialists" },
+  { value: "4", label: "global delivery centers, one delivery standard" },
+  { value: "24x7", label: "managed operations behind every program" },
+  { value: "630+", label: "published delivery playbooks across industries" },
 ];
 
 /* Wave 7 — the enterprise-systems practice: the maintained IT-services suite */
 const ENTERPRISE_SYSTEMS = [
   { icon: Database, name: "Data Analytics", desc: "Decision-ready reporting and analytics on the estate you already run.", url: "/services/data-analytics-lakehouse/" },
   { icon: Smartphone, name: "Mobility", desc: "Mobile front-ends that put enterprise systems in every pocket.", url: "/services/" },
-  { icon: RefreshCw, name: "SAP upgrades", desc: "SAP 3.X or 7.0 lifted to SAP BI 7.3 — without freezing the business.", url: "/consulting/erp-services/" },
+  { icon: RefreshCw, name: "SAP upgrades", desc: "SAP 3.X or 7.0 lifted to SAP BI 7.3, without freezing the business.", url: "/consulting/erp-services/" },
   { icon: ArrowLeftRight, name: "BW → HANA", desc: "BW objects migrated and transformed onto HANA, with parity proven.", url: "/consulting/erp-services/" },
   { icon: Network, name: "EAI migrations", desc: "Enterprise application integration carried forward, interface by interface.", url: "/consulting/it-services/" },
 ];
@@ -58,27 +60,27 @@ const BRIDGE_NODES = [
   {
     icon: Building2,
     t: "Your onsite team",
-    points: ["Direct collaboration in your time zones", "Business context stays where it lives", "One accountable counterpart per program"],
+    points: ["Direct collaboration in your time zones", "Business context stays with your teams", "One accountable counterpart per program"],
   },
   {
     icon: Network,
     t: "Dataq offshore pods",
-    points: ["Qualified engineers as added capability", "Capacity that scales without new overhead", "24x7 coverage across the delivery centers"],
+    points: ["Qualified engineers who plug into your teams", "Capacity that scales without new overhead", "24x7 coverage across the delivery centers"],
   },
   {
     icon: Scale,
     t: "One delivery standard",
-    points: ["Named owners and audited SLAs", "The same gates on both sides of the bridge", "Consistent, harmonious handovers — every geography"],
+    points: ["Named owners and audited SLAs", "The same quality checks on both sides of the bridge", "Handovers that hold across every geography"],
   },
 ];
 
 /* Wave 7 — the end-to-end RPA lifecycle delivered with our Automation
    Anywhere partnership */
 const RPA_STAGES = [
-  { icon: FileSearch, t: "Process Analysis", d: "Which processes are worth automating — measured before anything is built." },
+  { icon: FileSearch, t: "Process Analysis", d: "We measure which processes are worth automating before anything is built." },
   { icon: Compass, t: "RPA Vision & Strategy", d: "Where robots pay for themselves first, and how the program scales from there." },
-  { icon: Sparkles, t: "Proof of Concept", d: "A working robot on your real process, the business case proven on live data." },
-  { icon: Cog, t: "Implementation", d: "Bots deployed into production under the same release gates as every build." },
+  { icon: Sparkles, t: "Proof of Concept", d: "A working robot on a real process, with the business case proven on live data." },
+  { icon: Cog, t: "Implementation", d: "Bots deployed into production under the same release checks as every build." },
   { icon: ShieldCheck, t: "24x7 Managed Support", d: "Bots monitored, maintained and improved around the clock, across geographies." },
 ];
 
@@ -100,15 +102,16 @@ const INDUSTRY_REGIME: Record<string, string> = {
 
 /* A-41: the release-gate pair each engagement note was governed by —
    the site's own gate vocabulary, keyed by the delivering domain */
+/* the release checks each engagement note was governed by, in plain words */
 const GATE_BY_SERVICE: Record<string, string> = {
-  "Data, Analytics & Lakehouse": "Replay parity · freshness SLA",
-  "Agentic AI & Hyperautomation": "Policy envelope · human handoff",
-  "Applied AI & Generative AI": "Eval harness · PoC kill-rate",
-  "Cybersecurity & Zero-Trust": "Containment drill · evidence freshness",
-  "Cloud, Edge & Platform Engineering": "Reconciliation delta · rollback plan",
-  "IoT, Digital Twin & Robotics": "Twin fidelity · OTA safety",
-  "Blockchain & Digital Trust": "Consensus parity · audit chain",
-  "Quantum & Advanced Compute": "Benchmark honesty · baseline parity",
+  "Data, Analytics & Lakehouse": "Replay-tested decisions · freshness SLA",
+  "Agentic AI & Hyperautomation": "Guardrails · human checkpoints",
+  "Applied AI & Generative AI": "Eval scores · PoC kill rate",
+  "Cybersecurity & Zero-Trust": "Live response drills · audit trail",
+  "Cloud, Edge & Platform Engineering": "Reconciliation checks · rollback plan",
+  "IoT, Digital Twin & Robotics": "Twin accuracy · safe updates",
+  "Blockchain & Digital Trust": "Ledger parity · audit trail",
+  "Quantum & Advanced Compute": "Honest benchmarks · classical parity",
 };
 
 /* A-52: the three-question router — pain surface → domain + two practices */
@@ -169,17 +172,17 @@ const PILLARS = [
   {
     icon: Crosshair,
     title: "A named business metric",
-    desc: "Every engagement starts with the number you need to move — signed before delivery begins, reported every fortnight.",
+    desc: "Every engagement starts with the number you need to move. It is agreed before work begins and reported every fortnight.",
   },
   {
     icon: UserCheck,
     title: "A named control owner",
-    desc: "One accountable name on each control — not a committee. Regulators can walk the trail from gate to owner.",
+    desc: "One accountable person on each control, never a committee. When your auditor asks who signed, the trail has a name.",
   },
   {
     icon: GaugeIcon,
-    title: "A named risk budget",
-    desc: "The envelope of acceptable risk is fixed up front. Innovation inside it moves fast; nothing outside it ships.",
+    title: "A named risk boundary",
+    desc: "The boundaries of acceptable risk are fixed at the start. Inside them, teams move fast. Outside them, nothing ships.",
   },
 ];
 
@@ -189,14 +192,14 @@ const DOMAIN_ICONS = [Database, Bot, BrainCircuit, ShieldCheck, CloudCog, Radar,
 const CONSULTING_GROUPS = [
   {
     name: "Data & Analytics",
-    desc: "Migration factories, decision products, platform moves — the classic data estate under gate discipline.",
+    desc: "Migration factories, decision products and platform moves for the classic data estate, all under one delivery discipline.",
     services: [
       { name: "Data Analytics & Decision Products" }, { name: "Data Migration & Platform Moves" }, { name: "Digital Transformation Programs" },
     ],
   },
   {
     name: "Engineering & Quality",
-    desc: "Pods that ship into your controls, and quality engineered in — not tested after.",
+    desc: "Engineering pods that ship inside your controls, with quality designed in rather than tested afterwards.",
     services: [
       { name: "Software Development & Engineering Pods" }, { name: "Testing & Quality Engineering" }, { name: "Application Services & Modernization" }, { name: "UI/UX Design & Product Experience" },
     ],
@@ -210,7 +213,7 @@ const CONSULTING_GROUPS = [
   },
   {
     name: "Advisory & Enterprise",
-    desc: "ERP programs that land process and controls, capacity that scales, zero-trust advisory.",
+    desc: "ERP programs that land process and controls, managed capacity that scales, and zero-trust advisory.",
     services: [
       { name: "IT Consulting & Managed Capacity" }, { name: "Cybersecurity Consulting & Zero-Trust" }, { name: "ERP Services & Enterprise Core" },
     ],
@@ -218,23 +221,23 @@ const CONSULTING_GROUPS = [
 ];
 const ConsultIcons = [Database, Wrench, CloudCog, Handshake];
 
-/* A-58: the objections a buyer raises before the final CTA */
+/* A-58: the objections a buyer raises before the final CTA, in plain words */
 const HOME_FAQ = [
   {
-    q: "What if the provability sprint kills our idea?",
-    a: "Then it worked. Some diagnostics end with a don't-build verdict — that is the sprint doing its job: you get the fail for the price of two weeks, with the evidence that killed it written down and a cheaper alternative path scored. What you never get is a program that drifts for a year before admitting the number is not moving.",
+    q: "What happens if the two-week diagnostic says we should not build it?",
+    a: "Then it paid for itself. Some ideas should not be built, and the cheapest place to learn that is a two-week diagnostic, not a year-long program. You get the evidence that led to the verdict and the cheaper alternative path we scored, in writing.",
   },
   {
-    q: "What do the gates actually block?",
-    a: "Anything that cannot show evidence. A release ships only when its gate metric moves against your signed baseline and the proof pack reconciles — replay parity for decisions, reconciliation deltas for migrations, containment drills for security, eval-harness scores for models. Missing evidence stops the program at the gate, not in production.",
+    q: "What stops a program from shipping something that is not ready?",
+    a: "A release gate. Nothing ships until its measurement moves against the numbers agreed at the start and the proof reconciles. Migrations are checked by reconciliation, decision systems by replaying past decisions, models by evaluation scores, security controls by live drills. Missing evidence stops a release at the gate, not in production.",
   },
   {
-    q: "Who owns the baseline?",
-    a: "Your side does. The baseline is signed by your metric owner in week two and stays in your estate — we report against it every fortnight and never move it. If the metric owner changes, the baseline is re-signed before work continues; the audit trail shows every signature.",
+    q: "Who decides what success is measured against?",
+    a: "Your side does. Your metric owner signs the baseline in week two, it stays in your estate, and we report against it every fortnight. If the owner changes, the baseline is re-signed before work continues, and the audit trail records every signature.",
   },
   {
-    q: "How does the patented-IP differential work commercially?",
-    a: "The method families and platforms are licensed inside the engagement fee — there is no separate IP purchase to start. You get the pre-configured baseline, the evidence generation and the delivery patterns from day one. Accelerators we build specifically for you can carry co-ownership terms, and your baseline, gates and audit trail stay in your estate throughout.",
+    q: "How does the patented IP work commercially?",
+    a: "The platforms and method families are licensed inside the engagement fee, so there is nothing extra to buy to get started. Accelerators we build specifically for you can carry co-ownership terms, and your data, baselines and audit trail stay in your estate throughout.",
   },
 ];
 
@@ -352,32 +355,32 @@ export default function HomeView() {
               <p className="rise-item text-[12px] font-semibold uppercase tracking-[0.22em] text-brand-300" style={{ ["--rise-delay" as string]: "40ms" }}>
                 IT services · consulting · business solutions
               </p>
-              {/* A-01: brand line, not a category sentence — Infosys/TCS pattern (aspiration up top, category below) */}
+              {/* A-01: brand line that says what we do — the category chip above carries the descriptor */}
               <h1 className="text-display-1 mt-4 max-w-3xl text-white">
                 <span className="line-mask block" style={{ ["--rise-delay" as string]: "120ms" }}>
-                  <span className="line-mask-inner block">Ambition, engineered.</span>
+                  <span className="line-mask-inner block">We build, run and modernize</span>
                 </span>
                 <span className="line-mask block" style={{ ["--rise-delay" as string]: "260ms" }}>
                   <span className="line-mask-inner block">
-                    Outcomes, <span className="grad-text">proven</span>.
+                    the <span className="grad-text">systems</span> your business depends on.
                   </span>
                 </span>
               </h1>
-              {/* A-03: one promise sentence + one proof sentence */}
+              {/* A-03: one promise sentence + one proof sentence, in plain words */}
               <p className="rise-item measure mt-5 text-body-lg leading-relaxed text-white/70" style={{ ["--rise-delay" as string]: "560ms" }}>
-                We consult, build and run the technology your business runs on — ERP, cloud, data, AI and security.
-                Every program starts from patented platforms and is measured against the metric your board already
-                tracks.
+                Dataq Software is a global IT services and consulting firm. We deliver ERP, cloud, data, AI and
+                security programs for enterprises in 40+ countries, starting from patented platforms and reporting
+                every result against the metric your board already tracks.
               </p>
               {/* A-03: the three delivery vignettes, as a rotating proof line */}
               <div className="rise-item" style={{ ["--rise-delay" as string]: "620ms" }}>
                 <RotatingProof
                   lines={[
-                    "Fraud decided in milliseconds — with the evidence attached.",
-                    "ERP rollouts that land process, controls and cutover on one plan.",
-                    "Cloud estates re-platformed without a season of downtime.",
-                    "KYC backlogs cleared by governed agents.",
-                    "Data estates your auditors can walk alone.",
+                    "A top-10 European bank cut fraud losses 38% with real-time decisioning.",
+                    "A global insurer settles claims 55% faster with document intelligence.",
+                    "OEE up 7.2 points across 14 plants at a global automotive OEM.",
+                    "SAP and BW estates upgraded and migrated to HANA, with parity proven.",
+                    "Global RPA programs delivered end to end with Automation Anywhere.",
                   ]}
                 />
               </div>
@@ -397,14 +400,14 @@ export default function HomeView() {
                 </Link>
               </div>
               <p className="rise-item mt-2 text-[12px] text-white/45" style={{ ["--rise-delay" as string]: "720ms" }}>
-                A working session with a practice lead — bring your metric, leave with a plan.
+                A working session with a practice lead. Bring your problem, leave with a plan.
               </p>
               {/* A-05: outcome proof instead of compliance badges, linking to the evidence */}
               <p className="rise-item mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[12.5px] text-white/65" style={{ ["--rise-delay" as string]: "780ms" }}>
                 <Link href="#evidence" className="inline-flex flex-wrap items-center gap-x-2 gap-y-1 hover:text-brand-300">
                   <ShieldCheck className="h-3.5 w-3.5 text-brand-300" aria-hidden="true" />
-                  <span className="font-semibold text-white/80">38% lower fraud losses · OEE +7.2 pts · 55% faster claims</span>
-                  <span className="text-white/45">— see the engagements</span>
+                  <span className="font-semibold text-white/80">38% lower fraud losses, OEE up 7.2 pts, claims 55% faster</span>
+                  <span className="text-white/45">in the published engagement notes</span>
                 </Link>
                 <span className="rounded-full border border-white/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white/45">
                   Published results
@@ -423,7 +426,7 @@ export default function HomeView() {
         <div className="relative container-dq pb-12">
           <StatsStrip stats={brand.stats} />
           <p className="mt-2 text-right text-[10.5px] text-white/35">
-            Operating metrics from the illustrative reference program · engagement counts are delivery-to-date.
+            Operating metrics from the illustrative reference program. Engagement counts are delivery to date.
           </p>
         </div>
       </section>
@@ -434,9 +437,9 @@ export default function HomeView() {
           dark
           className="marquee-dark container-dq"
           items={[
-            "SOC 2 Type II", "ISO 27001", "ISO 9001", "GDPR & CCPA aligned", "Evidence-gated releases",
+            "SOC 2 Type II", "ISO 27001", "ISO 9001", "GDPR & CCPA aligned", "24x7 managed operations",
+            "SAP upgrades & BW on HANA", "RPA with Automation Anywhere", "Global delivery centers",
             "Dataq Nexus", "Dataq Forge", "Dataq Swarm", "Dataq Sentinel", "Dataq Twinverse", "Dataq Quanta", "Dataq Ledger", "Dataq Compass",
-            "Patented method families", "Consulting · build · run", "IP-led delivery", "Global delivery centers",
           ]}
         />
       </div>
@@ -449,31 +452,30 @@ export default function HomeView() {
               <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">Who we are</p>
               <h2 className="text-display-3 mt-1 max-w-3xl text-navy-800 sm:text-[30px]">
                 <span className="line-mask block">
-                  <span className="line-mask-inner block">A technology consulting organization,</span>
+                  <span className="line-mask-inner block">The systems large companies run</span>
                 </span>
                 <span className="line-mask block" style={{ ["--rise-delay" as string]: "160ms" }}>
                   <span className="line-mask-inner block">
-                    built for <span className="grad-text">application transformation</span>.
+                    are the systems we <span className="grad-text">maintain, upgrade and modernize</span>.
                   </span>
                 </span>
               </h2>
               <div className="mt-5 space-y-4 text-[14.5px] leading-relaxed text-slate-body/80">
                 <p className="rise-item" style={{ ["--rise-delay" as string]: "300ms" }}>
-                  Dataq Software specializes in application transformation products and services. We work with leading
-                  companies to maintain their application support and apply technology innovations that enhance
-                  deliverable and product efficiency — the work we do day in, day out, for clients whose systems
-                  cannot afford to stand still.
+                  Dataq Software is a technology consulting organization built for application transformation. We work
+                  on the estate enterprises actually run: SAP and ERP cores, BW and enterprise integrations, data
+                  estates, cloud platforms, and the AI now being layered on top of them.
                 </p>
                 <p className="rise-item" style={{ ["--rise-delay" as string]: "420ms" }}>
-                  Our enterprise transformation portfolio provides a range of modern tools, tailored to achieve
-                  digital transformation and ease people&rsquo;s role in each enterprise — so the technology carries the
-                  weight, and your people keep the decisions.
+                  The portfolio pairs a full suite of maintained IT services with eight proprietary platforms, each
+                  the productized form of a patented method family. Clients use them as a running start: configured
+                  controls, delivery patterns and reporting from day one, so budget goes to the work that is
+                  genuinely theirs.
                 </p>
                 <p className="rise-item" style={{ ["--rise-delay" as string]: "540ms" }}>
-                  The offering is catered towards meeting the client&rsquo;s immediate needs — responding to the SMAC
-                  shift (social, mobile, analytics and cloud) in a very cost-efficient way — complemented by a full
-                  suite of maintained IT services, from data analytics and mobility to enterprise system upgrades,
-                  migrations and wide digital transformation.
+                  We advise, we build, and we run what we build. Delivery teams work on site and offshore under one
+                  standard, managed operations run 24x7 behind every program, and results are reported against the
+                  numbers agreed at the start. The technology carries the weight; your people keep the decisions.
                 </p>
               </div>
               {/* identity facts — count up on reveal */}
@@ -503,11 +505,11 @@ export default function HomeView() {
                     />
                   </svg>
                   <blockquote className="mt-3 font-display text-[17.5px] font-semibold leading-snug text-navy-800">
-                    &ldquo;Our offering is catered towards meeting the client&rsquo;s immediate needs in responding to
-                    the SMAC trends in a very cost-efficient way.&rdquo;
+                    &ldquo;We maintain what runs, upgrade what lags, and modernize what holds the business back.
+                    That is application transformation, done as day-to-day work rather than a slogan.&rdquo;
                   </blockquote>
                   <figcaption className="mt-4 text-[11.5px] font-bold uppercase tracking-[0.16em] text-brand-deep">
-                    Dataq Software — company positioning
+                    Dataq Software, company positioning
                   </figcaption>
                 </figure>
               </Reveal>
@@ -517,7 +519,7 @@ export default function HomeView() {
                   <ul className="mt-3 space-y-2.5 text-[13px] leading-relaxed text-slate-body/80">
                     <li className="flex items-start gap-2.5">
                       <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />
-                      Your onsite team stays in command — direct collaboration, your time zones.
+                      Your onsite team stays in command, with direct collaboration in your time zones.
                     </li>
                     <li className="flex items-start gap-2.5">
                       <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />
@@ -552,13 +554,13 @@ export default function HomeView() {
                 </p>
                 {/* A-17 */}
                 <h2 className="text-display-3 mt-1 max-w-4xl text-navy-800 sm:text-[30px]">
-                  The expertise your next move needs
+                  Eight deep-tech domains and a full consulting practice
                 </h2>
                 {/* A-18 */}
                 <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-                  Eight deep-tech domains and a full consulting practice, run as one accountable delivery system.
-                  Whichever door you enter, the same discipline governs the build: named owners, measured gates,
-                  results reported against your baseline.
+                  Enter through any door; the same discipline governs the build. Named owners, measured results and
+                  every outcome reported against your own numbers. The consulting practice follows the same rule:
+                  the team that recommends is the team that builds.
                 </p>
               </div>
               <div className="flex flex-col items-start gap-1.5">
@@ -645,7 +647,7 @@ export default function HomeView() {
                 <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
                   Transformation programs, migration factories, engineering pods, quality engineering, Azure estates,
                   ERP cores, managed operations and end-user support. The team that recommends is the team that
-                  builds it.
+                  builds it, so nothing is lost between the deck and the build.
                 </p>
               </div>
               <Link
@@ -686,8 +688,8 @@ export default function HomeView() {
           <Reveal>
             <div className="mt-10 rounded-2xl border border-line bg-white p-5 sm:p-6">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-deep">
-                  Enterprise systems practice — maintain · upgrade · migrate
+                <p className="kicker-bar text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-deep">
+                  Enterprise systems practice · maintain · upgrade · migrate
                 </p>
                 <Link
                   href="/consulting/erp-services/"
@@ -750,11 +752,11 @@ export default function HomeView() {
                 </p>
                 <h2 className="text-display-3 mt-1 max-w-4xl text-white sm:text-[30px]">
                   <span className="line-mask block">
-                    <span className="line-mask-inner block">Use qualified offshore IT resources as</span>
+                    <span className="line-mask-inner block">Onsite command, offshore scale,</span>
                   </span>
                   <span className="line-mask block" style={{ ["--rise-delay" as string]: "170ms" }}>
                     <span className="line-mask-inner block">
-                      additional capabilities to your <span className="grad-text">onsite team</span>
+                      one <span className="grad-text">delivery standard</span>
                     </span>
                   </span>
                 </h2>
@@ -767,9 +769,9 @@ export default function HomeView() {
               </Link>
             </div>
             <p className="rise-item mt-3 max-w-3xl text-[14.5px] leading-relaxed text-white/70" style={{ ["--rise-delay" as string]: "420ms" }}>
-              Dataq delivers with teams located at on-shore and off-shore locations — qualified engineers who plug
-              into your organization as added capability, not added overhead. One delivery standard governs both
-              sides of the bridge, so deliveries stay consistent and harmonious across all geographies.
+              Teams at onshore and offshore locations work as one delivery organization: qualified engineers who
+              plug into your organization as extra capacity, while business ownership stays on your side of the
+              bridge. The same quality checks apply on both sides, so handovers stay clean across every geography.
             </p>
           </Reveal>
           {/* the delivery bridge — onsite command ↔ offshore pods, one standard across the span */}
@@ -805,7 +807,7 @@ export default function HomeView() {
             <div className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:items-center">
               <div className="grid grid-cols-3 gap-3">
                 {[
-                  { value: "4", label: "global delivery centers — one standard" },
+                  { value: "4", label: "global delivery centers, one standard" },
                   { value: "24x7", label: "operations coverage" },
                   { value: "40+", label: "countries served" },
                 ].map((s, i) => (
@@ -822,10 +824,9 @@ export default function HomeView() {
                 ))}
               </div>
               <p className="text-[13.5px] leading-relaxed text-white/65">
-                An enduring tell-tale sign is our ability to carry application maintenance and support practices from
-                one industry to another — significant experience in the support and maintenance of complex
-                applications, platforms and solutions, delivered through EAI migrations and a wide range of
-                application development tools, with 24x7 managed operations behind every pod.
+                Complex application maintenance is a transferable discipline. Our support teams have carried
+                estates from one industry to another, through EAI migrations and a broad range of application
+                development tools, and every pod is backed by 24x7 managed operations.
               </p>
             </div>
           </Reveal>
@@ -845,8 +846,8 @@ export default function HomeView() {
                   Automation that ends in managed support
                 </h2>
                 <p className="mt-2 max-w-3xl text-[14.5px] leading-relaxed text-slate-body/75">
-                  Our Automation Anywhere partnership has delivered global RPA implementations — robots put to work
-                  where they pay back fastest, every stage owned, measured and handed over with evidence.
+                  Our Automation Anywhere partnership has delivered global RPA implementations: robots put to work
+                  where they pay back fastest, every stage owned and measured, and every handover documented.
                 </p>
               </div>
               <Link
@@ -897,12 +898,12 @@ export default function HomeView() {
               </h2>
               {/* A-32: the platforms named · A-28: the four-of-eight affordance */}
               <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-                Every engagement starts from configured IP, not a blank page and a staffing plan: graph-native
+                Every engagement starts from configured IP rather than a blank page and a staffing plan. Graph-native
                 contextual intelligence, quantum-inspired optimization, federated trust, validated ethical decisions
-                and self-evolving learning — developed by our research programme, in production inside the platforms,
-                and governed by the gates each method ships with.{" "}
+                and self-evolving learning are developed by our research programme and run in production inside the
+                platforms.{" "}
                 <Link href="/patented-intelligence/" className="link-animated font-semibold text-brand-deep">
-                  The method map lists every family with its gates.
+                  The method map lists every family with its controls.
                 </Link>
               </p>
             </div>
@@ -919,15 +920,15 @@ export default function HomeView() {
           {[
             {
               t: "Start from configured IP",
-              d: "Method families arrive pre-configured inside our platforms — controls, evidence generation and delivery patterns already standardized. Budget goes to the 20% that is genuinely yours.",
+              d: "Method families arrive pre-configured inside our platforms: controls, reporting and delivery patterns already in place. Budget goes to the 20% that is genuinely yours.",
             },
             {
               t: "Fewer hours to the same outcome",
-              d: "With the heavy lifting in licensed IP, teams start near 80% readiness. The gates then prove the delta against your signed baseline — speed you can audit, not a claim.",
+              d: "With the heavy lifting in licensed IP, teams start near 80% ready, and the delta is measured against your own numbers. Speed you can check, not a claim.",
             },
             {
               t: "IP models that fit the deal",
-              d: "License, embed or co-develop: accelerators built specifically for you can carry co-ownership terms, so the IP advantage compounds on your side of the table too.",
+              d: "License, embed or co-develop. Accelerators built specifically for you can carry co-ownership terms, so the advantage compounds on your side of the table too.",
             },
           ].map((s) => (
             <Reveal key={s.t}>
@@ -1014,12 +1015,12 @@ export default function HomeView() {
                   Evidence library
                 </p>
                 <h2 className="text-display-3 mt-1 text-white sm:text-[28px]">
-                  Results you can audit
+                  Published results, with the numbers left in
                 </h2>
                 {/* A-08: reconciled count language */}
                 <p className="mt-2 max-w-2xl text-[14.5px] text-white/65">
-                  A track record you can audit: every published engagement note carries the measured delta, the system
-                  that produced it and the gates that governed the build.
+                  Every published engagement note carries the measured result, the system that produced it and the
+                  industry it ran in. Filter by sector, then read the full note.
                 </p>
               </div>
               <Link
@@ -1080,8 +1081,8 @@ export default function HomeView() {
               How an engagement starts
             </h2>
             <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-              One page, signed in week two: the metric to move, the owner of each control, the envelope of acceptable
-              risk. Your auditors and your board read the same page delivery runs on.
+              One page, signed in week two: the metric the program must move, the owner of each control, and the
+              boundaries of acceptable risk. Your board and your auditors read the same page delivery runs on.
             </p>
           </Reveal>
           <div className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
@@ -1107,15 +1108,15 @@ export default function HomeView() {
                 <div className="mt-3 space-y-2.5 text-[12.5px] leading-relaxed">
                   <p className="rounded-lg border border-line bg-mist/60 px-3 py-2">
                     <span className="font-semibold text-navy-800">Metric:</span>{" "}
-                    <span className="text-slate-body/80">fraud losses per approved volume — baseline signed, reported fortnightly</span>
+                    <span className="text-slate-body/80">fraud losses per approved volume, signed as baseline and reported fortnightly</span>
                   </p>
                   <p className="rounded-lg border border-line bg-mist/60 px-3 py-2">
                     <span className="font-semibold text-navy-800">Control owner:</span>{" "}
-                    <span className="text-slate-body/80">one accountable name per control — the trail a regulator walks</span>
+                    <span className="text-slate-body/80">one accountable name per control, the trail a regulator walks</span>
                   </p>
                   <p className="rounded-lg border border-line bg-mist/60 px-3 py-2">
-                    <span className="font-semibold text-navy-800">Risk budget:</span>{" "}
-                    <span className="text-slate-body/80">a fixed envelope — innovation inside it moves, nothing outside it ships</span>
+                    <span className="font-semibold text-navy-800">Risk boundary:</span>{" "}
+                    <span className="text-slate-body/80">a fixed envelope, agreed with you at the start</span>
                   </p>
                 </div>
                 {/* A-36: inline CTA inside the section */}
@@ -1141,12 +1142,12 @@ export default function HomeView() {
                   Industries
                 </p>
                 <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
-                  Built where you operate — under the rules you are held to
+                  Built where you operate, under the rules you are held to
                 </h2>
                 {/* A-42: the list is named for what it is */}
                 <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-                  Each sector brief maps the industry&rsquo;s regulatory reality and decision pressure to our expertise
-                  domains, with named workflows and the systems of record your programs will touch.
+                  Each sector brief maps the industry&rsquo;s regulatory reality to our expertise domains, with named
+                  workflows and the systems of record your programs will touch.
                 </p>
               </div>
               <Link
@@ -1179,9 +1180,9 @@ export default function HomeView() {
                         </span>
                       )}
                     </span>
-                    {/* A-34: the second line */}
+                    {/* A-34: the second line, with the real count */}
                     <span className="mt-0.5 block text-[11px] text-slate-body/60">
-                      Published engagement notes
+                      {notes} published engagement {notes === 1 ? "note" : "notes"}
                     </span>
                   </span>
                   <ArrowRight className="h-3.5 w-3.5 shrink-0 text-brand-deep transition group-hover:translate-x-0.5" aria-hidden="true" />
@@ -1203,11 +1204,11 @@ export default function HomeView() {
                 Insights
               </p>
               <h2 className="text-display-3 mt-1 text-navy-800 sm:text-[28px]">
-                From the delivery floor
+                Field notes from live programs
               </h2>
               <p className="mt-2 max-w-2xl text-[14.5px] text-slate-body/75">
-                What we are learning on live programs — retrieval layers, decision hubs, policy envelopes and the
-                economics of GenAI — with the vendor questions worth asking.
+                What we are learning on live programs: retrieval layers, decision hubs, agent guardrails and the
+                economics of GenAI, with the vendor questions worth asking.
               </p>
             </div>
             {/* A-45: the library button is a visible button */}
@@ -1244,9 +1245,9 @@ export default function HomeView() {
       {/* A-46: a client voice, anonymized from a published engagement note */}
       <section className="container-dq pt-12">
         <Quote
-          text="The gate map went into our audit pack unchanged."
+          text="Their controls went straight into our audit pack. Nothing needed translating."
           attribution="COO, European retail bank"
-          role="Published engagement note — real-time fraud decisioning on instant rails"
+          role="Published engagement note, real-time fraud decisioning on instant rails"
         />
       </section>
 
@@ -1255,9 +1256,10 @@ export default function HomeView() {
         <Reveal>
           <div className="grid gap-6 rounded-2xl border border-line bg-mist/60 px-6 py-8 shadow-1 sm:px-10 md:grid-cols-[1fr_320px] md:items-center">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-deep">The Delivery Floor — monthly</p>
+              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-deep">The Delivery Floor, monthly</p>
               <p className="mt-1.5 max-w-lg font-display text-[18px] font-semibold leading-snug text-navy-800">
-                One email a month — the delivery-floor thesis, the vendor questions, no noise.
+                One email a month from live programs. What worked, what did not, and the questions worth asking any
+                vendor.
               </p>
             </div>
             <NewsletterForm />
@@ -1282,7 +1284,7 @@ export default function HomeView() {
 
       {/* closing CTA */}
       <section className="container-dq pb-16 pt-12">
-        <CtaBand message="Bring the metric you need to move — we will show you the method, the platform and the baseline we would sign." />
+        <CtaBand message="Bring the number you need to move. A practice lead will show you the method, the platform and the plan we would sign against it." />
       </section>
     </>
   );

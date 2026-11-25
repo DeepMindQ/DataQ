@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     template: "%s",
   },
   description:
-    "Dataq Software is a global IT services, consulting and business solutions partner — from ERP and cloud to AI and data — powered by patented delivery IP and gated on signed metrics. SOC 2 · ISO 27001.",
+    "Dataq Software is a global IT services and consulting partner. We build, run and modernize the ERP, cloud, data, AI and security systems enterprises depend on. SOC 2 Type II, ISO 27001.",
   robots: { index: true, follow: true },
   // Icons/manifest: Next 16 does NOT prefix metadata icon/manifest hrefs with
   // the router basePath, so on GitHub Pages "/manifest.json" would resolve to

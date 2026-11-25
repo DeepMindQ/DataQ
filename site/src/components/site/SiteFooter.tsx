@@ -21,7 +21,7 @@ export default function SiteFooter({ brand, footer }: { brand: Brand; footer: Fo
               Tell us the metric you need to move.
             </h2>
             <p className="mt-3 max-w-md text-[14px] leading-relaxed text-white/65">
-              A practice lead — not a call center — responds within one business day with the
+              A practice lead, not a call center, responds within one business day with the
               relevant domain pod and three reference engagements. {brand.promise}
             </p>
             <div className="mt-6 space-y-2.5 text-[13px] text-white/75">
@@ -145,7 +145,7 @@ export default function SiteFooter({ brand, footer }: { brand: Brand; footer: Fo
               </button>
             </div>
             <p className="text-[12px] text-white/45">
-              © {new Date().getFullYear()} {brand.legalName}. Every release gated on signed evidence · SOC 2 Type II · ISO 27001.
+              © {new Date().getFullYear()} {brand.legalName}. Every release ships with its evidence. SOC 2 Type II · ISO 27001.
             </p>
           </div>
         </div>
