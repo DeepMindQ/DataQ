@@ -71,7 +71,7 @@ const PROGRAMS: Program[] = [
     log: [
       { t: "14:02:11", tag: "DECISION", msg: "credit limit review — approved, policy v2.4.1, replay id 8f3c" },
       { t: "14:01:41", tag: "INTERDICT", msg: "fraud interdiction — blocked, challenge issued, evidence attached" },
-      { t: "14:01:22", tag: "GATE", msg: "wave 3 gate passed — reconciliation delta 0.00%, signed" },
+      { t: "14:01:22", tag: "CHECK", msg: "wave 3 release check passed — reconciliation delta 0.00%, signed" },
     ],
     nextLog: [
       { t: "", tag: "DECISION", msg: "instant-rail payment scored — released, evidence pack attached" },
@@ -105,7 +105,7 @@ const PROGRAMS: Program[] = [
     log: [
       { t: "14:02:09", tag: "AGENT", msg: "prior-auth package assembled — policy citations included" },
       { t: "14:01:47", tag: "DECISION", msg: "straight-through settlement — within guardrails, ledger posted" },
-      { t: "14:01:15", tag: "GATE", msg: "human handoff rails verified — 0 unattended overrides" },
+      { t: "14:01:15", tag: "CHECK", msg: "human handoff rails verified — 0 unattended overrides" },
     ],
     nextLog: [
       { t: "", tag: "AGENT", msg: "KYC file assembled — 14 sources cited, routed to analyst" },
@@ -139,12 +139,12 @@ const PROGRAMS: Program[] = [
     log: [
       { t: "14:02:18", tag: "TWIN", msg: "line 3 state sync — 412 sensors, drift 0.4ms" },
       { t: "14:01:52", tag: "PREDICT", msg: "bearing wear flagged on press 7 — window proposed, planner notified" },
-      { t: "14:01:20", tag: "GATE", msg: "twin fidelity gate passed — 99.2% state match, signed" },
+      { t: "14:01:20", tag: "CHECK", msg: "twin fidelity check passed — 99.2% state match, signed" },
     ],
     nextLog: [
       { t: "", tag: "TWIN", msg: "scenario replay queued — changeover simulation, line 2" },
       { t: "", tag: "PREDICT", msg: "RUL confidence 0.94 — maintenance window scheduled" },
-      { t: "", tag: "GATE", msg: "OTA safety gate — canary 5%, rollback armed" },
+      { t: "", tag: "CHECK", msg: "OTA safety check — canary 5%, rollback armed" },
     ],
     series: mk(83, 24, (i) => 55 + (i / 23) * 30),
     compare: mk(97, 24, () => 66, 4),
