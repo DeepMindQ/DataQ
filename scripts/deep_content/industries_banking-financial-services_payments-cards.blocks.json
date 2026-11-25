@@ -1,0 +1,754 @@
+{
+ "file": "industries_banking-financial-services_payments-cards",
+ "meta_description": "How Dataq Software engineers payments and cards: real-time decision hubs inside authorization timeouts, false-decline recovery, chargeback automation under Visa and Mastercard rules, settlement reconciliation and fee assurance, token lifecycle and PCI DSS 4.0 evidence — across issuer, acquirer and instant rails.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Payments is a real-time decision business wearing a compliance uniform. Every authorization is a decision taken inside a timeout the switch measures in hundreds of milliseconds, every dispute is a deadline set by a scheme rulebook, every settlement file is a reconciliation waiting to break, and every basis point of interchange and scheme fee is revenue someone else calculated. Instant rails — RTP, FedNow, SEPA Instant — have compressed the fraud window from hours to seconds and made the decision layer the product. This page is the engineering picture of that machinery: the issuer, acquirer and rails estate it runs on, where latency, leakage and disputes take the margin, and the six deep builds Dataq Software ships to fix them."
+  },
+  {
+   "t": "h2",
+   "x": "How the payment actually flows"
+  },
+  {
+   "t": "p",
+   "x": "A payment is a promise that a balance will move, and the promise travels a chain in milliseconds. A card authorization crosses merchant gateway, acquirer, scheme and issuer host as ISO 8583 — with ISO 20022 migration arriving underneath — and each hop adds latency the next hop does not forgive. The issuer's fraud decision must land inside the switch timeout: model score, velocity, device, location and policy evaluated together, with step-up or decline returned before the merchant gives up. When the issuer cannot answer, stand-in processing approves on floor limits, and every stand-in approval is a decision made without the risk machinery that was built to make it."
+  },
+  {
+   "t": "p",
+   "x": "Behind the authorization sits the economics. Clearing and settlement run in windows: interchange and scheme fees calculate per transaction under rules that change every April and October, assessments arrive in scheme files nobody reads line by line, and settlement reconciles across issuer, acquirer, processor and scheme ledgers that each hold a version of the truth. Instant rails change the shape: account-to-account payments settle in seconds, request-to-pay and verification of payee add decisions the card world never had, and liquidity management becomes intraday. Tokenization replaces the PAN with network tokens whose lifecycle — provisioned, suspended, deleted at reissue — has its own reconciliation."
+  },
+  {
+   "t": "p",
+   "x": "Then the exceptions arrive, and they are where the margin leaks. Disputes run on scheme clocks — Visa Claims Resolution and Mastercard dispute rules define deadlines, evidence formats and liability shifts, and a missed clock is an automatic loss. Merchant acquiring carries its own risk: onboarding decisions, MCC risk, rolling reserves and monitoring against the acquirer's own loss appetite. And across all of it sits PCI DSS 4.0, which replaced the annual audit snapshot with continuous expectations for tokenization, segmentation and targeted risk analysis. The estate is fast at processing money and slow at producing evidence, and both halves decide the P&L."
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems this work touches"
+  },
+  {
+   "t": "p",
+   "x": "Programs in this sub-industry succeed or fail on how honestly the estate is mapped before anything is built. Dataq Software starts every engagement by naming the systems, their owners, their change cadences and their data contracts. The table below is the estate we most often find and integrate against in payments and cards — not a generic stack diagram."
+  },
+  {
+   "t": "table",
+   "caption": "The payments and cards estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
+    [
+     "Issuer switch and host",
+     "Authorization, stand-in processing, card lifecycle, posting on ISO 8583 and ISO 20022",
+     "Risk decisions must fit the timeout budget; stand-in approvals bypass online scoring silently"
+    ],
+    [
+     "Acquirer gateway and merchant stack",
+     "Merchant authorization, capture, gateway services, settlement to merchants",
+     "Latency budgets are unforgiving; merchant-level data fragments across processors"
+    ],
+    [
+     "Instant rails gateways (RTP, FedNow, SEPA Instant)",
+     "Account-to-account instant payments, request-to-pay, verification of payee",
+     "Fraud window measured in seconds; liquidity and participation limits manage intraday"
+    ],
+    [
+     "Token vault and network tokens",
+     "Token provisioning, lifecycle events, PAN-to-token mapping, wallet integration",
+     "Lifecycle events lag reissues; mapping gaps strand recurring payments"
+    ],
+    [
+     "Fraud and risk platforms",
+     "Issuer and acquirer scoring, rules engines, case management",
+     "Batch components cannot sit on the instant path; precision trades against approval rates"
+    ],
+    [
+     "Disputes and chargeback management",
+     "Case intake, evidence, chargeback and pre-arbitration filing under scheme rules",
+     "Scheme clocks auto-lose missed cases; evidence assembled by hand from five systems"
+    ],
+    [
+     "Settlement and reconciliation engine",
+     "Scheme files, interchange calculation, fee processing, GL posting",
+     "Breaks span windows and schemes; fee opacity hides billing errors in line items"
+    ],
+    [
+     "Merchant onboarding and risk",
+     "KYB, MCC risk assessment, reserves, transaction monitoring, terminations",
+     "Risk assessment is manual; clean merchants wait while risky ones sign anyway"
+    ],
+    [
+     "Payments data warehouse",
+     "Transaction telemetry, fraud analytics, finance and scheme reporting",
+     "Reconciliation across settlement windows is manual; latency kills real-time analytics"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where the margin leaks"
+  },
+  {
+   "t": "p",
+   "x": "Ask payments leaders where the money leaks and the answers converge on the same eight places, described in their own words. Dataq Software's diagnostic scores each of them in your estate before recommending a build, because the leak that dominates in an issuer is often minor in an acquirer, and the reverse."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Fraud precision trapped outside the timeout",
+     "The scoring stack that would catch the fraud runs after the authorization is answered, or adds enrichment milliseconds that drop approval rates until someone turns it off. Instant rails move the deadline into seconds, and social-engineering fraud pays out before the first phone rings. Precision has to live inside the decision window, or it does not exist."
+    ],
+    [
+     "False declines that burn good customers",
+     "Decline models tuned conservatively tax the genuine: a cardholder on holiday, a new device, a recurring payment after a reissue. Every false decline is lost revenue, a service call and a churn signal — invisible in fraud dashboards because nobody reports the approval they never got. The trade-off is managed per decision, not per policy document."
+    ],
+    [
+     "Chargebacks lost on the clock",
+     "Visa Claims Resolution and Mastercard dispute rules set deadlines measured in days, with evidence formats that differ by reason code. Files assemble by hand from switch logs, merchant data and CRM notes, so winnable cases lose on procedure and the win rate hides the loss. Pre-arbitration escalations carry the same deadline pressure with more money attached."
+    ],
+    [
+     "Settlement breaks across windows and schemes",
+     "Scheme settlement files, processor ledgers and the general ledger each hold a version of the truth, reconciled by analysts against cut-off rules that differ by scheme and window. Aged breaks hide fee errors, duplicate postings and missing interchange recoveries. Month-end compresses, and the reconciliation ritual absorbs the team that should be analyzing."
+    ],
+    [
+     "Interchange and scheme-fee opacity",
+     "Fee rules change twice a year, assessments arrive as line items nobody validates, and billing errors — misqualified transactions, wrong programs, duplicate assessments — hide inside the noise. Recoveries happen when someone complains. Without a fee model that recalculates expected charges from transaction data, the leakage is structural and invisible."
+    ],
+    [
+     "Token lifecycle gaps at reissue",
+     "A card reissued after fraud or expiry strands the network tokens that wallets and merchants hold. Recurring payments fail, authorization volumes dip, and the gap shows up as merchant complaints rather than as a token report. Lifecycle events exist; nobody reconciles them to the card file."
+    ],
+    [
+     "Merchant risk assessed by hand",
+     "Acquirer onboarding reads KYB documents, scores MCC risk and sets reserves with judgment and spreadsheets. Clean merchants wait in the queue while borderline ones sign because the file looked fine, and monitoring after go-live samples instead of covering. The loss rate on newly boarded merchants is discovered, not predicted."
+    ],
+    [
+     "PCI DSS 4.0 evidence that never pauses",
+     "The standard now expects continuous compliance: targeted risk analyses, segmentation testing, tokenization coverage, authenticated scanning evidence. Estates that treat PCI as an annual project assemble evidence under deadline and hope. The gap between the control and the evidence is where assessors and, increasingly, regulators and scheme programs look."
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight: decisions and deadlines are running faster than the evidence and reconciliation underneath them. The fix is the same in every case — one governed event stream from switch, rails and schemes, and decision services that answer inside the window while recording why they answered."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works payments and cards"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate you already run. We do not arrive with a replacement switch, a processor migration, or a strategy deck that ends where the hard part begins. The engagement model is engineering-first: a two-week diagnostic that baselines one workflow end to end — authorization scoring, disputes, settlement reconciliation, merchant risk — then a scoped build that ships behind your change process, your model-risk framework and the third-party registers your resilience regime requires."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver in this sub-industry. First, every decision carries replay: inputs, feature values, model versions, policy rules and reason codes stored, so an issuer response code, a step-up decision or a dispute disposition is explainable months later as a query. Second, latency is a budget, not a hope — the decision path is engineered to a P99 target with headroom, and enrichment that costs milliseconds has to buy its way in. Third, every build lands with its evidence layer: scheme-format evidence packs, PCI artifacts and reconciliation reports generate continuously, not the week before the assessment."
+  },
+  {
+   "t": "p",
+   "x": "The published record behind this posture is directly from this domain: a top-10 European retail bank moved to real-time fraud decisioning on instant rails and cut fraud losses 38% while approval rates rose — because the ensemble declined the attacks it used to miss and stopped declining the customers it used to annoy. Where the metric is clean we contract against the delta with the baseline locked during the diagnostic; where it is confounded the feasibility read says so and we scope fixed-fee."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for payments and cards"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our payments and cards practice. Each build is named for the workflow it changes, sized in the diagnostic, and shipped with the controls the workflow's scheme, regulator and standard expect. None require replacing the switch or the processor; all require taking the authorization latency budget and the settlement files seriously."
+  },
+  {
+   "t": "h3",
+   "x": "1. Real-time decision hub on the authorization path"
+  },
+  {
+   "t": "p",
+   "x": "The build is event-native by design: change-data-capture from the switch stream feeds a feature store that computes velocity, device, behavioral, network and graph features in milliseconds, and a decision service combines model scores with policy rules to return approve, decline, step-up or send-to-review inside the switch timeout, engineered to a P99 latency budget with headroom. Stand-in and degrade paths are modeled explicitly — floor-limit approvals logged and post-authorized against the same features — so offline decisions never bypass scoring silently."
+  },
+  {
+   "t": "p",
+   "x": "Champion/challenger governance runs in the registry the model-risk function owns: challengers see shadow traffic beside the live decision, promotions pass your gates, rollbacks are rehearsed. Every decision records its inputs, feature values, model versions, policy rules and reason codes into the replay store, so a declined cardholder or a supervisory question months later is a query. In the published program record this pattern cut fraud losses 38% on instant rails while approval rates rose — the ensemble caught what the rules missed and stopped taxing the customers the rules annoyed."
+  },
+  {
+   "t": "h3",
+   "x": "2. False-decline recovery and risk-based authentication"
+  },
+  {
+   "t": "p",
+   "x": "The build treats the approval rate as a first-class metric with the same governance as the loss rate. Borderline declines rescore against good-customer context — tenure, payment history, device familiarity, merchant category — and route to step-up rather than decline where the risk justifies it. Risk-based authentication integrates with the 3DS flow: exemption decisions — low-value, trusted merchant, token-based — tracked with the fraud-rate monitoring the regulation requires, and challenge rates tuned per segment instead of globally."
+  },
+  {
+   "t": "p",
+   "x": "The counter-metrics are engineered in: false-decline estimates from recovery cohorts and service-call correlates, approval-rate telemetry by segment and merchant category, and step-up completion rates that reveal where friction is losing transactions. Policy changes run as champion/challenger with the same replay and reason codes as fraud scoring, so the trade-off between loss and approval is made per decision with its evidence attached, not per annual policy review. The measurable deltas are approval rate, recovery cohort revenue, and challenge friction per segment."
+  },
+  {
+   "t": "h3",
+   "x": "3. Dispute and chargeback automation"
+  },
+  {
+   "t": "p",
+   "x": "Dispute processing is a deadline business wearing a workflow costume. The build starts at intake: structured reason codes captured from the channel, eligibility and liability computed against Visa Claims Resolution and Mastercard dispute rules, and the case file assembled automatically — authorization logs, clearing records, merchant descriptors, prior contacts, 3DS outcomes and the evidence templates the reason code requires. Analysts decide; the system has already collected, and the scheme clocks tick visibly per case."
+  },
+  {
+   "t": "p",
+   "x": "On the output side, chargeback and representment packages generate in the format the scheme expects, pre-arbitration escalations assemble with the full history attached, and postings integrate through your host interfaces with the customer notifications carrying the required content. Cycle-time telemetry shows where each case spends its days, and the quarterly QC sampling samples from the same evidence store. The measurable deltas are cycle time, clock breaches at or near zero, and win rate on contested cases — each reported from the system rather than estimated in a spreadsheet."
+  },
+  {
+   "t": "h3",
+   "x": "4. Settlement reconciliation and fee assurance"
+  },
+  {
+   "t": "p",
+   "x": "The build reconciles the truth the schemes send against the truth you booked. Scheme settlement and interchange files ingest behind one format abstraction — Visa, Mastercard, and instant-rail settlement reports normalized into a common event model — and match to switch, host and ledger records on amount, reference and window, with tolerance rules finance signs. Matches certify automatically; breaks land in a workbench with the probable cause attached, routed by aging and scheme instead of by whoever opens the file."
+  },
+  {
+   "t": "p",
+   "x": "Fee assurance runs on the same data: an expected-fee model recalculates interchange and scheme charges from transaction data under the current rules, compares to the assessment line items, and routes variances — misqualified transactions, wrong programs, duplicate assessments — to a recovery workbench with the evidence attached. Rule changes each April and October land as versioned configurations with regression tests, so the model stays current and the deltas it finds stay defensible. The measurable deltas are aged-break counts, recovery identified per cycle, and reconciliation effort per window."
+  },
+  {
+   "t": "h3",
+   "x": "5. Token lifecycle management"
+  },
+  {
+   "t": "p",
+   "x": "The build treats the token estate as a ledger of its own. Provisioning, suspension, resumption and deletion events stream from the token service providers and wallets into a token store reconciled against the card master daily; reissues trigger lifecycle reconciliation so the tokens that should survive do and the ones that should not are removed before they cause a dispute. Recurring and credential-on-file mandates map tokens to mandates, so a reissued card does not strand the subscriptions behind it."
+  },
+  {
+   "t": "p",
+   "x": "The operational surface is a lifecycle workbench: stranded-token queues with the affected mandates, provision failure analysis by wallet and issuer, and coverage telemetry showing tokenization penetration by merchant and channel — the number the economics depend on, since tokenized volume carries different approval rates and different liability. Lifecycle events feed the fraud and dispute builds, so a token history is evidence in a chargeback rather than a lookup across three portals. The measurable deltas are stranded-token incidents, recurring-payment continuity at reissue, and tokenization coverage."
+  },
+  {
+   "t": "h3",
+   "x": "6. Merchant onboarding risk and monitoring"
+  },
+  {
+   "t": "p",
+   "x": "The build industrializes the acquirer's risk judgment. KYB document intelligence extracts registry, ownership and banking details with confidence scores and steward queues; MCC risk, expected volume and business model feed a risk model whose outputs route onboarding: low-risk approvals flow straight through, borderline cases land in a reviewed lane with the file pre-assembled, and high-risk profiles route to named analysts with the terms the risk implies — reserves, monitoring cadence, settlement delay — drafted alongside."
+  },
+  {
+   "t": "p",
+   "x": "Monitoring after go-live runs on the same event stream: transaction patterns scored against the merchant's own baseline and MCC peers, sudden risk shifts — burst volume, descriptor changes, refund spikes — routed to review before they become scheme monitoring programs. Every onboarding and monitoring decision replays with its inputs and reason codes, which is what the scheme's own risk programs and your regulator ask for. The measurable deltas are onboarding cycle time, early-tenure loss rate on newly boarded merchants, and monitoring coverage across the portfolio."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — payments decision, reconciliation and evidence stack",
+   "lanes": [
+    "Transaction estate",
+    "Streams and contracts",
+    "Feature and risk core",
+    "Decision services",
+    "Controls and evidence",
+    "Operations surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "switch",
+     "lane": 0,
+     "label": "Issuer switch and host"
+    },
+    {
+     "id": "acqgw",
+     "lane": 0,
+     "label": "Acquirer gateway and merchant stack"
+    },
+    {
+     "id": "rails",
+     "lane": 0,
+     "label": "Instant rails gateways"
+    },
+    {
+     "id": "tokenvault",
+     "lane": 0,
+     "label": "Token vault and network tokens"
+    },
+    {
+     "id": "merch",
+     "lane": 0,
+     "label": "Merchant onboarding platform"
+    },
+    {
+     "id": "cdc",
+     "lane": 1,
+     "label": "Authorization event streams"
+    },
+    {
+     "id": "schemefiles",
+     "lane": 1,
+     "label": "Scheme settlement and fee files"
+    },
+    {
+     "id": "contracts",
+     "lane": 1,
+     "label": "Schema contracts and freshness SLAs"
+    },
+    {
+     "id": "lake",
+     "lane": 2,
+     "label": "Payments decision lakehouse"
+    },
+    {
+     "id": "fstore",
+     "lane": 2,
+     "label": "Real-time feature store",
+     "hot": true
+    },
+    {
+     "id": "devgraph",
+     "lane": 2,
+     "label": "Device and mule graph"
+    },
+    {
+     "id": "fraud",
+     "lane": 3,
+     "label": "Authorization fraud decision service",
+     "hot": true
+    },
+    {
+     "id": "rba",
+     "lane": 3,
+     "label": "Risk-based authentication and exemptions"
+    },
+    {
+     "id": "dispdec",
+     "lane": 3,
+     "label": "Dispute decision service"
+    },
+    {
+     "id": "replay",
+     "lane": 4,
+     "label": "Decision replay and reason codes"
+    },
+    {
+     "id": "mrm",
+     "lane": 4,
+     "label": "Model-risk registry"
+    },
+    {
+     "id": "pciev",
+     "lane": 4,
+     "label": "PCI and resilience evidence store"
+    },
+    {
+     "id": "fraudops",
+     "lane": 5,
+     "label": "Fraud operations workbench"
+    },
+    {
+     "id": "dispconsole",
+     "lane": 5,
+     "label": "Disputes and chargeback console"
+    },
+    {
+     "id": "reconconsole",
+     "lane": 5,
+     "label": "Reconciliation and fee workbench"
+    }
+   ],
+   "edges": [
+    {
+     "a": "switch",
+     "b": "cdc"
+    },
+    {
+     "a": "acqgw",
+     "b": "cdc"
+    },
+    {
+     "a": "rails",
+     "b": "cdc"
+    },
+    {
+     "a": "tokenvault",
+     "b": "cdc"
+    },
+    {
+     "a": "merch",
+     "b": "cdc"
+    },
+    {
+     "a": "schemefiles",
+     "b": "cdc"
+    },
+    {
+     "a": "cdc",
+     "b": "contracts"
+    },
+    {
+     "a": "contracts",
+     "b": "lake"
+    },
+    {
+     "a": "lake",
+     "b": "fstore"
+    },
+    {
+     "a": "lake",
+     "b": "devgraph"
+    },
+    {
+     "a": "fstore",
+     "b": "fraud"
+    },
+    {
+     "a": "fstore",
+     "b": "rba"
+    },
+    {
+     "a": "lake",
+     "b": "dispdec"
+    },
+    {
+     "a": "fraud",
+     "b": "replay"
+    },
+    {
+     "a": "rba",
+     "b": "replay"
+    },
+    {
+     "a": "dispdec",
+     "b": "replay"
+    },
+    {
+     "a": "fraud",
+     "b": "fraudops"
+    },
+    {
+     "a": "dispdec",
+     "b": "dispconsole"
+    },
+    {
+     "a": "lake",
+     "b": "reconconsole"
+    },
+    {
+     "a": "replay",
+     "b": "mrm"
+    },
+    {
+     "a": "tokenvault",
+     "b": "pciev"
+    }
+   ],
+   "note": "Lanes and nodes are named for the systems a payments build actually touches — the issuer switch and host, acquirer gateway, instant rails, token vault, scheme settlement files — not a generic stack. The hot nodes are where differentiation concentrates: the feature store computing inside the timeout, and the fraud decision service that must answer before the merchant gives up. The evidence lane records every decision and every settlement reconciliation."
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: from settlement windows to a governed stream"
+  },
+  {
+   "t": "p",
+   "x": "Every decision gap in payments traces to a data gap, and the gaps here are unusually expensive because the data arrives in three speeds at once: authorizations in milliseconds, scheme files in windows, disputes in days. The data plane build runs all three into one governed lakehouse — authorization events through change-data-capture with exactly-once semantics, scheme settlement and interchange files through a format abstraction that normalizes Visa, Mastercard and rail reports into one event model, and dispute, token and merchant lifecycle events through their own streams. Overnight batches keep running for finance; decision surfaces stop depending on them."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries a schema contract with a named owner, a freshness SLA and a reconciliation check against the source's own controls — the settlement file reconciles to the switch before its features feed the models. The merchant and card masters apply survivorship rules your data owners sign, and every downstream consumer — fraud features, exemption tracking, fee models, dispute evidence — reads through the contract layer, so a scheme format change fails loudly at the contract instead of silently in a fee model the week the rules change."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Authorization event streaming",
+     "change-data-capture from switch, rails and gateway events with exactly-once semantics, keeping the feature store and decision surfaces current without touching batch finance"
+    ],
+    [
+     "Scheme file abstraction",
+     "settlement, interchange and fee reports from multiple schemes normalized into one event model, so adding a scheme is configuration with a test suite"
+    ],
+    [
+     "Token and lifecycle event store",
+     "provisioning, suspension and deletion events reconciled to the card master daily, feeding fraud, disputes and mandate continuity from one source"
+    ],
+    [
+     "Fee and interchange data model",
+     "transaction-level expected fees under versioned rule sets, so billing variances are computed and evidenced rather than discovered"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: timeouts, replay and scheme clocks"
+  },
+  {
+   "t": "p",
+   "x": "Payments runs on decisions with the shortest legal tails in finance: an authorization answered in hundreds of milliseconds, an exemption granted under monitoring obligations, a dispute filed against a scheme deadline, a merchant boarded with terms attached. The decision layer we build treats those tails as first-class requirements. Every decision records its inputs, feature values, model versions, policy rules and reason codes into a replay store, so a declined cardholder, a missed exemption or a lost chargeback is explainable as a query — which is exactly what scheme integrity programs and regulators ask for."
+  },
+  {
+   "t": "p",
+   "x": "Champion/challenger governance is built in rather than bolted on: scoring models, threshold policies and exemption rules run as challengers on shadow traffic, performance tracked in the registry the model-risk function owns, promotions through the gates your framework already defines, rollbacks rehearsed. Latency is governed like any other risk: the decision path carries a P99 budget with telemetry, and every enrichment has to demonstrate its lift against the cost it adds. One registry, one replay store, one set of gates — across fraud, authentication, disputes and merchant risk."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: digital workers on the exception queues"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work here — dispute evidence assembly, reconciliation break clearance, merchant KYB files, token lifecycle cleanup — follows patterns an agentic workforce can absorb without touching judgment authority. Dataq Software's agent platform runs digital workers with explicit role scopes: the tools they may call, the systems they may read, the actions that require a human checkpoint and the budget of work per run. Agents pull switch logs, clearing records and merchant data into dispute files, match settlement line items, assemble KYB packets from registries, and reconcile token events to the card master — then hand over at the decision point."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — drafting dispute narratives from the structured case record, summarizing break causes for the recovery workbench, preparing merchant risk memos — the pattern is grounded generation with citation obligations and human authorship of record. Agents never file a chargeback, never post a settlement adjustment, never approve a merchant, and never change an authorization decision; they move the work to the decision point and stop. The capacity story is measured in cleared cases and reconciled windows per analyst per day, which is how operations leaders justify the program upward."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: audit as a query"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory surface here is hybrid: scheme rulebooks with real financial teeth, payment-services law, security standards and AML obligations, layered over the operational-resilience expectations now applied to payment estates. Dataq Software's answer is the evidence layer — the artifacts a reviewer, assessor or scheme program will ask for are generated continuously by the systems themselves. The table maps the regimes we build against to the evidence our builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes and standards that shape payments builds — and the evidence layer each one gets",
+   "headers": [
+    "Regime or standard",
+    "What it expects",
+    "What our build produces"
+   ],
+   "rows": [
+    [
+     "PCI DSS 4.0",
+     "Continuous compliance: tokenization, segmentation, targeted risk analyses, authenticated scanning",
+     "Evidence generated continuously from the stack; segmentation and tokenization telemetry; targeted risk analysis tracking per requirement"
+    ],
+    [
+     "PSD2 SCA and PSD3 direction",
+     "Strong customer authentication, exemption management with fraud-rate monitoring",
+     "Exemption decisions tracked per transaction with fraud-rate telemetry; step-up policy engine with audit trail"
+    ],
+    [
+     "Scheme rules (Visa, Mastercard, rails)",
+     "Authorization, dispute and integrity-program compliance within scheme clocks",
+     "Clock tracking per case; evidence packs in scheme format; integrity-program metrics reported from telemetry"
+    ],
+    [
+     "EU instant payments regulation",
+     "Verification of payee, instant fraud controls, unchanged execution times",
+     "VoP decision service with response-time telemetry; instant-rail fraud controls with decision replay"
+    ],
+    [
+     "AMLR package transaction monitoring",
+     "Monitoring coverage across products and rails with auditable alert disposition",
+     "Monitoring on instant rails and cards with alert-quality metrics and case lineage to the event stream"
+    ],
+    [
+     "DORA-class operational resilience",
+     "ICT third-party registers, incident playbooks, testing evidence for critical payment systems",
+     "Register entries per integration; playbook and recovery-test evidence generated per release"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the estate stays, the latency budget rules"
+  },
+  {
+   "t": "p",
+   "x": "Payments estates are the most latency-sensitive in banking, and the fastest way to fail a program here is to put a new component on the hot path without a budget. Our integration posture is contractual and out-of-path by default: scoring sits beside the authorization flow, consuming its events and returning its verdict through the interface your switch already exposes, engineered to a P99 budget with headroom and a rehearsed degrade path to the incumbent decision. The switch and the host are not replaced; they are supplied with better answers in the time they already allow."
+  },
+  {
+   "t": "p",
+   "x": "The file and vendor chains get the same treatment. Scheme settlement files, 3DS server components, token service providers, device-intelligence and KYB vendors sit behind abstraction layers with contract tests, so a scheme format change or a vendor swap is configuration with a migration runbook rather than a re-platform. Write-backs — postings, dispute statuses, merchant limits — flow through the host and processor interfaces your change process already controls, feature-flagged and independently deployable. This is unglamorous work and it is the reason the builds above hold up in production instead of in a pilot."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Out-of-path scoring integration",
+     "decision services consume switch events and return verdicts through existing interfaces, with a rehearsed degrade path to the incumbent decision"
+    ],
+    [
+     "Scheme file abstraction with contract tests",
+     "settlement and fee formats across schemes behind one interface, so rule changes and format changes are configuration, not surgery"
+    ],
+    [
+     "3DS, token and KYB vendor abstraction",
+     "authentication components, token service providers and registry vendors behind contract-tested interfaces with migration runbooks"
+    ],
+    [
+     "Feature-flagged, independently deployable",
+     "every build ships behind flags with rehearsed rollback, because the change advisory board and the timeout both demand it"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement. It starts with the two-week diagnostic: one workflow baselined end to end, the leak quantified in your own telemetry — authorization logs, dispute queues, settlement breaks — the data contracts inventoried, and a written feasibility read you can circulate, including the uncomfortable findings. If the delta is real, the build is scoped against the gates your change and model-risk processes define; if it is not, you keep the measurement design and the baseline either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "workflow instrumentation, leak quantification, latency and clock measurement, contract inventory, feasibility read with the delta estimate and the confounders named"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane live behind flags with replay and evidence from day one — for fraud one portfolio segment; for disputes one reason-code family"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "model-risk documentation landed, QC sampling wired to the evidence store, remaining segments and schemes added, latency and capacity telemetry to the operations review"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "models, thresholds and fee rules evaluated in the registry, fee models re-versioned after scheme changes, the baseline re-verified against the control group"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm, not a parallel one: our engineers work in your repositories or a shared workspace with the same CI, the same security review and the same access model your teams use. Knowledge transfer is part of the gates, not a closing slide — by the expansion phase your engineers are shipping changes to the builds, because the runbooks, contracts and evaluation suites are theirs from week one, and the quarterly reviews are chaired from your side of the table."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones payments programs are managed on. The targets are the ranges we set in feasibility reads for programs of this shape — commitments you can hold us to where the metric is clean, hypotheses we test where it is confounded. The measurement column is the part most programs skip and the part that makes the delta defensible in a steering committee."
+  },
+  {
+   "t": "table",
+   "caption": "Payments and cards program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Fraud loss rate on instant rails",
+     "25-40% reduction at equal or higher approval",
+     "Loss ledger against a pre-authorization baseline; published record 38% at a top-10 European retail bank"
+    ],
+    [
+     "False decline rate",
+     "20-40% reduction on borderline declines",
+     "Decline cohort analysis with recovery and service-call correlates, per segment"
+    ],
+    [
+     "Chargeback cycle time and win rate",
+     "40-60% faster; win rate up on contested cases",
+     "Dispute-console telemetry by reason code, with clock breaches reported per scheme"
+    ],
+    [
+     "Aged settlement breaks",
+     "50-70% fewer breaks past the aging threshold",
+     "Reconciliation-engine telemetry across schemes and windows, by cause"
+    ],
+    [
+     "Fee assurance recovery",
+     "10-20% of mis-billed interchange and scheme fees identified",
+     "Expected-fee model variance testing against assessments, quarterly"
+    ],
+    [
+     "Decision-path latency",
+     "Scoring inside the switch timeout budget with headroom",
+     "P99 telemetry on the decision path, per portfolio and scheme"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A payments build team is small and senior: a lead engineer who has run decision systems inside transaction deadlines, data engineers who own the CDC, scheme-file and contract layer, ML engineers who own scoring, evaluation and the feature store, a controls engineer who owns the evidence layer, and a domain lead who has run fraud operations, dispute queues or scheme reconciliation in production estates. Agentic-workflow specialists join for the exception-queue builds. The team works to your release calendar and your gate vocabulary from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: a weekly operations review on the workflow's own telemetry — decision latency, approval and loss rates, dispute clocks, break aging — fortnightly gate submissions to change and model-risk, quarterly challenger reviews aligned to scheme rule changes, and an incident practice that treats the feature store, the decision path and the evidence layer as production-critical systems, because by the second quarter they are. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs like these fail in known ways, and most of the failure modes are organizational rather than mathematical. We name them in the feasibility read and design against them explicitly, because a program that cannot survive its second quarter is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "a demo built on extracted transaction data that never integrates — prevented by shipping the first vertical slice through your change process, flags and gates included, within two months"
+    ],
+    [
+     "Model-risk stall",
+     "the scoring service or exemption engine stuck in review because documentation was an afterthought — the registry, evaluation results and lineage land with the build, not after it"
+    ],
+    [
+     "Timeout-budget creep",
+     "enrichment added a few milliseconds at a time until approval rates quietly dropped — latency is governed as a budget with telemetry, and every enrichment buys its way in"
+    ],
+    [
+     "Stand-in blindness",
+     "offline authorizations bypass online scoring until the loss reports show it — stand-in paths are modeled explicitly and post-authorized against the same features"
+    ],
+    [
+     "Metric gaming on disputes",
+     "win rates rising while customers churn from contested cases — win rate pairs with complaint and retention counter-metrics in the same telemetry"
+    ],
+    [
+     "Evidence debt",
+     "PCI and scheme evidence assembled by a team every cycle — the evidence layer generates artifacts continuously or the build is not done"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions payments leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do we need to replace our switch or processor?",
+     "No. None of the six builds require replacement. Decision services consume your switch events and return verdicts through existing interfaces within the timeout budget; reconciliation reads the scheme files you already receive. The switch stays; it gets better answers in the time it already allows."
+    ],
+    [
+     "How does scoring fit inside the authorization timeout?",
+     "The feature store precomputes what it can and computes the rest in milliseconds; the decision path is engineered to a P99 budget with headroom, and every enrichment must demonstrate lift against the latency it costs. Degrade paths are rehearsed, not improvised."
+    ],
+    [
+     "How do you balance fraud losses against false declines?",
+     "Both metrics carry governance. Decline cohorts, recovery telemetry and service-call correlates measure what the fraud dashboard cannot see, and policy changes run as champion/challenger so the trade-off is made per decision with evidence, not per annual review."
+    ],
+    [
+     "What happens when scheme rules change?",
+     "Rules and fee models land as versioned configurations with regression tests before the effective date, and the quarterly challenger reviews align to the scheme calendar. The April and October changes become releases, not incidents."
+    ],
+    [
+     "How does this pass PCI DSS 4.0 assessment?",
+     "The evidence layer generates the artifacts continuously: tokenization coverage, segmentation telemetry, targeted risk analysis tracking, scan and test evidence per release. Assessors walk artifacts the systems produced, not binders a team assembled under deadline."
+    ],
+    [
+     "What is the smallest program worth running?",
+     "One workflow, one baseline, one vertical slice. Disputes on one reason-code family and settlement reconciliation on one scheme are the most common starters because their clocks and files are already measurable. If the diagnostic cannot find the delta, we say so and stop."
+    ],
+    [
+     "How do the agents avoid becoming shadow AI?",
+     "Agents run inside the governed platform with role scopes, tool allow-lists, human checkpoints and full run logs. They never file chargebacks, post adjustments or approve merchants. The shadow-AI failure mode is what happens without those controls."
+    ],
+    [
+     "Who owns the build after you leave?",
+     "Your teams, with the runbooks, contracts, evaluation suites and registry entries transferred as gate conditions during expansion — not as a closing deliverable. Several programs run entirely in-house after the second quarter."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Bring one flow — authorization scoring, disputes, settlement reconciliation or merchant risk — and we will baseline it in two weeks against your own transaction telemetry, price the delta, and tell you honestly whether the build is worth your change budget. The first conversation costs an hour; the feasibility read is yours to keep."
+  }
+ ]
+}

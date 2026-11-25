@@ -1,0 +1,386 @@
+{
+ "file": "industries_education-research_higher-education",
+ "meta_description": "How Dataq Software builds the university student-record spine: early alert and persistence analytics on your own Banner, PeopleSoft or Workday Student terms, aid reconciliation from ISIR to COD, summer melt watch on your own funnel, and accreditation evidence that assembles between visits instead of for them.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Every university runs the same ring of systems that never quite close: Ellucian Banner or PeopleSoft Campus Solutions holding the record of truth, a degree audit engine applying catalog rules, Slate or Ellucian CRM Recruit working the funnel, the aid module packaging Title IV against deadlines it does not control, and Canvas or Moodle generating engagement signals advising never sees in time. Each system reconciles with its neighbors by spreadsheet, on a schedule set by census dates and accreditation cycles. Dataq Software builds the student-record spine that closes the ring: early-alert and persistence analytics trained on your own historical terms, aid reconciliation from ISIR to disbursement, and accreditation evidence that assembles itself between visits instead of for them."
+  },
+  {
+   "t": "p",
+   "x": "Underneath every catalog and every commencement program sits a less glamorous estate: registration tables in Banner or Campus Solutions, degree audit exceptions nobody has cleared, a verification queue measured in weeks, and a summer spreadsheet tracking which deposited students never arrived. The offices that run these systems — registrar, financial aid, advising, institutional research — meet weekly, usually over exports, and usually disagree about whose number is right. None of that is a defect in any single product. It is what happens when six systems of record were bought in different decades to answer different questions, and the joins between them live in staff memory and in SQL someone wrote years ago."
+  },
+  {
+   "t": "p",
+   "x": "The consequences are operational before they are strategic. A student who stops attending in week three is invisible until grades post unless the LMS engagement feed reaches the advising workbench that same week. A SAR with C-codes sits in a verification queue while the packaging deadline approaches, and the aid office learns about the backlog when the refund calendar slips. A program review self-study consumes a faculty committee's semester because the evidence — course outcomes, completion rates, licensure pass rates — lives in five systems and a shared drive. Each of these is a data plumbing problem wearing a policy costume."
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software's posture is deliberately narrow. We build the student-record spine and the decision layer on top of the SIS estate you already run — Banner, Campus Solutions, Workday Student — without proposing to replace any of it, and we read before we write. Our first two weeks on a campus are a baseline: term-to-term persistence computed on your own historical cohorts, summer melt measured on your own funnel, verification queue depth profiled on your own aid cycles. If the delta between what your systems already tell you and what a modeled early-alert layer would add is not real, we say so and stop. Universities have enough shelves with faded dashboards on them."
+  },
+  {
+   "t": "h2",
+   "x": "The SIS estate: Banner, Campus Solutions, Workday Student and the record of truth"
+  },
+  {
+   "t": "p",
+   "x": "An SIS is not a database; it is a set of opinions about student progress enforced by scheduled jobs. Banner's registration and academic history modules, Campus Solutions' service indicators and term activation, Workday Student's academic records — each encodes decades of registrar policy in configuration that no current employee fully understands. The record-of-truth question is therefore structural: which system decides whether a student is enrolled, withdrawn or on an approved leave, and which downstream consumers inherit that verdict. Institutions that never settle it run parallel enrollment counts — census file versus LMS roster versus disbursement roster — and spend the term reconciling them by hand."
+  },
+  {
+   "t": "p",
+   "x": "The practical work is inventory and contract. Which job writes service indicators, which nightly process feeds the degree audit engine, where transfer credit actually lands, who owns the catalog-to-section mapping every downstream consumer trusts. We start here because every later build — early alert, aid reconciliation, evidence automation — inherits whatever sloppiness exists at this layer. On most campuses the mapping exists but is undocumented; part of the two-week baseline turns it into schema contracts with freshness expectations, so the registrar's office stops functioning as the human API."
+  },
+  {
+   "t": "h2",
+   "x": "Registration and add-drop mechanics"
+  },
+  {
+   "t": "p",
+   "x": "Registration looks like a web page and behaves like an auction. Enrollment capacities, waitlists, reserve caps for specific cohorts, prerequisite and cohort restrictions, linked sections for lecture-and-lab pairs, time conflicts, and the add-drop deadline that ends it all interact in ways that produce the anomalies registrars know by name: the seminar with one seat and forty waitlisted students, the linked lab that silently blocks the lecture, the holds that fire at midnight and strand registrations half-completed. None of this is visible in enrollment reports; it lives in registration event logs and waitlist tables nobody exports."
+  },
+  {
+   "t": "p",
+   "x": "We treat registration as an event stream worth keeping. Add, drop, swap and waitlist events from Banner registration or Campus Solutions enrollment, timestamped and joined to capacity and restriction configuration, answer questions reports cannot: where students stall in the registration flow, which restrictions generate the most override requests, what the waitlist actually converts to at census. That same record becomes the input to scheduling analytics later on this page — no section forecast survives contact with the real add-drop curve unless it was built from it."
+  },
+  {
+   "t": "h2",
+   "x": "Degree audit engines and exception processing"
+  },
+  {
+   "t": "p",
+   "x": "The degree audit engine — DegreeWorks in Banner shops, the Academic Advisement report in Campus Solutions, equivalent engines elsewhere — is the most consequential business logic on campus: it decides whether a student graduates. It runs on catalog rules, course attributes and transfer articulation tables, and it is maintained through exception processing: substitutions, waivers and requirement overrides approved by committee, keyed in by hand, and invisible in any report until a student's audit fails at graduation clearance. The backlog of unprocessed exceptions is the truest leading indicator of registrar capacity anywhere on campus."
+  },
+  {
+   "t": "p",
+   "x": "We do not replace audit engines; their rules are accreditation-relevant and institution-owned. The build is the surveillance around them: exception queues with age and owner, surfaces that show which programs generate the most substitutions — usually a curriculum design problem rather than a staffing one — and pre-clearance audits that flag likely graduation failures two terms out instead of two weeks before commencement. Where the engine exposes an API we read from it; where it does not, we read the published audit output. Read-first either way."
+  },
+  {
+   "t": "h2",
+   "x": "Advising caseloads and early alert"
+  },
+  {
+   "t": "p",
+   "x": "Early-alert platforms in the EAB Navigate and Civitas style improved one thing decisively: they put a caseload in front of an advisor instead of a mailbox. What they usually import, though, is thin — demographics, holds, one coarse LMS signal — because the SIS integration was priced per interface and the campus stopped after two. The result is alert fatigue: advisors receive flags on students whose audit trail already explains the situation, and miss the ones whose registration pattern — a dropped co-requisite, a full-time to part-time conversion after census — actually predicted the stop-out."
+  },
+  {
+   "t": "p",
+   "x": "The build we run starts from the institution's own historical terms: which observable patterns in registration events, LMS activity, gradebook entries and aid status preceded non-persistence in your last five to eight fall cohorts. Models trained on your data and evaluated against your outcomes produce reason-coded flags an advisor can act on, plus a documented false-positive rate the retention committee can argue with. Signals land in the advising workbench advisors already use, not in another portal. When the delta over the current vendor import is marginal, the baseline says so."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Registration drift", "Part-time conversion after census, dropped co-requisites, repeated withdrawals from the same course family. These precede stop-out by a term and sit in the SIS event stream weeks before grades post."],
+    ["Engagement collapse", "Session frequency and gradebook entry velocity from Canvas or Moodle, joined across courses rather than read per course. The useful signal is change from the student's own baseline, not a campus-wide threshold."],
+    ["Financial stress markers", "Payment plan changes, refund anticipation, satisfactory-academic-progress warnings. Aid trouble is a leading indicator of stop-out and the one advisors can refer out fastest."],
+    ["Advising loop closure", "Whether outreach happened, what the advisor recorded, whether the student responded. The intervention record matters as much as the flag: without it, next term's model trains on interventions it cannot see."]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Term-to-term persistence and stop-out analysis"
+  },
+  {
+   "t": "p",
+   "x": "Persistence analysis is only as good as the cohort definition underneath it, and cohort definitions are contested on every campus. First-time full-time is the IPEDS 150% cohort; transfer-in students, part-timers and summer starters fall outside it, so the rate the board reads measures a fraction of the class. The honest version runs on the student-term spine: every term a student was active, the load carried, the courses completed, and what changed between terms. Stop-out becomes an observable transition — active to inactive without graduating — rather than an annual surprise in a board deck."
+  },
+  {
+   "t": "p",
+   "x": "On your own historical terms the spine answers questions the standard reports never pose: which stop-out is recoverable, meaning students who left in good standing within two courses of a credential; which term-to-term cliff is structural, like the spring-after-first-fall drop that persists across a decade of cohorts; and which interventions coincided with return. We build this as analysis the IR office owns — their definitions, their cohorts, reproducible on demand — rather than as a vendor dashboard nobody can audit."
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "Persistence analysis earns its keep when it changes a registration or advising decision, not when it decorates a board deck. The spine makes the analysis reproducible; the retention committee still has to decide what to do with the students the model names."
+  },
+  {
+   "t": "h2",
+   "x": "The enrollment funnel: inquiry to melt"
+  },
+  {
+   "t": "p",
+   "x": "The funnel — inquiry, application, admit, deposit, enroll — is run in Slate or Ellucian CRM Recruit on the admissions side and reconciled against SIS enrollment by hand. The seams are where the money hides. Summer melt, the share of deposited students who never arrive, is the most expensive unmanaged number in enrollment management: deposits were counted, sections were staffed on them, and no system owns the follow-through. Melt concentrates among students with unresolved aid files, unclear billing and no orientation registration, and those signals exist weeks before move-in."
+  },
+  {
+   "t": "p",
+   "x": "We build melt watch as a summer-long service on records you already hold: deposited students crossed with aid file status, housing and orientation registration, billing activation and communication response. The output is a ranked call list for the melt team and a weekly forecast the enrollment council can plan against; after arrival, the same spine feeds reverse melt — students who enrolled but never activated — before census. Institutions that run this against their own three previous summer cycles recognize the pattern immediately; the baseline quantifies what it would have caught."
+  },
+  {
+   "t": "table",
+   "caption": "The enrollment funnel and where it leaks",
+   "headers": ["Stage", "System of record", "What breaks", "What the spine adds"],
+   "rows": [
+    ["Inquiry to application", "Slate or CRM Recruit", "Source-of-truth conflicts with campus visits and counselor follow-ups logged in inboxes", "One funnel definition, event-level, reproducible across cycles"],
+    ["Admit to deposit", "CRM and SIS", "Commitment counts quoted from CRM while paid deposits in the SIS land later and lower", "A single deposited-student list reconciled daily against payment receipts"],
+    ["Deposit to enrollment", "SIS and aid module", "Summer melt: aid files unresolved, orientation unregistered, billing unactivated", "Melt watch with ranked call lists and a weekly forecast against prior summers"],
+    ["Enrollment to persistence", "SIS and LMS", "Week-three disengagement invisible until grades post", "Early alert from registration drift and engagement collapse on your own terms"],
+    ["Persistence to graduation", "Degree audit engine", "Exception backlog surfaces at graduation clearance", "Pre-clearance audits two terms out, with exception aging"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Financial aid operations: verification, packaging, SAP"
+  },
+  {
+   "t": "p",
+   "x": "The aid office runs the most deadline-bound workflow on campus: ISIRs arrive, C-codes and verification selections split the queue, verification documents are chased, packaging runs against enrollment intensity, SAP is evaluated against written policy, and disbursement rosters reconcile against COD. Every step has a regulatory clock, and most queue management happens in exports and color-coded spreadsheets. The failure modes are predictable and structural: verification backlog at the packaging deadline, SAP flags discovered after registration closes, and disbursement mismatches surfacing during reconciliation weeks after the money moved."
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds the aid operations layer as pipelines and queues rather than another system: ISIR ingestion with status tracking, verification case management with document-chase clocks, packaging runs that read enrollment intensity from the spine, SAP evaluation implemented against the institution's own written policy, and a disbursement-to-COD reconciliation that runs continuously instead of quarterly. The aid module remains the system of record; the queues and the reconciliation live beside it, feeding the aid operations meeting with numbers every seat at the table can see."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Verification queue", "Selected students, documents outstanding, chase attempts, age against the packaging deadline. The queue view replaces the spreadsheet and makes backlog visible to the aid director before refund calendars slip."],
+    ["SAP evaluation", "Satisfactory academic progress checked each term against the institution's own pace and GPA policy, with warning and probation states written back or surfaced for counselor review as the SIS allows."],
+    ["Packaging integrity", "Every award traced to enrollment intensity and remaining need, with mismatches flagged before disbursement rather than during COD reconciliation."],
+    ["Disbursement reconciliation", "Posted aid versus COD records versus student accounts, run continuously. Moving reconciliation forward turns a quarter-end crisis into a daily queue."]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "R2T4 and the withdrawal clock"
+  },
+  {
+   "t": "p",
+   "x": "Return of Title IV funds is the least glamorous and most audit-exposed calculation on campus. A withdrawal starts a clock: the last date of attendance must be established from LMS activity and academic evidence, the payment period prorated, aid returned to programs in statutory order, and the student's account left to absorb the residual. Institutions do this correctly but slowly, by hand, across the SIS, the LMS and the aid module — and audit findings, when they come, are almost always about evidence rather than arithmetic: which attendance source decided the withdrawal date, who reviewed it, and when."
+  },
+  {
+   "t": "p",
+   "x": "We automate the evidence chain, not the judgment. Last-date-of-attendance candidates are assembled from LMS activity and academic records; the R2T4 worksheet is pre-populated from the spine; the sequence of returns is computed and documented; the whole package is retained for audit. The aid office keeps every sign-off. What changes is that a withdrawal processed on Friday carries its documentation trail with it, the reconciliation stops producing surprises, and the file an auditor requests in year three opens in seconds instead of after a records hunt."
+  },
+  {
+   "t": "h2",
+   "x": "Accreditation evidence and institutional effectiveness"
+  },
+  {
+   "t": "p",
+   "x": "Regional accreditors — SACSCOC, the Higher Learning Commission and their peers — do not ask for a data platform; they ask for evidence that the institution knows whether students are learning and what it did about the answer. The institutional effectiveness cycle — program review, assessment of student learning, annual reporting — is therefore an evidence logistics problem: outcomes defined in one system, results computed in another, improvement plans in a third, and every cycle the same committees reassemble the same artifacts by hand. A program review self-study consumes a semester of faculty time that is mostly document hunting."
+  },
+  {
+   "t": "p",
+   "x": "The evidence engine we build maps each accreditation requirement to its data sources and assembles the artifacts continuously: course-level outcomes from the LMS and assessment records, completion and licensure pass rates from the spine, assignment-to-outcome mappings maintained where the curriculum lives. Evidence accumulates between visits instead of being manufactured for them. The program review workbench drafts the quantitative sections from governed definitions — the IR office certifies the numbers — so the committee spends its semester on interpretation, which is the part accreditors actually read."
+  },
+  {
+   "t": "p",
+   "x": "The same machinery serves specialized accreditors whose program-level demands make the general cycle look gentle: nursing boards wanting clinical placement and pass-rate joins, engineering programs tracking outcome rubrics across sections, business programs reconciling internship credit. Each becomes a mapping in the evidence engine rather than a bespoke scramble, and each inherits the same governed definitions IR already certifies. Institutions running this pattern notice the change first in the calendar: evidence season stops being a season and becomes a standing pipeline."
+  },
+  {
+   "t": "h2",
+   "x": "The IR reporting burden: IPEDS and the reporting calendar"
+  },
+  {
+   "t": "p",
+   "x": "Institutional research is a reporting factory with a fixed calendar: IPEDS collections across the year, state reports with their own definitions, the common data set for viewbooks and rankings, board metrics, program accreditors, federal cohort tracking. Each consumer defines the same student differently — degree-seeking, first-time, full-time, in-scope for the cohort — and the definitions drift between reports because each was implemented separately, often in a different tool, often by an analyst who has since left. The burden is not the reporting itself; it is re-deriving the population every time."
+  },
+  {
+   "t": "p",
+   "x": "The fix is definition governance on the spine. Every IPEDS or state population is implemented once as a versioned, testable query, certified by IR, and reused by every downstream report; new collections become configuration rather than archaeology. In the two-week baseline we inventory your reporting calendar against your current build process and show where one governed definition would retire a handful of hand-maintained ones — with the savings estimated from your own calendar and your own hours, not from any benchmark."
+  },
+  {
+   "t": "table",
+   "caption": "The IR reporting calendar and where the hours go",
+   "headers": ["Report", "Cadence", "Definition risk", "What governed definitions change"],
+   "rows": [
+    ["IPEDS collections", "Multiple windows across the year", "Cohort and degree-seeking definitions drift between surveys", "Implemented once on the spine, testable, reused across surveys"],
+    ["State report submissions", "Fall and spring, varies by state", "Residency, headcount and FTE rules differ from IPEDS", "State-specific populations versioned beside the federal ones"],
+    ["Common data set", "Annual", "Admissions and aid figures reconciled by hand from CRM and the aid module", "Pulled from funnel and aid ledgers that are already reconciled"],
+    ["Program accreditors", "Per-program cycles", "Program completions and licensure rates re-derived every cycle", "Program populations and outcomes assembled from governed definitions"],
+    ["Board and cabinet metrics", "Monthly or termly", "Enrollment counts differ by office and by meeting", "One certified enrollment definition, with changes logged"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "SIS-LMS integration: Canvas, Moodle and the grades feed"
+  },
+  {
+   "t": "p",
+   "x": "The SIS-LMS boundary is small and permanent: sections created in the SIS must become courses in Canvas or Moodle, enrollments must follow adds and drops in hours rather than days, and final grades must flow back at term end. Institutions stretch it with manual rostering at term start and keying grades by hand at term end, and both stretches are expensive in exactly the weeks the campus is busiest. Between those endpoints, LTI tools accumulate — publisher courseware, proctoring, lab simulations — each with its own rostering contract and gradebook column conventions."
+  },
+  {
+   "t": "p",
+   "x": "We keep the boundary honest: SIS-driven section and enrollment provisioning into the LMS, adds and drops propagated within hours, LTI tool rostering normalized to the same contract, and a final-grades feed that lands audit-ready in the SIS. On the read side, Caliper or LTI activity events and gradebook entries become the engagement signal that feeds early alert — the same integration that fixes the grades feed is what makes week-three disengagement visible. Failures here are rarely technical; they are ownership disputes between registrar, IT and teaching centers. The baseline names the owners."
+  },
+  {
+   "t": "h2",
+   "x": "Research administration: sponsored programs, effort reporting, subawards"
+  },
+  {
+   "t": "p",
+   "x": "The research side of the house runs on a different clock: proposals route through sponsored programs, awards set up accounts and effort commitments, subawards go out and come back with invoices, and every funder wants reports in its own shape. The failure modes are again joins: effort reporting detached from the payroll distribution it certifies, grant cost share tracked in a spreadsheet the auditor asks for two years later, subaward invoices reconciled against the prime award by hand. Faculty experience this as administrative drag; the business office experiences it as year-end reconciliation pain."
+  },
+  {
+   "t": "p",
+   "x": "We build the joins on the existing sponsored-programs estate — whatever system routes proposals and holds the award records — without replacing it. Effort certifications are tied to the payroll distributions they certify, so what a faculty member attests matches what the ledger says. Cost share is tracked where the expense actually lands, not in the spreadsheet. Subaward monitoring matches invoices to the prime award with aging, and the research office gets a portfolio view that reconciles commitments, spending and reporting deadlines continuously instead of at closeout."
+  },
+  {
+   "t": "h2",
+   "x": "Faculty workload, course scheduling and rooms"
+  },
+  {
+   "t": "p",
+   "x": "Course scheduling is a constraint problem run by intuition: program requirements, faculty workload contracts, room inventories, student demand patterns and the add-drop curves of previous terms. The intuitions are usually good and never documented, which is why room utilization looks acceptable in aggregate and pathological in detail — the seminar room empty on Tuesdays, the lecture hall double-booked during common exams, the required section scheduled against its own students' mandatory course. Faculty workload adds a contract layer of releases, overloads and administrative assignments tracked in departmental spreadsheets."
+  },
+  {
+   "t": "p",
+   "x": "The scheduling build reads the historical registration record — demand by course, by section, by time block — plus the catalog, room inventory and workload commitments, and produces schedules as proposals with utilization and conflict analysis attached. Department chairs keep the decisions; the analysis does the arithmetic nobody has time for. The value compounds in year two: once schedules are built from demand data, the schedule of classes becomes a modelable object, registration-week anomalies shrink, and the sections students need exist at the times they can actually take them."
+  },
+  {
+   "t": "h2",
+   "x": "Transfer articulation and credit evaluation"
+  },
+  {
+   "t": "p",
+   "x": "Transfer credit is where enrollment meets curriculum. Transcripts arrive, equivalencies must be decided against articulation tables and course outlines, evaluations must reach students before deposit deadlines, and every undecided credit is both an enrollment risk and a registration blocker. Community-college pathways make the volume structural: whole cohorts arrive with transcripts that repeat the same thirty equivalency questions every year, yet most institutions answer those questions one transcript at a time, in an evaluation queue with no memory of what was decided last month."
+  },
+  {
+   "t": "p",
+   "x": "We build articulation as a decision system with memory. An equivalency base is seeded from your existing evaluations; matching proposes equivalencies for human review rather than deciding them; queue management carries the same clocks as admissions; and published pathways reduce the inbound volume by telling students and community-college advisors what will transfer before they apply. Every evaluator decision is retained, so the same course from the same sending college asks its question once. The registrar owns the rules; the system remembers them. Competency-based programs get the same treatment with competencies rather than courses as the unit."
+  },
+  {
+   "t": "h2",
+   "x": "Student financial health: payment plans and holds"
+  },
+  {
+   "t": "p",
+   "x": "The bursar's side of the ring runs on payment plans, past-due balances and service indicators — the holds that block registration, transcripts and diplomas. Holds strategy is a policy question answered with blunt instruments: a registration hold fires on a balance that may be one forgotten payment, and the student stops out over a recoverable amount the institution never tried to collect. Payment plan enrollment changes and failed plan payments are leading indicators nobody watches, even though they sit in the same ledger as everything else."
+  },
+  {
+   "t": "p",
+   "x": "On the spine, financial health becomes readable: plan status, balance trajectory and hold events joined to persistence outcomes on your own terms. The build is deliberately modest — a financial-stress signal into the early-alert service, a holds-review queue for the bursar with balance age and student standing attached, and reconciliation between the SIS accounts receivable ledger and the aid ledger. Institutions set their own hold policy; what changes is that the consequences of the current policy become visible for the first time, in enrollment terms rather than ledger terms."
+  },
+  {
+   "t": "p",
+   "x": "Holds deserve their own analysis because they sit at the intersection of revenue and persistence. On your own cohorts, the spine can show how many stopped-out students carried a registration hold at the time, what the median balance was, and how many would have been cleared by a payment plan the student never enrolled in. That analysis belongs to the bursar and the retention committee jointly; historically it belongs to nobody, which is why the same blunt hold policy persists for a decade unexamined."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture — the university student-record spine and decision stack"
+  },
+  {
+   "t": "p",
+   "x": "The stack below is how the builds above assemble on a real campus. Systems of record stay where they are; a contracted layer of events, files and extracts feeds the student-term spine; decision services read from the spine under audit; and the reporting surfaces IR already owns consume certified definitions rather than re-deriving populations."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — the university student-record spine and decision stack",
+   "lanes": ["Systems of record", "Contracts and event capture", "Student-record spine", "Decision services", "Evidence and reporting", "Campus surfaces"],
+   "nodes": [
+    {"id": "sis", "lane": 0, "label": "Banner / Campus Solutions / Workday Student"},
+    {"id": "crm", "lane": 0, "label": "Slate or CRM Recruit"},
+    {"id": "aid", "lane": 0, "label": "Aid module and COD interface"},
+    {"id": "audit", "lane": 0, "label": "Degree audit engine"},
+    {"id": "lms", "lane": 0, "label": "Canvas / Moodle"},
+    {"id": "reg_events", "lane": 1, "label": "Registration and add-drop events"},
+    {"id": "lti", "lane": 1, "label": "Caliper / LTI activity streams"},
+    {"id": "aidfiles", "lane": 1, "label": "ISIR and COD file exchange"},
+    {"id": "spine", "lane": 2, "label": "Student-term spine", "hot": true},
+    {"id": "regstate", "lane": 2, "label": "Registration-state store"},
+    {"id": "aidledger", "lane": 2, "label": "Aid ledger and reconciliation"},
+    {"id": "early", "lane": 3, "label": "Early-alert service", "hot": true},
+    {"id": "persist", "lane": 3, "label": "Persistence and stop-out models"},
+    {"id": "melt", "lane": 3, "label": "Summer melt watch"},
+    {"id": "sap", "lane": 3, "label": "SAP and R2T4 checker"},
+    {"id": "evidence", "lane": 3, "label": "Accreditation evidence engine", "hot": true},
+    {"id": "ipeds", "lane": 4, "label": "IPEDS and state submissions"},
+    {"id": "progrev", "lane": 4, "label": "Program review workbench"},
+    {"id": "advisor", "lane": 5, "label": "Advising workbench"},
+    {"id": "aidops", "lane": 5, "label": "Aid operations queues"}
+   ],
+   "edges": [
+    {"a": "sis", "b": "reg_events"},
+    {"a": "sis", "b": "aidfiles"},
+    {"a": "crm", "b": "spine"},
+    {"a": "reg_events", "b": "spine"},
+    {"a": "lms", "b": "lti"},
+    {"a": "lti", "b": "spine"},
+    {"a": "lti", "b": "persist"},
+    {"a": "aidfiles", "b": "aidledger"},
+    {"a": "aid", "b": "aidledger"},
+    {"a": "reg_events", "b": "regstate"},
+    {"a": "spine", "b": "regstate"},
+    {"a": "audit", "b": "regstate"},
+    {"a": "spine", "b": "persist"},
+    {"a": "persist", "b": "early"},
+    {"a": "regstate", "b": "early"},
+    {"a": "aidledger", "b": "sap"},
+    {"a": "sap", "b": "aidops"},
+    {"a": "aidledger", "b": "aidops"},
+    {"a": "spine", "b": "melt"},
+    {"a": "melt", "b": "advisor"},
+    {"a": "spine", "b": "evidence"},
+    {"a": "evidence", "b": "progrev"},
+    {"a": "evidence", "b": "ipeds"},
+    {"a": "early", "b": "advisor"}
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "Nothing in the stack replaces a system of record. Banner, Campus Solutions or Workday Student stays authoritative; the spine reads events, files and extracts under contract; and every decision service writes its rationale back for audit, because the aid and accreditation questions are evidence questions in the end."
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems this work touches"
+  },
+  {
+   "t": "p",
+   "x": "No build starts from a blank page. The table below is the estate we most often find inside a university, the role each system actually plays, and what the spine build does beside it. Where a system is missing from this list, its function is usually being performed by a spreadsheet — which is its own finding, and often the first thing the baseline surfaces."
+  },
+  {
+   "t": "table",
+   "caption": "The estate underneath: systems this work touches",
+   "headers": ["System", "Role in the estate", "What we build against it"],
+   "rows": [
+    ["Ellucian Banner", "System of record for registration, academic history and accounts receivable at many institutions", "Event-level reads on registration and AR; service indicators surfaced; no write-backs without registrar sign-off"],
+    ["PeopleSoft Campus Solutions", "Records, enrollment, service indicators and aid packaging at others", "The same posture: contracted extracts, event capture, read-first integration"],
+    ["Workday Student", "Newer records and student finance platform on campuses mid-migration", "Migration-aware builds: the spine bridges legacy Banner terms and Workday terms during the transition"],
+    ["Slate or Ellucian CRM Recruit", "Funnel management from first inquiry through deposit", "Funnel events joined to SIS enrollment; melt watch over the deposit pool"],
+    ["Degree audit engine (DegreeWorks-class)", "Catalog rules, exceptions, graduation clearance", "Exception queues, pre-clearance audits and articulation memory beside the engine"],
+    ["Canvas or Moodle", "Course delivery, gradebooks and engagement telemetry", "Final grades fed back to the SIS; activity streams into early alert under existing consent language"],
+    ["Aid module and COD interface", "Title IV processing, packaging, disbursement", "Verification queues, SAP evaluation, continuous COD reconciliation and the R2T4 evidence chain"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software engages"
+  },
+  {
+   "t": "p",
+   "x": "Engagements start smaller than the vocabulary above suggests, because the first deliverable is evidence, not software. The two-week baseline runs on your data inside your tenancy, needs roughly one analyst-day a week from IR or the registrar's office plus read access to extracts your systems already produce, and ends with a memo containing numbers, owners and an honest statement of where the delta is real. Procurement usually follows the campus's own cooperative contract or statement-of-work path; nothing in the baseline requires a platform decision."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Two-week baseline first", "Term-to-term persistence on your historical cohorts, melt on your last three summer cycles, verification queue depth on your last two aid years, and the reporting calendar mapped against your current build process. If the modeled delta is marginal, the memo says so and the engagement stops there."],
+    ["Read-first on the SIS", "No writes to Banner, Campus Solutions or Workday Student without a contract the registrar signs. Every integration ships with schema definitions, freshness expectations and a named owner on your side."],
+    ["Data stays in your tenancy", "FERPA governs everything here. Student records are processed inside your cloud tenancy under your access controls; models train on your historical terms and remain yours when we leave."],
+    ["Evidence as the deliverable", "Every decision service writes reason codes and retains its inputs, because the output has to survive an aid audit, an accreditation visit or a board question — not just look good in a demo."]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions higher education leaders ask us"
+  },
+  {
+   "t": "p",
+   "x": "The questions below arrive in nearly every first conversation with a registrar, a CFO or a provost. The answers are the same ones we give in the room, including the parts vendors usually leave out."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Do we have to replace our SIS for any of this?", "No — the posture is the opposite. The SIS estate stays authoritative and everything we build reads from it under contract. Replacing Banner or Campus Solutions is a decade-scale decision; the spine makes the estate you have legible in months."],
+    ["What data do the persistence models need?", "Your historical terms: registration events, term activation, enrollment intensity, degree audit states, LMS activity where available, and aid status. Five to eight fall cohorts are usually enough to train and honestly evaluate against outcomes you already hold."],
+    ["How is this different from our early-alert vendor?", "The vendor sells a caseload product with an import. We build the join layer beneath it — registration drift, engagement collapse, aid stress on your own definitions — and evaluate flags against your actual outcomes. Many campuses keep their Navigate-style platform and simply feed it better signals."],
+    ["Who owns the numbers?", "Institutional research owns definitions and certification. The spine implements each population once as a versioned query an IR analyst can read and test; we do not ship black-box metrics."],
+    ["What about FERPA and student consent?", "Access is role-scoped and audited inside your tenancy. Engagement data is used under the consents your LMS contracts already establish; where a use would need new consent language, we say so before the build, not after."],
+    ["Can you work with our aid module directly?", "We read its data and its files — ISIRs, COD responses, disbursement records — and build queues and reconciliation beside it. Packaging and disbursement stay in the aid module as the system of record."],
+    ["What does the baseline cost in staff time?", "About one analyst-day per week plus read access. The baseline runs on extracts your systems already produce; if a needed extract does not exist, that finding is part of the memo and usually the first thing worth fixing."]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Bring one term's registration events, three years of funnel outcomes and last cycle's verification backlog, and we will run the two-week baseline against your own data inside your own tenancy: persistence deltas on your historical cohorts, the melt your systems would have caught, and queue depth measured against your own deadlines. If the numbers show a real gap between what the estate tells you today and what the spine would tell you, we scope the first build from the baseline — usually aid reconciliation or the early-alert join, because those pay for themselves fastest. If the gap is not real, you keep the memo and we stop. Universities do not need another shelf dashboard; they need the ring to close."
+  }
+ ]
+}

@@ -1,0 +1,766 @@
+{
+ "file": "industries_retail-consumer-goods_omnichannel-retail",
+ "meta_description": "How Dataq Software engineers omnichannel retail: the inventory-truth layer behind ATP, node-cost-aware order orchestration, BOPIS and curbside operations, returns latency pipelines from BORIS to restock, marketplace feed surveillance — built on the OMS, POS and warehouse estate you already run.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Omnichannel programs rarely fail on their promises; they fail in the seams between systems. The ATP number tells the web store a jacket is available when the floor has not seen it for a week; the OMS routes the order to the costliest node because its cost table was last refreshed two quarters ago; BOPIS orders hit their pick SLA but drown in unclaimed staging; returns sit in the back room for a week and a half before restocking while the customer's refund has already cleared. Each seam is a data problem with a decision attached. Dataq Software builds the inventory-truth layer, the orchestration analytics, the returns latency pipelines and the marketplace feed surveillance that close those seams — on the estate you already run."
+  },
+  {
+   "t": "h2",
+   "x": "How omnichannel operations actually run day to day"
+  },
+  {
+   "t": "p",
+   "x": "Follow one order across the network. A customer buys two shirts and a coat at nine at night; the OMS scores nodes — the DC with depth, two stores holding single units, a drop-ship vendor with a slow ASN — and splits the shipment to protect the promise date. The store pick team walks the sales floor at opening, stages the bag in the BOPIS cabinet, and the notification flow sends a claim code; roughly half of such orders are collected the same day, the rest age in staging and crowd the cabinet. One of the shirts turns out to be phantom — scanned out last week, never corrected — so the store substitutes or the line cancels, and the customer who drove to the store learns to distrust the promise."
+  },
+  {
+   "t": "p",
+   "x": "Around that order sits the machine. Demand planning aggregates channels into a seasonal buy that allocation distributes node by node; marketplace listings reprice on their own loops with feed quality deciding buy-box eligibility; clienteling apps carry customer profiles and saved baskets into the aisle; loyalty accrues online and burns at the POS through an earn/burn reconciliation nobody owns end to end. Pricing synchronization rules decide whether the web promo may appear on the store shelf, and markdown cadence differs by channel for legal and brand reasons."
+  },
+  {
+   "t": "p",
+   "x": "And when the customer changes their mind, BORIS returns flow through the front door into the back room, where they wait for processing capacity, fraud triage and a restock decision while the refund has already cleared. Sellable units sit invisible to every channel during their highest-demand window, and nobody can say which stores are worst at it because return-to-inventory latency is not a tracked number. The seams are not edge cases; they are the operating day, and every one of them is a data problem with a decision attached."
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems this work touches"
+  },
+  {
+   "t": "p",
+   "x": "Omnichannel estates are wider than they are deep: an OMS orchestrating nodes it cannot really see, WMS execution at the DCs, POS fleets mid-modernization with offline modes to protect, e-commerce and app stacks, marketplace integrations on two program models, CRM and clienteling, loyalty, and an ERP ledger underneath. The table below is the estate every seam-closing build has to read."
+  },
+  {
+   "t": "table",
+   "caption": "The omnichannel estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
+    [
+     "Order management system (OMS)",
+     "Node scoring, order routing, split decisions, promise dates, BOPIS release",
+     "Routes on stale node costs and hard-coded rules; cannot see labor cost per pick per store"
+    ],
+    [
+     "Inventory visibility layer and WMS",
+     "ATP computation, safety stock per node, reservations, DC execution",
+     "ATP built on book inventory; phantom units poison the promise and the pick"
+    ],
+    [
+     "POS fleet",
+     "Ring-up, BOPIS pickup, returns without receipt, offline mode",
+     "Offline policy and receiptless return rules vary by version; pickup fraud checks are manual"
+    ],
+    [
+     "E-commerce and app stack",
+     "Search, PDP, cart, checkout, image coverage, notification flows",
+     "Search relevance and image coverage drift unmanaged; PDP conversion signals reach merchandising late"
+    ],
+    [
+     "Marketplace integrations (1P/3P)",
+     "Feeds, repricing, buy-box competition, ASN and invoice flows",
+     "Feed quality errors surface as suppressions and lost buy boxes days after the fact"
+    ],
+    [
+     "Returns and reverse logistics",
+     "RMA, fraud screening, disposition, restock",
+     "Return-to-inventory latency unmeasured; wardrobing and brick-in-box caught by eye"
+    ],
+    [
+     "CRM, clienteling and loyalty",
+     "Profiles, saved baskets, associate apps, earn/burn reconciliation",
+     "Loyalty reconciliation across channels leaks; clienteling data is stale on the floor"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where omnichannel fails: the seams"
+  },
+  {
+   "t": "p",
+   "x": "Ask an omnichannel COO where the program bleeds and the answers cluster in the same seams: the ATP lie, the stale routing cost, the back-room return pile, the marketplace feed drift, the pick labor nobody prices, the fraud that walks through pickup and returns at once. Naming them matters, because every build in the catalog below maps to one of them, and none of them is solved by a new storefront."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "ATP lies by a week",
+     "Available-to-promise is computed from book inventory, and book inventory drifts — phantom units from uncorrected shrink, mis-picks, returns not yet restocked. Every downstream promise inherits the lie, and customers absorb it as canceled orders and substitutions."
+    ],
+    [
+     "The OMS routes on stale costs",
+     "Node scoring tables — labor cost per pick, shipping by zone, packaging, SLA risk — were set at implementation and refresh annually if ever. The network pays for the staleness on every split shipment and every ship-from-store that should have gone to a DC."
+    ],
+    [
+     "BOPIS ages in staging",
+     "Pick SLAs are met; claim SLAs are not. Unclaimed orders crowd the cabinet, tie up picked inventory, and generate cancellations that re-enter the network as reverse work nobody scheduled for."
+    ],
+    [
+     "Returns sit before they sell",
+     "A return-to-inventory latency of one to two weeks means sellable units are invisible to ATP during their highest-demand window. Latency is unmeasured per store, so it is unmanaged."
+    ],
+    [
+     "Marketplace feeds drift silently",
+     "Image gaps, attribute errors, stale shipping templates and suppressed listings surface as lost buy-box eligibility or deindexing, often days after the change that caused them."
+    ],
+    [
+     "Pick labor is a subsidy nobody prices",
+     "Store picks run on whatever labor the schedule has; minutes per order by basket size and pick path are unmeasured, so ship-from-store economics and slot commitments are guesses."
+    ],
+    [
+     "Fraud walks through two doors",
+     "BOPIS pickup fraud, wardrobing, receipt fraud and brick-in-box are screened by different teams with different signals, so a serial abuser is a pattern nowhere and a case everywhere."
+    ],
+    [
+     "Markdowns and promos disagree by channel",
+     "Price consistency rules, marketplace repricing loops and store clearance cadence are governed separately, so the same GTIN sells at three prices and customers arbitrate the difference publicly."
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight: the promise was designed at channel level and the execution happens at node level, with no data contract between them. Closing seams is plumbing plus a decision, which is engineering work, not a strategy deck."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works with omnichannel retailers"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate the retailer already runs. We do not replace the OMS, the POS fleet or the e-commerce stack; we read them, model them, and put decision services where the decisions actually happen — the inventory team's ATP review, the routing ruleset's change window, the store task console, the loss-prevention fraud queue, the marketplace operations desk. Read-first applies doubly where customer money and consumer-protection duties sit close to the surface: returns, pickups and price display."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape the work. First, node economics are measured on the client's own order history — pick minutes, shipping spend, packaging, cancellations, SLA misses — not on industry benchmarks, because a store's fulfillment cost is a function of its layout, its labor market and its pick path, and no benchmark knows those. Second, every recommendation lands in a surface the operator already uses, from the OMS workbench to the back-room returns cart. Third, feasibility gates are honest: if closing a seam costs more than the seam leaks, the baseline says so and we stop."
+  },
+  {
+   "t": "p",
+   "x": "The record behind the posture includes a specialty apparel chain where returns latency dropped from a week and a half to two days on the treated categories, a hardlines retailer whose ship-from-store routing stopped paying premium shipping for slow SKUs, and a marketplace program that recovered suppressed listings days earlier by watching feed quality continuously. Those references stand behind the two-week baseline offer described in the engagement section."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for omnichannel retail"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of the omnichannel practice at Dataq Software. Each build is a decision service with named inputs from your estate, a named decision owner, and a measured delta against your own trailing-quarter baseline — nothing in the catalog asks you to buy a system you already own."
+  },
+  {
+   "t": "h3",
+   "x": "1. Inventory truth: ATP, phantom stock and node-level safety stock"
+  },
+  {
+   "t": "p",
+   "x": "The truth build starts where the lie starts: the difference between book inventory and what a picker can actually find. Adjustment events, cycle count variances, pick failures, BOPIS claim failures, refund-to-restock gaps and negative-on-hand episodes are joined per node per item to classify phantom inventory and quantify how much ATP is fiction. Safety stock per node is recomputed against measured node-level demand variance and lead time, not against a network average set years ago."
+  },
+  {
+   "t": "p",
+   "x": "The output is an ATP correction loop with governance: high-confidence corrections write back to the inventory visibility layer through the client's own change process, ambiguous ones route to cycle-count scheduling so the count goes where the data says the lie lives. Endless aisle gets honest at the same time — selling what the network owns requires believing the network's numbers, and the truth build is what makes believing possible."
+  },
+  {
+   "t": "h3",
+   "x": "2. Order orchestration analytics: routing on real node costs"
+  },
+  {
+   "t": "p",
+   "x": "The routing build measures cost per order by node — store pick minutes by basket composition and pick path, packaging, shipping by zone and service level, cancellation and SLA-miss risk — and publishes what the OMS's scoring tables should have said this quarter, not at implementation. Simulation replays real orders through alternative routing policies: ship-from-store versus DC versus drop-ship, split versus consolidated, promise-date trade-offs priced in margin rather than adjectives."
+  },
+  {
+   "t": "p",
+   "x": "Recommendations land as change proposals for the routing ruleset the client already controls, with champion/challenger evidence attached: a candidate policy runs on replayed history first, then on live traffic for a node subset, then promotes. The OMS stays the system of execution; what changes is that its rules are refreshed on measured economics instead of folklore — and the refresh cadence becomes a governance item with an owner, not an archaeology project. Where an OMS exposes rule limits instead of cost hooks, the same evidence drives a quarterly manual refresh with a sign-off, which is imperfect, measured, and still better than a cost table from implementation week."
+  },
+  {
+   "t": "h3",
+   "x": "3. BOPIS, curbside and store-pick operations"
+  },
+  {
+   "t": "p",
+   "x": "The pickup build treats buy-online-pickup-in-store as a service with two clocks: the pick clock and the claim clock. Pick SLAs are measured per store against labor actually rostered; staging capacity is modeled so unclaimed orders stop crowding out fresh ones; notification flows are instrumented end to end — order ready, reminder, claim code at drawer or counter — so the store can see where a customer falls out of the flow. BOPIS-at-drawer and curbside get separate treatment: dwell time per mode, staffing triggers, and the pickup fraud checks that go with handoffs."
+  },
+  {
+   "t": "p",
+   "x": "Store-pick economics close the loop. Minutes per order by basket size, department and pick path are measured from timestamps and task data, then fed back into routing — a store with a four-minute pick path is a different node than one with twelve — and into the workforce schedule, so pick labor is planned demand rather than a raid on the floor team. The delta shows up in pick SLA adherence, curbside dwell and canceled pickups: three numbers store operations and e-commerce finally share."
+  },
+  {
+   "t": "h3",
+   "x": "4. Returns latency: BORIS, fraud triage and restock speed"
+  },
+  {
+   "t": "p",
+   "x": "The returns build measures what nobody wants to: the days between a return landing at the door and the unit becoming sellable in ATP, per store, per category. The pipeline joins RMA events, refund timing, fraud screening outcomes, disposition decisions and restock scans into one latency ledger, then attacks the queue: triage rules that clear low-risk returns to restock in hours, fraud scoring that concentrates human review on the patterns that actually cost money — wardrobing, receipt fraud, brick-in-box, serial BORIS across nodes."
+  },
+  {
+   "t": "p",
+   "x": "Fraud triage is built with loss-prevention governance, not around it: signals are scored and ranked, evidence packets carry transaction history rather than profiles, and case outcomes feed back as labels so the scoring improves on the client's definition of risk. Return-to-inventory latency is published weekly per store, because a number nobody sees is a number nobody manages. The margin effect is direct: every day a sellable unit hides in the back room is a day it cannot promise, sell or ship."
+  },
+  {
+   "t": "h3",
+   "x": "5. Marketplace feed quality and repricing surveillance"
+  },
+  {
+   "t": "p",
+   "x": "The marketplace build watches what the marketplace watches. Listing feeds are snapshotted continuously — images, attributes, shipping templates, pricing, compliance fields — and diffed against acceptance state, so a suppressed listing, a deindexed SKU or a lost buy box is detected within hours of the feed change that caused it, not days later in a sales report. Buy-box factors are tracked per SKU per competitor, and repricing rules are evaluated against realized margin, because winning the buy box at a loss is a way to lose more efficiently."
+  },
+  {
+   "t": "p",
+   "x": "Integration discipline extends to the 1P and 3P flows: ASN accuracy from drop-ship vendors is scored by vendor, because a late or wrong ASN poisons both ATP and the marketplace's own fulfillment metrics; invoice reconciliation and chargeback exposure are joined to the same vendor scorecards the merchandising team already reviews. The marketplace channel stops being a black box that merchandising discovers weekly and becomes an instrumented channel with an operations console."
+  },
+  {
+   "t": "h3",
+   "x": "6. Store-fulfillment economics and digital demand allocation"
+  },
+  {
+   "t": "p",
+   "x": "The fulfillment-economics build answers the question the network argues about monthly: which node should serve digital demand, and what does it really cost? Node cost models — pick labor, packaging, shipping, canceled-order and substitution costs — are joined to inventory depth and promise capability, then compared node against node on real orders. Attribution closes the loop: online demand that materialized in a store's trade area is measured against that store's inventory and sales, so allocation stops treating the website as a customerless void."
+  },
+  {
+   "t": "p",
+   "x": "Allocation for digital demand becomes a planning input: which node receives units for online sell-through, how much depth a BOPIS-heavy store needs beyond floor demand, when drop-ship vendors should carry a category instead of the network. Demand aggregation across channels feeds the buy with channel return rates priced in — because a category that ships twice and returns once is a different category than its gross demand suggests."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — omnichannel decision stack",
+   "lanes": [
+    "Systems of record",
+    "Event capture",
+    "Truth and analytics",
+    "Orchestration decisions",
+    "Operating surfaces",
+    "Controls and evidence"
+   ],
+   "nodes": [
+    {
+     "id": "oms",
+     "lane": 0,
+     "label": "OMS"
+    },
+    {
+     "id": "wms",
+     "lane": 0,
+     "label": "WMS and DC execution"
+    },
+    {
+     "id": "pos",
+     "lane": 0,
+     "label": "POS fleet"
+    },
+    {
+     "id": "ecom",
+     "lane": 0,
+     "label": "E-commerce and app"
+    },
+    {
+     "id": "mkt",
+     "lane": 0,
+     "label": "Marketplace integrations 1P/3P"
+    },
+    {
+     "id": "inv",
+     "lane": 1,
+     "label": "Inventory adjustment events"
+    },
+    {
+     "id": "rma",
+     "lane": 1,
+     "label": "RMA and returns events"
+    },
+    {
+     "id": "feed",
+     "lane": 1,
+     "label": "Listing and feed snapshots"
+    },
+    {
+     "id": "atp",
+     "lane": 2,
+     "label": "ATP truth service"
+    },
+    {
+     "id": "ncost",
+     "lane": 2,
+     "label": "Node cost model"
+    },
+    {
+     "id": "rlat",
+     "lane": 2,
+     "label": "Returns latency pipeline"
+    },
+    {
+     "id": "fqual",
+     "lane": 2,
+     "label": "Feed quality surveillance"
+    },
+    {
+     "id": "fra",
+     "lane": 2,
+     "label": "Fraud pattern graph"
+    },
+    {
+     "id": "route",
+     "lane": 3,
+     "label": "Routing recommendations"
+    },
+    {
+     "id": "alloc",
+     "lane": 3,
+     "label": "Digital demand allocation"
+    },
+    {
+     "id": "bop",
+     "lane": 3,
+     "label": "BOPIS capacity rules"
+    },
+    {
+     "id": "omsw",
+     "lane": 4,
+     "label": "OMS workbench"
+    },
+    {
+     "id": "stw",
+     "lane": 4,
+     "label": "Store task console"
+    },
+    {
+     "id": "mkw",
+     "lane": 4,
+     "label": "Marketplace ops console"
+    },
+    {
+     "id": "lp",
+     "lane": 4,
+     "label": "LP and fraud queue"
+    },
+    {
+     "id": "gov",
+     "lane": 5,
+     "label": "Model registry and audit trail"
+    }
+   ],
+   "edges": [
+    {
+     "a": "wms",
+     "b": "inv"
+    },
+    {
+     "a": "pos",
+     "b": "inv"
+    },
+    {
+     "a": "ecom",
+     "b": "atp"
+    },
+    {
+     "a": "rma",
+     "b": "rlat"
+    },
+    {
+     "a": "inv",
+     "b": "atp"
+    },
+    {
+     "a": "rlat",
+     "b": "atp"
+    },
+    {
+     "a": "feed",
+     "b": "fqual"
+    },
+    {
+     "a": "mkt",
+     "b": "fqual"
+    },
+    {
+     "a": "fqual",
+     "b": "mkw"
+    },
+    {
+     "a": "oms",
+     "b": "route"
+    },
+    {
+     "a": "atp",
+     "b": "route"
+    },
+    {
+     "a": "ncost",
+     "b": "route"
+    },
+    {
+     "a": "wms",
+     "b": "ncost"
+    },
+    {
+     "a": "route",
+     "b": "omsw"
+    },
+    {
+     "a": "oms",
+     "b": "bop"
+    },
+    {
+     "a": "atp",
+     "b": "bop"
+    },
+    {
+     "a": "bop",
+     "b": "stw"
+    },
+    {
+     "a": "atp",
+     "b": "alloc"
+    },
+    {
+     "a": "alloc",
+     "b": "omsw"
+    },
+    {
+     "a": "rma",
+     "b": "fra"
+    },
+    {
+     "a": "inv",
+     "b": "fra"
+    },
+    {
+     "a": "fra",
+     "b": "lp"
+    },
+    {
+     "a": "rlat",
+     "b": "lp"
+    },
+    {
+     "a": "route",
+     "b": "gov"
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: one order, many systems"
+  },
+  {
+   "t": "p",
+   "x": "A single customer order touches eight systems on a good day: storefront, OMS, WMS, POS, payment, loyalty, marketplace, workforce. None of them shares a key by design — order numbers fork, SKUs fork into unit and each levels, timestamps skew across clocks, and the store that picked the order is a code only one system holds natively. The data-plane work builds the spine: one order-event schema, one item-node-day inventory event stream, one returns event stream, all with lineage back to source."
+  },
+  {
+   "t": "p",
+   "x": "Identity and consent are handled at ingestion. Customer profiles from loyalty and clienteling are consent-scoped and minimized before they reach any model; the routing and returns builds need order and event truth, not identities. Payment-adjacent data stays tokenized inside the client's PCI boundary, and fraud features are engineered to read transaction patterns without moving cardholder data out of that boundary."
+  },
+  {
+   "t": "p",
+   "x": "Quality is measured per feed and published with the decisions it feeds: freshness SLAs, completeness checks against order counts, reconciliation reports per interface, dead-letter queues with owners. When the OMS says a store picked at 10:04 and the task system says 10:40, the discrepancy is a bug to fix, not a modeling choice to absorb — that discipline is what makes node economics believable."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Order event spine",
+     "Every order lifecycle event from storefront to doorstep normalized to one schema: routing decisions, pick events, staging, claim, ship, cancel, refund — keyed across systems with the forks recorded, not hidden."
+    ],
+    [
+     "Inventory adjustment stream",
+     "All adjustments — cycle counts, pick failures, damage-outs, returns restock, negative on-hand — joined per node per item, classified, and wired to the phantom-inventory detector and the count scheduler."
+    ],
+    [
+     "Returns event ledger",
+     "RMA, receipt, fraud screen, disposition and restock timestamps in one ledger per unit, so latency is a query, not a forensic project."
+    ],
+    [
+     "Marketplace feed snapshots",
+     "Listing state per SKU per channel snapshotted on every feed cycle, with diff history, buy-box outcomes and suppression events attached for the surveillance build."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: guardrails around the OMS"
+  },
+  {
+   "t": "p",
+   "x": "The OMS is the most consequential decision engine in the network and the least supervised: its routing tables encode costs and constraints that rarely get reviewed against reality. The decision layer puts supervision around it without taking execution away: measured node costs published monthly, candidate routing policies replayed against real order history before any live exposure, and a ruleset change process with the same sign-off discipline the client already applies to pricing."
+  },
+  {
+   "t": "p",
+   "x": "Champion/challenger discipline is native: a challenger policy runs on replayed orders first, then on a node or category subset, with deltas measured on cost per order, promise-date adherence and cancellation rate. Overrides — the merchant who forces a split, the store that flags a routing exception — are captured and reviewed monthly, because chronic overrides are the cheapest requirements document in the building."
+  },
+  {
+   "t": "h2",
+   "x": "Attribution: what online demand does to stores"
+  },
+  {
+   "t": "p",
+   "x": "Omnichannel accounting quietly misprices stores: ship-from-store revenue lands in e-commerce while the labor lands in the store, BOPIS baskets credit the channel that acquired them while the store absorbs the pick, and returns initiated online but made in store flow through whichever ledger grabbed them first. The attribution build repairs the seams so store P&Ls carry what stores actually do: fulfilled-for-digital revenue measured separately, pick labor costed to the order that consumed it, BORIS traffic credited as a store service with a measured attach rate."
+  },
+  {
+   "t": "p",
+   "x": "The planning consequence matters more than the accounting one. When attribution is honest, allocation stops starving stores that serve digital demand well, store-fulfillment expansion decisions get priced with real labor curves, and the network can compare the true economics of a BOPIS-heavy store against a ship-from-store warehouse on the same page. Most retailers discover a handful of stores are fulfillment workhorses subsidizing the channel P&L — and nobody had a number."
+  },
+  {
+   "t": "h2",
+   "x": "Site operations: search relevance, PDP conversion and image coverage"
+  },
+  {
+   "t": "p",
+   "x": "The storefront is itself an operations surface with decay curves: search relevance drifts as the assortment turns, synonyms fall behind how customers actually name things, and category pages keep ranking last season's imagery. The site-ops build measures search zero-result and poor-result rates, PDP conversion by category and device, image coverage per SKU per angle, and content completeness against the attributes both the search index and the marketplaces read. Those signals are joined to demand — a PDP that converts at half the category rate with full image coverage is a different problem than one missing its alt imagery, and the build separates the two instead of averaging them."
+  },
+  {
+   "t": "p",
+   "x": "The remediation loop is engineered, not editorial: content gaps route to the same product-content pipeline the marketplace surveillance uses, so an image gap fixed once is fixed on site and channel together; search synonym and boosting changes ship as experiments with revenue-per-search measured against a holdout. The e-commerce team gets a weekly ranked backlog with revenue at risk attached, instead of anecdote-driven fixes and a quarterly conversion postmortem."
+  },
+  {
+   "t": "p",
+   "x": "Site operations also feed the other builds upstream: a SKU with thin image coverage converts worse and returns more, which distorts node economics, allocation decisions and marketplace repricing all at once. Treating the storefront as an instrumented channel — with the same feed-quality discipline applied to marketplaces applied to your own search index — closes that loop, and it is usually the cheapest seam on the list to close."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: pricing consistency, fraud and consumer duty"
+  },
+  {
+   "t": "p",
+   "x": "The obligation surface in omnichannel concentrates where money and promises meet: price display accuracy across channels, returns policy enforcement, consumer refund timing, marketplace compliance, PCI scope and loyalty data handling. Decision services inherit those duties: a routing change cannot break a promise-date SLA silently, a fraud score cannot route around the client's appeal process, and a price synchronization rule must respect channel-specific legal constraints rather than flattening them."
+  },
+  {
+   "t": "table",
+   "caption": "Duties the omnichannel build inherits — and the evidence it produces",
+   "headers": [
+    "Duty",
+    "What the regulator, marketplace or auditor expects",
+    "What our build produces"
+   ],
+   "rows": [
+    [
+     "Price consistency and display",
+     "Shelf, web and marketplace prices accurate and differentiated only where permitted",
+     "Price synchronization rules with per-channel constraint modeling, plus an exception ledger showing where prices legitimately diverge"
+    ],
+    [
+     "Refund timing and returns policy",
+     "Consumer refund rights honored consistently across channels",
+     "Returns latency ledger with refund-to-restock timing, policy exception flags and per-store enforcement evidence"
+    ],
+    [
+     "Fraud process integrity",
+     "Fraud decisions explainable and appealable, evidence retained",
+     "Fraud pattern scoring with reason codes, evidence packets per case and outcomes fed back as model labels"
+    ],
+    [
+     "Marketplace compliance",
+     "Listing accuracy, shipping promises and invoicing per program rules",
+     "Feed surveillance logs, suppression root-cause history and ASN accuracy scored per vendor"
+    ],
+    [
+     "PCI and payment data scope",
+     "Cardholder data stays tokenized inside the boundary",
+     "Fraud and routing features engineered to read patterns without moving payment data; access logged"
+    ],
+    [
+     "Model and decision governance",
+     "Automated decisions monitored, explainable, reversible",
+     "Model registry with versioned features, drift monitors, champion/challenger records and rollback notes"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the estate stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Omnichannel integrations fail where ownership is ambiguous: nobody owns the OMS-to-store handoff, the marketplace feed or the returns file, so each interface is somebody's side project and drifts until it breaks loudly. The integration work assigns every seam a contract — event schemas, SLAs, reconciliation reports, dead-letter queues with owners — and instruments them, so drift is visible in days. The estate stays: the OMS keeps executing, the POS keeps ringing, the WMS keeps waving; what changes is that their contracts stop being tribal knowledge."
+  },
+  {
+   "t": "p",
+   "x": "POS modernization pain is treated as a data problem first. Offline-mode behavior, returns-without-receipt rules and pickup flows differ by POS generation, and those differences leak into BOPIS claims and BORIS processing. We model the fleet as it is — version by version, store by store — so the decision layer compensates for the differences instead of pretending a homogeneous fleet exists, and the modernization program, when it happens, inherits clean contracts instead of another migration archaeology project."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "OMS write-path safety",
+     "Routing and allocation recommendations enter through the client's ruleset change process with replay evidence; no direct writes to production routing outside the client's own controls."
+    ],
+    [
+     "Marketplace program rules",
+     "Feed and repricing changes respect program-specific constraints — shipping templates, lead-time promises, repricing floors — with per-channel guardrails before anything touches a live listing."
+    ],
+    [
+     "Legacy and batch tolerance",
+     "Where an interface can only be batch, it ships idempotent with sequence checks and late-arrival handling; where the POS fleet is mixed-generation, the fabric models the differences instead of hiding them."
+    ],
+    [
+     "Store console restraint",
+     "Store-facing surfaces read state and propose tasks; they never fork task ownership away from the systems of record the store already answers to."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "We start with a two-week baseline against your own order, inventory, returns and labor history: one node network or one seam — ATP truth, returns latency, routing costs, marketplace feeds — chosen with your operations and e-commerce leadership. The baseline states the delta we believe is real in cost per order, sellable days recovered or margin defended, and prices the build against that delta. If the seam does not leak enough to pay for closing it, the document says so and the engagement stops there."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: baseline and feasibility",
+     "Order, inventory, returns and labor extracts; seam decomposition on the chosen network; a signed delta statement with the build price next to it."
+    ],
+    [
+     "Weeks 3-8: first decision service",
+     "One build in champion/challenger — usually returns latency or ATP truth — with the owning team holding the approval lane and the deltas published weekly."
+    ],
+    [
+     "Weeks 9-16: measured rollout",
+     "Node-by-node or category-by-category expansion; integration contracts hardened; the surveillance console or fraud queue moves from pilot to daily use."
+    ],
+    [
+     "Steady state: services, not tickets",
+     "Models, contracts and consoles transfer to your teams under a joint runbook, or run as a managed service with quarterly re-baselines; no per-decision toll either way."
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Pricing is saved against the cost it replaces: a returns build is quoted against the sellable days and back-room labor it recovers, a routing build against the shipping and pick spend it moves, a marketplace program against the revenue it un-suppresses — the baseline's delta statement doubles as the quote. The team is small and senior: a lead engineer who has lived inside OMS and POS estates, a data engineer who treats an order fork as a solvable problem, an operations lead who has run stores or a DC, and an analyst who can argue cost per order with finance. Weekly operating reviews track the published delta; monthly model councils turn overrides into features; peak season is planned as a capacity event with freeze windows honored. Everything ships documented in the client's runbook format, because a service only the vendor can operate is a dependency, not a capability."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones omnichannel programs are measured on, each stated against the client's own trailing-quarter baseline and tracked in the weekly operating review rather than in a channel dashboard nobody reconciles."
+  },
+  {
+   "t": "table",
+   "caption": "Metrics the program is held to — against your own baseline",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Return-to-inventory latency",
+     "Week-plus back-room queues cut to one or two days on treated categories",
+     "RMA-to-restock timestamps per store per category from the returns ledger"
+    ],
+    [
+     "ATP accuracy",
+     "Phantom-driven cancellations and substitutions down measurably on treated nodes",
+     "Pick and claim failures reconciled against book inventory, per node per item"
+    ],
+    [
+     "Cost per order by node",
+     "Routing refresh moves share toward the economic node on replayed orders",
+     "Node cost model versus realized order outcomes, published monthly"
+    ],
+    [
+     "BOPIS pick and claim SLA",
+     "Pick SLA adherence up, curbside dwell down, staging cancellations down",
+     "Pick timestamps, staging telemetry and notification flow analytics per store"
+    ],
+    [
+     "Marketplace feed health",
+     "Suppressed listings recovered in hours; buy-box share defended at margin",
+     "Feed diff surveillance outcomes and repricing margin audits per SKU"
+    ],
+    [
+     "Pick labor per order",
+     "Minutes per order published and planned, not raided from the floor",
+     "Task timestamps against order composition, per store per department"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs like these fail in known ways, and most failure modes are organizational before they are technical. Each answer below is a design commitment, not a hope."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "The truth build becomes a blame feed",
+     "Phantom inventory maps straight to store execution, and if it is used to discipline before it is used to fix, stores stop reporting honestly and the data dies. Governance on the queue is set with store operations before go-live."
+    ],
+    [
+     "Routing optimization starves service",
+     "Cost per order optimized blind pushes promise dates to the edge and BOPIS into slow lanes. Promise adherence and cancellation risk sit inside the objective, not as a slide after it."
+    ],
+    [
+     "Returns automation waves fraud through",
+     "Fast restock without fraud triage converts latency gains into loss. Scoring concentrates human review where the patterns are; low-risk returns clear fast, ambiguous ones wait by design."
+    ],
+    [
+     "Marketplace surveillance becomes noise",
+     "Diff alerts without prioritization train the team to ignore them. Alerts rank by revenue at risk and buy-box proximity, and the console opens on the top ten, not the last thousand."
+    ],
+    [
+     "The OMS vendor owns the roadmap",
+     "If node economics live only in the OMS vendor's roadmap, the client waits years for routing the data already supports. We build the analytics layer beside the OMS, in the client's cloud, on the client's data."
+    ],
+    [
+     "Baseline softening",
+     "A vendor that grades its own homework against a moved baseline earns removal. Baselines are frozen, signed and re-verified against the client's own systems each quarter."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions omnichannel leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Will this replace our OMS?",
+     "No. The OMS stays the system of execution. We build the measurement and decision layer beside it — node costs, candidate policies, latency ledgers — and changes to routing happen through your own ruleset process, with evidence attached."
+    ],
+    [
+     "Our inventory accuracy is a known problem; why is yours different?",
+     "Because we attach the correction loop to decisions, not to a cleanup project. Phantom detection routes counts where the lie lives, ATP corrections write back governed, and the same fabric feeds routing and allocation — accuracy becomes a maintained property, not a one-time cleanse."
+    ],
+    [
+     "Can you work with our marketplace integrations as-is?",
+     "Yes. Feed surveillance reads the feeds you already send, whatever tooling produced them; the build watches outcomes and quality rather than replacing your listing stack. Where the integration itself is the root cause, the surveillance proves it before anyone spends on a rebuild."
+    ],
+    [
+     "How do you keep fraud screening fair?",
+     "Signals are transactional, evidence packets carry history rather than profiles, reason codes ship with every score, and the client's loss-prevention and legal leadership own the policy for case handling. Outcomes feed back as labels, so the model improves on the client's definition of risk."
+    ],
+    [
+     "Does BOPIS deserve this much engineering?",
+     "It is the highest-frequency omnichannel interaction most retailers have, it is the one that gets the customer inside the store, and it is measured today with three disconnected SLAs. Yes — but the baseline decides, and if the seam is smaller than we think, the baseline says so."
+    ],
+    [
+     "What if our data cannot support node costing?",
+     "Then the two-week baseline says what it can support. Roughly half the value in month one is repairing feeds — pick timestamps, adjustment streams — that were corrupting decisions anyway; the rest is a feasibility statement you can plan around."
+    ],
+    [
+     "Who owns the models after go-live?",
+     "You do. Models, feature stores, contracts and runbooks transfer to your teams, or Dataq Software operates them as a managed service with quarterly re-baselines. There is no per-decision toll in either arrangement."
+    ],
+    [
+     "What is the honest stop condition?",
+     "If the measured delta — cost per order, sellable days, margin defended — does not clear the cost of capturing it on your own data, the baseline says so and we stop. We would rather deliver a smaller build than an expensive pilot that proves nothing."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Choose one seam and one slice of the node network: we baseline ATP truth, returns latency and node-cost routing on your own order, inventory and labor history in two weeks, price the build against the cost per order and sellable days it recovers, and hand you the delta statement either way. If the seam does not leak enough to pay for the repair, the baseline says so and we stop."
+  }
+ ]
+}

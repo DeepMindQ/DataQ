@@ -1,0 +1,404 @@
+{
+ "file": "industries_agriculture-food_precision-agriculture",
+ "meta_description": "Dataq Software builds the field-data spine for precision agriculture: yield-log cleaning, ADAPT-based OEM cloud integration, replicated strip-trial analytics that separate treatment effects from soil noise, nitrogen response models, and MRV evidence pipelines for carbon programs.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Every major machinery maker now operates a cloud that would like to own the agronomy record: John Deere Operations Center, Case and New Holland, AGCO with PTx, Trimble. Imagery arrives from Sentinel-2 and Landsat, drone orthomosaics land as stitched tiles, yield monitors write harvest logs, and soil labs return grids keyed to hand-typed field names. None of it lands in one place an agronomist can defend, and every prescription built on fragmented data inherits the fragmentation. Dataq Software builds the field-data spine — field boundary master, practice records, trial metadata — plus the prescription loops agronomists actually trust."
+  },
+  {
+   "t": "p",
+   "x": "A typical row-crop operation today holds the same field in four databases under four identifiers. The FMIS has the field with a boundary the agronomist drew. The OEM cloud has equipment locations that sort of match. The imagery platform tiles the world on its own grid. The soil lab keys samples to a typed name. Yield data compounds the mess: harvest logs arrive with flow delay, moisture lag, and overlapping passes, uncleaned, then get averaged into summaries that erase exactly the variability precision agriculture exists to manage. The industry bought sensors for a decade and still runs prescriptions on averages."
+  },
+  {
+   "t": "p",
+   "x": "The cost is quiet and specific. Nitrogen rates applied to zones never validated against a responsive trial. Planting populations chosen from a seed guide instead of the field's own response. Irrigation scheduled off a generic calendar while soil-moisture probes stream unused to a dashboard nobody opens at five in the morning. Carbon program payments decided by questionnaire because practice evidence could not be assembled in time. And rebate structures at the retail co-op that pay on product volume, because the documented practice those rebates were supposed to reward could not be verified at claim time."
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds the spine before the prescriptions: a field-data layer holding the boundary master, practice records, trial metadata, and cleaned yield data, normalized from OEM clouds through the ADAPT framework and joined to imagery time series. On that spine, agronomy decisions become testable — nitrogen response models fitted on the operation's own replicated trials, population prescriptions tracked against flat check strips for ROI, MRV evidence assembled per field and season. We read OEM systems first, write back only where the agronomist owns the decision, and stop honestly when a field's data cannot support the claim being sold."
+  },
+  {
+   "t": "h2",
+   "x": "Five sources, five coordinate systems, five versions of the truth"
+  },
+  {
+   "t": "p",
+   "x": "Fragmentation is not primarily an API problem; it is a semantics problem. Each OEM cloud models fields, operations, and equipment its own way. Imagery platforms resample, mask clouds, and composite on their own schedules. Soil labs return PDFs keyed by sample name. Weather networks interpolate rainfall differently than the rain gauge at the bin. Probes report moisture at depths. An integration that pipes all of it into one screen without a shared field identity, a shared operation vocabulary, and shared timestamps just makes the disagreement faster. The build that matters is the one that makes the sources comparable."
+  },
+  {
+   "t": "p",
+   "x": "Trust is the real deliverable. An agronomist who cannot say which pass, which calibration, and which cloud sync produced a number will not hang a nitrogen recommendation on it, and should not. Provenance therefore has to be part of the data model: every yield point, every index value, every probe reading carries its source, its transform history, and its quality score. That is what turns a pretty map into a defensible decision, and it is the difference between imagery that decorates a recommendation and imagery that carries part of the argument."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["OEM cloud exports", "John Deere Operations Center, Case and New Holland, AGCO/PTx, and Trimble each hold machine data, boundaries, and as-applied records behind their own models and logins. Each export normalizes differently, and none of them is a data strategy."],
+    ["Imagery pipelines", "Sentinel-2 and Landsat composites, drone orthomosaics stitched from hundreds of frames, and index layers resampled differently per platform. Dates, resolution, and cloud handling must travel as metadata or comparisons lie."],
+    ["Soil lab results", "Grid and zone samples returning as PDFs and flat files keyed by hand-typed names, with methods and depths that drift year to year unless someone enforces consistency."],
+    ["Sensors and weather", "Soil-moisture probes at multiple depths, weather stations, and ET references that disagree politely. Each is useful alone; joined on a shared field and timestamp, they become a schedule."]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The field-data spine: boundary master, practice records, trial metadata"
+  },
+  {
+   "t": "p",
+   "x": "The spine is deliberately boring: a field boundary master with stable IDs and change history, practice records for planting, tillage, spraying, and irrigation with products, rates, timings, and equipment, trial metadata describing where experiments ran, and cleaned yield data keyed to boundaries. Every source joins through it, and every decision service reads from it. Without the spine, each new analytics project re-does the joins, disagreeing slightly with the last one, and the operation ends up with six versions of its own fields. The spine is also where grower consent lives, which matters the moment data is shared with programs or buyers."
+  },
+  {
+   "t": "p",
+   "x": "Boundary maintenance is the unglamorous core of precision agriculture. Boundaries change — ground is bought, rented, split, and recombined — and every measurement ever taken inherits the geometry of its year. A spine that keeps field versions with effective dates lets a 2023 yield map join a 2025 soil grid without silently mixing acres. Practice records follow the same discipline: an as-applied map means little until it carries the boundary version, the machine, the product, the rate, and the calibration state it was applied under. None of this is glamorous; all of it is why prescriptions can be trusted and audited later."
+  },
+  {
+   "t": "table",
+   "caption": "Spine entities and the decisions they anchor",
+   "headers": ["Spine entity", "What it holds", "Decisions it anchors"],
+   "rows": [
+    ["Field boundary master", "Stable field IDs, geometry, ownership and tenure, versioned change history", "Every join; acreage verification; program enrollment and reporting"],
+    ["Practice records", "Planting, tillage, spraying, irrigation events with products, rates, timings, equipment", "MRV evidence; rebate documentation; prescription audit and write-back"],
+    ["Trial metadata", "Treatments, rates, timings, plot and strip IDs, replication, design", "Strip trial analytics; response models; prescription ROI tracking"],
+    ["Cleaned yield data", "Delay-corrected, moisture-aligned, overlap-handled yield points and summaries", "Zone building; trial response; APH-quality documentation"],
+    ["Consent and rights registry", "Per-field, per-use grower consent, aggregation rules, export records", "Data cooperative operations; program data sharing; buyer reporting"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Yield data is noisy: calibration, flow delay, moisture lag, pass overlap"
+  },
+  {
+   "t": "p",
+   "x": "Raw yield logs flatter and distort at the same time. Flow delay smears mass flow behind the header, so points lag the spot they belong to. Moisture lags similarly at the sensor, corrupting dry-bushel math. Header width assumptions break on point rows and on the last pass. GPS drift and antenna offsets shift points across boundaries. Passes overlap at headlands and on scattered rounds, double-counting area. Calibration drifts through a long day as temperature and grain properties change. Stack the artifacts and a five-bushel difference between two treatments can be entirely instrument fiction — yet that is exactly the difference strip trials exist to detect."
+  },
+  {
+   "t": "p",
+   "x": "The cleaning pipeline is deterministic, documented, and rerunnable: sensor delay correction from machine geometry, moisture lag alignment, pass overlap handling, boundary and point-row logic, outlier and standard-deviation filters, and calibration verification against weigh loads where they exist. Every transformation is recorded, so a cleaned dataset can be regenerated from raw logs at any time and defended line by line. Summaries then preserve variability instead of erasing it: per-zone and per-treatment yields that trials can actually use, and documentation that survives an insurance adjuster's questions because the arithmetic is reproducible."
+  },
+  {
+   "t": "h3",
+   "x": "Calibration is a season-long discipline, not a button"
+  },
+  {
+   "t": "p",
+   "x": "Calibration loads done once at the start of harvest and never revisited are how operations end up with season-long drift. Mass flow sensors need verification as crop conditions change; moisture samplers need reference checks; load tickets and weigh wagons are ground truth worth capturing deliberately. We treat calibration events as practice records in the spine — when loads were run, against what reference, with what offsets — so a trial conducted that season can state exactly how much confidence its yield differences deserve. Fields whose calibration story is thin get flagged before anyone sells a prescription on them."
+  },
+  {
+   "t": "h2",
+   "x": "Soil sampling grids and zones that earn their keep"
+  },
+  {
+   "t": "p",
+   "x": "Grid sampling on a fixed grid and zone sampling built from soils, elevation, and yield history are both legitimate; the question is whether the resulting zones are response zones. Zones that differ in appearance but not in yield response to an input are decoration, and rates varied across them cost money without return. The spine makes the test possible: build zones, run replicated rate trials across them, and let the operation's own data say which boundaries matter. Soil chemistry then gets sampled where it changes decisions — sampling cadence, depth, and lab method held constant so year-over-year comparisons mean something."
+  },
+  {
+   "t": "p",
+   "x": "The loop closes when sampling drives prescriptions and prescriptions come back measured. Variable-rate P, K, and lime recommendations flow from zone chemistry and yield goals; as-applied maps return from the machine through ADAPT normalization; the next season's grids and trials show whether the zones earned their variation. Operations that skip the measurement half of the loop drift toward varying rates for appearance's sake. The honest pattern is small: fewer, better zones, tested annually, with boundaries retired when they stop predicting response."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Zone builds with provenance", "Zone boundaries built from soils, elevation, and yield history carry their recipe in the spine, so a recommendation can state exactly which layers produced the zones it rides on."],
+    ["Sampling cadence enforcement", "Grid and zone sampling scheduled, tracked, and held to constant depth and lab method, so the chemistry comparison across years is real instead of approximate."],
+    ["Lime and nutrient accounting", "Variable-rate application records reconciled against prescriptions and zone chemistry, closing the loop from recommendation to applied to re-sampled response."]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Nitrogen response models and N-rate algorithms on the operation's own data"
+  },
+  {
+   "t": "p",
+   "x": "The nitrogen decision is an economic one: rate per zone per timing against expected response and price. Generic state recommendations are priors, not answers — they cannot know a field's history, soil supply, or the grower's risk position. A fitted response model can, if it is fitted on data the operation trusts: replicated rate trials across years and zones, weather and soil covariates, and yields cleaned well enough to measure a response. The N-rate algorithm then produces a marginal-return answer with uncertainty attached, which an agronomist can argue with instead of quietly ignoring."
+  },
+  {
+   "t": "p",
+   "x": "Two failure modes are common and both are expensive. One is running trials too thin — a single rate comparison in a single year — and fitting confident nonsense on it. The other is buying a black-box model whose response curve nobody can inspect or challenge. Our pattern avoids both: trials designed with enough replication to state a minimum detectable difference up front, response functions the agronomist can see and interrogate, and honest limits published with the recommendation. When two thin seasons cannot support a response estimate, the algorithm says so and falls back to a conservative rate rather than inventing precision."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Response trial design", "Replicated rate strips placed where response is genuinely uncertain, blocked against known gradients, with the minimum detectable difference stated before planting so the season's answer is decided in advance."],
+    ["Economic optimum", "Marginal response valued against N price and expected crop price, per zone, with uncertainty carried through so the recommendation is a range with a reasoning trail."],
+    ["In-season adjustment", "Side-dress and late-season decisions reading in-season imagery, probe readings, and applied-to-date records, adjusting within the envelope the response model supports rather than re-guessing."]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Planting population prescriptions and hybrid placement"
+  },
+  {
+   "t": "p",
+   "x": "Population prescriptions and hybrid-by-soil-type placement are the most-widely-sold precision products and the least-widely-validated. The prescription is easy to generate; the evidence loop is rare. Closing it needs three records per season: the prescription itself, the actual planting data returned by the planter through the OEM cloud or ISOBUS task files, and emergence and final stand counts from scouting. Add a flat-rate check strip and the operation can state, with its own numbers, whether variable populations returned anything. Where they did not, the honest move is to stop paying for the map."
+  },
+  {
+   "t": "p",
+   "x": "Prescription ROI tracking makes this a standing capability rather than a one-off analysis: every prescription carries a control, every control carries its measured response, and the ledger accumulates across seasons by hybrid, by zone, by soil type. Sales claims stop being the basis for population decisions; the operation's own trial ledger is. The same ledger answers seed-company program questions honestly — which placement recommendations actually paid on this ground — which is precisely the kind of evidence an agronomist can defend in a grower meeting."
+  },
+  {
+   "t": "h2",
+   "x": "Irrigation scheduling: evapotranspiration, probes, and variable-rate irrigation"
+  },
+  {
+   "t": "p",
+   "x": "Irrigation is where sensor data most obviously rots unused. Reference evapotranspiration from weather stations, crop coefficients by stage, soil-moisture probes reporting at several depths, and VRI hardware capable of zone-level water application all exist on well-equipped operations — split across the irrigation dealer's app, the probe vendor's dashboard, and the pivot controller. The scheduling decision — how much, where, when, given pumping capacity and the power bill — still gets made by routine and habit, because the inputs never sat in one place."
+  },
+  {
+   "t": "p",
+   "x": "The decision service joins them: a daily recommendation per pivot and zone from ET demand, rainfall records, probe-measured profile refill, crop stage from planting records, and pumping constraints, with VRI maps generated for pivots that support zone control. Water use becomes documented rather than estimated — which matters for pumping cost, for aquifer reporting where it applies, and for sustainability programs asking for irrigation evidence. Where probes are too sparse to trust a zone recommendation, the service says so and schedules at the pivot level instead of pretending zone precision exists."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Probe-driven truth", "Soil-moisture readings at depth are the referee for every schedule; when probes and ET disagree, the probe wins, because the profile does not read weather models."],
+    ["VRI where it pays", "Zone-rate irrigation maps built from zone capacity and infiltration reality, retired where the pivot's hydraulics or the field's variability do not justify them."],
+    ["Water documentation", "Season-long water-use records per field assembled from schedules and flow telemetry, ready for program reporting and pumping-cost accounting without a spreadsheet archaeology project."]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Machinery telematics and the OEM cloud problem: ISOBUS, ADAPT, and four logins"
+  },
+  {
+   "t": "p",
+   "x": "A mixed-fleet operation manages four or five OEM clouds — John Deere Operations Center, Case and New Holland, AGCO's PTx ecosystem, Trimble — plus ISOBUS task files and whatever the borrowed or custom applicator produced. Each holds real data behind its own model and terms. The ADAPT framework exists precisely to normalize equipment data across these sources, and treating it as a checkbox rather than an operated service is why most operations still re-type as-applied data into the FMIS. Normalization is a pipeline to be run and monitored, not a download."
+  },
+  {
+   "t": "p",
+   "x": "What normalization buys is concrete. As-applied truth: rates, passes, and overlaps as the machine recorded them, not as the plan intended. Practice verification: planting, tillage, and spraying events that carbon programs and rebate claims can audit. Machine utilization and cost per acre joined to the fields that incurred them. And write-back paths that deliver prescriptions in each OEM's required format, so the agronomist's recommendation reaches the machine without a USB stick. Dataq Software operates this as a monitored service with the spine's identifiers enforced, so every source lands joinable rather than merely downloaded."
+  },
+  {
+   "t": "table",
+   "caption": "OEM and equipment data sources, standardized once",
+   "headers": ["Source", "What it holds", "What the pipeline standardizes"],
+   "rows": [
+    ["John Deere Operations Center", "Boundaries, operations, machine data, agronomic summaries", "Field and operation identity mapped to spine IDs; as-applied and harvest events normalized"],
+    ["Case and New Holland", "Telematics, task data, display files from CNH displays", "The same normalization; mixed-fleet joins across brands"],
+    ["AGCO / PTx", "Planter and application data across AGCO brands and the PTx ecosystem", "Population and rate truth for planting prescriptions and trials"],
+    ["Trimble / aftermarket", "Displays and guidance data on mixed and older fleets", "Legacy equipment brought into the same spine instead of orphaned"],
+    ["ISOBUS task files", "Vendor-neutral task data from capable monitors", "Direct ingestion where clouds are unavailable; offline continuity"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Replicated strip trials: separating treatment effects from soil noise"
+  },
+  {
+   "t": "p",
+   "x": "Strip trials are how the industry experiments: a treatment strip, a neighbor strip, a harvest map, a conclusion. Most of those conclusions are wrong, because soil gradients run along and across strips and a two-point comparison cannot tell treatment effect from background variability. The fix is design, not software: replicated strips, randomized treatment blocks, blocking against known gradients, and enough repetition to state a minimum detectable difference before harvest. A trial that cannot state its minimum detectable difference up front has not been designed; it has been hoped for."
+  },
+  {
+   "t": "p",
+   "x": "The analytics then do what field research has done for decades, at field scale: block by variability, fit treatment effects with spatial structure acknowledged, and report the yield difference with its statistical significance. Eight bushels with a three-bushel least significant difference is a decision. Eight bushels with a fifteen-bushel minimum detectable difference is a coin flip, and the report should say so. Every trial result lands in the spine's trial metadata with its design, so next season's questions start from accumulated evidence instead of from scratch — that accumulation is the entire compounding value of on-farm research."
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The most valuable sentence in trial analytics is the one written before planting: what difference would this trial have to show to change the decision. Trials designed backward from a decision threshold produce fewer, cleaner answers than trials designed to look thorough."
+  },
+  {
+   "t": "h3",
+   "x": "Trial metadata: the spine's rarest asset"
+  },
+  {
+   "t": "p",
+   "x": "Treatment lists, rates, timings, plot IDs, and the person who ran the trial usually live in a notebook, a phone, or one agronomist's memory. Two seasons later the operation cannot reconstruct what was tested where, and on-farm research resets annually. Recording trial metadata into the spine at design time — treatments, replication, boundaries, equipment, and the decision the trial was meant to inform — turns scattered experiments into an accumulating asset. It also disciplines the design itself: a trial that cannot be described crisply enough to register usually was not designed well enough to answer anything."
+  },
+  {
+   "t": "h2",
+   "x": "Carbon programs and MRV: evidence, not questionnaires"
+  },
+  {
+   "t": "p",
+   "x": "Carbon and ecosystem-service programs stand or fall on MRV — measurement, reporting, and verification — and most operations cannot currently produce evidence at protocol grade. What they have is practice intent (a plan), partial records (as-applied maps, seed receipts, cash register entries), and imagery that someone claims proves a cover crop. Verification-grade MRV is a pipeline: practice records from the spine, practice verification from Sentinel-2 and drone imagery time series, yield outcomes from cleaned harvest data, and soil sampling where the protocol requires it, assembled per field and season into a packet a verifier can sample."
+  },
+  {
+   "t": "p",
+   "x": "Honesty is the design constraint. Imagery can verify establishment of a cover crop, residue cover after tillage events, and the absence of certain field operations; it cannot verify everything a protocol asks for. Where a protocol needs soil organic carbon sampling at specified depths with specified lab methods, that is fieldwork to be scoped and priced, not modeled away. Fields whose evidence is incomplete are excluded from that program year rather than attested in — an operation's credibility with verifiers and buyers compounds just like trial evidence does, and it compounds in the same ledger."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Imagery-based practice verification", "Cover crop establishment, residue cover, and tillage or termination events detected from Sentinel-2 and drone time series against reported practice, with disagreement flagged before payment, not after audit."],
+    ["Verifier-ready evidence packets", "Per-field, per-season bundles of practice records, imagery extracts, and yields organized to the protocol's structure, so verification takes days and re-verification is trivial."],
+    ["Payment reconciliation", "Program payments reconciled against verified practice and enrolled acreage, with per-field evidence trails that survive buyer and registry audit."]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Agronomist workflows: scouting routes, recommendation slips, stewardship documentation"
+  },
+  {
+   "t": "p",
+   "x": "Agronomy runs on documents nobody counts as data: scouting routes and observations with photos, recommendation slips naming product, rate, timing, and field, stewardship records proving setbacks and re-entry intervals were honored, and the rebate and stewardship documentation retail programs require. The workflow breaks offline — rural connectivity fails exactly when scouts are in the field — and breaks again at handoff, when a paper recommendation becomes an application order re-typed by the applicator. Each break loses provenance the operation later needs for audits, programs, and disputes."
+  },
+  {
+   "t": "p",
+   "x": "Offline-first field apps change the shape of the day: scouts work routes with observations, counts, and photos stored locally, syncing when connectivity returns; recommendation slips flow digitally to applicators and close automatically with as-applied records returned through the spine; stewardship documentation — buffers, setbacks, re-entry intervals, restricted-use recordkeeping — assembles from practice records rather than from year-end reconstruction. The agronomist keeps their judgment and their field habits; what changes is that every document the day produces is already structured, already joined to the field, and already defensible."
+  },
+  {
+   "t": "h3",
+   "x": "Offline-first is a requirement, not a feature"
+  },
+  {
+   "t": "p",
+   "x": "Apps that merely tolerate poor connectivity fail in the specific places agronomy happens: deep in fields, under canopies, at cell-edge towers during the busiest weeks of the year. Offline-first design means the local store is authoritative during the day, writes are idempotent, conflicts resolve by rules an agronomist can predict — last writer wins on notes, merge on observations — and imagery basemaps tile to the device in advance, sized for bandwidth. The sync queue's health is monitored like any production system, because a lost day of scouting is a lost week of decisions."
+  },
+  {
+   "t": "h2",
+   "x": "Retail and co-op agronomy P&L: rebates tied to documented practice"
+  },
+  {
+   "t": "p",
+   "x": "The co-op's agronomy margin is product revenue plus manufacturer rebates, and rebate programs increasingly demand documented practice: enrolled acres, verified rates, stewardship completion, seed placement documentation. The claims problem is documentation assembled by hand from FMIS exports, applicator records, and emails — disputed, delayed, and sometimes forfeited for evidence that existed but could not be produced. Meanwhile the agronomy P&L cannot say which agronomists and branches capture the programs they sell, because program capture is not joined to the practice record."
+  },
+  {
+   "t": "p",
+   "x": "Joining rebate terms to documented practice changes the economics quietly: claims assemble per program with evidence attached from the spine — enrolled acreage, as-applied rates, stewardship events — and get filed on time, in full. Agronomy P&L reads by agronomist, branch, and program, showing capture rate and dollars left on the table. Grower statements show what was earned on whose acres, which turns rebate transparency into retention. None of this requires the co-op to change its ERP; it requires the practice record and the claim to finally meet."
+  },
+  {
+   "t": "table",
+   "caption": "Rebate and program documentation the spine supplies",
+   "headers": ["Program element", "Documentation demanded", "What the spine supplies at claim time"],
+   "rows": [
+    ["Enrolled acreage", "Field-level enrollment lists per program", "Enrollment joined to the boundary master, versioned and dated"],
+    ["Verified rates", "As-applied evidence that rates met program terms", "As-applied events normalized from machines, keyed to enrolled fields"],
+    ["Stewardship completion", "Training, setbacks, buffer and container documentation", "Stewardship events recorded in workflow, assembled per program"],
+    ["Seed placement", "Hybrid-by-field placement documentation", "Planting practice records carrying hybrid, population, and boundary version"],
+    ["Premium and program audit", "Evidence that premium dollars trace to verified practice", "Per-grower, per-field evidence trails reconciled to payments"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Grower data rights, ag data cooperatives, and Ag Data Transparent"
+  },
+  {
+   "t": "p",
+   "x": "Data ownership has become commercial, not philosophical. A grower's yield data is worth money to carbon programs, insurers, input suppliers, and buyers, and the question of who may sell it, aggregate it, or attach conditions to it is now negotiated in every program agreement. The Ag Data Transparent principles set the baseline — clarity on ownership, use limitations, and portability — and ag data cooperatives give growers collective leverage by pooling data under member control rather than signing it away platform by platform."
+  },
+  {
+   "t": "p",
+   "x": "We implement consent as data rather than as a PDF: per-field, per-use consent records in the spine's registry, aggregation rules enforced inside queries so no aggregate leaves a cooperative below its minimum field count, and portability handled as exports in open formats on request. Program integrations inherit the consent layer automatically, so a carbon program, a lender, or a buyer reporting pipeline cannot move data the consent registry does not cover. Cooperatives keep their member contract; we make it technically enforceable, which is the only kind of enforcement that scales."
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems this work touches"
+  },
+  {
+   "t": "p",
+   "x": "The precision agriculture build reads a wider estate than most agronomy software projects admit: machines, clouds, imagery platforms, labs, dealer systems, and program trackers, each holding a piece of the season. The inventory below is what we typically integrate, where it lives, and what the spine adds. It doubles as scope discipline — the spine reads these estates and normalizes them into one identifier space; it replaces none of them, and each integration is scoped against a named decision rather than a vendor's full surface."
+  },
+  {
+   "t": "table",
+   "caption": "The estate underneath: systems this work touches",
+   "headers": ["Estate", "Typical incumbents", "What the spine reads and normalizes"],
+   "rows": [
+    ["Machinery and OEM clouds", "John Deere Operations Center, Case and New Holland, AGCO/PTx, Trimble displays", "Boundaries, task data, as-applied and harvest events via ADAPT normalization"],
+    ["FMIS and ag retail", "Agronomy FMIS, retail ERP, recommendation systems", "Practice records, recommendations, product and program references keyed to spine IDs"],
+    ["Imagery", "Sentinel-2 and Landsat pipelines, drone orthomosaics, index services", "Composited time series joined to boundary versions with dates, masks, and quality flags"],
+    ["Soil and labs", "Soil lab exports, sampling services, probe telemetry", "Grids, zones, chemistry with methods and depths; probe readings keyed to fields"],
+    ["Irrigation", "Pivot controllers, VRI panels, dealer scheduling apps", "ET, rainfall, probe and flow telemetry joined into scheduling and documentation"],
+    ["Programs and claims", "Carbon program trackers, rebate portals, stewardship systems", "Evidence packets, claim assemblies, and consent-gated data sharing"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "A reference architecture for the precision ag decision stack"
+  },
+  {
+   "t": "p",
+   "x": "The stack below shows how the pieces assemble. Machine and sensor sources normalize through ADAPT into the field-data spine; imagery joins on boundaries; the decision services — zones, nitrogen, populations, irrigation — read the spine and write prescriptions back to machines; trials and MRV accumulate evidence; programs, rebates, and consent govern what may leave the operation. In the two-week baseline we map which of these nodes exist, which are stubs, and which decisions run on averages, then sequence the build against the gaps with the largest measured cost."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — precision agriculture and agronomy decision stack",
+   "lanes": ["Machines and sensors", "Imagery and remote sensing", "Field-data spine", "Agronomy decision services", "Trials and evidence", "Programs, P&L and data rights"],
+   "nodes": [
+    {"id": "telematics", "lane": 0, "label": "ISOBUS task data and machine telemetry"},
+    {"id": "oem-clouds", "lane": 0, "label": "OEM clouds — Deere Ops Center, CNH, AGCO/PTx, Trimble"},
+    {"id": "yield-raw", "lane": 0, "label": "Yield monitor raw harvest logs"},
+    {"id": "probes", "lane": 0, "label": "Soil-moisture probes and weather stations"},
+    {"id": "sentinel", "lane": 1, "label": "Sentinel-2 / Landsat composites and drone orthomosaics"},
+    {"id": "field-master", "lane": 2, "label": "Field boundary master"},
+    {"id": "practice", "lane": 2, "label": "Practice records — planting, tillage, spray"},
+    {"id": "adapt", "lane": 2, "label": "ADAPT normalization service"},
+    {"id": "yield-clean", "lane": 2, "label": "Yield cleaning pipeline"},
+    {"id": "trial-meta", "lane": 2, "label": "Trial metadata registry"},
+    {"id": "consent", "lane": 2, "label": "Consent and data-rights registry"},
+    {"id": "zones", "lane": 3, "label": "Soil grids and management zones"},
+    {"id": "nrate", "lane": 3, "label": "Nitrogen response model and N-rate algorithm"},
+    {"id": "plant-rx", "lane": 3, "label": "Planting population prescriptions"},
+    {"id": "irrig", "lane": 3, "label": "ET and probe-driven irrigation with VRI"},
+    {"id": "scouting", "lane": 3, "label": "Scouting routes and recommendation slips"},
+    {"id": "trials", "lane": 4, "label": "Replicated strip trial analytics"},
+    {"id": "roi", "lane": 4, "label": "Prescription ROI tracking"},
+    {"id": "mrv", "lane": 4, "label": "MRV evidence pipeline"},
+    {"id": "rebates", "lane": 5, "label": "Rebate capture, stewardship docs and agronomy P&L"}
+   ],
+   "edges": [
+    {"a": "telematics", "b": "adapt"},
+    {"a": "oem-clouds", "b": "adapt"},
+    {"a": "yield-raw", "b": "adapt"},
+    {"a": "adapt", "b": "practice"},
+    {"a": "adapt", "b": "yield-clean"},
+    {"a": "sentinel", "b": "field-master"},
+    {"a": "practice", "b": "field-master"},
+    {"a": "yield-clean", "b": "field-master"},
+    {"a": "field-master", "b": "zones"},
+    {"a": "field-master", "b": "trial-meta"},
+    {"a": "zones", "b": "nrate"},
+    {"a": "zones", "b": "plant-rx"},
+    {"a": "trial-meta", "b": "trials"},
+    {"a": "trials", "b": "nrate"},
+    {"a": "trials", "b": "roi"},
+    {"a": "nrate", "b": "roi"},
+    {"a": "plant-rx", "b": "roi"},
+    {"a": "probes", "b": "irrig"},
+    {"a": "practice", "b": "mrv"},
+    {"a": "sentinel", "b": "mrv"},
+    {"a": "practice", "b": "rebates"},
+    {"a": "roi", "b": "rebates"},
+    {"a": "consent", "b": "rebates"},
+    {"a": "scouting", "b": "practice"}
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Engagement model: baseline on your own data, then decisions in order"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software starts precision agriculture engagements the same way every time: two weeks reading your own estate. We pull harvest logs, OEM cloud exports, imagery metadata, soil results, and trial notes, clean a sample of yield data, and report what your data can currently support — which decisions have evidence behind them and which are running on averages and vendor claims. The output is a quantified gap list with a feasibility read and a sequenced roadmap: prescription loops worth building first, trials worth designing next, and integrations that are not worth their cost, stated plainly. If your data cannot support a claim being sold to you, the report says so."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Two-week field-data baseline", "We read and clean real samples from your yield logs, imagery, and OEM exports, and report evidence quality per decision — no platform license required, no rip-and-replace."],
+    ["Trial-first sequencing", "Where prescriptions are unproven, we design replicated strip trials with stated minimum detectable differences before selling analytics on top of them."],
+    ["Read-first integrations", "OEM clouds, probes, and controllers are read-only until an agronomist owns the write; prescription write-back goes through formats the machines actually accept."],
+    ["Prescription ROI ledgers", "Every prescription carries a control and a measured result; the ledger accumulates across seasons and is yours to audit."],
+    ["Honest stop conditions", "If a field's data cannot support the practice claim, the program claim, or the prescription, we exclude it and say why — credibility compounds; attestation does not."]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions precision agriculture leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Can you work with our mixed fleet instead of one OEM's ecosystem?", "That is the normal case. ADAPT normalization plus OEM cloud interfaces bring John Deere, Case and New Holland, AGCO/PTx, and Trimble data into one spine with one field identity, so decisions stop depending on which color of machine ran the pass."],
+    ["Our yield data is a mess. Is that disqualifying?", "No — it is the starting condition everywhere. The baseline cleans a real sample and reports what remains usable per field; the roadmap fixes capture where it blocks decisions that matter, and skips cleaning work that would change nothing."],
+    ["How do we know a prescription actually returned money?", "Every prescription we deploy carries a flat check strip and lands in a ROI ledger with its measured response. After a few seasons the operation knows which prescriptions pay on its ground and which were vendor confidence."],
+    ["Can imagery really verify cover crops for a carbon program?", "For establishment, termination timing, and many tillage events, yes — with disagreements flagged rather than papered over. For protocol elements imagery cannot verify, we scope the soil sampling and fieldwork instead of pretending."],
+    ["Who owns the data once it is in the spine?", "The grower does, and the consent registry enforces it per field and per use. For cooperatives, aggregation rules run inside the query layer, so no report can leak below the minimum field count the members agreed to."],
+    ["We already bought an analytics platform. Does this replace it?", "Usually not. Most platforms visualize; they do not normalize mixed-fleet data, run trials, or enforce consent. The spine feeds platforms as happily as it feeds our services, and the baseline will show which platform features your data can actually support."],
+    ["What does a first season look like?", "Baseline in two weeks, spine and yield cleaning in the following weeks, one or two trial designs registered before planting, and prescription write-back proven on a handful of fields by harvest — measured, not promised."]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Pick the question that will not die — an N-rate recommendation nobody validated, a carbon program paying on questionnaires, a rebate claim forfeited for missing evidence — and Dataq Software will baseline it against your own data in two weeks: yield logs cleaned and scored, OEM exports normalized, trial history assembled, evidence gaps priced. You get a quantified read on what your field data can support and what it cannot. If the numbers justify the build, we sequence the spine and the prescription loops on the systems you already run; if they do not, you keep the analysis and we stop there."
+  }
+ ]
+}

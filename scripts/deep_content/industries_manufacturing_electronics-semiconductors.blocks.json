@@ -1,0 +1,754 @@
+{
+ "file": "industries_manufacturing_electronics-semiconductors",
+ "meta_description": "How Dataq Software engineers semiconductor fabs and electronics plants: SECS/GEM data planes, yield analytics that close excursions, FDC and R2R governance, dispatch optimization beyond heuristics, tool-health prediction and fab IP security — built against your MES, APC and OSAT estate.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Semiconductor and electronics manufacturing runs the tightest quality-latency loops in industry: a wafer crosses a thousand process steps, a yield excursion costs more per hour than most plants lose in a month, and the tool that drifts silently tonight becomes the scrap bin next week. The fabs that win industrialize the loop from telemetry to decision — fault detection on every run, run-to-run control that trusts its metrology, dispatch that sees the bottleneck before the queue does — and they treat root-cause analysis as an engineered system rather than a heroic meeting. This page is the engineering picture of that loop: the systems a fab and its electronics supply chain actually run, the points where they leak yield and margin, and the six deep builds Dataq Software ships into them."
+  },
+  {
+   "t": "h2",
+   "x": "How the loop actually runs"
+  },
+  {
+   "t": "p",
+   "x": "In semiconductor and electronics manufacturing, the unit of work is the lot, and the lot lives in the MES: a 300mm fab tracks each of its thousands of lots through lithography, etch, deposition and CMP steps, with every run generating a SECS/GEM conversation between the tool and the equipment layer. Process parameters, chamber conditions and trace data stream into APC platforms, where fault detection and classification models watch each recipe step and run-to-run control adjusts the next wafer against the metrology result. Dispatch rules decide which lot gets the next available tool — by queue time, by criticality, by downstream bottleneck — and the rules were tuned once and argued over ever since."
+  },
+  {
+   "t": "p",
+   "x": "Quality is a measurement business at every scale. Metrology teams sample film thickness, CD and overlay; inline inspection feeds defect classification; and the yield management system joins process parameters, metrology and wafer-map defect data into the common cause analyses that decide whether an excursion is contained or still spreading. Reticle management tracks photolithography masks through their lifecycles, because a scratched reticle can quietly damage every die it touches. Virtual metrology promises to fill the sampling gaps, but trusts have to be engineered: a model that predicts thickness without quantifying when it may be wrong is a liability wearing an accuracy number."
+  },
+  {
+   "t": "p",
+   "x": "Around the fab, the supply chain runs its own clock. Downstream, OSAT partners handle test and assembly, so package-level yield problems surface days after the process cause. Upstream, component lifecycle events — PCN and EOL notices, wafer allocation shifts, substrate shortages — land on planners who balance demand against capacity across quarters. In electronics assembly, the same pattern repeats at smaller scale: SMT lines run feeder and oven telemetry, AOI stations classify solder defects, and the RMA and failure-analysis loop feeds engineering change decisions. Every one of these loops produces data faster than decisions, and the gap between the two is where cost and risk accumulate."
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems this work touches"
+  },
+  {
+   "t": "p",
+   "x": "Fab programs succeed or fail on how honestly the estate is mapped before anything is built. Dataq Software starts every engagement by naming the systems, their owners, their change cadences and their data contracts — from the SECS/GEM interface at the tool to the allocation spreadsheet at the supply desk. The table below is the estate we most often integrate against in fabs and electronics plants, with the strain points we plan for."
+  },
+  {
+   "t": "table",
+   "caption": "The fab and electronics estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
+    [
+     "Fab MES at ISA-95 level 3",
+     "Lot lifecycle, routing, holds, WIP tracking, rework and split-lot control",
+     "Transaction-centric; holds and dispatch state scattered across subsystems; integration cycles measured in quarters"
+    ],
+    [
+     "Equipment layer with SECS/GEM",
+     "Tool communication: process events, alarms, traces, recipe parameters, E10 states",
+     "GEM compliance varies by vendor and vintage; trace volumes overwhelm naive ingestion"
+    ],
+    [
+     "APC platform: FDC and R2R",
+     "Fault detection and classification on every run; run-to-run recipe adjustments",
+     "Models tuned per chamber drift silently; false alarms erode operator trust; coverage gaps on older tools"
+    ],
+    [
+     "Yield management and defect systems",
+     "Wafer maps, defect classification, parametric data, excursion flagging, common-cause analysis",
+     "Data siloed by tool generation; RCA takes days of manual correlation across teams"
+    ],
+    [
+     "Metrology and LIMS",
+     "Film, CD, overlay measurements; lab results; sampling plans; virtual metrology inputs",
+     "Sampling thin where risk is highest; virtual metrology models lack trust governance"
+    ],
+    [
+     "Dispatch and scheduling",
+     "Lot prioritization, tool matching, bottleneck management, batch decisions",
+     "Heuristic rules plateau; a dispatch decision ignores what maintenance knows about the tool"
+    ],
+    [
+     "ERP and supply planning",
+     "Demand-supply balancing, allocation, ATP/CTP, component lifecycle tracking",
+     "Allocation shocks arrive faster than plan cycles; PCN/EOL events tracked in spreadsheets"
+    ],
+    [
+     "OSAT and test coordination",
+     "Test and assembly lots, package-level yield, RMA and failure-analysis routing",
+     "Package failures surface late; FA data rarely rejoins fab process context"
+    ],
+    [
+     "Fab data historian and lake",
+     "Trace storage, sensor archives, analytics sandboxes feeding yield and maintenance teams",
+     "Schema drift across tool generations; trace data too expensive to keep, too valuable to drop"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where the yield and the margin leak"
+  },
+  {
+   "t": "p",
+   "x": "Ask fab and plant leaders where the money leaks and the answers converge on the same places, described in their own words. Dataq Software scores each leak in the estate before recommending a build, because the dominant leak in one line is often minor at the next — and the scoring produces the baseline the program is measured against."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Excursions traced slowly",
+     "A yield excursion starts a manual chase across process traces, metrology results and wafer maps held by different teams in different tool generations. Days pass before common cause is certain, and every day of uncertainty extends the affected population and the containment cost. The data to close an excursion in hours usually exists; what is missing is the joined, lineage-tracked store and the analysis workflow that treats RCA as an engineering service rather than a meeting."
+    ],
+    [
+     "Defect classification that never learns",
+     "Wafer-map review depends on expert eyes, and rare defect classes stay unlearned because labeling capacity goes to the classes everyone knows. New patterns from a process change take weeks to enter the taxonomy, so the inspection layer is blind exactly when the process is most unstable. Defect intelligence with active learning changes the economics: the hard cases route to experts, and every disposition trains the model."
+    ],
+    [
+     "Tool health that fails unscheduled",
+     "Vacuum subsystems, robots, valves and CMP tables fail on their own schedule because precursors hide in trace data nobody mines. Tool-down hours compound through the dispatch queue, and the bottleneck tool takes down the whole line's cycle time with it. Condition indicators computed from SECS/GEM traces and sensor streams, wired into maintenance windows, convert emergency repairs into planned interventions."
+    ],
+    [
+     "Dispatch rules that plateau",
+     "Dispatch is combinatorial: lots, tools, reticles, chamber condition, downstream bottlenecks and maintenance windows all interact. Heuristic rules tuned over years reach a ceiling the fab lives behind, and every expedite tears a hole in the queue the rules spend days repairing. Formulation search across solvers and learned dispatch policies, benchmarked against the incumbent, is how the ceiling moves."
+    ],
+    [
+     "Allocation and lifecycle shocks",
+     "Demand-supply balancing runs on quarterly plan cycles while allocation shocks, PCN notices and EOL announcements arrive in days. The consequences ripple through ATP/CTP commitments and into customer promises nobody can recompute in time. Component intelligence that watches lifecycle events and models substitution paths converts the shocks into managed decisions instead of escalations."
+    ],
+    [
+     "Reticle and photolithography blind spots",
+     "Reticles age with every exposure, and inspection of the mask itself is sampled thinly. A degrading reticle damages dies across many lots before anyone connects the wafer-map signature to the mask. Lifecycle tracking joined with litho telemetry and defect patterns turns reticle health into a monitored quantity with a replacement decision that pays for itself."
+    ],
+    [
+     "Virtual metrology without trust",
+     "Sampling plans cannot cover every run, and virtual metrology could fill the gaps — if the models carried error bars, drift monitoring and clear fallback-to-physical rules. Without that governance, engineers ignore the predictions or, worse, trust them silently. The metrology build makes trust explicit: uncertainty quantified, drift watched, and physical re-measurement triggered by risk rather than by calendar."
+    ],
+    [
+     "Fab IP with a wide attack surface",
+     "Process recipes and yield data are state-grade targets, and the fab estate is enormous: thousands of tools, vendor laptops, remote diagnostics, flat networks older than the security discipline. Export controls add handling duties to the same data. Fab IP security — zoning per IEC 62443, monitored conduits, exfiltration controls and recipe-access governance — is an engineering program that runs beside production, not a compliance binder."
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight leaks: the fab generates the evidence for every decision it needs — process traces, metrology, wafer maps, tool states — but the evidence lives in silos with different generations of schema. Closing the gap is a data engineering program first; the models are the easy half of the work."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works electronics and semiconductors"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the fab and plant estate you already run. We do not arrive with a replacement MES, an APC rip-and-replace, or a deck that ends where the integration begins. The engagement model is engineering-first: a two-week diagnostic that baselines one workflow end to end — one excursion path, one tool family, one dispatch lane, one allocation desk — then a scoped build that ships behind your change control, your equipment interface standards and the security review that governs everything near a recipe."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver here. First, every automated decision carries replay: inputs, model versions, thresholds and outcomes are stored, so the question of why a lot was held, or why a chamber was flagged, is a query rather than an investigation. Second, every model is bound to its physics — FDC to the chamber's known failure signatures, virtual metrology to its sampling validation, dispatch to the line's real constraint set — because models that ignore how the process runs get overruled and abandoned within a quarter. Third, every build lands with its evidence layer: the artifacts a customer audit, an export-control review or an ISO assessor will ask for are generated continuously by the system."
+  },
+  {
+   "t": "p",
+   "x": "The published record for the wider sector frames what these methods deliver when the baseline is honest: a global automotive OEM that gained 7.2 OEE points across 14 plants from sensor fabric through scheduling decisions, and a specialty chemicals producer that lifted yield 3.4 points while cutting energy per tonne 17% on an APC augmentation program. The same discipline — instrument what pays, close the loop from prediction to decision, generate the evidence as a by-product — is what the builds below bring to a fab or an electronics line, sized to its own baseline."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for fabs and electronics"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the spine of our electronics and semiconductor practice. Each build is named for the workflow it changes, sized in the diagnostic, and shipped with the controls the tool owners, the security team and the auditors will expect. None of them require replacing the MES or the APC platform; all of them require taking the equipment data contracts seriously."
+  },
+  {
+   "t": "h3",
+   "x": "1. The yield analytics spine — excursion RCA as an engineered service"
+  },
+  {
+   "t": "p",
+   "x": "The spine build joins what RCA needs: process parameters and traces from the APC layer, metrology and parametric results, inline defect data and wafer maps, reticle identities, split-lot and rework history from the MES. Every feed carries a schema contract keyed to tool family and process generation, so a chamber from 2015 and one from last year query the same way. The store is lineage-tracked end to end, and the excursion workflow sits on top: flag, scope the affected population, compare against healthy context, and rank candidate causes with the evidence attached."
+  },
+  {
+   "t": "p",
+   "x": "Integration engineers and MSAT work the same interface: pre-assembled comparisons, the affected lots enumerated, the containment proposal computed before the meeting. Common-cause analyses that took days of manual correlation collapse into hours, and the containment decision arrives while the affected population is still small. The measured outcomes are excursion MTTR, contained-population size and the repeat-excursion rate — the last one being the signal that root causes are actually being closed."
+  },
+  {
+   "t": "h3",
+   "x": "2. Defect intelligence with active learning"
+  },
+  {
+   "t": "p",
+   "x": "The defect build attacks classification economics: multi-class models over wafer-map and image data, with an active-learning loop that routes ambiguous cases to the experts whose labels train the next round. Rare classes stop being structurally unlearned, because the system is designed to notice what it does not recognize. Every disposition — real defect, nuisance, known artifact — feeds the taxonomy, and the taxonomy is versioned so a process change is visible as a distribution shift, not a mystery."
+  },
+  {
+   "t": "p",
+   "x": "The classification output integrates where decisions happen: inline inspection thresholds, excursion flagging, and the RCA spine above, so a new defect signature raises its hand at the line instead of waiting for a yield report. Golden sets per process step anchor the evaluation, and drift monitoring watches the models the way APC watches the chambers. The measured outcomes are classification precision on the classes that matter, reviewer hours per thousand defects, and the time from first appearance to named class."
+  },
+  {
+   "t": "h3",
+   "x": "3. FDC, R2R and virtual metrology governance"
+  },
+  {
+   "t": "p",
+   "x": "This build does not replace the APC platform; it gives it the supervision it never had. Fault-detection coverage is mapped per tool family and process step, with the gaps named and priced. False-alarm sources are diagnosed and tuned against chamber physics, because an FDC system the operators mute is worse than none. R2R control loops get drift monitoring, challenger evaluation and rollback paths, so a control change is as governed as a recipe change."
+  },
+  {
+   "t": "p",
+   "x": "Virtual metrology enters only under trust governance: uncertainty quantified per prediction, drift watched against physical sampling, fallback rules that trigger re-measurement by risk. The integration layer routes predictions to the consumers who need them — SPC, dispatch, release logic — with the confidence attached. The measured outcomes are FDC precision at fixed recall, R2R intervention quality, and the share of runs covered by metrology-grade confidence without a physical measurement."
+  },
+  {
+   "t": "h3",
+   "x": "4. Tool health and bottleneck reliability"
+  },
+  {
+   "t": "p",
+   "x": "The tool-health build mines what the estate already streams: SECS/GEM traces, E10 state histories, alarm patterns, consumable counters and sensor channels. Condition indicators are computed per subsystem — vacuum, motion, thermal, chemical delivery — and scored against failure-mode models validated at fleet level. Interventions land as maintenance proposals with the evidence attached: the trend, the anomaly, the recommended window, and the dispatch consequences of taking the tool down now versus in two shifts."
+  },
+  {
+   "t": "p",
+   "x": "The bottleneck interaction is the differentiator: when the constraint tool degrades, the model weighs the repair window against the queue it will create, and the scheduler sees both sides of the trade. Every closed intervention feeds back as a label. The measured outcomes are unscheduled tool-down hours, mean time between failures on the modeled subsystems, and cycle-time variance through the bottleneck — the metric the fab feels first when reliability moves."
+  },
+  {
+   "t": "h3",
+   "x": "5. Dispatch and allocation intelligence"
+  },
+  {
+   "t": "p",
+   "x": "The dispatch build treats lot sequencing as a formulation, not folklore: lots, tools, reticle availability, chamber condition, setup costs and downstream bottlenecks encoded as objectives and constraints, then searched across solver formulations and learned policies. Candidates are benchmarked against the incumbent rules on shadow replays of real days — including the ugly ones with the expedites — because a dispatch policy that only wins on clean days is not a policy."
+  },
+  {
+   "t": "p",
+   "x": "Above the line, the same decision layer handles allocation: demand-supply balancing that recomputes ATP/CTP when an allocation shock lands, component intelligence that watches PCN and EOL events and models substitution paths before the shortage, and package-level coordination with OSAT partners so test yields join the same planning picture. The measured outcomes are on-time starts, queue-time variance at the bottleneck, expedite counts and the fraction of lifecycle shocks converted into managed decisions."
+  },
+  {
+   "t": "h3",
+   "x": "6. Fab IP security and export-control evidence"
+  },
+  {
+   "t": "p",
+   "x": "The security build starts with enumeration: every tool interface, engineering workstation, vendor remote-access path and data store listed, owned and risk-ranked. Zones and conduits are designed per IEC 62443 around the process recipes and yield data, implemented in phases that respect tool downtime calendars. Recipe access moves behind named identities with dual control; vendor diagnostics are brokered and recorded; exfiltration paths are monitored against baselines that understand what normal fab traffic looks like."
+  },
+  {
+   "t": "p",
+   "x": "The evidence layer covers the obligations that ride on the same data: export-control handling of controlled technology, with access and transfer records generated continuously; customer IP segregation inside shared fabs, proven by policy and by query; and the incident playbooks that assume the adversary wants the recipe book, not the payroll. The measured outcomes are named-access coverage on recipe stores, vendor-session compliance, and the time to produce a complete access history for any controlled artifact."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — fab and electronics decision stack",
+   "lanes": [
+    "Tool level",
+    "Fab systems",
+    "Data spine",
+    "Yield intelligence",
+    "Controls and evidence",
+    "Operations surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "tools",
+     "lane": 0,
+     "label": "Process tools with SECS/GEM interfaces"
+    },
+    {
+     "id": "metro",
+     "lane": 0,
+     "label": "Metrology and inline inspection"
+    },
+    {
+     "id": "reticles",
+     "lane": 0,
+     "label": "Reticle and photolithography assets"
+    },
+    {
+     "id": "mes",
+     "lane": 1,
+     "label": "Fab MES: lots, holds, splits"
+    },
+    {
+     "id": "apc",
+     "lane": 1,
+     "label": "APC platform: FDC and R2R"
+    },
+    {
+     "id": "yms",
+     "lane": 1,
+     "label": "Yield management and wafer maps"
+    },
+    {
+     "id": "erp",
+     "lane": 1,
+     "label": "ERP and supply planning"
+    },
+    {
+     "id": "gem",
+     "lane": 2,
+     "label": "SECS/GEM trace ingestion"
+    },
+    {
+     "id": "cdc",
+     "lane": 2,
+     "label": "MES and ERP change-data-capture"
+    },
+    {
+     "id": "lake",
+     "lane": 2,
+     "label": "Fab decision lakehouse",
+     "hot": true
+    },
+    {
+     "id": "feat",
+     "lane": 2,
+     "label": "Trace feature store"
+    },
+    {
+     "id": "rca",
+     "lane": 3,
+     "label": "Excursion RCA service",
+     "hot": true
+    },
+    {
+     "id": "defcls",
+     "lane": 3,
+     "label": "Defect classification loop"
+    },
+    {
+     "id": "vm",
+     "lane": 3,
+     "label": "Virtual metrology governance"
+    },
+    {
+     "id": "dispatch",
+     "lane": 3,
+     "label": "Dispatch and allocation optimizer"
+    },
+    {
+     "id": "toolhealth",
+     "lane": 3,
+     "label": "Tool health models"
+    },
+    {
+     "id": "evi",
+     "lane": 4,
+     "label": "Decision replay and evidence store"
+    },
+    {
+     "id": "ipsec",
+     "lane": 4,
+     "label": "Recipe access and IP controls"
+    },
+    {
+     "id": "msat",
+     "lane": 5,
+     "label": "MSAT and integration workbench"
+    },
+    {
+     "id": "maint",
+     "lane": 5,
+     "label": "Maintenance planning queue"
+    }
+   ],
+   "edges": [
+    {
+     "a": "tools",
+     "b": "gem"
+    },
+    {
+     "a": "metro",
+     "b": "gem"
+    },
+    {
+     "a": "tools",
+     "b": "apc"
+    },
+    {
+     "a": "mes",
+     "b": "cdc"
+    },
+    {
+     "a": "erp",
+     "b": "cdc"
+    },
+    {
+     "a": "yms",
+     "b": "cdc"
+    },
+    {
+     "a": "gem",
+     "b": "feat"
+    },
+    {
+     "a": "cdc",
+     "b": "lake"
+    },
+    {
+     "a": "feat",
+     "b": "lake"
+    },
+    {
+     "a": "lake",
+     "b": "rca"
+    },
+    {
+     "a": "lake",
+     "b": "defcls"
+    },
+    {
+     "a": "lake",
+     "b": "vm"
+    },
+    {
+     "a": "lake",
+     "b": "dispatch"
+    },
+    {
+     "a": "lake",
+     "b": "toolhealth"
+    },
+    {
+     "a": "rca",
+     "b": "msat"
+    },
+    {
+     "a": "dispatch",
+     "b": "msat"
+    },
+    {
+     "a": "toolhealth",
+     "b": "maint"
+    },
+    {
+     "a": "defcls",
+     "b": "evi"
+    },
+    {
+     "a": "vm",
+     "b": "evi"
+    },
+    {
+     "a": "rca",
+     "b": "evi"
+    },
+    {
+     "a": "evi",
+     "b": "ipsec"
+    }
+   ],
+   "note": "Lanes and nodes are named for the systems a fab build actually touches — SECS/GEM interfaces, the APC platform, yield management, the supply desk — not a generic stack. The hot nodes mark where differentiation concentrates: the lakehouse that joins tool generations into one queryable spine, and the excursion service that turns RCA from a meeting into an engineered workflow. Every edge exists because a decision, an engineer or an auditor consumes it."
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: traces at scale, governed at every hop"
+  },
+  {
+   "t": "p",
+   "x": "A fab is one of the densest data environments in industry: every run streams trace channels, every wafer carries a map, every lot carries a transaction history, and the volumes make naive lake strategies expensive fast. The data plane build tiers the estate deliberately — hot features for the decision services, warm history for RCA and trend work, cold archive for the compliance tail — with schema contracts keyed to tool family so a 2015 chamber and this year's tool query through the same interface."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries an owner, a freshness SLA and a reconciliation check against source counts; trace channels land with units, sampling rates and calibration references, because a chamber trace without its sensor context is a shape, not a signal. Wafer maps join their process genealogy at ingest, so excursion scoping does not begin with a data hunt. When a tool vendor changes a schema, the contract fails loudly at the boundary instead of silently inside an FDC feature."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "SECS/GEM-native ingestion",
+     "traces, alarms and E10 states captured at the source with backpressure control, so tool communication never waits on analytics"
+    ],
+    [
+     "Tool-family schema contracts",
+     "chamber and tool interfaces normalized per family and generation, so models and RCA queries span the estate instead of one tool vintage"
+    ],
+    [
+     "Wafer-genealogy joins at ingest",
+     "maps, splits, rework and reticle identities joined when data lands, so excursion scoping starts from a complete picture"
+    ],
+    [
+     "Tiered storage with priced retention",
+     "hot features, warm history and compliance archives with explicit costs, so the trace estate stays affordable as it grows"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: holds, flags and their receipts"
+  },
+  {
+   "t": "p",
+   "x": "Fab decisions have short clocks and expensive tails: a hold on a lot, an FDC flag on a chamber, a dispatch priority, a release under virtual metrology. The decision layer treats each as a governed object. Every decision records its inputs, model versions, thresholds and outcomes in a replay store, so the question of why a lot sat for six hours, or why a chamber was cleared, is a query. Threshold changes go through review with the challenger's statistics attached, the way recipe changes always have."
+  },
+  {
+   "t": "p",
+   "x": "Every model sits on a physics floor: FDC must respect the chamber's known failure signatures, virtual metrology must carry its validation envelope, dispatch must respect the constraint set the process engineers recognize. When model and physics disagree, the disagreement is surfaced to MSAT rather than averaged away. Champion and challenger evaluation runs on shadow data with the process owners reading the results — because in a fab, adoption is earned in the integration lab, not in a steering committee."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: engineering preparation without authority"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work in a fab — excursion file assembly, containment scoping, FA report drafting, MSAT comparison packs, lifecycle-event dossiers — follows patterns an agentic workforce can absorb without touching the process. Dataq Software's agent platform runs digital workers with explicit role scopes: the systems they may read, the documents they may draft, the actions that require a human checkpoint and the budget of work per run. Every run logs its steps and outputs to the same evidence store the human workflow uses."
+  },
+  {
+   "t": "p",
+   "x": "Agents never touch tool interfaces, recipes or MES execution; they move work to the decision point and stop. A drafted excursion summary waits for the process engineer's authorship, with every factual claim traced to the evidence store; a scoping list waits for the integration owner; a lifecycle dossier waits for the sourcing desk. The capacity story is measured in hours returned per engineer per week — the number that matters in organizations where PhD time is the scarcest resource in the building."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: the audit runs on system output"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory surface of semiconductor and electronics manufacturing is unusual: export controls sit beside quality systems, product-security duties arrive with connectivity, and environmental permits govern the chemistry. Dataq Software's answer is the evidence layer: the artifacts a reviewer, customer or regulator will ask for are generated continuously by the systems themselves. The table maps the regimes we build against to the evidence our builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape fab and electronics builds — and the evidence each one gets",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What our build produces"
+   ],
+   "rows": [
+    [
+     "Export controls (EAR-class)",
+     "Controlled technology handling, access restriction, transfer records",
+     "Named-access logs on recipe and yield stores, transfer lineage, per-artifact access histories on demand"
+    ],
+    [
+     "ISO 9001 quality systems",
+     "Process control evidence, calibration, corrective-action rigor",
+     "Decision replay for holds and releases, SPC integration evidence, CAPA files assembled from telemetry"
+    ],
+    [
+     "IEC 62443 and NIS2",
+     "OT zones and conduits, access control, monitoring, recovery",
+     "Zone and conduit register, posture reports, rehearsed recovery evidence for tool networks"
+    ],
+    [
+     "Environmental permits",
+     "Fab emissions, effluent and chemical-handling records",
+     "Metered balances and stack data with lineage, exceedance alerts, audit-ready reporting datasets"
+    ],
+    [
+     "Conflict minerals and supply duties",
+     "Chain-of-custody evidence through the component base",
+     "Lifecycle event tracking with supplier attestations joined to the allocation picture"
+    ],
+    [
+     "Customer and foundry audits",
+     "Lot-level evidence on demand, excursion closures with data",
+     "Containment and RCA files from the evidence store, per-lot quality packets generated on request"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the tools stay, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Fab estates are layered over decades of tool generations, and promising greenfield is the fastest way to lose the integration lab. Our integration posture is contractual: schema contracts per tool family and interface, data landed through SECS/GEM, CDC and governed APIs, write-back through the MES and APC interfaces your change control already governs, and every new component independently deployable behind flags. The MES is not replaced; it is supplied with better context and drained of the reporting it was never good at."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment. Tool vendors, inspection suppliers and metrology platforms sit behind abstraction with contract tests, so a replacement is a migration runbook rather than a line-down event. Where an older tool cannot be upgraded, the offload pattern applies: the tool keeps running while a monitored, read-only path exports its traces with a documented schema. This is unglamorous work, and it is why these builds hold up in production instead of in a pilot bay."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Write-back through your interfaces",
+     "holds, flags and dispatch priorities flow through the MES and APC interfaces your change control already governs, never around them"
+    ],
+    [
+     "Tool-vintage abstraction",
+     "SECS/GEM variants and proprietary exports normalized behind contract tests, so a tool swap is configuration, not surgery"
+    ],
+    [
+     "Legacy offload, read-only and monitored",
+     "older tools keep running while monitored feeds export their traces with documented schemas and health checks"
+    ],
+    [
+     "Feature-flagged, independently deployable",
+     "every build ships behind flags with rehearsed rollback, because the integration lab will ask"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement. It starts with a two-week diagnostic: one workflow baselined end to end — usually the excursion path or one tool family — the leak quantified in the fab's own telemetry, the data contracts inventoried, and a written feasibility read the fab manager, MSAT and the security team can all circulate, including the uncomfortable findings. If the delta is real, the build is scoped against your change control and interface standards; if not, the baseline stays with you."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "one workflow instrumented, leak quantified, contract inventory across tool families, feasibility read with the delta estimate and the confounders named"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one tool family or one excursion path live behind flags with replay and evidence running from day one — validated in the integration lab before the line"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "model documentation landed, evidence layer live, remaining tool families added, capacity telemetry reporting to the operations review"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "FDC, dispatch and metrology challengers evaluated, threshold strategies re-optimized, baseline re-verified against production records"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your rhythm: our engineers work in your repositories, ticketing and access model, with the same CI and security review your teams run, and inside the cleanroom discipline wherever the work reaches the floor. Knowledge transfer is a gate condition, not a closing slide — by the expansion phase your engineers ship changes to the builds, because the runbooks and evaluation suites are theirs from week one."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones fab and electronics programs are managed on. The targets are the ranges we set in feasibility reads for programs of this shape — commitments we let you hold us to where the metric is clean, hypotheses we test where it is confounded. The measurement column is what makes the delta defensible in a capital committee."
+  },
+  {
+   "t": "table",
+   "caption": "Fab and electronics program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Excursion MTTR",
+     "50-70% reduction on instrumented paths",
+     "RCA service telemetry from flag to closure; affected-population size tracked per event"
+    ],
+    [
+     "Yield on instrumented process steps",
+     "0.5 to 2.0 points, step-dependent",
+     "Yield analytics against locked baselines; the sector record includes +3.4 points on an APC program in chemicals"
+    ],
+    [
+     "Unscheduled tool-down hours",
+     "25-45% reduction on modeled subsystems",
+     "E10 state histories versus predicted-intervention windows, tracked per failure mode"
+    ],
+    [
+     "Bottleneck queue-time variance",
+     "Material reduction at the constraint",
+     "Dispatch replays against held-out days, including expedite-heavy ones"
+    ],
+    [
+     "Classification coverage on defect classes",
+     "Rare classes named within days, not weeks",
+     "Active-learning metrics: time from first appearance to named class, reviewer hours per thousand defects"
+    ],
+    [
+     "Recipe-store access compliance",
+     "100% named access with dual control",
+     "Access-history queries per controlled artifact, generated by the evidence layer"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A fab build team is small and senior: a lead engineer who has run decision systems inside fabs or electronics plants, data engineers who own the SECS/GEM and CDC layer, ML engineers who own FDC, metrology and classification, a security engineer who owns the recipe-access and export-control posture, and a domain lead who has lived yield fights and dispatch wars in production. The team works to your tool-downtime calendar and your integration-lab vocabulary from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every site: weekly operations review on the workflow's own telemetry, gate submissions through your change control, quarterly challenger reviews, and an incident practice that treats the decision store and evidence layer as production-critical — because by the second quarter they are. Reviews are scheduled against shift patterns and lab availability, and escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs like these fail in known ways, and most failure modes are organizational rather than mathematical. We name them in the feasibility read and design against them explicitly, because a program that cannot survive its second quarter is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "a demo built on exported traces that never rejoins the line — we ship the first vertical slice through your change control and integration lab, flags included, within the first two months"
+    ],
+    [
+     "Tool-generation myopia",
+     "models built on one tool vintage that fail silently on the rest — schema contracts per family and fleet-level validation are gates, not optimizations"
+    ],
+    [
+     "Alarm fatigue",
+     "FDC precision drifting until operators mute the system — precision at fixed recall is the tracked metric, and nuisance sources are diagnosed against chamber physics"
+    ],
+    [
+     "Virtual metrology overreach",
+     "predictions trusted beyond their validation envelope — uncertainty, drift monitoring and risk-triggered physical re-measurement are part of the build, not documentation"
+    ],
+    [
+     "Dispatch chaos discounting",
+     "policies benchmarked only on clean days — shadow replays include the expedite-heavy days, because that is where the queue actually lives"
+    ],
+    [
+     "Evidence debt",
+     "export-control and audit preparation consuming a team every quarter — the evidence layer generates the artifacts continuously or the build is not done"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions fab leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do we need to replace our MES or APC platform first?",
+     "No. The builds consume streams from your MES, APC and tool layer, and write back through your interfaces. Where a platform truly blocks, the diagnostic prices the workaround instead of pretending around it."
+    ],
+    [
+     "Will anything write to the tools?",
+     "No. Decision services stop at the equipment boundary; recipe and tool writes stay with your existing control chain and change process. Advisories, holds and dispatch priorities flow through the interfaces your integration lab governs."
+    ],
+    [
+     "How do we trust virtual metrology?",
+     "With governance, not faith: uncertainty quantified per prediction, drift watched against physical sampling, fallback rules that trigger re-measurement by risk. The trust model ships with the build and is auditable."
+    ],
+    [
+     "Our tools span twenty years of vendors. Does that block it?",
+     "It is the normal case. Schema contracts per tool family normalize the interfaces, and fleet-level validation is a gate for every model. Programs start on the family where the delta is largest."
+    ],
+    [
+     "How does this pass export-control scrutiny?",
+     "Recipe and yield stores move behind named access with dual control, and the evidence layer generates access histories and transfer lineage continuously. A review becomes a walkthrough of artifacts the system already produces."
+    ],
+    [
+     "What happens to our engineers?",
+     "Preparation moves to agents; judgment stays with MSAT, process and integration engineers, with better context. Programs are justified in hours returned per engineer — the scarcest resource in the building."
+    ],
+    [
+     "How do you measure success without gaming?",
+     "Baselines are locked during the diagnostic, shadow replays are used where experiments are risky, and every metric reports from system telemetry. The feasibility read names the confounders before anyone commits to a target."
+    ],
+    [
+     "Who owns the build after you leave?",
+     "Your teams, with runbooks, contracts, evaluation suites and registry entries transferred as gate conditions during expansion. Several programs run entirely in-house after the second quarter; we stay on call only where asked."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Start with one yield question — an excursion nobody has closed, a tool that keeps failing, a dispatch rule nobody trusts — and we will baseline it against your own traces in two weeks. The feasibility read is technical, written for MSAT and integration engineers, and yours to keep."
+  }
+ ]
+}

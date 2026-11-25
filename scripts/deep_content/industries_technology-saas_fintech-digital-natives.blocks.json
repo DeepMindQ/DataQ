@@ -1,0 +1,732 @@
+{
+ "file": "industries_technology-saas_fintech-digital-natives",
+ "meta_description": "Dataq Software builds the ledger-to-GL spine for fintechs and digital natives: idempotent double-entry ledgers, reconciliation break triage, card program P&L, monitoring-model backtesting, CECL-ready credit data, and exam-ready evidence — without touching the money movement itself.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "A fintech is a reconciliation business wearing an app: every dollar that moved yesterday has to agree between the processor, the bank, and the general ledger by tonight, or someone explains a break tomorrow. Dataq Software builds that spine — idempotent double-entry ledgers, settlement file matching with break triage, monitoring-model backtesting, and evidence your examiners can pull themselves. We do not move money and we do not replace your BaaS core; we make the numbers around the movement hold up, starting with a two-week baseline of your reconciliation break volume."
+  },
+  {
+   "t": "p",
+   "x": "The architecture of a digital bank or payment app has a shape most engineering teams learn the hard way: a partner bank holds the accounts, a processor moves the card and ACH traffic, a BaaS core holds the ledger, and your app orchestrates all three. Every interface between them is a place where two systems can disagree about a dollar. The app gets the headlines; the operations team lives in the disagreement — settlement files that do not tie, authorizations without presentations, ledger entries without GL postings."
+  },
+  {
+   "t": "p",
+   "x": "The daily evidence of fragility is operational: reconciliation breaks aging in a queue, a close that takes two days because three systems disagree on posted balances, a compliance team rebuilding transaction-monitoring evidence by hand before a state exam, and a fraud model tuned by feel because nobody can measure the false-decline cost. None of these are product problems. They are ledger, reconciliation, and evidence problems — and they compound every time volume grows."
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software works on the layer underneath the app: double-entry integrity, idempotent payment events, automated reconciliation with break triage, GL posting automation, and the monitoring and evidence pipelines regulators actually sample. We read first, we do not touch money movement, and the two-week baseline measures your break volume, close duration, and evidence latency before anyone proposes a build."
+  },
+  {
+   "t": "h2",
+   "x": "Double-entry integrity and idempotent payment events"
+  },
+  {
+   "t": "p",
+   "x": "Every fintech claims a double-entry ledger; far fewer can prove it under stress. The stress cases are concrete: a processor webhook delivered twice after a timeout, a mobile client that retries a transfer, a settlement adjustment arriving after the business day closed. Each is a duplicate-in-flight risk, and the defense is idempotency at the event boundary — a client-supplied or derived idempotency key, a unique constraint at write time, and a deterministic rule for which duplicate wins. Without it, your ledger balance is a function of retry behavior, and it drifts from the bank balance in ways nobody can reproduce."
+  },
+  {
+   "t": "p",
+   "x": "Integrity also means the ledger is append-only and balanced by construction: every entry debits and credits in the same transaction, accounts are immutable history, and corrections are new entries that reverse and replace, never edits. That discipline is what makes nightly reconciliation meaningful — if the ledger can be edited by hand, the reconciliation is comparing against a moving target. We build the write path with these constraints, wire the audit log that shows who and what produced every entry, and leave the ledger able to answer balance-as-of-any-timestamp."
+  },
+  {
+   "t": "p",
+   "x": "Practical integrity work is mostly unglamorous detail. Clock discipline: the ledger records event time and ingest time separately, so a late-arriving payment lands in the business day it happened, not the day the webhook fired. Currency and rounding: amounts stored as integers in minor units, with one rounding rule defined once and applied everywhere. Account design: every product surface maps to ledger accounts whose balances reconcile to the partner bank statement line by line. None of it is clever, and all of it is the difference between a ledger you can certify and a database you hope is right."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Idempotency at the boundary",
+     "Every payment event carries an idempotency key, enforced by a unique constraint at write time. Retries, redeliveries, and client timeouts stop being balance-changing events and become log entries."
+    ],
+    [
+     "Append-only by construction",
+     "Corrections are reversing entries that reference what they fix, never edits. The ledger can answer balance-as-of-any-timestamp, which is what nightly reconciliation and exam sampling both need."
+    ],
+    [
+     "Event time versus ingest time",
+     "A payment that arrived late still belongs to the day it happened. Splitting the two timestamps keeps day boundaries stable and makes late-arrival handling a policy, not a mystery."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Reconciliation chains: processor to bank to general ledger"
+  },
+  {
+   "t": "p",
+   "x": "Reconciliation is a chain of pairwise matches: processor settlement file against bank postings, bank postings against ledger entries, ledger entries against GL postings, and for cards, authorizations against presentations against settlement. Every link has its own file format, timing skew, and edge cases — reversals, adjustments, returns, fees netted at the file level. The failure mode is that each link is reconciled by a different spreadsheet owner, so a break discovered at the GL was born at the processor two weeks ago and nobody can trace the lineage."
+  },
+  {
+   "t": "p",
+   "x": "We build the chain as one system: a match engine with defined tolerances, break classification by cause — timing, amount, missing record, duplicate — an aging and ownership model with service levels, and lineage that ties every break back to the source file and record. The operational win is measured in the baseline: break volume per thousand transactions, mean time to resolution, and the share of breaks that are timing noise versus real money. The compliance win is that the same lineage answers examiner sampling questions without a scramble."
+  },
+  {
+   "t": "p",
+   "x": "Tolerances and windows are where reconciliation design gets decided. A tolerance that is too loose hides real money; one that is too tight buries the queue in timing noise. Multi-day settlement windows, weekend processing, and timezone boundaries all need explicit handling, or every long weekend produces a thousand phantom breaks. We define tolerances per link and per field, age unmatched items automatically, and report tolerance hits separately from true breaks, so the queue measures real money and the noise is a tuning signal rather than a workload."
+  },
+  {
+   "t": "table",
+   "caption": "The reconciliation chain, link by link",
+   "headers": [
+    "Link",
+    "Compared records",
+    "Where breaks are born"
+   ],
+   "rows": [
+    [
+     "Processor to bank",
+     "Processor settlement file against bank postings",
+     "Presentment cutoffs, fee netting, multi-day windows"
+    ],
+    [
+     "Bank to ledger",
+     "Bank postings against ledger entries",
+     "Duplicate webhooks, timing skew at day boundaries"
+    ],
+    [
+     "Ledger to GL",
+     "Ledger entries against GL postings",
+     "Mapping-table drift, missing accruals, cut-off errors"
+    ],
+    [
+     "Authorizations to presentations",
+     "Auth switch records against clearing records",
+     "Force-posts, partial reversals, expired authorizations"
+    ],
+    [
+     "Program fees to margin",
+     "Settlement fee records against the program P&L",
+     "Unmapped fee codes, bundle fees split by hand"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Break handling as an operations discipline"
+  },
+  {
+   "t": "p",
+   "x": "Break handling is where discipline shows. A break queue with owners, severity classes, and escalation paths behaves like an incident process; a shared inbox with a spreadsheet does not. We define break classes with expected resolution paths: timing breaks auto-resolve on the next file, amount breaks route to finance with the two records side by side, missing-record breaks route to operations with the source record attached. The queue then produces metrics — mean time to resolution, aging buckets, recurrence by counterparty — instead of anecdotes."
+  },
+  {
+   "t": "p",
+   "x": "The same discipline serves oversight. Partner banks ask about your reconciliation operation in annual reviews; examiners sample breaks and ask who resolved them and why. When the queue is a system with lineage, the answer is a query. When it is a spreadsheet, the answer is a person reconstructing history under deadline. We wire break resolution records into the same evidence pipeline that serves exams, so one operational artifact answers both the CFO and the examiner."
+  },
+  {
+   "t": "h2",
+   "x": "Card issuing: BIN sponsorship, authorization switches, and ISO 8583"
+  },
+  {
+   "t": "p",
+   "x": "Card programs run on borrowed infrastructure: a sponsor bank owns the BIN and the exchange relationship, a processor operates the authorization switch, and your product experiences both as APIs. The technical vocabulary your team needs internally is ISO 8583 for authorization and clearing flows and ISO 20022 as the direction of travel for payments messaging — because when a decline reason, a force-post, or a partial reversal behaves oddly, the answer lives in the message fields, and your engineers should be able to read them without filing a processor ticket and waiting a week."
+  },
+  {
+   "t": "p",
+   "x": "The economics ride the same rails. Interchange is set by network rules and card type, the sponsor bank and processor take program fees, and net settlement arrives nightly with fees netted at the file level. We build the analytics that decompose every authorization into its economics — interchange category, program fee, network cost — and reconcile the nightly settlement file against authorization records so fee surprises surface as breaks, not as month-end margin mystery. That same decomposition is the evidence base when BIN sponsorship terms come up for renegotiation."
+  },
+  {
+   "t": "p",
+   "x": "Field-level literacy pays for itself in incidents. A decline reason code, a stand-in processing flag, a force-post indicator, and a reversal reason each tell a different story, and the difference between them decides who investigates: product, operations, or the processor. We build an authorization data model that keeps the raw switch fields alongside your business interpretation, so when a decline rate moves in one merchant category on one network, your team can answer why from the data instead of opening a ticket. The same model feeds the dispute pipeline, because most chargebacks are decided by what the authorization record captured."
+  },
+  {
+   "t": "h2",
+   "x": "Nightly settlement and the card program P&L"
+  },
+  {
+   "t": "p",
+   "x": "The nightly settlement file is the card program heartbeat: presented transactions, returns, adjustments, and fees, netted into a movement of funds. Reading it correctly is a data-engineering problem — file versions, record types, truncated amounts, multi-day presentment windows — and the P&L depends on it. Interchange revenue by category, program fees by construct, float earned on prepaid balances, chargeback losses, and fraud losses all reconcile back to these files. When the mapping is hand-maintained, the card program P&L is an estimate wearing a report."
+  },
+  {
+   "t": "p",
+   "x": "We rebuild settlement ingestion as versioned parsing with contract tests against real files, map every fee code to a P&L line, and produce a daily program margin statement finance actually trusts. The float question gets its own treatment: prepaid liability balances swept into yield-bearing instruments need the sweep policy, the accrual mechanics, and the liquidity buffer sizing modeled together, because the yield on float is often the difference between a marginal program and a viable one."
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The card program P&L and the reconciliation chain share one source: the settlement files. Parsing them once, with contract tests, feeds margin reporting, break triage, and exam evidence from the same pipeline."
+  },
+  {
+   "t": "h2",
+   "x": "Chargebacks and disputes: reason codes, evidence deadlines, and Reg E"
+  },
+  {
+   "t": "p",
+   "x": "Disputes are a workflow with legal clocks. Card disputes carry network reason codes, evidence deadlines, and pre-arbitration stages; Reg E puts a ten-business-day clock on error resolution for EFT errors and defines provisional credit rules. Most fintechs run this as a case queue with calendar reminders, which breaks exactly when volume spikes — evidence assembled late, provisional credit issued on the wrong timeline, write-offs booked without the dispute trail attached. The deadlines need to be modeled as data, not as memory."
+  },
+  {
+   "t": "p",
+   "x": "We build the dispute pipeline against the case system you already run: reason-code-driven evidence checklists, deadline computation from the network rules and Reg E timelines, automated evidence assembly from your own records — authorization logs, device signals, prior transaction history — and write-off postings that carry the full case lineage into the GL. The measurable outcomes are on-time evidence rates, provisional-credit compliance, and dispute loss rate by reason code, the last of which feeds fraud rules and product decisions."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Deadlines as data",
+     "Network reason codes and Reg E timelines become dated obligations per case, so evidence assembly and provisional credit decisions run on the clock rather than on whoever remembers the rule."
+    ],
+    [
+     "Evidence assembly from your own records",
+     "Authorization logs, device signals, and transaction history are assembled per checklist automatically. Response quality stops depending on who writes the rebuttal."
+    ],
+    [
+     "Loss rate by reason code",
+     "Dispute losses decomposed by reason code feed fraud rules, product decisions, and network compliance reporting from one pipeline instead of three exports."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Funds availability and treasury: sweeps, float, and liquidity buffers"
+  },
+  {
+   "t": "p",
+   "x": "Funds availability rules are risk policy expressed as code: when a deposit is spendable, what holds apply, and how holds release. They interact with settlement timing, fraud holds, and regulatory expectations, and they are usually implemented as a tangle of conditionals nobody owns. We model availability as versioned rules evaluated against ledger state, with every hold carrying a reason, an expiry, and an audit trail — because a hold that outlives its justification is a complaint, and a complaint pattern is an examiner question."
+  },
+  {
+   "t": "p",
+   "x": "Treasury operations turn liability balances into yield and liquidity: sweep policies across the sponsor bank and T-bill funds, accrual mechanics for float income, buffer sizing against withdrawal stress, and settlement funding windows for card programs. The data spine here is the ledger again — position by account type and program, projected with settlement and redemption forecasts. We build the treasury view on the same ledger the reconciliation runs on, so the yield you report and the balances you reconcile are the same numbers."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Sweeps with policy, not habit",
+     "Liability balances sweep into yield instruments under a versioned policy: thresholds, counterparties, and timing. The sweep history reconciles against the ledger, so yield accrual and principal movement are both traceable."
+    ],
+    [
+     "Buffers sized against stress, not vibes",
+     "Minimum liquidity buffers derive from withdrawal stress scenarios and the settlement funding calendar. The same ledger positions that drive reconciliation drive the buffer math, so the two never disagree."
+    ],
+    [
+     "Float income with an audit trail",
+     "Yield on float accrues from instrument positions, not from a monthly estimate. Accrual entries post on a schedule and tie to the statements of the instruments holding the money."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The KYC/AML stack: identity, sanctions, monitoring, and model validation"
+  },
+  {
+   "t": "p",
+   "x": "A fintech AML stack is four programs wearing one acronym: identity verification at onboarding, sanctions and PEP screening at onboarding and continuously, transaction monitoring against typologies, and SAR filing with case management. Each has vendors, thresholds, and alert queues; the failure mode is that they are tuned independently and never measured together — onboarding conversion sacrificed to screening thresholds nobody reviewed, alert quality measured by anecdote, and monitoring rules versioned nowhere."
+  },
+  {
+   "t": "p",
+   "x": "Model validation is the discipline examiners probe hardest. Transaction monitoring rules and fraud models need documented thresholds, periodic tuning with measured outcomes, and evidence that someone reviewed false-positive and false-negative performance. We build the backtesting harness: labeled outcomes — confirmed SARs, adjudicated alerts, chargeback-fraud linkage — joined to alert history, precision and recall by rule, and a tuning log that reads like an engineering changelog. The output is not just better thresholds; it is evidence that a validation program exists."
+  },
+  {
+   "t": "p",
+   "x": "Screening deserves its own engineering attention. Sanctions and PEP lists change on vendor schedules that never match your release calendar, so hits need re-evaluation whenever lists update, with a documented disposition for every hit — true match, false positive, or pending review. Alert routing needs ownership rules, because an alert with no owner is a finding waiting for an examiner to find it. And the whole stack needs a metrics surface: hit rates by list and threshold, disposition time, and re-screening latency, reported monthly and retained, because the reports themselves are exam evidence."
+  },
+  {
+   "t": "h2",
+   "x": "Fraud models and the false-decline tradeoff"
+  },
+  {
+   "t": "p",
+   "x": "Fraud stacks combine velocity rules, device fingerprinting, behavioral signals, and increasingly model scores — and every one of them trades fraud losses against false declines. The tradeoff is measurable only when decline reasons, appeal outcomes, and downstream fraud losses live in one dataset. Most fintechs cannot state the dollar cost of a point of additional decline friction, so they tune by incident: after a fraud wave, tighten everything; after a conversion dip, loosen everything."
+  },
+  {
+   "t": "p",
+   "x": "We build the measurement first: decline cohorts followed to appeal and re-attempt outcomes, fraud loss rate by rule and score band, and the marginal loss-to-friction curve per control. Then tuning becomes a policy decision with numbers — which rules run in block mode, which in review, which only log. Velocity rules and device signals get the same versioning discipline as monitoring rules, so an examiner or a partner bank can see not just the current policy but the history of why it changed."
+  },
+  {
+   "t": "p",
+   "x": "Device fingerprinting and behavioral signals raise their own lifecycle questions. A fingerprint rotates when a customer replaces a phone; a behavioral profile shifts when a customer changes employers or time zones. Controls that treat those shifts as fraud generate false declines that look exactly like fraud prevention on a dashboard. We version every signal the way we version rules, measure each signal contribution to both loss prevention and decline friction, and retire signals that no longer earn their place. The review cadence matters as much as the signals themselves: a model nobody re-examines is a policy nobody owns."
+  },
+  {
+   "t": "h2",
+   "x": "Credit products: decisioning, CECL allowance, and collections"
+  },
+  {
+   "t": "p",
+   "x": "Credit products add a second risk stack: application decisioning, line management, and collections. Decisioning needs the same model-governance spine as AML — documented features, versioned scorecards, adverse-action reason codes that trace to actual model outputs. The allowance for credit losses under CECL needs lifetime loss estimation on cohorts, which means the performance data — vintages, delinquency transitions, recoveries — must be pipeline-grade, not analyst-assembled each quarter."
+  },
+  {
+   "t": "p",
+   "x": "We build the credit data spine: application and behavior data joined to outcomes, vintage curves computed reproducibly, CECL inputs produced as scheduled datasets with methodology versioning, and collections workflows keyed off the same delinquency states the accounting uses. The payoff spans finance and risk: allowance estimates that tie to the data they came from, reason codes that survive regulator sampling, and collections prioritization that reflects measured roll rates rather than queue order."
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "CECL fails quietly: an allowance that cannot be re-performed from stored data is an opinion, not an estimate. Versioned methodology plus scheduled datasets turns the quarterly provision into something finance and examiners can both trace."
+  },
+  {
+   "t": "h2",
+   "x": "GL posting automation and the daily close"
+  },
+  {
+   "t": "p",
+   "x": "The general ledger is where every subsystem truth gets arbitrated into one set of books, and in most fintechs the postings arrive as manual journal entries assembled from exports. Card interchange, subscription revenue, rewards liabilities, program fees, provisions, and float income each need mapping tables, accrual logic, and cut-off rules. When that logic lives in spreadsheets, the close takes days and every new product multiplies it."
+  },
+  {
+   "t": "p",
+   "x": "We automate the posting path: subsystem events mapped to GL accounts through versioned mapping tables, accruals computed on scheduled runs, cut-off enforced at the posting boundary, and a daily close checklist that shows tie-outs — processor to bank to ledger to GL — with drill-down to source records. Finance gets a close measured in hours with an evidence trail; engineering gets one integration surface instead of four bespoke exports."
+  },
+  {
+   "t": "table",
+   "caption": "Daily close tie-outs and what each proves",
+   "headers": [
+    "Tie-out",
+    "Compared sources",
+    "What it proves"
+   ],
+   "rows": [
+    [
+     "Processor to bank",
+     "Settlement file totals against bank movement",
+     "Funding matches the files and fees land where mapped"
+    ],
+    [
+     "Bank to ledger",
+     "Bank postings against ledger entries",
+     "The app ledger agrees with the bank records"
+    ],
+    [
+     "Ledger to GL",
+     "Entry batches against posted journals",
+     "Recording reaches the books completely and on time"
+    ],
+    [
+     "Accruals to schedules",
+     "Accrual runs against recognized schedules",
+     "Interchange, float, and provisions tie to method"
+    ],
+    [
+     "Provisions to vintages",
+     "CECL inputs against performance data",
+     "Allowance estimates trace to the data that produced them"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Change management for code that touches money"
+  },
+  {
+   "t": "p",
+   "x": "Examiners and partner banks eventually ask the SOX-style question: who can change the code that moves or records money, and how do you prove what changed and when? For most digital natives the honest answer is that the deploy pipeline is fast and the evidence is thin. We implement change management as pipeline metadata, not ceremony: every deploy to money-adjacent services carries the ticket, the approver, the test evidence, and the diff, queryable by service and date."
+  },
+  {
+   "t": "p",
+   "x": "The same metadata powers your audit evidence. Reconciliation rule changes, ledger schema migrations, posting map updates, and monitoring threshold changes all become queryable change records with lineage to the person and ticket that produced them. Partner-bank oversight reviews and state exams both sample this material; having it generated by the pipeline rather than reconstructed for the exam is the difference between a one-day document pull and a three-week scramble."
+  },
+  {
+   "t": "p",
+   "x": "Break-glass access is the part everyone underdesigns. Production incidents will occasionally require a manual fix in a money-adjacent system, and the exam question is not whether you have such access but whether it is logged, reviewed, and time-boxed. We implement elevated access as a workflow: request, second-person approval, expiry, and a post-incident review record that links to the change metadata. The pattern turns your most dangerous operational moment into your best evidence artifact, because the record shows control even under pressure."
+  },
+  {
+   "t": "h2",
+   "x": "Exam readiness, licensing, and partner-bank oversight"
+  },
+  {
+   "t": "p",
+   "x": "Money transmitter licenses arrive with state exams on their own calendars, and the BaaS model adds a partner bank whose regulators examine your operations through the bank oversight program. Third-party risk management obligations flow downhill: your sponsor bank needs your control evidence, your BSA/AML program documentation, your incident history, and your change logs, on their schedule and in their format. The evidence burden is recurring, not episodic, and it grows with every program you launch."
+  },
+  {
+   "t": "p",
+   "x": "We build the exam-ready evidence pipeline: a control register mapped to the frameworks examiners and partner banks actually request, evidence pulls automated from the systems of record, an evidence portal organized by examination request rather than by spreadsheet tab, and stale-evidence detection so nothing presented is last year version. The same register answers CAIQ-style diligence from enterprise customers and partner-bank annual reviews — one control register, many consumers."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "One control register, many consumers",
+     "State exams, partner-bank oversight, and enterprise security reviews read from the same mapped register instead of three teams rebuilding it per request."
+    ],
+    [
+     "Evidence pulled from systems of record",
+     "Access reviews, change records, monitoring tuning logs, and incident history are pulled automatically and timestamped, so nothing presented is hand-reconstructed."
+    ],
+    [
+     "Stale-evidence detection",
+     "Every evidence item carries a freshness requirement. When a source goes quiet, the register flags it before an examiner does."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Open banking under CFPB 1033"
+  },
+  {
+   "t": "p",
+   "x": "Section 1033 turns data access from a partnership favor into a regulated right: consumers can direct their institution to share data with authorized third parties, and obligations around consent, revocation, and scope land on both sides of every fintech. For a digital native that aggregates accounts, the engineering surface is concrete: credential and consent lifecycle management, scoped data schemas, developer portal access controls, and audit logs that prove who accessed what under which consent and when that consent was revoked."
+  },
+  {
+   "t": "p",
+   "x": "We treat the consent ledger as part of the core design rather than a vendor-integration afterthought: consent records versioned like entitlements, revocation enforced at the data layer within the required timelines, and access logs joinable to the same evidence pipeline your exams use. Fintechs that retrofit 1033 after enforcement shapes the market will spend a quarter unpicking data flows; fintechs that model consent early treat it as one more entitlement system they already know how to run."
+  },
+  {
+   "t": "p",
+   "x": "The developer surface is where 1033 stops being abstract. Scoped data schemas define exactly which fields an authorized third party can receive, the developer portal enforces those scopes per credential, and access logs record the consent ID behind every call. Revocation has to propagate to cached tokens and downstream consumers within the required timelines, which makes the consent ledger a dependency of the token service, not a document in a policy binder. We wire that dependency chain first, because it is the part examiners and enterprise customers both test."
+  },
+  {
+   "t": "h2",
+   "x": "Real-time rails: RTP and FedNow operations"
+  },
+  {
+   "t": "p",
+   "x": "Instant settlement compresses the overnight window that batch files quietly provided. Good money arrives with immediate finality — and so do returns, recalls, and fraud attempts, at three in the morning instead of during settlement processing hours. Operating on RTP and FedNow means liquidity monitoring that runs continuously, return-handling runbooks that do not depend on who is on call, and an idempotent ledger write path identical to the one your card traffic uses, because an instant payment is still just a double entry with a faster clock."
+  },
+  {
+   "t": "p",
+   "x": "The reconciliation chain extends rather than duplicates: rail events ingest through the same idempotent boundary, match against bank confirmations with tighter tolerances and shorter windows, and post to the GL on the same schedule as everything else. We also design the funding model — how much liquidity sits at each rail and how sweeps respond to intraday drain — because instant rails convert settlement risk into a treasury problem with a dashboard. The alternative is discovering your buffer sizing during your first weekend of volume."
+  },
+  {
+   "t": "p",
+   "x": "Instant rails also change the staffing shape. Returns and recalls arrive when the operations team is thinnest, so runbooks need to be executable without escalation: decision trees keyed to reason codes, pre-approved limits for provisional handling, and a morning summary that reconstructs overnight activity for whoever starts the day. The reconciliation gap closes overnight too — rail confirmations match against the ledger within minutes, and unmatched items page an owner rather than waiting for a morning file. Speed of operations is the feature; everything else is plumbing."
+  },
+  {
+   "t": "h2",
+   "x": "How we draw the architecture"
+  },
+  {
+   "t": "p",
+   "x": "The reference architecture below is how we draw a ledger-to-GL program. Movement enters through idempotent contracts, the double-entry ledger is the single source of truth, reconciliation owns every seam between systems, and finance and evidence read from the same core instead of rebuilding exports. We implement it as an overlay on your existing estate — the BaaS core, processor, and GL stay; their boundaries get contracted, and every correction is a new entry rather than an edit."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — fintech ledger-to-GL decision stack",
+   "lanes": [
+    "Movement Interfaces",
+    "Ledger Core",
+    "Reconciliation & Ops",
+    "Risk & Compliance",
+    "Finance & Controls",
+    "Decision Layer"
+   ],
+   "nodes": [
+    {
+     "id": "processor-webhooks",
+     "lane": 0,
+     "label": "Processor & bank webhooks"
+    },
+    {
+     "id": "iso8583-auths",
+     "lane": 0,
+     "label": "Auth switch messages (ISO 8583)"
+    },
+    {
+     "id": "rail-events",
+     "lane": 0,
+     "label": "RTP / FedNow rail events"
+    },
+    {
+     "id": "payment-ingest",
+     "lane": 1,
+     "label": "Idempotent payment event ingest"
+    },
+    {
+     "id": "ledger-core",
+     "lane": 1,
+     "label": "Double-entry ledger (append-only)"
+    },
+    {
+     "id": "balance-engine",
+     "lane": 1,
+     "label": "Funds availability & balance rules"
+    },
+    {
+     "id": "settlement-parsers",
+     "lane": 2,
+     "label": "Settlement file parsers"
+    },
+    {
+     "id": "match-engine",
+     "lane": 2,
+     "label": "Reconciliation match engine"
+    },
+    {
+     "id": "break-queue",
+     "lane": 2,
+     "label": "Break triage & aging queue"
+    },
+    {
+     "id": "dispute-pipeline",
+     "lane": 2,
+     "label": "Dispute & chargeback pipeline"
+    },
+    {
+     "id": "monitoring-rules",
+     "lane": 3,
+     "label": "Transaction monitoring rules"
+    },
+    {
+     "id": "backtest-harness",
+     "lane": 3,
+     "label": "Model backtesting harness"
+    },
+    {
+     "id": "case-mgmt",
+     "lane": 3,
+     "label": "SAR & case management"
+    },
+    {
+     "id": "fraud-decision",
+     "lane": 3,
+     "label": "Fraud decision service"
+    },
+    {
+     "id": "gl-posting",
+     "lane": 4,
+     "label": "GL posting automation"
+    },
+    {
+     "id": "daily-close",
+     "lane": 4,
+     "label": "Daily close & tie-out reports"
+    },
+    {
+     "id": "change-records",
+     "lane": 4,
+     "label": "Change management metadata"
+    },
+    {
+     "id": "evidence-portal",
+     "lane": 4,
+     "label": "Exam evidence portal"
+    },
+    {
+     "id": "treasury-positions",
+     "lane": 5,
+     "label": "Treasury positions & sweeps"
+    },
+    {
+     "id": "credit-vintages",
+     "lane": 5,
+     "label": "CECL vintage & collections analytics"
+    }
+   ],
+   "edges": [
+    {
+     "a": "processor-webhooks",
+     "b": "payment-ingest"
+    },
+    {
+     "a": "iso8583-auths",
+     "b": "payment-ingest"
+    },
+    {
+     "a": "rail-events",
+     "b": "payment-ingest"
+    },
+    {
+     "a": "payment-ingest",
+     "b": "ledger-core"
+    },
+    {
+     "a": "ledger-core",
+     "b": "balance-engine"
+    },
+    {
+     "a": "settlement-parsers",
+     "b": "match-engine"
+    },
+    {
+     "a": "ledger-core",
+     "b": "match-engine"
+    },
+    {
+     "a": "match-engine",
+     "b": "break-queue"
+    },
+    {
+     "a": "break-queue",
+     "b": "ledger-core"
+    },
+    {
+     "a": "dispute-pipeline",
+     "b": "ledger-core"
+    },
+    {
+     "a": "ledger-core",
+     "b": "fraud-decision"
+    },
+    {
+     "a": "ledger-core",
+     "b": "dispute-pipeline"
+    },
+    {
+     "a": "dispute-pipeline",
+     "b": "gl-posting"
+    },
+    {
+     "a": "ledger-core",
+     "b": "gl-posting"
+    },
+    {
+     "a": "gl-posting",
+     "b": "daily-close"
+    },
+    {
+     "a": "match-engine",
+     "b": "daily-close"
+    },
+    {
+     "a": "ledger-core",
+     "b": "backtest-harness"
+    },
+    {
+     "a": "backtest-harness",
+     "b": "monitoring-rules"
+    },
+    {
+     "a": "monitoring-rules",
+     "b": "case-mgmt"
+    },
+    {
+     "a": "ledger-core",
+     "b": "treasury-positions"
+    },
+    {
+     "a": "treasury-positions",
+     "b": "gl-posting"
+    },
+    {
+     "a": "ledger-core",
+     "b": "credit-vintages"
+    },
+    {
+     "a": "change-records",
+     "b": "evidence-portal"
+    },
+    {
+     "a": "daily-close",
+     "b": "evidence-portal"
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems this work touches"
+  },
+  {
+   "t": "p",
+   "x": "None of this is greenfield, and nothing here replaces a regulated system. The BaaS core remains the ledger of record, the processor remains the movement engine, and the GL remains the books. What changes is the layer between them: contracts at every interface, reconciliation that covers the whole chain, posting automation that reaches the GL, and an evidence pipeline that serves exams, partner-bank oversight, and enterprise diligence from one register. The table lists the estate Dataq Software typically integrates with and what we read from or write to each."
+  },
+  {
+   "t": "table",
+   "caption": "The estate underneath: systems this work touches",
+   "headers": [
+    "System",
+    "Role in the chain",
+    "What we add"
+   ],
+   "rows": [
+    [
+     "BaaS core ledger (partner bank or core vendor)",
+     "System of record for balances, entries, and account state",
+     "Idempotent ingest contracts, append-only discipline, audit log"
+    ],
+    [
+     "Issuer processor (auth switch, clearing, settlement)",
+     "Card authorization, clearing, nightly settlement files",
+     "Versioned file parsers, fee-code mapping, reconciliation feeds"
+    ],
+    [
+     "Sponsor bank reporting and portals",
+     "Program oversight, settlement funding, compliance requests",
+     "Obligation evidence and oversight review packs on their schedule"
+    ],
+    [
+     "Transaction monitoring and screening vendors",
+     "Alerts, sanctions and PEP screening, case queues",
+     "Backtesting harness, threshold governance, tuning logs"
+    ],
+    [
+     "GL / ERP (NetSuite, Sage Intacct)",
+     "Books, provisions, financial statements",
+     "Posting automation, tie-out reports, close checklist"
+    ],
+    [
+     "Case and ticketing systems",
+     "Disputes, breaks, SAR casework",
+     "Deadline modeling, service-level metrics, evidence lineage"
+    ],
+    [
+     "Data warehouse and BI",
+     "Analytics over all of the above",
+     "Ledger-modeled marts, vintage curves, fraud measurement datasets"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Engagement model: measure the breaks, then build"
+  },
+  {
+   "t": "p",
+   "x": "We start with a two-week baseline against your own systems, not a framework workshop. We quantify reconciliation break volume and aging by link, close duration and its manual steps, dispute deadline performance, monitoring alert precision on a sampled month, and the evidence latency your last exam or partner-bank review actually experienced. Every number comes from production data. If the baseline does not show a real delta — material break leakage, close time, or evidence cost — we say so and stop. When it does, we build at the boundaries first, where the risk is lowest and the payoff is measurable."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Two-week baseline on your data",
+     "Break volume per thousand transactions, close duration, dispute on-time rates, alert precision, and evidence latency — each priced against what it costs you annually."
+    ],
+    [
+     "Read-first, no money movement",
+     "We take read-only access to the ledger, processor files, and GL exports. Dataq Software never touches the movement of funds; we build the recording, reconciliation, and evidence layer around it."
+    ],
+    [
+     "Contract boundaries, not rewrites",
+     "The BaaS core, processor, and GL stay exactly where they are. We add idempotent ingest, match engines, and posting automation at their boundaries, with reconciliation at every seam."
+    ],
+    [
+     "Honest stop conditions",
+     "If your reconciliation already ties and your close runs in hours, the recommendation is targeted fixes rather than a program. The baseline exists to prove or disprove the case."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions fintech leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Will you replace our BaaS core or processor?",
+     "No. Those contracts carry your licenses and bank relationships, and replacing them is a multi-quarter migration with its own regulatory exposure. We contract their boundaries and make the recording layer between them auditable."
+    ],
+    [
+     "Our core already reconciles. Why another match engine?",
+     "Core reconciliation matches the core to itself. The chain that breaks is processor to bank to ledger to GL, across systems the core cannot see. We extend coverage across those seams and hand every break to an owner with lineage."
+    ],
+    [
+     "Can you help without touching money movement?",
+     "That is the design constraint, not a limitation. Ingest, match, and post read from your systems and write only to the recording layer you designate; movement paths stay owned by your processor, your bank, and your existing services."
+    ],
+    [
+     "How do you approach model validation?",
+     "We build the backtesting harness and the tuning log first, then run validation against labeled outcomes from your case history. Your compliance team owns the model risk decisions; we make the evidence reproducible."
+    ],
+    [
+     "What does exam preparation actually look like?",
+     "One control register mapped to what examiners and partner banks request, automated evidence pulls from systems of record, and a portal organized by request. Most teams go from a three-week scramble to a pull measured in days."
+    ],
+    [
+     "We are pre-launch. Should we build this now?",
+     "Build the idempotent ledger write path and the event contracts before launch; defer the rest. The baseline will show which decisions can wait, and volume changes the economics of reconciliation quickly."
+    ],
+    [
+     "Who owns this after the engagement?",
+     "Your team. Match rules, posting maps, thresholds, and the control register live in versioned repositories with review cadences, and runbooks are documented as part of delivery."
+    ],
+    [
+     "Do you work with our existing AML and fraud vendors?",
+     "Yes. The backtesting harness, threshold governance, and evidence pipeline wrap around whatever monitoring and screening vendors you already run. Replacement is a separate decision the baseline numbers should drive, not a precondition of the work."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Bring a month of processor settlement files, your break queue export, and the manual journal entries from your last close. In two weeks, Dataq Software will baseline break volume and aging, close duration, dispute deadline performance, and evidence latency on your own data — and price each against what it costs you annually. If the numbers do not fund the build, we say so and stop. If they do, the idempotent ingest contract ships first and every later step reconciles against it."
+  }
+ ]
+}

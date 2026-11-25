@@ -1,0 +1,758 @@
+{
+ "file": "industries_energy-utilities_renewables",
+ "meta_description": "How Dataq Software engineers renewable operations: turbine and inverter health analytics, generation forecasting and portfolio bidding, lost-production-factor waterfalls, curtailment recovery, O&M orchestration and PPA or certificate settlement — built against your plant SCADA and trading estate.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Renewable operators run a business where the fuel arrives free and the margin is earned in fractions: availability percentage points, forecast accuracy percentages, curtailment megawatt-hours nobody claims, warranty claims that starve on weak evidence. The assets are weather-exposed, the revenue is contractual, and the physics is noisy — so the difference between a mediocre portfolio and a good one is rarely the hardware. It is the decision machinery underneath: how completely turbine and inverter telemetry becomes intervention, how fast a forecast becomes a bid, how honestly a lost-production-factor waterfall separates weather from negligence. This page is the engineering picture of that machinery: the systems a renewable portfolio actually runs, where performance and revenue leak, and the six deep builds Dataq Software ships to close them."
+  },
+  {
+   "t": "h2",
+   "x": "How a renewable portfolio actually runs, nacelle to settlement note"
+  },
+  {
+   "t": "p",
+   "x": "Renewable portfolios earn their margin in decisions per megawatt-hour, and the operating day starts at the plants. Turbine SCADA streams alarms, counters and temperatures while condition-monitoring systems capture vibration spectra from gearboxes, main bearings and generators; solar plant SCADA does the same for inverter strings, combiner boxes and tracker behavior. Meteorological masts and nacelle anemometry provide the reference the performance models need. All of it flows into a fleet historian and, in better-organized fleets, a portfolio lakehouse — but the tags arrive without component context, alarm floods hide the two that mattered, and the weather reference drifts from the sensors that should be calibrating it."
+  },
+  {
+   "t": "p",
+   "x": "The commercial layer runs on the same telemetry with a different deadline. Generation forecasts feed day-ahead and intraday bids; portfolios with PPAs settle against contracted profiles, hedge structures and imbalance prices; ancillary-services obligations add response-time duties on top. Curtailment arrives as instructions from the system operator and usually leaves as accepted loss, because recovering it requires evidence the portfolio rarely assembles. Guarantees-of-origin and RECs are issued from metered generation, then reconciled across registries, buyer claims and sustainability reports with spreadsheets doing the auditing. Every commercial function in this stack is a consumer of the same plant data that operations consumes — through pipelines that were built for neither."
+  },
+  {
+   "t": "p",
+   "x": "The maintenance layer closes the loop: technician scheduling against weather windows, spare-parts logistics across dispersed sites, major-component planning for gearboxes and inverters that cost more to replace reactively than proactively. Drone and blade-inspection programs produce terabytes of imagery whose findings rarely reprice the maintenance plan in time. Warranty and full-service contracts with OEMs turn on evidence — loss-of-production claims, availability accounting, degradation baselines — assembled from the same SCADA data that nobody structured for that purpose. Dataq Software's work concentrates on joining these three layers at the decision points, because the physics is instrumented everywhere and the decisions are connected almost nowhere."
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems this work touches"
+  },
+  {
+   "t": "p",
+   "x": "Renewable programs succeed or fail on how honestly the estate is described. The layers below are the ones a portfolio actually runs — named as they appear on site and in the trading book, not as a vendor catalog would have them — together with the point where each one strains under real weather, real contract deadlines and real warranty scrutiny."
+  },
+  {
+   "t": "table",
+   "caption": "The renewable estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
+    [
+     "Turbine SCADA and CMS",
+     "Alarms, counters, temperatures and vibration spectra per turbine",
+     "Alarm floods bury the two that mattered; vibration channels unread between failures; OEM formats vendor-locked"
+    ],
+    [
+     "Solar SCADA and inverter telemetry",
+     "String and inverter performance, tracker behavior, event logs",
+     "String-level faults surface monthly in reports; soiling invisible until washed; IV tracing episodic"
+    ],
+    [
+     "Meteorological instrumentation",
+     "Met masts, pyranometers, nacelle anemometry, weather feeds",
+     "Reference sensors drift uncalibrated; the performance model trusts them anyway; forecast weather and measured weather disagree silently"
+    ],
+    [
+     "Energy management and trading",
+     "Scheduling, day-ahead and intraday bidding, dispatch, hedge books",
+     "Forecasts fed by spreadsheets; curtailment accepted without claim; ancillary revenue unaudited to telemetry"
+    ],
+    [
+     "Renewables OMS and CMMS",
+     "Work orders, technician skills, spares across dispersed sites",
+     "Free-text histories defeat analytics; failure records unlinked to components; major-component planning by calendar"
+    ],
+    [
+     "Inspection programs",
+     "Drone blade imagery, thermography, ground surveys",
+     "Findings land in PDFs months after flight; defect severity unpriced; inspection never reorders the maintenance queue"
+    ],
+    [
+     "GO and REC registries",
+     "Certificate issuance, transfers, redemption, retirement evidence",
+     "Reconciliation across registries manual; provenance disputed; double-counting risk managed by hope"
+    ],
+    [
+     "Settlement systems",
+     "PPA profiles, imbalance invoices, curtailment claims, ancillary statements",
+     "Deadline-driven spreadsheets; disputes settled on judgment; metered-versus-contracted gaps explained quarterly"
+    ],
+    [
+     "Availability and LPF reporting",
+     "Contractual availability, loss-of-production-factor waterfalls, warranty metrics",
+     "Loss categories allocated by convention; weather attribution unverified; the OEM reads a different waterfall than the owner"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where the performance and the revenue leak"
+  },
+  {
+   "t": "p",
+   "x": "Ask renewable operators where the money leaks and the answers converge on the same eight places, described in their own words. Dataq Software scores each of them in your portfolio during the diagnostic, because the leak that dominates an onshore wind fleet is rarely the one that dominates a desert solar plant with a tracker estate and a soiling problem."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Availability points leaking silently",
+     "Turbines and inverters fail unscheduled because the precursors — vibration signatures, temperature deltas, string underperformance — sit unread across vendor portals. Every point of availability is worth real money against contract and merchant revenue, and the fleet loses it in fractions that never trigger an alarm. The failure modes are known; the detection loop is not built."
+    ],
+    [
+     "Forecast error compounding into imbalance",
+     "Legacy forecasting methods miss ramps, wake effects and soiling-degraded output, and every miss is billed. The error compounds through portfolio bidding, imbalance exposure and PPA settlement — and nobody can attribute the cost precisely enough to fix the worst-contributing sites, forecast horizons and weather regimes first."
+    ],
+    [
+     "Curtailment opaque and unrecovered",
+     "System operators curtail when the grid cannot take the energy; portfolios accept the loss because recovering it requires evidence they rarely assemble. Curtailment instructions, metered response and market prices exist in three systems; joining them is nobody's job. The difference between accepted and recovered curtailment is a decision loop, and it is often double-digit percentages of lost production."
+    ],
+    [
+     "Soiling and underperformance invisible",
+     "Solar plants lose single-digit percentages to soiling, tracker faults and string degradation that look like weather in monthly reports. IV-curve tracing runs episodically; washing is scheduled by calendar, not by measured loss; a degradation trend away from P50 surfaces at contract milestones when it is expensive. The data to see all of this streams in every day — to systems nobody configured to answer the question."
+    ],
+    [
+     "O&M weather windows missed",
+     "Technician routing, crane logistics and major-component lifts run on plans that ignore the weather windows the forecast already knows. A blade repair pushed into a season of wrong wind costs more than the repair; a vessel day wasted on an offshore site is real money. The weather data exists; the scheduling decision never consumes it."
+    ],
+    [
+     "Warranty claims starving on weak evidence",
+     "Availability guarantees, performance warranties and OEM contracts turn on evidence — loss-of-production accounting, defect timelines, degradation baselines — assembled from SCADA data nobody structured for that purpose. Claims get filed late, settle low, or never get filed because the evidence would cost more to assemble than the claim is worth. The contract pays for telemetry-grade proof; the portfolio sends screenshots."
+    ],
+    [
+     "GO and REC reconciliation manual",
+     "Certificates are issued from metered generation, then reconciled across registries, buyer claims and sustainability reports with spreadsheets doing the auditing. Provenance gets disputed, redemptions double-count, and buyer scrutiny — which increasingly wants instrumented proof — meets a process that cannot even answer its own inventory question quickly."
+    ],
+    [
+     "Degradation drift unexplained",
+     "Fleets drift from their P50 trajectories and nobody can say whether it is degradation, curtailment, availability or weather — because those categories live in different systems with different conventions. Capital decisions, refinancing models and warranty negotiations all inherit the ambiguity. The waterfall that would separate the causes exists as a concept in every term sheet and as a spreadsheet in almost no operator."
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight leaks: the physics is instrumented but the decisions are not. Every leak is a context problem before it is a modeling problem — which is why Dataq Software's first build in renewables is almost always the data fabric that joins plant SCADA, weather and contract data, not a smarter model sitting on top of a broken decision supply chain."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works renewable energy"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate you already run. We do not arrive with a mandate to replace your turbine SCADA or re-platform your trading stack; we arrive with connectors, schema contracts and a respect for the control path. Our engineers have worked beside asset managers, site supervisors and portfolio traders, and the first deliverable is always a working slice against a real workflow — one wind farm's health ledger, one solar site's soiling loop, one month's settlement evidence — not a strategy deck about the energy transition."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver in this sector. First, physics is respected: every model ships bounded by its validated envelope, weather attribution is computed against calibrated reference instrumentation, and nothing we write touches plant control outside your change process. Second, evidence is a by-product: availability accounting, warranty packs, certificate provenance and decision logs are generated by the build itself, so audits and claims stop being seasonal projects. Third, humans keep the stops: recommendations land in site-supervisor and trader workflows with provenance, and the operations team's authority is never bypassed by an arrow on a dashboard."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same logic: where the metric is clean, we price against the delta measured in your own telemetry. The published record includes a European TSO-DSO forecasting program that cut forecast error by thirty-one percent — the same weather-coupled forecasting machinery this page applies to renewable portfolios. We would rather show you that number in your own baseline than promise it in a slide, and if the diagnostic cannot find the delta in two weeks, we say so and stop."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for renewable portfolios"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our renewables practice. Each build is a named engineering service with defined data flows, decision services, guardrails and integration points — deployed against your estate in weeks, not quarters, and designed so the evidence contracts and registries want falls out of running the system."
+  },
+  {
+   "t": "h3",
+   "x": "1. Fleet health and CMS analytics — turbines and inverters"
+  },
+  {
+   "t": "p",
+   "x": "The build joins turbine SCADA, condition-monitoring vibration spectra, inverter and string telemetry, and inspection findings into a single health ledger per asset, anchored to the component hierarchy — gearbox, main bearing, generator, pitch system, power module, tracker row. Failure-mode models run per platform with validated precursors: bearing signatures, gear-mesh frequencies, temperature deltas under load, string current ratios under reference irradiance. OEM-locked formats normalize at ingest, so a mixed fleet reads as one fleet, and every health index carries its inputs for replay."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: ranked intervention worklists with risked consequence, major-component planning that replaces calendar habit, alarm rationalization driven by actual consequence rather than vendor defaults. Guardrails: recommendations never bypass engineering approval; assets whose sensor coverage cannot support scoring are flagged rather than scored; every computed precursor carries the spectra or telemetry behind it. Integration points: turbine and inverter SCADA, CMS vendors, CMMS, inspection programs. The delta lands as availability points recovered and major-component failures moved from reactive to scheduled."
+  },
+  {
+   "t": "h3",
+   "x": "2. Generation forecasting and portfolio bidding"
+  },
+  {
+   "t": "p",
+   "x": "The build replaces spreadsheet forecasting with a weather-coupled decision service: wind and solar predicted per site and per portfolio across trading horizons, with wake effects, soiling states and availability contexts included, and the forecast wired directly into day-ahead and intraday bidding, storage dispatch and PPA position management. Backcasting runs continuously against locked baselines, so forecast quality is a league table by site, horizon and weather regime rather than an anecdote defended quarterly. The same service prices curtailment risk into bids instead of discovering it in settlement."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: bid recommendations with risk bounds, imbalance-exposure dashboards naming the contributing sites, PPA-position proposals against contracted profiles. Guardrails: forecasts degrade gracefully with sensor gaps and say so; every bid carries its inputs for replay; the trader approves before anything executes. Integration points: trading platforms, weather providers, plant SCADA, market interfaces. This is the machinery behind the published record — forecast error down thirty-one percent in a European TSO-DSO program — applied at portfolio level with the same discipline."
+  },
+  {
+   "t": "h3",
+   "x": "3. The lost-production-factor waterfall and performance reconciliation"
+  },
+  {
+   "t": "p",
+   "x": "The build computes the LPF waterfall the contracts assume exists: energy lost to availability, curtailment, soiling, wake effects, grid constraints, weather deviation and degradation — each category measured from telemetry rather than allocated by convention. Reference instrumentation is calibrated into the loop, so weather attribution survives scrutiny; performance indices reconcile per turbine, string, site and portfolio. The waterfall that used to be a quarterly argument between owner, OEM and trader becomes a daily artifact every party reads from the same fabric."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: loss-category attribution with confidence bounds, degradation tracking against P50 trajectories, washing and maintenance recommendations priced against measured loss, warranty and availability accounting generated continuously. Guardrails: attribution rules are documented and versioned; estimates carry provenance labels; disputes freeze their evidence pack so positions cannot drift. Integration points: SCADA, met instrumentation, settlement systems, OEM reporting. The delta lands as losses converted into recoverable actions and contract claims that settle on evidence instead of negotiation."
+  },
+  {
+   "t": "h3",
+   "x": "4. O&M orchestration — weather windows, crews and blade inspection"
+  },
+  {
+   "t": "p",
+   "x": "The build closes the loop between condition findings, inspection programs and the maintenance schedule. Drone and blade-inspection imagery flows through defect-detection analytics that price severity into the work queue; technician routing is computed against skills, site access and forecast weather windows; major-component logistics synchronize with the health ledger so a gearbox ordered reactively never travels twice. Work orders write back structured records — findings, parts, as-run data — so the failure history becomes analytics-grade instead of free-text folklore."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: weather-window-aware scheduling, inspection-queued defect worklists ranked by costed severity, spare-parts positioning across the portfolio, major-lift plans with contingency windows. Guardrails: safety-critical tasks stay human-gated; every schedule change carries its delta; defect classifications replay to their imagery. Integration points: CMMS, mobile workforce platforms, inspection vendors, weather services. The delta lands as more production recovered per O&M dollar and fewer vessel days or crane windows lost to the wrong week."
+  },
+  {
+   "t": "h3",
+   "x": "5. PPA and certificate settlement automation"
+  },
+  {
+   "t": "p",
+   "x": "The build joins metered generation, contracted profiles, market statements and registry records into one settlement fabric: PPA profiles reconciled per interval, imbalance invoices traceable to the schedules that caused them, curtailment claims evidenced from SCADA and market data, guarantees-of-origin and RECs reconciled against generation with provenance anchored per certificate. What used to be a deadline-driven spreadsheet ritual becomes a query — and a dispute pack assembles itself from the same records all parties already read."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: settlement dispute packs, curtailment claim files with instruction-and-response evidence, certificate inventory with redemption status, ancillary-services performance tracked against obligation windows. Guardrails: every settlement figure carries its lineage; disputes freeze their evidence; certificate provenance is immutable once anchored. Integration points: settlement platforms, GO and REC registries, meter data, market interfaces. The delta lands as disputes resolved in weeks instead of quarters, curtailment actually claimed, and certificate sales that survive buyer due diligence."
+  },
+  {
+   "t": "h3",
+   "x": "6. Hybrid co-optimization — storage, curtailment and grid-code evidence"
+  },
+  {
+   "t": "p",
+   "x": "The build co-optimizes storage against renewable generation, market prices and network constraints: charge from curtailed energy instead of spilling it, dispatch into imbalance windows where the forecast justifies it, and bid into ancillary services with response capability verified against telemetry. Grid-code compliance — reactive power, frequency response, ramp rates — is evidenced continuously from plant data instead of demonstrated annually, so connection obligations become auditable artifacts the system operator can query."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: storage dispatch recommendations priced against curtailment risk and imbalance exposure, ancillary-service participation with verified headroom, grid-code event dossiers generated from telemetry. Guardrails: network safety limits are hard constraints the optimizer cannot trade away; state-of-charge boundaries are enforced architecturally; every dispatch carries its inputs for replay. Integration points: BESS controllers, plant SCADA, market interfaces, system-operator portals. The delta lands as curtailed megawatt-hours converted to revenue and compliance demonstrations that cost a query instead of a site visit."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — the renewable decision stack",
+   "lanes": [
+    "Plant estate",
+    "Telemetry and transport",
+    "Data fabric",
+    "Decision services",
+    "Evidence and compliance",
+    "Operations surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "tscada",
+     "lane": 0,
+     "label": "Turbine SCADA and CMS"
+    },
+    {
+     "id": "sscada",
+     "lane": 0,
+     "label": "Solar SCADA and inverter telemetry"
+    },
+    {
+     "id": "met",
+     "lane": 0,
+     "label": "Met masts and pyranometers"
+    },
+    {
+     "id": "wk",
+     "lane": 0,
+     "label": "CMMS and work orders"
+    },
+    {
+     "id": "edge",
+     "lane": 1,
+     "label": "Plant edge gateways"
+    },
+    {
+     "id": "bus",
+     "lane": 1,
+     "label": "Governed stream bus",
+     "hot": true
+    },
+    {
+     "id": "contracts",
+     "lane": 1,
+     "label": "Schema contracts and freshness SLAs"
+    },
+    {
+     "id": "lake",
+     "lane": 2,
+     "label": "Portfolio lakehouse",
+     "hot": true
+    },
+    {
+     "id": "perf",
+     "lane": 2,
+     "label": "Performance-model spine — P50 and degradation"
+    },
+    {
+     "id": "fcst",
+     "lane": 3,
+     "label": "Forecast and portfolio bidding service"
+    },
+    {
+     "id": "lpf",
+     "lane": 3,
+     "label": "LPF waterfall engine"
+    },
+    {
+     "id": "health",
+     "lane": 3,
+     "label": "CMS and fleet health engine"
+    },
+    {
+     "id": "om",
+     "lane": 3,
+     "label": "O&M optimizer"
+    },
+    {
+     "id": "hybrid",
+     "lane": 3,
+     "label": "Hybrid and storage co-optimizer"
+    },
+    {
+     "id": "settle",
+     "lane": 4,
+     "label": "PPA and GO settlement engine"
+    },
+    {
+     "id": "replay",
+     "lane": 4,
+     "label": "Decision replay store"
+    },
+    {
+     "id": "evid",
+     "lane": 4,
+     "label": "Warranty and certificate evidence store"
+    },
+    {
+     "id": "desk",
+     "lane": 5,
+     "label": "Trading desk"
+    },
+    {
+     "id": "workbench",
+     "lane": 5,
+     "label": "O&M workbench"
+    },
+    {
+     "id": "owner",
+     "lane": 5,
+     "label": "Asset-owner console"
+    }
+   ],
+   "edges": [
+    {
+     "a": "tscada",
+     "b": "edge"
+    },
+    {
+     "a": "sscada",
+     "b": "edge"
+    },
+    {
+     "a": "met",
+     "b": "edge"
+    },
+    {
+     "a": "wk",
+     "b": "bus"
+    },
+    {
+     "a": "edge",
+     "b": "bus"
+    },
+    {
+     "a": "bus",
+     "b": "contracts"
+    },
+    {
+     "a": "contracts",
+     "b": "lake"
+    },
+    {
+     "a": "lake",
+     "b": "perf"
+    },
+    {
+     "a": "lake",
+     "b": "fcst"
+    },
+    {
+     "a": "perf",
+     "b": "fcst"
+    },
+    {
+     "a": "lake",
+     "b": "health"
+    },
+    {
+     "a": "lake",
+     "b": "lpf"
+    },
+    {
+     "a": "lake",
+     "b": "om"
+    },
+    {
+     "a": "lake",
+     "b": "hybrid"
+    },
+    {
+     "a": "health",
+     "b": "replay"
+    },
+    {
+     "a": "lpf",
+     "b": "replay"
+    },
+    {
+     "a": "om",
+     "b": "replay"
+    },
+    {
+     "a": "replay",
+     "b": "evid"
+    },
+    {
+     "a": "settle",
+     "b": "evid"
+    },
+    {
+     "a": "fcst",
+     "b": "desk"
+    },
+    {
+     "a": "om",
+     "b": "workbench"
+    },
+    {
+     "a": "lpf",
+     "b": "owner"
+    }
+   ],
+   "note": "Lanes and nodes are named for the systems a renewable portfolio actually runs — turbine SCADA and CMS channels, inverter telemetry, met masts, the CMMS, the settlement engine — not a generic reference stack. The hot nodes are where the program's differentiation concentrates: the governed stream bus carrying weather-coupled telemetry, and the portfolio lakehouse that turns it into one answerable truth for forecasting, health, losses and settlement."
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: weather-coupled telemetry with the component spine attached"
+  },
+  {
+   "t": "p",
+   "x": "Every decision gap in renewables traces back to a data gap, and most of those gaps are engineering choices rather than physics. Plant SCADA holds the asset truth, met masts hold the reference truth, contracts hold the revenue truth — in three vocabularies, three cadences and often three vendors per site. The data plane's job is to make those views queryable together at decision speed: turbine and inverter telemetry at native cadence, weather reference calibrated into the loop, contract profiles joined per interval, and the component hierarchy attached as the spine so every vibration spectrum, string reading and work order lands on the hardware that produced it."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every value in the lakehouse can name its source system, transformation chain and quality state at read time, which is what makes warranty packs and certificate provenance possible later. Sensor gaps from remote sites arrive with gap metadata attached, so forecasts and attribution degrade honestly. Weather forecasts, market prices and curtailment instructions join as first-class feeds, because the decisions a portfolio makes are always conditional on all three."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Native-cadence plant ingestion",
+     "turbine SCADA, CMS spectra and inverter telemetry streamed at their native rate with OEM formats normalized at ingest — a mixed-vendor fleet reads as one fleet, and the control path is never touched"
+    ],
+    [
+     "The component spine",
+     "every tag, spectrum, defect and work order tied to the gearbox, bearing, string or tracker row that produced it — so a failure precursor from 2019 informs the intervention decision in 2026 without an archaeology project"
+    ],
+    [
+     "Calibrated weather reference",
+     "met masts, pyranometers and nacelle anemometry verified into the loop with drift detection, so weather attribution — the foundation of every waterfall and warranty claim — survives scrutiny"
+    ],
+    [
+     "Contract and market joins",
+     "PPA profiles, curtailment instructions, market prices and certificate records joined per interval with schema contracts, so settlement and bidding consume the same truth operations consumes"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: bounded dispatch with replay"
+  },
+  {
+   "t": "p",
+   "x": "Renewable portfolios run on decisions with contractual tails: a bid submitted against a weather regime, a maintenance window spent on the wrong turbine, a warranty claim filed without its evidence. The decision layer treats every one as a first-class object — inputs, model version, constraints active, expected delta, human approval — stored in a replay service that can re-derive any decision months later for an OEM negotiation, an investor review or an engineer asking what the system knew at the time. Champion and challenger run permanently: every forecasting method, health model and dispatch policy competes against the incumbent on locked baselines before it earns traffic."
+  },
+  {
+   "t": "p",
+   "x": "The guardrails are as engineered as the models. Recommendations are bounded by validated envelopes; anything approaching a boundary escalates with its reasoning attached. Decision rights are explicit — what the system may do alone, what it drafts for approval, what stays human by contract or choice. Uncertainty travels forward rather than being averaged away: a health index without its sensor-coverage caveat never reaches a major-component decision, and a loss attribution without its confidence bound never reaches a warranty claim. The result is optimization the site team, the OEM and the investor can all interrogate."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: digital workers on the paperwork frontier"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work in renewables is evidentiary: assembling warranty claim packs, reconciling certificate inventories, preparing settlement dispute files, summarizing inspection campaigns, drafting availability reports. These are retrieval, assembly and cross-checking jobs with clear success criteria — ideal for governed agents that work inside the platform with role scopes, tool allow-lists and complete run logs. Each agent ships with an evaluation suite: golden cases where the right answer is known, adversarial cases where the tempting answer is wrong, and a human checkpoint at every boundary that matters."
+  },
+  {
+   "t": "p",
+   "x": "Where generative capability adds leverage — summarizing site logs, drafting narrative sections of investor and regulatory reports, translating inspection PDFs into structured defect records — it operates with retrieval grounding against your estate and provenance stamps on every claim. No agent submits a bid, files a claim or dispatches a crew; those boundaries are architectural. The agentic layer's output is reviewed work moving faster, with the audit trail to prove it — which is the difference between automation that survives an OEM negotiation and automation that loses the claim."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: audit as a query"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory and contractual surface of renewables is narrower than a utility's but sharper: connection obligations enforced by grid codes, certificate registries with integrity duties, market conduct rules on bidding, plant OT security, sustainability reporting with assurance, and the private regimes — PPAs and warranties — that bind revenue. Programs here fail when evidence is a project and succeed when evidence is a property of the running system. The table maps the regimes to the artifacts each build generates continuously — every row is produced as a by-product of operation, not assembled at audit or claim time."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape renewable builds — and the evidence layer each one draws on",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What the build produces"
+   ],
+   "rows": [
+    [
+     "Grid codes and connection agreements",
+     "Frequency and voltage response, ramp rates, reactive power within stated capability",
+     "Continuous compliance evidence from plant telemetry; event dossiers generated from SCADA; capability verified per season"
+    ],
+    [
+     "GO and REC registries",
+     "Certificate integrity, issuance-to-generation lineage, no double counting",
+     "Provenance anchored per certificate from metered generation; reconciliation executed as workflows with immutable records"
+    ],
+    [
+     "REMIT and market conduct",
+     "Order and schedule reporting, no-manipulation controls",
+     "Bid decision logs with inputs, position context and reporting artifacts produced from the bidding fabric"
+    ],
+    [
+     "IEC 62443 and plant OT security",
+     "Zones, conduits and access control across plant networks",
+     "Zone model enforced; plant traffic baselines and drift alerts; remote-access sessions recorded and reviewable"
+    ],
+    [
+     "CSRD and sustainability assurance",
+     "Auditable generation and emissions data across the value chain",
+     "Reporting spine with lineage to telemetry; assurance queries answered as database queries"
+    ],
+    [
+     "PPA and warranty contract regimes",
+     "Availability accounting, loss attribution, degradation baselines per contract terms",
+     "Contract-grade evidence packs generated continuously; dispute files frozen per event; claims priced from measured loss"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the estate stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Renewable estates are layered by acquisition: this portfolio's turbines report through one OEM portal, that portfolio's solar plants through another, the met data in files, the contracts in PDFs — and the fastest way to stall a program is to treat that as debt to repay before starting. Dataq Software wraps the estate instead: adapters at native cadence, normalizers for every OEM format, schema contracts that make each upstream system answerable for freshness and shape. Plant control is read-first by policy; nothing writes into a controlled system without your change process, and most builds never need to."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment. OEM SCADA vendors, CMS providers, drone-inspection contractors, weather services, registry operators and market interfaces all become contract parties to the data plane: formats specified, freshness SLAs enforced, test harnesses run per delivery. When a vendor changes a format, the contract test fails before the decision layer notices — which is the difference between an integration estate and an integration apology. Inspection vendors get the strictest contracts of all, because a defect classified inconsistently between campaigns is worse than no campaign."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Read-first plant integration",
+     "every path into turbine or solar plant control starts read-only at native cadence; write access is designed only where a workflow demands it and executed through your change process with your engineers in the loop"
+    ],
+    [
+     "OEM-format normalizers",
+     "SCADA exports, CMS spectra and inspection findings normalized at ingest with schema contracts and golden-file tests per vendor release — a mixed fleet becomes one analytics estate"
+    ],
+    [
+     "Registry and settlement bridges",
+     "GO and REC registry interfaces, PPA settlement platforms and market systems behind contract-tested feeds, so certificates reconcile against generation and disputes read from one fabric"
+    ],
+    [
+     "Contract-tested weather feeds",
+     "forecast providers and site instrumentation behind freshness SLAs and golden-day replay tests, because a drifted pyranometer silently rewrites every attribution built on it"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement. It opens with a two-week diagnostic on the workflow you nominate — not a maturity assessment of the whole portfolio — and the diagnostic's product is a baseline in your own telemetry, a named delta with the confounders listed, and a scoped proposal only if the delta justifies the build. You keep the measurement design either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "workflow instrumentation, leak quantification, contract inventory, feasibility read with the delta estimate and the confounders named in writing"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane of the workflow live behind flags with replay and evidence running from day one — one wind farm's health ledger, one solar site's soiling loop"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "controls landed, quality gates live, remaining sites added, capacity and decision telemetry reporting to the operations review"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "forecasting methods, health models and dispatch policies re-evaluated in the registry, baselines re-verified, the roadmap re-priced against measured deltas"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs inside your operating rhythm, not a parallel program tower: our engineers sit with asset managers, site supervisors and the trading desk, work through your change process for anything that touches a governed system, and hand over runbooks, evaluation suites and registry entries as gate conditions during expansion — not as a closing document after the invoice."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones renewable programs are managed on. The targets are design goals set per portfolio during the diagnostic — operating ranges comparable programs have achieved, not market statistics — and each one is measured from system telemetry against a locked baseline rather than from a status deck."
+  },
+  {
+   "t": "table",
+   "caption": "Renewable program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Fleet availability",
+     "1-3 points recovered on instrumented fleets",
+     "Availability ledger reconciled to SCADA, CMS and CMMS records per contract definition"
+    ],
+    [
+     "Lost production factor",
+     "20-40% of identified losses recovered",
+     "LPF waterfall audited monthly against calibrated weather reference, loss categories priced"
+    ],
+    [
+     "Forecast error feeding imbalance",
+     "15-30% weighted reduction at portfolio level",
+     "Backcast league table against locked baselines; the published record shows 31% in a TSO-DSO program"
+    ],
+    [
+     "Curtailment recovered",
+     "Double-digit share of curtailed megawatt-hours converted to revenue",
+     "Settlement records reconciled to curtailment instructions and metered response"
+    ],
+    [
+     "O&M cost per megawatt-hour",
+     "10-20% reduction without availability decay",
+     "Cost telemetry per site per intervention, weather-normalized production denominator"
+    ],
+    [
+     "Settlement dispute cycle time",
+     "50-70% faster resolution",
+     "Dispute packs from the settlement fabric, clock telemetry per dispute from filing to closure"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A renewables build team is small and senior: a lead engineer who has carried fleet or plant responsibility, data engineers fluent in SCADA and CMS semantics, a forecasting specialist who treats weather-model error as an empirical question, and a delivery lead who has carried a site-supervisor phone call. The team sits with asset managers, site teams and traders — not in a program tower — because the context that makes the difference lives in the alarm journal, the met mast drift and the conversation before a crane window is committed."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: a weekly operations review on the metric, a monthly delta review against the locked baseline with finance in the room, and quarterly challenger sessions where forecasting methods, health models and dispatch policies defend their traffic. Runbooks, evaluation suites and the decision-replay store transfer to your teams as gate conditions during expansion, so the program's dependency on us shrinks on a schedule rather than by negotiation."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs in this sector fail in known ways, and most of the failure modes are organizational wearing a technical costume. We name them here because prevention is a design decision, not a cultural aspiration."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "a demo built on extracted data that never integrates — prevented by shipping the first vertical slice through your change process, flags and gates included, within the first two months"
+    ],
+    [
+     "Weather attribution theater",
+     "loss waterfalls built on drifted reference sensors — met instrumentation is calibrated into the loop or the attribution is labeled unproven, because a wrong waterfall loses the warranty claim"
+    ],
+    [
+     "Component-spine shortcuts",
+     "health analytics starved because tags never tied to gearboxes and strings — the component hierarchy is a gate condition of the first quarter, not an optimization"
+    ],
+    [
+     "Bid-risk blindness",
+     "forecast improvements that raise imbalance exposure because risk bounds never reached the desk — bid recommendations carry risk bounds or they do not ship"
+    ],
+    [
+     "Evidence debt",
+     "warranty and audit preparation consuming a team every cycle because artifacts were manual — the evidence layer generates them continuously or the build is not done"
+    ],
+    [
+     "Certificate ambiguity",
+     "GO and REC inventories nobody can answer for under buyer due diligence — provenance anchored per certificate from metered generation, immutable once written"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions renewable operators ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do you touch the turbine or inverter controllers?",
+     "We read. Write paths to plant control go through your change process with your engineers in the loop, and most builds never need them. Recommendations land in site workflows; the plant keeps its authority."
+    ],
+    [
+     "Can this work across mixed OEM fleets and acquisitions?",
+     "Yes — normalizers are part of the build, and we have handled every major turbine and inverter vendor format. The component spine makes a mixed fleet read as one estate for analytics and contracts."
+    ],
+    [
+     "How do you handle the OEM relationship?",
+     "The evidence layer makes you a better contract party, not a worse customer: claims priced from measured loss, availability reconciled to telemetry, and the OEM reading the same waterfall the owner reads."
+    ],
+    [
+     "What happens to our site teams and traders?",
+     "Their judgment moves up a level: the build assembles context and drafts options; humans approve, dispatch and own the risk decisions. Programs are justified in recovered production per intervention, not headcount removed."
+    ],
+    [
+     "Can you price against the delta rather than the effort?",
+     "Yes, where the metric is clean. Availability points, forecast error, curtailment recovered and settlement cycle time all baseline in your telemetry during the diagnostic; the feasibility read names the confounders first."
+    ],
+    [
+     "What is the smallest program worth running?",
+     "One wind farm's health ledger, one solar site's soiling loop, or one settlement dispute stream — whichever has the cleanest baseline. If the diagnostic cannot measure the delta in two weeks, we say so and stop."
+    ],
+    [
+     "How do the agents avoid becoming shadow AI?",
+     "Agents run inside the governed platform with role scopes, tool allow-lists, human checkpoints and complete run logs. The shadow-AI failure mode is what happens without those controls; the program's goal is to eliminate the conditions that create it."
+    ],
+    [
+     "Who owns the models after you leave?",
+     "Your teams, with runbooks, model documentation, evaluation suites and the decision-replay store transferred as gate conditions during expansion. Several programs run entirely in-house after the second quarter."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Bring one portfolio and one number — availability points, forecast error, curtailment recovered — and the practice will baseline it across your turbine SCADA and settlement data in two weeks. If the delta is not real in your estate, we say so and stop there."
+  }
+ ]
+}

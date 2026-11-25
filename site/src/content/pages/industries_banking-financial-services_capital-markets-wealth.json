@@ -5,267 +5,762 @@
  "template": "subindustry_page",
  "breadcrumb": "Industries > Banking & Financial Services > Capital Markets & Wealth Management",
  "seo_title": "Capital Markets & Wealth Management | Dataq Software",
- "meta_description": "Wealth and capital-markets clients buy judgment and pay for experience: advisors need research and portfolio context in minutes, operations need settlem.",
+ "meta_description": "How Dataq Software engineers capital markets and wealth management: custody reconciliation, fee billing integrity, advisor copilots, constrained rebalancing and tax-lot optimization, certified performance and suitability evidence — built across PMS, OMS/EMS, custody and billing estates.",
  "blocks": [
   {
    "t": "hero",
-   "x": "Wealth and capital-markets clients buy judgment and pay for experience: advisors need research and portfolio context in minutes, operations need settlement and reconciliation without firefights, and compliance needs evidence without expeditions. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
+   "x": "Capital markets and wealth management sell judgment and charge for experience, which makes the operations underneath the judgment unusually consequential. A portfolio decision is only as good as the positions it was made on; a fee is only real if it was billed correctly; an advisor meeting only converts if the research and portfolio context arrived before the client did. Around all of it sits fiduciary duty: suitability, best execution, client-asset protection and performance standards that turn every operational shortcut into a compliance question. This page is the engineering picture of that operation — the systems it runs on, where breaks, billing errors and stale valuations quietly take the margin, and the six deep builds Dataq Software ships to fix them."
   },
   {
    "t": "h2",
-   "x": "The setting, described honestly"
+   "x": "How the business actually runs"
   },
   {
    "t": "p",
-   "x": "The work concentrates in advisor research and prep, reconciliation and breaks, client reporting, with suitability and disclosure close behind. Volume grows on every path; the decision layer has not kept up. That gap is measurable, and it is the work."
+   "x": "In capital markets and wealth management, the product begins as a mandate. An investment policy statement fixes objectives, constraints and risk tolerance; the service model — discretionary or advisory — decides who pulls the trigger. Discretionary books run on model portfolios: a portfolio management system holds the model, compliance pre-checks the mandate rules, and a rebalancing engine turns drift into trade instructions. Advisory relationships leave execution to the client but demand research, context and suitability evidence on every recommendation. Orders flow over FIX to the OMS/EMS, which routes to venues, captures executions and allocations, and hands everything downstream for settlement."
+  },
+  {
+   "t": "p",
+   "x": "Then the operations floor takes over, and it is bigger than clients assume. Trades settle through custodians and clearing brokers whose statements arrive as files, portals and SWIFT messages in formats that never quite agree. Corporate actions — dividends, splits, tenders, rights, elections — arrive as notices that must be processed before value date or they become client complaints and reconciliation breaks. Fund orders and alternatives add capital calls, distributions and stale valuations that do not fit the securities pipeline. Securities lending, cash sweeps and collateral moves run alongside, each with its own calendar and its own exceptions. Every one of these feeds the position store the portfolio decisions depend on."
+  },
+  {
+   "t": "p",
+   "x": "The commercial layer decides whether any of it is profitable. Fees bill on basis points, tiered schedules, household aggregation and negotiated exceptions that live in mandate documents rather than in the billing engine. Performance and attribution reconcile from extracts, so client questions wait on report runs and analysts argue definitions instead of results. Suitability reviews, best-execution monitoring and disclosure obligations attach evidence duties to each trade and each recommendation. When the data plane wobbles, the whole stack wobbles: wrong positions produce wrong rebalances, wrong performance, wrong fees and wrong evidence — and the error is usually discovered by the client, or the consultant, first."
   },
   {
    "t": "h2",
-   "x": "Where this bites first"
+   "x": "The estate underneath: systems this work touches"
   },
   {
    "t": "p",
-   "x": "In Capital Markets & Wealth Management, the queues and waits that come up first:"
+   "x": "Programs in this sub-industry succeed or fail on how honestly the estate is mapped before anything is built. Dataq Software starts every engagement by naming the systems, their owners, their change cadences and their data contracts. The table below is the estate we most often find and integrate against in capital markets and wealth management — not a generic stack diagram."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "The capital markets and wealth estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
     [
-     "Advisor research friction",
-     "Advisors assemble portfolio context from terminals, PDFs and CRM; response quality depends on prep time."
+     "Portfolio management system (PMS)",
+     "Model and client portfolios, rebalancing, mandate compliance pre-checks, tax-lot accounting",
+     "Constraint and tax-lot logic caps optimization quality; mandate changes are configuration projects"
     ],
     [
-     "Reconciliation and breaks manual",
-     "Custody, clearing and fund reconciliation produce breaks cleared by spreadsheet; month-end compresses."
+     "OMS/EMS with FIX connectivity",
+     "Order routing, execution, allocations, drop copies, TCA capture across venues",
+     "Best-execution evidence assembled manually; venue and algorithm changes outpace review cycles"
     ],
     [
-     "Client performance data stitched",
-     "Positions, performance and fees reconcile from extracts; client questions wait on report runs."
+     "Custody and clearing platforms",
+     "Safekeeping, settlement, corporate actions, cash and client-asset records",
+     "Statement formats disagree; breaks cleared in spreadsheets as month-end compresses"
     ],
     [
-     "High-value client data exposure",
-     "HNW records concentrate spear-phishing and exfiltration value; controls are generic, not tiered by risk."
+     "Fund accounting and alternatives administration",
+     "Fund orders, NAV feeds, capital calls, distributions, private-market valuations",
+     "Private-markets data arrives as PDFs and portal exports; reconciliation is manual and late"
     ],
     [
-     "Portfolio optimization ceilings",
-     "Constrained rebalancing across tax lots hits solver limits; tax-alpha is left behind."
+     "Market, reference and alternatives data",
+     "Prices, benchmarks, security master, entitlements, private-market marks",
+     "Security-master drift propagates everywhere; stale valuations distort performance and fees"
     ],
     [
-     "Suitability and disclosure workload",
-     "Suitability checks and disclosure packs assembled manually per trade; audit trails thin."
+     "Fee billing and revenue engine",
+     "Basis-point and tiered billing, household aggregation, negotiated exceptions, rebates",
+     "Complex mandates mis-bill silently; leakage recovered only when a client complains"
+    ],
+    [
+     "CRM and advisor desktop",
+     "Client history, meeting notes, documents, next actions, review calendar",
+     "Context assembled by hand from terminals and PDFs; prep time scales with complexity"
+    ],
+    [
+     "Compliance and surveillance",
+     "Suitability checks, restricted lists, personal account dealing, communications review",
+     "Evidence assembled per trade; supervision samples rather than covers the book"
+    ],
+    [
+     "Performance and data warehouse",
+     "Positions, returns, attribution and client-reporting extracts for finance and clients",
+     "No certified definitions; attribution disputes settled by whoever holds the spreadsheet"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "What we put in place"
+   "x": "Where the margin leaks"
   },
   {
    "t": "p",
-   "x": "The proof in Capital Markets & Wealth Management is a working system on a real workflow. These are the builds that go live:"
+   "x": "Ask operations and advisory leaders where the money leaks and the answers converge on the same eight places, described in their own words. Dataq Software's diagnostic scores each of them in your estate before recommending a build, because the leak that dominates in one wealth manager is often minor in the next."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Advisor copilot",
-     "portfolio context, research and market moves summarized with citations pre-meeting"
+     "Custody and cash breaks cleared by spreadsheet",
+     "Custodian statements, internal ledgers and the general ledger disagree daily. Analysts match by eye, breaks age past the point where root cause is findable, and month-end compresses everything at once. Every aged break is a client-asset record that cannot be certified, and the staffing plan assumes the spreadsheet ritual will hold as volumes grow."
     ],
     [
-     "Break-clearance agent",
-     "reconciliation breaks matched and remediated with escalation policy"
+     "Fee billing leakage on complex mandates",
+     "Tiered schedules, household aggregation, inceptions and terminations mid-period, negotiated exceptions and rebates — the billing engine approximates what the mandate actually says. The error is usually in the client's favor, invisible until an audit or a complaint, and unrecoverable once paid. Revenue assurance is treated as finance's problem when it is a data contract problem."
     ],
     [
-     "Client 360 platform",
-     "positions/performance/fees unified with certified definitions"
+     "Advisor prep time consumed by context assembly",
+     "Before every client meeting, the advisor rebuilds context: performance from one system, research from another, holdings and tax posture from a third, the last meeting's commitments from the CRM. High-value relationships get the preparation they need because prep scales with effort, not value. Response quality depends on which advisor had time to prepare."
     ],
     [
-     "Rebalancing tournaments",
-     "tax-lot constrained optimization benchmarked across solvers"
+     "Rebalancing ceilings that leave tax-alpha behind",
+     "Constraint stacks — mandate rules, tax lots, wash-sale windows, concentration limits — push the PMS rebalancer into approximations. Portals sit outside model drift for days, realized gains run higher than necessary, and tax-loss harvesting happens at year-end instead of continuously. The solver is blamed for what is really a data and formulation problem."
     ],
     [
-     "Client-tier security",
-     "risk-tiered controls for HNW data with monitoring"
+     "Corporate-action errors that cascade",
+     "A missed election or a misprocessed entitlement does not stay an operations incident: it becomes wrong positions, wrong performance, wrong fees and a client call. The notices arrive in unstructured formats, deadlines vary by market and custodian, and the calendar is managed manually. Error rates are stable only because the same people catch them every time."
+    ],
+    [
+     "Suitability and best-execution evidence assembled per trade",
+     "Suitability reviews pull profile, portfolio and recommendation from three systems; best-execution reviews pull TCA from the EMS and write summaries by hand. Coverage is sampled, not complete, and the evidence trail for an advice question months later depends on who documented what. Supervisors read thin evidence as conduct risk, not as paperwork."
+    ],
+    [
+     "Performance numbers without certified definitions",
+     "Returns, attribution and composites are computed in report runs and spreadsheets with no certified definitions behind them. GIPS-style consistency is asserted rather than engineered, and when a client or a consultant disputes a number, the response is an analyst with an extract, not a query with lineage. The dispute is never really closed."
+    ],
+    [
+     "Client reporting stitched from extracts",
+     "Month-end reporting assembles positions, performance, fees and commentary from extracts into decks and portals. Ad-hoc client questions wait for the next run, alternatives lag by weeks because valuations arrive late, and the same relationship gets different numbers from the portal and the deck. Reporting effort grows linearly with the book."
     ]
    ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight leaks: judgment is being made on positions, fees and performance the firm cannot fully certify, and the certification work lands on people after the fact. That is why our first build here is the position and cash spine with certified definitions — the rebalancer, the copilot and the billing engine all improve once it exists."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works capital markets and wealth management"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate you already run. We do not arrive with a replacement PMS, a custody migration, or a strategy deck that ends where the hard part begins. The engagement model is engineering-first: a two-week diagnostic that baselines one workflow end to end — reconciliation, billing, rebalancing, advisor prep or reporting — then a scoped build that ships behind your change process, your model-risk framework and the third-party registers your resilience regime requires."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver in this sub-industry. First, every consequential decision — a rebalance, a fee, a suitability outcome, a break disposition — carries replay: inputs, constraint versions, model versions and reason codes stored so a client or examiner question twelve months later is a query. Second, every generative component is permission-aware and citation-bound — the advisor copilot answers from your research, product terms and the client's own records, and every answer shows its sources. Third, every build lands with its evidence layer: suitability packs, best-execution reviews and billing variance tests generate continuously, not the week before the review."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same logic. Where the metric is clean — break clearance time, billing variance, rebalancing turnaround, prep time — we contract against the delta with the baseline locked during the diagnostic; where it is confounded, the feasibility read says so and we scope fixed-fee. The published record behind this posture includes a tier-1 US bank that moved third-party and incident evidence to automated collection under a DORA-grade posture — the same evidence discipline we apply to trading estates and client-asset operations here."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for capital markets and wealth"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our capital-markets and wealth practice. Each build is named for the workflow it changes, sized in the diagnostic, and shipped with the controls the workflow's regulator and standard-setters expect. None require replacing the PMS or the custody platform; all require taking custodian data contracts seriously."
+  },
+  {
+   "t": "h3",
+   "x": "1. Custody, cash and position reconciliation engine"
+  },
+  {
+   "t": "p",
+   "x": "The build replaces the spreadsheet ritual with a matching engine that ingests custodian statements — files, portals and SWIFT custody messages behind one format abstraction — and matches them against internal ledgers on security, quantity, price and cash, with tolerance rules your controllers sign. Matches certify automatically; breaks land in a workbench with the candidate matches, the delta and the probable root cause already attached, routed by aging and cause rather than by whoever opens the file first."
+  },
+  {
+   "t": "p",
+   "x": "Break clearance agents do the legwork: they pull the corporate-action notice, the settlement confirm, the fee entry and the prior day's fix for the case, draft the remediation, and hand the decision to an analyst at a named checkpoint. Daily telemetry reports breaks by custodian, cause and age, so the staffing conversation and the custodian conversation both run on evidence. The month-end compression stops being a fire drill because the certification work happens daily, and the client-asset record is reconcilable on any date, not just at period end."
+  },
+  {
+   "t": "h3",
+   "x": "2. Fee billing integrity and revenue assurance"
+  },
+  {
+   "t": "p",
+   "x": "The build treats mandate documents as data contracts. Fee schedules — basis points, tiers, households, exceptions, rebates — are extracted from agreements into a structured terms store, and the billing engine is reconciled against those terms every cycle: every account's calculated fee compared to the contractual fee with the variance explained. Inceptions, terminations and mid-period changes flow through the same store, so the billing engine stops approximating what the mandate says."
+  },
+  {
+   "t": "p",
+   "x": "Variances route to a revenue-assurance workbench with the contract excerpt and the calculation side by side; recoveries and write-offs both carry lineage. Quarterly variance testing across the book gives finance a defensible number for leakage and recovery, and client disputes resolve by query because the calculation and its inputs are replayable. The measurable deltas are leakage identified per cycle, dispute cycle time, and the share of billed revenue that reconciles to contract without manual intervention."
+  },
+  {
+   "t": "h3",
+   "x": "3. Advisor copilot with grounded portfolio and research context"
+  },
+  {
+   "t": "p",
+   "x": "The copilot is a retrieval-grounded assistant, deliberately not an open-ended chatbot. Pre-meeting, it assembles the briefing: current positions and performance from the certified spine, research views with citations, tax posture from the lot store, open corporate actions, and the last meeting's commitments from the CRM. In-meeting, it answers questions from the same permission-aware index — product terms, research, the client's own records — with every answer showing its sources, and it never executes anything; transactional authority stays with governed APIs and the advisor."
+  },
+  {
+   "t": "p",
+   "x": "The evaluation harness is part of the deliverable: golden question sets per client segment, citation accuracy scored, hallucination and out-of-perimeter responses tested before each release. Communications-review requirements are handled by design — drafts and briefings route through the same records and surveillance the firm already operates. The measurable deltas are prep time per meeting, briefing completeness against the firm's own checklist, and the share of client questions answered with a cited source in the meeting rather than a follow-up email."
+  },
+  {
+   "t": "h3",
+   "x": "4. Constrained rebalancing and tax-lot optimization"
+  },
+  {
+   "t": "p",
+   "x": "The build reformulates rebalancing as a constrained optimization that takes the constraints seriously: mandate rules, tax lots with realized and unrealized gains, wash-sale windows, concentration and cash constraints, and household aggregation. Solver tournaments benchmark candidate formulations on your book — drift-to-trade, realized tax, tracking to model — with champion/challenger governance, so a better formulation has to beat the incumbent on the metric the business owns before it ships."
+  },
+  {
+   "t": "p",
+   "x": "Suitability gates sit in front: the optimizer cannot propose a trade the mandate or the profile disallows, and exceptions route to a human checkpoint with the rationale attached. Every rebalance replays — inputs, constraint versions, solver output, exceptions — so the drift-to-trade trail is reconstructable months later. The measurable deltas are drift-to-trade turnaround, realized tax per unit of return, and the share of trades that clear without manual overrides, each reported from the decision log rather than estimated."
+  },
+  {
+   "t": "h3",
+   "x": "5. Client 360, performance and reporting spine"
+  },
+  {
+   "t": "p",
+   "x": "Underneath personalization, reporting and fee decisions sits the same missing asset: one certified view of the client. The build is a lakehouse fed by the PMS, custody, billing, CRM and market data through schema contracts with freshness SLAs; a conformed household and account master with survivorship rules your data owners sign; and certified performance definitions — returns, attribution, composites — computed once from governed inputs so the portal, the deck and the consultant query all answer the same number."
+  },
+  {
+   "t": "p",
+   "x": "Reporting assembles from the spine rather than from extracts: month-end packs, ad-hoc client questions and alternatives lag all read the same certified store, and commentary generation stays grounded with citations to the numbers it summarizes. The reconciliation ritual that ate the first week of every month becomes a monitored query. The measurable deltas are report cycle time, cross-report consistency defects at or near zero, and the time an analyst spends answering a performance question — which falls from an expedition to a lookup."
+  },
+  {
+   "t": "h3",
+   "x": "6. Suitability, best-execution and marketing-rule evidence"
+  },
+  {
+   "t": "p",
+   "x": "The evidence build attaches to the moment of advice and the moment of execution rather than to the quarterly sampling cycle. Suitability: profile, portfolio context, recommendation rationale and conflicts recorded per transaction, with periodic-review files assembled automatically from the same record. Best execution: TCA from the EMS, venue quality and routing decisions monitored continuously, with the annual review generated from the same evidence store instead of reconstructed."
+  },
+  {
+   "t": "p",
+   "x": "Marketing and disclosure obligations get the same treatment: performance claims in decks and campaigns extract against certified performance data, net-of-fee calculations carry lineage, and review workflows track approvals with the sources attached. Supervision sampling runs from the evidence store, so coverage can rise without headcount. The measurable deltas are evidence completeness on sampled reviews, best-execution review preparation time, and the time from a records request to a complete, sourced answer."
   },
   {
    "t": "arch",
-   "title": "Reference architecture — Capital Markets & Wealth Management",
+   "title": "Reference architecture — capital markets and wealth decision and evidence stack",
    "lanes": [
-    "Signals",
-    "Fabric",
-    "Models",
-    "Decision API",
-    "Audit",
-    "Products"
+    "Systems of record",
+    "Market and reference data",
+    "Decision and optimization core",
+    "Guarded generation",
+    "Controls and evidence",
+    "Business surfaces"
    ],
    "nodes": [
     {
-     "id": "sg0",
+     "id": "pms",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Portfolio management system"
     },
     {
-     "id": "sg1",
+     "id": "oms",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "OMS/EMS over FIX"
     },
     {
-     "id": "fb2",
+     "id": "custody",
+     "lane": 0,
+     "label": "Custody and clearing platforms"
+    },
+    {
+     "id": "billing",
+     "lane": 0,
+     "label": "Fee billing engine"
+    },
+    {
+     "id": "crm",
+     "lane": 0,
+     "label": "CRM and meeting records"
+    },
+    {
+     "id": "mktdata",
      "lane": 1,
-     "label": "Feature store (online/offline)",
+     "label": "Market and benchmark data"
+    },
+    {
+     "id": "secmaster",
+     "lane": 1,
+     "label": "Security master"
+    },
+    {
+     "id": "corpact",
+     "lane": 1,
+     "label": "Corporate-actions events"
+    },
+    {
+     "id": "privdata",
+     "lane": 1,
+     "label": "Alternatives and private-markets data"
+    },
+    {
+     "id": "lake",
+     "lane": 2,
+     "label": "Client decision lakehouse",
      "hot": true
     },
     {
-     "id": "fb3",
-     "lane": 1,
-     "label": "Vector & graph indexes",
-     "hot": false
-    },
-    {
-     "id": "mo4",
+     "id": "rebal",
      "lane": 2,
-     "label": "Domain models",
-     "hot": false
+     "label": "Rebalancing optimizer"
     },
     {
-     "id": "mo5",
+     "id": "suit",
      "lane": 2,
-     "label": "Foundation adapters",
-     "hot": false
+     "label": "Suitability and mandate service"
     },
     {
-     "id": "da6",
+     "id": "copilot",
      "lane": 3,
-     "label": "Decision API",
+     "label": "Advisor copilot",
      "hot": true
     },
     {
-     "id": "da7",
+     "id": "repasm",
      "lane": 3,
-     "label": "Champion / challenger",
-     "hot": false
+     "label": "Reporting assembler"
     },
     {
-     "id": "au8",
+     "id": "bestex",
      "lane": 4,
-     "label": "Decision replay",
-     "hot": false
+     "label": "Best-execution monitor"
     },
     {
-     "id": "au9",
+     "id": "replay",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Decision replay and reason codes"
     },
     {
-     "id": "pr10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "mrm",
+     "lane": 4,
+     "label": "Model-risk registry"
     },
     {
-     "id": "pr11",
+     "id": "desk",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Advisor desktop"
+    },
+    {
+     "id": "breaks",
+     "lane": 5,
+     "label": "Ops breaks workbench"
+    },
+    {
+     "id": "portal",
+     "lane": 5,
+     "label": "Client portal and reporting"
     }
    ],
    "edges": [
     {
-     "a": "sg0",
-     "b": "fb2"
+     "a": "pms",
+     "b": "lake"
     },
     {
-     "a": "sg1",
-     "b": "fb3"
+     "a": "oms",
+     "b": "lake"
     },
     {
-     "a": "fb2",
-     "b": "mo4"
+     "a": "custody",
+     "b": "lake"
     },
     {
-     "a": "fb3",
-     "b": "mo5"
+     "a": "billing",
+     "b": "lake"
     },
     {
-     "a": "mo4",
-     "b": "da6"
+     "a": "crm",
+     "b": "lake"
     },
     {
-     "a": "mo5",
-     "b": "da7"
+     "a": "mktdata",
+     "b": "lake"
     },
     {
-     "a": "da6",
-     "b": "au8"
+     "a": "secmaster",
+     "b": "lake"
     },
     {
-     "a": "da7",
-     "b": "au9"
+     "a": "corpact",
+     "b": "lake"
     },
     {
-     "a": "da6",
-     "b": "pr10"
+     "a": "privdata",
+     "b": "lake"
     },
     {
-     "a": "da7",
-     "b": "pr11"
+     "a": "lake",
+     "b": "rebal"
+    },
+    {
+     "a": "lake",
+     "b": "suit"
+    },
+    {
+     "a": "lake",
+     "b": "copilot"
+    },
+    {
+     "a": "lake",
+     "b": "repasm"
+    },
+    {
+     "a": "suit",
+     "b": "rebal"
+    },
+    {
+     "a": "rebal",
+     "b": "oms"
+    },
+    {
+     "a": "copilot",
+     "b": "desk"
+    },
+    {
+     "a": "repasm",
+     "b": "portal"
+    },
+    {
+     "a": "lake",
+     "b": "breaks"
+    },
+    {
+     "a": "rebal",
+     "b": "replay"
+    },
+    {
+     "a": "suit",
+     "b": "replay"
+    },
+    {
+     "a": "bestex",
+     "b": "replay"
+    },
+    {
+     "a": "replay",
+     "b": "mrm"
     }
    ],
-   "note": "Lanes and nodes are named for Capital Markets & Wealth Management systems and workflows — not a generic stack."
+   "note": "Lanes and nodes are named for the systems a wealth and capital-markets build actually touches — the PMS, the OMS/EMS over FIX, custody and clearing, the billing engine — not a generic stack. The hot nodes are where differentiation concentrates: the certified client lakehouse that every other build reads from, and the advisor copilot that turns it into preparation a client can feel. The evidence lane records every rebalance, fee and suitability outcome."
   },
   {
    "t": "h2",
-   "x": "Controls the auditor will ask about"
+   "x": "The data plane: from custodian chaos to certified positions"
   },
   {
    "t": "p",
-   "x": "The binding regimes in Capital Markets & Wealth Management: MiFID II / fiduciary regimes, Client-asset protection rules. Designing against them early is what keeps later audits short."
+   "x": "Every decision gap in this sub-industry traces to a data gap, and most data gaps trace to the same source: the firm's own books disagree with the outside world in formats nobody standardized. Custodian statements arrive as files, portals and SWIFT messages; corporate actions arrive as notices in half-structured formats; alternatives data arrives as PDFs and portal exports with valuations weeks stale. The data plane build lands all of it through change-data-capture and governed ingestion into one lakehouse, with the overnight batch preserved for finance while decision surfaces stop depending on it."
   },
   {
-   "t": "table",
-   "caption": "Regimes in scope for Capital Markets & Wealth Management",
-   "headers": [
-    "Regime",
-    "What it expects"
-   ],
-   "rows": [
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries a schema contract with a named owner, a freshness SLA and a reconciliation check against the source's own controls. The security master gets a golden-source discipline — one identifier per instrument, effective-dated attributes, a steward queue for exceptions. The household and account master applies survivorship rules your data owners sign, and every downstream consumer — the optimizer, the copilot, the billing engine, the reporting assembler — reads through the contract layer, so a source change fails loudly at the contract instead of silently in a client report."
+  },
+  {
+   "t": "bullets",
+   "items": [
     [
-     "MiFID II / fiduciary regimes",
-     "suitability and best-execution evidence"
+     "Custodian ingestion behind one abstraction",
+     "files, portals and SWIFT custody messages normalized into one contract, so adding a custodian is configuration with a test suite, not a project"
     ],
     [
-     "Client-asset protection rules",
-     "custody reconciliation duties"
+     "Corporate-actions event store",
+     "notices parsed into structured events with deadlines, entitlements and elections, feeding reconciliation, reporting and the risk calendar from one source"
     ],
     [
-     "GDPR",
-     "HNW client data handling"
+     "Alternatives and private-markets normalization",
+     "capital calls, distributions, valuations and documents extracted into the position spine, so private assets appear in performance and billing without hand-assembly"
     ],
     [
-     "Records regimes",
-     "comms and advice evidence"
+     "Security-master governance",
+     "effective-dated golden attributes, identifier cross-references and a steward queue, ending the drift that quietly corrupts every downstream calculation"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Where a program starts"
+   "x": "The decision layer: mandates, taxes and replay"
   },
   {
    "t": "p",
-   "x": "Engagements in Capital Markets & Wealth Management open smaller than you expect: one workflow, two weeks, a signed baseline on advisor research friction. Everything after that is scoped against the measured delta, never a wish list."
+   "x": "This sub-industry runs on decisions with fiduciary tails: a rebalance must respect the mandate and the tax posture, a fee must match the contract, a suitability outcome must be defensible months later, a break disposition must explain why the books moved. The decision layer we build treats those tails as first-class requirements. Every decision records its inputs, constraint versions, model or solver versions, policy rules and reason codes into a replay store, so the question why this portfolio traded, why this fee, why this exception is a query with lineage rather than an investigation."
+  },
+  {
+   "t": "p",
+   "x": "Champion/challenger governance is built in rather than bolted on: solver formulations and scoring models run as challengers on shadow traffic, performance tracked in the registry the model-risk function owns, promotions through the gates your framework already defines, rollbacks rehearsed. The same decision service layer hosts rebalancing, suitability gating, fee calculation checks and break dispositions, so the governance surface is one registry, one replay store, one set of gates — instead of a rebalancer, a billing engine and a compliance workflow each with their own unaudited logic."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: digital workers for the operations floor"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work here — break clearance, corporate-action preparation, KYC refresh for institutional and high-net-worth relationships, reporting assembly, billing variance investigation — follows patterns an agentic workforce can absorb without touching judgment authority. Dataq Software's agent platform runs digital workers with explicit role scopes: the tools they may call, the systems they may read, the actions that require a human checkpoint and the budget of work per run. Every run logs its steps, tool calls and outputs to the same evidence store the human workflow uses."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — drafting break remediations, summarizing case files for suitability reviews, assembling client-report commentary from certified numbers — the pattern is grounded generation with citation obligations and human authorship of record. Agents never post trades, never change a mandate, never send client communications without review, and never close a break on their own authority; they move the work to the decision point and stop. The capacity story is measured in cleared breaks and assembled files per analyst per day, which is how operations leaders justify the program upward."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: audit as a query"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory surface here is fiduciary before it is prudential: suitability and best execution, client-asset protection, performance and marketing standards, records obligations, and the resilience expectations now applied to trading-critical estates. Dataq Software's answer is the evidence layer — the artifacts a reviewer will ask for are generated continuously by the systems themselves. The table maps the regimes and standards we build against to the evidence our builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes and standards that shape wealth and capital-markets builds — and the evidence each one gets",
+   "headers": [
+    "Regime or standard",
+    "What it expects",
+    "What our build produces"
+   ],
+   "rows": [
+    [
+     "MiFID II suitability and best execution (and fiduciary equivalents)",
+     "Suitability evidence per recommendation and periodic review; best-execution monitoring and annual review",
+     "Suitability service logging per trade with rationale; best-execution monitor with TCA evidence packs generated continuously"
+    ],
+    [
+     "Client-asset protection rules (CASS-class)",
+     "Internal and external custody reconciliations at required frequency; timely break resolution",
+     "Daily reconciliation telemetry by custodian and cause; break evidence with remediation lineage"
+    ],
+    [
+     "GIPS and performance presentation standards",
+     "Consistent calculation and presentation where compliance is claimed",
+     "Certified performance definitions computed once from governed inputs, with composite-level lineage"
+    ],
+    [
+     "FINRA marketing rule and disclosure regimes",
+     "Evidence for performance advertising, net-of-fee calculation, testimonials and required disclosures",
+     "Claims extracted against certified data; approval workflows with sources attached per artifact"
+    ],
+    [
+     "Records and communications regimes",
+     "Advice, order and communications records retained, retrievable and supervisable",
+     "Permission-aware retrieval index with retention metadata; supervision sampling from the same store"
+    ],
+    [
+     "DORA-class resilience for the trading estate",
+     "ICT risk management, incident reporting and testing for trading-critical systems",
+     "Resilience evidence for OMS/EMS and decision services; third-party register entries per integration"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the estate stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Wealth and capital-markets estates are layered over decades, and the fastest way to fail a program is to promise greenfield. Our integration posture is contractual: we define schema contracts with each system owner, land custodian and market data through governed ingestion, write back through the PMS, OMS and billing interfaces your change process already controls, and keep every new component independently deployable behind feature flags. The PMS and the custody platform are not replaced; they are supplied with better context and drained of the assembly work they were never good at."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment. Market-data, TCA, corporate-actions and alternatives-data vendors sit behind an abstraction layer with contract tests, so a vendor swap is a configuration change with a migration runbook rather than a re-platform. FIX connectivity captures drop copies as the audit record of what was sent and filled. Where a legacy reporting stack must stay, the offload pattern applies: it keeps producing, while the new surfaces read from the governed stream it feeds. This is unglamorous work and it is the reason the builds above hold up in production."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Write-back through your interfaces",
+     "rebalance instructions, break dispositions and billing adjustments flow through the PMS, OMS and billing interfaces your change process already governs"
+    ],
+    [
+     "FIX sessions with drop-copy capture",
+     "orders, executions and allocations captured as the audit record, feeding best-execution monitoring without after-the-fact assembly"
+    ],
+    [
+     "Vendor abstraction with contract tests",
+     "market data, TCA, corporate-action and alternatives vendors behind one interface, so a swap is configuration, not surgery"
+    ],
+    [
+     "Feature-flagged, independently deployable",
+     "every build ships behind flags with rehearsed rollback, because the change advisory board will ask"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement. It starts with the two-week diagnostic: one workflow baselined end to end, the leak quantified in your own telemetry, the data contracts inventoried, and a written feasibility read you can circulate — including the uncomfortable findings. If the delta is real, the build is scoped against the gates your change and model-risk processes define; if it is not, you keep the measurement design and the baseline either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "workflow instrumentation, leak quantification, contract inventory, feasibility read with the delta estimate and the confounders named"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane live behind flags with replay and evidence running from day one — for reconciliation that is one custodian and one break family"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "model-risk documentation landed, compliance sampling wired to the evidence store, remaining custodians and lanes added, capacity telemetry to the operations review"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "solver formulations and thresholds evaluated in the registry, billing variance tests re-run, the baseline re-verified against the control group"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm, not a parallel one: our engineers work in your repositories or a shared workspace with the same CI, the same security review and the same access model your teams use. Knowledge transfer is part of the gates, not a closing slide — by the expansion phase your engineers are shipping changes to the builds, because the runbooks, contracts and evaluation suites are theirs from week one, and the quarterly reviews are chaired from your side of the table."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones wealth and capital-markets programs are managed on. The targets are the ranges we set in feasibility reads for programs of this shape — commitments you can hold us to where the metric is clean, hypotheses we test where it is confounded. The measurement column is the part most programs skip and the part that makes the delta defensible in a steering committee."
+  },
+  {
+   "t": "table",
+   "caption": "Capital markets and wealth program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Break clearance time",
+     "40-60% faster median clearance; aged breaks down sharply",
+     "Reconciliation-engine telemetry by custodian and cause, not reconstructed from tickets"
+    ],
+    [
+     "Fee billing leakage",
+     "10-20% of mis-billed revenue identified and recovered",
+     "Billing-to-contract variance testing across the book, quarterly, with recovery tracked to disposition"
+    ],
+    [
+     "Advisor prep time",
+     "30-50% less time to a client-ready briefing",
+     "Copilot telemetry against baseline prep task timing, per client segment"
+    ],
+    [
+     "Rebalancing turnaround (drift-to-trade)",
+     "50-70% faster from drift signal to executed orders",
+     "Decision-log timestamps from drift detection through allocation, by mandate type"
+    ],
+    [
+     "Client report cycle time",
+     "50-70% faster month-end and ad-hoc reporting",
+     "Reporting-pipeline telemetry from data cut to distribution"
+    ],
+    [
+     "Suitability evidence completeness",
+     "At or near 100% coverage on sampled reviews",
+     "Compliance sampling from the evidence store, quarterly, with exceptions named"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A capital-markets and wealth build team is small and senior: a lead engineer who has run decision and reconciliation systems in regulated finance, data engineers who own the custodian ingestion and contract layer, ML and optimization engineers who own scoring, solvers and evaluation, a controls engineer who owns the evidence layer, and a domain lead who has cleared reconciliation breaks and fee disputes in production estates. Agentic-workflow specialists join for the file-assembly builds. The team works to your release calendar and your gate vocabulary from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: a weekly operations review on the workflow's own telemetry — break queues, billing variances, rebalancing turnaround — fortnightly gate submissions to change and model-risk, quarterly challenger reviews, and an incident practice that treats the position spine and the evidence layer as production-critical systems, because by the second quarter they are. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs like these fail in known ways, and most of the failure modes are organizational rather than mathematical. We name them in the feasibility read and design against them explicitly, because a program that cannot survive its second quarter is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "a demo built on extracted positions that never integrates — prevented by shipping the first vertical slice through your change process, flags and gates included, within two months"
+    ],
+    [
+     "Model-risk stall",
+     "the copilot or the optimizer stuck in review because documentation was an afterthought — the registry, evaluation results and lineage land with the build, not after it"
+    ],
+    [
+     "Security-master drift",
+     "the golden source never actually agreed, so every downstream calculation inherits the argument — stewardship and exception queues are a gate, not an optimization"
+    ],
+    [
+     "Certified-definition deadlock",
+     "performance definitions argued across teams until reporting stays manual — the definitions are signed by named owners in week one or the build does not start"
+    ],
+    [
+     "Solver blindness",
+     "an optimizer tuned to a proxy nobody validates, quietly trading away the metric the business owns — tournaments score on the business metric with the incumbent as champion"
+    ],
+    [
+     "Evidence debt",
+     "audit preparation consuming a team every quarter because artifacts were manual — the evidence layer generates them continuously or the build is not done"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions wealth and markets leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do we need to replace our PMS or custody platform?",
+     "No. None of the six builds require replacement. They consume streams and files from your systems of record and write back through the interfaces your change process governs. The PMS and custody stay; they stop being the bottleneck for decisions and evidence."
+    ],
+    [
+     "How do you handle custodian file chaos?",
+     "That is the first build. Custodian files, portals and SWIFT messages normalize behind one abstraction with contract tests, and the matching engine certifies what agrees and isolates what does not. Adding a custodian becomes configuration with a test suite, not a project."
+    ],
+    [
+     "How does the advisor copilot pass compliance review?",
+     "It ships with its model-risk documentation: data lineage, evaluation results against golden question sets, guardrail inventory, citation obligations and drift monitoring. Communications route through your existing surveillance, and the review becomes a walkthrough of artifacts the system already produces."
+    ],
+    [
+     "What about private markets and alternatives data?",
+     "Capital calls, distributions, valuations and documents are extracted into the position spine, so private assets appear in performance, reporting and billing without hand-assembly. Stale valuations carry freshness flags instead of silently distorting returns."
+    ],
+    [
+     "How do you measure success without gaming?",
+     "Baselines are locked during the diagnostic, controls or holdouts are used where experiments are cheap, and every metric is reported from system telemetry rather than a status deck. The feasibility read names the confounders before anyone commits to a target."
+    ],
+    [
+     "Who validates the optimizer?",
+     "Your investment and compliance teams, against the incumbent: solver tournaments run challengers on shadow traffic and score on the business metric — drift-to-trade, realized tax, tracking — with champion/challenger governance in the registry your model-risk function owns."
+    ],
+    [
+     "Can this run in our jurisdiction and data residency?",
+     "Yes. The stack is cloud-agnostic and has been delivered under EU, UK and US regulatory regimes; residency, key management and third-party register entries are handled as build requirements, not assumptions."
+    ],
+    [
+     "Who owns the build after you leave?",
+     "Your teams, with the runbooks, contracts, evaluation suites and registry entries transferred as gate conditions during expansion — not as a closing deliverable. Several programs run entirely in-house after the second quarter."
+    ]
+   ]
   },
   {
    "t": "cta",
-   "x": "The next step is small and real: one working session on operations in Capital Markets & Wealth Management, your data, and a written feasibility read you can circulate."
+   "x": "Bring one workflow — reconciliation, billing, rebalancing or advisor prep — and we will baseline it in two weeks against your own custodian and billing data, price the delta, and tell you honestly whether the build is worth your change budget. The first conversation costs an hour; the feasibility read is yours to keep."
   }
  ],
- "words": 424,
+ "words": 5355,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Banking & Financial Services",

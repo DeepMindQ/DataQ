@@ -1,0 +1,741 @@
+{
+ "file": "industries_public-sector_defense-security",
+ "meta_description": "How Dataq Software engineers defense and national security programs: continuous authorization evidence, multi-level mission data fusion, sensor-to-shooter integration, logistics readiness, secure DevSecOps in classified clouds and post-quantum migration — assurance as engineering, not paperwork.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Defense and national security programs run at the highest assurance bars in engineering: air-gapped and enclave estates, classified data flows, cross-domain rules, supply-chain scrutiny and authorization regimes that treat every change as a risk decision. The mission cost of that assurance is real — accreditation cycles slow every change, sensitivity tiers fragment the data, and the estates that would benefit most from modern tooling are the ones gated hardest. The programs that deliver do not lower the bar; they industrialise the evidence behind it. This page is the engineering picture of that discipline: the systems defense organizations actually run, the exact points where mission programs leak, and the six deep builds Dataq Software ships to fix them — with authorization and OPSEC treated as engineering constraints, not paperwork."
+  },
+  {
+   "t": "h2",
+   "x": "Mission threads and the machinery behind them"
+  },
+  {
+   "t": "p",
+   "x": "Trace one mission thread from sensor to decision and the machinery assembles itself. Platform sensors and ISR feeds publish through tactical data links and dissemination services; the fusion cell correlates tracks, imagery and reports across sensitivity tiers; the intelligence picture lands in the commander's decision support tools; the effect request routes through targeting and engagement authorities; and the after-action record feeds exercises, readiness reporting and the next accreditation package. Every hop is a system boundary with its own classification, its own message formats and its own assurance duties — which is why the thread is slow exactly where the decisions matter most."
+  },
+  {
+   "t": "p",
+   "x": "The sustainment thread runs parallel and equally decides readiness. Maintenance systems record faults, inspections and part consumption; supply accounting tracks munitions, spares and consumables against authorizations; the readiness systems roll platform states up into mission-capable rates; and the logistics ERP plans replenishment against exercise and operational demand. When the data joins cleanly, the maintenance controller sees the same platform picture the squadron does and the supply chain anticipates the consumption pattern. When it does not, readiness is argued in briefings from three spreadsheets nobody fully trusts."
+  },
+  {
+   "t": "p",
+   "x": "The quieter machinery is assurance itself. Authorization boundaries defined per enclave (IL4/IL5-class), cross-domain solutions mediating what moves between them, RMF packages and POA&M registers tracking control evidence, DevSecOps pipelines whose every artefact is attested, cryptographic inventories that decide the post-quantum migration order, and exercise records that prove the rehearsals happened. None of it shows in the mission brief; all of it decides whether the next capability ships this quarter or after the next assessment cycle — and the engineering has to make the assurance cheaper without making it weaker."
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems defense programs touch"
+  },
+  {
+   "t": "p",
+   "x": "Programs in this sub-industry succeed or fail on how honestly the estate and the assurance boundaries are mapped before anything is built. Dataq Software starts every engagement by naming the systems, their classification boundaries, their owners and the accreditation instruments that govern them. The table below is the estate we most often find and integrate against — not a generic stack diagram."
+  },
+  {
+   "t": "table",
+   "caption": "The defense and security estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
+    [
+     "Mission platforms and sensor estates",
+     "Platform telemetry, ISR feeds, weapons system interfaces, assured PNT sources",
+     "Formats proprietary per program; feeds operational but disconnected from fusion and analytics estates"
+    ],
+    [
+     "Tactical data links and dissemination",
+     "Track and message exchange between platforms, ground stations and coalition partners",
+     "Latency-bound; schemas versioned slowly; coalition interoperability gated by bilateral agreements"
+    ],
+    [
+     "Fusion and intelligence systems",
+     "Multi-source correlation, imagery analysis, watch floor tooling, analyst workspaces",
+     "Sensitivity tiers prevent joining; analysts swivel-chair across enclaves; tooling predates modern data stacks"
+    ],
+    [
+     "Logistics ERP and maintenance systems",
+     "Faults, inspections, parts, munitions and supply accounting, work orders",
+     "Interfaces batch-era; readiness data assembled manually; consumption patterns invisible to planners"
+    ],
+    [
+     "Enclave and cross-domain estate",
+     "IL4/IL5-class boundaries, cross-domain solutions, transfer and audit services",
+     "CDS throughput constrained; transfer approvals manual; boundary policy a document rather than code"
+    ],
+    [
+     "Authorization and assurance systems",
+     "RMF packages, control evidence, POA&M registers, continuous monitoring feeds",
+     "Evidence assembled manually per cycle; POA&M closure unmeasured; packages stale between assessments"
+    ],
+    [
+     "DevSecOps toolchain",
+     "CI/CD pipelines, artefact attestation, SBOM management, deployment to classified environments",
+     "Pipeline parity across enclaves rare; provenance gaps block authorization re-use; SBOM discipline immature"
+    ],
+    [
+     "Cryptographic and key management estate",
+     "Key hierarchies, HSMs, crypto inventory, transmission security",
+     "Inventories incomplete; post-quantum migration unowned; hybrid paths undefined for long-life systems"
+    ],
+    [
+     "Exercise and readiness data systems",
+     "Exercise planning, execution records, readiness reporting, lessons capture",
+     "Exercise data disconnected from systems of record; lessons repeat; readiness reports assembled by hand"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where mission programs leak"
+  },
+  {
+   "t": "p",
+   "x": "Ask program managers where the mission leaks and the answers converge on the same eight places, described in their own words. Dataq Software's diagnostic scores each of them in your estate before recommending a build, because the leak that dominates one program is often minor in the next."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Accreditation cycles that slow everything",
+     "Every change waits for assessment: control evidence assembled manually, packages stale between cycles, assessors verifying artifacts the system could generate. Continuous authorization turns the package into a live product — control evidence emitted per release, monitoring feeds flowing to the authorizing official — so the bar rises while the cycle time falls."
+    ],
+    [
+     "Sensitivity tiers that fragment the picture",
+     "Track data on one enclave, imagery on another, logistics on a third, and the correlation that would shorten the decision loop happens in an analyst's head across swivel-chair gaps. Tier-aware fusion — provenance, downgrades controlled by policy code, cross-domain transfers engineered rather than emailed — is what turns three silos back into one picture."
+    ],
+    [
+     "Fusion latency where decisions are made",
+     "The thread from sensor to shooter accumulates latency at every manual hop: dissemination delays, format conversion, analyst queues. Measuring the thread — event timestamps end to end, per hop — is step one; automating the deterministic hops is where the seconds come from. Design goals are set per mission thread and reported, not assumed in slideware."
+    ],
+    [
+     "Logistics blind spots in readiness",
+     "Mission-capable rates roll up from maintenance and supply data that joins badly, so the readiness picture is assembled manually and arrives stale. Consumption patterns during exercises and operations exist in transactions nobody aggregates. Readiness analytics on joined data turn the briefing argument into a query and the supply plan into a forecast."
+    ],
+    [
+     "Supply-chain scrutiny without tooling",
+     "CMMC-class and SBOM duties arrive faster than the discipline to meet them: component origins unknown, build provenance partial, third-party risk assessed by questionnaire. Attested pipelines with SBOM generation per build (SPDX/CycloneDX-class) turn supply-chain evidence into a pipeline artefact rather than a compliance scramble per contract."
+    ],
+    [
+     "Post-quantum exposure unowned",
+     "Harvest-now-decrypt-later applies to classified traffic and long-life systems alike, yet the crypto inventory — what algorithms, where, protecting what — is incomplete in most estates. A cryptographic bill of materials with migration sequencing, hybrid paths and re-keying plans turns the quantum timeline from a briefing topic into a program schedule."
+    ],
+    [
+     "Exercise data that never teaches",
+     "Exercise records land in decks and PDFs; lessons repeat across units because nothing joins execution data to systems of record. Exercise analytics on the same governed core as operational data — readiness deltas, consumption, timeline reconstructions — make each rehearsal compound into the next one instead of evaporating."
+    ],
+    [
+     "OSINT pipelines without legal gates",
+     "Open-source intelligence is cheap to collect and expensive to over-collect: sources gathered past their legal basis, analysts unable to say what was ingested under which authority, outputs unattributable. A legal-gate and provenance discipline — source registers, purpose bindings, retention enforced — keeps the pipeline fast and defensible in equal measure."
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight leaks: assurance work is manual where it could be emitted by systems, and mission data is fragmented where it could be tier-aware. That is why the first build in most defense programs is the authorization evidence platform and the provenance core — the pieces every other build inherits."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works defense and national security"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the enclave architecture you already run, under the authorization instruments your authorizing official already owns. We do not arrive with a platform bet, a re-accreditation odyssey, or a strategy deck that ends where the hard part begins. The engagement model is engineering-first: a two-week diagnostic that baselines one mission thread or one assurance process end to end, then a scoped build that ships inside your boundary policy, your DevSecOps gates and your OPSEC rules — with the same CI, the same vetting and the same review model your teams run."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver. First, assurance is emitted, not assembled: control evidence, SBOMs, pipeline attestations and decision replay are generated by the systems continuously, so the RMF package is a product rather than a quarterly scramble. Second, provenance is a primitive: every record carries source, classification, handling and lineage, so tier-aware fusion and cross-domain transfer are governed by policy code instead of by habit. Third, judgment stays with the accountable human: every model-assisted step is a lead with confidence and traceability, and the decision-support layer reports who decided, on what basis, at every gate the mission requires."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same logic: where the metric is clean — package cycle time, fusion latency on instrumented threads, POA&M closure rates — we contract against the delta with the baseline locked during the diagnostic; where it is confounded or classified, we scope fixed-fee and say so in the feasibility read. Much of the record behind this page runs under the confidentiality the sector rightly demands; the delivery discipline itself is the same one published in our civilian government work, including the metropolitan city government program that cut fault-to-fix 63% on an asset platform under continuous evidence."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for defense and security"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our defense and security practice, named for the workflow it changes. Each build is sized in the diagnostic, shipped with the controls its regime expects, and integrated against the estate you already run. None of them require re-architecting the enclave estate; all of them require taking provenance and continuous evidence seriously."
+  },
+  {
+   "t": "h3",
+   "x": "1. The continuous authorization evidence platform"
+  },
+  {
+   "t": "p",
+   "x": "The build turns the RMF package from a document cycle into a live product. Controls map to the framework your scheme uses (NIST RMF, ICD 503-class); evidence emits from the systems that actually enforce them — pipeline attestations, configuration baselines, monitoring feeds, scan results, access reviews; and the package assembles itself continuously against the current baseline. POA&M items become a managed queue with owners, closure criteria and measured closure rates rather than a spreadsheet reviewed when an assessment looms."
+  },
+  {
+   "t": "p",
+   "x": "Continuous monitoring closes the loop: the feeds the authorizing official needs — control status, vulnerability posture, boundary events — flow to a dashboard that reflects the system as it runs, not as it was last assessed. Change requests carry their own impact analysis against the control set, so re-authorization becomes delta review instead of repeat review. The design goal is a program where the assessment cycle measures the system's health rather than a team's documentation stamina, and where cATO-style continuous authorization is a maintained state, not a once-earned badge."
+  },
+  {
+   "t": "h3",
+   "x": "2. Multi-level mission data fusion"
+  },
+  {
+   "t": "p",
+   "x": "The fusion build joins mission data across sensitivity tiers without breaking the rules that separate them. Every record carries classification, handling caveats and provenance at ingest; the correlation layer works across tiers through policy-governed joins — results computed on tiered copies, released through cross-domain solutions under codified rules; and analysts receive one correlated picture with the trust level of every source visible, instead of three screens and a telephone."
+  },
+  {
+   "t": "p",
+   "x": "Downgrades and releases are policy code: an automatic declassification schedule, a coalition releasability tag set, a caveat inheritance check — each enforced by the platform and logged for the security officer. Provenance survives every hop, so an intelligence product can be traced to its sources years later for scrutiny or lesson capture. The measurable deltas are fusion latency on instrumented threads and correlation coverage — how much of the multi-source picture the analysts actually see — each reported from the system rather than asserted in a brief."
+  },
+  {
+   "t": "h3",
+   "x": "3. The sensor-to-shooter integration fabric"
+  },
+  {
+   "t": "p",
+   "x": "The fabric build normalises the thread between sensing and effect. Platform telemetry, ISR feeds and tactical data link messages land through connectors with contract-tested mappings; track quality, staleness and confidence are computed per source so downstream consumers see the state of the data, not just the data; and dissemination rules route products by classification, releasability and need-to-know through the mediation services your architecture already trusts."
+  },
+  {
+   "t": "p",
+   "x": "Latency is engineered per mission thread: event timestamps end to end, per hop, reported against design goals, with the deterministic hops automated and the judgment hops instrumented for the humans who own them. Interoperability with coalition partners is configuration over the same fabric — releasability tags and agreed schemas rather than bespoke interfaces per partner. After-action review runs from the same event store, so every thread analysed improves the next thread instead of dying in a slide."
+  },
+  {
+   "t": "h3",
+   "x": "4. Logistics readiness and fleet availability"
+  },
+  {
+   "t": "p",
+   "x": "The readiness build joins the sustainment estate: maintenance records, supply accounting, munitions serials and exercise consumption landed in one governed core with lineage. Fault and failure patterns cluster by platform, system and operating condition; consumption during exercises and operations becomes a forecast input rather than a retrospective; and the mission-capable rate rolls up from the same joined data the maintenance controller and the supply planner use, so the readiness briefing and the logistics plan stop disagreeing."
+  },
+  {
+   "t": "p",
+   "x": "Maintenance planning becomes decision-supported: work packages prioritised against readiness impact and parts availability, cannibalisation visible as a managed quantity rather than folklore, and long-lead spares flagged from the consumption forecast. Every readiness figure reports with its lineage — which systems, which date range, which corrections — so the debate moves from whose spreadsheet is right to what the plan should be. The design goal is availability argued from data the whole sustainment chain trusts."
+  },
+  {
+   "t": "h3",
+   "x": "5. Secure DevSecOps and supply-chain attestation"
+  },
+  {
+   "t": "p",
+   "x": "The DevSecOps build makes the pipeline the assurance artefact. CI/CD runs with parity across your enclaves: the same pipeline definitions, the same gates, attested builds with provenance, SBOM generation per artefact (SPDX/CycloneDX-class), and signed deployments that the authorization evidence platform ingests directly. Third-party components enter through an ingested-components register with licence, origin and vulnerability posture tracked per build, so CMMC-class and SBOM duties are pipeline outputs rather than contract-time scrambles."
+  },
+  {
+   "t": "p",
+   "x": "Deployment paths to classified environments follow the boundary policy as code: transfer packages assembled with their manifests, cross-domain movement logged and reconciled, and rollback rehearsed rather than improvised. Build hygiene is measured — reproducibility, dependency freshness, attestation coverage — and reported to the same oversight the mission systems use. The design goal is a program where shipping a capability and evidencing its assurance are the same activity, because they run through the same pipeline."
+  },
+  {
+   "t": "h3",
+   "x": "6. Cryptographic inventory and post-quantum migration"
+  },
+  {
+   "t": "p",
+   "x": "The PQC build starts with the census nobody has finished: a cryptographic bill of materials spanning systems, protocols, key stores and embedded dependencies — what algorithms run where, protecting what, with what key lifetimes. Harvest-now-decrypt-later exposure is scored per data class against sensitivity and longevity, so the migration order follows risk rather than vendor pressure. Hybrid classical-plus-PQC paths are engineered for the systems that cannot flip overnight, with FIPS-validated implementations and the key management estate planned alongside."
+  },
+  {
+   "t": "p",
+   "x": "Migration runs as a program with a schedule: per-system migration plans, re-keying runs rehearsed like exercises, interoperability windows coordinated with partners and legacy consumers, and progress reported as inventory coverage — the share of the CBOM migrated, verified and evidenced. The same inventory feeds the authorization platform, so crypto state is part of the continuous package. The design goal is a quantum transition managed on a board with dates and coverage figures, not discovered one procurement at a time."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — the mission and assurance stack",
+   "lanes": [
+    "Mission and platform estates",
+    "Cross-domain ingest",
+    "Mission data core",
+    "Decision services",
+    "Assurance and authorisation",
+    "Operational surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "sens",
+     "lane": 0,
+     "label": "Platform sensors and ISR feeds"
+    },
+    {
+     "id": "tdl",
+     "lane": 0,
+     "label": "Tactical data links"
+    },
+    {
+     "id": "log",
+     "lane": 0,
+     "label": "Logistics ERP and maintenance"
+    },
+    {
+     "id": "exr",
+     "lane": 0,
+     "label": "Exercise and readiness systems"
+    },
+    {
+     "id": "cds",
+     "lane": 1,
+     "label": "Cross-domain solutions",
+     "hot": true
+    },
+    {
+     "id": "ing",
+     "lane": 1,
+     "label": "Ingest with classification tags"
+    },
+    {
+     "id": "prov",
+     "lane": 1,
+     "label": "Provenance ledger",
+     "hot": true
+    },
+    {
+     "id": "core",
+     "lane": 2,
+     "label": "Tiered mission data core"
+    },
+    {
+     "id": "cbom",
+     "lane": 2,
+     "label": "Cryptographic inventory"
+    },
+    {
+     "id": "fuse",
+     "lane": 3,
+     "label": "Tier-aware fusion service"
+    },
+    {
+     "id": "thread",
+     "lane": 3,
+     "label": "Sensor-to-shooter broker"
+    },
+    {
+     "id": "read",
+     "lane": 3,
+     "label": "Readiness analytics"
+    },
+    {
+     "id": "osint",
+     "lane": 3,
+     "label": "OSINT pipeline with legal gates"
+    },
+    {
+     "id": "rmf",
+     "lane": 4,
+     "label": "RMF evidence store"
+    },
+    {
+     "id": "poam",
+     "lane": 4,
+     "label": "POA&M tracker"
+    },
+    {
+     "id": "sca",
+     "lane": 4,
+     "label": "Supply-chain attestation"
+    },
+    {
+     "id": "watch",
+     "lane": 5,
+     "label": "Watch floor and analyst tools"
+    },
+    {
+     "id": "maint",
+     "lane": 5,
+     "label": "Maintenance planning console"
+    },
+    {
+     "id": "cmd",
+     "lane": 5,
+     "label": "Commander decision support"
+    }
+   ],
+   "edges": [
+    {
+     "a": "sens",
+     "b": "ing"
+    },
+    {
+     "a": "tdl",
+     "b": "ing"
+    },
+    {
+     "a": "log",
+     "b": "ing"
+    },
+    {
+     "a": "exr",
+     "b": "ing"
+    },
+    {
+     "a": "ing",
+     "b": "cds"
+    },
+    {
+     "a": "cds",
+     "b": "core"
+    },
+    {
+     "a": "prov",
+     "b": "core"
+    },
+    {
+     "a": "core",
+     "b": "fuse"
+    },
+    {
+     "a": "core",
+     "b": "thread"
+    },
+    {
+     "a": "core",
+     "b": "read"
+    },
+    {
+     "a": "osint",
+     "b": "core"
+    },
+    {
+     "a": "core",
+     "b": "cbom"
+    },
+    {
+     "a": "sca",
+     "b": "rmf"
+    },
+    {
+     "a": "fuse",
+     "b": "rmf"
+    },
+    {
+     "a": "rmf",
+     "b": "poam"
+    },
+    {
+     "a": "read",
+     "b": "maint"
+    },
+    {
+     "a": "thread",
+     "b": "cmd"
+    },
+    {
+     "a": "fuse",
+     "b": "watch"
+    },
+    {
+     "a": "cbom",
+     "b": "rmf"
+    }
+   ],
+   "note": "Lanes and nodes are named for the systems a defense build actually touches — sensor and tactical-link estates, cross-domain solutions, the tiered core, the assurance plane — not a generic reference stack. The hot nodes are where differentiation concentrates: cross-domain movement engineered as policy code, and the provenance ledger that makes every join and release traceable. The assurance plane sits beside the decision services deliberately; authorization evidence is part of the mission architecture, not an annex assembled before an assessment."
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: classification tags travel with the data"
+  },
+  {
+   "t": "p",
+   "x": "Defense estates move data in tiered silos: mission data on classified networks, logistics on the enterprise estate, exercise records wherever the last exercise left them. The data plane build lands every feed in a tiered core where classification, handling and provenance are part of the record. Platform telemetry and tactical link messages stream through connectors with contract-tested mappings; logistics and maintenance data lands through batch-era interfaces wrapped with the same contracts; and cross-domain movement runs through the mediation services your boundary policy already trusts."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries a schema contract with a named owner, a freshness SLA and a reconciliation check against the source system's own controls. Sensitivity is tagged at the field level so joins, releases and retention enforce by configuration; the provenance ledger records source, transformation and release for every artefact; and every downstream consumer — fusion, readiness, decision support, assurance — reads through the contract layer, so a schema change fails loudly at the contract instead of silently in a mission product."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Classification tags at ingest",
+     "every record lands with classification, caveats and handling attached, so tier rules, releases and retention enforce by configuration rather than by analyst memory"
+    ],
+    [
+     "Provenance across every hop",
+     "source, transformation and release recorded in the ledger, so an intelligence product traces to its inputs years later for scrutiny or lessons capture"
+    ],
+    [
+     "Contract-tested legacy interfaces",
+     "logistics and maintenance feeds wrapped with the same schema contracts and freshness SLAs as streaming sources, so batch-era systems join without special cases"
+    ],
+    [
+     "Boundary movement reconciled",
+     "cross-domain transfers logged with manifests and reconciled against the boundary policy, so nothing moves between enclaves outside the record"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: leads with lineage at every gate"
+  },
+  {
+   "t": "p",
+   "x": "Mission decisions carry consequences that no other sector replicates, and they are made under OPSEC, classification and coalition constraints simultaneously. The decision layer we build treats those constraints as engineering inputs: every model-assisted step — track correlation, imagery triage, readiness forecasting, maintenance prioritisation — produces a lead with confidence bounds and full input lineage; a named human owns every decision the mission reserves for people; and the replay store records who decided, on what basis, with which model versions, at every gate."
+  },
+  {
+   "t": "p",
+   "x": "Evaluation runs continuously rather than per exercise cycle: challenger models operate on shadow traffic, bias and drift metrics report to the same oversight the authorization platform feeds, and promotions pass gates defined with your mission assurance function. Where the regime restricts a use, the restriction is configuration — the platform blocks it structurally rather than relying on guidance documents. The design goal is decision support that survives an after-action review: every recommendation traceable, every human judgment visible, every model's fitness evidenced."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: mission workers with bounded authority"
+  },
+  {
+   "t": "p",
+   "x": "The volume work in defense programs — package assembly, log reconciliation, maintenance records preparation, exercise data collation, SBOM bookkeeping — follows patterns an agentic workforce absorbs without touching judgment authority. Dataq Software's agent platform runs digital workers with explicit role scopes: the enclaves and systems they may read, the tools they may call, the actions that require a human checkpoint, and a budget of work per run. Every run logs its steps and outputs to the same evidence store the human workflow uses, so an agent's package contribution is auditable exactly like an analyst's."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — summarising system logs for assessment evidence, drafting package sections, assembling after-action packs — the pattern is grounded generation with citation obligations and a human author of record, running inside the enclave with your approved tooling. Agents never move data across boundaries, never alter classified records, and never act in targeting or engagement workflows; they move the work to the decision point and stop. Capacity is measured in packages and case files cleared per analyst, which is how program managers justify the build upward."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: the package as a product"
+  },
+  {
+   "t": "p",
+   "x": "The accountability surface of defense is unique in that the accreditors are part of daily operations, not an annual event: authorization officials, assessors, security officers and supply-chain auditors all consume evidence the builds generate. Dataq Software's answer is the evidence layer — artifacts emitted continuously by the systems themselves. The table maps the regimes we build against to the evidence our builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape defense builds — and the evidence layer each one gets",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What our build produces"
+   ],
+   "rows": [
+    [
+     "NIST RMF and ICD 503-class authorization",
+     "Control implementation, assessment, continuous monitoring, POA&M discipline",
+     "Evidence store mapped to the control set, emitted per release; POA&M queue with measured closure; continuous monitoring feeds"
+    ],
+    [
+     "Zero trust mandates (NSA reference class)",
+     "Identity-centric access, segmentation, assumed-breach posture",
+     "Policy-as-code boundaries, workload identity, segmentation and access telemetry ingested into the package"
+    ],
+    [
+     "Supply-chain duties (CMMC-class, SBOM)",
+     "Component provenance, build attestation, third-party assurance",
+     "SBOMs per build (SPDX/CycloneDX-class), ingested-components register, signed pipelines feeding the evidence store"
+    ],
+    [
+     "Export controls (ITAR-class)",
+     "Controlled data handling, transfer restrictions, personnel screening",
+     "Releasability tags enforced at the interface, transfer logs, access bound to vetted identities"
+    ],
+    [
+     "Sovereignty and data residency rules",
+     "Localization, national control over classified and sensitive stores",
+     "Residency enforced per store and per enclave, key management under national control, transfer evidence reconciled"
+    ],
+    [
+     "Post-quantum timelines (CNSA 2.0-class)",
+     "Crypto transition planning, inventory, hybrid migration paths",
+     "Cryptographic bill of materials with migration sequencing, re-keying evidence and inventory coverage reporting"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the enclave stays, the plumbing changes"
+  },
+  {
+   "t": "p",
+   "x": "Defense estates are bounded by architecture the mission depends on, and the fastest way to fail a program is to promise estate replacement. Our integration posture is contractual: schema contracts with each system owner, data landed through connectors and the cross-domain services your boundary policy already trusts, write-back through the maintenance and mission interfaces your configuration control board governs, and every new component independently deployable behind feature flags inside its enclave. Enclave boundaries are not renegotiated; the plumbing across them is finally engineered."
+  },
+  {
+   "t": "p",
+   "x": "The legacy estate gets the offload treatment wherever a core cannot modernise: batch interfaces wrapped with contracts, records streamed where policy allows, decision surfaces fed from the tiered core rather than from extracts. Pipeline parity across enclaves is a gate condition — the same pipeline definitions and gates everywhere, so evidence produced in one enclave is trusted in another. This is unglamorous work and it is the reason the builds above hold up in production instead of in a demonstration cell."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Write-back through configuration control",
+     "readiness figures, maintenance packages and mission products flow through the interfaces your configuration control board already governs, with integrity checks intact"
+    ],
+    [
+     "Pipeline parity across enclaves",
+     "the same CI/CD definitions, gates and attestations in every boundary, so evidence and artefacts are trusted wherever they were produced"
+    ],
+    [
+     "Legacy offload pattern",
+     "batch-era cores preserved and wrapped with contracts, their records streamed into the tiered core, no accreditation odyssey negotiated to ship a build"
+    ],
+    [
+     "Coalition interfaces as configuration",
+     "releasability tags and agreed schemas over one fabric, so a partner integration is a mapping exercise rather than a bespoke program"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement, and it fits inside the instruments your organization already runs — existing contracts, IDIQ-class vehicles, or a directly scoped study under your security office's supervision. It starts with the two-week diagnostic: one mission thread or one assurance process baselined end to end, the leak quantified in your own telemetry, the data contracts and boundary rules inventoried, and a written feasibility read you can circulate inside your review chain, including the uncomfortable findings."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "workflow instrumentation, leak quantification, contract and boundary inventory, feasibility read with the delta estimate and the confounders named against your assurance duties"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane of the workflow live behind flags with provenance and evidence running from day one — for assurance that is one control family emitting evidence; for fusion it is one instrumented thread"
+    ],
+    [
+     "Weeks 9-16: gates, attestation, expansion",
+     "pipeline parity landed, SBOM and attestation live, remaining lanes added, POA&M closure and latency telemetry reporting to the program review"
+    ],
+    [
+     "Quarterly: assessment reviews",
+     "challenger models evaluated in the registry, thresholds re-tuned, the baseline re-verified against controls, and the package refreshed for the authorizing official"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm, not a parallel one: our engineers work inside your enclave tooling with the same CI, the same security review and the same vetting model your teams use, and every artefact they produce is attested into your evidence store. Knowledge transfer is a gate condition, not a closing slide — by the expansion phase your engineers ship changes to the builds, because the runbooks, contracts and evaluation suites are theirs from week one."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the program line"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones defense programs are managed on. The targets are the ranges we set in feasibility reads for programs of this shape — commitments we let you hold us to where the metric is clean, hypotheses we test where it is confounded or classified. The measurement column is the part most programs skip and the part that makes the delta defensible to the program office and the authorizing official."
+  },
+  {
+   "t": "table",
+   "caption": "Defense program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Authorization package cycle time",
+     "40-60% reduction with continuous evidence",
+     "Package telemetry: evidence emission to approval, per delta review"
+    ],
+    [
+     "POA&M closure rate",
+     "85%+ within the committed window",
+     "Queue telemetry with owners, criteria and closure dates from the tracker"
+    ],
+    [
+     "Fusion latency on instrumented threads",
+     "Measurable reduction against the design goal",
+     "Event timestamps end to end, per hop, from the thread broker"
+    ],
+    [
+     "Correlation coverage",
+     "+10 to +20 points of multi-source picture joined",
+     "Fusion service telemetry against the analyst workbench baseline"
+    ],
+    [
+     "Mission-capable rate visibility",
+     "Readiness figures with full lineage, same-day freshness",
+     "Sustainment core queries replacing the assembled briefing"
+    ],
+    [
+     "PQC inventory coverage",
+     "90%+ of the CBOM migrated or scheduled",
+     "Coverage reporting from the cryptographic inventory, verified per re-key"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A defense build team is small and senior: a lead engineer who has run mission data systems inside accredited estates, data engineers who own the ingest and provenance layer, ML engineers who own fusion and evaluation, a controls engineer who owns the evidence layer, and a domain lead who has carried RMF packages and readiness briefings in production. Security engineers, key-management specialists and supply-chain analysts join where the workflow demands them. The team works to your configuration control board, your boundary policy and your assessment cycle from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: weekly program review on the workflow's own telemetry, fortnightly gate submissions to the configuration control board and the evidence store, quarterly challenger reviews, and an incident practice that treats the provenance ledger and the evidence store as production-critical systems — because by the second quarter, the assessment cycle will. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs like these fail in known ways, and most failure modes are organisational rather than mathematical. We name them in the feasibility read and design against them explicitly, because a program that cannot survive its second quarter — or its next assessment — is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "a demo built on extracted data that never integrates — we prevent it by shipping the first vertical slice through your pipeline and gates, attestations included, in the first two months"
+    ],
+    [
+     "Evidence scramble",
+     "the package rebuilt by hand every cycle because artifacts were manual — the evidence layer emits continuously or the build is not done"
+    ],
+    [
+     "Tier-rule drift",
+     "handling rules enforced by habit instead of code until a release goes wrong — downgrade, releasability and caveat rules run as policy with logs, not as guidance"
+    ],
+    [
+     "Pipeline divergence",
+     "each enclave accumulating its own toolchain until evidence is untrustworthy — parity across enclaves is a gate condition, not an aspiration"
+    ],
+    [
+     "Readiness theatre",
+     "figures assembled for the briefing and defended against the data — lineage on every readiness number ends the argument by making it unnecessary"
+    ],
+    [
+     "Quantum drift",
+     "the crypto census abandoned after the first inventory sprint — the CBOM is a maintained product with coverage reporting, or the migration program does not start"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions defense leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Does this require re-accreditation?",
+     "The builds ship inside your boundary policy and existing packages, and they emit the evidence your authorizing official already needs. Delta review replaces repeat review — that is the point of the evidence platform."
+    ],
+    [
+     "Can fusion really work across sensitivity tiers?",
+     "Yes, when joins are policy-governed: computation on tiered copies, releases through your cross-domain services under codified rules, provenance on every hop. The analyst sees one correlated picture with every source's trust level visible."
+    ],
+    [
+     "How do models stay under OPSEC and legal control?",
+     "Every model-assisted step is a lead with confidence and lineage; restricted uses are blocked by configuration; and the oversight registry tracks evaluation, drift and fitness continuously for the assurance function."
+    ],
+    [
+     "What about our classified toolchain?",
+     "The DevSecOps build runs with parity inside your enclaves using your approved tooling — the same pipeline definitions and gates everywhere, with SBOMs and attestations produced per build as pipeline artefacts."
+    ],
+    [
+     "How do you measure success without gaming?",
+     "Baselines are locked during the diagnostic, metrics report from system telemetry with lineage, and the feasibility read names the confounders before anyone commits to a target. Where a metric is classified or confounded, we scope fixed-fee and say so."
+    ],
+    [
+     "What is the smallest program worth running?",
+     "One thread or one process, one baseline, one vertical slice — the authorization evidence platform and one instrumented mission thread are the most common starters. If the diagnostic cannot find the delta, we say so and stop."
+    ],
+    [
+     "How does the PQC program avoid becoming shelfware?",
+     "It runs as a maintained product: a cryptographic bill of materials with owners, hybrid migration paths engineered per system class, re-keying runs rehearsed, and coverage figures reported to the same board that tracks POA&M closure."
+    ],
+    [
+     "Who owns the build after you leave?",
+     "Your teams, with the runbooks, contracts, evaluation suites and registry entries transferred as gate conditions during expansion — not as a closing deliverable. Several programs run entirely in-house after the second quarter."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Bring one mission thread or one accreditation package to a two-week diagnostic: Dataq Software will baseline it inside your enclave rules, quantify where the latency and the evidence debt live, and tell you honestly whether the build is worth your program office's attention. The feasibility read is yours to keep, at your classification, whichever way the decision goes."
+  }
+ ]
+}

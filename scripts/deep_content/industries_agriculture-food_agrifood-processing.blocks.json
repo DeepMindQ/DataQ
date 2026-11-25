@@ -1,0 +1,767 @@
+{
+ "file": "industries_agriculture-food_agrifood-processing",
+ "meta_description": "Agri-food processing data engineering: batch-lot traceability, giveaway and fill control from checkweigher data, mock-recall evidence chains and GFSI audit automation built on the MES, SCADA and ERP estate you already run.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "A food plant does not lack data; it lacks the join. The MES holds the batch, the checkweigher holds the pack weight, the LIMS holds the micro result, and the ERP holds the invoice — and every yield, giveaway and recall question lives in the seam between them. Dataq Software builds that join: a batch-lot data fabric over the MES, SCADA, checkweighers and ERP you already run, so traceability, fill control and audit evidence come out of one spine instead of three spreadsheets."
+  },
+  {
+   "t": "p",
+   "x": "Most processing plants — meat and poultry, dairy, bakery, prepared foods, feed milling, packhouse produce — run a patchwork that grew by acquisition and necessity. A food-grade MES or paper batch records at the mixer, PLC and SCADA layers over the cook, fry and wash lines, checkweighers and metal detectors at the packhead, a LIMS in the lab, and an ERP such as SAP, Oracle, Infor M3 or Dynamics 365 in the office. Each system is competent at its own job. The decisions that move margin and compliance are cross-system: what a lot actually cost in giveaway, which upstream trim lots fed a suspect pallet, and whether a critical control point held on the night shift three weeks ago."
+  },
+  {
+   "t": "p",
+   "x": "The gap is not a software gap; it is a data-model gap. No shared identifier ties a production order to the checkweigher stream, the CIP event, the lab sample and the pallet license plate. So process engineers rebuild the same joins in spreadsheets every week, quality rebuilds them again before an audit, and finance rebuilds them a third time at month-end for yield variance. The engineering work that matters is making the join permanent: a batch-lot spine keyed on lot, batch and production order that every downstream answer reuses instead of re-deriving, with governance so the identifiers stay clean."
+  },
+  {
+   "t": "p",
+   "x": "We are deliberately read-first. The fabric integrates against the estate you already validated — no rip-and-replace of the MES, the ERP or the line control layer, all of which keep doing their jobs. Feasibility is gated honestly: if the giveaway delta on your line turns out to be measurement noise rather than money, we say so and stop, because a two-week baseline on your own pack stream settles that question with data. The sections below walk through the plant decisions this fabric serves, the evidence it automates, and the sequencing that makes it land without a plant shutdown."
+  },
+  {
+   "t": "h2",
+   "x": "The patchwork is the system of record — treat it that way"
+  },
+  {
+   "t": "p",
+   "x": "Walk the floor and the patchwork has names: a food-grade MES or e-batch records at the mixer, AVEVA or Ignition SCADA over the cook and wash lines, Mettler-Toledo, Ishida or Loma checkweighers and metal detectors at the packhead, a STARLIMS or LabWare instance in the lab, Videojet and Domino coders printing date codes, and SAP, Infor M3 or Dynamics 365 carrying the orders. Every one of those systems is load-bearing. The failure mode is not any single tool — it is that yield, giveaway and traceability answers live in the seams, so they get rebuilt by hand every time someone asks."
+  },
+  {
+   "t": "p",
+   "x": "The engineering answer is not a new plant system, and it is not a data lake for its own sake. It is a collector layer that reads each source where it already speaks — OPC-UA or MQTT from SCADA, the per-pack stream from the checkweigher over its vendor protocol, LIMS result extracts, coder and printer logs — and lands every event on one spine keyed to lot, batch and production order. Once that spine exists, the questions in the sections below become queries against it instead of quarterly integration projects. That is the thesis of a plant data fabric: build the join once, then serve a decade of questions from it."
+  },
+  {
+   "t": "p",
+   "x": "Two practical notes from doing this repeatedly. First, identifier reconciliation is a named workstream with an owner inside your plant — lot numbering conventions between MES and ERP cannot be fixed by software alone. Second, the collector layer stays deliberately thin: it reads and lands events, it does not become a second MES with its own opinions. Plants that accepted those two constraints had the spine producing answers in weeks; plants that wanted the fabric to also re-implement scheduling or quality workflows stalled. Scope discipline is an engineering feature here, not a sales posture."
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "Plants rarely need more data capture; they need the data they already capture to agree on identifiers. Most of the build effort goes into reconciling lot numbering between MES, ERP and the pack stream — not into buying new sensors."
+  },
+  {
+   "t": "h2",
+   "x": "Formulation and recipe management: scaling without breaking the mass balance"
+  },
+  {
+   "t": "p",
+   "x": "A recipe is not a document; it is a constraint set. Scale a 500 kg marinade batch to 2,400 kg and brine injection percentage, salt concentration and allergen handling all move with it — while the mass balance still has to close: raw weight in, cook loss, trim, giveaway and net weight out. Food-grade MES products and disciplined spreadsheet shops both carry this logic, but the scaled recipe and the actual consumption rarely reconcile. The fabric reads the recipe master and the actual consumption events, then computes batch-level mass balance as a first-class metric rather than a month-end reconstruction."
+  },
+  {
+   "t": "p",
+   "x": "When mass balance closes batch after batch, something downstream changes shape: yield variance stops being a month-end surprise and becomes a same-day signal. A 2.1 percent cook loss that standard costing quietly absorbed becomes an actual against the recipe's engineered loss, tagged to oven, shift and raw-material lot. The conversation between production and finance changes too: instead of arguing whether the standard is right, both sides read the same batch-level reconciliation and argue about the two ovens that drifted. That argument is worth having; it is where margin lives, and it needs the batch-lot spine underneath it to stay honest."
+  },
+  {
+   "t": "table",
+   "caption": "What a closed mass balance exposes in the first weeks",
+   "headers": [
+    "Signal",
+    "Where it comes from",
+    "Typical owner"
+   ],
+   "rows": [
+    [
+     "Cook and fry loss versus engineered loss",
+     "SCADA batch weights against the recipe master",
+     "Process engineering"
+    ],
+    [
+     "Trim and portion giveaway",
+     "Portioner and checkweigher streams against spec",
+     "Operations"
+    ],
+    [
+     "Seasoning and brine uptake variance",
+     "Recipe scaling against actual consumption events",
+     "R&D and quality"
+    ],
+    [
+     "Unaccounted shrink",
+     "Mass-balance residual by lot",
+     "Plant controller"
+    ],
+    [
+     "Rebatch and rework frequency",
+     "MES batch record edits and rework transactions",
+     "Quality"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Lot genealogy and 1-up/1-down traceability"
+  },
+  {
+   "t": "p",
+   "x": "Traceability is a graph problem wearing a compliance costume. One lot of ground product consumes twenty upstream trim lots; that finished lot splits across four pallets, two customers and a blast-freeze event; then one customer call inverts the whole question. One-up/one-down is the regulatory floor — what you received and where you shipped it, retrievable within hours under FSMA 204-style scrutiny. The graph a plant actually needs is many-up and many-down: every input lot that fed a suspect output, every output a suspect input touched, with quantities, dates and the process steps in between."
+  },
+  {
+   "t": "h3",
+   "x": "From regulatory floor to operating graph"
+  },
+  {
+   "t": "p",
+   "x": "We build the genealogy graph on the spine: consumption events, transformation events such as grind, blend, cook, pack and freeze, and shipping events, each carrying the lot identifiers from the systems that created them. GS1 EPCIS 2.0 supplies a standard event vocabulary for commissioning, transformation and shipping, which matters when a retail customer demands event-level reporting or when a co-man has to feed you its half of the chain. The same graph that satisfies an auditor also powers FEFO picking, hold scoping and the co-man reconciliation described later — one graph, many consumers, which is what makes it worth building properly."
+  },
+  {
+   "t": "p",
+   "x": "Rework and reprocessing are where genealogy quietly dies. A batch that failed spec and was rebatched, trim that looped back into the blender, packs repackaged after a coding error — each creates a many-to-many edge most MES schemas do not record cleanly, and each is exactly what an investigator asks about on day two of a recall. The fabric models rework as first-class transformation events with their own quantities, so the graph stays complete under messy conditions, not just clean ones. Auditors probe the messy conditions deliberately; a graph that only works on green-field days fails precisely when it matters."
+  },
+  {
+   "t": "h2",
+   "x": "Giveaway control and target net weight: where the checkweigher earns its keep"
+  },
+  {
+   "t": "p",
+   "x": "Giveaway is the most quietly expensive number in a packaging plant. Set a 454 g target with a tight underweight tolerance and every 8 g overfill is product you gave away; on a line running 120 packs a minute across two shifts, that is a material line item by Friday. Checkweigher data already measures it pack by pack, but in most plants the stream ends at the reject gate and a daily summary printout. Fill control means reading the per-pack distribution — mean, sigma, skew, drift by filler head, by hour, by changeover — and pricing what it costs."
+  },
+  {
+   "t": "h3",
+   "x": "Pricing the gram, then defending it"
+  },
+  {
+   "t": "p",
+   "x": "Giveaway analytics join the checkweigher stream to the recipe spec and the production order, so the delta is priced rather than merely plotted. The outputs are operational: filler-head drift alarms, target-weight recommendations per product-and-line pair, and a giveaway ledger finance can reconcile against yield variance in the ERP. When the plant quotes a giveaway number at budget time, it comes from the pack stream instead of an estimate — and the two-week baseline says, on your own SKUs, how many grams per case are actually recoverable before anyone commits to a build."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Filler-head drift detection",
+     "Per-head mean and sigma from the pack stream exposes the one head that drifts at hour six. Maintenance gets a named culprit instead of a line-wide weight complaint, and the fix is a calibration rather than a guess."
+    ],
+    [
+     "Target-weight optimization per SKU",
+     "For each product-and-line pair the fabric computes the mean that holds compliance headroom with the least giveaway. Moving a target down 1.5 g on a compliant distribution is recovered product, priced against the same pack stream."
+    ],
+    [
+     "Checkweigher health and false rejects",
+     "A rising reject rate often means the checkweigher itself is drifting or a coder is misfeeding. Reading the stream continuously catches sensor drift before it trashes good product or lets underweights ship."
+    ],
+    [
+     "A giveaway ledger finance trusts",
+     "Every pack event rolls up to a priced giveaway figure per SKU, line and week, reconciled against yield variance in the ERP. Budget conversations start from measured grams instead of folklore."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Line yield, first-pass yield and OEE that packaging teams believe"
+  },
+  {
+   "t": "p",
+   "x": "OEE on a food packaging line is a different animal from a discrete assembly line. Availability is eaten by changeovers and by CIP and SIP cleaning, not only by breakdowns; performance is bounded by filler and seamer speeds; and quality is giveaway, seal integrity and coding accuracy rather than scrap count. Most plants compute OEE from downtime codes entered by hand at shift end, which measures what operators remembered. The fabric computes it from events: the pack stream, line state signals, CIP skid telemetry and checkweigher rejects, all keyed to the lot."
+  },
+  {
+   "t": "p",
+   "x": "First-pass yield is the metric that changes behavior. A pallet that passes the metal detector twice, or a lot re-labeled for a date-code correction, is invisible in most dashboards; on the spine it is arithmetic — good packs at first inspection versus after rework, per lot and per line. Line yield closes the loop into the mass balance above, and the perishables S&OP section below plans capacity from the same numbers. None of it requires new line hardware; it requires the signals you already emit to be read consistently and joined to the lot, which is why it can be baselined inside two weeks."
+  },
+  {
+   "t": "table",
+   "caption": "Metrics packaging and finance can finally agree on",
+   "headers": [
+    "Metric",
+    "How the fabric computes it",
+    "What it changes"
+   ],
+   "rows": [
+    [
+     "Availability",
+     "Line state signals plus CIP and SIP telemetry, bucketed by cause",
+     "Changeover and cleaning become plannable losses instead of surprises"
+    ],
+    [
+     "Performance",
+     "Pack counts against engineered line speed for each SKU",
+     "Reveals chronic under-speed on specific products"
+    ],
+    [
+     "First-pass yield",
+     "Good packs at first inspection over total packs, per lot",
+     "Makes rework and re-inspection visible instead of absorbed"
+    ],
+    [
+     "Giveaway ratio",
+     "Pack weight distribution against target net weight per SKU",
+     "Prices overfill directly in grams and dollars"
+    ],
+    [
+     "OEE reconciliation",
+     "Event-computed OEE against shift-entered OEE",
+     "Quantifies reporting bias before it reaches plant reviews"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Changeover and CIP/SIP: the downtime the schedule pretends is not there"
+  },
+  {
+   "t": "p",
+   "x": "In a dairy or ready-to-eat plant, cleaning is the shift. CIP cycles, SIP verification and allergen changeovers structure the entire schedule, and their true duration is usually known to nobody: the SCADA historian logs the CIP skid, the MES logs order completion, and the schedule says something else again. Allergen changeover matrices sharpen it further — running a nut-containing SKU before a nut-free run is not an availability problem, it is a food-safety decision with documented cleaning validation behind it."
+  },
+  {
+   "t": "p",
+   "x": "Reading CIP skid telemetry and changeover events onto the spine does two things. First, the plant gets an actual distribution of changeover durations by from-product and to-product pair, which is what finite scheduling needs to stop padding every sequence. Second, quality gets a living allergen matrix: which sequence pairs are validated, which require enhanced cleaning, which are prohibited — checked automatically against the sequence the schedule proposes. When someone proposes running dip after breaded product, the matrix answers before the schedule is committed, not after the line is down and the question is forensic."
+  },
+  {
+   "t": "p",
+   "x": "Schedule simulation closes the loop. Once changeover durations and cleaning validations live on the spine, the scheduler can test a proposed sequence against the allergen matrix and the CIP reality before committing it to the floor: which pairs are legal, which add an extra clean, which push the nut-free run past its window. Plants using this check stop discovering forbidden sequences at shift start, and the argument between scheduling and quality moves from the floor to the plan, where it is cheap. The matrix stays owned by quality; the scheduler simply gains the ability to ask it automatically instead of by phone."
+  },
+  {
+   "t": "h2",
+   "x": "HACCP critical control points, FSMA preventive controls and GFSI evidence"
+  },
+  {
+   "t": "p",
+   "x": "Critical control points — cook temperature, metal detection, pH, water activity — generate monitoring records continuously, and every GFSI scheme audit and FSMA Preventive Controls inspection asks the same question: show me the records, and show me they were reviewed on time. The readings exist in the SCADA historian and on clipboards; the review signatures exist in a quality binder; the corrective actions exist in an inbox. None of it is joined, which is why audit preparation is a fire drill and why one missing night-shift signature becomes an all-hands search."
+  },
+  {
+   "t": "h3",
+   "x": "Excursions that attach to lots, not lines"
+  },
+  {
+   "t": "p",
+   "x": "On the fabric, CCP readings land against the batch-lot spine with the same identifiers as the production record, so an excursion attaches to the exact lots on the line when it happened. Corrective-action workflows attach to the same event: what was held, who released it, what disposition was applied. The reviewer's signature is captured where the record lives rather than copied to paper afterward. The auditor's question becomes a query with a timestamp, and the unannounced audit stops being a crisis."
+  },
+  {
+   "t": "h3",
+   "x": "Clause-by-clause evidence, not a new quality system"
+  },
+  {
+   "t": "p",
+   "x": "BRCGS, SQF and FSSC 22000 audits are evidence exercises: the scheme asks for monitoring records, verification activities, traceability tests, complaint handling and corrective actions, organized by clause. The records exist; assembling them per clause is the cost, and a quality manager spending most of a month before a BRCGS visit pulling spreadsheets is a structural reality, not an exaggeration. The evidence vault is an index over the records your HACCP plan and preventive controls already generate, organized by clause and retrievable as links. Your team keeps owning the food safety plan; the assembly work stops being yours."
+  },
+  {
+   "t": "table",
+   "caption": "GFSI audit asks mapped to evidence the fabric already holds",
+   "headers": [
+    "Audit ask",
+    "Evidence the fabric holds",
+    "Human work left"
+   ],
+   "rows": [
+    [
+     "Traceability test and mock recall",
+     "Genealogy graph query with quantities, timestamps and destinations",
+     "Review and sign-off"
+    ],
+    [
+     "CCP monitoring records",
+     "Reading-level records joined to lots and orders",
+     "Reviewer signature and escalation"
+    ],
+    [
+     "Cleaning and changeover validation",
+     "CIP telemetry with allergen matrix check history",
+     "Periodic revalidation"
+    ],
+    [
+     "Corrective actions",
+     "Event-linked CAPA records with dispositions",
+     "Closure discipline"
+    ],
+    [
+     "Verification and training trails",
+     "Scheduled versus completed verification events",
+     "Escalation on gaps"
+    ],
+    [
+     "Label and artwork compliance",
+     "Version-controlled specs checked against printed codes",
+     "Spot audit"
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "Most CCP evidence failures are identifier failures: the historian logged the excursion against a line, not a lot, so nobody can say which pallets were exposed. Fixing the join is the fix; the sensor was fine."
+  },
+  {
+   "t": "h2",
+   "x": "Hold-and-release and mock recalls: inventory that is money and liability at once"
+  },
+  {
+   "t": "p",
+   "x": "A hold is inventory the ERP says is sellable and the lab says is not. In most plants the hold lives in a spreadsheet or a status code nobody trusts, so held pallets get picked by accident and released lots ship late — both expensive. Hold-and-release on the fabric is a workflow with teeth: a hold event attaches to lots, the genealogy graph propagates it to every downstream pallet, the WMS sees the status, and release requires the lab result and a named approver. The financial view travels with it, because a hold that outlives the code date is working capital with a countdown."
+  },
+  {
+   "t": "p",
+   "x": "Every GFSI scheme requires a traceability exercise, and retail customers increasingly run their own with a blunt standard: pick a lot, produce the full one-up/one-down picture — quantities, dates, destinations — inside a four-hour window, with mass balance reconciling within one percent. Plants that run mock recalls from spreadsheets spend two days assembling the answer and hope the quantities tie. The recall simulator runs the genealogy query the way an auditor would, on a schedule: a random finished lot this quarter, a raw-material lot the next, output generated while people watch rather than assembled after the fact."
+  },
+  {
+   "t": "h3",
+   "x": "The first run finds the real gaps"
+  },
+  {
+   "t": "p",
+   "x": "The first mock recall on a new fabric usually finds real defects, which is the point of running it: a co-man lot with no inbound event, a blast-freeze tunnel that consumed lots without recording them, a retained sample without a lot link, an intercompany transfer booked on one side only. Each defect found in simulation is a recall-week crisis avoided. Where a customer or regulator requires event-level reporting, the same events export as GS1 EPCIS 2.0 messages, so the chain speaks a standard language instead of a PDF."
+  },
+  {
+   "t": "h2",
+   "x": "Cold chain, FEFO and catch-weight: the warehouse half of the plant"
+  },
+  {
+   "t": "p",
+   "x": "Downstream of the packhead the questions change shape. Blast freezing and cold storage create temperature-excursion exposure that must attach to lots, not to rooms. Date codes and FEFO discipline decide which pallet ships, and a mispick is either a shelf-life loss or a code-date complaint. Catch-weight product — cases that vary in weight — breaks each-based inventory math in the ERP unless weight capture travels with the case. None of this is exotic; all of it is where plants lose shelf life, working capital and customer goodwill quietly."
+  },
+  {
+   "t": "p",
+   "x": "The fabric reads warehouse events the same way it reads line events: cold-store telemetry joined to pallet license plates, blast-freeze tunnel cycles recorded as transformation events, catch-weight capture from the packhead flowing to the ERP as actual weight per case. FEFO logic gets a real remaining-shelf-life figure per pallet instead of a production-date bucket, and hold status rides along so a held pallet is never the pick. The payoff surfaces in claims: excursions with no exposed lots, and weight complaints that reconcile in minutes against per-case actuals."
+  },
+  {
+   "t": "p",
+   "x": "Shipping is the last unmonitored leg of the cold chain, and it is where code-date promises are kept or broken. The fabric carries the pallet's remaining shelf life into the load plan, so a trailer built for a five-day transit does not get loaded with pallets that have two days left. Carrier temperature telemetry joins post-delivery to the pallet manifest, closing the loop on transit excursions that customers otherwise discover as complaints. The result is fewer code-date credits and a defensible answer when a customer asks what happened in transit — because the answer is recorded, not reconstructed."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Excursion scoping to pallets",
+     "A cold-room alarm attaches to the pallets present during the window, not to the room's whole inventory. Disposition conversations start from a named lot list instead of a temperature chart."
+    ],
+    [
+     "Catch-weight integrity end to end",
+     "Per-case weights follow the pallet through the WMS to shipment. Invoicing matches what actually shipped, and customer weight claims reconcile against evidence in minutes."
+    ],
+    [
+     "FEFO with real shelf life",
+     "Remaining shelf life per pallet, including hold status and freeze events, drives pick priority. The same view exposes the lots that will age out before they ever ship."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "ERP for food: SAP, Oracle, Infor M3 and Dynamics 365 in their place"
+  },
+  {
+   "t": "p",
+   "x": "Food ERPs are strong at orders, costing and compliance paperwork, and structurally blind at plant-floor resolution. Infor M3 and Dynamics 365 F&SCM carry respectable food-grade lot control; SAP and Oracle carry the scale. None ingest a 120-packs-a-minute weight stream natively, and none model a CIP event. The right division of labor: the ERP stays the commercial system of record, and the fabric feeds it clean rollups — actual consumption, actual yield, giveaway and catch-weight actuals — instead of the plant backfilling it by hand at month-end."
+  },
+  {
+   "t": "h3",
+   "x": "Writing back through interfaces that already exist"
+  },
+  {
+   "t": "p",
+   "x": "Integration direction matters as much as integration volume. Our rule at Dataq Software is simple: write to the ERP only through interfaces it already exposes — production confirmations, batch orders, quality statuses, intercompany transfers — and never propose replacing ERP master data. Hedged commodity positions arriving at the plant are a good test case: a beef or dairy plant buying raw material on futures-linked contracts can reconcile actual receipts against contracted quantities and basis inside the fabric, so procurement and the plant finally read the same exposure number."
+  },
+  {
+   "t": "h2",
+   "x": "Perishables S&OP and shelf-life-aware run ordering"
+  },
+  {
+   "t": "p",
+   "x": "Weekly scheduling in a perishables plant is a shelf-life problem: run the shortest-life raw material first, honor customer code-date windows, and fit changeovers and CIP cycles around both. Most plants schedule on sequence folklore and discover shelf-life collisions at the pick face, where the fix is expensive. Run ordering on the fabric uses genealogy, remaining shelf life and the measured changeover matrix to propose sequences that respect all three — then shows the planner the tradeoffs instead of hiding them."
+  },
+  {
+   "t": "h3",
+   "x": "The baseline is the gate"
+  },
+  {
+   "t": "p",
+   "x": "The same model feeds perishables S&OP above the plant: yield actuals, giveaway, hold status and shelf-life risk roll into a weekly view that says which SKUs are at risk of aging out and which lines' changeover patterns are eating capacity. This is where the two-week baseline earns its name — we run it on your actual orders, recipes and line data, and the output is a sequence comparison on real production weeks, not a demonstration dataset. If the delta does not pay for itself, the baseline says so and we stop there."
+  },
+  {
+   "t": "h2",
+   "x": "Co-packers, co-mans and intercompany transfers"
+  },
+  {
+   "t": "p",
+   "x": "Co-manufacturing spreads the plant across buildings you do not control, and traceability chains break exactly there. The co-man ships finished pallets under its own lot scheme; your ERP books the receipt; nobody joins the two until an auditor or a customer complaint forces the question. Intercompany transfers between your own plants have the same defect in miniature. The fabric handles both with one mechanism: inbound events keyed to your lot scheme with a cross-reference to theirs, quantities reconciled against the transfer order, and the co-man's CCP evidence landing in the same evidence vault where your contract requires it."
+  },
+  {
+   "t": "p",
+   "x": "Co-man scorecards become factual instead of anecdotal: yield variance on your recipes where batch records are contractual, giveaway comparison where pack data is shared, hold frequency, and document timeliness against SLA. The intercompany transfer ledger reconciles both plants' views of the same pallets, which matters at month-end and matters far more in a recall. When a customer audit asks how you supervise a co-man, the answer is data you hold rather than assurances you forward, and supplier audits get shorter for the same reason."
+  },
+  {
+   "t": "p",
+   "x": "Data sharing with a co-man is a contract clause before it is an interface. The fabric works one-sided — your inbound events and transfers reconcile even without their internals — but the strongest chains come from agreements that require a minimum event set: inbound receipts, CCP status on your recipe, hold events, pallet-level weights. We draft that event specification in a form your procurement team can attach to the next co-man agreement, so the next renewal closes the gap permanently instead of renegotiating it annually."
+  },
+  {
+   "t": "table",
+   "caption": "The co-man ledger: what reconciliation catches before the auditor does",
+   "headers": [
+    "Reconciliation",
+    "Inputs joined",
+    "What it surfaces"
+   ],
+   "rows": [
+    [
+     "Inbound receipt versus transfer order",
+     "Co-man ASN and pallet events against ERP receipts",
+     "Shorts, overages and phantom pallets"
+    ],
+    [
+     "Lot cross-reference completeness",
+     "Co-man lot identifiers against your finished-goods lots",
+     "Genealogy gaps before audit, not during"
+    ],
+    [
+     "Yield on your recipe",
+     "Their batch records where contractual, against engineered yield",
+     "Recipe leakage or process drift"
+    ],
+    [
+     "Giveaway where data is shared",
+     "Their pack weights against your target net weight",
+     "A real fill-control comparison"
+    ],
+    [
+     "CCP evidence timeliness",
+     "Their monitoring records against contract SLAs",
+     "Evidence gaps by clause and month"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Label compliance, packaging specs and artwork version control"
+  },
+  {
+   "t": "p",
+   "x": "A label is a regulated artifact: nutrition panel, allergen declarations that must match the recipe's allergen profile, claim language, country-of-origin statements and a code date printed in a validated format. Most label errors are data errors — the artwork says one allergen sentence, the recipe master says another, and nobody compared them at changeover. The fabric joins recipe version, artwork version and printed-code samples from the coder so the three can be checked against each other automatically when a line changes over."
+  },
+  {
+   "t": "h3",
+   "x": "The dependency runs backward"
+  },
+  {
+   "t": "p",
+   "x": "Artwork version control closes the loop in the other direction: when R&D changes a recipe's allergen profile, the label versions requiring re-approval are computed from the dependency, not remembered by a coordinator. Packaging specs — film, case, coder configuration, label placement — live as versioned objects tied to SKUs, and the changeover check compares spec to configuration before the first pack prints. It is unglamorous work. It is also the difference between a code-date recall and a quiet correction, and only one of those outcomes costs once."
+  },
+  {
+   "t": "p",
+   "x": "Assembled, the pieces have a shape that is deliberately boring in the best sense: standard collectors, standard event models, your identifiers. Line and plant sources feed a collector layer; the collector layer lands events on a batch-lot spine; the spine feeds decision services for giveaway, yield, scheduling and compliance; and those services write back only through interfaces your MES, WMS and ERP already expose. This is the stack Dataq Software builds and operates alongside your plant engineers, and it is the same shape whether the plant is a poultry further-processor, a fluid dairy, a feed mill or a produce packhouse. The identifiers and the decision services change; the architecture does not."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — agri-food processing decision stack",
+   "lanes": [
+    "Line and plant sources",
+    "Collector and event layer",
+    "Batch-lot spine",
+    "Decision services",
+    "Compliance and evidence",
+    "Planning and ERP"
+   ],
+   "nodes": [
+    {
+     "id": "cw",
+     "lane": 0,
+     "label": "Checkweighers and metal detection"
+    },
+    {
+     "id": "scada",
+     "lane": 0,
+     "label": "Cook and wash line SCADA"
+    },
+    {
+     "id": "cip",
+     "lane": 0,
+     "label": "CIP skid telemetry"
+    },
+    {
+     "id": "lims",
+     "lane": 0,
+     "label": "LIMS lab results"
+    },
+    {
+     "id": "cold",
+     "lane": 0,
+     "label": "Cold store and blast-freeze telemetry"
+    },
+    {
+     "id": "col",
+     "lane": 1,
+     "label": "OPC-UA and MQTT collectors"
+    },
+    {
+     "id": "cwnorm",
+     "lane": 1,
+     "label": "Catch-weight normalizer"
+    },
+    {
+     "id": "spine",
+     "lane": 2,
+     "label": "Batch-lot event spine"
+    },
+    {
+     "id": "recipe",
+     "lane": 2,
+     "label": "Recipe and packaging spec master"
+    },
+    {
+     "id": "gene",
+     "lane": 2,
+     "label": "Lot genealogy graph"
+    },
+    {
+     "id": "matrix",
+     "lane": 2,
+     "label": "Allergen changeover matrix"
+    },
+    {
+     "id": "give",
+     "lane": 3,
+     "label": "Giveaway and fill analytics"
+    },
+    {
+     "id": "yield",
+     "lane": 3,
+     "label": "Yield and OEE models"
+    },
+    {
+     "id": "sched",
+     "lane": 3,
+     "label": "Changeover-aware run ordering"
+    },
+    {
+     "id": "hold",
+     "lane": 3,
+     "label": "Hold-and-release workflow"
+    },
+    {
+     "id": "epcis",
+     "lane": 4,
+     "label": "GS1 EPCIS 2.0 event export"
+    },
+    {
+     "id": "recall",
+     "lane": 4,
+     "label": "Mock-recall simulator"
+    },
+    {
+     "id": "vault",
+     "lane": 4,
+     "label": "Audit evidence vault"
+    },
+    {
+     "id": "erp",
+     "lane": 5,
+     "label": "ERP production orders and transfers"
+    },
+    {
+     "id": "sop",
+     "lane": 5,
+     "label": "Perishables S&OP feed"
+    }
+   ],
+   "edges": [
+    {
+     "a": "cw",
+     "b": "col"
+    },
+    {
+     "a": "scada",
+     "b": "col"
+    },
+    {
+     "a": "cip",
+     "b": "col"
+    },
+    {
+     "a": "lims",
+     "b": "col"
+    },
+    {
+     "a": "cold",
+     "b": "col"
+    },
+    {
+     "a": "col",
+     "b": "cwnorm"
+    },
+    {
+     "a": "col",
+     "b": "spine"
+    },
+    {
+     "a": "cwnorm",
+     "b": "spine"
+    },
+    {
+     "a": "recipe",
+     "b": "spine"
+    },
+    {
+     "a": "spine",
+     "b": "gene"
+    },
+    {
+     "a": "gene",
+     "b": "epcis"
+    },
+    {
+     "a": "gene",
+     "b": "recall"
+    },
+    {
+     "a": "gene",
+     "b": "hold"
+    },
+    {
+     "a": "gene",
+     "b": "sched"
+    },
+    {
+     "a": "cwnorm",
+     "b": "give"
+    },
+    {
+     "a": "spine",
+     "b": "yield"
+    },
+    {
+     "a": "matrix",
+     "b": "sched"
+    },
+    {
+     "a": "yield",
+     "b": "sop"
+    },
+    {
+     "a": "hold",
+     "b": "erp"
+    },
+    {
+     "a": "spine",
+     "b": "vault"
+    },
+    {
+     "a": "recall",
+     "b": "vault"
+    },
+    {
+     "a": "erp",
+     "b": "spine"
+    }
+   ]
+  },
+  {
+   "t": "table",
+   "caption": "The estate underneath: systems this work touches",
+   "headers": [
+    "Layer",
+    "Representative estate",
+    "What we integrate",
+    "Our stance"
+   ],
+   "rows": [
+    [
+     "MES and batch records",
+     "Food-grade MES, e-batch systems, scanned paper batch records",
+     "Batches, lots, orders, consumption and rework events",
+     "Read-first; never replaced"
+    ],
+    [
+     "Line control",
+     "PLC and SCADA (AVEVA, Ignition, FactoryTalk), CIP skids",
+     "CCP readings, line states, CIP cycle telemetry",
+     "Read via OPC-UA and historians"
+    ],
+    [
+     "Pack and inspection",
+     "Checkweighers, metal detection, X-ray, coders",
+     "Per-pack weights, rejects, printed code samples",
+     "Read at the source"
+    ],
+    [
+     "Lab and quality",
+     "LIMS (STARLIMS, LabWare), HACCP plans, CAPA tools",
+     "Results, dispositions, approvals, hold decisions",
+     "Read and event-linked"
+    ],
+    [
+     "Warehouse and cold chain",
+     "WMS, cold-store telemetry, blast-freeze controls",
+     "Pallet events, temperatures, catch weights",
+     "Read; write pick guidance only"
+    ],
+    [
+     "ERP",
+     "SAP S/4HANA, Oracle, Infor M3, Dynamics 365 F&SCM",
+     "Orders, receipts, transfers, confirmations",
+     "Read-heavy; writes via existing interfaces"
+    ],
+    [
+     "Artwork and packaging specs",
+     "Artwork DAM, spec spreadsheets, coder configurations",
+     "Label versions, spec parameters, dependencies",
+     "Indexed, not replaced"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software engages"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Two-week baseline on your own data",
+     "We read one line's checkweigher stream, one recipe family and one month of lots, then quantify the giveaway and yield delta and list the traceability gaps on your own numbers. If the delta is not real, we say so and stop."
+    ],
+    [
+     "Batch-lot spine first",
+     "The first build is the identifier layer and the collector fabric over your existing MES, SCADA and ERP — the join every later answer reuses. No plant system is replaced to get there."
+    ],
+    [
+     "Evidence automation in parallel",
+     "HACCP monitoring joins, hold-and-release workflows and the mock-recall simulator ship alongside the spine. Audit relief is the fastest visible win for the quality team, so it is sequenced early."
+    ],
+    [
+     "Analytics where the money is",
+     "Giveaway and fill control, line yield and first-pass yield, changeover reality — sequenced by the baseline's measured dollars rather than by dashboard aesthetics."
+    ],
+    [
+     "Fixed-scope increments with named owners",
+     "Each increment improves a named decision, with an owner on your side and a before and after number. No multi-year platform commitment before the second mock recall proves the first."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions food processing leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Will you replace our MES or ERP?",
+     "No. The fabric reads your MES, SCADA, checkweighers, LIMS, WMS and ERP and writes only through interfaces those systems already expose. Food plants run validated systems; we do not destabilize them."
+    ],
+    [
+     "How fast can a mock recall run on the fabric?",
+     "First builds typically reach a four-hour mock recall within the first quarter, with quantity reconciliation against mass balance. The first run usually exposes genealogy gaps, which is intended and valuable."
+    ],
+    [
+     "Our checkweighers are old. Does that block giveaway analytics?",
+     "Usually not. Most checkweigher fleets expose pack-level data through vendor protocols or serial taps, and where a unit cannot, an interim aggregate feed still supports drift and giveaway baselines."
+    ],
+    [
+     "Who owns the data model after you leave?",
+     "Your team does. The spine is documented, the collectors are standard tooling, and we train plant engineers to extend lanes. Ownership transfer is an explicit phase, not an afterthought."
+    ],
+    [
+     "Can you handle catch-weight and mixed-SKU pallets?",
+     "Yes. Catch-weight capture at the packhead travels with the pallet through the WMS and reconciles to invoicing, and mixed-SKU pallets are modeled as composed lots with their own genealogy."
+    ],
+    [
+     "What if our co-man will not share data?",
+     "The fabric works one-sided: your inbound events and transfers reconcile even without their internals. Contract clauses can require a minimum event set for the chain to close, and we draft that specification."
+    ],
+    [
+     "Is this a food-safety system or a margin system?",
+     "Both, deliberately. Traceability and CCP evidence are compliance deliverables, while giveaway, yield and changeover analytics are margin deliverables. They share one spine, which is why both improve together."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Bring us one packaging line and one recipe family for two weeks. We will read the checkweigher stream, the batch records and the ERP orders, quantify the giveaway and yield delta, and run a mock-recall gap check against your genealogy. You get a measured delta and a build sequence priced against the recovered product and audit hours it saves. If the delta is not real on your data, we say so and stop. Dataq Software builds the plant data fabric on the systems you already run, and the fastest way to see whether it pays is to measure one line."
+  }
+ ]
+}

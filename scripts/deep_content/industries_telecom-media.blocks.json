@@ -1,0 +1,770 @@
+{
+ "file": "industries_telecom-media",
+ "meta_description": "How Dataq Software engineers telecom and media: network assurance and AIOps, churn and ARPU decision hubs, revenue assurance, consent-first ad activation, streaming QoE and delivery economics, content supply chain and rights evidence — built against the OSS, BSS and platform estate you already run.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Telecom and media operate the largest real-time estates outside finance: networks that carry the traffic, platforms that hold the attention, and a trading layer — wholesale, advertising, rights — that prices both. The sector runs on OSS and BSS suites, streaming delivery pipelines, programmatic pipes and rights ledgers, inside a perimeter drawn by GDPR and ePrivacy, NIS2-class resilience rules, DSA transparency duties and net-neutrality obligations. Most of the margin pressure here is decision latency: the telemetry already exists, the consent already exists, the billing already exists — the decisions that would convert them into revenue and cost control arrive late or never. This page is the engineering picture at sector level: the systems that define the estate, the places where money leaks, and the deep builds Dataq Software ships across network operators, streaming platforms, advertising and martech, and media groups."
+  },
+  {
+   "t": "h2",
+   "x": "How the sector runs day to day"
+  },
+  {
+   "t": "p",
+   "x": "Follow a single day across an operator and the sector's operating rhythm becomes concrete. Element managers and network probes stream alarms into the fault-management wall; the NOC correlates what it can, opens tickets and dispatches field crews through the workforce system. Care queues fill with billing questions and outage complaints that the outage itself explains. Overnight, mediation files feed rating and charging, billing runs post, and interconnect and roaming settlement files travel to counterparties whose figures rarely match on first exchange. None of these motions is exotic; the margin is decided by how quickly each one converts telemetry into a decision."
+  },
+  {
+   "t": "p",
+   "x": "The media half of the sector runs a different clock. Commissioning decisions price slate risk against predicted engagement; production management tracks call sheets and wrap reports; the content supply chain ingests masters, normalizes metadata, localizes through dubbing and subtitling pipelines, and packages for DRM before delivery to platforms that each impose their own specification sheets. Playout automation drives the linear schedule while streaming apps compete for the same attention. Rights windows expire and renew; royalties accrue against participation contracts that finance teams reconcile by hand. The estate is different; the failure pattern is identical — decisions wait on data that already exists somewhere else."
+  },
+  {
+   "t": "p",
+   "x": "Underneath both halves sits the machinery that makes the sector buildable: TM Forum Open APIs and the SID information model wiring activation, product catalog and CRM together; billing mediation translating network events into chargeable records; consent-management platforms emitting TCF strings that decide whether targeting is lawful; OpenRTB connecting SSPs, exchanges and DSPs at bid time; CDN control planes switching traffic by policy; and the data estate — increasingly a lakehouse — that everything reads from. Regulation draws the perimeter: GDPR and ePrivacy for profiling, NIS2 and DORA-class rules for resilience, the DSA for platform transparency, net-neutrality rules for how traffic may be treated. Dataq Software builds inside that machinery rather than around it."
+  },
+  {
+   "t": "h2",
+   "x": "Systems, standards and obligations that define the sector"
+  },
+  {
+   "t": "p",
+   "x": "Programs in this sector succeed or fail on how honestly the estate is mapped before anything is built. Dataq Software starts every engagement by naming the systems, their owners, their change cadences and their data contracts — and by separating the systems that make decisions from the systems that merely record them. The table below is the sector estate we most often find and integrate against, layer by layer."
+  },
+  {
+   "t": "table",
+   "caption": "The telecom and media estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
+    [
+     "OSS assurance stack",
+     "Fault and performance management over element managers, probes and network telemetry; the NOC operating surface",
+     "Alarm floods outrun correlation; customer impact is discovered by tickets instead of telemetry"
+    ],
+    [
+     "Inventory and activation",
+     "Network inventory, service design and provisioning wired through TM Forum Open APIs and the SID model",
+     "Inventory drifts from reality; activation failures resurface as care tickets weeks later"
+    ],
+    [
+     "BSS core",
+     "CRM, product catalog, charging and rating, billing mediation, invoicing and collections",
+     "Batch rating windows delay decisions; product onboarding is a release negotiation"
+    ],
+    [
+     "Wholesale settlement",
+     "Interconnect and roaming accounting, TAP file exchange, dispute management",
+     "Bilateral file exchange and contested evidence stretch settlement into quarters"
+    ],
+    [
+     "Consent and identity layer",
+     "Consent-management platform, TCF strings, first-party identity graphs, UID2-class tokens",
+     "Consent enforced at collection but not at activation; identity coverage decays with signal loss"
+    ],
+    [
+     "Streaming delivery plane",
+     "CDN and multi-CDN switching, ABR ladder encoding, DRM packaging, playback QoE telemetry",
+     "Cost per streamed hour unknown by region and codec; QoE blind spots on long-tail devices"
+    ],
+    [
+     "Programmatic trading stack",
+     "SSP, exchange and DSP pipes, header bidding wrappers, OpenRTB bid streams",
+     "Supply-path opacity, invalid traffic and reconciliation gaps tax yield silently"
+    ],
+    [
+     "Content estate",
+     "DAM and MAM, playout automation, localization pipelines, metadata enrichment, platform delivery specs",
+     "Manual QC consumes weeks per title; metadata gaps break discovery and compliance edits"
+    ],
+    [
+     "Rights and royalties",
+     "Participation accounting, windowing schedules, ISRC and ISWC matching, cue sheets, publishing administration",
+     "Disputes run for quarters because evidence is assembled by hand from five systems"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where the sector leaks margin"
+  },
+  {
+   "t": "p",
+   "x": "Ask operations and finance leaders across the sector where the money leaks and eight answers recur in the same vocabulary, whether the speaker runs a NOC, a platform or a royalty desk. Dataq Software's diagnostic scores each leak in your own telemetry before recommending a build, because the leak that dominates in one group is often minor in the next."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "NOC decisions arrive after the outage",
+     "Element alarms flood in faster than correlation can process them, so customer-impacting events are discovered by ticket volume rather than by telemetry. Mean time to repair absorbs the cost; the retention cost shows up a quarter later in churn cohorts that the outage created and nobody connected."
+    ],
+    [
+     "Retention runs on campaign calendars",
+     "Save offers fire in monthly batches while the intent signals that predict cancellation — support contacts, usage drops, billing disputes, competitive SIM swaps — sit unwatched in systems the campaign calendar never reads. By the time the calendar fires, the customer has already decided, and the offer subsidizes a departure that was preventable weeks earlier."
+    ],
+    [
+     "Wholesale revenue leaks quietly",
+     "Interconnect and roaming settlement reconcile by file exchange against disputed evidence, and the leaks — mis-rated routes, unbillable destinations, IRSF and Wangiri fraud, PBX bypass — surface as margin variance rather than as cases. Revenue assurance teams inherit spreadsheets where they need reconciliation engines."
+    ],
+    [
+     "Energy is a black box per site",
+     "RAN and datacenter energy is the second cost line in most operator P&Ls, yet per-site telemetry lacks the discipline to separate load-driven consumption from waste. Without per-site baselines, optimization is anecdotal and ESG reporting is a quarterly scramble through utility invoices."
+    ],
+    [
+     "Delivery economics go unattributed",
+     "Streaming operations rarely know their cost per streamed hour by CDN, codec and region, so multi-CDN switching is run on availability folklore instead of unit economics. Encoding profiles persist because they have always persisted; every unnecessary rung on the ABR ladder is spend nobody owns."
+    ],
+    [
+     "Consent drift erodes targeting",
+     "Consent captured at collection decays at activation: TCF strings are stale, purposes drift from what the user agreed, and downstream pipes spend against identity graphs whose lawful basis is contested. Signal loss compounds the problem until reach and measurement both degrade."
+    ],
+    [
+     "Measurement is argued, not tested",
+     "Attribution disputes between platforms, agencies and finance resolve by negotiation rather than by experiment. Incrementality is tested rarely and locally; media-mix models are calibrated against last-touch numbers nobody fully trusts; budget decisions wobble as a result."
+    ],
+    [
+     "Rights evidence is assembled by hand",
+     "Participation accounting, cue sheets and ISRC and ISWC matching depend on evidence compiled from contracts, statements and delivery records across systems. Disputes run for quarters, reserves grow to cover them, and the audit that finally arrives reviews a spreadsheet rather than a record."
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight leaks is the same: decisions wait on context that exists but was never engineered into the decision path. Context is a data engineering problem before it is a modeling problem — which is why the first build in this sector is usually the lakehouse, not a smarter model."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works telecom and media"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate you already run. We do not arrive with a platform that replaces your OSS, a re-platforming story for your BSS, or a strategy deck that ends where the hard part begins. The engagement model is engineering-first: a two-week diagnostic that baselines one workflow end to end — assurance, retention, delivery, activation, content operations or rights — then a scoped build that ships behind your change process, your TM Forum Open API surface and the third-party registers your resilience regime requires."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver across the sector. First, every automated decision carries replay: inputs, feature values, model versions, policy rules and outcomes are stored so that a why-did-you question twelve months later is a query, not an investigation. Second, every generative component is permission-aware and citation-bound — assistants answer from your knowledge base, contracts and catalogs, never from the open internet, and every answer shows its sources. Third, every build lands with its evidence layer: the artifacts an auditor, a counterparty or a regulator will ask for are generated continuously by the system, not assembled by a team the week before the review."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same discipline. Where the metric is clean — churn in a target segment, energy per site, care cost per contact, leakage recovered — we contract against the delta with the baseline locked during the diagnostic; where the metric is confounded, the feasibility read says so and the scope is fixed-fee instead. The published record in this sector includes a tier-1 European operator that cut churn 19% in target segments with an event-triggered save hub, a Middle East operator group that reduced energy per site 18% across 12,000 sites, and a North American cable operator that lowered care cost per contact 36% with a resolution-first conversational platform."
+  },
+  {
+   "t": "h2",
+   "x": "The deep engineering catalog for telecom and media"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the sector-wide practice. Each build is named for the workflow it changes, sized in the diagnostic, and shipped with the controls the sector's regulators and counterparties expect. None of them requires replacing an OSS, a BSS or a content platform; all of them require taking data contracts seriously."
+  },
+  {
+   "t": "h3",
+   "x": "1. The sector decision lakehouse — network, audience and commerce in one spine"
+  },
+  {
+   "t": "p",
+   "x": "The build is one governed spine fed by change-data-capture from the systems that generate facts: element managers and probes for the network, mediation and charging for commerce, CRM and care for the relationship, consent platforms for the lawful basis, playback sessions for the platform, bid streams for the trading stack. Every feed carries a schema contract with a named owner and a freshness SLA; the inventory spine is conformed to the SID model your OSS already understands; and the subscriber-viewer master applies survivorship rules your data owners sign, because the same human exists in this estate as a subscriber, a viewer and a seller."
+  },
+  {
+   "t": "p",
+   "x": "What the spine buys is shared context: one feature store that assurance, retention and activation all read from, so network load, usage trend and consent state mean the same thing in every decision; a replay store that answers profiling questions as queries; and the reconciliation rituals that used to eat the first week of every month turned into monitored queries against source controls. This is the build every other build leans on, which is why the diagnostic usually prices it first."
+  },
+  {
+   "t": "h3",
+   "x": "2. Real-time assurance and AIOps for the network estate"
+  },
+  {
+   "t": "p",
+   "x": "The build turns the fault wall from a list into a queue of decisions. Event correlation clusters alarms across element, probe and ticket streams into incidents with probable causes; noise models suppress the flapping 90% that consumes NOC attention; performance baselines feed predictive maintenance so degradation is worked before it becomes outage. Every incident carries customer-impact mapping — which services, which segments, which sites — so the NOC prioritizes by business consequence instead of by alarm age."
+  },
+  {
+   "t": "p",
+   "x": "The action wiring is where programs usually fail, so the build treats it as first-class: incidents dispatch to field force with evidence attached, trigger proactive care messages to affected segments, and feed the post-incident review with a timeline reconstructed from the same telemetry. Ticket triage runs through the agentic layer described below, and every automated action carries replay so a disputed dispatch is a query. The measurable deltas are alarm-to-incident precision, mean time to repair and the ticket backlog the NOC stopped generating."
+  },
+  {
+   "t": "h3",
+   "x": "3. Retention and ARPU decision hubs"
+  },
+  {
+   "t": "p",
+   "x": "The build moves saves from the campaign calendar to the event stream. Intent signals — care contacts, usage drops, billing disputes, balance-to-limit stress, competitive SIM-swap indicators — fire the decision service in the moment; eligibility, propensity, vulnerability flags and consumer-protection constraints are evaluated per event; and the offer engine returns a save action inside the policy envelope your commercial team owns. Offers that a regulator would read as unfair are structurally impossible, not merely discouraged."
+  },
+  {
+   "t": "p",
+   "x": "ARPU management runs on the same hub: plan-fit recommendations, upsell eligibility and price-change exposure are computed from the same features the save hub reads, so retention and growth decisions never contradict each other. Champion and challenger policies run on shadow traffic through the gates your governance already defines, and the published record shows what this is worth: churn down 19% in target segments at a tier-1 European operator, with the save-rate lift measured against a held-out control rather than against the campaign deck."
+  },
+  {
+   "t": "h3",
+   "x": "4. Consent-first activation and measurement"
+  },
+  {
+   "t": "p",
+   "x": "The build reconstructs targeting on a lawful footing. A first-party identity spine joins subscriber, viewer and commerce records under consent-scoped keys with UID2-class tokens where partners require them; consent state is enforced at activation time, not just at collection, so a stale TCF string cannot spend against a purpose the user revoked; and clean-room collaboration replaces raw data export wherever a partner or retailer demands it. Frequency capping and cross-device reach are computed inside the lawful scope the consent platform defines."
+  },
+  {
+   "t": "p",
+   "x": "Measurement completes the loop: incrementality testing is designed into campaign execution rather than argued afterwards, media-mix models are calibrated against the test results, and attribution is governed — last-touch numbers still get produced, but decisions cite the experiment evidence. The activation service logs every spend decision with its consent basis, which turns the DSA transparency duty and the regulator question into exports rather than projects."
+  },
+  {
+   "t": "h3",
+   "x": "5. Content supply chain and rights evidence"
+  },
+  {
+   "t": "p",
+   "x": "The build compresses the path from master to monetizable asset. Ingest normalizes masters and sidecar files against platform specifications; metadata enrichment classifies, tags and completes the fields discovery, packaging and compliance depend on; localization runs through dubbing and subtitling pipelines with linguist QC gates; and packaging lands DRM-ready renditions per destination. Every step carries an acceptance check, so the delivery spec that used to bounce a title back a week late fails at ingest instead."
+  },
+  {
+   "t": "p",
+   "x": "Rights evidence runs in parallel: the rights registry holds windows, territories, holdbacks and participation terms as structured records; royalty computation reads delivery and usage actuals against those records; and every statement carries its lineage, so a dispute is answered from the registry rather than rebuilt from five systems. The measurable deltas are cycle time per title, metadata coverage and the dispute cycle the finance team stops re-litigating."
+  },
+  {
+   "t": "h3",
+   "x": "6. Grounded assistants for care, sales and content operations"
+  },
+  {
+   "t": "p",
+   "x": "The assistant build is retrieval-grounded and deliberately not an open-ended chatbot. In care and sales it answers from your knowledge base, product terms and the customer's own records, with transactional intents handing off to governed APIs or humans by policy; in content operations it drafts metadata, localization briefs and delivery checklists from the catalog record, with editors as authors of record. Voice and chat channels share the same retrieval core, so the phone channel inherits the grounding the app has."
+  },
+  {
+   "t": "p",
+   "x": "The evaluation harness ships with the build: golden question sets per intent, containment scored against post-contact outcomes rather than deflection alone, escalation-context quality tracked as a first-class metric. The published record shows the ceiling: a North American cable operator cut care cost per contact 36% with a resolution-first conversational platform — because the routine intents resolved grounded and the escalations arrived with context."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — telecom and media decision and activation stack",
+   "lanes": [
+    "Network and content estates",
+    "Event and consent streams",
+    "Sector decision lakehouse",
+    "Decision services",
+    "Evidence and control",
+    "Business surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "ems",
+     "lane": 0,
+     "label": "Element managers and probes"
+    },
+    {
+     "id": "bss",
+     "lane": 0,
+     "label": "BSS: charging, CRM, care"
+    },
+    {
+     "id": "ssp",
+     "lane": 0,
+     "label": "SSP, DSP and exchange pipes"
+    },
+    {
+     "id": "dam",
+     "lane": 0,
+     "label": "DAM, MAM and playout"
+    },
+    {
+     "id": "cdc",
+     "lane": 1,
+     "label": "Change-data-capture streams",
+     "hot": true
+    },
+    {
+     "id": "consent",
+     "lane": 1,
+     "label": "Consent state and TCF strings"
+    },
+    {
+     "id": "lake",
+     "lane": 2,
+     "label": "Sector decision lakehouse",
+     "hot": true
+    },
+    {
+     "id": "inv",
+     "lane": 2,
+     "label": "SID-conformed inventory spine"
+    },
+    {
+     "id": "fstore",
+     "lane": 2,
+     "label": "Shared feature store"
+    },
+    {
+     "id": "assure",
+     "lane": 3,
+     "label": "Assurance and AIOps service"
+    },
+    {
+     "id": "savehub",
+     "lane": 3,
+     "label": "Retention and ARPU hub"
+    },
+    {
+     "id": "activ",
+     "lane": 3,
+     "label": "Consent-scoped activation"
+    },
+    {
+     "id": "rightsd",
+     "lane": 3,
+     "label": "Rights and royalty service"
+    },
+    {
+     "id": "replay",
+     "lane": 4,
+     "label": "Decision replay and reason codes"
+    },
+    {
+     "id": "registry",
+     "lane": 4,
+     "label": "Model-risk registry"
+    },
+    {
+     "id": "eval",
+     "lane": 4,
+     "label": "Evaluation harness"
+    },
+    {
+     "id": "nocwall",
+     "lane": 5,
+     "label": "NOC wall and field dispatch"
+    },
+    {
+     "id": "agentd",
+     "lane": 5,
+     "label": "Agent desktop and care console"
+    },
+    {
+     "id": "yieldb",
+     "lane": 5,
+     "label": "Yield and P&L consoles"
+    }
+   ],
+   "edges": [
+    {
+     "a": "ems",
+     "b": "cdc"
+    },
+    {
+     "a": "bss",
+     "b": "cdc"
+    },
+    {
+     "a": "ssp",
+     "b": "cdc"
+    },
+    {
+     "a": "dam",
+     "b": "cdc"
+    },
+    {
+     "a": "cdc",
+     "b": "lake"
+    },
+    {
+     "a": "cdc",
+     "b": "inv"
+    },
+    {
+     "a": "lake",
+     "b": "fstore"
+    },
+    {
+     "a": "consent",
+     "b": "activ"
+    },
+    {
+     "a": "fstore",
+     "b": "assure"
+    },
+    {
+     "a": "lake",
+     "b": "savehub"
+    },
+    {
+     "a": "lake",
+     "b": "rightsd"
+    },
+    {
+     "a": "lake",
+     "b": "activ"
+    },
+    {
+     "a": "assure",
+     "b": "replay"
+    },
+    {
+     "a": "savehub",
+     "b": "replay"
+    },
+    {
+     "a": "activ",
+     "b": "replay"
+    },
+    {
+     "a": "rightsd",
+     "b": "replay"
+    },
+    {
+     "a": "assure",
+     "b": "nocwall"
+    },
+    {
+     "a": "savehub",
+     "b": "agentd"
+    },
+    {
+     "a": "rightsd",
+     "b": "yieldb"
+    }
+   ],
+   "note": "Lanes and nodes are named for the systems a sector-wide program actually touches — element managers, BSS, trading pipes, DAM and playout — not a generic reference stack. The hot nodes are where differentiation concentrates: change-data-capture ingestion and the sector decision lakehouse, because every downstream decision inherits their quality."
+  },
+  {
+   "t": "h2",
+   "x": "Sub-industry programs: what differs on the ground"
+  },
+  {
+   "t": "p",
+   "x": "The sector spine is shared; the programs are not. Each sub-industry concentrates its decision pressure in different workflows, runs different systems of record and answers to different regulators. The bullets below name what changes on the ground when Dataq Software takes the catalog into each estate."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Network Operators (CSPs): assurance, wholesale and energy",
+     "Workloads concentrate in the NOC, provisioning and activation, wholesale settlement and the field force. Systems of record are OSS assurance, inventory and activation on TM Forum Open APIs, mediation and rating, and interconnect and roaming accounting. Regulators add numbering and interconnection evidence duties, net-neutrality traffic rules and NIS2 essential-entity obligations, while energy per site behaves like a second P&L of its own."
+    ],
+    [
+     "Streaming & Digital Platforms: playback, retention and unit cost",
+     "Workloads concentrate in the content supply chain, playback sessions and the subscription lifecycle. Systems of record are encoders and packagers, multi-CDN control planes, recommendation stacks, entitlements and subscription billing. Obligations skew consumer-facing: billing and cancellation fairness, accessibility for captions and interfaces, local content quotas where they apply, and consent for profiling that recommendations and AVOD both depend on."
+    ],
+    [
+     "Advertising & MarTech: identity, pipes and measurement",
+     "Workloads concentrate in bidding, identity resolution and measurement. Systems of record are SSP, DSP and exchange pipes, header bidding wrappers, consent platforms, first-party graphs and clean rooms. GDPR and TCF define what targeting may lawfully do, the DSA defines what it must disclose, and the commercial argument — incrementality — has to be engineered into campaign execution rather than negotiated after the invoice."
+    ],
+    [
+     "Media & Entertainment: production, rights and royalties",
+     "Workloads concentrate in commissioning, production management, localization and the rights desk. Systems of record are DAM and MAM, playout automation, delivery and QC pipelines, participation accounting and music rights databases keyed on ISRC and ISWC. Privacy regimes govern audience data, content regulation governs labeling and quotas, and talent agreements govern residuals — every one of them an evidence duty the registry exists to satisfy."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: one estate, governed streams"
+  },
+  {
+   "t": "p",
+   "x": "Every decision gap in this sector traces back to a data gap, and most data gaps trace back to the same habit: systems of record write to files, files load into marts overnight, and decisions run on whatever the last load knew. The data plane build inverts the pattern where it matters. Network telemetry, mediation records, playback sessions, bid events and consent state land through change-data-capture into a governed lakehouse in near real time; the overnight batch keeps running for finance and settlement, but decision surfaces stop depending on it."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries a schema contract with a named owner, a freshness SLA and a reconciliation check against the source system's own controls. The subscriber-viewer master applies survivorship rules agreed with your data owners, and every downstream consumer — assurance features, save-hub eligibility, activation scope, royalty computation — reads through the contract layer, so a schema change fails loudly at the contract instead of silently inside a model or a statement."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Streaming estate ingestion",
+     "change-data-capture from element managers, probes, mediation, CRM, playback clients and bid streams with exactly-once semantics into the lakehouse, keeping decision surfaces current without touching batch settlement"
+    ],
+    [
+     "Consent as a first-class stream",
+     "TCF strings and consent state versioned, propagated and enforced at activation time, with expiry and revocation treated as events rather than as annual clean-up projects"
+    ],
+    [
+     "SID-conformed inventory spine",
+     "network inventory conformed to the SID model so assurance, activation and capacity planning read one definition of a site, a service and a resource"
+    ],
+    [
+     "Contract-enforced freshness",
+     "per-feed SLAs with alerting and automated breach reports, so a late mediation file pages an owner instead of silently skewing features and statements"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: scoring, replay and sector reason codes"
+  },
+  {
+   "t": "p",
+   "x": "Telecom and media run on decisions with legal and commercial tails: a save offer carries consumer-protection obligations, an activation decision carries consent obligations, a dispatch decision carries labor and safety obligations, a royalty computation carries contract obligations. The decision layer treats those tails as first-class requirements. Every decision records its inputs, feature values, model versions, policy rules and reason codes in a replay store that answers audit questions as queries — when a customer, a counterparty or an examiner asks why, the answer is retrieved, not reconstructed."
+  },
+  {
+   "t": "p",
+   "x": "Champion and challenger governance is built in rather than bolted on: challengers run on shadow traffic with performance tracked in the registry your governance function owns, promotions pass through the gates your change process already defines, and rollbacks are rehearsed, not improvised. The same service layer hosts assurance correlation, save decisions, activation and royalty computation, so the governance surface is one registry, one replay store, one set of gates — instead of four platforms with four audit stories."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: digital workers across both halves"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work in this sector — ticket triage, evidence assembly for fraud and leakage cases, settlement matching, metadata enrichment, rights file preparation — follows patterns an agentic workforce can absorb without touching judgment authority. Dataq Software's agent platform runs digital workers with explicit role scopes: the tools they may call, the systems they may read, the actions that require a human checkpoint and the budget of work per run. Every run logs its steps, tool calls and outputs to the same evidence store the human workflow uses, so an agent's file is auditable exactly like an analyst's."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — summarizing incident timelines, drafting settlement dispute files, completing metadata records, preparing localization briefs — the pattern is grounded generation with citation obligations and human authorship of record. Agents never activate a service, never spend against an audience, never sign a statement; they move the work to the decision point and stop. The capacity story is measured in cleared cases per analyst per day, which is how operations leaders justify these programs upward."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: audit as a query"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory surface of telecom and media is dense and growing in exactly the directions these builds touch: privacy and consent, resilience, platform transparency, traffic neutrality and AI governance. Dataq Software's answer is the evidence layer — the artifacts a reviewer will ask for are generated continuously by the systems themselves. The table maps the regimes we build against to the evidence our builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape sector builds — and the evidence layer each one gets",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What our build produces"
+   ],
+   "rows": [
+    [
+     "GDPR, ePrivacy and TCF consent",
+     "Lawful basis for profiling and targeting; consent withdrawal honored; DSAR timelines",
+     "Consent state enforced at activation; decision replay for profiling questions; DSAR joins across entities"
+    ],
+    [
+     "NIS2 and DORA-class resilience",
+     "Essential-entity cyber duties, ICT third-party registers, incident and testing evidence",
+     "Third-party register entries per integration; incident playbooks and recovery tests generated per release"
+    ],
+    [
+     "DSA and ad-transparency duties",
+     "Disclosure of targeting parameters; repository obligations for larger platforms",
+     "Targeting-parameter logs exported from the activation service; repository evidence generated on schedule"
+    ],
+    [
+     "Net neutrality and wholesale access",
+     "Non-discriminatory traffic treatment; interconnection evidence duties",
+     "Policy and traffic management separated in delivery decisions; settlement evidence bundles per counterparty"
+    ],
+    [
+     "EU AI Act",
+     "Risk-classified duties, transparency for synthetic content, oversight for profiling",
+     "Model-risk registry with evaluation results, guardrail inventory and lineage shipped with every build"
+    ],
+    [
+     "Accessibility (WCAG and EAA)",
+     "Accessible interfaces, captions and audio description coverage",
+     "Accessibility checks in the evaluation harness; caption and description coverage telemetry per title"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the estate stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Sector estates are layered over decades, and the fastest way to fail a program is to promise greenfield. Our integration posture is contractual: we define schema contracts with each system owner, land data through CDC and governed APIs, write back through the activation interfaces, workflow hooks and posting paths your change process already controls, and keep every new component independently deployable behind feature flags. OSS suites are not replaced; they are supplied with better context and drained of the decision work they were never good at."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment. Element managers, mediation vendors, CDN partners, ad-tech pipes and localization vendors sit behind abstraction layers with contract tests, so a vendor swap is a configuration change with a migration runbook rather than a re-platform. Where a legacy component must stay, the offload pattern applies: the batch window keeps posting, while decision surfaces read from the stream the offload produces. This is unglamorous work and it is why the builds hold up in production instead of in a pilot."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "TM Forum Open API alignment",
+     "write-back through the TMF-class activation, product catalog and trouble-ticketing interfaces your change process already governs, with contract tests on every dependency"
+    ],
+    [
+     "Mediation and probe taps",
+     "telemetry landed from mediation taps and probe feeds rather than element-manager forklifts, so the assurance build never negotiates with an OSS release calendar"
+    ],
+    [
+     "Consent enforced at execution",
+     "TCF strings and consent state checked when the decision executes, not when the campaign was designed, with the check logged as evidence"
+    ],
+    [
+     "Feature-flagged, independently deployable",
+     "every build ships behind flags with rehearsed rollback, because the change advisory board and the resilience regulator will both ask"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement. It starts with the two-week diagnostic: one workflow baselined end to end, the leak quantified in your own telemetry, the data contracts inventoried, and a written feasibility read you can circulate — including the uncomfortable findings. If the delta is real, the build is scoped against the gates your change and governance processes define; if it is not, you keep the measurement design and the baseline either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "workflow instrumentation, leak quantification, contract inventory and a feasibility read with the delta estimate and the confounders named"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane of the workflow live behind flags with replay and evidence running from day one — for assurance that is one incident family; for retention it is one trigger class"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "governance documentation landed, QC sampling live, remaining lanes added, capacity and unit-cost telemetry reporting to the operations review"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "model and policy challengers evaluated in the registry, treatment strategies re-optimized, the baseline re-verified against controls"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm, not a parallel one: our engineers work in your repositories or a shared workspace with the same CI, the same security review and the same access model your teams use. Knowledge transfer is a gate condition, not a closing slide — by the expansion phase your engineers are shipping changes to the builds, because the runbooks, contracts and evaluation suites are theirs from week one."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones sector programs are managed on. The targets are the ranges we set in feasibility reads for programs of this shape — commitments you can hold us to where the metric is clean, hypotheses we test where it is confounded. The measurement column is the part most programs skip and the part that makes the delta defensible in a steering committee."
+  },
+  {
+   "t": "table",
+   "caption": "Telecom and media program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Churn in target segments",
+     "10-20% reduction via event-triggered saves",
+     "Cohort control against baseline quarters; the published record shows 19% at a tier-1 European operator"
+    ],
+    [
+     "Energy per site",
+     "12-20% reduction at constant service quality",
+     "Site telemetry normalized per bit delivered; the published record shows 18% across 12,000 sites"
+    ],
+    [
+     "Care cost per contact",
+     "20-35% reduction without CSAT decay",
+     "Unit telemetry scored against post-contact outcomes; the published record shows 36% at a North American cable operator"
+    ],
+    [
+     "Wholesale leakage recovered",
+     "0.5-2% of wholesale billings identified per year",
+     "Reconciliation evidence per counterparty and route, reviewed quarterly"
+    ],
+    [
+     "Cost per streamed hour",
+     "10-25% reduction through codec and CDN policy",
+     "Per-stream cost attribution across CDN, codec and region, reconciled to invoices"
+    ],
+    [
+     "Royalty dispute cycle time",
+     "40-60% reduction",
+     "Dispute telemetry from the rights registry, from query raised to statement agreed"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A sector build team is small and senior: a lead engineer who has run decision systems at carrier or platform scale, data engineers who own the CDC and contract layer, ML engineers who own scoring and evaluation, a controls engineer who owns the evidence layer, and domain leads who have worked NOC floors, streaming product desks or royalty operations in production estates. Agentic-workflow specialists join for the file-assembly builds. The team works to your release calendar and your gate vocabulary from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: weekly operations review on the workflow's own telemetry, fortnightly gate submissions to change and governance, quarterly challenger reviews, and an incident practice that treats the decision store and the evidence layer as production-critical systems — because by the second quarter, they are. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs in this sector fail in known ways, and most of the failure modes are organizational rather than mathematical. We name them in the feasibility read and design against them explicitly, because a program that cannot survive its second quarter is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "a demo built on extracted data that never integrates — prevented by shipping the first vertical slice through your change process, flags and gates included, in the first two months"
+    ],
+    [
+     "Dashboards without control loops",
+     "assurance or energy telemetry that reports beautifully and changes nothing — every build wires its decisions into dispatch, offers or policy, or it is not shipped"
+    ],
+    [
+     "Consent drift",
+     "activation running on stale TCF strings until a regulator or a partner asks — consent state is enforced at execution time and the check is logged, from day one"
+    ],
+    [
+     "Metric tribalism",
+     "network, product and finance teams each holding a private definition of uptime, engagement or leakage — certified metric definitions with lineage are a gate, not an optimization"
+    ],
+    [
+     "Vendor abstraction skipped",
+     "one vendor's API welded into the decision path until the next contract renewal becomes a re-platform — contract tests and abstraction layers are non-negotiable"
+    ],
+    [
+     "Evidence debt",
+     "audit preparation consuming a team every quarter because artifacts were manual — the evidence layer generates them continuously or the build is not done"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions sector leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do you replace our OSS or BSS?",
+     "No. Every build consumes streams from the estate and writes back through TMF-class interfaces, mediation taps and posting paths you already control. The systems of record stay; they stop being the bottleneck for decisions."
+    ],
+    [
+     "Can one lakehouse serve network and audience data?",
+     "Yes, with lane discipline. Network, commerce, playback and consent feeds land as separate contract-governed domains that join at the subscriber-viewer master. Shared context is the point; shared schema chaos is not."
+    ],
+    [
+     "How do you handle consent across markets?",
+     "Consent state is a versioned stream with per-market purposes and retention rules, enforced at activation time. Where markets conflict, the strictest applicable scope wins and the enforcement is logged as evidence."
+    ],
+    [
+     "What about our existing AIOps vendor?",
+     "We build the decision layer, not a duplicate event pipe. Correlation and triage services read from your existing feeds, and the abstraction layer means the vendor underneath can change without the decisions changing."
+    ],
+    [
+     "How is success measured without gaming?",
+     "Baselines are locked during the diagnostic, controls or holdouts are used where experiments are cheap, and every metric reports from system telemetry rather than a status deck. The feasibility read names the confounders before anyone commits to a target."
+    ],
+    [
+     "What is the smallest program worth running?",
+     "One workflow, one baseline, one vertical slice — retention and assurance are the two most common starters because their signals and funnels are already instrumented. If the diagnostic cannot find the delta, we say so and stop."
+    ],
+    [
+     "How do generative components stay governed?",
+     "Every assistant and agent runs inside the governed platform with role scopes, tool allow-lists, citation obligations, human checkpoints and full run logs, with evaluation results shipped into the registry your reviewers already own."
+    ],
+    [
+     "Who owns the build after you leave?",
+     "Your teams, with the runbooks, contracts, evaluation suites and registry entries transferred as gate conditions during expansion — not as a closing deliverable. Several programs run entirely in-house after the second quarter."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Bring one program — assurance, retention, delivery economics, consent or rights — and we will baseline it in two weeks and price the delta in your own telemetry. The first conversation costs an hour; the feasibility read is yours to keep either way."
+  }
+ ]
+}

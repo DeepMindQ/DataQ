@@ -5,267 +5,717 @@
  "template": "subindustry_page",
  "breadcrumb": "Industries > Education & Research > K-12 & School Systems",
  "seo_title": "K-12 & School Systems | Dataq Software",
- "meta_description": "School systems serve every child under public scrutiny: learning analytics, special-education compliance, safeguarding and parental communication.",
+ "meta_description": "How Dataq Software builds the district data house: an Ed-Fi-aligned join of PowerSchool or Infinite Campus attendance, vendor scale scores and IEP service minutes; chronic-absence early warning, IEP compliance surveillance and enrollment projection for staffing, with FERPA, COPPA and SOPIPA-type privacy engineered in.",
  "blocks": [
   {
    "t": "hero",
-   "x": "School systems serve every child under public scrutiny: learning analytics, special-education compliance, safeguarding and parental communication. Technology must be privacy-strict (minors), accessibility-complete and teacher-time-respecting. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
-  },
-  {
-   "t": "h2",
-   "x": "The setting, described honestly"
+   "x": "A school district runs on three systems that were never designed to meet: the SIS where attendance and grades of record live, the assessment vendors that report scale scores on their own platforms, and the special education system where IEP timelines accrue quietly. Between them sit Ed-Fi ambitions, Clever and ClassLink rostering, a ParentSquare-class communication platform and a state reporting calendar with fixed submission windows. Dataq Software builds the district data house that finally joins them — chronic-absence early warning, IEP compliance surveillance, enrollment projection for staffing — with student privacy engineered in from the first table rather than appended later."
   },
   {
    "t": "p",
-   "x": "The work concentrates in learning analytics, safeguarding case management, special-ed compliance, with parent communication close behind. The paths are busy; the decisions are late. Closing that delay is worth more than any single tool purchase."
-  },
-  {
-   "t": "h2",
-   "x": "Where the work piles up"
+   "x": "Ask three offices in the same district how many students are chronically absent, on track, or served under an IEP, and you will often get three defensible numbers. The SIS counts one way, the assessment vendor's platform another, the special education system a third, and every number is right inside its own walls. The pattern repeats for every question that matters: attendance from PowerSchool or Infinite Campus, scale scores from NWEA MAP or i-Ready, service minutes from the IEP module, communication records from the family engagement platform. Districts do not lack data; they lack the joins, and the joins have no owner."
   },
   {
    "t": "p",
-   "x": "where the friction concentrates, K-12 & School Systems edition:"
+   "x": "The costs arrive on a calendar. Fall and spring state submissions pull office staff into week-long extraction rituals that repeat every year with new thresholds. The back-to-school roster crunch breaks classroom apps for the first two weeks of school while principals escalate tickets. IEP compliance timelines — initial evaluation windows, annual reviews, service minutes delivered versus prescribed — live in per-case-manager spreadsheets that surface problems only when a state complaint or a due-process filing arrives. Transportation and food service claims reconcile against general ledger codes nobody fully trusts, in the same weeks the instructional calendar demands everyone's attention."
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software works the way districts actually buy: we build the data house on the SIS estate you already run — PowerSchool, Infinite Campus, Skyward — and we do not propose replacing it. Read-first on the student information system, Ed-Fi-aligned where your state supports it, and privacy by design: aggregated views below cell-suppression thresholds, role-scoped access, student data processed inside the district's tenancy. Every engagement opens with a two-week baseline run on your own attendance, assessment and IEP history; if the early-warning or projection models do not beat what your experienced staff already infer, the memo says so and we stop."
+  },
+  {
+   "t": "h2",
+   "x": "The district SIS estate: PowerSchool, Infinite Campus, Skyward"
+  },
+  {
+   "t": "p",
+   "x": "The student information system is the district's spine whether or not anyone calls it that: enrollment, calendars, sections, attendance, grades of record, health flags, and the state reporting extracts that read from all of them. PowerSchool, Infinite Campus and Skyward each implement attendance differently — meeting versus daily attendance, excused codes with district-specific meanings, entry and exit dates that drive the funding count — and each exposes a different integration surface, from nightly extracts to APIs with rate limits. Every downstream system inherits those choices, whether or not anyone documents them."
+  },
+  {
+   "t": "p",
+   "x": "The first build is therefore an inventory with contracts: which tables hold the attendance of record, which job runs the nightly extract, where grades of record diverge from the LMS gradebook, who owns the school-to-section mapping. Districts that skip this step build dashboards on whatever extract was easiest to obtain, and the dashboard quietly disagrees with the official headcount every time a student moves. Dataq Software starts with the SIS contract because ADA funding, chronic-absence thresholds and state submissions all read from it."
+  },
+  {
+   "t": "p",
+   "x": "Mobility is the join key most district analytics quietly get wrong. A student who enrolls in mid-October and exits in March appears in two schools' counts, one state submission and sometimes two assessment rosters; whether the district counts that student once or twice depends on rules that live in the enrollment tables and nowhere else. The data house treats entry date, exit date, exit reason and school of record as first-class fields with contract-level checks, because every downstream build — early warning, compliance clocks, projection — inherits whatever ambiguity the enrollment layer leaves behind."
+  },
+  {
+   "t": "h2",
+   "x": "Attendance, ADA and the funding mechanics"
+  },
+  {
+   "t": "p",
+   "x": "In ADA states, attendance is revenue. The average daily attendance calculation converts each absence into budget, which is why the attendance clerk's corrections matter to the business office and why the codes carry meaning beyond compliance: excused versus unexcused drives truancy thresholds, entry and exit dates define the count window, and independent study has claim rules of its own. None of this is visible in the percentage on a school site's wall dashboard, because that dashboard shows a rate while the funding office needs the money the rate produces."
+  },
+  {
+   "t": "p",
+   "x": "We build the attendance model the funding office actually needs: ADA computed per site and per count window from the SIS of record, claim reconciliation against what was actually submitted, and attendance codes modeled cleanly enough that chronic-absence analysis downstream never has to guess what a code meant. When districts see absence converted to dollars at the site level, attendance conversations change — the principal's wall dashboard finally says what the budget office knows, and intervention priorities get argued with shared numbers."
+  },
+  {
+   "t": "p",
+   "x": "ADA mechanics also shape what the early-warning build must respect. A student who exits on the count date affects the funding window differently from one who exits mid-quarter; independent study and blended programs accrue attendance under different rules; and corrections to the attendance of record must propagate to claims already submitted. The data house keeps those distinctions explicit rather than averaging over them, and claim reconciliation runs against submission snapshots rather than the live table, because the state auditor will not average over them."
+  },
+  {
+   "t": "h2",
+   "x": "Chronic absenteeism and tiered early warning"
+  },
+  {
+   "t": "p",
+   "x": "Chronic absence — most districts use the share of students missing ten percent or more of enrolled days — is the one attendance metric that predicts outcomes, and it is also the one that requires joins to act on: which students are crossing the district's own threshold, what pattern their absence follows, which intervention tier they already occupy, and whether the family engagement platform reached them in a language they read. Site-level rates give principals a headline; they do not hand anyone a call list."
+  },
+  {
+   "t": "p",
+   "x": "The early-warning build runs on your own history: absence patterns that preceded disengagement in your previous years, joined to grades, assessment scale scores and mobility. Tiers follow the district's MTSS language, interventions are tracked with dates and owners, and the system watches fidelity — whether the tier-two check-in actually happened weekly — because unimplemented interventions teach the model the wrong lesson. Signals surface in the principal console and to MTSS teams, role-scoped, with aggregation rules below small-cell thresholds."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Learning data fragmented",
-     "Assessment, attendance and wellbeing data siloed; interventions late."
+     "Absence pattern, not just rate",
+     "Friday-only absence, period absence in secondary schools, absence clustered after enrollment changes. Patterns carry intervention options that a headline rate does not."
     ],
     [
-     "Minors' data high-risk",
-     "Student PII concentrated; vendor sprawl."
+     "Attendance-team workflow",
+     "Letters, calls and home visits logged where the SIS attendance record can see them, so the next tier decision starts from what actually happened."
     ],
     [
-     "Teacher workload climbing",
-     "Admin, reporting and differentiation consume teaching hours."
+     "Fidelity watch",
+     "Whether assigned interventions occurred on schedule. Chronic-absence improvement fails quietly when tier-two supports exist on paper only."
     ],
     [
-     "Safeguarding workflows manual",
-     "Concern reporting and follow-up inconsistent."
-    ],
-    [
-     "Legacy SIS drag",
-     "Student-info systems resist change; integrations brittle."
-    ],
-    [
-     "Building costs rising",
-     "Energy and space unmanaged across school estates."
+     "Funding view beside it",
+     "The same absence data rendered as ADA impact per site, so the intervention conversation and the budget conversation share one number."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The working system, described"
+   "x": "State reporting calendars and ESSA submissions"
   },
   {
    "t": "p",
-   "x": "Capability in K-12 & School Systems is not abstract: each domain lands as a named build on a named workflow. The patterns below are what we deploy there."
+   "x": "Every district serves two calendars: the instructional one and the reporting one. Fall submissions carry enrollment, staffing and membership counts; spring carries assessment results, discipline and the ESSA plan data that determines school designations. Each submission has its own population definitions, its own edge cases — the student who enrolled on the count date and exited the following week — and its own state validation rules that reject files in batches the night before the window closes. The calendar is fixed; in most districts the preparation is improvised."
+  },
+  {
+   "t": "p",
+   "x": "The build is submission infrastructure. Each report becomes a versioned query over the data house, test-run against the state's validation rules weeks before the window opens, with exception lists that carry owners and a submission log the next superintendent inherits. Districts rarely lack the data for state reporting; they lack reproducibility, because last year's logic lived in one analyst's queries and that analyst now works elsewhere. Governed definitions turn the reporting calendar from an annual event into a pipeline with dry runs."
+  },
+  {
+   "t": "p",
+   "x": "The reporting calendar also has a staffing dimension that never appears in any plan: the extract freezes the night before each window, the validation-error triage that consumes the student information team for a week, and the late corrections that arrive after certification. Submission infrastructure handles those weeks the way version control handles releases — dry runs, diffed files, an exception queue per submission — so the December crisis becomes a scheduled task. The first year usually pays for the build in avoided resubmissions alone, measured against your own correction history."
+  },
+  {
+   "t": "h2",
+   "x": "Ed-Fi and the ODS: interoperability as a decision"
+  },
+  {
+   "t": "p",
+   "x": "Ed-Fi is the most credible attempt to end the fifty-answers problem: a published standard for students, enrollment, assessments, grades and discipline, with the operational data store pattern behind it. States differ in how much of it they mandate; vendors differ in how much of it they actually implement; districts differ in whether their Ed-Fi ODS is a live integration layer or a compliance checkbox feeding a state repository nobody queries locally. The standard is not the win — the governed ODS is."
+  },
+  {
+   "t": "p",
+   "x": "We treat Ed-Fi as a schema discipline rather than a product: map the SIS, assessment and special-education sources to Ed-Fi domains where the mappings are real, and document honestly where they are not — assessment scale scores and IEP service data often need vendor-specific bridges regardless. The ODS becomes the district's own asset: queryable, versioned, and the substrate for every dashboard that follows. Where the state already runs an Ed-Fi pipeline, we build the district-side extensions it does not cover."
+  },
+  {
+   "t": "h2",
+   "x": "Rostering: OneRoster, Clever, ClassLink and the back-to-school crunch"
+  },
+  {
+   "t": "p",
+   "x": "Rostering is the least glamorous integration in the district and the one every teacher touches daily. OneRoster or a Clever and ClassLink sync pushes students and sections from the SIS into every classroom app, and the whole arrangement meets its annual stress test in the two weeks before Labor Day: enrollment changes, course balancing and section moves land simultaneously, and every app handles the sync edge cases differently — the orphaned account, the section that did not move, the teacher with two login identities."
+  },
+  {
+   "t": "p",
+   "x": "We build rostering as a monitored pipeline rather than a background job: sync health per application, mismatch queues for the technology team, and a pre-launch rehearsal that replays the prior year's failure modes against the new year's data before students arrive. When the crunch is instrumented, first-week chaos shrinks to exception handling. The same telemetry answers a procurement question every district asks eventually: which classroom applications actually depend on live rostering, and which quietly re-create classes by hand and desynchronize the moment a schedule changes."
+  },
+  {
+   "t": "p",
+   "x": "Rostering is also where privacy enforcement becomes real. Every app in the rostering pipeline receives student data under some agreement, and the sync is the mechanism that either honors that agreement or violates it at scale. Gating rostering on the vendor registry — no agreement, no sync, with an override path the privacy officer controls — turns the student data privacy agreement from paperwork into an enforcement point. Most districts discover mid-year which apps never had agreements at all; the registry makes that discovery happen before the first sync."
+  },
+  {
+   "t": "h2",
+   "x": "Assessment data: scale scores that never join"
+  },
+  {
+   "t": "p",
+   "x": "Assessment arrives fragmented by design: state summatives in one platform with their own scale, NWEA MAP with RIT scores and growth norms, i-Ready with its own placements, curriculum-based measures in the MTSS platform. Each vendor reports well inside its walls; none of them joins to each other or to the SIS roster cleanly, so every on-track conversation assembles three exports and a lookup table. Scale-score joins across vendors are a methodological problem before they are a technical one."
+  },
+  {
+   "t": "p",
+   "x": "The assessment bridge we build is deliberately conservative: vendor data landed at score-record level, mapped to course, grade and student through the roster of record, with each vendor's scale kept intact and translations documented rather than invented. Growth views compare a student to their own prior scores and to district norms derived from district history — not to a vendor's benchmark. The output feeds MTSS teams and the early-warning model, and every join carries its match rate, so staff know when a bridge is thin."
+  },
+  {
+   "t": "table",
+   "caption": "Assessment sources and what each one needs to become usable",
+   "headers": [
+    "Source",
+    "What it reports",
+    "Join risk",
+    "What the bridge adds"
+   ],
+   "rows": [
+    [
+     "State summative",
+     "Proficiency and scale scores by subject, annually",
+     "Roster as of the testing window differs from current enrollment",
+     "Test-window rosters preserved; results attached to enrollment history"
+    ],
+    [
+     "NWEA MAP",
+     "RIT scores, growth percentiles across fall-winter-spring terms",
+     "Term-aligned records detached from sections and teachers",
+     "Score records joined to sections and MTSS caseloads"
+    ],
+    [
+     "i-Ready",
+     "Diagnostic placements and lesson performance",
+     "Placement bands drift from grade-level standards",
+     "Placements versioned beside standards mastery from gradebooks"
+    ],
+    [
+     "Curriculum assessments",
+     "Unit tests and standards mastery in the gradebook",
+     "Standards tagging inconsistent across courses",
+     "Standards-mapped mastery rolled up beside vendor scales"
+    ],
+    [
+     "Screeners and behavior flags",
+     "Tiers and flags recorded in MTSS tools",
+     "Sensitive fields with separate consent rules",
+     "Role-scoped access; aggregated views below thresholds"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Standards-based grading and gradebook sync"
+  },
+  {
+   "t": "p",
+   "x": "Gradebooks are where pedagogy and plumbing collide. Elementary schools run standards-based grading with mastery scales the SIS must store and report; secondary schools run points-and-weights that feed the transcript; Google Classroom and Canvas hold the working gradebook while the SIS holds the grade of record, and the sync between them is a nightly negotiation. When the sync fails silently, teachers re-key grades at term end and the error rate rises at exactly the moment the transcript is being finalized."
+  },
+  {
+   "t": "p",
+   "x": "The gradebook build keeps one direction of truth per artifact. Standards mastery from the elementary gradebook flows into the SIS report card; scores from Classroom or Canvas flow into the SIS at the checkpoints the district defines; reconciliation reports show divergence before it matters rather than after grades post. Teachers see sync status where they already work, the technology team sees failure queues with the offending records attached, and the registrar receives a grades feed that lands audit-ready. Nobody re-keys grades in January."
+  },
+  {
+   "t": "h2",
+   "x": "MTSS and RTI: tracking fidelity, not just tiers"
+  },
+  {
+   "t": "p",
+   "x": "Tiered intervention systems accumulate documentation faster than they accumulate practice: the MTSS platform records that a student is tier two, but whether the twenty-five-minute small-group block actually happened three times a week lives in a teacher's plan book. Fidelity of implementation is the difference between interventions that show effect and interventions that show paperwork, and it is invisible to any platform that only records assignments. Districts evaluating their own MTSS outcomes without fidelity data are measuring a system they cannot see."
+  },
+  {
+   "t": "p",
+   "x": "The MTSS build joins the record to the reality: intervention assignments from the platform, delivery evidence from schedules and attendance at intervention blocks, progress-monitoring scores from the assessment bridge. Tier movement is evaluated against the district's own decision rules and reviewed in the team meetings the district already runs. The fidelity view is not surveillance of teachers — it is the only honest denominator for the question of whether tier two works in this district, and MTSS teams ask for it first."
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "Fidelity data changes the MTSS conversation from compliance to cause: once teams can see which interventions actually ran, tier movement becomes evidence about the program rather than evidence about the paperwork."
+  },
+  {
+   "t": "h2",
+   "x": "Special education: IEP workflows, IDEA clocks, service minutes"
+  },
+  {
+   "t": "p",
+   "x": "Special education runs on statutory timelines with litigation attached: initial evaluation windows, eligibility determinations, annual IEP reviews, re-evaluations every three years, and service minutes prescribed in the IEP that must be delivered and documented. The IEP system tracks the paper; the delivery evidence — whether a student actually received the prescribed minutes from a licensed provider this week — lives in calendars, sign-in sheets and caseload spreadsheets. State special-education reporting asks for both, and only one of them is systematically recorded."
+  },
+  {
+   "t": "p",
+   "x": "IEP compliance surveillance joins the prescribed to the delivered: service minutes from the IEP record, delivery logged against provider schedules and the student's attendance, gaps surfaced to case managers the week they open rather than the month the state report is due. The compliance calendar — evaluations, reviews, transition planning — is tracked as clocks with owners and escalation. The district keeps its case management system; what changes is that nobody learns about a missed annual review from a complaint."
+  },
+  {
+   "t": "table",
+   "caption": "Compliance clocks and what surveillance adds",
+   "headers": [
+    "Clock",
+    "Trigger",
+    "Where it fails today",
+    "What surveillance adds"
+   ],
+   "rows": [
+    [
+     "Initial evaluation window",
+     "Referral received",
+     "Start date ambiguous when consent and referral arrive separately",
+     "Clock started from the SIS-documented referral date, with aging visible to the SPED director"
+    ],
+    [
+     "Eligibility determination",
+     "Evaluation complete",
+     "Meeting scheduling slips past the window during caseload peaks",
+     "Calendar-linked aging and escalation before the deadline, not after"
+    ],
+    [
+     "Annual IEP review",
+     "Anniversary of the last IEP",
+     "Tracked per case manager; misses surface at state reporting",
+     "District-wide clock with owners and escalation at defined thresholds"
+    ],
+    [
+     "Re-evaluation cycle",
+     "Three-year anniversary",
+     "Triennial dates inherited from legacy systems",
+     "Reconciliation against the current IEP record each term"
+    ],
+    [
+     "Service minutes delivered",
+     "Prescribed in the active IEP",
+     "Delivery documented in sign-in sheets and spreadsheets",
+     "Weekly prescribed-versus-delivered view per student, provider and service type"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "504 plans and the other compliance layer"
+  },
+  {
+   "t": "p",
+   "x": "Section 504 plans carry accommodations without the IDEA machinery, which is exactly why they drift: written once, reviewed rarely, implemented in classrooms where no system tracks whether the extended time or the chunked assignment actually happened. The plans live in a different module than IEPs, or in scanned documents; the accommodation list reaches teachers through staff meetings and memory. Districts discover the gap when an OCR complaint arrives rather than from any dashboard, because no delivery record exists to surface it."
+  },
+  {
+   "t": "p",
+   "x": "The build is deliberately modest and disproportionately valuable: plans registered with review clocks, accommodation lists pushed to the teachers of record inside the systems they already open each morning, and implementation check-ins that produce a delivery record parallel to the IEP surveillance described above. The same pattern generalizes to health plans and English-learner plans — any accommodation layer where the prescribed-versus-delivered gap is currently unmeasured. None of this changes who writes the plan; it changes whether the district can show the plan was carried out."
+  },
+  {
+   "t": "h2",
+   "x": "Student data privacy: FERPA, COPPA, SOPIPA and vendor contracts"
+  },
+  {
+   "t": "p",
+   "x": "District privacy obligations arrive from three directions at once: FERPA on education records, COPPA on the applications serving students under thirteen, and state statutes of the SOPIPA type that restrict targeting and profiling on K-12 data. On top of the statutes sits the contract layer — student data privacy agreements with every vendor, increasingly managed through national SDPA frameworks — and the practical reality that classroom apps are adopted faster than agreements are signed. The privacy program fails in the gap between classroom adoption and procurement."
+  },
+  {
+   "t": "p",
+   "x": "We build privacy as engineering rather than policy binders: a vendor registry joined to rostering, so every application receiving student data is listed against its agreement, its data classes and its expiry; role-scoped access on every surface we ship; aggregation and suppression rules below small-cell thresholds; and audit trails on who saw which student record and why. Where a tool needs data outside its agreement, the registry says so before the roster sync does. Data stays inside the district's tenancy, and models train on district history and remain district assets."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Learning analytics",
-     "assessment/attendance/wellbeing unified"
+     "Vendor registry with teeth",
+     "Every application that receives roster data is listed against its SDPA, data classes and contract expiry. Rostering stops for apps that fall out of compliance, with the trail to prove it."
     ],
     [
-     "Student data protection",
-     "vendor governance + monitoring"
+     "Role-scoped access",
+     "Principals see their school, MTSS teams their caseloads, board reports aggregated. Access reviews run against the directory rather than a spreadsheet of exceptions."
     ],
     [
-     "Teacher assistants",
-     "lesson-prep/reporting support under policy"
+     "Small-cell suppression",
+     "Views below the district's minimum group size aggregate automatically, so a helpful dashboard does not become a re-identification risk in a board packet."
     ],
     [
-     "Safeguarding orchestration",
-     "concerns routed/tracked with evidence"
-    ],
-    [
-     "School estates",
-     "energy/space telemetry"
+     "Audit as a by-product",
+     "Every read of a student record in a surface we build is logged with role and purpose. When a parent exercises FERPA rights, the response assembles from the log rather than from memory."
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Family engagement and two-way communication"
+  },
+  {
+   "t": "p",
+   "x": "Family engagement platforms of the ParentSquare class carry more operational signal than districts extract: two-way messages, delivery failures, translation status, read rates by school and by room, and the attendance nudge that went unanswered. The communication log is also a compliance record — which families were notified, in which language, before which deadline — and it lives in a platform the SIS never sees. When a student goes chronically absent, the question of whether the family was reached, and in what language, currently requires an export and a search through message history."
+  },
+  {
+   "t": "p",
+   "x": "The engagement build joins the communication record to the student spine: per-student contact histories across school and district sends, response latency by family, language preference from the registration record, and outreach-to-outcome joins that show whether attendance nudges and MTSS invitations actually moved the metric. Schools keep their platform; the district gains the feedback loop — which messages, in which channel, at which times, correlate with the outcomes the early-warning model watches."
+  },
+  {
+   "t": "p",
+   "x": "Language access deserves explicit treatment because it is both an obligation and a signal. The registration record holds home-language data; the engagement platform holds what was actually sent and translated; the join shows where families whose home language is not English received notices late, untranslated or not at all — often the same families the absence model is flagging. Districts that surface that join in the family engagement review usually find the fix is operational rather than technical: routing, timing and template coverage, not another platform."
+  },
+  {
+   "t": "h2",
+   "x": "Operations: transportation, food service, HR and substitutes"
+  },
+  {
+   "t": "p",
+   "x": "The operational ring outside instruction runs its own claims calendar: transportation claims to the state computed from routes and ridership, USDA reporting for food service built from point-of-service counts, and payroll for certificated and classified staff reconciled against timesheets and substitute coverage. Substitute fill rates are a classroom instruction problem wearing a payroll costume — an unfilled absence is unsupervised learning or a merged class, and the fill-rate data sits in the absence management system nobody joins to student outcomes."
+  },
+  {
+   "t": "p",
+   "x": "These builds are deliberately unglamorous: claim reconciliation between routing systems and the counts actually submitted to the state, point-of-service to claim joins for food service against USDA reporting calendars, and substitute fill-rate views joined to school and course so principals see instructional impact rather than only cost. Bond and levy capital projects ride the same pattern — project spend reconciled against the scopes voters approved — because the capital ledger and the enrollment forecast answer to the same board, usually in the same meeting."
+  },
+  {
+   "t": "h2",
+   "x": "Enrollment projection for staffing and capital"
+  },
+  {
+   "t": "p",
+   "x": "Enrollment projection decides staffing contracts, classroom sections and capital requests, and most districts still run it on cohort survival ratios adjusted by intuition. The methods are known — birth-cohort tracking for elementary entry, housing-development pipeline analysis for growth corridors, mobility rates from the district's own entry-exit history — but the inputs live across the county assessor, the SIS and planning department meetings that produce PDFs. The forecast is only as good as the housing pipeline data nobody maintains."
+  },
+  {
+   "t": "p",
+   "x": "The projection build assembles the inputs the district already owns: birth cohorts from health records or state files, historical entry-exit and mobility from the SIS, development pipeline from planning and assessor records, and school-by-school yield from past boundary changes. Outputs are scenario ranges per school and grade — not single lines — with the assumptions versioned so the board sees why the forecast moved. When the same model feeds staffing ratios and the bond capacity plan, the district stops negotiating against its own numbers."
+  },
+  {
+   "t": "p",
+   "x": "Projection quality is testable, which is what separates a model from a tradition. Backtesting against your own entry-exit history — forecasting 2019 with 2018 data, forecasting last year with the year before — shows where birth-cohort survival holds and where a boundary change or a housing phase broke it. Districts that require this backtest before every staffing cycle stop debating the forecast and start debating the assumptions, which is where the argument belongs."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture — the Ed-Fi-aligned district data house"
+  },
+  {
+   "t": "p",
+   "x": "The stack below is how the builds assemble in a district that keeps its current SIS: contracted sources feed an Ed-Fi-aligned house, decision services read from it under role-scoped access, and every surface respects the district's aggregation rules from its first release."
   },
   {
    "t": "arch",
-   "title": "Reference architecture — K-12 & School Systems",
+   "title": "Reference architecture — the Ed-Fi-aligned district data house",
    "lanes": [
-    "Estates",
-    "Contracts",
-    "Lakehouse",
-    "Governance",
-    "Consumers",
-    "Actions"
+    "Systems of record",
+    "Interchange and rostering",
+    "District data house",
+    "Decision services",
+    "Privacy and governance",
+    "District surfaces"
    ],
    "nodes": [
     {
-     "id": "es0",
+     "id": "sis",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "PowerSchool / Infinite Campus / Skyward"
     },
     {
-     "id": "es1",
+     "id": "assess",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "Assessment vendors: state, MAP, i-Ready"
     },
     {
-     "id": "ct2",
+     "id": "iep",
+     "lane": 0,
+     "label": "IEP and special education system"
+    },
+    {
+     "id": "lms",
+     "lane": 0,
+     "label": "Google Classroom / Canvas"
+    },
+    {
+     "id": "ops",
+     "lane": 0,
+     "label": "Transport, food service, HR and payroll"
+    },
+    {
+     "id": "roster",
      "lane": 1,
-     "label": "Schema registry",
-     "hot": false
+     "label": "OneRoster / Clever / ClassLink sync"
     },
     {
-     "id": "ct3",
+     "id": "inter",
      "lane": 1,
-     "label": "Quality gates",
-     "hot": false
+     "label": "Ed-Fi interchanges and extracts"
     },
     {
-     "id": "lh4",
+     "id": "ods",
      "lane": 2,
-     "label": "Medallion lakehouse",
+     "label": "Ed-Fi-aligned ODS"
+    },
+    {
+     "id": "house",
+     "lane": 2,
+     "label": "District data house",
      "hot": true
     },
     {
-     "id": "lh5",
+     "id": "abridge",
      "lane": 2,
-     "label": "Cost-aware storage",
-     "hot": false
+     "label": "Assessment scale-score bridge"
     },
     {
-     "id": "gv6",
+     "id": "absence",
      "lane": 3,
-     "label": "Lineage & catalog",
-     "hot": false
+     "label": "Chronic-absence early warning",
+     "hot": true
     },
     {
-     "id": "gv7",
+     "id": "iepwatch",
      "lane": 3,
-     "label": "Access policies",
-     "hot": false
+     "label": "IEP compliance surveillance",
+     "hot": true
     },
     {
-     "id": "cs8",
+     "id": "proj",
+     "lane": 3,
+     "label": "Enrollment projection"
+    },
+    {
+     "id": "mtss",
+     "lane": 3,
+     "label": "MTSS fidelity tracker"
+    },
+    {
+     "id": "scope",
      "lane": 4,
-     "label": "Origination & servicing",
-     "hot": false
+     "label": "Role-scoped access"
     },
     {
-     "id": "cs9",
+     "id": "agg",
      "lane": 4,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Aggregation and suppression rules"
     },
     {
-     "id": "ac10",
-     "lane": 5,
-     "label": "Owned decisions",
-     "hot": false
+     "id": "sdpa",
+     "lane": 4,
+     "label": "Vendor registry and SDPAs"
     },
     {
-     "id": "ac11",
+     "id": "principal",
      "lane": 5,
-     "label": "Metric disputes closed",
-     "hot": false
+     "label": "Principal console"
+    },
+    {
+     "id": "spedview",
+     "lane": 5,
+     "label": "SPED compliance dashboard"
+    },
+    {
+     "id": "planner",
+     "lane": 5,
+     "label": "Staffing and board planner"
     }
    ],
    "edges": [
     {
-     "a": "es0",
-     "b": "ct2"
+     "a": "sis",
+     "b": "roster"
     },
     {
-     "a": "es1",
-     "b": "ct3"
+     "a": "sis",
+     "b": "inter"
     },
     {
-     "a": "ct2",
-     "b": "lh4"
+     "a": "assess",
+     "b": "inter"
     },
     {
-     "a": "ct3",
-     "b": "lh5"
+     "a": "iep",
+     "b": "inter"
     },
     {
-     "a": "lh4",
-     "b": "gv6"
+     "a": "ops",
+     "b": "inter"
     },
     {
-     "a": "lh5",
-     "b": "gv7"
+     "a": "roster",
+     "b": "inter"
     },
     {
-     "a": "gv6",
-     "b": "cs8"
+     "a": "inter",
+     "b": "ods"
     },
     {
-     "a": "gv7",
-     "b": "cs9"
+     "a": "ods",
+     "b": "house"
     },
     {
-     "a": "cs8",
-     "b": "ac10"
+     "a": "assess",
+     "b": "abridge"
     },
     {
-     "a": "cs9",
-     "b": "ac11"
+     "a": "abridge",
+     "b": "house"
+    },
+    {
+     "a": "house",
+     "b": "absence"
+    },
+    {
+     "a": "house",
+     "b": "mtss"
+    },
+    {
+     "a": "abridge",
+     "b": "mtss"
+    },
+    {
+     "a": "house",
+     "b": "iepwatch"
+    },
+    {
+     "a": "iep",
+     "b": "iepwatch"
+    },
+    {
+     "a": "house",
+     "b": "proj"
+    },
+    {
+     "a": "absence",
+     "b": "principal"
+    },
+    {
+     "a": "mtss",
+     "b": "principal"
+    },
+    {
+     "a": "iepwatch",
+     "b": "spedview"
+    },
+    {
+     "a": "proj",
+     "b": "planner"
+    },
+    {
+     "a": "house",
+     "b": "scope"
+    },
+    {
+     "a": "scope",
+     "b": "principal"
+    },
+    {
+     "a": "scope",
+     "b": "spedview"
+    },
+    {
+     "a": "sdpa",
+     "b": "roster"
     }
-   ],
-   "note": "Lanes and nodes are named for K-12 & School Systems systems and workflows — not a generic stack."
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The SIS stays the record of truth and the rostering contract stays intact; the data house reads interchanges and extracts, decision services write reason codes and intervention records, and the privacy lane is not a layer on top — role scoping and aggregation are properties of every surface."
   },
   {
    "t": "h2",
-   "x": "Regulatory ground truth"
+   "x": "The estate underneath: systems this work touches"
   },
   {
    "t": "p",
-   "x": "Ferpa/gdpr-k sets the floor for K-12 & School Systems: minors' data duties. The build adds the evidence layer so compliance is a query, not a project."
+   "x": "Every district's estate differs in vendor and age, but the roles repeat. The table below is what we most often find, what each system actually controls, and what the data-house build does beside it — never instead of it. Skyward shops look like the Infinite Campus row with a different extract surface, and the same posture applies."
   },
   {
    "t": "table",
-   "caption": "Regimes in scope for K-12 & School Systems",
+   "caption": "The estate underneath: systems this work touches",
    "headers": [
-    "Regime",
-    "What it expects"
+    "System",
+    "Role in the estate",
+    "What we build against it"
    ],
    "rows": [
     [
-     "FERPA/GDPR-K",
-     "minors' data duties"
+     "PowerSchool SIS",
+     "Enrollment, attendance, grades of record and state extracts in many districts",
+     "Contracted nightly extracts and event reads; attendance codes modeled for ADA and chronic absence"
     ],
     [
-     "Safeguarding law",
-     "reporting duties"
+     "Infinite Campus",
+     "SIS of record in others, including campus-level attendance and grading",
+     "The same posture: schema contracts on attendance, enrollment and grading tables"
     ],
     [
-     "Accessibility (ADA/WCAG)",
-     "materials duties"
+     "Clever / ClassLink",
+     "Rostering and single sign-on into classroom applications",
+     "Sync health monitoring, mismatch queues, vendor-registry gating before data leaves the district"
     ],
     [
-     "Curriculum standards",
-     "outcome evidence"
+     "State assessment platform",
+     "Summative results and accountability files",
+     "Score-record landing with test-window rosters preserved for cohort joins"
+    ],
+    [
+     "NWEA MAP / i-Ready",
+     "Interim assessment with scale scores and growth norms",
+     "Scale-score bridge keeping vendor scales intact with documented translations"
+    ],
+    [
+     "IEP / special education system",
+     "IEP documents, services and compliance paperwork",
+     "Prescribed-versus-delivered joins and compliance clocks beside the case management system"
+    ],
+    [
+     "Family engagement platform (ParentSquare-class)",
+     "Two-way messaging, alerts and delivery logs",
+     "Contact and delivery records joined to the student spine for outreach-to-outcome analysis"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The first two weeks"
+   "x": "How Dataq Software engages with districts"
   },
   {
    "t": "p",
-   "x": "Engagements in K-12 & School Systems open smaller than you expect: one workflow, two weeks, a signed baseline on learning data fragmented. Everything after that is scoped against the measured delta, never a wish list."
+   "x": "District engagements start smaller than universities and stay inside procurement reality. The two-week baseline runs on extracts your SIS and assessment platforms already produce, inside the district's own tenancy, with student data processed under your access controls and FERPA consents. We baseline chronic absence against your own intervention history, IEP compliance clocks against your own case records, and enrollment projection against your own entry-exit history — then state plainly whether the modeled delta over what your experienced staff already know is real enough to build."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Two-week baseline on your data",
+     "Absence patterns, IEP clock aging, scale-score join rates and projection backtests computed on your history. If the early-warning model would not have beaten the calls your attendance clerks already made, the memo says so."
+    ],
+    [
+     "Read-first on the SIS",
+     "No writes to PowerSchool, Infinite Campus or Skyward without a schema contract your student information team signs. Extracts, freshness expectations and owners are documented before any dashboard ships."
+    ],
+    [
+     "Privacy by design",
+     "Role-scoped access, small-cell aggregation, vendor-registry gating and audit logs are built into the first release, not scheduled for later. Student records stay inside the district tenancy throughout."
+    ],
+    [
+     "Built for turnover",
+     "Definitions are versioned queries, documentation lives with the pipeline, and every submission or forecast can be regenerated by the next analyst. Districts lose institutional memory; the data house should not lose it with them."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions district leaders ask us"
+  },
+  {
+   "t": "p",
+   "x": "These are the questions that come up in first conversations with superintendents, chief technology officers and student services directors. The answers are the same ones we give in the room, including the parts that cost us scope."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do we need Ed-Fi before anything else works?",
+     "No. Ed-Fi alignment is a schema discipline we apply where your state and vendors support it; where they do not, we build documented bridges. Waiting for perfect interoperability is how districts lose five years of actionable data."
+    ],
+    [
+     "Will this replace our SIS or our MTSS platform?",
+     "No. PowerSchool, Infinite Campus or Skyward stays the record of truth, and the platforms your teams use stay in place. We build the joins and the surveillance those systems cannot do alone."
+    ],
+    [
+     "What about FERPA and state privacy laws?",
+     "Everything processes inside the district tenancy under your controls. Access is role-scoped, views aggregate below your minimum cell size, and every read is logged. Vendor data flows are checked against SDPAs before rostering feeds them."
+    ],
+    [
+     "Can we start with just chronic absence?",
+     "Yes, and many do. The absence build needs SIS attendance, contact data and your intervention records; it runs inside one term and pays for the data contracts the rest of the house reuses."
+    ],
+    [
+     "How do you handle assessment scale scores from different vendors?",
+     "Conservatively. Vendor scales stay intact, translations are documented rather than invented, and every join reports its match rate. Growth compares students to their own history and to district norms derived from district data."
+    ],
+    [
+     "What does the baseline cost in staff time?",
+     "About one analyst-day a week plus read access to extracts your systems already generate. If a required extract does not exist, that finding goes in the memo — it is usually the first thing worth fixing."
+    ],
+    [
+     "Who owns it when the engagement ends?",
+     "The district. Pipelines, definitions and models live in your tenancy, documented for your staff. We would rather be re-engaged for the next build than retained as the only people who understand the last one."
+    ]
+   ]
   },
   {
    "t": "cta",
-   "x": "Talk to the team that runs operations in K-12 & School Systems in production — the briefing is technical by design, and the first one costs nothing but the hour."
+   "x": "Bring two years of attendance extracts, last year's IEP compliance records and your current enrollment forecast assumptions, and we will run the two-week baseline inside your tenancy: absence patterns your early-warning build would have caught, IEP clocks that aged out quietly, scale-score join rates across your assessment vendors, and a projection backtest against your own district history. If the models beat what your clerks, case managers and planners already infer by hand, we scope the first build from the baseline — usually chronic-absence early warning or IEP compliance surveillance, because those change student outcomes fastest. If they do not, you keep the memo and we part as honest people. That is the deal every district should demand."
   }
  ],
- "words": 334,
+ "words": 5213,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Education & Research",

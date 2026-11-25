@@ -1,0 +1,663 @@
+{
+ "file": "industries_technology-saas_semiconductors-hardware",
+ "meta_description": "Dataq Software builds yield-learning data fabrics, SPC and FDC analytics layers, PLM-to-test linkage, and field-return loops for fabs and hardware makers — read-first against your MES, baselined in two weeks, with honest feasibility gates.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Yield is a data problem disguised as a process problem. The answer to most excursions already exists inside the fab — in the MES lot history, in the ATE datalogs, in the equipment sensor streams — but it never meets in one query, so a commonality analysis that should take minutes takes three engineers and two weeks of spreadsheet archaeology. Dataq Software builds the yield-learning fabric, the SPC and FDC analytics layer, and the field-return loop on top of the MES and test systems you already run: read-first integration against your estate, and a stated stop condition if the joined data does not change how fast root cause gets found."
+  },
+  {
+   "t": "p",
+   "x": "A 300mm line moves thousands of wafers a day across five hundred to nine hundred process steps, and every wafer accumulates a step-by-step history in the MES, inline metrology readings, multivariate equipment sensor traces, and one or more ATE datalogs by the time it reaches bin sort. Each system knows something true: the MES knows where the lot has been and what held it, the SPC engine knows what drifted, the test floor knows what failed, the FDC platform knows which chamber misbehaved during the exact window the lot sat in it. None of these systems were designed to answer questions together, so excursion investigations stall while data is exported, re-keyed, and joined by hand — if it is joined at all."
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds the connective layer. A yield-learning data fabric holds lot genealogy, wafer maps, bin and parametric results, metrology, equipment states, and sensor features in one queryable model. On top of it sit the analytics that act: SPC with executable OCAPs, FDC classification joined to downstream outcomes, dispatch and tool-matching support. For device and hardware companies the same fabric extends to PLM revisions, supplier lots, reliability test results, and field returns, so a warranty curve can be traced back to an ECO, a supplier lot, or a firmware version. We integrate against your MES — Camstar, SAP ME, or homegrown — through read APIs and change-data-capture feeds, and we never propose replacing the MES, the SPC engine, or the PLM system of record."
+  },
+  {
+   "t": "p",
+   "x": "The engagement starts with a two-week baseline on one product family: we reconstruct a month of lot genealogy from the MES, join it to test and bin data, time how long a real commonality query takes in your current workflow, and work one excursion case end to end. If your existing yield management system already answers these questions in minutes, we say so and stop — some fabs are genuinely well-instrumented and do not need us. If not, you keep the joined dataset, the query patterns, and a ranked list of where integration effort pays back first."
+  },
+  {
+   "t": "h2",
+   "x": "MES lot tracking and WIP visibility"
+  },
+  {
+   "t": "p",
+   "x": "The MES lot history is the spine everything else attaches to. Lots move through processing steps, split and merge across chambers, get held for engineering disposition, rework through loops, and queue behind capacity constraints — and every one of those transitions is a record with a timestamp, a tool, a recipe, and an operator. When that history is queryable, the question of which lots saw chamber B3 between the preventive maintenance and the excursion becomes a single join. When it is not, it becomes a week of exports. We model the lot-step-event history once, with normalized hold reasons and rework flags, because free-text hold codes are the most common reason WIP analytics die in pilot."
+  },
+  {
+   "t": "p",
+   "x": "WIP visibility is a dispatch decision surface, not a report. Dispatchers need queue depth by tool group for the next two hours, not yesterday's utilization chart, and shift leads need hold queues ranked by how long lots have been waiting for disposition. The failure mode we see constantly: WIP snapshots refreshed nightly, so morning dispatch runs on stale queues, and the on-time-start metric gets gamed by releasing low-value lots to make the number. The fix is data plumbing — streaming lot events into queue-depth and hold-aging views the dispatch team trusts — before anyone talks about optimization algorithms."
+  },
+  {
+   "t": "p",
+   "x": "Split and merge semantics deserve explicit treatment too. A lot split across two chambers, a rework loop that rejoins the main route, a child lot that inherits a different downstream test flow — each of these breaks naive genealogy joins, and each one silently corrupts commonality analysis when handled wrong. The baseline tests your MES history against these patterns and documents where the edge cases live, because a fabric that quietly joins rework lots as if they were first-pass lots will produce confident nonsense."
+  },
+  {
+   "t": "h2",
+   "x": "Dispatch scheduling and on-time lot starts"
+  },
+  {
+   "t": "p",
+   "x": "Dispatch rules encode a fab's real priorities: FIFO by queue entry, critical ratio against due date, bottleneck-first at constraint tools, hot-lot overrides that corrupt everything around them. The on-time lot start KPI measures whether lots begin processing inside their release window, and cycle time decomposes into queue, process, hold, and transport components — with queue dominating everywhere except the constraint. We build the decomposition mart first: every lot's cycle time split by state, per step, per tool group, per product family. Until that exists, dispatch conversations are opinion exchanges between people holding different exports."
+  },
+  {
+   "t": "table",
+   "caption": "Cycle time decomposition: where the days actually go",
+   "headers": [
+    "Component",
+    "What it includes",
+    "Typical lever"
+   ],
+   "rows": [
+    [
+     "Queue time",
+     "Wait at the tool group before load, including wait-for-PM windows",
+     "Dispatch rules, capacity buffering, batch sizing at constraints"
+    ],
+    [
+     "Process time",
+     "Loaded processing across chambers, plus inline batch waits",
+     "Recipe throughput and chamber scheduling"
+    ],
+    [
+     "Hold time",
+     "Engineering holds, lot disposition, rework loops",
+     "Disposition ownership and hold-aging alerts"
+    ],
+    [
+     "Transport time",
+     "Moves between stockers and tools",
+     "AMHS scheduling and queue placement"
+    ],
+    [
+     "Release variance",
+     "Start timing against due dates and capacity windows",
+     "On-time start discipline and release rules"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Simulation beats argument. We replay historical WIP against candidate dispatch rules — your current rule, critical ratio, bottleneck-first variants — using your actual arrival patterns, tool availability, and hold events, then show the cycle-time and on-time-start deltas per product family. The honest gate applies: if constraint tools already run above ninety percent utilization with disciplined queues, dispatch optimization is not where the cycle time lives, and we will point at the hold-time pile instead. Most fabs find their biggest lever is unexciting: holds that linger for days because nobody owns the disposition queue."
+  },
+  {
+   "t": "h2",
+   "x": "Wafer maps, bin sort, and parametric test data"
+  },
+  {
+   "t": "p",
+   "x": "A wafer map is die-level truth: coordinates, pass and fail by test, defect overlays from inline inspection. Bin sort data compresses that truth into category distributions — bin one through bin N — and a bin shift between releases is the first symptom most yield excursions show. Parametric test data sits underneath: probe card measurements of Vmin, leakage, and speed margins — the continuous variables that explain why dies fell into which bin. All of it arrives in vendor-specific formats — Teradyne and Advantest datalogs, STDF or proprietary derivatives — and in most organizations it gets archived the day it lands, queryable only by the vendor tool that wrote it."
+  },
+  {
+   "t": "p",
+   "x": "The join is the product. Die coordinates linked to parametric values linked to wafer position linked to lot genealogy turns the phrase bin three worsened into bin three worsened on die at the wafer edge, in lots that ran chamber pair seven, with leakage shifted on the same reticle field. That sentence is one query in the fabric and a two-week investigation without it. We keep raw datalogs queryable in the lakehouse, serve aggregated bin and parametric trends to a ClickHouse-class engine for the daily yield meeting, and version the bin definitions so a re-binning event never masquerades as a yield change."
+  },
+  {
+   "t": "p",
+   "x": "Defect pareto deserves the same treatment as bin trends. Inline inspection counts, classified by defect type and layer, joined to the die outcomes they precede, separate the defects that matter from the defects that decorate dashboards. Most fab pareto charts rank by count; the version that drives action ranks by yield sensitivity — how much bin movement each defect class actually explains, computed from the joined data rather than assumed from tradition. The ranking usually changes, and the argument it ends is usually years old."
+  },
+  {
+   "t": "h2",
+   "x": "Yield learning loops: commonality across lots, tools, and layers"
+  },
+  {
+   "t": "p",
+   "x": "Commonality analysis is the yield engineer's core move: take the set of failed dies or degraded lots and ask what they share — same tool, same chamber, same layer, same reticle revision, same operator shift, same incoming supplier lot. Done manually, it means exporting MES histories, eyeballing tool assignment tables, and hoping the sensor data happens to be retained. Done as a query against the fabric, the failed-die set expands through genealogy, factors score themselves across the candidate axes, and the top candidates surface with their supporting evidence attached."
+  },
+  {
+   "t": "p",
+   "x": "The loop matters more than any single analysis. A yield learning loop runs on cadence: every lot that closes below its yield target enters the queue, commonality runs automatically, and candidates land in a review the yield team actually holds — weekly during a ramp, exception-triggered in steady state. The metric we manage is days from excursion signal to confirmed root cause, and the honest baseline usually measures it in weeks. Closing that to days is the whole commercial argument for the fabric, which is why the two-week baseline measures your current number before we claim we can move it."
+  },
+  {
+   "t": "p",
+   "x": "Factor breadth decides whether the loop finds anything. Tool and chamber are the obvious axes; layer, reticle revision, recipe version, operator shift, incoming supplier lot, metrology tool, and upstream queue composition all belong in the same scoring pass. Every axis added is a join the fabric has to carry, which is why the estate mapping in the baseline matters: the fabric can only be as wide as the genealogy you can honestly reconstruct. We would rather scope the build to six solid axes than promise twenty that the MES cannot support."
+  },
+  {
+   "t": "h2",
+   "x": "SPC and OCAP: catching drift before it becomes scrap"
+  },
+  {
+   "t": "p",
+   "x": "Statistical process control watches critical parameters — CD, overlay, film thickness, defect density — on control charts per tool and per chamber, and violations trigger OCAPs: out-of-control action plans that specify exactly what happens next. In most fabs the SPC engine works and the OCAP fails, because OCAPs live as PDFs and tribal memory rather than executed workflows. A violation fires, an email goes out, and meanwhile the tool keeps processing wafers that will need disposition later — or worse, a slow drift never trips any rule at all because the rule set was tuned once and never revisited."
+  },
+  {
+   "t": "p",
+   "x": "We build the execution layer beside your existing SPC engine, not instead of it. Violations stream with full context: which lots were exposed during the out-of-control window, which downstream test bins those wafers landed in, and what the sensor traces show. Auto-hold proposals route to the disposition queue with the evidence attached, and OCAP steps get tracked to completion with timestamps, so the monthly quality review can see which action plans actually ran. False-alarm economics get explicit treatment: every SPC rule tuned without a nuisance-alarm budget becomes noise the floor learns to ignore, and ignored alarms are how drifts become excursions."
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "An SPC program is only as credible as its nuisance-alarm rate. Every rule is tuned against a stated false-alarm budget, because the alternative — operators trained by noise to ignore alarms — is how real drifts become scrap."
+  },
+  {
+   "t": "h2",
+   "x": "FDC: fault detection and classification on equipment sensors"
+  },
+  {
+   "t": "p",
+   "x": "Fault detection and classification reads the multivariate sensor traces every tool already produces — RF power, gas flows, temperatures, pressures, robotic timings — step-aligned per wafer. Detection compares each wafer's trace against the recipe's golden envelope and flags anomalies; classification maps the anomaly to fault signature families engineers recognize: chamber mismatch after a PM, a degrading valve, a timing fault in the robot sequence. The models are per-chamber, and their accuracy lives or dies on trace alignment quality, which is the unglamorous work that decides whether FDC gets trusted or quietly switched off."
+  },
+  {
+   "t": "p",
+   "x": "The payoff comes from the join to outcomes. An FDC fault score attached to every wafer lets you answer the question that justifies the whole program: which downstream bin and parametric shifts correlate with which fault signatures, and how many wafers of exposure accumulated between fault onset and the PM call. That exposure number turns FDC from an alarm source into a financial argument — the cost of drift you can now see arriving, quantified in wafers rather than anecdotes. Where fabs skip the join, FDC becomes another dashboard nobody checks after the first hundred false alarms."
+  },
+  {
+   "t": "p",
+   "x": "Trace retention is the unglamorous prerequisite. Raw sensor traces at full sampling rate are enormous, but the features FDC needs are compact: step-aligned aggregates, alignment residuals, and signature distances. We keep raw traces in the lakehouse for the retention period your investigations require, serve computed features to the analytics layer, and version the feature definitions so a model retrain never silently changes what it reads. When a chamber's behavior is questioned a quarter later, the traces are still there."
+  },
+  {
+   "t": "h2",
+   "x": "SEMI E10 states, tool matching, and chamber-to-chamber variation"
+  },
+  {
+   "t": "p",
+   "x": "SEMI E10 defines the equipment state model — productive, standby, down, engineering, preventive maintenance, non-scheduled — and it is the only honest basis for utilization. Most utilization dashboards overstate productivity because setup, idle-in-wait, and engineering time get folded into productive buckets. We reconstruct E10-conformant state timelines from tool logs and event reports, reconcile them against WIP movement, and give the capacity team a utilization number that survives scrutiny. Chamber-to-chamber variation inside multi-chamber cluster tools is where the next layer of yield hides: chambers that pass their own checks individually but produce measurably different distributions at final test."
+  },
+  {
+   "t": "p",
+   "x": "Tool matching closes the loop. For critical layers, chambers get equivalence scores computed from the test outcomes of wafers they processed, and matching constraints feed dispatch so sensitive lots route to proven chamber sets. Recipe and reticle management belongs in the same fabric: recipe revisions, reticle versions, and their lot-level usage are exactly the factor axes a commonality query needs when an excursion appears after a reticle swap. None of this replaces the tool host, the recipe management system, or the dispatch engine — it reads their outputs and makes them jointly queryable."
+  },
+  {
+   "t": "p",
+   "x": "The capacity conversation changes once E10 states are honest. Standby time masquerading as productive time inflates the utilization number capacity planning uses, so the fab buys and schedules against capacity it does not actually have. We have seen lines discover five to eight points of true idle capacity purely from state reconciliation, before any dispatch change — the cheapest capacity expansion available to most fabs, and the one that requires no capital request."
+  },
+  {
+   "t": "h2",
+   "x": "Metrology sampling and measurement system quality"
+  },
+  {
+   "t": "p",
+   "x": "Every sampling plan is a bet: measure one wafer in twenty-five and assume the rest behaved. The bet is fine until the measurement system itself drifts — gauge repeatability and reproducibility degrade, metrology tool-to-tool matching wanders after calibration, and the SPC charts start monitoring the metrology tool instead of the process. A meaningful share of yield drops we investigate end in a measurement artifact: a probe needle wear pattern, a recalibrated film gauge, a reference wafer that aged. Separating signal from measurement error is only possible when metrology results, tool identities, and calibration histories sit in the same fabric as the process data."
+  },
+  {
+   "t": "p",
+   "x": "Sampling optimization is the quieter win. Where to measure more matters as much as where to measure less: high-variation steps deserve denser sampling, stable commodity steps can shed measurements without risk, and the sampling budget is zero-sum across the line. We model detection power against sampling cost using your own historical excursions — how often would this plan have caught the drifts you actually had — and hand the metrology team a defensible reallocation instead of a consultant's instinct. Reference wafers get the same treatment: their drift, recalibration schedule, and usage history explain a class of step changes that otherwise get blamed on process tools."
+  },
+  {
+   "t": "h2",
+   "x": "Excursion root-cause via lot-to-tool genealogy"
+  },
+  {
+   "t": "p",
+   "x": "The walk-back is the pattern every excursion investigation follows: failed bins at test, back to affected wafers, back through step histories to tool and chamber occupancy windows, sideways to co-located lots that shared the suspect windows, down to sensor traces during those windows. Each hop is a join that exists in a different system, which is why the walk-back that should take an afternoon takes two weeks. In the fabric it is one parameterized query and a case file: the evidence chain assembles itself, and the engineer's job becomes judgment instead of data assembly."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Occupancy windows",
+     "Every tool and chamber the affected wafers touched, with timestamps, recipe versions, and the co-located lots sharing each window."
+    ],
+    [
+     "Sensor evidence",
+     "FDC features and raw traces for the suspect windows, aligned per wafer rather than per lot, so batch effects do not hide the signature."
+    ],
+    [
+     "Counterfactual lots",
+     "Lots that ran the same step on adjacent tools or chambers in the same period, showing the delta is real and not a metrology artifact."
+    ],
+    [
+     "Closure record",
+     "The confirmed root cause, the corrective action, the lots dispositioned, and the monitoring rule added so the same signature alerts earlier next time."
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Cross-line excursions are the hard case: the same product family showing the same bin shift across two fabs, or between a fab and an outsourcing line, pointing at something shared — a supplier lot, a reticle revision, a metrology standard. Genealogy that extends across sites, including supplier lot identifiers and incoming inspection records, is what makes that class of investigation tractable. We build the case-study template into the tooling, so every excursion closes with a written chain of evidence — because an RCA that lives only in a meeting recording is an RCA that will be re-litigated at the next excursion."
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "An excursion that recurs three times is not three incidents; it is one root cause the data layer failed to surface. The fabric's job is to make the fourth occurrence impossible to miss."
+  },
+  {
+   "t": "h2",
+   "x": "Tapeout, reticle management, and DFM feedback"
+  },
+  {
+   "t": "p",
+   "x": "Tapeout milestones, reticle revisions, and design-for-manufacturability scores set the ceiling a ramp can reach, and the feedback from silicon back to design is where most organizations leak learning. Systematic fail patterns — edge-die effects, gate-length sensitivity, via-open clusters at specific coordinates — are visible in the wafer maps and invisible in the design team's world, because the join between layout-derived features and die-level outcomes requires both datasets in one model with a shared coordinate system. We build that join: layout features extracted once per design, joined to die outcomes across lots and wafers, separating systematic from random failure components so the next tapeout ships with the pareto already addressed."
+  },
+  {
+   "t": "p",
+   "x": "The same join serves the ramp conversation. When a product ramps below the yield model's projection, the split between design-systematic, process-excursion, and random-defect components tells the ramp team whether to escalate to design, to the line, or to the defect-reduction roadmap — three different meetings with three different budgets. Reticle management data anchors the analysis: revision dates, patch versions, and field placement explain more edge and overlay signatures than any other single factor axis, and they are usually the cheapest axis to check first."
+  },
+  {
+   "t": "h2",
+   "x": "PLM, BOM structures, and the supplier-quality evidence trail"
+  },
+  {
+   "t": "p",
+   "x": "For hardware and device companies, the equivalent of lot genealogy starts in PLM. Multi-level BOM structures, approved vendor lists, ECO and ECN workflows, and hardware-firmware revision pairing all live in Teamcenter, Windchill, or an equivalent system of record — and almost never connect to production test data or field returns. The question of which revision is failing in the field goes unanswered not because the data is missing but because serial numbers, BOM revisions, and ECO effective dates sit in three systems nobody has joined. We build revision-effective joins: shipped serial to build record to BOM revision to ECO timeline, with change-point analysis on production and field metrics so a regression that starts with an ECO is visible as such within days."
+  },
+  {
+   "t": "p",
+   "x": "Supplier quality completes the trail. Incoming inspection records, supplier scorecards, and PPAP-style evidence packages — dimensional reports, material certifications, capability studies — establish what a supplier lot looked like when it arrived, and lot-level traceability carries it into your build records. During allocation crunches, sourcing teams substitute suppliers on lead time alone because quality data is not in the decision loop; the fabric puts incoming defect rates and escape histories next to price and lead time, which changes a surprising number of sourcing conversations before they harden into supply commitments."
+  },
+  {
+   "t": "h2",
+   "x": "Reliability engineering: HALT/HASS, burn-in, and life data"
+  },
+  {
+   "t": "p",
+   "x": "Reliability data is small, precious, and scattered. HALT and HASS regimes, production burn-in results, and life tests with scheduled read points produce failure-time data that deserves better than lab notebooks and spreadsheet Weibull fits. We consolidate reliability test records into the same fabric — stress profiles, sample builds, failure modes, read-point outcomes — so life-data analysis runs against current data and reliability engineers stop reconstructing test histories from email. Acceleration models get their covariates from the same place: component revisions, supplier changes, and process drift all belong next to the failure times they explain."
+  },
+  {
+   "t": "table",
+   "caption": "Reliability regimes and what each one feeds",
+   "headers": [
+    "Regime",
+    "What it produces",
+    "What it feeds downstream"
+   ],
+   "rows": [
+    [
+     "HALT",
+     "Accelerated stress-to-failure limits on design margins",
+     "Design review inputs and the HASS envelope"
+    ],
+    [
+     "HASS",
+     "Production screening at accelerated but non-damaging stress",
+     "Escape detection and process drift signals"
+    ],
+    [
+     "Burn-in",
+     "Early-life failure removal on production units",
+     "Infant-mortality curves and burn-in duration tuning"
+    ],
+    [
+     "HTOL life test",
+     "Failure times at elevated stress over scheduled read points",
+     "FIT-rate estimates and warranty reserve assumptions"
+    ],
+    [
+     "Field telemetry",
+     "Usage-weighted health counters and crash logs from the deployed fleet",
+     "Return-curve calibration and OTA rollout gates"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "The loop to design is the point. A failure mode found in HALT that traces to a component revision, an ECO that changed a thermal path, or a firmware configuration belongs in the design review before the next build — which only happens when reliability, PLM, and test data share a model. Burn-in optimization follows the same logic: burn-in duration is a cost line tuned against field-return evidence, and the evidence only exists if the field-return loop is built. Test coverage is the quiet constraint, because the failure modes that only appear in customer usage surface in field telemetry, not in the lab."
+  },
+  {
+   "t": "h2",
+   "x": "Field returns: FA lab workflows, RMA analysis, warranty reserves"
+  },
+  {
+   "t": "p",
+   "x": "Field returns are the most expensive telemetry your product generates, and most companies process them through a queue designed for logistics, not learning. RMA records capture the swap; the failure analysis lab — decap, X-ray, SEM inspection, electrical characterization — produces verdicts in reports that live as PDFs. We build the loop: the RMA database joined to shipped-serial genealogy — which build, which BOM revision, which supplier lots, which firmware version — FA findings structured into a failure-mode taxonomy, and pareto computed by revision, supplier lot, firmware, geography, and usage cohort."
+  },
+  {
+   "t": "h3",
+   "x": "Inside the FA lab queue"
+  },
+  {
+   "t": "p",
+   "x": "The FA lab is a scarce resource triaged badly. Queues ordered by arrival date waste the lab on returns with obvious stories while the ambiguous ones — the failures that would actually change a design or a process — wait months. We score the queue by expected learning: returns from cohorts with unusual failure signatures, returns that contradict the current pareto, returns clustered on a recent ECO. Every completed analysis writes its verdict back into the fabric in structured form, so the next commonality query sees it, and the FA report stops being a PDF tombstone."
+  },
+  {
+   "t": "h3",
+   "x": "Warranty reserves that trace to data"
+  },
+  {
+   "t": "p",
+   "x": "Reserve calculations rest on return-rate assumptions, and actual return curves by cohort — including the slow-surfacing failure modes that dominate real reserves — only exist if the RMA loop is instrumented. We build the reserve calculation on the same fabric as the return loop: cohort curves, failure-mode mix, and repair cost assumptions all trace to observed data, so finance and engineering can challenge the inputs together. The honest gate applies: if returns are dominated by one known issue with a shipped fix, the analysis is short and the reserve adjustment is arithmetic."
+  },
+  {
+   "t": "p",
+   "x": "The loop closes when FA verdicts change decisions. A failure mode attributed to a supplier lot becomes a supplier corrective action with evidence attached; one attributed to a firmware version becomes a hotfix gate in the OTA campaign; one attributed to a design margin becomes a DFM item for the next tapeout. Returns processed without that closure are warranty cost, not learning, and the fabric's job is to make the closure path the default rather than the exception."
+  },
+  {
+   "t": "h2",
+   "x": "Firmware OTA campaigns and field telemetry"
+  },
+  {
+   "t": "p",
+   "x": "OTA update campaigns are staged rollouts: cohort rings, adoption curves, failure rates per ring, and rollback decisions under time pressure. The telemetry to run them well — device health counters, crash logs, usage patterns, connectivity classes — already flows from the field; the gap is that campaign state, device cohorts, and telemetry rarely meet in one system, so rollout decisions run on support-ticket volume, the slowest and noisiest signal available. We build the campaign decision layer: ring definitions joined to telemetry-based health scores, automatic anomaly gates between rings, and rollback triggers your firmware team tunes in advance rather than improvises at midnight."
+  },
+  {
+   "t": "p",
+   "x": "Field telemetry also feeds the reliability loop backward. Firmware version belongs next to failure modes as a covariate — a regression that surfaces on one firmware build is a different problem from one that spans builds — and bricking-risk gates before wide rollout depend on exactly this join. For products under regulatory recall obligations, the same layer produces the cohort identification and evidence trail the notification process requires, from a query rather than from a war room. Adoption is a campaign design problem as much as a telemetry one, so push order, ring sizing, and pause criteria get encoded into the tooling before launch."
+  },
+  {
+   "t": "h2",
+   "x": "Component sourcing, allocation, and the counterfeit question"
+  },
+  {
+   "t": "p",
+   "x": "Component sourcing runs on twenty-six to fifty-two week lead times, allocation decisions during shortages, last-time-buy calls on end-of-life notices, and an excess-and-obsolete inventory problem created by every forecast miss. The data to manage all four exists — actual consumption against planning BOMs, supplier lead-time histories, EOL notices, and E&O exposure by part — but it sits across ERP, procurement systems, and spreadsheets, so E&O gets discovered at the quarterly review instead of at the forecast miss. We build the exposure view first: E&O valued by part and family, driven by consumption data and open orders, reviewed monthly alongside the demand signal that created it."
+  },
+  {
+   "t": "p",
+   "x": "Counterfeit part avoidance is a procurement-integrity problem with a data component: broker-sourced parts during shortages carry lot provenance gaps, and the test flows that screen suspect parts — decap comparison, X-ray, electrical signature screening — produce evidence that should attach permanently to the receiving lot record. We integrate those screening results into the same traceability fabric as internal test data, so a suspect part can never silently enter a build genealogy. The honest feasibility gate applies: if your volumes never touch brokers, the counterfeit work is a policy document, not a system, and we will say so."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture: the yield decision stack"
+  },
+  {
+   "t": "p",
+   "x": "The stack below is how the layers assemble in a typical engagement. The first three lanes read from systems you already operate — the MES, the equipment streams, the test floor. The build concentrates in the last three lanes: the fabric that joins them, the analytics that act on the join, and the decision workflows that close the loop back into dispatch, disposition, and design. Dataq Software implements it in that order, because every layer depends on the honesty of the one beneath it, and a fabric built on unreconciled genealogy produces confident nonsense faster than spreadsheets ever did."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — semiconductor yield decision stack",
+   "lanes": [
+    "Process execution and equipment",
+    "Sensor and inspection capture",
+    "Test, metrology, and genealogy",
+    "Analytics and models",
+    "Decision workflows",
+    "Design and field loop"
+   ],
+   "nodes": [
+    {
+     "id": "mes-lots",
+     "lane": 0,
+     "label": "MES lot and WIP history"
+    },
+    {
+     "id": "dispatch",
+     "lane": 0,
+     "label": "Dispatch execution"
+    },
+    {
+     "id": "recipe-reticle",
+     "lane": 0,
+     "label": "Recipe and reticle management"
+    },
+    {
+     "id": "secs-gem",
+     "lane": 1,
+     "label": "SECS/GEM equipment streams"
+    },
+    {
+     "id": "fdc-sensors",
+     "lane": 1,
+     "label": "FDC sensor traces"
+    },
+    {
+     "id": "inline-inspection",
+     "lane": 1,
+     "label": "Inline defect inspection"
+    },
+    {
+     "id": "ate-datalogs",
+     "lane": 2,
+     "label": "ATE datalogs (STDF)"
+    },
+    {
+     "id": "wafer-maps",
+     "lane": 2,
+     "label": "Wafer maps"
+    },
+    {
+     "id": "binsort",
+     "lane": 2,
+     "label": "Bin sort results"
+    },
+    {
+     "id": "metrology",
+     "lane": 2,
+     "label": "Metrology and calibration history"
+    },
+    {
+     "id": "spc-fdc",
+     "lane": 3,
+     "label": "SPC and FDC analytics"
+    },
+    {
+     "id": "commonality",
+     "lane": 3,
+     "label": "Commonality engine"
+    },
+    {
+     "id": "excursion-rca",
+     "lane": 3,
+     "label": "Excursion RCA case builder"
+    },
+    {
+     "id": "ocap-runner",
+     "lane": 4,
+     "label": "OCAP execution and disposition"
+    },
+    {
+     "id": "tool-matching",
+     "lane": 4,
+     "label": "Tool and chamber matching"
+    },
+    {
+     "id": "dispatch-optimizer",
+     "lane": 4,
+     "label": "Dispatch rule simulation"
+    },
+    {
+     "id": "dfm-feedback",
+     "lane": 5,
+     "label": "DFM feedback to design"
+    },
+    {
+     "id": "field-returns",
+     "lane": 5,
+     "label": "Field return and FA loop"
+    }
+   ],
+   "edges": [
+    {
+     "a": "recipe-reticle",
+     "b": "mes-lots"
+    },
+    {
+     "a": "mes-lots",
+     "b": "dispatch"
+    },
+    {
+     "a": "mes-lots",
+     "b": "spc-fdc"
+    },
+    {
+     "a": "secs-gem",
+     "b": "fdc-sensors"
+    },
+    {
+     "a": "fdc-sensors",
+     "b": "spc-fdc"
+    },
+    {
+     "a": "metrology",
+     "b": "spc-fdc"
+    },
+    {
+     "a": "inline-inspection",
+     "b": "wafer-maps"
+    },
+    {
+     "a": "ate-datalogs",
+     "b": "commonality"
+    },
+    {
+     "a": "wafer-maps",
+     "b": "commonality"
+    },
+    {
+     "a": "binsort",
+     "b": "commonality"
+    },
+    {
+     "a": "metrology",
+     "b": "commonality"
+    },
+    {
+     "a": "spc-fdc",
+     "b": "excursion-rca"
+    },
+    {
+     "a": "commonality",
+     "b": "excursion-rca"
+    },
+    {
+     "a": "excursion-rca",
+     "b": "ocap-runner"
+    },
+    {
+     "a": "ocap-runner",
+     "b": "mes-lots"
+    },
+    {
+     "a": "commonality",
+     "b": "tool-matching"
+    },
+    {
+     "a": "tool-matching",
+     "b": "dispatch-optimizer"
+    },
+    {
+     "a": "dispatch-optimizer",
+     "b": "dispatch"
+    },
+    {
+     "a": "ate-datalogs",
+     "b": "dfm-feedback"
+    },
+    {
+     "a": "wafer-maps",
+     "b": "dfm-feedback"
+    },
+    {
+     "a": "field-returns",
+     "b": "dfm-feedback"
+    }
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems this work touches"
+  },
+  {
+   "t": "p",
+   "x": "A fab or hardware company does not lack systems; it lacks joins between them. This is the estate a typical engagement reads from and what we build beside each component. Every integration is read-first — CDC feeds, vendor APIs, and warehouse landings against the systems of record your organization already audits — and nothing we build writes back to execution systems until the read layer has earned trust."
+  },
+  {
+   "t": "table",
+   "caption": "The fab and device estate — and how the decision layer reads it",
+   "headers": [
+    "System",
+    "What it holds",
+    "How this work uses it"
+   ],
+   "rows": [
+    [
+     "MES (Camstar, SAP ME, or homegrown)",
+     "Lot-step-event history, holds, rework loops, WIP state",
+     "Read via CDC or staged extracts; the genealogy spine of the fabric"
+    ],
+    [
+     "Equipment layer (SECS/GEM, tool hosts, FDC platform)",
+     "Sensor traces, E10 state timelines, recipe execution records",
+     "Streamed read-only; sensor features joined to lot occupancy windows"
+    ],
+    [
+     "Test floor (ATE datalogs, STDF archives)",
+     "Die-level parametric results, wafer maps, bin distributions",
+     "Landed raw in the lakehouse; aggregated marts serve the daily yield meeting"
+    ],
+    [
+     "YMS and SPC systems",
+     "Control charts, violation history, yield reports",
+     "Kept in place; violations and outcomes enriched with joined context"
+    ],
+    [
+     "PLM (Teamcenter, Windchill, or equivalent)",
+     "BOM structures, ECO and ECN workflows, approved vendor lists",
+     "Read APIs for revision-effective joins to production and field data"
+    ],
+    [
+     "ERP and procurement (SAP or equivalent)",
+     "Purchase orders, supplier lots, inventory, E&O positions",
+     "Read for supplier genealogy and sourcing-exposure reporting"
+    ],
+    [
+     "Field service and RMA systems",
+     "Return authorizations, service events, warranty claims",
+     "Joined to shipped-serial genealogy and FA findings for the return loop"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software engages with fabs and hardware companies"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Two-week yield baseline",
+     "One product family, one month of genealogy joined to test data, one real excursion worked end to end, and a timed measurement of how long your current commonality workflow takes. You keep the dataset and the query patterns regardless of the decision."
+    ],
+    [
+     "Read-first against the MES",
+     "Integration through CDC feeds, staged extracts, and vendor APIs. The MES, SPC engine, and PLM stay the systems of record; nothing we build writes back without an engineered, audited path."
+    ],
+    [
+     "Feasibility gates stated in advance",
+     "Each proposal names the signal it needs — sensor retention, datalog availability, hold-reason discipline. If the data does not exist, the proposal says the work is not buildable yet, and what would make it buildable."
+    ],
+    [
+     "A squad that has run this loop",
+     "Data engineers, a yield or test-data specialist, and a lead who has lived through excursion reviews. We join your yield meeting and your excursion war room, not just a project standup."
+    ],
+    [
+     "Handover into your operating rhythm",
+     "Query definitions, model documentation, and runbooks land in your repository with your engineers as owners, because sensor schema changes and tool replacements will happen on their schedule, not ours."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions semiconductor and hardware leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Our MES vendor sells analytics modules. Why build a fabric?",
+     "Vendor modules analyze vendor data well and stop at the boundary. Excursion answers live across MES, test, and equipment data, which is precisely the gap a single-vendor module cannot cross. We build the join layer and keep your vendor systems authoritative."
+    ],
+    [
+     "Can you work without writing to the MES?",
+     "Yes, for most of the decision layer. Holds and dispatch changes go through your existing execution systems; where a write-back saves real time — auto-hold proposals, for example — it is engineered separately, audited, and only after the read-only layer has earned trust."
+    ],
+    [
+     "Our ATE datalogs are archived and huge. Is that a blocker?",
+     "No, it is the normal starting condition. We land the archives in queryable storage once, keep new datalogs streaming, and serve aggregates to the tools people already use. The one-time migration is scoped in the baseline before any commitment."
+    ],
+    [
+     "How do you handle a homegrown MES without clean schemas?",
+     "Homegrown MES histories join on timestamps, tool identifiers, and lot identifiers that usually exist even when the schema is messy. The baseline quantifies how much discipline your data actually has before we promise analytics on top of it."
+    ],
+    [
+     "Who owns the fabric after the engagement?",
+     "Your team, from the first week. Code and query definitions land in your repositories, model documentation travels with the code, and runbooks are written for your on-call engineers."
+    ],
+    [
+     "Do you replace our SPC or FDC vendors?",
+     "No. We read their outputs, join them to outcomes they cannot see, and build the execution layer — OCAP tracking, disposition queues, exposure accounting — that turns their alarms into closed loops. Replacing a validated SPC engine is a regulatory and organizational cost we do not recommend."
+    ],
+    [
+     "What if the two-week baseline shows our current systems are fine?",
+     "Then you get a documented confirmation, the joined dataset, and no follow-on proposal. That outcome happens — most often in fabs with strong internal data engineering — and it is a cheap result compared to a scoped build that was never necessary."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Bring one product family, one month of MES lot history, and the datalogs your test floor already archives to a scoping call. Dataq Software will reconstruct the genealogy, join it to bin and parametric data, and work one real excursion end to end in two weeks — on your data, with query definitions you keep either way. If the commonality query your yield engineers run by hand today already executes in minutes against your current stack, we will say so and stop. If it does not, you will have the evidence, the case study, and a priced path before any larger commitment."
+  }
+ ]
+}

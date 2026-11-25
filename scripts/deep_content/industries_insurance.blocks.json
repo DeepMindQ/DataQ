@@ -1,0 +1,770 @@
+{
+ "file": "industries_insurance",
+ "meta_description": "How Dataq Software engineers insurance end to end: claims decision engines, underwriting and pricing workbenches, FWA analytics, IFRS 17 and LDTI reserving pipelines, bordereaux automation and grounded servicing — built against the policy admin, claims and actuarial estate you already run.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Insurance is a decision business wrapped in a promise: price the risk correctly, honour the claim quickly, hold the reserves honestly. Every one of those acts now runs on machinery most carriers have underinvested in for a decade — policy administration platforms, claims pipelines, rating engines, catastrophe models, reserving databases, bordereaux exchanges. The consequences are concrete: pricing that drifts from the portfolio it prices, claims queues where leakage compounds quietly, reserves assembled from spreadsheets months after the experience they describe, recoverables that reconcile but never collect. This page is the engineering picture of that machinery as Dataq Software sees it — the systems it runs on, the regimes that bound it, the exact points where money leaks — and the six deep builds we ship across the sector. The four sub-industry pages beneath it go deeper still."
+  },
+  {
+   "t": "h2",
+   "x": "How the machine runs across the sector"
+  },
+  {
+   "t": "p",
+   "x": "Across insurance, the machine executes the same loop everywhere: accept a risk, hold it for years or decades, settle the losses it produces, and prove the balance between the three. A submission or an enrolment lands through a broker portal, an app or an EDI gateway; the policy administration platform writes the contract, bills the premium and owns the master record. Rating engines and underwriting workbenches price the exposure against filing-approved plans, scorecards and catastrophe model outputs. When a loss occurs, FNOL intake captures it, the claims system assigns, adjudicates and pays, and payment integrity tests every payment before and after it leaves. At period end, the actuarial function rebuilds triangles, reserves and IFRS 17 or LDTI reporting from everything the loop produced."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is cyclical, and each cycle carries its own clock. Rate filings move on state and national timelines with actuarial justification attached. Catastrophe events compress months of claims work into weeks and test surge capacity at exactly the wrong moment. Health books run prior-authorization and quality-measure clocks continuously. Reinsurance settlements turn on quarterly bordereaux that must reconcile before cash moves. Program audits, market conduct exams and Solvency II or NAIC supervisory reporting arrive on their own calendars, and every one of them reads the same underlying data. A carrier that cannot produce evidence quickly pays for it twice: once in audit effort, and once in the findings that follow."
+  },
+  {
+   "t": "p",
+   "x": "Underneath, the plumbing tells the real story. Health flows ride EDI 837, 835, 834 and 278 transactions through clearinghouses. Commercial and reinsurance flows ride ACORD messages, broker portals and bordereaux spreadsheets that resist structure. Claims documents — estimates, medical records, police reports, repair invoices — arrive as PDFs and photographs. Policy history accumulates across migrated admin systems with conflicting record formats. The warehouse reconciles all of it monthly, by hand, and every decision surface downstream inherits the lag. That plumbing, not the absence of clever models, is why so many insurance AI programs stall: they are built on data estates that cannot answer the question the model depends on."
+  },
+  {
+   "t": "h2",
+   "x": "Systems, standards and obligations that define the sector"
+  },
+  {
+   "t": "p",
+   "x": "Programs here succeed or fail on how honestly the estate is mapped before anything is built. Dataq Software starts every engagement by naming the systems, their owners, their change cadences and the obligations that hang off them — Solvency II and NAIC risk-based capital, IFRS 17 and LDTI reporting, conduct and claims-handling rules, GDPR-class privacy, DORA-class operational resilience and the EU AI Act for automated underwriting and pricing decisions. The table below is the sector-wide estate we most often find and integrate against — not a generic stack diagram."
+  },
+  {
+   "t": "table",
+   "caption": "The insurance estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
+    [
+     "Policy administration platform",
+     "Contract issue, billing, endorsements, servicing transactions, master policy record",
+     "Product and rate changes are release events; decades of migrated records hide duplicates and inconsistencies"
+    ],
+    [
+     "Claims adjudication system",
+     "FNOL capture, assignment, reserving, payments, recovery workflow",
+     "Decision logic is rule sprawl; documents live outside the system; audit trails are reconstructed rather than generated"
+    ],
+    [
+     "Rating engine and pricing stack",
+     "Rate plans, relativities, GLM scorecards, telematics factors, quote services",
+     "Model complexity outruns validation and filing evidence; every state or product variant multiplies the surface"
+    ],
+    [
+     "Catastrophe model suite",
+     "Per-event and aggregate loss simulation for pricing, accumulation and capital",
+     "Vendor models integrate by file drop; portfolio views lag events by weeks; secondary modifiers go unverified"
+    ],
+    [
+     "EDI gateway and clearinghouse links",
+     "837, 835, 834 and 278 health transactions; commercial and reinsurance message flows",
+     "Companion-guide drift and loop-level errors surface downstream as claim and enrollment defects nobody owns"
+    ],
+    [
+     "Reinsurance and bordereaux exchange",
+     "Ceded premium and loss reporting, settlement, recoverables tracking",
+     "Formats and quality vary by counterparty; reconciliation consumes analysts and disputes stay bilateral"
+    ],
+    [
+     "Actuarial reserving and valuation stack",
+     "Triangles, IBNR, LDTI and IFRS 17 measurement, experience studies",
+     "Data preparation consumes the quarter; lineage to source systems is tribal knowledge held by named individuals"
+    ],
+    [
+     "Data warehouse and regulatory reporting",
+     "Finance, risk and supervisory marts feeding MI, filings and QRTs",
+     "Lineage undocumented; reconciliations to the ledger are a monthly manual ritual that every quarter inherits"
+    ],
+    [
+     "Servicing estate: contact centre, portals, CRM",
+     "Member and policyholder service, agent desks, appeals and complaints intake",
+     "Context fragmentation: agents swivel-chair across systems to answer one question; containment metrics get gamed"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where the margin leaks"
+  },
+  {
+   "t": "p",
+   "x": "Ask carrier operations and finance leaders where the money leaks and the answers converge on the same places, described in their own words. Dataq Software scores each of them in your estate during the diagnostic, because the leak that dominates one book is often minor on the next."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Claims decisions waiting in document queues",
+     "FNOL packets, estimates, medical records and police files arrive unstructured; triage takes days before an adjuster sees the file. Leakage compounds in the queue, cycle time inflates the expense ratio, and the claimant experiences silence where the promise was speed."
+    ],
+    [
+     "Pricing sophistication outrunning its governance",
+     "GLM pricing, telematics factors and external enrichment multiply model complexity faster than validation capacity. Filing evidence is reconstructed under exam pressure, model documentation lags the models themselves, and portfolio drift stays invisible until the loss ratio says so."
+    ],
+    [
+     "Fraud and abuse industrialised against static thresholds",
+     "Organised rings exploit application and claims patterns across carriers faster than rules change. SIU teams work leads generated by thresholds tuned for last year's fraud, false positives tax honest claimants, and the referral queue says nothing about which cases are actually linked."
+    ],
+    [
+     "Reserving and reporting assembled by hand",
+     "Triangles, IBNR studies and LDTI or IFRS 17 data preparation consume actuarial quarters. Assumption changes are tracked in documents rather than in systems, restatements surface late, and audit evidence is a reconstruction project rather than a query."
+    ],
+    [
+     "Recoverables that reconcile but never collect",
+     "Ceded recovery demands go out late and under-documented, bordereaux disputes drag settlement into the next quarter, and the recoverable asset on the balance sheet is softer than the reconciliation suggests. Nobody owns the gap between booked and collected."
+    ],
+    [
+     "Legacy admin drag on product and expense",
+     "Core policy systems from another era make product changes quarterly affairs and lock servicing into manual workarounds. The expense ratio carries weight competitors have shed, and every integration request becomes a change-window negotiation."
+    ],
+    [
+     "Sensitive data under double pressure",
+     "Claims and underwriting files concentrate health and financial data, so privacy duties (GDPR, CCPA, HIPAA-adjacent handling) and resilience duties (DORA-class third-party governance) both bite. TPA, broker and partner ecosystems extend the attack surface the carrier still owns the headline for."
+    ],
+    [
+     "Servicing cost nobody can decompose",
+     "Cost per policy serviced, per contact resolved, per appeal processed exists in fragments across finance spreadsheets. Agents swivel-chair between six systems, next-best-action guesses, and containment metrics rise while complaints quietly do the same."
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight leaks is the one we find in every carrier: decisions are being made without their context, and context is a data engineering problem before it is a modeling problem. That is why the first build in insurance is almost always the decision lakehouse, not a smarter model."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works insurance"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate you already run. We do not arrive with a replacement core, a rip-and-replace migration story, or a strategy deck that ends where the hard part begins. The engagement model is engineering-first: a two-week diagnostic that baselines one workflow end to end — claims, pricing, underwriting, reserving or reinsurance operations — then a scoped build that ships behind your change process, behind your model-risk framework, and behind the third-party registers your resilience regime requires."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver in this sector. First, every automated decision carries replay: inputs, model versions, policy cutoffs and outcomes are stored so that an adverse-decision question twelve months later is a query, not an investigation. Second, every generative component is permission-aware and citation-bound — the servicing assistant answers from your policy wording, medical policy and knowledge base, not from the open internet, and every answer shows its sources. Third, every build lands with its evidence layer: the artifacts an auditor, program auditor or supervisory reviewer will ask for are generated by the system, not assembled by a team the week before the review."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same logic. Where the metric is clean — claims cycle time, straight-through rate, reconciliation effort, cost per policy serviced — we contract against the delta, with the baseline locked during the diagnostic. Where the metric is political or confounded, we say so in the feasibility read and scope fixed-fee instead. The published record behind this approach spans the sector: a top-5 global P&C insurer moved claims triage 55% faster with document intelligence, a leading North American life insurer assembled underwriting evidence in hours with case cycle time down 44%, and a European specialty reinsurer cut bordereaux reconciliation effort 74% with automated settlement evidence."
+  },
+  {
+   "t": "h2",
+   "x": "The deep engineering catalog for insurance"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our insurance practice at sector level. Each build is named for the workflow it changes, sized in the diagnostic, and shipped with the controls its regulator will expect. None of them require replacing the core; every one of them requires taking the data contracts seriously. The four sub-industry pages adapt this catalog to their own ground truth."
+  },
+  {
+   "t": "h3",
+   "x": "1. The claims decision engine — document intelligence to straight-through settlement"
+  },
+  {
+   "t": "p",
+   "x": "The build replaces the document choke with a claims intelligence pipeline: classification and field extraction from FNOL packets, estimates, medical records and police reports, each extraction carrying a confidence score; coverage verification against the policy record; and triage that routes clean, low-severity claims into straight-through lanes while complex cases land on an adjuster console with the evidence already collated. Assignment rules execute inside the same decision service, so severity, skill match and workload are balanced deliberately rather than by queue position."
+  },
+  {
+   "t": "p",
+   "x": "Every decision writes to the replay store with its inputs and reason codes, so a denial or a reserve change is explainable months later as a query. QC sampling the regulator expects draws from the same evidence store. Leakage analytics run beside the workflow — estimate variance by repairer, payment trend by claim type, supplement frequency by segment — and SIU referrals carry their rationale with them. In the published program record, this build moved a top-5 global P&C insurer's claims triage 55% faster, with the audit trail generated as the work happened."
+  },
+  {
+   "t": "h3",
+   "x": "2. The insurance decision lakehouse — exposure, claims and finance unified"
+  },
+  {
+   "t": "p",
+   "x": "Underneath every pricing, reserving and portfolio decision sits the same missing asset: one governed view of exposure, claims and money. The build is a lakehouse fed by change-data-capture from policy administration, claims, rating, EDI and bordereaux flows, with schema contracts and freshness SLAs on every feed. Conformed masters — policyholder, provider, counterparty, location — apply survivorship rules your data owners sign, and a shared feature store means the pricing pipeline and the fraud pipeline read one definition of claims frequency, not two."
+  },
+  {
+   "t": "p",
+   "x": "On top of it, portfolio analytics stop being quarterly projects: loss triangles on demand, exposure-claims joins for adequacy monitoring, reserve inputs that reconcile to the general ledger, and cat exposure views refreshed as business inforces. The same lakehouse powers the underwriting workbench, the payment integrity pipeline and the servicing desktop. This is the build every other build leans on, which is why the diagnostic usually prices it first."
+  },
+  {
+   "t": "h3",
+   "x": "3. The underwriting and pricing workbench with filing-grade evidence"
+  },
+  {
+   "t": "p",
+   "x": "Commercial underwriting and personal-lines pricing share a governance problem: too many decisions, too little documented. The workbench build starts at intake — submissions classified and summarised, appetite matched against underwriting guides, referrals routed with context — and runs through rating, where the decision service combines filing-approved rate plans with model scores and records every quote, declination and referral with reason codes your conduct reviewer can read."
+  },
+  {
+   "t": "p",
+   "x": "The evidence factory is the differentiator: model inventory, validation results, fairness reviews and filing justification are generated during the build, not reconstructed before an exam. Rate filings reference documentation the registry already holds, challenger models run on shadow traffic through the same gates, and drift monitoring flags adequacy movement within the quarter rather than at renewal. Under the EU AI Act and state DOI guidance on pricing models, that documentation layer is no longer optional — we build it in from the first sprint."
+  },
+  {
+   "t": "h3",
+   "x": "4. The fraud, waste and abuse decision hub"
+  },
+  {
+   "t": "p",
+   "x": "Fraud on the application side, abuse on the claims side and waste across both are scored by one hub rather than three disconnected tools. The ensemble combines policy rules, anomaly models and network analytics: shared devices, bank accounts, addresses and repairers across claims; provider-member-employer patterns in health books; staged-loss typologies in motor. Scores arrive in an SIU and payment-integrity workbench with the case pre-assembled — linked entities, prior decisions, claim history — so investigators decide rather than collect."
+  },
+  {
+   "t": "p",
+   "x": "The guardrails are as engineered as the scoring. Referral is always a human decision with a recorded rationale; member-facing actions are gated by policy; and outcomes feed back into threshold reviews so false-positive cost is managed as deliberately as catch rate. Regulator-ready reporting — referral volumes, precision, recovery — comes from the same store. The measurable deltas are referral precision, recovery per referral, and the false-positive cost that honest claimants and providers currently pay."
+  },
+  {
+   "t": "h3",
+   "x": "5. Actuarial reserving and reporting pipelines for IFRS 17 and LDTI"
+  },
+  {
+   "t": "p",
+   "x": "Reserving is where data debt becomes a supervisory conversation. The build is a governed pipeline from policy administration and claims into the valuation stack: policy-level extracts with cohort and aggregation discipline, assumption sets versioned and traceable, triangles and IBNR inputs assembled automatically, and reconciliation to the general ledger running as a monitored query rather than a month-end ritual. Actuaries stay in command — the pipeline moves data, not judgment."
+  },
+  {
+   "t": "p",
+   "x": "For LDTI and IFRS 17 specifically, the pipeline encodes the accounting rules as code: level-of-aggregation logic, discount-rate and assumption inputs, and disclosure datasets validated before they leave. Lineage answers the audit question — where did this number come from — as a query into the lakehouse, and assumption monitoring flags experience drift between valuations instead of at them. The measurable deltas are valuation preparation effort, restatement count, and the hours audit evidence currently costs each reporting period."
+  },
+  {
+   "t": "h3",
+   "x": "6. Reinsurance operations — bordereaux, recoverables and settlement evidence"
+  },
+  {
+   "t": "p",
+   "x": "Between cedants, reinsurers and brokers, the data still moves as spreadsheets, and the margin leaks at every handoff. The bordereaux build ingests premium and loss bordereaux in whatever format each counterparty sends, normalises them against a schema registry, scores their quality, and reconciles them automatically to treaty terms — premium, loss, natural-return-premium adjustments and reinstatements. Exceptions route to counterparty-specific queues with the mismatch already located."
+  },
+  {
+   "t": "p",
+   "x": "Recovery and settlement sit on the same foundation: ceded-claim notification obligations tracked so recoverables are claimed within treaty windows, recovery demands assembled with the evidence chain attached, and closing statements generated from a shared record both parties can audit. Collateral and letters of credit are monitored against exposure movements. In the published record, a European specialty reinsurer cut reconciliation effort 74% with this build, and settlement disputes fell because both sides finally read the same numbers."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — the insurance decision and evidence stack",
+   "lanes": [
+    "Systems of record",
+    "Contracts and ingestion",
+    "Decision and retrieval core",
+    "Decision services",
+    "Controls and evidence",
+    "Business surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "admin",
+     "lane": 0,
+     "label": "Policy administration platform"
+    },
+    {
+     "id": "claims",
+     "lane": 0,
+     "label": "Claims adjudication system"
+    },
+    {
+     "id": "rating",
+     "lane": 0,
+     "label": "Rating engine and pricing stack"
+    },
+    {
+     "id": "cdc",
+     "lane": 1,
+     "label": "Change-data-capture streams"
+    },
+    {
+     "id": "edi",
+     "lane": 1,
+     "label": "EDI gateway: 837, 835, 834, 278"
+    },
+    {
+     "id": "bord",
+     "lane": 1,
+     "label": "Bordereaux and ACORD feeds"
+    },
+    {
+     "id": "contracts",
+     "lane": 1,
+     "label": "Schema contracts and freshness SLAs"
+    },
+    {
+     "id": "lake",
+     "lane": 2,
+     "label": "Insurance decision lakehouse"
+    },
+    {
+     "id": "fstore",
+     "lane": 2,
+     "label": "Shared feature store"
+    },
+    {
+     "id": "index",
+     "lane": 2,
+     "label": "Permission-aware retrieval index",
+     "hot": true
+    },
+    {
+     "id": "triage",
+     "lane": 3,
+     "label": "Claims triage decision service",
+     "hot": true
+    },
+    {
+     "id": "price",
+     "lane": 3,
+     "label": "Pricing and appetite service"
+    },
+    {
+     "id": "fwa",
+     "lane": 3,
+     "label": "FWA and SIU network analytics"
+    },
+    {
+     "id": "asst",
+     "lane": 3,
+     "label": "Grounded servicing assistant"
+    },
+    {
+     "id": "replay",
+     "lane": 4,
+     "label": "Decision replay and reason codes"
+    },
+    {
+     "id": "mrm",
+     "lane": 4,
+     "label": "Model-risk registry"
+    },
+    {
+     "id": "workbench",
+     "lane": 5,
+     "label": "Underwriting workbench"
+    },
+    {
+     "id": "adjconsole",
+     "lane": 5,
+     "label": "Adjuster and examiner console"
+    },
+    {
+     "id": "servdesk",
+     "lane": 5,
+     "label": "Member and policyholder servicing desk"
+    }
+   ],
+   "edges": [
+    {
+     "a": "admin",
+     "b": "cdc"
+    },
+    {
+     "a": "claims",
+     "b": "cdc"
+    },
+    {
+     "a": "rating",
+     "b": "cdc"
+    },
+    {
+     "a": "edi",
+     "b": "contracts"
+    },
+    {
+     "a": "bord",
+     "b": "contracts"
+    },
+    {
+     "a": "contracts",
+     "b": "lake"
+    },
+    {
+     "a": "lake",
+     "b": "fstore"
+    },
+    {
+     "a": "lake",
+     "b": "index"
+    },
+    {
+     "a": "fstore",
+     "b": "triage"
+    },
+    {
+     "a": "fstore",
+     "b": "price"
+    },
+    {
+     "a": "fstore",
+     "b": "fwa"
+    },
+    {
+     "a": "index",
+     "b": "asst"
+    },
+    {
+     "a": "triage",
+     "b": "replay"
+    },
+    {
+     "a": "price",
+     "b": "replay"
+    },
+    {
+     "a": "fwa",
+     "b": "replay"
+    },
+    {
+     "a": "asst",
+     "b": "mrm"
+    },
+    {
+     "a": "lake",
+     "b": "workbench"
+    },
+    {
+     "a": "replay",
+     "b": "adjconsole"
+    },
+    {
+     "a": "asst",
+     "b": "servdesk"
+    }
+   ],
+   "note": "Lanes and nodes are named for the systems an insurance build actually touches — policy administration, claims adjudication, rating engines, EDI and bordereaux flows — not a generic reference stack. The hot nodes are where program differentiation concentrates: permission-aware retrieval and the claims triage decision service. Every decision service writes to the same replay store, so one audit conversation covers pricing, claims and fraud alike."
+  },
+  {
+   "t": "h2",
+   "x": "Sub-industry programs: what differs on the ground"
+  },
+  {
+   "t": "p",
+   "x": "The catalog above is sector-wide; the workflows beneath it are not. Each sub-industry runs different systems on different clocks under different regulators, and programs there start from different first builds. Four differences matter most when you choose where to begin."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Health Insurance: adjudication and audit clocks",
+     "The ground truth is the 837-to-835 pipeline, prior authorization on 278 clocks, coding integrity across ICD-10-CM, CPT and HCPCS, HCC risk-adjustment capture, HEDIS measure reporting, appeals and grievances, and CMS program audit readiness — under CMS, state DOI and NCQA scrutiny. First builds there are claims payment integrity and prior-auth evidence assembly, with HIPAA shaping every design decision."
+    ],
+    [
+     "Life and Annuities: decades-long contracts and regime shifts",
+     "The book is a thirty-year promise: underwriting evidence at issue (APS, MIB checks, tele-underwriting), policy servicing across decades, death claims with contestability analysis, LDTI and IFRS 17 valuation data, lapse and GLWB rider behaviour, in-force reinsurance. First builds are the underwriting evidence factory and the valuation pipeline, because both pay for themselves before the second quarter."
+    ],
+    [
+     "Property and Casualty: two decision factories under weather",
+     "Economics live at FNOL and at rate filing: intake triage and assignment, photo-based estimating and repair networks, catastrophe event response and surge, pricing adequacy against filing calendars, telematics and UBI signals, subrogation and SIU recovery, MGA and MGU bordereaux. First builds are claims triage and the filing evidence factory — the two places leakage and exam risk concentrate."
+    ],
+    [
+     "Reinsurance and Commercial Lines: wholesale complexity",
+     "The trade is treaty structures, facultative risk, bordereaux reconciliation, ceded recovery, cat accumulation, retrocession and capital modelling under Solvency II and ORSA, with runoff and LPT deals at the end of the line. First builds are the bordereaux engine and the submission workbench, because settlement and placement are where the counterparty friction is priced."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: from monthly extracts to governed streams"
+  },
+  {
+   "t": "p",
+   "x": "Every decision gap in insurance traces back to a data gap, and most data gaps trace back to the same habit: systems of record write to files, files load into marts on a monthly cycle, and decisions run on whatever the last load knew. The data plane build inverts the pattern where it matters. Claims events, EDI transactions, enrollment changes and bordereaux land through change-data-capture into a governed lakehouse in near real time; the batch cycle keeps running for finance and reconciliation, but decision surfaces stop depending on it."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries a schema contract with a named owner, a freshness SLA and a reconciliation check against the source system's own controls. The conformed masters apply survivorship rules agreed with your data owners — policyholder, provider, counterparty, location — and every downstream consumer reads through the contract layer, so a schema change fails loudly at the contract instead of silently inside a pricing model. The monthly reconciliation ritual becomes a monitored query with an owner and a dashboard."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Streaming claims and EDI ingestion",
+     "change-data-capture from adjudication events and 837, 835, 834, 278 transactions with exactly-once semantics, keeping decision surfaces current without touching the finance batch"
+    ],
+    [
+     "Contract-enforced freshness",
+     "per-feed SLAs with alerting and automated breach reports, so a late claims load pages an owner instead of silently skewing a loss triangle"
+    ],
+    [
+     "Conformed party masters",
+     "policyholder, provider and counterparty survivorship rules signed off by data owners, with the duplicate-suspect queue surfaced rather than hidden"
+    ],
+    [
+     "Feature store discipline",
+     "one definition of claims frequency, payment velocity and contact recency shared by pricing, fraud and servicing — the end of two teams computing the same feature differently"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: scoring, replay and reason codes"
+  },
+  {
+   "t": "p",
+   "x": "Insurance runs on decisions with regulatory tails: a claim denial carries conduct and appeal obligations, a pricing decline carries fairness obligations, a treatment assignment carries claims-handling rules. The decision layer we build treats those tails as first-class requirements. Every decision records its inputs, feature values, model versions, policy cutoffs and the reason codes the obligation requires, in a replay store that answers supervisory and consumer questions as queries. When an examiner or a claimant asks why, the answer is retrieved, not reconstructed."
+  },
+  {
+   "t": "p",
+   "x": "Champion/challenger governance is built in rather than bolted on: challengers run on shadow traffic with performance tracked in the registry your model-risk function owns, promotions pass through the gates your framework already defines, and rollbacks are rehearsed rather than improvised. The same decision service layer hosts claims triage, pricing and appetite, FWA scoring and servicing treatments, so the governance surface is one registry, one replay store, one set of gates — instead of four platforms with four audit stories."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: digital workers with audit trails"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work in insurance — claims file assembly, bordereaux matching, evidence collation for appeals, valuation data preparation — follows patterns an agentic workforce can absorb without touching judgment authority. Dataq Software's agent platform runs digital workers with explicit role scopes: the tools they may call, the systems they may read, the actions that require a human checkpoint, and the budget of work per run. Every run logs its steps, tool calls and outputs to the same evidence store the human workflow uses, so an agent's file is auditable exactly like an adjuster's."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — summarising claim files, drafting recovery demands, assembling appeal packets — the pattern is grounded generation with citation obligations and human authorship of record. Agents never post payments, never send claimant or provider communications without review, and never change a coverage decision; they move the work to the decision point and stop. The capacity story is measured in cleared cases per analyst per day, which is how the operations leaders who sponsor these programs justify them upward."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: audit as a query"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory surface of insurance is dense and growing in exactly the directions these builds touch: capital and reporting regimes, conduct and claims-handling rules, AI governance for pricing and underwriting, privacy over sensitive claims data, and operational resilience for the platforms themselves. Dataq Software's answer is the evidence layer — the artifacts a reviewer will ask for are generated continuously by the systems themselves. The table maps the regimes we build against to the evidence our builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape insurance builds — and the evidence layer each one gets",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What our build produces"
+   ],
+   "rows": [
+    [
+     "Solvency II and NAIC RBC regimes",
+     "Capital, reserving and model governance under supervisory review",
+     "Reserve pipelines with lineage to source; model-risk registry entries; valuation extracts reconciled to the ledger"
+    ],
+    [
+     "IFRS 17 and LDTI accounting",
+     "Aggregation discipline, assumption traceability, disclosure-quality data",
+     "Valuation-ready marts with cohort logic encoded; assumption versioning; reconciliation running as a monitored query"
+    ],
+    [
+     "Conduct and claims-handling regulation",
+     "Timely handling, documented decisions, fair treatment in claims and appeals",
+     "Clock tracking per case; decision replay with reason codes; QC sampling drawn from the evidence store"
+    ],
+    [
+     "Model risk and AI rules (EU AI Act, state DOI guidance)",
+     "Inventory, validation, monitoring and explainability for pricing and underwriting decisions",
+     "Model-risk registry with evaluation results, drift monitoring and adverse-decision reason codes shipped with every build"
+    ],
+    [
+     "Privacy regimes (GDPR, CCPA, HIPAA-adjacent handling)",
+     "Sensitive-category handling, retention duties, data-subject rights timelines",
+     "Decision replay for profiling questions; DSAR joins across lakehouse entities; purpose and consent enforced at execution"
+    ],
+    [
+     "Operational resilience (DORA class)",
+     "ICT third-party registers, incident playbooks, testing evidence, exit strategies",
+     "Third-party register entries for every vendor integration; playbook and recovery-test evidence generated per release"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the estate stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Insurance estates are layered over decades, and the fastest way to fail a program is to promise greenfield. Our integration posture is contractual: we define schema contracts with each system owner, land data through CDC and governed APIs, write back through the posting interfaces and workflow hooks your change process already controls, and keep every new component independently deployable behind feature flags. Policy administration cores are not replaced; they are supplied with better context and drained of the decision work they were never good at."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment. Estimatics platforms, cat model vendors, clearinghouses, IDV and data providers sit behind an abstraction layer with contract tests, so a vendor swap is a configuration change with a migration runbook rather than a re-platform. Where a legacy admin or mainframe component must stay, the offload pattern applies: the batch window keeps posting, while the decision surfaces read from the stream the offload produces. This is unglamorous work, and it is the reason the builds above hold up in production instead of in a pilot."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Write-back through your interfaces",
+     "payments, status changes, referrals and treatment updates flow through the claims and admin interfaces your change process already governs"
+    ],
+    [
+     "Vendor abstraction with contract tests",
+     "estimatics, cat models, clearinghouse and data-provider signals behind one interface so a vendor swap is configuration, not surgery"
+    ],
+    [
+     "Legacy and mainframe offload",
+     "batch windows preserved, decisions fed from CDC streams, no change freeze negotiated to ship a model"
+    ],
+    [
+     "Feature-flagged, independently deployable",
+     "every build ships behind flags with rehearsed rollback, because the change advisory board will ask"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement. It starts with the two-week diagnostic: one workflow baselined end to end, the leak quantified in your own telemetry, the data contracts inventoried, and a written feasibility read you can circulate — including the uncomfortable findings. If the delta is real, the build is scoped against the gates your change and model-risk processes define; if it is not, you keep the measurement design and the baseline either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "workflow instrumentation, leak quantification, contract inventory, feasibility read with the delta estimate and the confounders named"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane of the workflow live behind flags with replay and evidence running from day one — for claims that is one claim family; for bordereaux, one counterparty"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "model-risk documentation landed, QC sampling live, remaining lanes added, capacity telemetry reporting to the operations review"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "threshold and model challengers evaluated in the registry, treatment strategies re-optimised, the baseline re-verified against the control group"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm, not a parallel one: our engineers work in your repositories or a shared workspace with the same CI, the same security review and the same access model your teams use. Knowledge transfer is part of the gates, not a closing slide — by the expansion phase your engineers are shipping changes to the builds, because the runbooks, contracts and evaluation suites are theirs from week one."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones insurance programs are managed on. The targets are the ranges we set in feasibility reads for programs of this shape — commitments we let you hold us to where the metric is clean, hypotheses we test where it is confounded. The measurement column is the part most programs skip and the part that makes the delta defensible in a steering committee."
+  },
+  {
+   "t": "table",
+   "caption": "Insurance program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Claims cycle time, FNOL to decision",
+     "40-60% reduction on triaged lanes; the published record shows 55% at a top-5 P&C insurer",
+     "Clock telemetry per claim from the claims platform, segmented by lane and severity"
+    ],
+    [
+     "Leakage recovery on reviewed payments",
+     "1-3 loss-ratio points recovered across estimate and payment review",
+     "Paid-versus-benchmark variance tracked from the payment integrity pipeline, reported quarterly"
+    ],
+    [
+     "Pricing adequacy at equal volume",
+     "Drift detected within the quarter; rate-for-rate improvement where filings allow",
+     "Loss-ratio emergence against pricing cohorts, with filing evidence regenerated from the registry"
+    ],
+    [
+     "Bordereaux reconciliation effort",
+     "50-75% reduction; the published record shows 74% at a specialty reinsurer",
+     "Reconciliation hours and dispute counts from the bordereaux engine, per treaty and counterparty"
+    ],
+    [
+     "Valuation and reporting preparation effort",
+     "40-60% less analyst time per IFRS 17 or LDTI cycle",
+     "Pipeline run telemetry versus the pre-build baseline, per reporting period"
+    ],
+    [
+     "Cost per policy or member serviced",
+     "15-25% reduction without CSAT decay",
+     "Servicing unit telemetry with containment scored against post-contact outcomes"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "An insurance build team is small and senior: a lead engineer who has run decision systems in regulated carriers, data engineers who own the CDC and contract layer, ML engineers who own scoring and evaluation, a controls engineer who owns the evidence layer, and a domain lead who has cleared claims backlogs, filed rates or closed bordereaux in production estates. Agentic-workflow specialists join for the file-assembly builds. The team works to your release calendar and your gate vocabulary from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: weekly operations review on the workflow's own telemetry, fortnightly gate submissions to change and model-risk, quarterly challenger reviews, and an incident practice that treats the replay store and the evidence layer as production-critical systems — because by the second quarter, they are. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs like these fail in known ways, and most of the failure modes are organizational rather than mathematical. We name them in the feasibility read and design against them explicitly, because a program that cannot survive its second quarter is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "a demo built on extracted data that never integrates — we prevent it by shipping the first vertical slice through your change process, flags and gates included, within the first two months"
+    ],
+    [
+     "Model-risk stall",
+     "the scoring service stuck in review because documentation was an afterthought — we land the registry, evaluation results and lineage with the build, not after it"
+    ],
+    [
+     "Feature store fragmentation",
+     "two teams recomputing the same feature with different semantics until pricing and fraud decisions diverge — one shared feature store with contract tests is a gate, not an optimization"
+    ],
+    [
+     "Containment gaming",
+     "servicing deflection rising while complaints rise with it — containment is scored with post-contact outcomes, and escalation-context quality is tracked as a first-class metric"
+    ],
+    [
+     "Evidence rebuilt under exam",
+     "filings and audit files reconstructed by a team every cycle because artifacts were manual — the evidence layer generates them continuously or the build is not done"
+    ],
+    [
+     "Backlog complacency",
+     "triage precision improving while the claims queue still grows because capacity was cut on the forecast — capacity telemetry stays in the operations review until the curve bends"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions insurance leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do we need to replace our policy admin system first?",
+     "No. None of the six builds require a core replacement. They consume streams from the admin and claims estate and write back through your posting interfaces. The core stays; it stops being the bottleneck for decisions."
+    ],
+    [
+     "How does this pass model risk and AI review?",
+     "Every scoring and generative component ships with its documentation: data lineage, evaluation results against golden sets, guardrail inventory, drift monitoring and the decision replay store. The review becomes a walkthrough of artifacts the system already produces."
+    ],
+    [
+     "What happens to our claims handlers and analysts?",
+     "The builds move evidence collection and file assembly to agents and put judgment back in human hands with better context. Capacity is redeployed to the complex cases the backlog currently neglects; programs are justified in cleared cases per analyst, not headcount removed."
+    ],
+    [
+     "Can this run in our jurisdictions and data residency?",
+     "Yes. The stack is cloud-agnostic and has been delivered under EU, UK and US regulatory regimes; residency, key management and third-party register entries are handled as build requirements, not assumptions."
+    ],
+    [
+     "How do you measure success without gaming?",
+     "Baselines are locked during the diagnostic, controls or holdouts are used where experiments are cheap, and every metric is reported from system telemetry rather than a status deck. The feasibility read names the confounders before anyone commits to a target."
+    ],
+    [
+     "What is the smallest program worth running?",
+     "One workflow, one baseline, one vertical slice — claims triage and bordereaux are the two most common starters because their clocks and queues are already instrumented. If the diagnostic cannot find the delta, we say so and stop."
+    ],
+    [
+     "How do the agents avoid becoming shadow AI?",
+     "Agents run inside the governed platform with role scopes, tool allow-lists, human checkpoints and full run logs. The shadow-AI failure mode is what happens without those controls; the program's explicit goal is to eliminate the conditions that create it."
+    ],
+    [
+     "Who owns the build after you leave?",
+     "Your teams, with the runbooks, contracts, evaluation suites and registry entries transferred as gate conditions during expansion — not as a closing deliverable. Several programs run entirely in-house after the second quarter."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Pick the leak that hurts most — the claims queue, pricing drift, bordereaux drag or valuation prep — and we will run the two-week diagnostic that quantifies it in your own telemetry. If the delta is real, the build gets scoped against your gates; if it is not, you keep the baseline and the measurement design either way."
+  }
+ ]
+}

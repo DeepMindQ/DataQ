@@ -1,0 +1,754 @@
+{
+ "file": "industries_energy-utilities_oil-gas",
+ "meta_description": "How Dataq Software engineers oil and gas operations: predictive integrity over ILI and corrosion circuits, gas lift and ESP optimization, turnaround scheduling, process-safety evidence, methane MRV and blend scheduling — built against your DCS, historian and CMMS estate.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Oil and gas operations run hazardous physics on decade-old capital under markets that reprice daily. Upstream, the value lives in keeping wells producing against lift-cost curves; midstream, in pipelines that must never fail; downstream, in turning crude into products inside narrow margin windows. Around all of it sits process safety — the discipline that keeps a hydrocarbon facility boring, and the reason this sector tolerates less improvisation than any other. The operating day is telemetry, permits, inspections and schedules; the money leaks where those four lose contact with each other. This page is the engineering picture: the systems that run the operation, the exact points where margin and the safety case leak, and the six deep builds Dataq Software ships to close them."
+  },
+  {
+   "t": "h2",
+   "x": "How the operation actually runs, from wellhead to wharf"
+  },
+  {
+   "t": "p",
+   "x": "In oil and gas operations, value is created in three simultaneous loops. The production loop runs DCS and SCADA against reservoir behavior: well tests, choke management, gas-lift injection, ESP frequency, separator levels, flare rates — all streamed into a PI-class historian that holds the complete operating memory of the facility. The integrity loop runs slower: risk-based inspection plans, corrosion circuits, in-line inspection runs and integrity operating windows, governed by documents that live in an engineering registry separate from the historian. The commercial loop runs fastest: crude assays, product prices, refinery LP plans and blend schedules, repriced against markets every day. Each loop has its own systems, cadence and dialect — and the seams between them are where margin and risk accumulate."
+  },
+  {
+   "t": "p",
+   "x": "Downstream, the machinery tightens further. A refinery takes feed through crude distillation, converts it across FCC and hydrocracking units, and blends products against specification windows and tank logistics — all planned by an LP model that assumes the plant behaves as designed. It does not: exchangers foul, catalysts age, compressors trip, so the LP runs against a stale idea of the facility. Turnarounds compress months of maintenance into weeks of execution, sequenced against permits, contractors and tie-ins, where one late heat exchanger cascades into days of lost production. Drilling teams log WITSML while reservoir engineers run simulation models that inform infill and waterflood decisions on a quarterly rhythm. Every one of these workflows is instrumented; few of them are decision-connected."
+  },
+  {
+   "t": "p",
+   "x": "Wrapped around the loops is the safety and compliance machinery: process safety management with its mechanical-integrity schedules, management-of-change gates and HAZOP action tracking; permit-to-work on the floor; shift handover between control rooms; environmental reporting for flaring and methane. Regulators read this machinery as documents, but it lives as system records — MOC approvals, isolation certificates, calibration due-dates, alarm journals. The gap between the document view and the system view is where audits get long and incidents get explained. Dataq Software's work concentrates on closing that gap at the decision points: the moment an operator opens a valve, a planner commits a window, or an inspector signs a circuit."
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems this work touches"
+  },
+  {
+   "t": "p",
+   "x": "Programs here succeed or fail on how honestly the estate is described. The layers below are the ones an operating company actually runs — named as they appear on the plant, not as a vendor catalog would have them — together with the point where each one strains under real throughput, real weather and real regulatory scrutiny."
+  },
+  {
+   "t": "table",
+   "caption": "The oil and gas estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
+    [
+     "DCS and process control",
+     "Closed-loop control of units: temperatures, pressures, levels, interlocks, APC setpoints",
+     "Point databases proprietary and undocumented; alarm rationalization decades stale on brownfield sites"
+    ],
+    [
+     "SCADA and well-site telemetry",
+     "Remote wells, compression and pipelines: states, rates, vibration, valve positions",
+     "Intermittent comms on remote sites; store-and-forward hides gaps; security zones incomplete"
+    ],
+    [
+     "Process historian (PI-class)",
+     "Every tag, every second: the operating memory of the facility",
+     "Context — units, modes, equipment ties — undocumented; exports slow; access ungoverned"
+    ],
+    [
+     "Production optimization stack",
+     "Well tests, lift curves, gas-lift and ESP models, gathering-network hydraulics",
+     "Runs offline on stale inputs; recommendations die in email; test separation unreliable"
+    ],
+    [
+     "Drilling and reservoir systems",
+     "WITSML rig feeds, mud logs, simulation models, reserves tracking",
+     "Rigid file exchanges; rig data lands after the decisions; simulation scenarios unversioned"
+    ],
+    [
+     "CMMS and RBI programs",
+     "Work orders, mechanical-integrity schedules, inspection records, corrosion circuits",
+     "Free-text histories defeat analytics; RBI keys off last inspection, not current condition"
+    ],
+    [
+     "Process-safety systems",
+     "MOC workflow, HAZOP actions, permit-to-work, alarm management, shift handover",
+     "Approvals tracked in documents; action closure manual; handover context lost between shifts"
+    ],
+    [
+     "Pipeline integrity systems",
+     "ILI run records, defect management, corrosion-growth models, repair planning",
+     "Defect data locked in vendor formats; growth modeled per run, not continuously; dig decisions manual"
+    ],
+    [
+     "Trading, LP and blend scheduling",
+     "Crude procurement, refinery LP, blend recipes, product logistics",
+     "LP coefficients stale against plant condition; blend windows missed; margin attribution guesswork"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where the margin and the safety case leak"
+  },
+  {
+   "t": "p",
+   "x": "Ask operations leaders where the money leaks in oil and gas and the answers converge on the same eight places. Dataq Software scores each of them in your estate during the diagnostic, because the leak that dominates a refinery is rarely the one that dominates a gas field."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Integrity data that never meets decisions",
+     "ILI runs, corrosion coupons and wall-thickness readings land in vendor formats and engineering registries, while RBI schedules run on calendar dates. The corrosion circuit that accelerated last quarter is invisible until the next inspection window. Every deferred dig is a bet placed without the current condition of the pipe, and every premature dig is capital spent against a risk that had already moved."
+    ],
+    [
+     "Turnarounds sequenced by experience",
+     "Scope books run to thousands of tasks; the master schedule lives in a planning tool fed by hand. One late exchanger or a delayed permit cascades through the critical path, and the recovery plan gets negotiated by seniority rather than optimization. Duration slippage at refinery scale is measured in millions per day, and the lessons from the last turnaround rarely reach the schedule for the next one."
+    ],
+    [
+     "Gas lift and ESP fleets tuned by habit",
+     "Lift-gas allocation and ESP frequency follow setpoints chosen years ago. Well tests run monthly where the physics would reward weekly; the lift curve that would show a well running below its efficiency knee never gets computed. Production left on the table hides inside normal-looking rates, and the gathering network's constraints — never the individual well — decide where the next barrel comes from."
+    ],
+    [
+     "Static APC against shifting feedstock",
+     "Advanced process control was commissioned for a crude slate the refinery no longer runs. Exchangers foul, catalysts age, compressors wander, and the controller holds yesterday's optimum while energy and yield degrade a fraction of a percent at a time. The delta is continuous, auditable in the historian, and owned by nobody — which is why it survives every budget review."
+    ],
+    [
+     "Methane and flare numbers built from factors",
+     "Emissions reporting assembles measured flows with emission factors and spreadsheet judgment, then defends the result to auditors and buyers who increasingly expect measurement. Methane MRV duties and customer scrutiny both move toward instrumented truth, so the gap between estimate and measurement becomes a commercial as well as a regulatory exposure — and leak-detection surveys sit in PDFs instead of worklists."
+    ],
+    [
+     "Shift handover that loses the thread",
+     "The morning handover compresses twelve hours of alarms, overrides, permit status and near-misses into a template filled under time pressure. Context that would prevent the next incident or the next unplanned stoppage evaporates between logbooks. The fix is to design the handover as a data object first and a narrative second — the alarm journal, the open MOCs and the temporary setpoint changes arrive as structured context, not memory tests."
+    ],
+    [
+     "Permit-to-work friction at the worst moments",
+     "Isolations, confined-space entries and hot work queue behind paperwork during exactly the windows when plant availability matters most. The safety intent is right; the execution is manual, so the queue itself pushes crews toward shortcuts nobody wants. Evidence that an isolation was verified lives in a signature, not a record the shutdown planner can sequence against."
+    ],
+    [
+     "Trading decisions on stale plant reality",
+     "The LP assumes design performance; schedulers blend against tank levels that update by hand; crude assays arrive as documents rather than data. When plant condition and market position diverge, the spread is absorbed as lost margin — realizable, attributable and fixable with a decision hub that feeds live yield evidence into planning and scheduling instead of design assumptions."
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight leaks: the physics is instrumented but the decisions are not. Every leak is a context problem before it is a modeling problem — which is why Dataq Software's first build in oil and gas is almost always the data fabric that joins historian, CMMS and safety records, not a smarter model sitting on top of a broken decision supply chain."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works oil and gas"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate you already run. We do not arrive with a rip-and-replace program for your DCS or a mandate to re-platform the historian; we arrive with connectors, schema contracts and a respect for the operating envelope. Our engineers have worked beside refinery planners, integrity teams and production-optimization groups, and the first deliverable is always a working slice against a real workflow — one corrosion circuit, one turnaround, one well set — not a strategy deck about transformation."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver in this sector. First, physics is respected: every model ships bounded by its validated operating envelope, validated against historian truth before anyone trusts it, with uncertainty stated rather than hidden. Second, evidence is a by-product: MOC records, integrity-window checks, MRV calculations and decision logs are generated by the build itself, so audit preparation stops being a seasonal project. Third, humans keep the stops: recommendations land in operator, planner and inspector workflows with context and confidence attached, and the control room's authority is never bypassed by an arrow on a dashboard."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same logic: where the metric is clean, we price against the delta measured in your own telemetry. The published record includes a global integrated energy major whose turnaround duration came down fourteen percent through scheduling optimization at refinery scale. We would rather show you that number in your own baseline than promise it in a slide — and if the diagnostic cannot find the delta in two weeks, we say so and stop, leaving you the measurement design either way."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for oil and gas"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our oil and gas practice. Each build is a named engineering service with defined data flows, decision services, guardrails and integration points — deployed against your estate in weeks, not quarters, and designed so the evidence the regulator wants falls out of running the system."
+  },
+  {
+   "t": "h3",
+   "x": "1. Predictive integrity over corrosion circuits and ILI"
+  },
+  {
+   "t": "p",
+   "x": "The build joins in-line inspection records, wall-thickness history, corrosion coupons, process conditions from the historian and RBI documentation into a single integrity fabric per circuit. Vendor formats normalize at ingest, defect populations track from run to run, and corrosion-growth models run continuously against live process data — temperature, velocity, sulfur and acid content — instead of interpolating between inspection runs that arrive years apart. Every circuit carries a computed rate, a confidence interval and an integrity operating window that updates as conditions change."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: ranked dig lists with risked consequences; IOW breach alerts with operator guidance attached; RBI plan adjustments proposed with their evidence; anomaly packs assembled automatically for the next inspection cycle. Guardrails: recommendations never bypass engineering approval; every computed rate carries its inputs so an auditor can replay it; circuits whose sensor coverage cannot support the calculation are blocked from scoring rather than scored anyway. Integration points: ILI vendors, CMMS, engineering document registries, the historian. The unit of value is simple: digs that are in the right place, on evidence."
+  },
+  {
+   "t": "h3",
+   "x": "2. Production optimization — gas lift, ESP and network hydraulics"
+  },
+  {
+   "t": "p",
+   "x": "The build pulls well tests, ESP frequency and vibration channels, gas-lift injection rates and gathering-network pressures into a live optimization layer that computes lift curves and network-constrained targets per well. Test-separation quality is monitored, because an optimization built on bad tests optimizes noise. Virtual metering fills the gaps between physical tests, and the optimizer allocates lift gas and ESP setpoints against the true network constraint rather than the well-by-well habit that the field inherited from whoever commissioned it."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: lift-gas reallocation proposals, ESP setpoint guidance with failure-precursor context, test-frequency schedules that concentrate measurement where uncertainty is highest. Guardrails: recommendations bounded by validated envelopes, operator approval before any setpoint moves, and every proposal logged with its inputs for replay. Integration points: SCADA, the historian, allocation and production-accounting systems. The delta lands as lifted volumes and defected failures avoided — measured against control wells, not against a forecast that benefits from weather."
+  },
+  {
+   "t": "h3",
+   "x": "3. Turnaround and maintenance-window scheduling"
+  },
+  {
+   "t": "p",
+   "x": "The build ingests the scope book from the CMMS, builds the task network with durations and resource constraints, and runs solver tournaments across schedule formulations — because the formulation that wins for a petrochemical complex loses for a gas plant, and nobody should guess which applies. Critical-path simulation runs against uncertainty: permit delays, discovery work, contractor availability. The planning tool stays; what changes is that it gets fed a defensible schedule instead of a hand-built one, and the gap between plan and execution becomes measurable in days rather than discovered in hindsight."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: sequence recommendations, resource-conflict alerts, discovery-work impact analysis that quantifies the cascade before it commits, daily recovery plans when reality moves. Guardrails: safety-critical tasks stay locked to their regulatory sequence; schedule changes require planner approval with the delta shown; every published schedule carries its assumptions for replay. Integration points: CMMS, permit-to-work, contractor systems, the master planning tool. This is the build behind the published record: turnaround duration down fourteen percent at refinery scale for an integrated energy major."
+  },
+  {
+   "t": "h3",
+   "x": "4. Process-safety evidence — MOC, HAZOP and IOW enforcement"
+  },
+  {
+   "t": "p",
+   "x": "The build turns process-safety machinery from documents into system records: management-of-change with lineage from hazard study to field implementation, HAZOP and other action tracking with closure telemetry, integrity operating windows computed from live historian conditions rather than reviewed on paper quarterly. Alarm journals feed rationalization with actual frequency and consequence data. The safety case stops being a parallel universe of PDFs and becomes a view over records the operation already produces — which is what makes audits short and surprises rare."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: MOC risk summaries with overdue-implementation escalation, action-closure dashboards by study and severity, IOW breach context delivered to the console where operators already work. Guardrails: no closure without evidence attached; segregation of duties enforced in the workflow; every state transition replayable for the regulator. Integration points: engineering registries, DCS alarm systems, permit-to-work, the historian. The point is not more process safety paperwork — it is the same duty, satisfied by structured evidence that costs a query instead of a project."
+  },
+  {
+   "t": "h3",
+   "x": "5. Methane MRV and flare monitoring"
+  },
+  {
+   "t": "p",
+   "x": "The build computes emissions from measurements wherever instruments exist and labels estimates honestly where they do not. Flare gas meters, methane detection surveys, tank measurements and fuel consumption fuse into site-level accounts with uncertainty ranges, reconciled monthly and traceable from any reported figure back to the reading that produced it — the pattern OGMP 2.0-class reporting expects. Flare events get root-cause context from the historian automatically: what opened, when, and whether the event was within permitted duration or an anomaly worth investigating."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: methane intensity per barrel produced, leak-priority worklists that sequence LDAR crews by risked volume, flare-event dossiers assembled for regulators, uncertainty published alongside every headline number. Guardrails: estimates carry provenance labels end to end; lineage from sensor to disclosure is unbroken; no figure reaches a report without its uncertainty class. Integration points: SCADA and flow metering, OGI survey providers, environmental reporting pipelines. The commercial point is that verified low-methane barrels increasingly command their premium — estimates cannot."
+  },
+  {
+   "t": "h3",
+   "x": "6. Refinery LP, blend scheduling and trading decision support"
+  },
+  {
+   "t": "p",
+   "x": "The build feeds the LP with live yield coefficients derived from historian evidence — fouling factors, catalyst age, actual mode behavior — instead of design assumptions, and joins blend scheduling to tank gauging, lab results and product logistics in one decision surface. Crude assays arrive as structured data; substitution deltas are computed before the cargo is procured rather than discovered at the unit. The scheduling horizon synchronizes with procurement so the blend plan the refinery runs is the one the desk bought crude against."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: blend recipes with specification-bound guards, crude substitution analysis, giveaway tracking by product line, margin attribution per barrel that survives a finance audit. Guardrails: specification limits are hard constraints; planner approval gates every recipe; LP coefficients carry their evidence so a planner can ask why the model believes a yield. Integration points: LP and scheduling tools, tank gauging, LIMS, the trading desk. The delta shows up as blend windows hit, giveaway down and margin variance finally explained."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — the oil and gas decision stack",
+   "lanes": [
+    "Plant and field estate",
+    "Telemetry and historians",
+    "Data fabric",
+    "Decision services",
+    "Safety and evidence",
+    "Operations surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "dcs",
+     "lane": 0,
+     "label": "DCS and process control"
+    },
+    {
+     "id": "wscada",
+     "lane": 0,
+     "label": "SCADA and well-site telemetry"
+    },
+    {
+     "id": "ili",
+     "lane": 0,
+     "label": "ILI and inspection records"
+    },
+    {
+     "id": "wits",
+     "lane": 0,
+     "label": "WITSML rig feeds"
+    },
+    {
+     "id": "hist",
+     "lane": 1,
+     "label": "PI-class historian",
+     "hot": true
+    },
+    {
+     "id": "bus",
+     "lane": 1,
+     "label": "Governed stream bus"
+    },
+    {
+     "id": "contracts",
+     "lane": 1,
+     "label": "Schema contracts and freshness SLAs"
+    },
+    {
+     "id": "lake",
+     "lane": 2,
+     "label": "Operations lakehouse",
+     "hot": true
+    },
+    {
+     "id": "circuit",
+     "lane": 2,
+     "label": "Corrosion-circuit model spine"
+    },
+    {
+     "id": "fstore",
+     "lane": 2,
+     "label": "Fleet feature store"
+    },
+    {
+     "id": "integ",
+     "lane": 3,
+     "label": "Integrity engine — RBI and IOW"
+    },
+    {
+     "id": "lift",
+     "lane": 3,
+     "label": "Lift and network optimizer"
+    },
+    {
+     "id": "ta",
+     "lane": 3,
+     "label": "Turnaround scheduler"
+    },
+    {
+     "id": "mrv",
+     "lane": 3,
+     "label": "Methane MRV engine"
+    },
+    {
+     "id": "moc",
+     "lane": 4,
+     "label": "MOC and HAZOP tracker"
+    },
+    {
+     "id": "ptw",
+     "lane": 4,
+     "label": "Permit-to-work evidence"
+    },
+    {
+     "id": "replay",
+     "lane": 4,
+     "label": "Decision replay store"
+    },
+    {
+     "id": "cr",
+     "lane": 5,
+     "label": "Control-room console"
+    },
+    {
+     "id": "planner",
+     "lane": 5,
+     "label": "Turnaround planner desk"
+    },
+    {
+     "id": "trade",
+     "lane": 5,
+     "label": "LP and trading desk"
+    }
+   ],
+   "edges": [
+    {
+     "a": "dcs",
+     "b": "hist"
+    },
+    {
+     "a": "wscada",
+     "b": "hist"
+    },
+    {
+     "a": "ili",
+     "b": "contracts"
+    },
+    {
+     "a": "wits",
+     "b": "bus"
+    },
+    {
+     "a": "hist",
+     "b": "bus"
+    },
+    {
+     "a": "bus",
+     "b": "contracts"
+    },
+    {
+     "a": "contracts",
+     "b": "lake"
+    },
+    {
+     "a": "lake",
+     "b": "circuit"
+    },
+    {
+     "a": "lake",
+     "b": "fstore"
+    },
+    {
+     "a": "circuit",
+     "b": "integ"
+    },
+    {
+     "a": "fstore",
+     "b": "lift"
+    },
+    {
+     "a": "fstore",
+     "b": "ta"
+    },
+    {
+     "a": "lake",
+     "b": "mrv"
+    },
+    {
+     "a": "moc",
+     "b": "ptw"
+    },
+    {
+     "a": "integ",
+     "b": "replay"
+    },
+    {
+     "a": "ta",
+     "b": "replay"
+    },
+    {
+     "a": "mrv",
+     "b": "replay"
+    },
+    {
+     "a": "replay",
+     "b": "cr"
+    },
+    {
+     "a": "ta",
+     "b": "planner"
+    },
+    {
+     "a": "lift",
+     "b": "cr"
+    },
+    {
+     "a": "replay",
+     "b": "trade"
+    }
+   ],
+   "note": "Lanes and nodes are named for the systems an oil and gas build actually touches — the DCS, the historian, ILI records, the permit-to-work chain, the LP desk — not a generic reference stack. The hot nodes are where the program's differentiation concentrates: the historian as the integration point for plant truth, and the lakehouse that gives every decision service a context-bearing, replayable view of it."
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: historian truth with context attached"
+  },
+  {
+   "t": "p",
+   "x": "Every decision gap in oil and gas traces back to a data gap, and most of those gaps are engineering choices rather than physics. The historian holds the highest-frequency truth but ships it without units, modes or equipment ties; the CMMS holds the maintenance reality but ships it as free text; the commercial systems hold the money view but update on documents. The data plane's job is to make those three views queryable together at decision speed — schema contracts on every feed, the corrosion-circuit and well-hierarchy model as a spine, and quality gates that quarantine a drifting transmitter instead of letting it skew a model."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every value in the lakehouse can name its source system, transformation chain and quality state at read time, which is what makes the evidence layer possible later. Store-and-forward telemetry from remote well sites arrives with gap metadata attached, so optimization degrades honestly instead of confidently. Lab assays, well tests and OGI surveys join as first-class feeds with chain of custody, because the decisions this industry makes are always conditional on measurements someone signed."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Native-cadence historian ingestion",
+     "PI-class interfaces stream tags at their native rate with compression semantics preserved and backfill handled explicitly; the control path is never touched and the historian keeps its role while the lakehouse adds the context it lacks"
+    ],
+    [
+     "The circuit and well-hierarchy spine",
+     "every tag, work order and inspection reading tied to the corrosion circuit, well or unit that produced it, signed off by the engineers who own those hierarchies — context as a contract, not a convention"
+    ],
+    [
+     "Quality gates with named owners",
+     "staleness, flatlines and sensor drift detected at ingest; the affected feature set quarantined and the owner paged, so a stuck transmitter pages a technician rather than quietly degrading an optimization"
+    ],
+    [
+     "Vendor-format normalizers",
+     "ILI geometry records, OGI surveys, assay files and well-test exports normalized at ingest with schema contracts, so vendor diversity never reaches a decision service"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: bounded optimization with replay"
+  },
+  {
+   "t": "p",
+   "x": "This industry runs on decisions with physical and regulatory tails: a dig deferred on a pipeline, a turnaround window committed, a blend recipe released to the field. The decision layer treats every one as a first-class object — inputs, model version, constraints active, expected delta, human approval — stored in a replay service that can re-derive any decision months later for an auditor, a regulator or an engineer asking what the system knew at the time. Champion and challenger run permanently: every scheduling formulation, corrosion model and optimization method competes against the incumbent on locked baselines before it earns traffic."
+  },
+  {
+   "t": "p",
+   "x": "The guardrails are as engineered as the models. Recommendations are bounded by validated operating envelopes, and anything approaching a boundary escalates with its reasoning attached. Decision rights are explicit — what the system may do alone, what it drafts for approval, what stays human by regulation or choice. Uncertainty travels forward rather than being averaged away: a computed corrosion rate without its sensor-coverage caveat never reaches an integrity engineer, and a schedule without its critical-path assumptions never reaches a turnaround director. The result is optimization the process-safety team and the auditor can both interrogate."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: digital workers on the paperwork frontier"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work in oil and gas is evidentiary: assembling dig packs, drafting MOC files, preparing permit packages, reconciling inspection findings against RBI plans, reconstructing incident timelines from alarm journals. These are retrieval, assembly and cross-checking jobs with clear success criteria — ideal for governed agents that work inside the platform with role scopes, tool allow-lists and complete run logs. Each agent ships with an evaluation suite: golden cases where the right answer is known, adversarial cases where the tempting answer is wrong, and a human checkpoint at every boundary that matters."
+  },
+  {
+   "t": "p",
+   "x": "Where generative capability adds leverage — summarizing shift logs, drafting narrative sections of regulatory reports, translating inspection PDFs into structured records — it operates with retrieval grounding against your estate and provenance stamps on every claim. No agent issues a permit, signs an isolation or moves a setpoint; those boundaries are architectural. The agentic layer's output is reviewed work moving faster, with the audit trail to prove it — which is the difference between automation that survives a process-safety inspection and automation that becomes the finding."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: audit as a query"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory surface of oil and gas is the densest in industry: process-safety law, OT security standards, methane measurement duties, pipeline-integrity clocks, market conduct rules and environmental permitting. Programs here fail when evidence is a project and succeed when evidence is a property of the running system. The table maps the regimes that shape sector builds to the artifacts each build generates continuously — every row is produced as a by-product of operation, not assembled at audit time."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape oil and gas builds — and the evidence layer each one draws on",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What the build produces"
+   ],
+   "rows": [
+    [
+     "Process safety (PSM and Seveso class)",
+     "Mechanical-integrity schedules, MOC discipline, HAZOP action closure, training records",
+     "MOC and HAZOP evidence generated from system records; IOW telemetry; integrity schedule execution ledger"
+    ],
+    [
+     "IEC 62443 and OT security",
+     "Zones and conduits, access control, monitoring for the OT estate",
+     "Enforced zone model, OT traffic baselines with drift alerts, access reviews produced continuously"
+    ],
+    [
+     "Methane regulation and MRV",
+     "Measurement-based accounting with uncertainty, leak detection and repair cadence",
+     "MRV engine with site reconciliation, uncertainty ranges, LDAR worklists and closure evidence"
+    ],
+    [
+     "Pipeline integrity (PHMSA class)",
+     "Integrity assessments, defect management, repair response within regulatory clocks",
+     "Defect ledger with growth projections, dig packs, assessment calendars executed as workflows"
+    ],
+    [
+     "REMIT and market conduct",
+     "Order and schedule reporting, no-manipulation controls",
+     "Decision logs with inputs, position context and reporting artifacts produced from the scheduling fabric"
+    ],
+    [
+     "Environmental permitting",
+     "Flare and emission-event reporting with lineage",
+     "Event dossiers assembled from historian evidence; exceedance reports with full replay"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the estate stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Oil and gas estates are layered over decades — control systems from three vendors, historians acquired with plants, integrity data living in vendor silos — and the fastest way to stall a program is to treat that as debt to repay before starting. Dataq Software wraps the estate instead: adapters at native cadence, normalizers for every vendor format, schema contracts that make each upstream system answerable for freshness and shape. Control systems are read-first by policy; nothing writes into a controlled system without your MOC process, and most builds never need to."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment. ILI vendors, OGI survey providers, lab networks, weather services and assay providers all become contract parties to the data plane: formats specified, freshness SLAs enforced, test harnesses run per delivery. When a vendor changes a format, the contract test fails before the decision layer notices — which is the difference between an integration estate and an integration apology. The CMMS gets its own program within the program: taxonomies, criticality fields and free-text history structured to the point where analytics can consume it."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Read-first DCS and SCADA integration",
+     "every path into plant control starts read-only at native cadence; write access is designed only where a workflow demands it and executed through your management-of-change process with your engineers in the loop"
+    ],
+    [
+     "Vendor-format normalizers",
+     "ILI pipe-geometry records, OGI survey files, assay documents and well-test exports normalized at ingest with schema contracts and golden-file tests per vendor release"
+    ],
+    [
+     "CMMS structure repair",
+     "work-order taxonomies, criticality fields and equipment hierarchies rebuilt to analytics grade in the first quarter — free-text debt named as a gate condition, not discovered later"
+    ],
+    [
+     "Planning-tool bridges",
+     "LP, scheduling and maintenance-window tools fed live yield and condition coefficients through governed interfaces, so the plan the desk runs matches the plant the operators see"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement. It opens with a two-week diagnostic on the workflow you nominate — not a maturity assessment of the whole estate — and the diagnostic's product is a baseline in your own telemetry, a named delta with the confounders listed, and a scoped proposal only if the delta justifies the build. You keep the measurement design either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "workflow instrumentation, leak quantification, contract inventory, feasibility read with the delta estimate and the confounders named in writing"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane of the workflow live behind flags with replay and evidence running from day one — one corrosion circuit, one turnaround, one well set"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "controls landed, quality gates live, remaining circuits and units added, capacity and decision telemetry reporting to the operations review"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "scheduling formulations, corrosion models and optimization methods re-evaluated in the registry, baselines re-verified, the roadmap re-priced against measured deltas"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs inside your operating rhythm, not a parallel program tower: our engineers sit with the planning office, the integrity team and the shift superintendents, work through your MOC process for anything that touches a governed system, and hand over runbooks, evaluation suites and registry entries as gate conditions during expansion — not as a closing document after the invoice."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones oil and gas programs are managed on. The targets are design goals set per estate during the diagnostic — operating ranges comparable programs have achieved, not market statistics — and each one is measured from system telemetry against a locked baseline rather than from a status deck."
+  },
+  {
+   "t": "table",
+   "caption": "Oil and gas program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Turnaround duration",
+     "10-15% shorter critical path; the published record shows 14% at refinery scale",
+     "Master-schedule telemetry against locked baseline, discovery work tracked separately"
+    ],
+    [
+     "Unplanned downtime on monitored units",
+     "20-40% fewer unscheduled stoppages",
+     "Availability ledger reconciled to historian and CMMS records, precursor events tracked to closure"
+    ],
+    [
+     "Lifted volumes from optimization",
+     "1-3% production uplift on instrumented wells",
+     "Allocation-grade measurement against control wells over full test cycles"
+    ],
+    [
+     "Methane intensity",
+     "Measurement coverage up, intensity down year on year",
+     "MRV engine outputs audited against site-level reconciliation and LDAR closure rates"
+    ],
+    [
+     "Energy per tonne of throughput",
+     "3-8% reduction on optimized units",
+     "Utility metering against historian-normalized throughput, fouling adjusted"
+    ],
+    [
+     "Evidence effort per audit cycle",
+     "50-70% less manual assembly",
+     "Auditor-hours from compliance calendar telemetry, sampling coverage verified to schedule"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "An oil and gas build team is small and senior: a lead engineer who has carried integrity or planning responsibility, data engineers fluent in historian semantics, an optimization specialist who treats solver behavior as an empirical question, and a delivery lead who has carried an operations pager on a live site. The team sits with your planners, integrity engineers and shift superintendents — not in a program tower — because the context that makes the difference lives in the permit office, the test separator and the conversation before a window is committed."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: a weekly operations review on the metric, a monthly delta review against the locked baseline with finance in the room, and quarterly challenger sessions where scheduling formulations, corrosion models and optimization methods defend their traffic. Runbooks, evaluation suites and the decision-replay store transfer to your teams as gate conditions during expansion, so the program's dependency on us shrinks on a schedule rather than by negotiation."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs in this sector fail in known ways, and most of the failure modes are organizational wearing a technical costume. We name them here because prevention is a design decision, not a cultural aspiration."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "a demo built on extracted data that never integrates — prevented by shipping the first vertical slice through your change process, flags and gates included, within the first two months"
+    ],
+    [
+     "Optimizer meets the envelope wall",
+     "a schedule or setpoint recommendation outside the validated operating envelope — bounded envelopes, uncertainty labels and engineer gates are architectural, not advisory"
+    ],
+    [
+     "Safety-system theater",
+     "dashboards sitting beside the safety case instead of inside it — evidence is generated from the system records the operation already produces, or the build is not done"
+    ],
+    [
+     "CMMS free-text debt",
+     "integrity analytics starved by work orders nobody can parse — taxonomy repair is scoped into the first quarter as a gate condition, not an aspiration"
+    ],
+    [
+     "Stale-coefficient drift",
+     "the LP running on design while the plant drifts — live coefficient refresh with drift alarms, and every coefficient carrying the historian evidence behind it"
+    ],
+    [
+     "Evidence debt",
+     "audit preparation consuming a team every cycle because artifacts were manual — the evidence layer generates them continuously or the build is not done"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions oil and gas operations leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do you touch the control systems?",
+     "We read. Write paths to any controlled system go through your MOC process with your engineers in the loop, and most builds never need them. Recommendations land in operator workflows; the DCS keeps its authority."
+    ],
+    [
+     "Can this work on a brownfield site with thin instrumentation?",
+     "Yes — the fabric starts with what exists, and the diagnostic names the circuits and wells where sensing investment pays. We sequence instrumentation like any other capital: where the computed delta justifies it."
+    ],
+    [
+     "How do you handle vendor-locked historians and ILI formats?",
+     "Adapters and normalizers are part of the build; we have normalized every major ILI vendor format. Your license stays; the export contract changes so decisions can consume the data."
+    ],
+    [
+     "What happens to our planners and integrity engineers?",
+     "Their judgment moves up a level: the build assembles context and drafts options; humans approve, sequence and own the risk decisions. Programs are justified in engineer-hours per decision, not headcount removed."
+    ],
+    [
+     "How does this survive our process-safety review?",
+     "Every artifact ships with lineage, envelope bounds and approval gates. The safety case reads the build as another managed system — and the evidence layer makes that read fast because the records are already structured."
+    ],
+    [
+     "Can you price against the delta rather than the effort?",
+     "Yes, where the metric is clean. Turnaround duration, lifted volumes, energy per tonne and methane intensity all baseline in your telemetry during the diagnostic; the feasibility read names the confounders first."
+    ],
+    [
+     "What is the smallest program worth running?",
+     "One corrosion circuit, one turnaround, or one well set — whichever has the cleanest baseline. If the diagnostic cannot measure the delta in two weeks, we say so and stop. You keep the measurement design either way."
+    ],
+    [
+     "Who owns the models after you leave?",
+     "Your teams, with runbooks, model documentation, evaluation suites and the decision-replay store transferred as gate conditions during expansion. Several programs run entirely in-house after the second quarter."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Bring one asset class or one turnaround — a corrosion circuit, a compressor fleet, a shutdown plan — and we will scope the build against your DCS, historian and CMMS in two weeks, with the delta priced in your own operating data before any contract is discussed."
+  }
+ ]
+}

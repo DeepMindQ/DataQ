@@ -1,0 +1,402 @@
+{
+ "file": "industries_logistics-supply-chain_3pl-freight",
+ "meta_description": "How Dataq Software engineers 3PL and freight operations: tender-to-invoice automation over EDI 204, 990, 214 and 210, rating and quote engines with margin guardrails, freight-audit integrity, agentic exception management, carrier verification and customs documentation — built against the TMS you already run.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Freight forwarding and third-party logistics sell the same two products: reliable execution and trustworthy information about execution. The operation quotes a lane, tenders the load, tracks it across modes, clears it at borders, resolves what breaks, and invoices it accurately — thousands of times a day, across gauges, currencies and Incoterms the customer never sees. The economics are decided in the decision machinery underneath: how fast a quote assembles from tariffs and market data, how early an exception is caught, how completely the evidence for an accessorial charge attaches itself to the load. This page is the engineering picture of that machinery for 3PLs and forwarders — the systems it runs on, the exact points where margin leaks, and the six deep builds Dataq Software ships to fix them."
+  },
+  {
+   "t": "h2",
+   "x": "How a load actually moves through the operation"
+  },
+  {
+   "t": "p",
+   "x": "Inside a freight brokerage or third-party logistics operator, the load is the unit of truth and the EDI stream is its bloodstream. A shipper tenders by X12 204 — or by portal, email and phone, which is where the trouble starts. The rating engine prices the load against contract tariffs, spot boards and accessorial schedules; the tender goes out by 204 and returns as a 990 acceptance or rejection. Dispatch tracks the move through 214 status messages, telematics pings and driver calls; ELD hours-of-service state constrains what the plan may ask of the driver. At the border, the brokerage stack classifies, files and clears — ISF and entries through ACE, security declarations through ICS2 — and the delivery posts a POD that starts, rather than ends, the paperwork."
+  },
+  {
+   "t": "p",
+   "x": "After delivery, the economics begin. The carrier invoices by 210; freight audit matches it against the contracted rate, the accessorials actually incurred and the fuel surcharge table indexed that week. Detention at a shipper's dock, layovers, stopoffs and reweighs each carry a documentation burden somebody must assemble or the charge fails. LTL freight carries NMFC class and density rules that reprice the load after the dock scales it; intermodal adds drayage turns, chassis splits and ramp cut-offs; parcel adds zone and dim-weight logic of its own. Every mismatch becomes an exception in a queue, an accrual in finance and, eventually, a conversation between two people reading different systems."
+  },
+  {
+   "t": "p",
+   "x": "The commercial layer wraps the same streams. Bid season and event RFQs price the next contract period; the spot-contract mix absorbs demand the contract did not forecast; the OS/D portal is the customer's only window, so its milestone vocabulary is a product surface, not a reporting detail. Claims arrive under Carmack in the US, CMR in Europe, COGSA at sea, each with its own liability limits and evidence duties. Profitability per load, lane and customer is the number the whole machine exists to produce — and the number most operations reconstruct monthly, from spreadsheets, after the margin has already leaked."
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems a 3PL actually runs"
+  },
+  {
+   "t": "p",
+   "x": "Programs here succeed or fail on how honestly the estate is mapped before anything is built: the systems, their owners, their change cadences, their data contracts. The table below is the estate Dataq Software most often finds in forwarders and 3PLs — and where each layer strains under peak volume, carrier churn or an audit. It is deliberately specific, because the failure patterns live in the specifics."
+  },
+  {
+   "t": "table",
+   "caption": "The 3PL and freight estate we build against — and where each layer strains",
+   "headers": ["System layer", "What it actually does", "Where it strains"],
+   "rows": [
+    ["Transportation management system", "Tendering, execution, milestone capture, carrier settlement and the load record of truth", "Batch EDI and portal stitching lag the network; load profitability is reconstructed monthly, not known daily"],
+    ["Rating and pricing engine", "Contract tariffs, spot rates, accessorial schedules, fuel surcharge tables, quote assembly", "Tariff sprawl across customers and modes; quotes assembled by hand under time pressure; overrides unlogged"],
+    ["EDI gateway", "204, 990, 214, 210 and 997 exchange with carriers and customers; 940 and 945 where warehousing attaches", "Map drift per counterparty; 997s confirm receipt rather than truth; failures surface as customer complaints"],
+    ["Visibility and telematics feeds", "Vehicle positions, ELD hours, container events and trailer temperatures from multiple providers", "Each provider defines milestones differently; the control tower reads an average, not the network"],
+    ["Customs brokerage stack", "HS classification, ISF and entry filings, ACE and ICS2 declarations, document management", "Evidence assembled per shipment by hand; classification rationale undocumented until the audit asks"],
+    ["Freight audit and payment", "Invoice matching, accessorial validation, dispute management, accruals and settlement", "Detention and demurrage argued from memory; unmatched invoices age into write-offs nobody owns"],
+    ["Claims management", "Carmack, CMR and COGSA claims, evidence files, carrier and insurer correspondence", "Evidence gathered by hand after the fact; liability limits applied inconsistently across claim types"],
+    ["Quote desk and CRM", "Quotes, RFQs, bid analytics, customer commitments and service history", "Commitments made without capacity or margin context; bid pricing runs on last year's averages"],
+    ["Data warehouse and margin reporting", "Finance marts, lane and customer profitability, operational management information", "Lineage thin; profitability per load rebuilt in spreadsheets; definitions drift team by team"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where the margin leaks in 3PL operations"
+  },
+  {
+   "t": "p",
+   "x": "Ask operations and finance leaders where the money leaks and the answers converge on the same places, described in their own words. Dataq Software's diagnostic scores each leak in your estate before recommending a build, because the leak that dominates a global forwarder is often minor in a dedicated-fleet brokerage — and the fix is engineering either way, not another portal."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Quoting that outruns the tariff library", "Quotes assemble by hand from contract PDFs, spot boards and email chains while the customer waits. Every hour of latency loses loads to faster competitors, and every shortcut — a stale tariff, a missed accessorial, an unlogged override — becomes margin erosion discovered at invoice time, weeks after the load moved."],
+    ["Exceptions absorbed by heroics", "Tender rejections, late pickups, missed appointments and customs holds are worked by phone by the same planners who should be improving the network. There is no policy for the recoverable majority, no replay for the disputes, and no memory across the quarter — the same exception re-taught every Monday."],
+    ["Accessorial evidence that never attaches", "Detention, layover and stopoff charges are real money with a documentation burden. Gate scans and GPS traces could prove them; nobody joins the evidence at invoice time, so legitimate charges go unbilled and contested ones fold without a fight on either side of the ledger."],
+    ["Freight fraud on the tender stream", "Double brokering and stolen carrier identities exploit onboarding that checked once and never again. Authority status, insurance and safety ratings drift after day one, and the tender decision has no fraud signal to read at the moment it actually matters — the moment of award."],
+    ["OS/D portals that undersell the service", "Customers see stitched milestone feeds with yesterday's vocabulary, so the operation looks worse than it runs and WISMO calls consume the desk. The portal is the product; treating it as a reporting afterthought quietly reprices the whole customer relationship."],
+    ["Customs evidence assembled per shipment", "Classification decisions, valuation support and security data are gathered by hand under filing clocks. The work is repeatable and the evidence is structured — which is exactly why it should be generated by the system as the load moves, not chased by a team before the deadline."],
+    ["Bid pricing without cost truth", "Event RFQs are priced on last year's averages because per-lane cost truth is not available when the bid is due. The network then lives for a contract period with the error: lanes won below cost, lanes lost above it, and nobody able to say which was which."],
+    ["Claims files assembled after the memory fades", "Cargo claims under Carmack, CMR and COGSA have notice deadlines, evidence standards and liability limits. Photos, scans, custody events and temperature logs exist at transit time; the claim file is assembled weeks later from whatever people still remember."]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight: the operation is instrumented but its decisions and evidence are not. Tenders, statuses, invoices and custody events already flow; quoting, exception, audit and claims work still runs on memory and spreadsheets. That is why the first build here is almost always the load event spine — not a better portal."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works 3PL and freight"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate the operation already runs — the TMS you tender from, the rating engine you quote from, the brokerage stack you file through. We do not arrive with a replacement-platform story or a strategy deck that ends where the dispatch board begins. The engagement is engineering-first: a two-week diagnostic that baselines one workflow end to end — tender-to-invoice, quoting, exception management or customs documentation — with the leak quantified in the operation's own EDI, telematics and margin data."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver in this sub-industry. First, every automated decision carries replay: tender awards, rating calls, accessorial determinations and customs classifications store their inputs, versions and reason codes so a carrier dispute or a broker audit twelve months later is a query. Second, autonomy is policy-gated: agents re-tender, re-book and re-document within the rules commercial and compliance teams define, and every gate crossing is logged. Third, evidence is a by-product: the artifacts a shipper, carrier, customs authority or insurer will ask for are generated as the load moves, not assembled when asked."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same logic. Where the metric is clean — exception auto-resolution rate, quote turnaround, audit recovery, invoice-match rate — we contract against the delta with the baseline locked during the diagnostic; where it is confounded, we say so in the feasibility read and scope fixed-fee instead. The published record includes a global 3PL across 40+ countries that moved exceptions auto-resolved to 74% on the control-tower-to-agentic-remediation pattern this page describes."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for 3PL and freight"
+  },
+  {
+   "t": "p",
+   "x": "Each build below is named for the workflow it changes, sized in the diagnostic against your systems and carrier community, and shipped with the controls the workflow's counterparties expect. None require replacing the TMS; all require taking the load's data contracts seriously — because in freight, the contract and the message are the same artifact."
+  },
+  {
+   "t": "h3",
+   "x": "1. Load lifecycle automation — tender to invoice, engineered"
+  },
+  {
+   "t": "p",
+   "x": "The build wraps the load's whole message life: 204 tenders assembled from orders and capacity context, 990 responses parsed into execution state, 214 milestones normalized into the canonical journey, 210 invoices matched to contract and evidence, 997s monitored for what they do not tell you. Where counterparties still work by portal, email and phone, ingestion adapters capture the same events so the load record stays complete without waiting for the industry to finish its EDI homework."
+  },
+  {
+   "t": "p",
+   "x": "OS/D visibility becomes a product surface: customer-specific milestone vocabularies mapped into the canonical model, commitments tracked against actuals, and proactive notifications sent before the customer notices the exception. Every state transition carries replay — which tender version won, which rate applied, which accessorial evidence attached — so the question of why a load invoiced the way it did is a query, and the customer conversation starts from the same record the operation ran on."
+  },
+  {
+   "t": "h3",
+   "x": "2. The rating and quote engine with margin guardrails"
+  },
+  {
+   "t": "p",
+   "x": "Rating is a data problem wearing a sales costume. The build consolidates tariff libraries, customer contracts, accessorial schedules and fuel surcharge tables into a versioned rating service; quotes assemble from it with the customer's commitments, the lane's cost history and the current spot-contract mix as inputs. LTL pricing reads NMFC class and density rules; intermodal reads ramp cut-offs and drayage economics; every quote carries margin guardrails — floors by lane and customer, overrides logged with author and reason."
+  },
+  {
+   "t": "p",
+   "x": "The same service prices bids. Event RFQs draw on per-lane cost truth from the lakehouse instead of last year's averages, produce defensible pricing with sensitivity bands, and return the win-probability context that bid teams actually argue about. Every rating decision is replayable — inputs, tariff versions, override trail — so the invoice the customer receives in March matches the quote the system priced in January, and the disputes that remain are genuine disputes about service, not arithmetic."
+  },
+  {
+   "t": "h3",
+   "x": "3. Freight audit and payment integrity"
+  },
+  {
+   "t": "p",
+   "x": "The audit build attacks the gap between what moved and what was billed. Carrier invoices arrive by 210 or portal; the matcher joins them to the load record, the contracted rate, the accessorial evidence and the week's fuel table. Detention and demurrage clocks are computed from gate scans, GPS dwell and ELD context, so the charge is proven or the dispute is filed with evidence attached — in both directions, on carrier invoices and on customer billings alike."
+  },
+  {
+   "t": "p",
+   "x": "The workbench routes only the genuine disagreements to people: pre-assembled with the load history, the contract clause, the telemetry and the proposed resolution. Accruals and cost per load update from matched truth rather than estimates, which quietly fixes the budget conversation with finance. The measurable deltas are invoice-match rate, audit recovery on both sides of the ledger, and the share of accessorials carrying telemetry evidence — each reported from the system, not reconstructed quarterly."
+  },
+  {
+   "t": "h3",
+   "x": "4. Agentic exception management and the control tower"
+  },
+  {
+   "t": "p",
+   "x": "Exceptions are typed, not just queued: tender rejections, late pickups, missed appointments, customs holds, capacity shortfalls, weather closures. Agents run with role scopes and tool allow-lists — re-tender to the next carrier by policy, re-book the delivery window, notify the customer, assemble the customs file — and re-plan inside the constraints commercial and compliance teams define. The recoverable majority clears without a person; the rest escalate with context, options and pricing already assembled."
+  },
+  {
+   "t": "p",
+   "x": "Every run logs to the same evidence store the human workflow uses, so an agent's work is auditable exactly like a planner's. The root-cause loop feeds carrier scorecards, lane risk flags and procurement, so the queue shrinks quarter over quarter instead of being heroically cleared. In the published record, a global 3PL across 40+ countries ran exceptions auto-resolved at 74% on this pattern — the delta that justified the program upward to the board."
+  },
+  {
+   "t": "h3",
+   "x": "5. Carrier procurement, verification and the capacity desk"
+  },
+  {
+   "t": "p",
+   "x": "Carrier onboarding is an annual ritual defending a daily decision, and the fraud wave lives in that gap. The build monitors authority, insurance and safety-rating state continuously against the tender stream; identity signals — domain age, banking-match consistency, behavioral anomalies — score every new tender; double-brokering patterns surface as graph features across loads, counterparties and accounts. Suspicious tenders route to a verification step instead of sailing through to dispatch."
+  },
+  {
+   "t": "p",
+   "x": "Procurement gets the same engineering: event RFQs run with structured lanes, volumes and service levels; bid analytics compare offers on cost, service history and fraud posture rather than rate alone; contract-mix-versus-spot decisions carry replayed context. The capacity desk sees committed versus available capacity against forecast demand, so the spot purchases that protect service are deliberate choices with margins attached — not Friday-afternoon improvisation at premium rates."
+  },
+  {
+   "t": "h3",
+   "x": "6. Customs and trade documentation automation"
+  },
+  {
+   "t": "p",
+   "x": "The documentation build treats customs as an evidence pipeline. Classification work items arrive with product data, prior rulings and rationale logged per decision; ISF, entry and ICS2-class security filings prepare from the shipment record for broker review; document versions bind to the journey they describe. AEO and C-TPAT evidence — seals, access, storage, escort — attaches to the same trail, so the accreditation's evidence duties are met by running the operation, not by maintaining a binder."
+  },
+  {
+   "t": "p",
+   "x": "The human gate stays where the law expects it: brokers decide classifications and release filings; the system has already assembled, cross-checked and flagged. Deltas are measured in filing cycle time, first-pass acceptance rate and the share of shipments with complete evidence packs at filing — plus the audit-season number that matters most: the hours spent assembling history, which drops toward zero when the system generates it continuously."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — the freight decision stack",
+   "lanes": ["Systems of record", "Message spine", "Decision services", "Agents and workbenches", "Evidence and controls", "Business surfaces"],
+   "nodes": [
+    {"id": "tms", "lane": 0, "label": "TMS load execution"},
+    {"id": "rate", "lane": 0, "label": "Rating engine and tariffs"},
+    {"id": "brok", "lane": 0, "label": "Customs brokerage stack"},
+    {"id": "telem", "lane": 0, "label": "Telematics and ELD"},
+    {"id": "edigw", "lane": 1, "label": "EDI gateway: 204, 990, 214, 210", "hot": true},
+    {"id": "vis", "lane": 1, "label": "Visibility and carrier APIs"},
+    {"id": "spine", "lane": 1, "label": "Canonical load spine", "hot": true},
+    {"id": "lake", "lane": 2, "label": "Freight decision lakehouse"},
+    {"id": "prof", "lane": 2, "label": "Profitability per load and lane"},
+    {"id": "etasvc", "lane": 2, "label": "ETA and milestone service"},
+    {"id": "tendd", "lane": 2, "label": "Tender decision service"},
+    {"id": "auditd", "lane": 2, "label": "Audit matching service"},
+    {"id": "exag", "lane": 3, "label": "Exception agents", "hot": true},
+    {"id": "audw", "lane": 3, "label": "Freight audit workbench"},
+    {"id": "claw", "lane": 3, "label": "Claims desk"},
+    {"id": "replay", "lane": 4, "label": "Decision replay store"},
+    {"id": "evstore", "lane": 4, "label": "Evidence store"},
+    {"id": "tower", "lane": 5, "label": "Control tower"},
+    {"id": "osd", "lane": 5, "label": "OS/D customer portal"},
+    {"id": "fin", "lane": 5, "label": "Settlement and finance"}
+   ],
+   "edges": [
+    {"a": "tms", "b": "edigw"},
+    {"a": "telem", "b": "vis"},
+    {"a": "brok", "b": "vis"},
+    {"a": "edigw", "b": "spine"},
+    {"a": "vis", "b": "spine"},
+    {"a": "spine", "b": "lake"},
+    {"a": "spine", "b": "tendd"},
+    {"a": "rate", "b": "tendd"},
+    {"a": "tendd", "b": "replay"},
+    {"a": "spine", "b": "etasvc"},
+    {"a": "lake", "b": "prof"},
+    {"a": "spine", "b": "auditd"},
+    {"a": "auditd", "b": "audw"},
+    {"a": "spine", "b": "exag"},
+    {"a": "exag", "b": "claw"},
+    {"a": "exag", "b": "tower"},
+    {"a": "etasvc", "b": "tower"},
+    {"a": "prof", "b": "fin"},
+    {"a": "replay", "b": "evstore"}
+   ],
+   "note": "Lanes and nodes are named for the systems a 3PL and freight build actually touches — the TMS and rating engine, the customs brokerage stack, the EDI gateway carrying 204, 990, 214 and 210, the agents and workbenches that clear exceptions and audit invoices. The hot nodes are where differentiation concentrates: the message gateway and canonical load spine that make every load legible, and the exception agents that act on it inside commercial policy."
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: EDI truth, telematics truth, one record"
+  },
+  {
+   "t": "p",
+   "x": "The 3PL data estate speaks in two dialects that rarely reconcile: EDI messages that are contractually defined but batchy, and telematics that are continuous but semantically loose. The data plane build joins them. EDI lands through a versioned gateway with per-counterparty maps; telematics and ELD stream continuously; both normalize into the canonical load record with reconciliation between what the 214 said and where the truck actually was."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered: schema contracts with named owners, milestone dictionaries per counterparty, freshness SLAs, and data-quality gates on identifiers, geocodes and equipment numbers — because a rating engine or a routing plan fed ambiguous reference data produces confident nonsense. The load record the finance team settles from is the same record the dispatch board plans from, which quietly ends the oldest argument in freight."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Versioned counterparty maps", "Every EDI map and API schema owned, fixture-tested and replayable, so a partner's segment change fails in test instead of in live tendering, and every historical translation can be replayed for a dispute"],
+    ["Streaming telematics and ELD ingestion", "Position, hours and reefer context with exactly-once semantics into the lakehouse, keeping dispatch current while batch EDI continues to serve settlement and finance untouched"],
+    ["Milestone reconciliation desk", "214 events, telematics truth and POD scans joined continuously; mismatches queued with context instead of surfacing weeks later as customer complaints nobody can reconstruct"],
+    ["Reference data discipline", "Locations, equipment, lanes and customer calendars under named ownership, because every rating and routing decision inherits the quality of the reference data beneath it"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: rating, tendering and replay"
+  },
+  {
+   "t": "p",
+   "x": "Decisions in freight carry tails: a tender declined sours a carrier relationship, a quote mispriced erodes the year's margin, an accessorial denied teaches the network not to bother documenting. The decision layer treats those tails as requirements. Every rating call, tender award, accessorial determination and customs classification records inputs, versions, policy rules and reason codes into a replay store, so a dispute, an audit or a margin review is a query against the load's history."
+  },
+  {
+   "t": "p",
+   "x": "Champion/challenger governance covers pricing models, fraud scores and routing policies alike: challengers run on shadow traffic, performance tracks in the registry commercial and operations leaders own, promotions pass through gates the change process defines, and rollbacks are rehearsed. One decision service layer hosts rating, tendering and exception policy, so the governance surface is one registry and one replay store rather than a pricing tool, a fraud tool and a dispatch board with three audit stories."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: digital workers on the exception desk"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work of a 3PL — chasing tender responses, rebooking appointments, assembling customs files, collecting claim evidence, reconciling invoices — follows patterns an agentic workforce absorbs without touching judgment authority. Agents run with role scopes, tool allow-lists and per-run budgets; anything that changes a customer commitment, a carrier contract or a customs declaration stops at a human checkpoint. Every run logs to the evidence store, so the agent's file is auditable exactly like an analyst's."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — customer status narratives composed from journey events, dispute letters drafted from evidence packs, exception summaries for the morning ops review — the pattern is grounded generation with citations and a human author of record. Capacity is measured in exceptions cleared and files assembled per analyst per shift, which is how the operations leaders who sponsor these programs justify them upward."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence in freight"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory and contractual surface of freight is dense: security accreditations, customs regimes with filing clocks, dangerous-goods rules, hours-of-service law, liability regimes with evidence deadlines and privacy duties over driver and customer data. The evidence layer generates what each expects as the load moves; the table maps the regimes we build against to the artifacts the builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape 3PL builds — and the evidence layer each one gets",
+   "headers": ["Regime", "What it expects", "What our build produces"],
+   "rows": [
+    ["Supply-chain security (AEO, C-TPAT)", "Cargo security across the chain: seals, access, storage, personnel and estate controls", "Custody event trails with seal and access evidence generated per movement; accreditation evidence as a query"],
+    ["Customs regimes (ACE, ICS2, ISF)", "Advance filings within clocks, accurate classification, document retention", "Filing-ready evidence packs, classification rationale logs, clock telemetry per declaration"],
+    ["Dangerous goods (ADR, IMDG, IATA DGR)", "Declarations, segregation, packaging and training evidence", "DG declaration generation from the item master; segregation checks logged against the load"],
+    ["Driver hours (ELD/HOS, EU tachograph)", "Limits enforced in planning, records retained and reviewable", "Scheduling guardrails reading ELD state; breach alerts; retention aligned to inspection duties"],
+    ["Cargo liability (Carmack, CMR, COGSA)", "Notice deadlines, evidence standards, liability limits honored", "Claim files assembled from custody, temperature and scan telemetry within regime deadlines"],
+    ["Privacy (GDPR and driver data rules)", "Driver and recipient data minimized, retained lawfully, subject to rights requests", "Purpose-scoped retention on telematics and POD; DSAR joins across the canonical load record"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the TMS stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Freight estates are layered over decades of acquisitions and EDI relationships, and the fastest way to fail is to promise greenfield. The integration posture is contractual: schema contracts with each system owner, ingestion through the EDI gateway, governed APIs and vendor feeds, write-back through the interfaces the change process already controls — tender responses into the TMS, statuses to customers, settlements to finance — and no big-bang cutover anywhere in the network."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment: visibility providers, telematics vendors, rating data and customs engines sit behind abstraction layers with contract tests, so a swap is configuration with a migration runbook rather than a re-platform. Where a legacy module must stay, the offload pattern applies — the batch keeps posting while decision surfaces read the stream. Unglamorous work, and the reason the builds above hold up in production freight instead of in a slide."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Write-back through your interfaces", "Tender responses, milestone updates, invoice statuses and appointment changes flow through TMS and finance hooks your change process already governs, with no parallel path for anyone to reconcile"],
+    ["EDI map versioning with replay", "Translations replayable against fixtures and history, so counterparty drift is caught in test, never in a live tender window or a settlement run"],
+    ["Vendor abstraction with contract tests", "Visibility, telematics and rating sources behind one interface, making a vendor swap a configuration exercise with a runbook rather than a re-platform"],
+    ["Feature-flagged, independently deployable", "Per-lane and per-customer rollouts with rehearsed rollback, because peak season and bid season will not negotiate"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs on a tender desk"
+  },
+  {
+   "t": "p",
+   "x": "The engagement opens smaller than you expect: one workflow, two weeks, a signed baseline in your own telemetry. The diagnostic instruments the workflow end to end, quantifies the leak, inventories the EDI maps and data contracts, and returns a written feasibility read you can circulate — including the uncomfortable findings. If the delta is real, the build is scoped against the gates your change process defines; if it is not, you keep the measurement design and the baseline either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Weeks 1-2: diagnostic and baseline", "Workflow instrumentation, leak quantification, EDI and contract inventory, feasibility read with the delta estimate and the confounders named before targets are set"],
+    ["Weeks 3-8: first vertical slice", "One lane live behind flags with replay and evidence from day one — for exceptions, one carrier lane; for audit, one accessorial family; for quoting, one customer"],
+    ["Weeks 9-16: gates, controls, expansion", "Evidence layer live, remaining lanes added, margin and quality telemetry reporting to the operations review, security and privacy documentation landed"],
+    ["Quarterly: challenger reviews", "Pricing and fraud challengers evaluated in the registry, policies re-tuned from the root-cause loop, the baseline re-verified against a control group where one exists"]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm: our engineers work in your repositories or a shared workspace with the same CI, security review and access model your teams use. Knowledge transfer is a gate condition, not a closing slide — by expansion, your analysts are changing policies and thresholds themselves, because the runbooks, counterparty dictionaries and evaluation suites have been theirs since week one."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on a 3PL P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones 3PL programs are managed on. Targets are the ranges we set in feasibility reads for programs of this shape — commitments to hold us to where the metric is clean, hypotheses to test honestly where it is confounded. The measurement column is what makes the delta defensible in a steering committee and, in freight, defensible to the customers who read the same numbers."
+  },
+  {
+   "t": "table",
+   "caption": "3PL and freight program metrics — targets and how they are measured",
+   "headers": ["Metric", "Typical program target", "How it is measured"],
+   "rows": [
+    ["Exception auto-resolution rate", "60-80% of recoverable exceptions without human touch", "Agent run logs against exception intake; the published record shows 74% at a global 3PL across 40+ countries"],
+    ["Quote turnaround time", "Minutes, not hours, at equal or better margin", "Quote desk telemetry from request to priced response, segmented by mode, lane and customer"],
+    ["Freight audit recovery", "1-3% of audited spend recovered across payables and billings", "Matched versus unmatched invoice value from the audit platform against the locked baseline"],
+    ["Detention and accessorial leakage", "40-60% reduction in unbilled or folded charges", "Telemetry-verified clocks joined to invoices, reported per shipper, facility and lane"],
+    ["Cost per load processed", "10-20% reduction in operations cost per load", "Activity telemetry across tender, dispatch, exception and settlement workflows against the baseline"],
+    ["Invoice match rate", "95%+ first-pass match at equal revenue integrity", "Audit platform match telemetry against the pre-program baseline, reported per carrier and mode"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and its weekly rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A 3PL build team is small and senior: a lead engineer who has run decision systems against live freight operations, data engineers who own the spine and the EDI contract layer, an optimization engineer for rating and capacity problems, an agentic-workflow specialist for the exception and documentation builds, and a domain lead who has run a dispatch board or a brokerage desk in production. The team works to your peak and bid calendar from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: a weekly operations review on the workflow's own telemetry, fortnightly gate submissions to change and data governance, quarterly challenger reviews timed to bid season, and an incident practice that treats the event spine and replay store as production-critical systems — because by the second quarter, dispatch plans through them. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "The failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs here fail in known ways, mostly organizational. We name them in the feasibility read and design against them explicitly, because a program that cannot survive its second quarter — or its peak and its bid season in the same month — is not worth starting, whatever the business case promised the board."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Pilot purgatory", "A demo on extracted loads that never touches the TMS — prevented by shipping the first vertical slice through your change process, EDI maps and flags included, in two months"],
+    ["Portal first, spine later", "A customer portal built before the event spine stitches counterparty vocabularies and misrepresents the network — dictionaries and reconciliation come first, the portal second"],
+    ["Rating sprawl", "Quote logic forked per customer until nobody can state the true floor — one versioned rating service with logged overrides is a gate, not an optimization"],
+    ["Fraud checks at onboarding only", "Annual vetting defending a daily decision — continuous monitoring against the tender stream is part of the first slice, not a later phase"],
+    ["Agent sprawl", "Automation without role scopes and run logs becomes shadow operations — agents live in the governed platform with checkpoints, or they do not ship"],
+    ["Evidence debt", "Claims and audit files assembled by hand until the caseload forces a project — the evidence layer generates them continuously, or the build is not done"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions 3PL and freight leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Do we need to replace our TMS first?", "No. The builds consume streams from the TMS, rating engine and brokerage stack you run and write back through interfaces your change process governs. The estate stays; it stops being the bottleneck for decisions and evidence."],
+    ["How do you handle carriers without EDI?", "Ingestion adapters capture portal, email and phone events into the same canonical load record, so the journey stays complete. Those carriers get the same replay and evidence discipline as the EDI community, without waiting for the industry to finish its standards homework."],
+    ["What happens to our dispatchers and brokers?", "The builds move chasing, file assembly and reconciliation to agents and put judgment back with people in better context. Capacity is redeployed to the exceptions that need skill; programs are justified in exceptions cleared per analyst, not headcount removed."],
+    ["Can agents re-tender loads on their own?", "Within the policy your commercial team defines: allowed carriers, rate floors, service commitments and per-run budgets, with human checkpoints on anything that changes a customer commitment. Every run logs its steps and reasoning to the evidence store."],
+    ["How do you measure results without gaming?", "Baselines lock during the diagnostic, holdouts run where experiments are cheap, and every metric reports from system telemetry rather than a status deck. The feasibility read names the confounders before anyone commits to a target."],
+    ["What is the smallest program worth running?", "One workflow, one baseline, one vertical slice — exception management and freight audit are the common starters because their queues and clocks are already instrumented. If the diagnostic cannot find the delta, we say so and stop."],
+    ["How does this survive bid season and peak?", "Vertical slices land before peak, capacity telemetry runs in the operations review, and the rating service is built for the week everything breaks. Bid analytics price from per-lane cost truth, so the season's contracts stop inheriting last year's errors."],
+    ["Who owns the build after you leave?", "Your teams, with the runbooks, counterparty dictionaries, evaluation suites and registry entries transferred as gate conditions during expansion. Several programs run entirely in-house after the second quarter."]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Pick the workflow that leaks most — tendering, freight audit, customs documentation or exception management — and Dataq Software will baseline it in two weeks on your own loads, price the delta, and tell you honestly whether the build is worth your change budget. The feasibility read is yours to keep either way."
+  }
+ ]
+}

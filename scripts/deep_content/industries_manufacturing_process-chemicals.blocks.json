@@ -1,0 +1,758 @@
+{
+ "file": "industries_manufacturing_process-chemicals",
+ "meta_description": "How Dataq Software engineers process and chemicals operations: APC augmentation and RTO on live historian truth, mass-balance yield accounting, ISA-88 batch genealogy, alarm rationalization and shift handover, steam-and-power energy optimization and blend scheduling — built against your DCS, historian, LIMS and ERP estate.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Process plants earn their margin in fractions of a percent. A yield point recovered on a distillation train, an energy percentage shaved off a steam balance, a batch saved from off-spec, a changeover shortened by an hour — each is small, and together they decide whether the site beats its plan. Around those fractions sit the duties that make the sector unforgiving: process safety, mechanical integrity, alarm discipline and an evidence trail a regulator can read. This page is the engineering picture of that operation: the systems that run a chemicals site, the exact points where yield, energy and compliance leak, and the six deep builds Dataq Software ships to close them."
+  },
+  {
+   "t": "h2",
+   "x": "How the site runs, from feedstock to dispatch"
+  },
+  {
+   "t": "p",
+   "x": "Follow one operating day across a chemicals site and three clocks run at once. The fast clock is the control system: DCS loops and advanced process control hold temperatures, pressures and compositions against setpoints, while the historian records every tag at its native rate. The middle clock is operations: campaigns and batch recipes execute under ISA-88, changeovers and degassing are sequenced against tank availability, and the laboratory releases product through LIMS before it can ship. The slow clock is engineering and safety: mechanical integrity, SIS proof tests, management of change and alarm rationalization move on schedules measured in months, governed by documents that live apart from the systems that run the plant."
+  },
+  {
+   "t": "p",
+   "x": "The commercial layer binds the clocks together. Feedstock contracts, energy purchases and product orders set the plan; the real-time optimizer and the schedulers try to make the plant hit it; the ERP holds the orders, the rail and truck slots, the tank farm and the blend schedule. The plan assumes the plant behaves as designed. It does not: exchangers foul, catalysts age, compressors wander, assay variance moves yields, and the optimizer runs on coefficients commissioned years ago. Every one of those drifts is visible in the historian; almost none of it is connected to the planning decision that pays for it."
+  },
+  {
+   "t": "p",
+   "x": "Wrapped around the plant is the discipline machinery. Process safety management demands hazard studies, MOC closure and mechanical-integrity evidence; ISA-18.2 expects alarms to be rationalized, not inherited; shift handover carries operating context between crews; emissions and energy flows are reported against schemes that increasingly expect measurement rather than factors. Regulators read this machinery as documents, but it lives as system records — approvals, test certificates, alarm journals, batch records. The gap between the document view and the system view is where audits get long and incidents get explained; closing it at the decision points is where an engineering program earns its keep."
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems this work touches"
+  },
+  {
+   "t": "p",
+   "x": "Programs here succeed or fail on how honestly the estate is described before anything is built. The layers below are the ones a chemicals site actually runs — named as the operations team would name them — together with the point where each strains under real throughput, real feedstock variance and real regulatory scrutiny."
+  },
+  {
+   "t": "table",
+   "caption": "The process and chemicals estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
+    [
+     "DCS and advanced process control",
+     "Closed-loop control, APC applications, interlocks, faceplates, alarm annunciation",
+     "APC commissioned for a feed slate the site no longer runs; controller performance unmeasured between projects"
+    ],
+    [
+     "Process historian",
+     "Every tag, every second: temperatures, pressures, flows, analyzer and lab tie-ins",
+     "Context — units, grades, modes, equipment ties — undocumented; data quality unmeasured; exports slow"
+    ],
+    [
+     "Real-time optimization and planning",
+     "RTO models, LP planning, setpoint targets, energy procurement",
+     "Runs on stale coefficients; recommendations die in email; plan-versus-actual never reconciles automatically"
+    ],
+    [
+     "Batch management and MES (ISA-88)",
+     "Recipes, campaigns, phases, electronic batch records, genealogy",
+     "Records split across paper and systems; investigations assembled by hand; audits read folders"
+    ],
+    [
+     "LIMS and quality release",
+     "Sampling plans, assays, certificates of analysis, release decisions",
+     "Lab data disconnected from process telemetry; release evidence assembled manually; hold reasons inconsistent"
+    ],
+    [
+     "Tank farm and blend scheduling",
+     "Gauging, receipts, blend recipes, component availability, loading orders",
+     "Spreadsheets govern the schedule; changeovers sequenced by habit; giveaway and re-blends unmeasured"
+    ],
+    [
+     "CMMS, RBI and SIS testing",
+     "Work orders, mechanical integrity, inspection records, proof-test evidence",
+     "SIS test records live in documents; RBI keys off calendar rather than condition; corrosion circuits unlinked"
+    ],
+    [
+     "Alarm management and shift operations",
+     "ISA-18.2 rationalization, alarm journals, shift handover, operating logs",
+     "Rationalization decades stale on brownfield units; handover context evaporates between crews"
+    ],
+    [
+     "ERP, energy and logistics",
+     "Orders, rail and truck slots, steam and power balances, emissions data",
+     "Energy cost per unit unknown; emissions assembled from factors; demurrage and dwell paid without attribution"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where the margin leaks"
+  },
+  {
+   "t": "p",
+   "x": "Ask operations leaders where the money leaks on a chemicals site and the answers converge on the same eight places, described in their own words. Dataq Software scores each of them in your estate during the diagnostic, because the leak that dominates a continuous train is rarely the one that dominates a batch plant."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "APC holding yesterday's optimum",
+     "Advanced process control was commissioned against a feedstock and a catalyst age the plant no longer runs. Exchangers foul, instruments drift, valves stick, and the controller holds its stale optimum while yield and energy degrade a fraction at a time. The delta is continuous, visible in the historian and owned by nobody — which is why it survives every budget review."
+    ],
+    [
+     "Yield accounting that stops at the spreadsheet",
+     "Mass balances are assembled monthly from hand-entered numbers, so the true yield of a unit in a given grade and mode is never computed continuously. Losses hide in inventory adjustments, and the argument between operations and planning is settled by seniority because neither side has a defensible number. The audit-grade balance everyone needs is a monthly archaeology project."
+    ],
+    [
+     "Batch investigations assembled from folders",
+     "When a batch fails, the investigation gathers the batch record, the chromatograms, the operator notes and the process traces by hand. Genealogy across campaigns, cleaning rounds and equipment states is reconstructed from memory. Root causes take weeks; the same failure repeats because the evidence never becomes searchable, and the audit reads binders instead of records."
+    ],
+    [
+     "Alarms inherited, not rationalized",
+     "Alarm databases carry decades of additions and no removals. Floods during upsets bury the signal that mattered; operators desensitize to standing, chattering alarms; the ISA-18.2 philosophy document exists but the plant does not live it. Every missed early warning is paid for in an excursion that telemetry saw coming and the console could not show."
+    ],
+    [
+     "Energy bought and burned without a balance",
+     "Steam, power and cooling are consumed by units nobody prices. The site buys energy against a forecast that assumes design efficiency; the boiler house runs on habit; the true energy cost per tonne by product is unknown. Without the balance, every optimization target is a guess, every savings claim is unverifiable, and the emissions number inherits the same weakness."
+    ],
+    [
+     "Changeovers sequenced by habit",
+     "Product transitions, degassing and cleaning consume hours that are never costed against the margin they idle. The schedule follows the sequence the senior operator prefers rather than the one the tank farm, the lab queue and the order book actually reward. Changeover cost is real, recurring and unmeasured — which is why it never competes for capital."
+    ],
+    [
+     "Safety evidence living in documents",
+     "MOC approvals, SIS proof tests, hazard-study actions and inspection records live in registries separate from the systems that run the plant. Closure is manual, evidence assembly is seasonal, and every audit re-derives what the records already knew. The safety case is sound; the trail to it is expensive, and the expense is paid during turnarounds when capacity matters most."
+    ],
+    [
+     "Logistics paid in demurrage and dwell",
+     "Rail slots, truck windows and tank availability are coordinated in spreadsheets and phone calls. Wagons wait, trucks dwell, blends miss their windows because the schedule never met the plant's true state. The cost lands in freight and demurrage lines that finance attributes to markets rather than to decisions — so it is never optimized and rarely challenged."
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight leaks is the same: the plant is instrumented, but the numbers that decide margin and safety are assembled by hand from systems that never meet. That is why Dataq Software's first build here is the unit-and-batch lineage fabric, not a smarter model over a context supply chain nobody owns."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works process industries and chemicals"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate you already run. We do not arrive with a replacement DCS, a plant-wide MES program or a transformation roadmap that stops short of the control loop; we arrive with connectors into your historian, your batch manager, your LIMS and your CMMS, and a respect for the management-of-change process that governs anything near it. The first deliverable is a working slice against a real workflow — one unit, one column, one batch family — not a strategy deck about the plant of the future."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver in this sub-industry. First, physics is respected: every model ships bounded by its validated operating envelope, validated against historian truth before anyone trusts it, with uncertainty stated rather than hidden. Second, evidence is a by-product: MOC records, SIS test evidence, alarm-rationalization outputs and decision logs are generated by the build itself, so audit preparation stops being a seasonal project. Third, the control room keeps its authority: recommendations land in operator, planner and scheduler workflows with context and confidence attached, and no optimizer writes to the DCS without your MOC process."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same logic: where the metric is clean, we price against the delta measured in your own telemetry. The published record includes a specialty chemicals producer whose program lifted yield three point four percent and cut energy per tonne seventeen percent through APC augmentation running on live historian data. We would rather show that number in your own baseline than promise it in a slide — and if the diagnostic cannot find the delta in two weeks, we say so and stop, leaving you the measurement design either way."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for process and chemicals"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our process-industries practice. Each build is a named engineering service with defined data flows, decision services, guardrails and integration points — deployed against your estate in weeks, and designed so the evidence the regulator wants falls out of running the system."
+  },
+  {
+   "t": "h3",
+   "x": "1. APC augmentation and real-time optimization"
+  },
+  {
+   "t": "p",
+   "x": "The build rebuilds the control intelligence on live truth: historian-derived fouling factors, catalyst-age and instrument-health context, and constraint models refreshed continuously instead of at commissioning. Machine-learning augmentations run beside the incumbent APC — predicting column drift, reactor margin erosion and compressor head-room — and their outputs surface as setpoint proposals inside the operator's workflow. The RTO layer receives live yield and efficiency coefficients computed from the plant's own operating evidence, so the targets it computes are achievable by the plant as it actually is today."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: setpoint guidance with expected delta and confidence, controller-performance monitoring that names the loops drifting, optimization cases ranked by margin contribution. Guardrails: augmentations are advisory until your MOC process admits them; envelopes are validated before a proposal is shown; every recommendation logs its inputs for replay. Integration points: DCS and APC platforms, the historian, RTO and planning models. The published record for this pattern shows yield up three point four points and energy per tonne down seventeen percent at a specialty chemicals producer — both measured against a locked baseline."
+  },
+  {
+   "t": "h3",
+   "x": "2. Historian data quality and mass-balance yield accounting"
+  },
+  {
+   "t": "p",
+   "x": "The build treats the historian as the plant's ledger: ingestion at native cadence, unit and mode context attached through a hierarchy your engineers sign, and data-quality gates that quarantine flatlined, drifted or out-of-calibration tags instead of letting them skew a calculation. On that foundation, mass and component balances run continuously per unit and per grade — inputs, outputs, losses and inventory corrections reconciled daily, with uncertainty carried alongside every figure rather than discovered at month end."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: live yield by unit, grade and mode; loss investigations triggered when a balance moves; planning coefficients computed from evidence rather than design; month-end close supported by numbers that already reconcile. Guardrails: balances show their inputs and their exclusions; inventory adjustments carry authorship; no figure reaches finance without its quality state. Integration points: historian, tank gauging and flow metering, LIMS assays, ERP inventory. The delta is a yield number operations and planning finally agree on — and the losses that stop hiding inside adjustments."
+  },
+  {
+   "t": "h3",
+   "x": "3. Batch genealogy and ISA-88 recipe intelligence"
+  },
+  {
+   "t": "p",
+   "x": "The build assembles batch truth from the systems that already hold it: recipe phases and parameters from the batch manager, process traces from the historian, results and specifications from LIMS, and disposition decisions from quality — joined into one genealogy per batch and per campaign. Investigations stop being folder archaeology: an excursion query returns the batches affected, the equipment they ran on, the cleaning rounds between them and the traces that show where physics diverged from recipe."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: genealogy queries answered in minutes, deviation packs pre-assembled for quality review, release readiness computed before the certificate is requested, campaign plans checked against equipment and cleaning constraints. Guardrails: electronic records keep their audit-trail semantics; quality owns the release decision; agents may assemble evidence but never disposition a batch. Integration points: batch manager and MES, historian, LIMS, ERP quality modules. The delta shows up as investigation cycle time, right-first-time release and the repeat failures that finally get closed because their evidence is searchable."
+  },
+  {
+   "t": "h3",
+   "x": "4. Alarm rationalization and shift handover engineering"
+  },
+  {
+   "t": "p",
+   "x": "The build brings the alarm system under engineering governance: journals parsed at native rate to expose chattering, flooding and standing alarms; rationalization applied against the ISA-18.2 philosophy your site already owns; and the resulting master alarm database deployed back to the DCS with ownership and review cadence attached. Operator attention becomes measurable — alarms per hour per console, minutes in flood, nuisance sources ranked by cost — and the rationalization stops being a project that decays and becomes a discipline the system enforces."
+  },
+  {
+   "t": "p",
+   "x": "Shift handover joins the same fabric: alarm journals, open overrides, temporary setpoint changes and permit status arrive as structured context, so the incoming crew inherits the plant's state rather than a memory test. Decision services: rationalization worklists ranked by nuisance cost, flood forensics after each upset, handover quality telemetry. Guardrails: alarm changes route through your MOC process; rationalization decisions are owned by operations, not by software. Integration points: DCS alarm systems, operator logs, permit-to-work, the historian. The delta is attention restored to the operator — and excursions caught earlier."
+  },
+  {
+   "t": "h3",
+   "x": "5. Energy management — steam, power and emissions balance"
+  },
+  {
+   "t": "p",
+   "x": "The build computes the site's energy balance continuously: steam headers, power imports and exports, furnace and boiler efficiencies, cooling and compressed-air loads, all priced per unit and per product. Metering gaps are named honestly and filled by calculation with uncertainty attached. The optimizer proposes dispatch — boiler loading, turbine extraction, imports against time-of-use prices — within the constraints operations actually faces, and emissions are computed from measured flows with the factors and estimates labelled end to end."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: energy cost per tonne by product and unit, dispatch proposals with tariff context, waste-heat and steam-trap worklists ranked by recovered value, emissions reports with lineage from sensor to disclosure. Guardrails: dispatch stays a proposal until the control room accepts it; hard constraints are architectural; reported figures carry provenance labels. Integration points: utility metering and SCADA, energy procurement, environmental reporting pipelines. The published record for this class of program shows energy per tonne down seventeen percent — measured against a locked baseline, not against a forecast that flatters itself."
+  },
+  {
+   "t": "h3",
+   "x": "6. Tank farm, blend scheduling and logistics"
+  },
+  {
+   "t": "p",
+   "x": "The build joins tank gauging, laboratory results, component availability, order book and transport slots into one scheduling decision surface. Blend recipes carry specification-bound guards; changeovers and degassing are sequenced against the tank farm, the lab queue and the loading plan; rail and truck slots are committed against a schedule the plant can actually keep. Product transitions stop being habit and become optimization problems with a visible cost, a visible duration and an owner who sees both before committing."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: blend schedules with giveaway tracked per line, changeover sequences with cost attributed, demurrage-risk alerts before the slot is missed, margin attribution per batch that survives a finance audit. Guardrails: specification limits are hard constraints; scheduler approval gates every plan; every published schedule carries its assumptions for replay. Integration points: tank gauging, LIMS, blend controllers, ERP orders, transport slot systems. The delta lands as blend windows hit, giveaway down, demurrage attributed to decisions rather than to markets, and margin variance finally explained."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — the process plant decision stack",
+   "lanes": [
+    "Plant and field estate",
+    "Telemetry and historians",
+    "Data fabric",
+    "Decision services",
+    "Safety and evidence",
+    "Operations surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "dcs",
+     "lane": 0,
+     "label": "DCS with APC faceplates"
+    },
+    {
+     "id": "batch",
+     "lane": 0,
+     "label": "ISA-88 batch manager"
+    },
+    {
+     "id": "lims",
+     "lane": 0,
+     "label": "LIMS and quality release"
+    },
+    {
+     "id": "tank",
+     "lane": 0,
+     "label": "Tank gauging and flow metering"
+    },
+    {
+     "id": "hist",
+     "lane": 1,
+     "label": "Process historian",
+     "hot": true
+    },
+    {
+     "id": "bus",
+     "lane": 1,
+     "label": "Governed stream bus"
+    },
+    {
+     "id": "contracts",
+     "lane": 1,
+     "label": "Schema contracts and freshness SLAs"
+    },
+    {
+     "id": "lake",
+     "lane": 2,
+     "label": "Operations lakehouse",
+     "hot": true
+    },
+    {
+     "id": "spine",
+     "lane": 2,
+     "label": "Unit and batch lineage spine"
+    },
+    {
+     "id": "qgates",
+     "lane": 2,
+     "label": "Data-quality gates"
+    },
+    {
+     "id": "apc",
+     "lane": 3,
+     "label": "APC augmentation service"
+    },
+    {
+     "id": "yield",
+     "lane": 3,
+     "label": "Mass-balance yield engine"
+    },
+    {
+     "id": "alarm",
+     "lane": 3,
+     "label": "Alarm rationalization engine"
+    },
+    {
+     "id": "energy",
+     "lane": 3,
+     "label": "Steam-power balance optimizer"
+    },
+    {
+     "id": "blend",
+     "lane": 3,
+     "label": "Blend and logistics scheduler"
+    },
+    {
+     "id": "moc",
+     "lane": 4,
+     "label": "MOC and SIS evidence store"
+    },
+    {
+     "id": "replay",
+     "lane": 4,
+     "label": "Decision replay store"
+    },
+    {
+     "id": "cons",
+     "lane": 5,
+     "label": "Operator console"
+    },
+    {
+     "id": "plan",
+     "lane": 5,
+     "label": "Planning and scheduling desk"
+    },
+    {
+     "id": "qual",
+     "lane": 5,
+     "label": "Quality release workbench"
+    }
+   ],
+   "edges": [
+    {
+     "a": "dcs",
+     "b": "hist"
+    },
+    {
+     "a": "batch",
+     "b": "bus"
+    },
+    {
+     "a": "lims",
+     "b": "bus"
+    },
+    {
+     "a": "tank",
+     "b": "bus"
+    },
+    {
+     "a": "hist",
+     "b": "bus"
+    },
+    {
+     "a": "bus",
+     "b": "contracts"
+    },
+    {
+     "a": "contracts",
+     "b": "lake"
+    },
+    {
+     "a": "lake",
+     "b": "spine"
+    },
+    {
+     "a": "spine",
+     "b": "qgates"
+    },
+    {
+     "a": "qgates",
+     "b": "apc"
+    },
+    {
+     "a": "lake",
+     "b": "yield"
+    },
+    {
+     "a": "lake",
+     "b": "alarm"
+    },
+    {
+     "a": "lake",
+     "b": "energy"
+    },
+    {
+     "a": "lake",
+     "b": "blend"
+    },
+    {
+     "a": "apc",
+     "b": "replay"
+    },
+    {
+     "a": "yield",
+     "b": "replay"
+    },
+    {
+     "a": "energy",
+     "b": "replay"
+    },
+    {
+     "a": "blend",
+     "b": "replay"
+    },
+    {
+     "a": "alarm",
+     "b": "moc"
+    },
+    {
+     "a": "replay",
+     "b": "cons"
+    },
+    {
+     "a": "yield",
+     "b": "plan"
+    },
+    {
+     "a": "blend",
+     "b": "plan"
+    }
+   ],
+   "note": "Lanes and nodes are named for the systems a process-industries build actually touches — the DCS and its APC faceplates, the ISA-88 batch manager, LIMS, tank gauging, the MOC and SIS evidence chain — not a generic reference stack. The hot nodes concentrate the differentiation: the historian supplying plant truth at native cadence, and the lineage spine that ties every tag, phase and assay to the unit that produced it, so each decision service reads context rather than bare values."
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: plant truth with its pedigree attached"
+  },
+  {
+   "t": "p",
+   "x": "Every decision gap in a process plant traces back to a data gap, and most of those gaps are engineering choices rather than physics. The historian holds the highest-frequency truth but ships it without units, grades, modes or equipment ties; the batch manager holds recipes and phases; LIMS holds assays; the CMMS holds maintenance reality as free text; ERP holds the money view. The data plane's job is to make those views queryable together at decision speed — schema contracts on every feed, the unit-and-batch lineage model as a spine, and quality gates that quarantine a drifting transmitter instead of letting it skew a yield calculation."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every value in the lakehouse can name its source system, transformation chain and quality state at read time, which is what makes the evidence layer possible later. Instrument drift, calibration expiry and store-and-forward gaps arrive with metadata attached, so a balance degrades honestly instead of confidently. Assays, certificates and proof-test records join as first-class feeds with chain of custody, because the decisions this industry makes are always conditional on measurements someone signed."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Native-cadence historian ingestion",
+     "tags stream at their native rate with compression semantics preserved and backfill handled explicitly; the control path is never touched and the historian keeps its role while the lakehouse adds the context it lacks"
+    ],
+    [
+     "The unit-and-batch lineage spine",
+     "every tag, phase, assay and work order tied to the unit, grade and batch that produced it, signed off by the engineers who own those hierarchies — context bound as an engineering contract, not a tribal convention"
+    ],
+    [
+     "Data-quality gates with named owners",
+     "flatlines, drift and expired calibrations detected at ingest; the affected feature set quarantined and the owner paged, so a stuck transmitter pages an instrument technician rather than quietly degrading a yield model"
+    ],
+    [
+     "Assay and certificate integration",
+     "LIMS results, certificates of analysis and proof-test records normalized at ingest with chain of custody, so quality truth arrives with the same governance as process truth"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: bounded setpoints, full replay"
+  },
+  {
+   "t": "p",
+   "x": "This industry runs on decisions with physical, commercial and regulatory tails: a setpoint moved, a blend released, a batch dispositioned, a turnaround window committed. The decision layer treats every one as a first-class object — inputs, model version, constraints active, expected delta, human approval — stored in a replay service that can re-derive any decision months later for an auditor, a regulator or an engineer asking what the system knew at the time. Champion and challenger run permanently: every augmentation, yield model and scheduling formulation competes against the incumbent on locked baselines before it earns traffic."
+  },
+  {
+   "t": "p",
+   "x": "The guardrails are as engineered as the models. Recommendations are bounded by validated operating envelopes, and anything approaching a boundary escalates with its reasoning attached. Decision rights are explicit — what the system may draft, what the control room must approve, what stays human by regulation or choice. Uncertainty travels forward rather than being averaged away: a yield proposal without its assay-confidence caveat never reaches a production planner, and a blend schedule without its specification margins never reaches the loading rack. The result is optimization the process-safety team and the auditor can both interrogate."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: governed digital workers for site paperwork"
+  },
+  {
+   "t": "p",
+   "x": "The repeat work on a chemicals site is largely evidentiary: deviation and investigation packs, MOC file drafting, proof-test schedule reconciliation, alarm-rationalization analysis, emissions and energy submissions. Agents absorb retrieval, assembly and cross-checking jobs with clear success criteria — governed digital workers running inside the platform with role scopes, tool allow-lists and complete run logs. Each agent ships with an evaluation suite: golden cases where the right answer is known, adversarial cases where the tempting answer is wrong, and a human checkpoint at every boundary that matters."
+  },
+  {
+   "t": "p",
+   "x": "Where generative capability adds leverage — summarizing shift logs, drafting narrative sections of submissions, translating inspection PDFs into structured records — it operates with retrieval grounding against your estate and provenance stamps on every claim. No agent signs a release, issues a permit or moves a setpoint; those boundaries are architectural. The agentic layer's output is reviewed work moving faster, with the run log to prove it — and when the auditor asks who approved the deviation, the answer is a person, on the record."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: the safety case as a query"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory surface of process industries is the densest in manufacturing: process safety law, OT security standards, alarm governance, chemical registration duties, energy and emissions reporting, and batch documentation wherever pharma-adjacent products run. Programs here succeed when evidence is a property of the running system rather than a seasonal project. The table maps the regimes that shape sector builds to the artifacts each build generates continuously — every row falls out of operation, not out of an audit-season sprint."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape process and chemicals builds — and the evidence layer each one gets",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What the build produces"
+   ],
+   "rows": [
+    [
+     "Process safety (PSM and Seveso class)",
+     "Hazard studies, MOC discipline, mechanical integrity, incident investigation",
+     "MOC lineage from study to field; action-closure telemetry; integrity schedules executed as workflows"
+    ],
+    [
+     "SIS integrity (IEC 61511 and ISA S84)",
+     "Proof-test evidence, bypass management, failure records",
+     "Test certificates structured at ingest; bypass windows tracked with expiry alarms; failure ledgers queryable"
+    ],
+    [
+     "Alarm management (ISA-18.2)",
+     "Rationalized alarm database, philosophy adherence, periodic review",
+     "Rationalization outputs deployed with ownership; flood forensics; alarm KPI telemetry per console"
+    ],
+    [
+     "Chemical regulation (REACH and equivalents)",
+     "Substance registration, SDS accuracy, restricted-substance controls",
+     "Formulation-to-substance lineage; restricted-use checks at recipe release; documentation generated from records"
+    ],
+    [
+     "Energy and emissions reporting (CSRD class)",
+     "Metered energy, emissions with provenance, efficiency disclosures",
+     "Continuous steam-power balance; emissions computed from measured flows with uncertainty and lineage"
+    ],
+    [
+     "GMP where pharma-adjacent",
+     "Batch documentation, data integrity, deviation handling",
+     "ISA-88 genealogy joined to quality records; audit trails preserved; deviation packs assembled automatically"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the plant stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Chemicals estates are layered over decades — control systems from several vendors, historians acquired with units, batch records split between systems and paper — and a program that demands greenfield first will never start. Dataq Software wraps the estate instead: adapters at native cadence, normalizers for every vendor format, schema contracts that make each upstream system answerable for freshness and shape. Control systems are read-first by policy; nothing writes into a controlled system without your management-of-change process, and most builds never need to."
+  },
+  {
+   "t": "p",
+   "x": "The supply chain gets the same treatment. LIMS vendors, gauging providers, assay laboratories, weather and tariff feeds all become contract parties to the data plane: formats specified, freshness SLAs enforced, test harnesses run per delivery. When a vendor changes a format, the contract test fails before the decision layer notices. The CMMS gets its own program within the program: failure taxonomies, corrosion-circuit fields and free-text history structured to the point where integrity analytics can consume them."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Read-first DCS integration",
+     "every integration into plant control starts read-only at native cadence; the rare write path goes through your management-of-change process with your engineers owning the change from design to verification"
+    ],
+    [
+     "Vendor-format normalizers",
+     "batch records, LIMS exports, gauging files and assay documents normalized at ingest with schema contracts and golden-file tests per vendor release"
+    ],
+    [
+     "CMMS structure repair",
+     "work-order taxonomies, failure modes and corrosion-circuit fields rebuilt to analytics grade in the first quarter — free-text debt scoped as a first-quarter gate condition with acceptance criteria, not discovered mid-program"
+    ],
+    [
+     "Planning-tool bridges",
+     "RTO, LP and scheduling tools fed live yield and condition coefficients through governed interfaces, so the plan the commercial desk runs is the one the plant can actually execute"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement opens with a two-week diagnostic on the workflow you nominate — one unit, one batch family or one balance, never a maturity assessment of the whole site. The product is a baseline in your own telemetry, a named delta with its confounders listed, and a scoped proposal only where the delta justifies the build. The measurement design stays with you either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "unit and batch instrumentation, yield and energy quantified, contract inventory, feasibility read with the delta estimate and the confounders named in writing"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane of the workflow live behind flags with replay and evidence running from day one — one APC augmentation, one balance, one batch family"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "controls landed, quality gates live, remaining units and grades added, decision telemetry reporting to the operations review"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "augmentations, yield models and scheduling formulations re-evaluated in the registry, baselines re-verified, the roadmap re-priced against measured deltas"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs inside your operating rhythm, not a parallel program tower: our engineers sit with production planning, the control room and the integrity team, work through your MOC process for anything that touches a governed system, and hand over runbooks, evaluation suites and registry entries as gate conditions during expansion — ownership is an exit criterion, not a closing slide."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones process-industries programs are managed on. The targets are program design goals — operating ranges comparable estates have reached, stated as commitments only where the metric is clean — and each one is measured from system telemetry against a baseline locked during the diagnostic, not from a status deck."
+  },
+  {
+   "t": "table",
+   "caption": "Process and chemicals program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Yield on instrumented units",
+     "1-4 points recovered; the published record shows +3.4 points at a specialty chemicals producer",
+     "Mass-balance engine output against a locked baseline, separated from feedstock and grade mix"
+    ],
+    [
+     "Energy per tonne",
+     "8-18% reduction on optimized sites; the published record shows 17%",
+     "Utility metering normalized to throughput, weather and campaign adjusted"
+    ],
+    [
+     "Off-spec and rework",
+     "25-50% fewer off-spec batches and re-blends",
+     "Quality release records reconciled to batch genealogy, causes closed to evidence"
+    ],
+    [
+     "Changeover and transition time",
+     "15-30% shorter on scheduled transitions",
+     "Event timestamps from batch manager and tank farm against the committed schedule"
+    ],
+    [
+     "Alarm load on operators",
+     "Standing and nuisance alarms down 40-60%",
+     "DCS journal telemetry per console, flood minutes tracked per week"
+    ],
+    [
+     "Unplanned downtime on monitored units",
+     "20-40% fewer unscheduled stoppages",
+     "Availability ledger reconciled to historian and CMMS records, precursors tracked to closure"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A process-industries build team is small and senior: a lead engineer who has carried unit or production responsibility on a live site, data engineers fluent in historian semantics, a control specialist who treats APC behaviour as an empirical question, and a delivery lead who has carried an operations pager. A quality-and-compliance engineer joins wherever LIMS, GMP or emissions duties are in scope. The team sits with production planning, the control room and the integrity team — not in a program tower — because the context that makes the difference lives in the assay, the changeover and the conversation before a window is committed."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: a weekly operations review on the metric, a monthly delta review against the locked baseline with finance in the room, and quarterly challenger sessions where augmentations, yield models and scheduling formulations defend their traffic. Runbooks, evaluation suites and the decision-replay store transfer to your teams as gate conditions during expansion — the program's dependency on us is scheduled to shrink, and the schedule is visible to everyone."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs on a chemicals site fail in known ways, and most of the failure modes are organizational rather than thermodynamic. We name them in the feasibility read and design against them explicitly, because a program that cannot survive its next turnaround is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "an augmentation demoed on extracted data that never lands in the estate — prevented by shipping the first vertical slice through your change process within two months, flags and gates included"
+    ],
+    [
+     "Optimizer meets the envelope wall",
+     "a proposal outside the validated operating envelope arrives with confidence it has not earned — envelopes are bounded, uncertainty labelled and engineer gates architectural, not advisory"
+    ],
+    [
+     "Alarm work abandoned after the study",
+     "the rationalization project completes and the database reverts within a year — the master alarm database stays under ownership with review cadence enforced by the build"
+    ],
+    [
+     "Balance nobody trusts",
+     "yield accounting rejected by operations because inputs are unexplained — every figure carries its exclusions, inventory adjustments and quality state, or it is not published"
+    ],
+    [
+     "CMMS free-text debt",
+     "integrity and reliability analytics starved by work orders nobody can parse — taxonomy repair is a first-quarter gate condition with acceptance criteria the engineers sign"
+    ],
+    [
+     "Evidence debt",
+     "audit readiness rebuilt by hand every cycle because artifacts are manual — the evidence layer generates MOC, SIS and alarm artifacts continuously, or the build ships unfinished"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions process operations leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do you touch the control systems?",
+     "We read. Any write path goes through your management-of-change process with your engineers in the loop, and most builds never need one. Recommendations land in operator workflows; the DCS keeps its authority."
+    ],
+    [
+     "Can this work on a brownfield site with thin instrumentation?",
+     "Yes — the fabric starts with what exists, and the diagnostic names the units where sensing investment pays. We sequence instrumentation like any other capital: where the computed delta justifies it."
+    ],
+    [
+     "How does this pass our process-safety review?",
+     "Every artifact ships with lineage, envelope bounds and approval gates. The safety case reads the build as another managed system, and the evidence layer makes that read fast because the records are already structured."
+    ],
+    [
+     "What happens to our operators and engineers?",
+     "Their judgment moves up a level: the build assembles context and drafts options; humans approve, dispose and own the risk decisions. Programs are justified in engineer-hours per decision, not headcount removed."
+    ],
+    [
+     "Can you price against the delta rather than the effort?",
+     "Yes, where the metric is clean. Yield, energy per tonne, changeover time and alarm load all baseline in your telemetry during the diagnostic; the feasibility read names the confounders first."
+    ],
+    [
+     "How do you handle vendor-locked historians and batch systems?",
+     "Adapters and normalizers are part of the build; we integrate every major historian and batch manager through governed interfaces. Your licenses stay; the export contract changes so decisions can consume the data."
+    ],
+    [
+     "What is the smallest program worth running?",
+     "One unit, one batch family or one energy balance — whichever has the cleanest baseline. If the diagnostic cannot measure the delta in two weeks, we say so and stop. You keep the measurement design either way."
+    ],
+    [
+     "Who owns the models after you leave?",
+     "Your teams, with runbooks, model documentation, evaluation suites and the decision-replay store transferred as gate conditions during expansion. Several programs run entirely in-house after the second quarter."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Bring one unit, one column or one batch family — we will baseline the yield and energy delta against your historian in two weeks, price it against the margin it moves, and tell you plainly whether the build is worth the change budget. The feasibility read is yours to keep."
+  }
+ ]
+}

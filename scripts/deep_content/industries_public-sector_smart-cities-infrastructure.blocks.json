@@ -1,0 +1,746 @@
+{
+ "file": "industries_public-sector_smart-cities-infrastructure",
+ "meta_description": "How Dataq Software engineers smart cities and infrastructure: multi-vendor IoT telemetry fabrics, condition-based maintenance, adaptive corridor management, digital twins, streetworks coordination and public-space privacy governance — city-owned data contracts, not vendor lock-in.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "A city is a portfolio of physical systems — signals, streetlights, sensors, fleets, networks and buried utilities — each arriving with its own vendor, its own cloud and its own contract, all expected to deliver service in public view with budgets that shrink and trust that erodes faster. The cities that run well do not buy more dashboards; they own their telemetry, normalise it into one context layer, and make maintenance, mobility and energy decisions from it under privacy governance that survives scrutiny. This page is the engineering picture of that operating model: the systems municipalities actually run, the exact points where urban service delivery leaks, and the six deep builds Dataq Software ships to fix them — with public-space privacy as the gate no pilot may skip."
+  },
+  {
+   "t": "h2",
+   "x": "How a city actually runs its assets"
+  },
+  {
+   "t": "p",
+   "x": "Stand in a municipal control room at evening peak and the operating picture assembles itself. Traffic signal controllers report phase timings and detector counts; adaptive corridor systems adjust plans against the congestion building on the arterial; transit feeds stream vehicle positions through GTFS-RT into the journey planner; air-quality nodes, noise sensors and flood gauges trickle telemetry over LoRaWAN and NB-IoT; the streetlight management system dims and reports faults; waste sensors report fill levels; the fleet telematics track sweepers, crews and refuse trucks. Everything is producing data. Whether anything is producing decisions depends entirely on the layer underneath."
+  },
+  {
+   "t": "p",
+   "x": "The maintenance path shows the gap. A streetlight controller fails; the fault may surface in the lighting CMS, the 311 intake, or a resident's phone call first. Whichever path it takes, a work order gets cut in the CMMS, dispatched against crew calendars, executed, and closed — with the fix rarely verified by the sensor that reported it, and the root cause rarely traced to the batch of controllers installed that year. Multiply by signals, pumps, chargers, trees, bins and road surface, and the city runs a reactive maintenance operation where the sensor estate it already paid for could be running condition-based work."
+  },
+  {
+   "t": "p",
+   "x": "The quieter machinery decides whether any of it holds. A context broker normalising every vendor's payload into one city model. Device identity and secure onboarding so a sensor the city provisioned is a sensor the city can trust. Data contracts written into procurement so the next tender cannot lock the telemetry away. Privacy governance that answers, with documents, what every public-space sensor collects and why. None of it is glamorous; all of it decides whether the city owns its operating picture or rents it from a vendor who will not share the keys."
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems the city touches"
+  },
+  {
+   "t": "p",
+   "x": "Programs in this sub-industry succeed or fail on how honestly the estate is mapped before anything is built — and here the estate includes procurement contracts as much as servers. Dataq Software starts every engagement by naming the systems, their owners, their data contracts and the vendors holding the keys. The table below is the estate we most often find and integrate against — not a generic stack diagram."
+  },
+  {
+   "t": "table",
+   "caption": "The smart-city estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
+    [
+     "Traffic signal and corridor control",
+     "Phase control, detector data, adaptive plans, priority for transit and emergency vehicles",
+     "Adaptive logic vendor-locked; detector coverage patchy; priority corridors tuned by hand and never re-evaluated"
+    ],
+    [
+     "Streetlight and energy management",
+     "Controller scheduling, dimming, fault detection, energy metering and billing reconciliation",
+     "Faults surfaced by residents before the CMS; energy data disconnected from the asset register and the tariff"
+    ],
+    [
+     "IoT sensor estate (air, noise, water, waste, parking)",
+     "Environmental and service telemetry over LoRaWAN, NB-IoT and cellular",
+     "Device identity weak or absent; payloads vendor-proprietary; estates grow without lifecycle management"
+    ],
+    [
+     "Transit and mobility systems",
+     "Vehicle locations, GTFS/GTFS-RT feeds, fare systems, real-time passenger information",
+     "Feeds break silently; fare and location data siloed per operator; passenger information diverges from reality"
+    ],
+    [
+     "Fleet and waste operations",
+     "Telematics, routing, fill-level sensing, crew and vehicle scheduling",
+     "Routing static; telemetry trapped in fleet vendor portals; waste rounds unchanged for years"
+    ],
+    [
+     "GIS and asset registry",
+     "Authoritative location and attribute data for every maintainable asset",
+     "Registry drifts from reality; condition data lives in inspection spreadsheets; heirs to no single owner"
+    ],
+    [
+     "CMMS and work order management",
+     "Fault intake, work orders, crew dispatch, parts and closure",
+     "Fault-to-fix unmeasured end to end; closure without verification; vendor portals parallel the CMMS"
+    ],
+    [
+     "Context broker and city data platform",
+     "Normalised city model (NGSI-LD-class), event fabric, open data publication",
+     "Adopted as a demo, not a fabric; vendor payloads bypass it; privacy tagging absent"
+    ],
+    [
+     "OT security and network estate",
+     "Connectivity, segmentation, device management, monitoring for operational systems",
+     "Flat networks; shared credentials; updates rare; no inventory of what is actually attached"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where city operations leak"
+  },
+  {
+   "t": "p",
+   "x": "Ask city operations leaders where the service leaks and the answers converge on the same eight places, described in their own words. Dataq Software's diagnostic scores each of them in your estate before recommending a build, because the leak that dominates one municipality is often minor in the next."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Vendor-locked telemetry",
+     "Every asset class arrives with its own cloud, its own portal and its own export format, and the data that would join decisions sits behind vendor keys. When the contract lapses, the history leaves with the vendor. Open context layers and data contracts written into procurement turn telemetry into city property instead of a subscription the treasury renews under duress."
+    ],
+    [
+     "Faults reported by residents first",
+     "The streetlight, signal or charger fails, and the first telemetry is a 311 report hours later — from the sensor estate the city already owns. Condition-based maintenance needs trustable device data and a work-order path that starts at the sensor, not the phone. The published record shows fault-to-fix down 63% when the fabric reports first and the CMMS orchestrates to verified closure."
+    ],
+    [
+     "Maintenance unscheduled and unverifiable",
+     "Work orders close on a technician's word, not on the sensor's confirmation. Repeat faults cluster by batch, location and weather, and nothing connects them. Condition-based orchestration — failure signatures, prioritised work orders, verified closure, root-cause clustering — converts the CMMS from a diary into a maintenance strategy the asset committee can defend."
+    ],
+    [
+     "Signals tuned by hand, once",
+     "Corridor timings set at commissioning age against changing demand, and adaptive plans run with defaults nobody audits. Journey-time variance on the arterial is measurable from vehicle and detector data; corridor optimisation with evaluation loops adjusts plans and proves the delta — typically measured in journey-time variance and priority reliability, not vendor slideware."
+    ],
+    [
+     "Privacy governance by press release",
+     "Cameras, ANPR and sensors in public space accumulate faster than the governance that should bound them. One DPIA from three years ago, one privacy notice from the pilot, and no register of what collects what — until a commissioner, a journalist or a council committee asks. Privacy-by-design governance with a sensor register and per-purpose DPIAs is the licence to operate."
+    ],
+    [
+     "Procurement that fragments the fabric",
+     "Each tender specifies its own platform, its own data format and its own exit terms, and the fabric dissolves contract by contract. Interoperability requirements — open APIs, data export at term, device onboarding standards — written into procurement are engineering work with legal force, and they are the cheapest integration the city will ever buy."
+    ],
+    [
+     "OT estates exposed and unknown",
+     "Controllers, gateways and meters sit on flat networks with shared credentials and firmware nobody has patched since commissioning. An inventory of what is actually attached — device identity, firmware state, network position — is step one; segmentation and monitored onboarding are what make step one survivable under NIS2-class essential-service duties."
+    ],
+    [
+     "A twin that simulates nothing",
+     "The digital twin arrives as a 3D visualisation and dies as a demo. A twin earns its keep when it runs scenarios the city actually faces: a corridor closure, a heat wave's effect on power demand, a fleet electrification plan. Scenario engines fed by the same governed telemetry the operations run on — with validated assumptions — are what separate a twin from a picture."
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight leaks: the city already owns the sensors; what it lacks is the context layer that makes their data usable, ownable and governed. That is why the first build in most municipal programmes is the telemetry fabric and the data contracts behind it, not another dashboard."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works smart cities"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate you already run, under the procurement instruments and committees you already have. We do not arrive with a proprietary platform that replaces your vendors, or a smart-city vision deck that ends where the integration begins. The engagement model is engineering-first: a two-week diagnostic that baselines one asset class or one corridor end to end against your own telemetry, then a scoped build that ships behind your change board, your procurement rules and your privacy governance."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver. First, the city owns the data: every build lands telemetry in an open context layer with schemas, ownership and exit terms the municipality controls, so no vendor can hold the operating picture hostage. Second, privacy is structural: sensor registers, purpose bindings, DPIA automation and anonymisation pipelines are part of the build, not documentation written after the pilot. Third, every decision loop closes: faults verified fixed by the sensors that reported them, corridors re-evaluated against measured journey times, and energy savings reconciled against metered consumption."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same logic: where the metric is clean — fault-to-fix, streetlight energy, sensor uptime, permit turnaround — we contract against the delta with the baseline locked during the diagnostic; where it is confounded, we say so in the feasibility read and scope fixed-fee instead. The published record includes a metropolitan city government that brought fault-to-fix down 63% and street-light energy down 22% on an urban asset platform — the same discipline, the same measurement, applied across asset classes and corridors."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for cities and infrastructure"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our smart-cities practice, named for the workflow it changes. Each build is sized in the diagnostic, shipped with the controls its regime expects, and integrated against the estate you already run. None of them require replacing your vendors; all of them require taking data contracts and device trust seriously."
+  },
+  {
+   "t": "h3",
+   "x": "1. The urban IoT telemetry fabric"
+  },
+  {
+   "t": "p",
+   "x": "The fabric build is the front door for every sensor the city owns or will buy: device identity provisioned at onboarding, certificates instead of shared credentials, payloads normalised into a context broker (NGSI-LD-class) so a streetlight from vendor A and a node from vendor B publish the same entities in the same model. LoRaWAN, NB-IoT and cellular paths are engineered for their failure modes — store-and-forward at the gateway, backhaul monitoring, dead-device detection — because a sensor estate without lifecycle telemetry is a guess, not a fabric."
+  },
+  {
+   "t": "p",
+   "x": "Onboarding is where security and procurement meet: new device types join through a certified path with identity, firmware state and network position registered, so the inventory of what is attached stays true as estates grow. Vendor payloads arrive through connectors with contract tests, so a vendor swap is configuration rather than re-integration. The fabric reports its own health — device counts, battery and firmware states, message-loss rates — because an unmonitored estate decays silently until the first heat wave finds out."
+  },
+  {
+   "t": "h3",
+   "x": "2. Asset performance and maintenance orchestration"
+  },
+  {
+   "t": "p",
+   "x": "The maintenance build closes the loop from sensor to verified fix. Fault signatures for each asset class — streetlight outages, signal detector failures, pump anomalies, charger errors — trigger work orders in the CMMS with the evidence attached; dispatch optimises against crew calendars, locations and skill sets; and closure requires confirmation from the sensor that reported the fault, not just a technician's tick. Repeat-fault clustering connects failures to batches, locations and environmental conditions so the asset committee sees root causes, not anecdotes."
+  },
+  {
+   "t": "p",
+   "x": "Energy is part of the same loop: streetlight dimming schedules optimise against metered consumption and light-level requirements, with savings reconciled monthly against the tariff data rather than estimated. The published record shows fault-to-fix down 63% and street-light energy down 22% on this pattern. Fault-to-fix telemetry reports end to end — detection, dispatch, fix, verification — because a maintenance operation that cannot measure its own cycle cannot improve it."
+  },
+  {
+   "t": "h3",
+   "x": "3. Adaptive mobility and corridor management"
+  },
+  {
+   "t": "p",
+   "x": "The mobility build works with your signal system, not against it. Detector counts, vehicle telemetry and transit feeds (GTFS-RT-class) feed corridor models; adaptive plan changes and transit priority requests are generated as proposals with predicted effects, and the corridor engineer approves, adjusts or rejects — with every proposal and its measured outcome logged. Signal control stays inside your vendor's safety envelope; the build supplies the evaluation and decision layer above it."
+  },
+  {
+   "t": "p",
+   "x": "Evaluation is the differentiator: journey-time variance on instrumented corridors, priority reliability for transit and emergency vehicles, and pedestrian wait patterns are measured before and after each plan change, so corridor policy becomes evidence rather than preference. Scenario runs through the twin (below) test a plan against incident conditions before it ships. The design goal is corridors whose performance is a published, defensible number — because mobility arguments in a city are won and lost on whose numbers the committee believes."
+  },
+  {
+   "t": "h3",
+   "x": "4. The city data platform and digital twin"
+  },
+  {
+   "t": "p",
+   "x": "The platform build is the governed lakehouse behind the context layer: every asset entity, event and measurement with lineage, freshness SLAs and schema contracts; the asset registry reconciled against telemetry so the GIS stops drifting from reality; and role-based publication into the open data portal with privacy tags enforced at the interface. Every consumer — dashboards, analytics, vendors, researchers — reads through the contract layer, so a schema change fails loudly at the contract instead of silently in a model."
+  },
+  {
+   "t": "p",
+   "x": "The twin sits on the same platform and earns its keep through scenarios: corridor closures, demand surges, heat-wave energy loads, fleet electrification paths, run as simulations calibrated against the city's own historical telemetry, with assumptions documented and sensitivity tested. Scenario outputs route back into the mobility and maintenance builds as proposals. A twin that runs the city's actual questions on the city's actual data becomes infrastructure; one that only renders becomes wallpaper."
+  },
+  {
+   "t": "h3",
+   "x": "5. Streetworks permitting and utility coordination"
+  },
+  {
+   "t": "p",
+   "x": "Streetworks are where the city loses the most credibility per square metre: trenches reopened, lanes closed by uncoordinated crews, residents inconvenienced by works nobody deconflicted. The build is a coordination layer over the permitting workflow: a live excavation register joining utility notices, permit applications, lane closures and asset data; conflict detection that flags two crews on one street in one fortnight before permits issue; and once-only data reuse so an applicant's registered facts are not re-keyed at every agency touch."
+  },
+  {
+   "t": "p",
+   "x": "Statutory clocks run per application with breach telemetry, inspections schedule against the field calendar, and reinstatement verification pulls from inspections and resident reports rather than self-certification alone. Completed works feed back into the asset registry so the GIS learns what changed underground — which is why this build pays for the next pavement failure twice. Permit turnaround and repeat-excavation rates become managed metrics reported from the workflow, not annual complaints."
+  },
+  {
+   "t": "h3",
+   "x": "6. Public-space privacy governance and open data"
+  },
+  {
+   "t": "p",
+   "x": "The governance build is the licence for everything else: a sensor register recording every device in public space, what it collects, why, for which purpose and under which notice; DPIA automation that generates assessments from the register and tracks reviews; anonymisation pipelines applied at the interface so published data leaves as aggregates; and retention schedules that delete raw captures on schedule with proof. Access requests against public-space data are answered from the register rather than reconstructed under deadline."
+  },
+  {
+   "t": "p",
+   "x": "Open data runs on the same governance: publication with privacy tags enforced by the platform, quality telemetry per dataset, and reuse tracked so the city knows whether its transparency actually gets used. The register also disciplines procurement: a sensor that cannot state its purpose and retention profile does not pass tender review. The design goal is a city where every camera, sensor and feed can be explained — to a resident, a commissioner or a committee — in one query, because trust is the operating budget's scarcest asset."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — the urban operations stack",
+   "lanes": [
+    "Street assets and sensors",
+    "City network fabric",
+    "Context and twin core",
+    "Optimisation services",
+    "Governance and privacy",
+    "Operator and resident surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "sig",
+     "lane": 0,
+     "label": "Traffic signals and detectors"
+    },
+    {
+     "id": "light",
+     "lane": 0,
+     "label": "Streetlight controllers"
+    },
+    {
+     "id": "iot",
+     "lane": 0,
+     "label": "Air, noise, water and waste nodes"
+    },
+    {
+     "id": "fleet",
+     "lane": 0,
+     "label": "Fleet telematics and chargers"
+    },
+    {
+     "id": "net",
+     "lane": 1,
+     "label": "LoRaWAN and NB-IoT gateways"
+    },
+    {
+     "id": "secure",
+     "lane": 1,
+     "label": "Device identity and onboarding",
+     "hot": true
+    },
+    {
+     "id": "ctx",
+     "lane": 2,
+     "label": "Context broker (NGSI-LD-class)",
+     "hot": true
+    },
+    {
+     "id": "lake",
+     "lane": 2,
+     "label": "City data lakehouse"
+    },
+    {
+     "id": "gis",
+     "lane": 2,
+     "label": "Asset registry and GIS"
+    },
+    {
+     "id": "twin",
+     "lane": 2,
+     "label": "Scenario and simulation engine"
+    },
+    {
+     "id": "maint",
+     "lane": 3,
+     "label": "Maintenance orchestrator"
+    },
+    {
+     "id": "corr",
+     "lane": 3,
+     "label": "Corridor optimiser"
+    },
+    {
+     "id": "streetworks",
+     "lane": 3,
+     "label": "Streetworks coordinator"
+    },
+    {
+     "id": "energy",
+     "lane": 3,
+     "label": "Energy and dimming service"
+    },
+    {
+     "id": "reg",
+     "lane": 4,
+     "label": "Sensor register and DPIAs"
+    },
+    {
+     "id": "anon",
+     "lane": 4,
+     "label": "Anonymisation pipelines"
+    },
+    {
+     "id": "open",
+     "lane": 4,
+     "label": "Open data publication"
+    },
+    {
+     "id": "control",
+     "lane": 5,
+     "label": "Control room console"
+    },
+    {
+     "id": "cmms",
+     "lane": 5,
+     "label": "CMMS work orders"
+    },
+    {
+     "id": "app",
+     "lane": 5,
+     "label": "Resident app and 311"
+    }
+   ],
+   "edges": [
+    {
+     "a": "sig",
+     "b": "net"
+    },
+    {
+     "a": "light",
+     "b": "net"
+    },
+    {
+     "a": "iot",
+     "b": "net"
+    },
+    {
+     "a": "fleet",
+     "b": "net"
+    },
+    {
+     "a": "net",
+     "b": "secure"
+    },
+    {
+     "a": "secure",
+     "b": "ctx"
+    },
+    {
+     "a": "ctx",
+     "b": "lake"
+    },
+    {
+     "a": "lake",
+     "b": "gis"
+    },
+    {
+     "a": "lake",
+     "b": "twin"
+    },
+    {
+     "a": "lake",
+     "b": "maint"
+    },
+    {
+     "a": "lake",
+     "b": "corr"
+    },
+    {
+     "a": "lake",
+     "b": "streetworks"
+    },
+    {
+     "a": "lake",
+     "b": "energy"
+    },
+    {
+     "a": "reg",
+     "b": "ctx"
+    },
+    {
+     "a": "anon",
+     "b": "open"
+    },
+    {
+     "a": "lake",
+     "b": "anon"
+    },
+    {
+     "a": "maint",
+     "b": "cmms"
+    },
+    {
+     "a": "ctx",
+     "b": "control"
+    },
+    {
+     "a": "ctx",
+     "b": "app"
+    }
+   ],
+   "note": "Lanes and nodes are named for the systems a municipal build actually touches — signals, streetlights, sensor nodes, fleet telematics, the context broker, the CMMS — not a generic reference stack. The hot nodes are where differentiation concentrates: device identity and onboarding that make the estate trustworthy, and the context broker that makes it usable. Governance and privacy sit as their own lane deliberately; in public space they are part of the operating architecture, not a compliance annex."
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: sensor payloads become a governed city model"
+  },
+  {
+   "t": "p",
+   "x": "Municipal estates move data in vendor silos: each asset class publishes to its own portal, exports arrive as spreadsheets, and the city model exists only in slideware. The data plane build lands every payload in one governed core: gateway telemetry through store-and-forward paths, controller events through connectors with contract tests, fleet and transit feeds through streaming interfaces. The context broker normalises entities so a streetlight, a sensor reading and a work order reference the same asset identity across systems."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries a schema contract with a named owner, a freshness SLA and a reconciliation check against the source system's own controls. Privacy tags attach at the entity level so the anonymisation pipelines and access rules enforce by configuration, and retention executes as pipelines with deletion proofs for raw captures. Every downstream consumer — maintenance, corridors, twin, open data — reads through the contract layer, so a vendor schema change fails loudly at the contract instead of silently in a corridor plan."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Store-and-forward telemetry paths",
+     "gateway buffering, backhaul monitoring and dead-device detection so intermittent connectivity loses minutes of data, not the asset's whole history"
+    ],
+    [
+     "Contract-enforced vendor connectors",
+     "every vendor payload mapped through contract-tested connectors into the city model, so a vendor swap is configuration rather than re-integration"
+    ],
+    [
+     "Registry-reality reconciliation",
+     "asset telemetry reconciled against the GIS and CMMS so the authoritative registry learns what changed on the street instead of drifting"
+    ],
+    [
+     "Privacy tags at the entity level",
+     "sensitivity and purpose attached where data is born, so anonymisation, retention and access enforce by configuration across every consumer"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: proposals with measured outcomes"
+  },
+  {
+   "t": "p",
+   "x": "City decisions are physical and slow to reverse: a corridor plan moves thousands of journeys, a dimming schedule touches every streetlight, a maintenance priority decides which pump survives the storm season. The decision layer we build treats those stakes with the respect they demand: optimisers and models generate proposals with predicted effects and confidence bounds; a named engineer or asset owner approves, adjusts or rejects; and the measured outcome flows back against the prediction, so the next proposal starts from evidence rather than opinion."
+  },
+  {
+   "t": "p",
+   "x": "Every decision writes its replay record — inputs, model versions, thresholds, approver — into the same governed store the operations use, so a council committee, an auditor or an insurer asks a query rather than a mystery. Champion/challenger evaluation runs corridor plans and maintenance policies as candidates with metrics before adoption, and the AI oversight registry tracks every model's evaluation and drift under the accountable-AI framework. Safety envelopes — signal control, pump control, charger firmware — stay inside their certified vendors; the decision layer orchestrates above them, never inside them."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: operations workers with city authority"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work in municipal operations — fault triage, work-order preparation, permit completeness checks, inspection scheduling, data-quality reconciliation — follows patterns an agentic workforce absorbs without touching physical control. Dataq Software's agent platform runs digital workers with explicit role scopes: the systems they may read, the tools they may call, the actions that require a human checkpoint, and a budget of work per run. Every run logs its steps and outputs to the same evidence store the human workflow uses, so an agent's work order is auditable exactly like a dispatcher's."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — drafting permit correspondence, summarising asset histories, preparing committee reports from live telemetry — the pattern is grounded generation with citation obligations and a human author of record. Agents never actuate a signal, never dispatch a crew alone, never publish open data without review, and never alter a safety-critical configuration; they move the work to the decision point and stop. Capacity is measured in work orders processed and faults cleared per operator, which is how operations leaders justify the programme upward."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: built for the committee and the regulator"
+  },
+  {
+   "t": "p",
+   "x": "The accountability surface of smart cities spans privacy law for public space, essential-service security duties, OT standards, procurement law and accessibility obligations — and every one of them examines the same builds. Dataq Software's answer is the evidence layer: the artifacts a commissioner, a regulator or a committee will ask for are generated continuously by the systems themselves. The table maps the regimes we build against to the evidence our builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape smart-city builds — and the evidence layer each one gets",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What our build produces"
+   ],
+   "rows": [
+    [
+     "GDPR and public-space guidance",
+     "Proportionality, notices, DPIAs, minimisation for public-space processing",
+     "Sensor register with purpose and retention per device; DPIA automation; anonymisation enforced at the interface"
+    ],
+    [
+     "NIS2 and essential-service security duties",
+     "Risk management, incident handling, supply-chain assurance",
+     "Device inventory and segmentation evidence, monitored onboarding records, incident telemetry per release"
+    ],
+    [
+     "IEC 62443 class OT standards",
+     "Zones, conduits, component security for operational systems",
+     "Network segmentation documentation, device identity certificates, firmware state tracking across the estate"
+    ],
+    [
+     "Procurement law",
+     "Competition, transparency, audit of awards and variations",
+     "Data contracts and exit terms in tender language; award and variation audit trails; interoperability conformance evidence"
+    ],
+    [
+     "Accessibility (WCAG 2.2, EN 301 549)",
+     "Resident services and information usable by all",
+     "Assistive-technology suites in CI for resident surfaces and conformance statements per release"
+    ],
+    [
+     "Records and open data law",
+     "Retention, transparency publication, release of datasets on request",
+     "Retention governor with deletion proofs; publication logs with privacy tags; reuse telemetry per dataset"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: vendors stay, the city takes command"
+  },
+  {
+   "t": "p",
+   "x": "Municipal estates are assembled by procurement over decades, and the fastest way to fail a programme is to promise a single-vendor platform. Our integration posture is contractual: schema contracts with each vendor and department, telemetry landed through connectors and the context broker, write-back through the CMMS, signal and permitting interfaces your governance already controls, and every new component independently deployable behind feature flags. Vendors are not replaced; they are surrounded by a fabric the city owns."
+  },
+  {
+   "t": "p",
+   "x": "Procurement is treated as integration engineering: data contracts, onboarding standards, export-at-term and exit clauses are drafted in tender language so the next competition strengthens the fabric instead of dissolving it. Device onboarding is certified per type so the estate grows without unmanageable surface. Where a legacy asset cannot join, its exports are wrapped with the same contracts and logging so nothing bypasses the city model. This is unglamorous work and it is the reason the builds above hold up in production instead of in a pilot."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Write-back through CMMS interfaces",
+     "work orders, statuses and closures flow through the maintenance interfaces your change board already governs, with verification steps enforced"
+    ],
+    [
+     "Vendor abstraction with contract tests",
+     "lighting, signal, sensor and fleet payloads behind one interface, so a re-competition is configuration with a runbook rather than surgery"
+    ],
+    [
+     "Procurement-grade data contracts",
+     "schemas, freshness, ownership and exit terms drafted for tender documents, so contracts reinforce the fabric instead of fragmenting it"
+    ],
+    [
+     "Certified device onboarding",
+     "identity, firmware and network position registered per device type at commissioning, so the inventory of what is attached stays true as estates grow"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement, and it fits inside the procurement instruments your municipality already runs — framework call-offs, lot-based competitions, or a directly scoped pilot where the rules allow. It starts with the two-week diagnostic: one asset class or one corridor baselined end to end, the leak quantified in your own telemetry, the vendor contracts and data rights inventoried, and a written feasibility read you can circulate, including the uncomfortable findings."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "telemetry instrumentation, leak quantification, contract and device inventory, feasibility read with the delta estimate and the confounders named against your service standards"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one asset class live on the fabric with maintenance orchestration behind flags — for streetlights that is fault-to-fix telemetry end to end; for corridors it is one instrumented arterial"
+    ],
+    [
+     "Weeks 9-16: governance, expansion",
+     "sensor register and DPIAs landed, anonymisation live, remaining asset classes added, energy and maintenance telemetry reporting to the operations review"
+    ],
+    [
+     "Quarterly: outcome reviews",
+     "corridor plans and maintenance policies re-evaluated against measured outcomes, the baseline re-verified, and the evidence pack refreshed for committees"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm, not a parallel one: our engineers work in your repositories or a shared workspace with the same CI, the same security review and the same access model your teams use. Knowledge transfer is a gate condition, not a closing slide — by the expansion phase your engineers ship changes to the builds, because the runbooks, contracts and evaluation suites are theirs from week one."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the municipal budget line"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones municipal programmes are managed on. The targets are the ranges we set in feasibility reads for programmes of this shape — commitments we let you hold us to where the metric is clean, hypotheses we test where it is confounded. The measurement column is the part most programmes skip and the part that makes the delta defensible in a committee and to the auditors."
+  },
+  {
+   "t": "table",
+   "caption": "Smart-city programme metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Fault-to-fix cycle time",
+     "50-70% reduction across instrumented asset classes",
+     "Fabric-to-CMMS telemetry end to end; the published record shows 63%"
+    ],
+    [
+     "Streetlight energy consumption",
+     "15-30% reduction with light levels preserved",
+     "Metered consumption reconciled against tariff data; the published record shows 22%"
+    ],
+    [
+     "Sensor estate uptime",
+     "95%+ reported devices with lifecycle telemetry",
+     "Fabric health telemetry: device counts, battery, firmware, message loss"
+    ],
+    [
+     "Corridor journey-time variance",
+     "Measurable reduction on instrumented arterials",
+     "Vehicle and detector telemetry compared before and after each plan change"
+    ],
+    [
+     "Streetworks permit turnaround",
+     "30-50% faster with breaches at or near zero",
+     "Statutory clock tracking per application from the permitting workflow"
+    ],
+    [
+     "Repeat-fault rate",
+     "20-40% reduction on instrumented classes",
+     "Fault clustering by batch, location and condition against baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A municipal build team is small and senior: a lead engineer who has run IoT and operations platforms at city scale, data engineers who own the fabric and contract layer, embedded and network engineers who own device onboarding and segmentation, ML engineers who own optimisation and evaluation, a controls engineer who owns privacy and evidence, and a domain lead who has run streetlight fleets and corridor programmes in production. Procurement and privacy specialists join where the workflow demands them. The team works to your release calendar, your committee cycle and your tender calendar from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: weekly operations review on the fabric's own telemetry, fortnightly gate submissions to change and privacy governance, quarterly outcome reviews where corridor plans and maintenance policies are re-evaluated against measured results, and an incident practice that treats the context broker and the device estate as production-critical systems — because by the second quarter, the control room will. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programmes like these fail in known ways, and most failure modes are organisational rather than mathematical. We name them in the feasibility read and design against them explicitly, because a programme that cannot survive its second quarter — or its first council scrutiny — is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "a demo built on extracted data that never integrates — we prevent it by shipping the first vertical slice through your change process, flags and gates included, in the first two months"
+    ],
+    [
+     "Vendor lock re-entry",
+     "the fabric built and then dissolved by the next tender — data contracts and exit terms are drafted into procurement language before expansion, not after the renewal"
+    ],
+    [
+     "Estate decay",
+     "sensors failing silently until the data is wrong everywhere — lifecycle telemetry, dead-device detection and battery and firmware health are part of the fabric, not an afterthought"
+    ],
+    [
+     "Twin theatre",
+     "a visualisation that simulates nothing — scenario engines are calibrated against your own historical telemetry with documented assumptions, or we say so in the feasibility read"
+    ],
+    [
+     "Privacy shortcut",
+     "sensors deployed ahead of the register and DPIAs — the governance build ships with the fabric, because trust once lost is the most expensive asset to rebuild"
+    ],
+    [
+     "Decision debt",
+     "optimisation proposals piling up unapproved because nobody owns the loop — named approvers, measured outcomes and the replay store keep the decision layer alive"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions city leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do we have to replace our vendors?",
+     "No. The builds surround your vendors with a fabric the city owns: connectors normalise their payloads, contracts govern their interfaces, and write-back flows through the CMMS and signal interfaces you already control."
+    ],
+    [
+     "What if a vendor refuses data access?",
+     "The tender language settles it before it starts: export at term, open APIs and onboarding standards are procurement-grade data contracts we draft with you. Existing contracts are inventoried in the diagnostic, with the gaps named honestly."
+    ],
+    [
+     "How does privacy governance actually work?",
+     "A sensor register records every public-space device, its purpose and its retention profile; DPIAs generate from the register; anonymisation enforces at the interface; and any camera or sensor can be explained in one query to a resident or a commissioner."
+    ],
+    [
+     "Is the digital twin worth the investment?",
+     "Only when it runs your actual questions on your actual data — corridor closures, demand surges, electrification paths — calibrated against your historical telemetry. If the diagnostic finds no scenario the twin would answer better than measurement, we say so and scope something else."
+    ],
+    [
+     "How do you measure success without gaming?",
+     "Baselines are locked during the diagnostic, outcomes are measured from the sensors and systems themselves, and every metric reports from telemetry rather than a status deck. The feasibility read names the confounders — weather, roadworks, seasonal demand — before anyone commits to a target."
+    ],
+    [
+     "What is the smallest programme worth running?",
+     "One asset class, one baseline, one vertical slice — streetlighting is the most common starter because fault and energy telemetry are already metered. If the diagnostic cannot find the delta, we say so and stop."
+    ],
+    [
+     "Who keeps the buttons on safety-critical systems?",
+     "Signal control, pump control and charger firmware stay inside their certified vendor envelopes. The decision layer orchestrates above them with proposals, approvals and measured outcomes — never inside the safety path."
+    ],
+    [
+     "Who owns the build after you leave?",
+     "Your teams, with the runbooks, contracts, evaluation suites and registry entries transferred as gate conditions during expansion — not as a closing deliverable. Several programmes run entirely in-house after the second quarter."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Start with one asset fleet or one corridor: Dataq Software will baseline it in two weeks against your own telemetry, price the delta — fault-to-fix, energy, journey-time variance — and tell you honestly whether the fabric and the builds are worth your capital plan. The feasibility read is yours to keep whichever way the committee decides."
+  }
+ ]
+}

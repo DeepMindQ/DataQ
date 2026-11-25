@@ -5,267 +5,762 @@
  "template": "subindustry_page",
  "breadcrumb": "Industries > Energy & Utilities > Power Generation & Grid",
  "seo_title": "Power Generation & Grid | Dataq Software",
- "meta_description": "Grid operators balance physics, markets and regulation in real time: forecasting under intermittency, substation reliability, flexibility orchestration.",
+ "meta_description": "How Dataq Software engineers power generation and grid operations: forecasting under intermittency, substation asset health, DERMS flexibility orchestration, outage and storm response, settlement decision support and NERC CIP evidence — built against your EMS, ADMS and MDM estate.",
  "blocks": [
   {
    "t": "hero",
-   "x": "Grid operators balance physics, markets and regulation in real time: forecasting under intermittency, substation reliability, flexibility orchestration and CIP-grade security. The telemetry-to-decision loop is the core competency of the transition era. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
+   "x": "Power system operators balance physics, markets and regulation in the same sixty seconds. The control room commits generation against a load forecast, restores feeders around a fault, activates flexibility from a rooftop fleet it cannot fully see, and defends all of it before a regulator — while intermittent supply keeps rewriting the assumptions the system was built on. The telemetry-to-decision loop is the core competency of the transition era: whoever turns synchrophasors, meter reads and market signals into dispatch decisions fastest, wins. This page is the engineering picture of that loop: the systems a grid operator actually runs, the exact points where reliability and revenue leak, and the six deep builds Dataq Software ships to close them."
   },
   {
    "t": "h2",
-   "x": "The setting, described honestly"
+   "x": "How the grid operation actually runs, dispatch desk to dead-end feeder"
   },
   {
    "t": "p",
-   "x": "The work concentrates in forecasting and dispatch, asset condition management, der/flexibility orchestration, with cip compliance close behind. Volume grows on every path; the decision layer has not kept up. That gap is measurable, and it is the work."
+   "x": "In power system operations, the physics sets the tempo and the paperwork sets the boundaries. The transmission layer runs EMS against a network model: state estimation, load flow, contingency analysis, automatic generation control — fed by SCADA over DNP3 and, increasingly, by synchrophasors per IEEE C37.118 that let operators see oscillations instead of inferring them. The distribution layer runs ADMS and DMS: switching orders, fault location and isolation, volt-var optimization on feeders whose topology the field keeps quietly editing. Both layers feed an outage management system where storm mode turns a quiet Tuesday into three hundred crews and a public dashboard. Each layer has its own model, its own protocol stack and its own definition of now."
+  },
+  {
+   "t": "p",
+   "x": "Underneath the control rooms, the commercial machinery never sleeps. Load and renewable forecasts drive unit commitment and day-ahead bids; intraday markets reprice the residuals; settlement then reconciles scheduled energy against metered energy and invoices the difference as imbalance. The metering estate — AMI head-ends and meter data management — produces the interval truth that settlement, planning and customer functions all consume through validation-edit-estimation rules nobody outside the metering team can explain. DER compounds the complexity: rooftop solar, batteries and electric-vehicle charging show up in hosting-capacity studies and flexibility registers, but their telemetry arrives late, partial and unverified."
+  },
+  {
+   "t": "p",
+   "x": "Wrapped around all of it is the compliance estate: NERC CIP for bulk-power cyber duties, IEC 62443 for OT zoning, NIS2 and DORA-class resilience obligations, network codes, market conduct rules and sustainability reporting. The evidence these regimes demand — access reviews, change records, monitoring logs, restoration timelines — exists in the systems, but is assembled by hand every audit cycle. Dataq Software's work concentrates on closing the gap between the running grid and the decision layer: forecasts that feed bids directly, asset condition that feeds worklists directly, flexibility that dispatches within its documented limits, and evidence that generates itself."
   },
   {
    "t": "h2",
-   "x": "What actually breaks today"
+   "x": "The estate underneath: systems this work touches"
   },
   {
    "t": "p",
-   "x": "For Power Generation & Grid, named from the floor, not from a framework:"
+   "x": "Grid programs succeed or fail on how honestly the estate is described. The layers below are the ones an operator actually runs — named as they appear in the control room and the asset office, not as a vendor catalog would have them — together with the point where each one strains under real weather, real DER growth and real regulatory scrutiny."
+  },
+  {
+   "t": "table",
+   "caption": "The power grid estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
+    [
+     "EMS and control-center SCADA",
+     "Network model, state estimation, load flow, contingency analysis, AGC on the transmission system",
+     "Model drifts from field reality; analogue telemetry gaps papered over; state estimator output trusted without error bounds"
+    ],
+    [
+     "ADMS and DMS",
+     "Distribution switching, fault location and isolation, volt-var, feeder reconfiguration",
+     "Feeder topology edits arrive late; DER visibility partial; optimization assumptions stale against the actual network"
+    ],
+    [
+     "OMS and crew dispatch",
+     "Outage calls, crew assignment, restoration sequencing, public ETAs",
+     "Storm mode overwhelms queues; restoration priorities set by judgment under stress; crew context limited to one screen"
+    ],
+    [
+     "Substation automation (IEC 61850, DNP3)",
+     "Bays, relays, GOOSE messaging, RTU polling, event records",
+     "Vendor-proprietary configs; event records unread between trips; firmware estate unaudited"
+    ],
+    [
+     "AMI head-end and MDM",
+     "Interval reads, events, voltage telemetry from millions of meter points",
+     "Validation-edit-estimation rules opaque; meter-to-bill chains break silently; grid-edge detail never reaches planning"
+    ],
+    [
+     "Asset health instrumentation",
+     "Transformer dissolved-gas analysis, breaker operations, partial discharge, thermal imaging",
+     "Monitors bolted on without an asset spine; condition data separate from the CMMS; alarms ignored as noise"
+    ],
+    [
+     "DERMS and flexibility registers",
+     "DER aggregation, curtailment instructions, flexibility market participation",
+     "Aggregations lag real telemetry; curtailment instructions unverified; hosting-capacity studies stale on arrival"
+    ],
+    [
+     "Market settlement and imbalance systems",
+     "Schedules, metered volumes, imbalance invoicing, ancillary services",
+     "Deadline-driven spreadsheets; disputes settled on judgment; ancillary revenue rarely audited to source"
+    ],
+    [
+     "Field workforce and vegetation management",
+     "Crew scheduling, trimming cycles, storm staging, inspection rounds",
+     "Routing manual; vegetation budgets spent on cycle, not risk; inspection findings never reprice the program"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where reliability and revenue leak"
+  },
+  {
+   "t": "p",
+   "x": "Ask grid operators where the money leaks and the answers converge on the same eight places, described in their own words. Dataq Software scores each of them in your estate during the diagnostic, because the leak that dominates a transmission-heavy system is rarely the one that dominates a distribution cooperative with a fast-growing rooftop fleet."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Forecasting under intermittency",
-     "Renewable/demand forecasts legacy; imbalance and curtailment climb."
+     "Forecast error compounding into imbalance",
+     "Legacy load and renewable forecasting runs on methods the weather has outgrown. Every miss becomes imbalance cost, a curtailment instruction issued too late, or a unit commitment that holds expensive capacity on standby. The error compounds through bidding, scheduling and settlement, and nobody can attribute the cost precisely enough to fix the worst-contributing zones and products first."
     ],
     [
      "Substation assets uninstrumented",
-     "Transformers/breakers lack condition telemetry; failures unscheduled."
+     "Transformers, breakers and cables hold failure precursors nobody sees: dissolved gas trending toward a trip, a breaker mechanism wearing past its duty cycle, a joint heating on a summer afternoon. Inspection schedules predate the sensors, so condition-based maintenance is impossible and the failures that arrive are the unscheduled kind — the most expensive, on the assets that matter most."
     ],
     [
-     "CIP/62443 compliance load",
-     "Evidence assembled manually; flat zones persist."
+     "CIP evidence assembled by hand",
+     "NERC CIP duties — asset classification, access reviews, change records, monitoring — are satisfied annually by a team reconstructing what the systems already know. The reconstruction itself becomes the risk: evidence drifts from system state, findings repeat, and nobody can answer quickly what a compromised zone would actually have reached."
     ],
     [
-     "Flexibility orchestration manual",
-     "DER flexibility activation by phone/portal; markets underused."
+     "DER flexibility activation by phone",
+     "Flexibility markets exist; the activation path does not. Curtailment instructions, demand response and storage dispatch get orchestrated by email, portal and phone tree, so the fastest flexibility in the portfolio is also the least usable. Aggregators deliver telemetry the operator cannot verify, and hosting-capacity studies go stale before the interconnection queue moves."
     ],
     [
      "Unit-commitment ceilings",
-     "Scheduling formulations exceed solvers; flexibility left unused."
+     "Scheduling formulations exceed what the solver and the process can chew in the window available: network constraints approximated, storage modeled crudely, stochastic unit commitment abandoned for deterministic habit. The gap between the schedule the market got and the schedule the physics wanted settles later as imbalance, congestion and curtailment — costs booked far from their cause."
     ],
     [
      "Grid-edge data blind",
-     "AMI/DER telemetry unharvested; planning blind to edge reality."
+     "AMI head-ends and DER telemetry hold the most detailed picture of the network ever produced, and planning consumes almost none of it. Voltage problems surface as complaints; transformer loading is inferred from nameplates; hosting capacity is studied from spreadsheets. The edge is instrumented and blind at the same time — the data exists, the decision pipeline does not."
+    ],
+    [
+     "Restoration sequencing under storm stress",
+     "When the storm lands, restoration priorities are set by experience and phone calls, not by customers-at-risk computed live against network, weather and crew state. ETAs published to the public drift for hours; crews arrive to find the isolation already switched; the after-action review reconstructs decisions from memory. Storm cost concentrates exactly where the decision loop is slowest."
+    ],
+    [
+     "Vegetation spend without risk targeting",
+     "Trimming cycles run on calendar and budget habit while outage statistics quietly rank the feeders nobody prioritizes. The line crews know which spans fail; the program does not. A decade of outage and inspection data exists to reprice every kilometre of the network, and the budget still spreads evenly where the risk does not."
     ]
    ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight leaks: the grid is instrumented but the decisions are not. Every leak is a context problem before it is a modeling problem — which is why Dataq Software's first build in grid operations is almost always the data fabric that joins EMS, MDM and asset records, not a smarter model sitting on top of a broken decision supply chain."
   },
   {
    "t": "h2",
-   "x": "What we put in place"
+   "x": "How Dataq Software works power generation and grid"
   },
   {
    "t": "p",
-   "x": "Capability in Power Generation & Grid is not abstract: each domain lands as a named build on a named workflow. The patterns below are what we deploy there."
+   "x": "Dataq Software builds inside the estate you already run. We do not arrive with a mandate to replace your EMS or re-platform your MDM; we arrive with connectors, schema contracts and a respect for the control path. Our engineers have worked beside control-room supervisors, protection engineers and settlement desks, and the first deliverable is always a working slice against a real workflow — one control zone's forecast, one transformer fleet's condition ledger, one storm's restoration replay — not a strategy deck about the energy transition."
   },
   {
-   "t": "bullets",
-   "items": [
-    [
-     "Forecasting platform",
-     "weather-coupled ML at asset/portfolio level"
-    ],
-    [
-     "Substation telemetry",
-     "condition monitoring on critical assets"
-    ],
-    [
-     "CIP program",
-     "continuous evidence and zone enforcement"
-    ],
-    [
-     "Flexibility hub",
-     "DER activation within market/policy rules"
-    ],
-    [
-     "Commitment tournaments",
-     "scheduling across solvers"
-    ]
-   ]
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver in this sector. First, physics is respected: every model ships bounded by its validated envelope, forecasts carry confidence intervals that mean something, and nothing we write touches a controlled system outside your management-of-change process. Second, evidence is a by-product: CIP artifacts, restoration timelines, flexibility dispatch records and decision logs are generated by the build itself, so audit preparation stops being a seasonal project. Third, humans keep the stops: recommendations land in operator and dispatcher workflows with provenance, and the control room's authority is never bypassed by an arrow on a dashboard."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same logic: where the metric is clean, we price against the delta measured in your own telemetry. The published record includes a European TSO-DSO group whose forecast error came down thirty-one percent, with imbalance cost recovered across three control zones — the same forecasting, scheduling and settlement machinery this page describes. We would rather show you that number in your own baseline than promise it in a slide, and if the diagnostic cannot find the delta in two weeks, we say so and stop."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for power generation and grid"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our grid practice. Each build is a named engineering service with defined data flows, decision services, guardrails and integration points — deployed against your estate in weeks, not quarters, and designed so the evidence the regulator wants falls out of running the system."
+  },
+  {
+   "t": "h3",
+   "x": "1. The forecasting and imbalance decision hub"
+  },
+  {
+   "t": "p",
+   "x": "The build replaces spreadsheet forecasting with a weather-coupled decision service: load, wind, solar and DER-behind-the-meter predicted at zone, feeder and portfolio level, with confidence intervals attached and the forecast wired directly into everything that consumes it — unit commitment, day-ahead and intraday bids, storage dispatch, maintenance windows. Backcasting runs continuously against locked baselines, so forecast quality is a league table by zone and product rather than an anecdote defended quarterly. Solver tournaments evaluate scheduling formulations in parallel, because the formulation that wins at one grid topology loses at another."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: bid recommendations with risk bounds, imbalance-exposure dashboards naming the contributing feeders or farms, commitment proposals that respect network constraints and storage behavior. Guardrails: forecasts degrade gracefully with data gaps and say so; every schedule carries its inputs for replay; the operator or trader approves before anything executes. Integration points: EMS, market interfaces, weather providers, AMI and DER telemetry. This is the build behind the published record — forecast error down thirty-one percent, imbalance cost recovered across three European control zones."
+  },
+  {
+   "t": "h3",
+   "x": "2. Substation asset health — DGA, breakers and the condition ledger"
+  },
+  {
+   "t": "p",
+   "x": "The build joins transformer dissolved-gas analysis, breaker operation counters and timing traces, partial-discharge surveys, thermal imagery and loading history into a single condition ledger per asset, anchored to the asset register and the CMMS. Failure-mode models run per asset class with validated precursors — gas-ratio signatures, mechanism wear patterns, thermal thresholds — and risk-based inspection plans start consuming current condition instead of last inspection date. Monitors that were bolted on as projects become a fleet fabric that reprices the intervention list every morning."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: ranked intervention worklists with risked consequence, capital-renewal prioritization with failure cost modeled honestly, loading recommendations for transformers approaching their thermal limits. Guardrails: recommendations never bypass engineering approval; every computed health index carries its inputs for replay; assets whose sensor coverage cannot support scoring are flagged rather than scored. Integration points: CMMS, historians, condition-monitoring vendors, SCADA. The delta lands as unscheduled stoppages avoided and capital moved from calendar habit to measured risk."
+  },
+  {
+   "t": "h3",
+   "x": "3. DERMS and flexibility orchestration"
+  },
+  {
+   "t": "p",
+   "x": "The build makes DER flexibility dispatchable within its documented limits: aggregation verified against telemetry rather than assumed, curtailment instructions issued and confirmed in minutes, storage and demand-response dispatch co-optimized against market prices and network constraints. Hosting-capacity studies run continuously against real grid-edge data instead of stale load models, so the interconnection queue stops moving against yesterday's network. Flexibility registers become a live contract: what each aggregated asset can deliver, when, at what confidence, verified per event."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: flexibility dispatch recommendations with verified headroom, curtailment-minimization plays that co-optimize storage and demand response, market participation proposals priced against delivery risk. Guardrails: aggregations below telemetry confidence never dispatch; network safety limits are hard constraints the optimizer cannot trade away; every instruction and confirmation is logged for the regulator. Integration points: DERMS platforms, ADMS, market interfaces, AMI head-end. The delta lands as curtailment recovered and flexibility revenue actually captured instead of administratively forfeited."
+  },
+  {
+   "t": "h3",
+   "x": "4. Outage and storm response orchestration"
+  },
+  {
+   "t": "p",
+   "x": "The build closes the loop between the outage management system, the network model, the crew state and the weather. Restoration sequencing optimizes customers-at-risk rather than call volume; crew staging is computed against predicted fault density and road reality; public ETAs are recomputed continuously from executed work rather than estimated once and defended forever. Every switching action writes back to the network model, so the ADMS stops drifting from the field and the after-action review reads from records instead of memory."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: storm-mode crew allocation, restoration-sequence recommendations with customers-at-risk quantified, ETA recalibration as conditions move, mutual-assistance requests sized by modeled need. Guardrails: safety-critical switching stays human-gated by design; every sequence carries its network snapshot for replay; crew safety constraints override optimization always. Integration points: OMS, ADMS, mobile workforce platforms, GIS, weather services. The delta lands as SAIDI and MAIFI improvement on the storms that dominate the decade's statistics, and after-action reviews that actually improve the next response."
+  },
+  {
+   "t": "h3",
+   "x": "5. NERC CIP evidence and OT segmentation"
+  },
+  {
+   "t": "p",
+   "x": "The build treats cyber events as operational events and compliance as a property of the running system. IEC 62443 zone-and-conduit models are designed against your actual network, then enforced and monitored: OT traffic baselines per zone, drift alerts, remote access brokered through identity with sessions recorded. NERC CIP evidence — asset classification, access reviews, change records, monitoring logs — generates continuously from the systems of record, with the electronic security perimeter documented as it actually is rather than as the last assessment drew it."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: zone health dashboards, access-risk reviews prioritized by consequence, incident playbooks tied to OT scenarios, bulk-electric-system impact analysis for change requests. Guardrails: no change enters a controlled system outside MOC; segmentation designs are validated with your OT engineers before deployment; monitoring is passive-first so the control path stays untouched. Integration points: SCADA networks, historians, identity providers, GRC tooling. NIS2 and DORA-class duties land on the same evidence pipeline, because the artifacts those regimes want are the ones a healthy OT estate produces anyway."
+  },
+  {
+   "t": "h3",
+   "x": "6. Settlement, imbalance and market decision support"
+  },
+  {
+   "t": "p",
+   "x": "The build joins scheduling, metered volumes and market statements into one settlement fabric: every imbalance invoice traceable to the schedules that caused it, every ancillary revenue stream auditable to the telemetry that earned it, every curtailment claim evidenced from SCADA and meter data rather than reconstructed from spreadsheets. Validation-edit-estimation rules from the MDM become explainable artifacts, so settlement disputes resolve against a shared record instead of dueling exports from the same systems."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: imbalance cost attribution by zone, product and forecast source; settlement dispute packs assembled automatically; ancillary-services performance tracked against obligation windows; curtailment claims evidenced end to end. Guardrails: every settlement figure carries its lineage; disputes freeze their evidence pack so positions cannot drift; finance and operations read the same numbers from the same fabric. Integration points: settlement systems, MDM, market interfaces, SCADA. The delta lands as imbalance cost down, disputes settled in weeks not quarters, and ancillary revenue finally audited to source."
   },
   {
    "t": "arch",
-   "title": "Reference architecture — Power Generation & Grid",
+   "title": "Reference architecture — the grid decision stack",
    "lanes": [
-    "Estates",
-    "Contracts",
-    "Lakehouse",
-    "Governance",
-    "Consumers",
-    "Actions"
+    "Grid estates",
+    "Telemetry and protocols",
+    "Data fabric",
+    "Decision services",
+    "Controls and evidence",
+    "Operations surfaces"
    ],
    "nodes": [
     {
-     "id": "es0",
+     "id": "ems",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "EMS and network model"
     },
     {
-     "id": "es1",
+     "id": "adms",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "ADMS and OMS"
     },
     {
-     "id": "ct2",
+     "id": "ami",
+     "lane": 0,
+     "label": "AMI head-end and MDM"
+    },
+    {
+     "id": "dga",
+     "lane": 0,
+     "label": "DGA and breaker monitors"
+    },
+    {
+     "id": "proto",
      "lane": 1,
-     "label": "Schema registry",
-     "hot": false
+     "label": "IEC 61850 and DNP3 ingestion"
     },
     {
-     "id": "ct3",
+     "id": "pmu",
      "lane": 1,
-     "label": "Quality gates",
-     "hot": false
+     "label": "Synchrophasor streams (IEEE C37.118)"
     },
     {
-     "id": "lh4",
-     "lane": 2,
-     "label": "Medallion lakehouse",
+     "id": "bus",
+     "lane": 1,
+     "label": "Governed stream bus",
      "hot": true
     },
     {
-     "id": "lh5",
+     "id": "contracts",
+     "lane": 1,
+     "label": "Schema contracts and freshness SLAs"
+    },
+    {
+     "id": "lake",
      "lane": 2,
-     "label": "Cost-aware storage",
-     "hot": false
+     "label": "Operations lakehouse",
+     "hot": true
     },
     {
-     "id": "gv6",
+     "id": "netmodel",
+     "lane": 2,
+     "label": "Network-model spine"
+    },
+    {
+     "id": "fcst",
      "lane": 3,
-     "label": "Lineage & catalog",
-     "hot": false
+     "label": "Load and DER forecast service"
     },
     {
-     "id": "gv7",
+     "id": "apm",
      "lane": 3,
-     "label": "Access policies",
-     "hot": false
+     "label": "Asset health engine"
     },
     {
-     "id": "cs8",
+     "id": "flex",
+     "lane": 3,
+     "label": "Flexibility dispatcher (DERMS)"
+    },
+    {
+     "id": "settle",
+     "lane": 3,
+     "label": "Settlement and imbalance engine"
+    },
+    {
+     "id": "replay",
      "lane": 4,
-     "label": "Origination & servicing",
-     "hot": false
+     "label": "Decision replay store"
     },
     {
-     "id": "cs9",
+     "id": "cip",
      "lane": 4,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "CIP evidence store"
     },
     {
-     "id": "ac10",
-     "lane": 5,
-     "label": "Owned decisions",
-     "hot": false
+     "id": "zone",
+     "lane": 4,
+     "label": "62443 zone monitor"
     },
     {
-     "id": "ac11",
+     "id": "cr",
      "lane": 5,
-     "label": "Metric disputes closed",
-     "hot": false
+     "label": "Control-room wallboard"
+    },
+    {
+     "id": "storm",
+     "lane": 5,
+     "label": "Storm and outage workbench"
+    },
+    {
+     "id": "desk",
+     "lane": 5,
+     "label": "Market and settlement desk"
     }
    ],
    "edges": [
     {
-     "a": "es0",
-     "b": "ct2"
+     "a": "ems",
+     "b": "proto"
     },
     {
-     "a": "es1",
-     "b": "ct3"
+     "a": "adms",
+     "b": "proto"
     },
     {
-     "a": "ct2",
-     "b": "lh4"
+     "a": "dga",
+     "b": "bus"
     },
     {
-     "a": "ct3",
-     "b": "lh5"
+     "a": "ami",
+     "b": "bus"
     },
     {
-     "a": "lh4",
-     "b": "gv6"
+     "a": "proto",
+     "b": "bus"
     },
     {
-     "a": "lh5",
-     "b": "gv7"
+     "a": "pmu",
+     "b": "bus"
     },
     {
-     "a": "gv6",
-     "b": "cs8"
+     "a": "bus",
+     "b": "contracts"
     },
     {
-     "a": "gv7",
-     "b": "cs9"
+     "a": "contracts",
+     "b": "lake"
     },
     {
-     "a": "cs8",
-     "b": "ac10"
+     "a": "lake",
+     "b": "netmodel"
     },
     {
-     "a": "cs9",
-     "b": "ac11"
+     "a": "lake",
+     "b": "fcst"
+    },
+    {
+     "a": "netmodel",
+     "b": "fcst"
+    },
+    {
+     "a": "lake",
+     "b": "apm"
+    },
+    {
+     "a": "lake",
+     "b": "flex"
+    },
+    {
+     "a": "lake",
+     "b": "settle"
+    },
+    {
+     "a": "fcst",
+     "b": "replay"
+    },
+    {
+     "a": "apm",
+     "b": "replay"
+    },
+    {
+     "a": "flex",
+     "b": "replay"
+    },
+    {
+     "a": "settle",
+     "b": "replay"
+    },
+    {
+     "a": "replay",
+     "b": "cip"
+    },
+    {
+     "a": "zone",
+     "b": "cip"
+    },
+    {
+     "a": "fcst",
+     "b": "cr"
+    },
+    {
+     "a": "settle",
+     "b": "desk"
     }
    ],
-   "note": "Lanes and nodes are named for Power Generation & Grid systems and workflows — not a generic stack."
+   "note": "Lanes and nodes are named for the systems a grid operator actually runs — the EMS, the ADMS, the AMI head-end, the DGA monitors, the settlement desk — not a generic reference stack. The hot nodes are where the program's differentiation concentrates: the governed stream bus carrying protocol-native telemetry, and the operations lakehouse that turns it into one answerable truth for forecasting, asset health, flexibility and settlement."
   },
   {
    "t": "h2",
-   "x": "Rules we build against"
+   "x": "The data plane: protocol-native streams with the grid model attached"
   },
   {
    "t": "p",
-   "x": "The binding regimes in Power Generation & Grid: NERC CIP, Electricity market codes. Designing against them early is what keeps later audits short."
+   "x": "Every decision gap in grid operations traces back to a data gap, and most of those gaps are engineering choices rather than physics. The EMS holds the transmission truth, the ADMS the distribution truth, the AMI head-end the consumption truth — in three protocols, three models and three cadences. The data plane's job is to make those views queryable together at decision speed: IEC 61850 and DNP3 ingested at native cadence, synchrophasors streamed with their time sync intact, meter reads joined per meter point, and the network model attached as the spine so every reading lands on the feeder, bay or transformer that produced it."
   },
   {
-   "t": "table",
-   "caption": "Regimes in scope for Power Generation & Grid",
-   "headers": [
-    "Regime",
-    "What it expects"
-   ],
-   "rows": [
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every value in the lakehouse can name its source system, transformation chain and quality state at read time, which is what makes the evidence layer possible later. Telemetry gaps from remote telemetry units and third-party DER arrive with gap metadata attached, so forecasts and dispatch degrade honestly. Weather, market prices and vegetation data join as first-class feeds, because the decisions a grid makes are always conditional on all three."
+  },
+  {
+   "t": "bullets",
+   "items": [
     [
-     "NERC CIP",
-     "bulk-system cyber standards"
+     "Protocol-native ingestion",
+     "IEC 61850, DNP3 and C37.118 streams consumed at their native cadence with event semantics preserved — synchrophasor time alignment verified, point maps documented, and the control path never touched"
     ],
     [
-     "Electricity market codes",
-     "balancing/settlement duties"
+     "The network-model spine",
+     "every reading tied to the feeder, bay or asset that produced it, reconciled to the EMS and ADMS models with field edits written back — model drift becomes a measurable, managed quantity"
     ],
     [
-     "EU network codes",
-     "operational duties"
+     "Quality gates with named owners",
+     "staleness, flatlines and sensor drift detected at ingest; the affected feature set quarantined and the owner paged, so a stuck RTU pages a technician rather than quietly degrading a forecast"
     ],
     [
-     "CSRD",
-     "emissions reporting"
+     "Grid-edge joins",
+     "AMI interval data, DER telemetry and billing-class reads joined per meter point and rolled to transformer and feeder, so planning finally consumes the edge it already measures"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "What happens before anything scales"
+   "x": "The decision layer: bounded dispatch with replay"
   },
   {
    "t": "p",
-   "x": "For Power Generation & Grid, the first move costs little: a two-week diagnostic on forecasting under intermittency, your data, one honest baseline. The scoped proposal only follows if the measured delta justifies it."
+   "x": "Grid operations run on decisions with regulatory tails: a bid submitted to a market, a curtailment instruction issued to a community, a switching sequence that de-energizes a street. The decision layer treats every one as a first-class object — inputs, model version, constraints active, expected delta, human approval — stored in a replay service that can re-derive any decision months later for a regulator, an after-action review or an engineer asking what the system knew at the time. Champion and challenger run permanently: every forecasting method, dispatch policy and restoration heuristic competes against the incumbent on locked baselines before it earns traffic."
+  },
+  {
+   "t": "p",
+   "x": "The guardrails are as engineered as the models. Recommendations are bounded by validated network and safety envelopes; anything approaching a boundary escalates with its reasoning attached. Decision rights are explicit — what the system may do alone, what it drafts for approval, what stays human by regulation or choice. Uncertainty travels forward rather than being averaged away: a forecast without its confidence interval never reaches a bid, and a flexibility dispatch without its verification status never reaches a community. The result is optimization the control room, the market desk and the regulator can all interrogate."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: digital workers on the paperwork frontier"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work in grid operations is evidentiary: assembling CIP evidence packs, preparing settlement dispute files, reconciling DER aggregation records, drafting restoration after-action reports, maintaining third-party registers. These are retrieval, assembly and cross-checking jobs with clear success criteria — ideal for governed agents that work inside the platform with role scopes, tool allow-lists and complete run logs. Each agent ships with an evaluation suite: golden cases where the right answer is known, adversarial cases where the tempting answer is wrong, and a human checkpoint at every boundary that matters."
+  },
+  {
+   "t": "p",
+   "x": "Where generative capability adds leverage — summarizing storm logs, drafting narrative sections of regulatory submissions, translating protection settings documents into structured records — it operates with retrieval grounding against your estate and provenance stamps on every claim. No agent issues a switching order, submits a market bid or grants remote access; those boundaries are architectural. The agentic layer's output is reviewed work moving faster, with the audit trail to prove it — which is the difference between automation that survives a CIP audit and automation that becomes the finding."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: audit as a query"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory surface of grid operations is the densest in infrastructure: bulk-power cyber standards, OT security engineering, resilience regimes for essential entities, network and market codes, sustainability reporting and consumer-privacy duties on meter data. Programs here fail when evidence is a project and succeed when evidence is a property of the running system. The table maps the regimes that shape grid builds to the artifacts each build generates continuously — every row is produced as a by-product of operation, not assembled at audit time."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape grid builds — and the evidence layer each one draws on",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What the build produces"
+   ],
+   "rows": [
+    [
+     "NERC CIP (bulk power)",
+     "Asset classification, access management, monitoring, incident response with auditable evidence",
+     "Continuous evidence pipeline: access reviews, logs and change records generated from the systems of record"
+    ],
+    [
+     "IEC 62443 and OT segmentation",
+     "Zones and conduits, access control, monitoring of the OT estate",
+     "Enforced zone model, OT traffic baselines with drift alerts, remote-access sessions recorded and reviewable"
+    ],
+    [
+     "NIS2 and DORA-class resilience",
+     "Governance, incident reporting, resilience testing for essential services",
+     "Incident playbooks tied to grid scenarios, test evidence and third-party registers maintained live"
+    ],
+    [
+     "Network and market codes",
+     "Operational duties, scheduling and reporting obligations, imbalance settlement discipline",
+     "Schedule-to-meterage lineage, imbalance attribution, curtailment claims evidenced from SCADA and meter data"
+    ],
+    [
+     "CSRD and sustainability assurance",
+     "Auditable emissions and energy data across the value chain",
+     "Reporting spine with lineage to telemetry; assurance queries answered as database queries"
+    ],
+    [
+     "Privacy and meter-data duties",
+     "Lawful basis, minimization and access rules over consumption data",
+     "Purpose-scoped access enforced at execution; aggregation policy tested; DSAR joins across meter and customer records"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the estate stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Grid estates are layered over decades — EMS from one vendor, ADMS from another, MDM inherited through mergers, condition monitors bolted on as projects — and the fastest way to stall a program is to treat that as debt to repay before starting. Dataq Software wraps the estate instead: adapters at native cadence, normalizers for vendor formats, schema contracts that make each upstream system answerable for freshness and shape. Control systems are read-first by policy; nothing writes into a controlled system without your management-of-change process, and most builds never need to."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment. Condition-monitoring vendors, weather services, DER aggregators, meter-data processors and market interfaces all become contract parties to the data plane: formats specified, freshness SLAs enforced, test harnesses run per delivery. When a vendor changes a format, the contract test fails before the decision layer notices — which is the difference between an integration estate and an integration apology. Aggregator telemetry gets the strictest contracts of all, because dispatching on unverified aggregation is how flexibility programs lose their credibility."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Read-first control integration",
+     "every path into EMS, ADMS or substation automation starts read-only at native cadence; write access is designed only where a workflow demands it and executed through your MOC process with your engineers in the loop"
+    ],
+    [
+     "Aggregator verification contracts",
+     "DER aggregations verified against meter and telemetry evidence per event, with confidence scoring and dispatch blocks when verification lapses — flexibility markets run on verified megawatts, not promises"
+    ],
+    [
+     "MDM and settlement bridges",
+     "validation-edit-estimation rules surfaced as explainable artifacts, settlement interfaces contract-tested per market cycle, so disputes resolve against a shared record rather than dueling exports"
+    ],
+    [
+     "Contract-tested weather and price feeds",
+     "forecast providers, price curves and registry interfaces behind freshness SLAs and golden-day replay tests, because a stale weather feed is a silent forecast killer"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement. It opens with a two-week diagnostic on the workflow you nominate — not a maturity assessment of the whole estate — and the diagnostic's product is a baseline in your own telemetry, a named delta with the confounders listed, and a scoped proposal only if the delta justifies the build. You keep the measurement design either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "workflow instrumentation, leak quantification, contract inventory, feasibility read with the delta estimate and the confounders named in writing"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane of the workflow live behind flags with replay and evidence running from day one — one control zone's forecast, one transformer fleet's condition ledger"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "controls landed, quality gates live, remaining zones and fleets added, capacity and decision telemetry reporting to the operations review"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "forecasting methods, dispatch policies and restoration heuristics re-evaluated in the registry, baselines re-verified, the roadmap re-priced against measured deltas"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs inside your operating rhythm, not a parallel program tower: our engineers sit with control-room supervisors, protection engineers and the settlement desk, work through your change process for anything that touches a governed system, and hand over runbooks, evaluation suites and registry entries as gate conditions during expansion — not as a closing document after the invoice."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones grid programs are managed on. The targets are design goals set per estate during the diagnostic — operating ranges comparable programs have achieved, not market statistics — and each one is measured from system telemetry against a locked baseline rather than from a status deck."
+  },
+  {
+   "t": "table",
+   "caption": "Grid program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Forecast error feeding imbalance",
+     "15-30% weighted reduction; the published record shows 31% across three control zones",
+     "Backcast league table against locked baselines, by zone and product"
+    ],
+    [
+     "Imbalance and curtailment cost",
+     "25-50% reduction in attributable cost",
+     "Settlement statements tracked against baseline, control group where markets allow"
+    ],
+    [
+     "SAIDI and MAIFI on monitored feeders",
+     "10-25% improvement, weather-normalized",
+     "OMS telemetry against pre-program baseline, storm events analyzed separately"
+    ],
+    [
+     "Unscheduled outages on monitored assets",
+     "20-40% fewer on the instrumented fleet",
+     "Availability ledger reconciled to historian, CMMS and protection records"
+    ],
+    [
+     "Flexibility revenue captured",
+     "Curtailment recovered and verified dispatch up year on year",
+     "Market statements and curtailment records reconciled to dispatch confirmations"
+    ],
+    [
+     "CIP evidence effort",
+     "60-80% less manual assembly per cycle",
+     "Auditor-hours from compliance calendar telemetry, sampling coverage verified to schedule"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A grid build team is small and senior: a lead engineer who has carried operational or protection responsibility, data engineers fluent in protocol semantics and meter data, an optimization specialist who treats solver behavior as an empirical question, and a delivery lead who has carried an operations pager during storm mode. The team sits with control-room supervisors, asset engineers and the settlement desk — not in a program tower — because the context that makes the difference lives in the switching log, the DGA trend and the conversation before a window is committed."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: a weekly operations review on the metric, a monthly delta review against the locked baseline with finance in the room, and quarterly challenger sessions where forecasting methods, dispatch policies and prioritization models defend their traffic. Runbooks, evaluation suites and the decision-replay store transfer to your teams as gate conditions during expansion, so the program's dependency on us shrinks on a schedule rather than by negotiation."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs in this sector fail in known ways, and most of the failure modes are organizational wearing a technical costume. We name them here because prevention is a design decision, not a cultural aspiration."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "a demo built on extracted data that never integrates — prevented by shipping the first vertical slice through your change process, flags and gates included, within the first two months"
+    ],
+    [
+     "Model drift from the network",
+     "forecasts and studies running against a network model the field has quietly outgrown — the network-model spine reconciles field edits continuously or the build is not done"
+    ],
+    [
+     "Dispatching unverified flexibility",
+     "DER aggregations assumed rather than verified — telemetry confidence is a dispatch gate, and the block fires before the regulator asks why the megawatts never arrived"
+    ],
+    [
+     "CIP evidence debt",
+     "audit preparation consuming a team every cycle because artifacts were manual — the evidence layer generates them continuously or the build is not done"
+    ],
+    [
+     "Control-room rejection",
+     "a dashboard the operators ignore because it contradicts the alarm philosophy or hides its provenance — operator co-design and decision replay are how trust gets built"
+    ],
+    [
+     "Metric gaming",
+     "SAIDI improving on paper while complaints rise — reliability metrics are weather-normalized and audited against complaint and call records, not self-reported from the OMS"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions grid operations leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do you touch the EMS or protection systems?",
+     "We read. Write paths to any controlled system go through your MOC process with your engineers in the loop, and most builds never need them. Recommendations land in operator workflows; the control room keeps its authority."
+    ],
+    [
+     "Can this work with a partial AMI rollout?",
+     "Yes — the fabric starts with what exists, and the diagnostic names where sensing investment pays. Forecasts and studies degrade honestly where coverage is thin, and the coverage map becomes a capital argument."
+    ],
+    [
+     "How do you handle vendor-locked SCADA and MDM exports?",
+     "Adapters and normalizers are part of the build. Your licenses stay; the export contracts change so decisions can consume the data. Every vendor interface ships with schema contracts and freshness SLAs."
+    ],
+    [
+     "What happens to our operators and dispatchers?",
+     "Their judgment moves up a level: the build assembles context and drafts options; humans approve, sequence and own the risk decisions. Programs are justified in decisions per shift, not headcount removed."
+    ],
+    [
+     "How does this survive a NERC CIP audit?",
+     "Every artifact ships with lineage, scope boundaries and approval gates. The audit reads the build as another managed system — and the evidence layer makes that read fast because the records are already structured."
+    ],
+    [
+     "Can you price against the delta rather than the effort?",
+     "Yes, where the metric is clean. Forecast error, imbalance cost, reliability indices and evidence effort all baseline in your telemetry during the diagnostic; the feasibility read names the confounders first."
+    ],
+    [
+     "What is the smallest program worth running?",
+     "One control zone's forecast, one transformer fleet's condition ledger, or one settlement dispute stream — whichever has the cleanest baseline. If the diagnostic cannot measure the delta in two weeks, we say so and stop."
+    ],
+    [
+     "Who owns the models after you leave?",
+     "Your teams, with runbooks, model documentation, evaluation suites and the decision-replay store transferred as gate conditions during expansion. Several programs run entirely in-house after the second quarter."
+    ]
+   ]
   },
   {
    "t": "cta",
-   "x": "Bring operations in Power Generation & Grid to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
+   "x": "Bring the control room, the asset team or the settlement desk into a 45-minute technical briefing with the practice lead. We will walk the forecasting, asset-health or CIP-evidence build against your EMS and MDM estate, and leave you the feasibility read either way."
   }
  ],
- "words": 351,
+ "words": 5414,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Energy & Utilities",

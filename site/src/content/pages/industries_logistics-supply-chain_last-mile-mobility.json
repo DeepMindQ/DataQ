@@ -5,267 +5,763 @@
  "template": "subindustry_page",
  "breadcrumb": "Industries > Logistics & Supply Chain > Last-Mile & Urban Logistics",
  "seo_title": "Last-Mile & Urban Logistics | Dataq Software",
- "meta_description": "Last mile is the costliest mile: route density, delivery promise, failed-delivery economics and urban access rules.",
+ "meta_description": "How Dataq Software engineers last-mile delivery: dynamic routing with time windows, capacity-backed delivery promises, driver app and proof-of-delivery engineering, failed-delivery recovery agents, sortation telemetry and EV fleet planning — built for parcel, grocery and urban delivery networks.",
  "blocks": [
   {
    "t": "hero",
-   "x": "Last mile is the costliest mile: route density, delivery promise, failed-delivery economics and urban access rules. Dynamic routing, fleet telemetry and micro-hub orchestration decide whether the final mile makes money. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
+   "x": "The last mile is the costliest mile because it is the least dense: one driver, one van, one doorstep at a time, against a promise the customer can see and a city that taxes the plan with congestion, access rules and weather. The economics are decided in the decision machinery underneath — how precisely the promise was set at checkout, how well the route balanced density against service, how early a failed delivery was caught, and whether the second attempt was engineered or improvised. This page is the engineering picture of that machinery for parcel networks, urban carriers and grocery and food delivery operations — the systems it runs on, the exact points where it leaks, and the six deep builds Dataq Software ships to fix them."
   },
   {
    "t": "h2",
-   "x": "The setting, described honestly"
+   "x": "How a parcel actually reaches the door"
   },
   {
    "t": "p",
-   "x": "The work concentrates in dynamic routing, delivery promise management, failed-delivery recovery, with micro-hub operations close behind. Volume grows on every path; the decision layer has not kept up. That gap is measurable, and it is the work."
+   "x": "On urban delivery networks, the parcel's journey is a chain of promises and handoffs. The promise is set at checkout — a window, a cutoff, a dynamic ETA — and it becomes the constraint every downstream system plans against. The order allocates to a hub or micro-fulfillment node; sortation inducts it through scanners, sorters and put walls; the routing engine solves the vehicle routing problem with time windows against stop density, driver hours, vehicle capacity and urban access rules; the manifest loads to a driver app with geocoded stops, attempt instructions and notification triggers that will chase the van all afternoon."
+  },
+  {
+   "t": "p",
+   "x": "The doorstep is where economics and experience collide. The driver app captures scans, photos and signatures as proof of delivery; failed attempts generate exception codes, redelivery bookings or redirects to parcel shops and lockers; customer notifications run ahead of the van, and WISMO calls follow every promise the ETA engine misses. Behind the van, the network optimizes density: pickup-point networks concentrate demand, courier capacity forecasts area by area and hour by hour, fleet telematics and EV charging schedules shape what the fleet can physically do tomorrow morning."
+  },
+  {
+   "t": "p",
+   "x": "The urban layer adds rules: low-emission zones and tolls that reprice corridors, time windows that shrink delivery hours, buildings that constrain access. Returns run the same network in reverse with their own promise and economics. The systems underneath — routing engines, dispatch consoles, driver apps, sortation control, notification stacks, telematics — are competent individually and disconnected jointly, which is why the same network that hits strong first-attempt success in one city misses promises in the next: the difference is decision machinery, not effort."
   },
   {
    "t": "h2",
-   "x": "The friction, located precisely"
+   "x": "The estate underneath: systems the last mile actually runs on"
   },
   {
    "t": "p",
-   "x": "The queues and waits that come up first — Last-Mile & Urban Logistics edition:"
+   "x": "Programs here succeed or fail on how honestly the estate is mapped: the routing engine's constraints, the app's offline behavior, the notification stack's latency, the sort plan's assumptions. The table below is the estate Dataq Software most often finds in parcel, grocery and food-delivery networks — and where each layer strains under peak, weather and city rules. It is specific because the failure patterns live in the specifics."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "The last-mile estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
     [
-     "Routing at density",
-     "Dynamic multi-stop routing exceeds solver time budgets."
+     "Routing and scheduling engine",
+     "Vehicle routing with time windows: stop sequencing, capacity, hours, service times",
+     "Solve-time budgets force frozen routes; re-optimization on disruption is manual and slow"
     ],
     [
-     "Promise accuracy short",
-     "Delivery windows missed; WISMO calls climb."
+     "Delivery promise and ETA service",
+     "Checkout promises, cutoffs, dynamic ETAs, window commitments",
+     "Promises set without capacity truth; ETAs static while the day diverges from the plan"
     ],
     [
-     "Fleet and parcel blind",
-     "Vehicle/parcel telemetry sparse; failed deliveries unexplained."
+     "Driver app and dispatch console",
+     "Manifests, navigation, scans, POD capture, exception codes, messaging",
+     "Offline gaps and geocode errors corrupt the record; exception codes free-texted by drivers"
     ],
     [
-     "Exception handling manual",
-     "Address issues and redeliveries by call center."
+     "Sortation and hub control",
+     "Induction, sorters, put walls, load planning to vans",
+     "Sort plans assume yesterday's volume; chute allocation manual at peak; departures slip"
     ],
     [
-     "Demand spikes unpredicted",
-     "Promotion/seasonal surges break capacity."
+     "Customer notification stack",
+     "ETA updates, delivery windows, failed-delivery options, feedback prompts",
+     "Messages lag the van; options offered without the capacity to honor them"
     ],
     [
-     "Electrification planning crude",
-     "EV fleet charging/range planning by spreadsheet."
+     "Fleet and telematics estate",
+     "Vehicle positions, driver hours, fuel or energy state, maintenance signals",
+     "Telemetry read for safety only; capacity and density analytics disconnected from it"
+    ],
+    [
+     "PUDO and locker network",
+     "Parcel shop and locker allocation, opening hours, capacity state",
+     "Allocation blind to real-time capacity; redirects fail at the locker door"
+    ],
+    [
+     "Returns and reverse logistics",
+     "Returns pickups, drop-off routing, refurbishment and disposition flows",
+     "Reverse volume unplanned; pickups cannibalize delivery capacity without visibility"
+    ],
+    [
+     "Fleet planning and EV charging",
+     "Depot schedules, charging windows, range budgets, energy costs",
+     "Charging planned in spreadsheets; range anxiety resolved by padding routes with waste"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The system, piece by piece"
+   "x": "Where the last mile leaks money"
   },
   {
    "t": "p",
-   "x": "The proof in Last-Mile & Urban Logistics is a working system on a real workflow. These are the builds that go live:"
+   "x": "Ask delivery operations leaders where the money leaks and the answers rhyme across parcel, grocery and food networks. The eight below recur everywhere; the mix differs by city and operating model, which is why the diagnostic scores them in your telemetry before any build is priced rather than assuming the average network."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Routing engines",
-     "quantum-inspired routing benchmarked vs. classical"
+     "Promises set without capacity truth",
+     "Checkout promises are marketing decisions wearing an operations costume. When the promise engine cannot see depot capacity, courier supply and historical density, the network inherits promises it cannot keep, and every miss compounds into refunds, WISMO contacts and churn that never gets attributed to its cause."
     ],
     [
-     "Promise engine",
-     "ETA models per stop with confidence"
+     "Routes frozen against a moving day",
+     "The routing solver runs overnight against assumptions; by mid-morning the day has diverged — cancellations, traffic, a sick driver, a locker down. Re-optimization is manual, so density evaporates and overtime covers the gap the solver was bought to close."
     ],
     [
-     "Parcel telemetry",
-     " POD and condition sensing"
+     "Failed deliveries engineered by nobody",
+     "The failed attempt is the most expensive event in the network: a second trip, a WISMO call, a refund, a churn risk. Attempt protocols, redelivery options and PUDO redirects exist as policy documents, not as decision services with capacity awareness behind them."
     ],
     [
-     "Exception agents",
-     "address/availability issues remediated via customer channels"
+     "Geocode and address quality unmanaged",
+     "Ambiguous addresses, missing access codes and new-build estates send drivers to the wrong door. The errors are visible in POD telemetry and attempt outcomes; nobody owns the feedback loop that fixes the address master before the next van loads."
     ],
     [
-     "Surge forecasting",
-     "demand prediction by area/hour"
+     "Sortation blind to demand",
+     "Sort plans assume yesterday's volume profile; promotions and weather break the assumption. Induction queues, chute conflicts and van-loading waits surface as late departures, and the delay lands on the route plan as an unexplained headwind nobody prices."
+    ],
+    [
+     "Courier supply planned on averages",
+     "Capacity forecasts by area and hour run on last quarter's averages, so surges are absorbed by expensive spot supply and quiet periods by idle hours. Gig-versus-employed economics are decided by policy habit, not by modeled cost per drop under uncertainty."
+    ],
+    [
+     "EV transitions padded with waste",
+     "Range budgets padded for fear of a dead van defeat the point of electrification. Charging windows conflict with delivery peaks; depot power limits go unmodeled; urban access rules that reward clean vehicles are not represented anywhere in the plan."
+    ],
+    [
+     "Doorstep experience unmeasured",
+     "NPS at the door, driver courtesy, condition on arrival — the moments that decide app-store ratings and repeat purchase — live in survey spreadsheets disconnected from the telemetry that would explain them, so improvements are guessed rather than engineered."
     ]
    ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight: the network's physics are instrumented — scans, GPS, POD photos, sorter counts — but its decisions run on yesterday's assumptions. Promise, route and recovery are three decision systems that never see each other's state. That is why the first build here is the parcel event spine, and the promise engine is the second."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works last-mile and mobility"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate the network already runs — the routing engine you plan with, the driver app your couriers carry, the sortation control your hubs depend on. No replacement-platform story, no pilot that dies at the depot door. The engagement is engineering-first: a two-week diagnostic that baselines one region end to end — promise-to-doorstep for one city or one hub — with the leak quantified in the network's own scans, GPS traces, POD outcomes and contact logs."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver in this sub-industry. First, every automated decision carries replay: promise assignments, route plans, attempt outcomes and exception decisions store inputs, versions and reason codes, so a refund dispute or a carrier-performance review is a query. Second, autonomy is policy-gated: agents re-route, re-book and re-promise within the constraints service and safety teams define, and every gate crossing is logged. Third, evidence is a by-product: the POD packs, temperature dossiers and delivery attestations a customer or insurer asks for are generated as the parcel moves."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same logic. Where the metric is clean — failed-delivery rate, first-attempt success, stops per hour, promise accuracy — we contract against the delta with the baseline locked during the diagnostic; where it is confounded, we say so in the feasibility read and scope fixed-fee instead. The published record includes a parcel network moving 12 million parcels a week that cut failed deliveries 34% with the promise-engine and exception-agent pattern this page describes."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for the last mile"
+  },
+  {
+   "t": "p",
+   "x": "Each build below is named for the workflow it changes, sized in the diagnostic against your network and courier community, and shipped with the controls the workflow's regulators and customers expect. None require replacing the routing engine or the app; all require taking the parcel's data contracts seriously, because at the doorstep the data contract is the customer promise."
+  },
+  {
+   "t": "h3",
+   "x": "1. Dynamic routing and stop-density management"
+  },
+  {
+   "t": "p",
+   "x": "The routing build treats the vehicle routing problem with time windows as a living service, not an overnight batch. The formulation library encodes what actually constrains the day: service times by stop type, building access, vehicle capacity and compartments, driver hours, urban access zones and promised windows. Solver tournaments benchmark exact, heuristic and metaheuristic approaches on your real instances against the incumbent engine, and the winner deploys behind a plan-versus-execute interface with warm starts."
+  },
+  {
+   "t": "p",
+   "x": "Execution is where the build earns its keep: re-optimization on disruption within policy — a breakdown, a cancellation, a locker outage — with guardrails enforcing hours law, access zones and promises automatically. Density is managed as a first-class metric: stops per hour by geography and daypart, pickup-point allocation that concentrates demand where density pays, and route shapes reviewed quarterly against the density they actually achieved rather than the density the plan promised."
+  },
+  {
+   "t": "h3",
+   "x": "2. The delivery promise and ETA engine"
+  },
+  {
+   "t": "p",
+   "x": "The promise build connects checkout to operations truth. Promise options are priced from depot capacity, courier supply, historical density per area and hour, and the access constraints the city imposes — so the windows offered are windows the network can keep. Dynamic ETAs update continuously from telematics, stop progress and dwell history, with confidence intervals the notification stack respects: customers hear about a slip before it becomes a WISMO call."
+  },
+  {
+   "t": "p",
+   "x": "Every promise decision is replayable — inputs, model versions, the capacity state the promise was priced against — so the question of why a window was offered here is a query, not an argument. Promise accuracy reports from the same store, segmented by area, daypart and product. In the published record, a parcel network moving 12 million parcels a week ran this engine alongside exception agents and cut failed deliveries 34% — the delta the program was justified on."
+  },
+  {
+   "t": "h3",
+   "x": "3. Driver app and proof-of-delivery engineering"
+  },
+  {
+   "t": "p",
+   "x": "The app build treats the driver as the network's primary sensor and its most expensive decision maker. Manifests arrive with clean geocodes, access instructions and attempt guidance; scans, photos, signatures and exception codes capture against a controlled vocabulary instead of free text; offline-first sync means a basement or a rural dead zone does not corrupt the record. Geocode quality runs as a managed loop: POD outcomes and attempt telemetry feed the address master continuously."
+  },
+  {
+   "t": "p",
+   "x": "POD becomes evidence, not decoration: photo and signature packs bind to the parcel's journey with timestamps and location attestations, ready for the dispute, the insurance claim or the retailer's audit without assembly. Driver-facing guardrails — hours state, access-zone awareness, safe-at-door policies — appear as decision support rather than surveillance, and adoption telemetry reports honestly, because an app the drivers route around is worse than no app at all."
+  },
+  {
+   "t": "h3",
+   "x": "4. Failed-delivery recovery and returns agents"
+  },
+  {
+   "t": "p",
+   "x": "The recovery build treats the failed attempt as a decision problem with options: re-attempt scheduling against density, redirect to a parcel shop or locker with real-time capacity, customer-channel rescheduling, return-to-depot with a recovery plan. Agents run the options within policy — what may be re-promised, which redirects are free, when the customer must be asked — and every option is priced against capacity truth before it is offered to anyone."
+  },
+  {
+   "t": "p",
+   "x": "Returns run the same machinery in reverse: pickup requests scheduled into existing route density, drop-off flows directed to nodes with capacity, refunds and swaps triggered on verified receipt. Every agent run logs to the evidence store, and the root-cause loop feeds address quality, promise policy and packaging decisions upstream. The published parcel-network program ran this pattern at scale: failed deliveries down 34%, with the recovery options customers actually accepted reporting into the same telemetry."
+  },
+  {
+   "t": "h3",
+   "x": "5. Sortation telemetry and hub orchestration"
+  },
+  {
+   "t": "p",
+   "x": "The hub build instruments the physics between arrival and departure: induction queues, sorter throughput, chute allocation, put-wall density, van-loading waits. Sort plans re-plan against actual volume forecasts rather than yesterday's profile; chute conflicts resolve algorithmically before they queue; departure integrity — did every planned load leave complete and on time — reports per wave with the delay causes attached to it."
+  },
+  {
+   "t": "p",
+   "x": "Peak is the design target, not the exception. Capacity models per hub, surge forecasting by area and daypart, and elastic staffing plans keyed to the same forecast turn the sortation floor from a bottleneck into a buffer. Every flow decision carries replay, so the post-peak review asks the system why rather than the veterans, and the answers improve next peak's plan instead of next peak's folklore."
+  },
+  {
+   "t": "h3",
+   "x": "6. Fleet, EV and urban-access planning"
+  },
+  {
+   "t": "p",
+   "x": "The fleet build joins telematics, energy and city rules into one planning surface. Vehicle assignments respect range budgets computed from actual route energy profiles, not manufacturer estimates; charging windows schedule against depot power limits and delivery peaks; urban access rules — emission zones, tolls, time windows — enter the routing formulation as constraints the plan cannot quietly violate, with compliance evidence generated per route."
+  },
+  {
+   "t": "p",
+   "x": "Capacity planning gets the same discipline: courier supply forecast by area and hour with gig-versus-employed cost models under uncertainty, so surge staffing is a priced decision rather than a reflex. Telematics feeds maintenance and safety programs through the same lakehouse, and the fleet's true cost per drop — energy, lease, driver, access charges — reports per route, ending the era of blended per-kilometer averages."
   },
   {
    "t": "arch",
-   "title": "Reference architecture — Last-Mile & Urban Logistics",
+   "title": "Reference architecture — the last-mile decision stack",
    "lanes": [
-    "Crypto estate",
-    "Inventory",
-    "Migration factory",
-    "Hybrid phase",
-    "Assurance",
-    "Business"
+    "Operational estate",
+    "Event streams",
+    "Decision services",
+    "Agentic layer",
+    "Evidence and controls",
+    "Business surfaces"
    ],
    "nodes": [
     {
-     "id": "ce0",
+     "id": "sort",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Sortation control"
     },
     {
-     "id": "ce1",
+     "id": "wmsf",
      "lane": 0,
-     "label": "PKI & key stores",
-     "hot": false
+     "label": "Fulfillment and micro-hub systems"
     },
     {
-     "id": "inv2",
+     "id": "fleet",
+     "lane": 0,
+     "label": "Fleet telematics and EV charging"
+    },
+    {
+     "id": "lock",
+     "lane": 0,
+     "label": "PUDO and locker estate"
+    },
+    {
+     "id": "appgw",
      "lane": 1,
-     "label": "Crypto-agility inventory",
+     "label": "Driver app backend"
+    },
+    {
+     "id": "geo",
+     "lane": 1,
+     "label": "Geocode and address services"
+    },
+    {
+     "id": "spine",
+     "lane": 1,
+     "label": "Parcel event spine",
      "hot": true
     },
     {
-     "id": "inv3",
-     "lane": 1,
-     "label": "Risk-ranked CBOM",
-     "hot": false
+     "id": "lake",
+     "lane": 2,
+     "label": "Delivery decision lakehouse"
     },
     {
-     "id": "mf4",
+     "id": "dens",
      "lane": 2,
-     "label": "PQC migration factory",
+     "label": "Stop-density analytics"
+    },
+    {
+     "id": "prom",
+     "lane": 2,
+     "label": "Promise and ETA service",
      "hot": true
     },
     {
-     "id": "mf5",
+     "id": "router",
      "lane": 2,
-     "label": "ML-KEM / ML-DSA rollout",
-     "hot": false
+     "label": "Routing decision service"
     },
     {
-     "id": "hp6",
+     "id": "exag",
      "lane": 3,
-     "label": "Hybrid classical+PQC",
-     "hot": false
+     "label": "Recovery and returns agents",
+     "hot": true
     },
     {
-     "id": "hp7",
+     "id": "dispw",
      "lane": 3,
-     "label": "Backward compatibility",
-     "hot": false
+     "label": "Dispatch workbench"
     },
     {
-     "id": "asr8",
+     "id": "replay",
      "lane": 4,
-     "label": "Interop test suites",
-     "hot": false
+     "label": "Decision replay store"
     },
     {
-     "id": "asr9",
+     "id": "podv",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "POD evidence store"
     },
     {
-     "id": "bs10",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "acc",
+     "lane": 4,
+     "label": "Urban-access compliance log"
     },
     {
-     "id": "bs11",
+     "id": "tower",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Network control tower"
+    },
+    {
+     "id": "notif",
+     "lane": 5,
+     "label": "Customer notification service"
+    },
+    {
+     "id": "csat",
+     "lane": 5,
+     "label": "Doorstep experience feed"
+    },
+    {
+     "id": "fpd",
+     "lane": 5,
+     "label": "Fleet planning desk"
     }
    ],
    "edges": [
     {
-     "a": "ce0",
-     "b": "inv2"
+     "a": "sort",
+     "b": "spine"
     },
     {
-     "a": "ce1",
-     "b": "inv3"
+     "a": "wmsf",
+     "b": "spine"
     },
     {
-     "a": "inv2",
-     "b": "mf4"
+     "a": "appgw",
+     "b": "spine"
     },
     {
-     "a": "inv3",
-     "b": "mf5"
+     "a": "geo",
+     "b": "appgw"
     },
     {
-     "a": "mf4",
-     "b": "hp6"
+     "a": "fleet",
+     "b": "spine"
     },
     {
-     "a": "mf5",
-     "b": "hp7"
+     "a": "lock",
+     "b": "spine"
     },
     {
-     "a": "hp6",
-     "b": "asr8"
+     "a": "spine",
+     "b": "lake"
     },
     {
-     "a": "asr8",
-     "b": "asr9"
+     "a": "lake",
+     "b": "dens"
     },
     {
-     "a": "hp7",
-     "b": "bs10"
+     "a": "lake",
+     "b": "prom"
     },
     {
-     "a": "asr9",
-     "b": "bs11"
+     "a": "dens",
+     "b": "router"
+    },
+    {
+     "a": "prom",
+     "b": "notif"
+    },
+    {
+     "a": "spine",
+     "b": "exag"
+    },
+    {
+     "a": "exag",
+     "b": "dispw"
+    },
+    {
+     "a": "exag",
+     "b": "replay"
+    },
+    {
+     "a": "router",
+     "b": "appgw"
+    },
+    {
+     "a": "prom",
+     "b": "tower"
+    },
+    {
+     "a": "router",
+     "b": "tower"
+    },
+    {
+     "a": "podv",
+     "b": "csat"
+    },
+    {
+     "a": "acc",
+     "b": "fpd"
     }
    ],
-   "note": "Lanes and nodes are named for Last-Mile & Urban Logistics systems and workflows — not a generic stack."
+   "note": "Lanes and nodes are named for the systems an urban delivery build actually touches — sortation control, the driver app backend, the PUDO and locker estate, the promise and routing services, and the recovery agents that work the failed attempts. The hot nodes are where differentiation concentrates: the parcel event spine that joins every scan and GPS ping, the promise service priced from capacity truth, and the agents that recover the day without a call center."
   },
   {
    "t": "h2",
-   "x": "Regulatory ground truth"
+   "x": "The data plane: scans, sensors and one parcel record"
   },
   {
    "t": "p",
-   "x": "Urban access/lez rules — zone compliance duties. Programs here are designed against these duties from the first sprint; evidence is a by-product of running the system, not an audit-season project."
+   "x": "The last mile generates the densest event streams in logistics — scans at every touch, GPS at seconds, photos at doorsteps, sorter counts per chute — and loses most of them into system-specific stores that never reconcile. The data plane build lands these streams into a governed lakehouse as one parcel record: allocation, induction, route assignment, stop progress, attempt, outcome and return, each event with its source, its geocode quality and its latency."
   },
   {
-   "t": "table",
-   "caption": "Regimes in scope for Last-Mile & Urban Logistics",
-   "headers": [
-    "Regime",
-    "What it expects"
-   ],
-   "rows": [
+   "t": "p",
+   "x": "Governance is engineered: schema contracts with the routing, app, sortation and notification teams as named owners; freshness SLAs on the streams dispatch actually plans against; data-quality gates on identifiers, geocodes and stop sequences, because a routing engine fed ambiguous reference data produces confident nonsense at the kerb. The record the contact center sees is the record the dispatcher planned against, which is what makes promise conversations short."
+  },
+  {
+   "t": "bullets",
+   "items": [
     [
-     "Urban access/LEZ rules",
-     "zone compliance duties"
+     "One parcel record from scan to return",
+     "Allocation, sortation, routing, attempt and reverse events joined per parcel with source and latency, ending the per-system truth problem that makes every dispute an archaeology exercise"
     ],
     [
-     "Driver-hours law",
-     "scheduling compliance"
+     "Streaming telematics ingestion",
+     "Vehicle positions, driver hours and energy state with exactly-once semantics into the lakehouse, keeping ETA and dispatch surfaces current enough to act on"
     ],
     [
-     "GDPR",
-     "recipient data"
+     "Geocode quality as a managed loop",
+     "POD outcomes and attempt telemetry feeding the address master continuously, with drift reporting per estate and postcode district so fixes land before the next van loads"
     ],
     [
-     "Consumer rules",
-     "delivery promises"
+     "Notification event contracts",
+     "Every customer message tied to the parcel events that justify it, so the stack stops promising what operations cannot see and WISMO stops paying for it"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Where a program starts"
+   "x": "The decision layer: promises, routes and attempts"
   },
   {
    "t": "p",
-   "x": "For Last-Mile & Urban Logistics, the first move costs little: a two-week diagnostic on routing at density, your data, one honest baseline. The scoped proposal only follows if the measured delta justifies it."
+   "x": "Decisions at the doorstep carry tails: a promise missed triggers refunds and churn, a route planned without hours law creates compliance exposure, a redirect offered without locker capacity becomes a second failure. The decision layer treats those tails as requirements. Every promise assignment, route plan, attempt outcome and redirect records inputs, model versions, policy rules and reason codes into a replay store, so a refund dispute or a city audit is a query."
+  },
+  {
+   "t": "p",
+   "x": "Champion/challenger governance covers ETA models, routing configurations and recovery policies alike: challengers run on shadow regions, performance tracks in the registry operations leadership owns, promotions pass through gates the change process defines, and rollbacks are rehearsed. One decision service layer hosts promise, routing and recovery, so the governance surface is one registry and one replay store rather than a routing tool, an ETA service and a contact-center script with three audit stories."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: recovery without the call center"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work of urban delivery — chasing failed attempts, rebooking redeliveries, resolving address complaints, assembling dispute packs — follows patterns an agentic workforce absorbs without touching judgment authority. Agents run with role scopes, tool allow-lists and per-run budgets; anything that re-promises a customer, redirects a parcel or compensates a delivery stops at a human checkpoint defined by policy. Every run logs to the evidence store, so the agent's work is auditable like a coordinator's."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — customer notifications composed from journey state, dispute summaries for the carrier review, exception briefs for the morning stand-up — the pattern is grounded generation with citations and a human author of record. Capacity is measured in recoveries completed per agent shift and WISMO contacts deflected per thousand parcels, which is how the leaders who sponsor these programs justify them upward."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence at the door"
+  },
+  {
+   "t": "p",
+   "x": "The last mile's regulatory surface is urban, personal and physical: city access rules, hours law, consumer promises, privacy over recipient data, dangerous goods in van loads and the safety of people lifting parcels all day. The evidence layer generates what each expects as the route runs; the table maps the regimes we build against to the artifacts the builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape last-mile builds — and the evidence layer each one gets",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What our build produces"
+   ],
+   "rows": [
+    [
+     "Urban access and emission zones",
+     "Zone, toll and time-window compliance per vehicle and route",
+     "Route-level compliance evidence generated from the plan; violation alerts before departure, not after the fine"
+    ],
+    [
+     "Driver hours and road time law",
+     "Limits enforced in planning, records retained and reviewable",
+     "Scheduling guardrails reading tachograph and app state; breach alerts; retention aligned to inspection duties"
+    ],
+    [
+     "Consumer protection on promises",
+     "Windows honored or remedies offered; refunds and credits defensible",
+     "Promise replay per parcel; remedy triggers logged; accuracy reporting per area, window and product"
+    ],
+    [
+     "Privacy (GDPR and recipient data)",
+     "Recipient location and contact data minimized, retained lawfully, subject to rights",
+     "Purpose-scoped retention on POD and notifications; DSAR joins across the parcel record"
+    ],
+    [
+     "Dangerous goods in van loads (ADR class)",
+     "Limited-quantity rules, segregation, driver awareness",
+     "Load-build checks against the item master; DG flags on manifests; training evidence attached per driver"
+    ],
+    [
+     "Workplace safety at delivery",
+     "Manual-handling, vehicle and doorstep safety duties",
+     "Incident telemetry joined to route and load context; safety evidence per shift, not per annual survey"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the app stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Delivery estates are layered over a decade of routing tools, app vendors, locker networks and notification stacks, and the fastest way to fail is to promise greenfield. The integration posture is contractual: schema contracts with each system owner, ingestion through APIs and event streams, write-back through the interfaces the change process already controls — route updates to the app, ETAs to the notification stack, recovery options to the customer channels — and no big-bang cutover anywhere."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment: routing engines, telematics, address services and locker networks sit behind abstraction layers with contract tests, so a swap is configuration with a migration runbook rather than a re-platform. Where a legacy dispatch tool must stay, the offload pattern applies — it keeps running while decision surfaces read the stream. Unglamorous work, and the reason the builds above survive their first peak."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Write-back through your interfaces",
+     "Route updates, ETA pushes, recovery offers and returns bookings flow through app, notification and customer-channel hooks your change process already governs"
+    ],
+    [
+     "Solver abstraction with tournaments",
+     "Routing engines behind one interface, benchmarked on your instances, so an engine swap is a decision the evidence makes rather than a migration nobody planned"
+    ],
+    [
+     "Address-service abstraction",
+     "Geocode and validation vendors behind contract tests, because address quality decides route truth and nobody should be locked to one provider"
+    ],
+    [
+     "Feature-flagged, independently deployable",
+     "Per-region rollouts with rehearsed rollback, because peak season and weather will not negotiate"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs in one region"
+  },
+  {
+   "t": "p",
+   "x": "The engagement opens smaller than you expect: one region, one promise family, two weeks, a signed baseline in your own telemetry. The diagnostic instruments the workflow end to end, quantifies the leak, inventories the integration contracts, and returns a written feasibility read you can circulate — including the uncomfortable findings. If the delta is real, the build is scoped against the gates your change process defines; if it is not, you keep the measurement design and the baseline either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "Promise, route and attempt instrumentation, leak quantification, contract inventory, feasibility read with the delta estimate and the confounders named before targets are set"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "One region live behind flags with replay and evidence from day one — for recovery, one failed-delivery family; for promises, one window product"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "Evidence layer live, remaining regions added, density and accuracy telemetry reporting to the operations review, model-risk documentation landed"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "ETA and routing challengers evaluated in the registry, recovery policies re-tuned from the root-cause loop, the baseline re-verified against a control region"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm: our engineers work in your repositories or a shared workspace with the same CI, security review and access model your teams use. Knowledge transfer is a gate condition, not a closing slide — by expansion, your planners are changing policy thresholds themselves, because the runbooks, dictionaries and evaluation suites have been theirs since week one."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the delivery P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones last-mile programs are managed on. Targets are the ranges we set in feasibility reads for programs of this shape — commitments to hold us to where the metric is clean, hypotheses to test honestly where it is confounded. The measurement column is what makes the delta defensible in a steering committee rather than an anecdote in an ops review."
+  },
+  {
+   "t": "table",
+   "caption": "Last-mile program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Failed-delivery rate",
+     "20-35% reduction at equal volume",
+     "Attempt and outcome telemetry per parcel; the published record shows 34% at a network moving 12M parcels a week"
+    ],
+    [
+     "First-attempt success",
+     "+5 to +12 points",
+     "First-scan success against total attempts, segmented by area, daypart and access type"
+    ],
+    [
+     "Stops per hour at equal service",
+     "+8 to +15%",
+     "Route telemetry per driver-shift against the locked baseline, service metrics tracked in the same cohort"
+    ],
+    [
+     "Promise accuracy",
+     "95%+ windows hit or proactively remediated",
+     "Promise replay joined to outcome telemetry, reported per window product and area"
+    ],
+    [
+     "WISMO contacts per thousand parcels",
+     "30-50% reduction",
+     "Contact-center intent telemetry tied to parcel events, before-versus-after on the same lanes"
+    ],
+    [
+     "Cost per drop",
+     "8-15% reduction",
+     "Energy, lease, driver and access cost per route from fleet and finance telemetry"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the rhythm on the ground"
+  },
+  {
+   "t": "p",
+   "x": "A last-mile build team is small and senior: a lead engineer who has run decision systems against live delivery networks, data engineers who own the parcel spine and contract layer, optimization engineers who own routing and promise formulations, an agentic-workflow specialist for the recovery builds, and a domain lead who has run a dispatch floor or a delivery region in production. The team works to your peak and promotion calendar from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: a weekly operations review on the network's own telemetry, fortnightly gate submissions to change and data governance, quarterly challenger reviews, and an incident practice that treats the parcel spine and replay store as production-critical systems — because by the second quarter, dispatch plans through them. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "How these programs fail, and the countermeasures"
+  },
+  {
+   "t": "p",
+   "x": "Delivery programs fail in known ways, mostly organizational. We name them in the feasibility read and design against them explicitly, because a network that cannot survive its second quarter — or its peak — is not worth starting, whatever the pilot demo showed the executives in the conference room."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "A demo on one extracted day of parcels that never touches the routing engine — prevented by shipping the first vertical slice through your change process in two months"
+    ],
+    [
+     "Promise theater",
+     "Windows advertised faster than the network can honor — the promise engine reads capacity truth, or it does not ship"
+    ],
+    [
+     "Solver worship",
+     "Routes optimized against assumptions the depot cannot execute — service times, access rules and hours law are constraints from the first formulation"
+    ],
+    [
+     "Notification spam",
+     "Messages sent because the stack can, not because the event justifies them — every notification ties to a parcel event with a reason code"
+    ],
+    [
+     "Driver-app rebellion",
+     "Guardrails experienced as surveillance get routed around — decision support with adoption telemetry, tested with the people who carry it"
+    ],
+    [
+     "Evidence debt",
+     "Dispute packs assembled by hand until the retailer audit forces a project — the POD evidence layer generates them continuously, or the build is not done"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Returns and the reverse leg nobody planned"
+  },
+  {
+   "t": "p",
+   "x": "Every parcel route has a shadow: the return leg. E-commerce return rates in softgoods run high enough that the reverse stream is not an exception queue but a second network operating over the same vans, the same lockers and the same couriers — with none of the same economics. A pickup at a consumer door costs more than the outward drop because it is unscheduled, needs label generation and reason capture at the doorstep, and lands as single units into a sortation flow built for batches. Most last-mile stacks treat returns as an accounting event and discover the operational cost only when courier utilization dips on days the reverse book runs heavy."
+  },
+  {
+   "t": "p",
+   "x": "The build is a reverse-leg plan inside the same dispatch loop: return-to-origin and locker-drop consignments scheduled against forward volume instead of bolted onto it, reason codes captured at the door and joined to the order record, disposition triage (restock, refurbish, liquidate) decided before the parcel re-enters the warehouse, and fraud signals — serial returners, empty-box claims, mismatched weights at induction — surfaced from scan data the network already produces. Dataq Software baselines the reverse economics first: cost per return by channel, recovery latency from doorstep to sellable, and the share of return volume riding routes paid for a different job. If the delta is small, the honest answer is that returns are fine and the effort belongs elsewhere."
+  },
+  {
+   "t": "h2",
+   "x": "Questions delivery operations leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do we need to replace our routing engine?",
+     "No. The builds consume its plans and constraints and feed it better inputs, with a solver-abstraction layer that lets challengers compete on your instances. Replacement is a decision the tournaments inform, not a prerequisite."
+    ],
+    [
+     "Can the promise engine work with our checkout?",
+     "Yes. It exposes promise options with capacity-backed confidence through an API your checkout calls; the customer-facing wording stays yours, the truth underneath becomes shared."
+    ],
+    [
+     "What happens to our dispatchers?",
+     "Re-optimization and recovery move to agents within policy, and dispatchers keep the judgment calls with better context. Programs are justified in recoveries completed and density gained per shift, not headcount removed."
+    ],
+    [
+     "How do agents contact our customers?",
+     "Through your notification stack with governed templates, policy limits on compensation and re-promises, and full run logs. Anything that changes a commitment or pays money stops at a human checkpoint."
+    ],
+    [
+     "How do you measure without gaming?",
+     "Baselines lock during the diagnostic; holdout regions run where experiments are cheap; metrics report from scan, GPS and POD telemetry rather than status decks. The feasibility read names the confounders first."
+    ],
+    [
+     "What is the smallest program worth running?",
+     "One region, one promise family, one baseline — failed-delivery recovery is the common starter because its costs and outcomes are already instrumented. If the diagnostic cannot find the delta, we say so and stop."
+    ],
+    [
+     "Does this work with gig couriers?",
+     "Yes. Capacity models price gig and employed supply under the same uncertainty, and the app and recovery flows are provider-neutral. The economics decide the mix; the machinery does not care who carries the parcel."
+    ],
+    [
+     "Who owns the build after you leave?",
+     "Your teams, with runbooks, dictionaries, evaluation suites and registry entries transferred as gate conditions during expansion. Several programs run entirely in-house after the second quarter."
+    ]
+   ]
   },
   {
    "t": "cta",
-   "x": "Bring operations in Last-Mile & Urban Logistics to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
+   "x": "Start where the cost concentrates: one delivery region, one promise family, one honest baseline. Dataq Software will instrument the workflow in two weeks on your own scans and POD telemetry, price the delta, and tell you plainly whether the build is worth your change budget. The feasibility read is yours to keep either way."
   }
  ],
- "words": 347,
+ "words": 5095,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Logistics & Supply Chain",

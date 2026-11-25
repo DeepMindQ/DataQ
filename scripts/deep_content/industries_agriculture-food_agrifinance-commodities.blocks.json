@@ -1,0 +1,794 @@
+{
+ "file": "industries_agriculture-food_agrifinance-commodities",
+ "meta_description": "AgriFinance and commodity markets data engineering: satellite-verified planted acres, elevator collateral reconciliation, hedge position surveillance and renewal-season automation built on the LOS, CTRM/ETRM and grain accounting estate you already run.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Ag lenders and grain merchandisers price risk off data farmers and elevators already produce — and it arrives as PDFs, scale tickets, emails and February phone calls. The verification, collateral and hedge answers exist; the joins do not. Dataq Software builds the joins: satellite-verified acres against pledged acres, collateral inventory reconciled against elevator grain accounting, and hedge surveillance that watches positions the way the desk actually holds them."
+  },
+  {
+   "t": "p",
+   "x": "A renewal desk in February does not lack opinions about a borrower; it lacks verified facts assembled in time. The operating line was written against last year's balance sheet, the crop insurance agent holds actual production histories in another system, the elevator holds scale tickets that say what actually crossed the pit, and the loan file holds a collage of PDFs nobody has reconciled since planting. Underwriting, collateral management and hedging all price risk from the same underlying events — planted acres, verified stands, delivered bushels, hedge positions — yet every function re-derives its own version from documents."
+  },
+  {
+   "t": "p",
+   "x": "The join is the product. When satellite imagery confirms planted acres against the pledged amount, when elevator grain accounting ties to the collateral certificate, when the hedge-to-arrive book reconciles to the futures commission account, risk decisions stop being narrative and become arithmetic. The institutions that do this well did not replace their loan origination systems or their CTRM/ETRM; they built a verification and reconciliation layer on top, and their renewal season got shorter while their collateral got real. The pattern holds from a community bank operating line to a multi-elevator origination desk, because the events being joined are the same events."
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software is deliberately read-first on both sides of this market. We integrate against your loan origination system, your insurance administration platform, your CTRM/ETRM and the elevator's existing scale and accounting software — none of which we propose to replace. Feasibility is gated on your own data: if satellite verification cannot resolve the acreage question on your portfolio's geography, or if shrink tolerances already explain the variance, the two-week baseline says so and we stop. Everything after that gate is engineering rather than persuasion."
+  },
+  {
+   "t": "h2",
+   "x": "The intake problem: PDFs, scale tickets and emails"
+  },
+  {
+   "t": "p",
+   "x": "Look at what a farm loan file actually contains: a signed application PDF, a balance sheet compiled by the borrower's accountant in whatever format the accountant uses, an enterprise budget, insurance quotes, a farm service agency acreage history printout, and photographs from a field visit. Look at what a merchandiser's origin file contains: contracted bushels, a scale ticket feed from the elevator, freight quotes, and an email thread that settles disputes. Both are risk documents. Neither is data. The first engineering task is a parsing and normalization layer that turns this intake into records with identifiers — borrower, operation, legal entity, field, contract, ticket — that every downstream check can use."
+  },
+  {
+   "t": "h3",
+   "x": "Parsing is the unglamorous half of the win"
+  },
+  {
+   "t": "p",
+   "x": "The verification each parsed record enables is the visible half: planted acres checked against pledged acres, stands checked against reported plant populations, delivered bushels checked against contracted bushels, collateral checked against elevator books. Every section below is one of those checks, built on the same spine of parsed intake plus system-of-record data. Institutions that skip the parsing layer never get the checks; they get another dashboard of manually keyed numbers that drifts from the files it claims to summarize."
+  },
+  {
+   "t": "p",
+   "x": "Provenance rules the intake layer. Every parsed document keeps its source file, page coordinates and extraction confidence, so a number in the credit file can always be traced back to the PDF it came from — and re-parsed when a template changes instead of re-keyed. Retention follows the same discipline: loan files, inspection photos and trade communications land with timestamps and immutable copies, which is what examiners, secondary-market partners and disputed claims all end up needing. Parsing without provenance just moves the chaos into a database; provenance is what turns it into evidence."
+  },
+  {
+   "t": "h2",
+   "x": "Farm operating lines and crop loans: underwriting on verified acres"
+  },
+  {
+   "t": "p",
+   "x": "An operating line is a bet on a specific crop year: acres planted, input costs committed, yield expectation, marketing plan. The loan file asserts those numbers; almost nothing in the file proves them. Verification is the discipline — satellite imagery over the pledged fields, planting evidence against reported intent, stand counts where the crop allows them — and it moves underwriting from character plus history toward character plus evidence. A borrower who plants 1,900 of the pledged 2,400 acres is a different risk than their balance sheet suggests, and the lender who sees that in May is in a different position than one who sees it at default."
+  },
+  {
+   "t": "p",
+   "x": "The same evidence discipline extends through the life of the loan. Input financing draws can be checked against verified planting progress; marketing-plan covenants can be checked against elevator contracts; harvested acres can be checked against first notices of loss and insurance claims. Each check is small. Together they make an operating line a monitored position rather than a signed-and-filed hope, which is what a portfolio manager actually needs at segment level."
+  },
+  {
+   "t": "h3",
+   "x": "Yield-based repayment needs observable triggers"
+  },
+  {
+   "t": "p",
+   "x": "Yield-based repayment structures push the logic into the waterfall: repayment sized to harvested and marketed bushels rather than calendar dates, with triggers the lender can actually observe. Observed is the operative word. Harvest evidence — scale tickets, first notices of loss, crop insurance settlements — flows into the same fabric as planting evidence, so the repayment schedule recalculates from events instead of from phone calls. The renewal conversation in October then starts from measured performance rather than from a borrower's recollection of a difficult August."
+  },
+  {
+   "t": "h2",
+   "x": "Satellite-verified planting and stand checks"
+  },
+  {
+   "t": "p",
+   "x": "Satellite verification is now table stakes for crop lending, and it is also widely misused. A vegetation index over a county says little; a time series over a field boundary, scored against planting dates, crop calendar and cloud-free acquisition windows, says whether the field was planted, roughly when, and whether the stand established. The engineering is in the joins: field boundaries from the borrower's records or agency clips, planting windows from the application, imagery from your existing vendor, and a scoring model that produces a per-field verification result a loan officer can defend."
+  },
+  {
+   "t": "h3",
+   "x": "The output is a delta, not a map"
+  },
+  {
+   "t": "p",
+   "x": "The deliverable is not a pretty map; it is a delta. Pledged acres versus verified planted acres, per field, per borrower, per portfolio segment. Lenders use the delta at underwriting, at renewal and at covenant monitoring; crop insurers use the same artifacts to support planting-date verification and acreage reporting; merchandisers use planted-acre evidence to sanity-check origin commitments. One verification layer, three consumers — which is exactly why it pays to build it once on shared identifiers instead of three times in three departments."
+  },
+  {
+   "t": "p",
+   "x": "Vendor independence is a design requirement, not a preference. Imagery and analytics are consumed behind one interface — acquisition windows, cloud masks, index outputs — so the lender can change satellite providers or add a radar source without rewriting the verification logic. Field boundaries get the same treatment: they are versioned objects with provenance, because a boundary edited by hand three seasons ago is a different asset than the one the deed describes. The verification result always carries its inputs, which is what makes it defensible in a credit committee and in a dispute with a borrower."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Planted versus pledged acres",
+     "A time series per field boundary, scored against the planting window, produces a verified-acreage delta per borrower. Underwriting and covenant monitoring read the same number instead of competing estimates."
+    ],
+    [
+     "Stand establishment checks",
+     "Early-season imagery plus agronomic thresholds flags fields where the stand did not establish in time. The replant conversation starts with the borrower in the window where replanting is still an option."
+    ],
+    [
+     "Prevented-planting corroboration",
+     "Fields claiming prevented planting are scored against the same imagery. Nothing planted by the final planting date either corroborates the claim early or routes it to an adjuster visit before claim time."
+    ],
+    [
+     "Portfolio-level roll-ups",
+     "Verified-acreage deltas aggregate to segment and portfolio level. A drought-shaped anomaly across a region shows up as a portfolio signal rather than as forty separate surprises in forty files."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Renewal season, portfolio-at-risk and weather stress testing"
+  },
+  {
+   "t": "p",
+   "x": "Renewal season is a throughput problem disguised as a credit problem. Between harvest and spring planting, a community lender re-underwrites most of its book, and the constraint is analyst hours: pulling files, chasing documents, re-keying numbers. Portfolio-at-risk metrics are only as current as that manual grind, which is why they go stale exactly when weather makes them urgent. Automating the renewal workbench — document chasing, verification deltas, prior-year yield evidence, covenant status assembled per borrower — converts analyst hours from data assembly into credit judgment."
+  },
+  {
+   "t": "h3",
+   "x": "The season is the deadline"
+  },
+  {
+   "t": "p",
+   "x": "Any automation that cannot run inside the season is decoration. The workbench is therefore built backward from the calendar: what the analyst needs on day one of renewal, what can be assembled before the season opens, and what must wait for borrower input. Prior-year packages are drafted in the off-season from evidence already on file, so February starts with drafts instead of blank folders. That sequencing choice, more than any model, is what makes renewal-season automation measurable in analyst hours returned."
+  },
+  {
+   "t": "table",
+   "caption": "The renewal workbench: what assembles itself per borrower",
+   "headers": [
+    "Artifact",
+    "Assembled from",
+    "What the analyst does"
+   ],
+   "rows": [
+    [
+     "Verification delta",
+     "Satellite time series against pledged acres, per field",
+     "Reviews flagged fields and orders site visits where needed"
+    ],
+    [
+     "Prior-year evidence",
+     "APH histories, scale tickets and settlements where consented",
+     "Confirms repayment capacity from observed yields"
+    ],
+    [
+     "Document status",
+     "Parsed intake against the required-document checklist per loan type",
+     "Chases gaps instead of chasing files"
+    ],
+    [
+     "Covenant status",
+     "Collateral values, hedge marks and insurance status against terms",
+     "Reads computed status and approves exceptions"
+    ],
+    [
+     "Renewal memo draft",
+     "All of the above, versioned per borrower per year",
+     "Edits the judgment and signs"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Thin-file credit scoring and farm financial data"
+  },
+  {
+   "t": "p",
+   "x": "Young farmers and small operations are thin-file by definition: two or three balance sheets, no credit bureau depth, an enterprise budget that may live in a notebook. Scoring them on bureau data alone is scoring the absence of history. The fabric builds scores from observable operating evidence instead: verified planted acres, input purchases, insurance participation, elevator settlement history, prior crop insurance yields where consented. None of it replaces the balance sheet; all of it gives the thin file a body a credit committee can weigh."
+  },
+  {
+   "t": "p",
+   "x": "Scoring on operating evidence also changes the conversation with the borrower. A young operation that plants what it pledges, buys inputs on schedule and settles with the elevator on time has a track record even without a decade of financial statements. The score becomes explainable — here is the evidence, here is the weight — which matters at renewal and matters even more when a regulator or a secondary-market partner asks how the decision was made."
+  },
+  {
+   "t": "h3",
+   "x": "Documents with provenance, not retyped numbers"
+  },
+  {
+   "t": "p",
+   "x": "Farm financial data deserves engineering respect. A balance sheet in the lender's template, an accountant's compilation and the borrower's bank feed disagree in wiring and timing, and reconciling them is analyst time. The intake layer parses, normalizes and version-controls these documents per borrower per year, so trend lines — working capital, leverage, term debt coverage — are computed from reconciled history rather than retyped. Enterprise budgets become comparable objects across the portfolio, which is what makes segment-level stress testing possible at all."
+  },
+  {
+   "t": "h2",
+   "x": "Field-agent workflows: photos, GPS and inspection evidence"
+  },
+  {
+   "t": "p",
+   "x": "Field visits are the lender's ground truth and its most inconsistently captured asset. Photos arrive in text threads, locations arrive as descriptions, and the inspection note lives in a template nobody reuses. A structured field-agent workflow captures evidence the way the file needs it: photos with GPS and timestamp, checklist responses keyed to the collateral type, and the visit tied to the borrower and the security it supports. Evidence that arrives structured can be verified, audited and reused at renewal; evidence that arrives as a thread cannot."
+  },
+  {
+   "t": "h3",
+   "x": "One evidence model, three workflows"
+  },
+  {
+   "t": "p",
+   "x": "The same evidence model serves the insurance side, where adjuster and agent visits capture damage in a form the claim file can consume, with GPS-stamped photos that survive disputes. It serves collateral inspections for warehouse receipt lending, where the lender's periodic count has to be comparable to the elevator's records. And it serves merchandisers' origin checks, where a load photo and a GPS fix can settle a dispute about quality or delivery. One model, three workflows — the pattern repeats deliberately across this page, because provenance is the asset."
+  },
+  {
+   "t": "p",
+   "x": "The workflow also fixes the boring failure modes: photos that arrive compressed beyond recognition, visits logged against the wrong field, checklists completed after the fact. Capturing at the point of visit with GPS and timestamp prevents all three, and offline-first design matters because rural connectivity is a fact of life. The inspection becomes reproducible — another agent visiting the same collateral captures the same evidence shape — which is what makes periodic counts comparable across a season and across a portfolio. Consistency, not heroics, is the feature."
+  },
+  {
+   "t": "h2",
+   "x": "Warehouse receipt lending and elevator collateral management"
+  },
+  {
+   "t": "p",
+   "x": "Warehouse receipt lending prices grain in a bin as collateral, which only works if the bin's book is trustworthy. The lender holds receipts and periodic inspection reports; the elevator holds scale tickets, shrink schedules and a grain accounting system; between them sits the collateral certificate everyone trusts and nobody continuously verifies. Continuous reconciliation changes that: the lender's collateral position is recomputed from the elevator's actual records — scale tickets in and out, moisture adjustments, shrink — instead of being restated quarterly from a PDF summary."
+  },
+  {
+   "t": "h3",
+   "x": "Tolerances explicit, alerts on breaches"
+  },
+  {
+   "t": "p",
+   "x": "Discrepancies surface as they occur: a certificate that says 480,000 bushels against books that say 452,000 after shrink and a shipment nobody netted is caught in days, not at the annual audit. Tolerances are explicit — shrink tolerance, moisture discount schedules, out-of-trust thresholds — so alerts fire on breaches rather than on noise. For multi-elevator lenders the same reconciliation runs per location with per-operator variance profiles, which is how concentration risk in one elevator's book stops being invisible and starts being priced into the lending decision."
+  },
+  {
+   "t": "p",
+   "x": "Inspection cadence becomes risk-based once the reconciliation runs continuously. Locations with clean history earn longer intervals between physical counts; locations with variance patterns earn more frequent eyes on the bins, and the inspection schedule follows the data rather than the calendar. When an out-of-trust threshold breaches, the workflow already knows which receipts, which tickets and which movements explain the breach, so the lender's conversation with the elevator starts from evidence instead of from suspicion. That difference decides whether the relationship is repaired or terminated, and it is decided by data both sides can read."
+  },
+  {
+   "t": "table",
+   "caption": "Collateral reconciliation: what the join catches, and when",
+   "headers": [
+    "Reconciliation",
+    "Inputs joined",
+    "Finding and timing"
+   ],
+   "rows": [
+    [
+     "Certificate versus elevator book",
+     "Collateral certificate against scale tickets, shrink and inventory",
+     "Bushel gap caught within days of occurrence"
+    ],
+    [
+     "Ticket-in versus ticket-out",
+     "Inbound deliveries against shipments and transfers",
+     "Unnetted movements and phantom inventory"
+    ],
+    [
+     "Moisture-adjusted bushels",
+     "Raw ticket weights against drying and shrink schedules",
+     "Systematic overstatement of collateral by one operator"
+    ],
+    [
+     "Out-of-trust thresholds",
+     "Collateral value against loan balance at price marks",
+     "Breach alerts at daily price marks, not quarterly review"
+    ],
+    [
+     "Multi-location variance",
+     "Per-elevator variance profiles across the lender's book",
+     "Concentration and operator risk made visible"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Elevator grain accounting: scale tickets, moisture and shrink"
+  },
+  {
+   "t": "p",
+   "x": "Elevator grain accounting is the most underrated data asset in this market. Scale tickets carry field, grower, commodity, weight, moisture, test weight and dock; drying and shrink schedules carry the operator's actual economics; settlement records carry the pricing basis the grower accepted. For the lender this is collateral truth, for the merchandiser it is origin truth, and for the insurer it is production evidence. The fabric treats the elevator's records as a first-class source — read where they sit, normalized once — instead of asking everyone to re-key summaries into their own systems."
+  },
+  {
+   "t": "p",
+   "x": "Grain inventory audits stop being a sampling exercise when the reconciliation runs continuously. The auditor's question — do the books reflect the bins — becomes a standing query with a tolerance envelope, and the annual audit reviews a year of reconciliation history instead of one freeze-frame count. Shrink that consistently runs outside tolerance stops being a rounding artifact and becomes a named conversation with a specific operator about schedules, drying practice or records discipline, and that conversation only works when both sides read the same tickets."
+  },
+  {
+   "t": "p",
+   "x": "Quality disputes between growers and elevators follow the same pattern. Grade, test weight, foreign material and moisture each carry a schedule, and the ticket records what was applied; when a grower disputes a settlement, the answer is the ticket joined to the schedule and the contract, not a phone call. Over a season the dispute pattern is itself diagnostic: an elevator whose dockage deductions consistently run outside regional norms has a process question, and the reconciliation makes it visible without accusations. Merchandisers use the same ties to explain origin quality to buyers, because the ticket chain is the evidence."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Ticket-level normalization",
+     "Field, grower, commodity, weight, moisture, test weight and dock parsed per ticket across operators. One bushel becomes one number everywhere it is read, from collateral marking to settlement."
+    ],
+    [
+     "Shrink and drying economics",
+     "Drying charges and shrink schedules become comparable objects per operator. Collateral haircuts become evidence-based instead of customary, and outliers get questioned with data attached."
+    ],
+    [
+     "Settlement-to-contract ties",
+     "Grower settlements tie to contracts and pricing basis, so origin commitments and deferred-price books reconcile to what actually moved. Disputes shrink because both sides can point at tickets."
+    ],
+    [
+     "Audit-ready count history",
+     "Continuous reconciliation gives the annual grain inventory audit a year of history to review. The freeze-frame count becomes a confirmation exercise instead of a discovery exercise."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Crop insurance data: APH, unit structures, acreage reporting and adjusters"
+  },
+  {
+   "t": "p",
+   "x": "Multiple Peril Crop Insurance generates the most complete yield and acreage record in agriculture: actual production histories by unit, acreage reporting with planting dates, loss adjustments with causes. It is also fragmented — agent systems, insurance provider platforms, RMA reporting — and lenders and merchandisers typically see none of it except a settlement check. With borrower consent, APH histories and unit structures are underwriting gold: observed, audited and comparable across years, which is exactly what thin-file scoring and yield-based repayment structures need."
+  },
+  {
+   "t": "table",
+   "caption": "Crop insurance artifacts and who else consumes them",
+   "headers": [
+    "Insurance artifact",
+    "What it contains",
+    "Reused by"
+   ],
+   "rows": [
+    [
+     "Actual Production History",
+     "Yield history by crop and unit, trend-adjusted",
+     "Lenders for repayment capacity; merchandisers for origin sanity checks"
+    ],
+    [
+     "Acreage Reporting",
+     "Planted acres, fields, shares and planting dates",
+     "Satellite verification targets; covenant monitoring"
+    ],
+    [
+     "Unit structure records",
+     "Basic and optional units, shares and entities",
+     "Portfolio segmentation by operation structure"
+    ],
+    [
+     "Loss and adjustment files",
+     "Cause of loss, appraised and adjusted production",
+     "Weather stress calibration; adjuster workflow evidence"
+    ],
+    [
+     "Settlement records",
+     "Indemnity amounts and payment dates",
+     "Yield-based repayment waterfalls; cash-flow forecasting"
+    ]
+   ]
+  },
+  {
+   "t": "h3",
+   "x": "Adjuster workflows, upstream of the check"
+  },
+  {
+   "t": "p",
+   "x": "Claims adjuster workflows are where verification meets empathy, and where evidence quality decides cycle time. A structured claim file — GPS-stamped damage photos, unit-level appraisals, cause-of-loss documentation — moves through review without the document hunt, and disputed claims settle on evidence instead of persistence. The same structure lets a lender see the first notice of loss early and reforecast borrower cash flow before the settlement arrives rather than after it. Adjusters get faster files, lenders get earlier warning, and growers get decisions closer to the speed of the damage."
+  },
+  {
+   "t": "p",
+   "x": "Acreage reporting deserves its own note because it is the hinge between the insurance record and everything else. The acreage report fixes planted acres, shares and planting dates per field, and those numbers become the APH base, the satellite verification target and the collateral geography at once. When the report disagrees with what the imagery shows or with what the loan pledged, the discrepancy is cheapest to resolve in June and most expensive at claim time. The fabric surfaces those disagreements as a routine check rather than as a surprise discovered during a loss."
+  },
+  {
+   "t": "h2",
+   "x": "CTRM/ETRM, hedging and basis: the merchandiser's decision stack"
+  },
+  {
+   "t": "p",
+   "x": "A grain merchandiser lives on a CTRM/ETRM: contracts, positions, basis, freight, and the profit and loss of every bushel from origin to destination. The systems are capable; the seams leak. Origin commitments arrive by phone and email, scale tickets land days later, hedge entries live in the CTRM while the futures commission account lives in a broker portal, and freight deductions get renegotiated in a thread. The fabric joins these at the contract and ticket level, so position, basis and exposure are computed from events rather than asserted from the spreadsheet beside the CTRM."
+  },
+  {
+   "t": "h3",
+   "x": "Decompose the price, then defend it"
+  },
+  {
+   "t": "p",
+   "x": "Origin and destination pricing decomposes cleanly once joined: cash price minus futures minus basis minus freight deductions, per contract, recomputed whenever any leg moves. Merchandisers use the decomposition to see which origination offices actually capture basis, which freight arrangements erode margin, and which hedges genuinely offset the book they hold. Shared with lenders, the same decomposition turns an elevator borrower's credit file from a summary profit figure into an explainable exposure picture — physical book, hedge book and margin obligations in one frame."
+  },
+  {
+   "t": "table",
+   "caption": "The pricing chain and where it breaks today",
+   "headers": [
+    "Component",
+    "Source data",
+    "Typical break"
+   ],
+   "rows": [
+    [
+     "Futures leg",
+     "CTRM/ETRM positions against the FCM account",
+     "Broker portal and CTRM disagree on overnight fills"
+    ],
+    [
+     "Basis leg",
+     "Local cash quotes against origin contracts",
+     "Basis keyed by hand from boards and text messages"
+    ],
+    [
+     "Freight deductions",
+     "Freight quotes, tariffs, rail and truck settlements",
+     "Negotiated changes live in email threads"
+    ],
+    [
+     "Ticket settlement",
+     "Scale tickets with moisture and dock schedules",
+     "Tickets arrive after contracts settle; rework follows"
+    ],
+    [
+     "Margin calls",
+     "Futures commission account balances against positions",
+     "Margins discovered at settlement instead of at breach"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "None of this displaces the CTRM/ETRM — it makes the CTRM trustworthy at the seams where it was blind. Desk risk, middle office and credit all read the same contract and ticket events, so the argument moves from whose number is right to what the number means for today's commitments. That argument is decidable. The spreadsheet argument beside it never was, and it quietly consumed a meeting every week of the trading year."
+  },
+  {
+   "t": "h2",
+   "x": "Hedge-to-arrive, deferred price and counterparty limits"
+  },
+  {
+   "t": "p",
+   "x": "Hedge-to-arrive and deferred-price contracts convert grower relationships into the elevator's price risk, and the book of them is only as safe as its surveillance. A hedge-to-arrive book needs its futures offset checked continuously against the CTRM and the futures account; a deferred-price book needs its unpriced-bushel exposure marked and limited. Counterparty credit limits apply to both — a grower's deferred bushels are unsecured exposure exactly like a loan — yet most books track them in a spreadsheet beside the accounting system, marked occasionally and limited informally."
+  },
+  {
+   "t": "p",
+   "x": "Surveillance on the fabric marks the book daily, checks it against per-counterparty limits, and reconciles hedge-to-arrive offsets against the futures commission account so the coverage ratio is computed rather than remembered. Margin calls stop being surprises: exposure to the futures account is projected from positions and price moves, and the funding conversation happens before the call instead of after it. For lenders who finance elevators, the same surveillance is collateral insight into a borrower whose real risk sits in a book the financial statements barely describe."
+  },
+  {
+   "t": "p",
+   "x": "Counterparty limits also need a home outside the credit policy binder. The fabric applies the same limit logic to deferred-price books, hedge-to-arrive books and grain advances, with one definition of exposure per counterparty that all three books read. When a grower's exposure moves — a deferred contract priced, a hedge-to-arrive rolled, an advance repaid — the limit check runs on the event, not at month-end. Credit officers stop being the last to know, and the elevator's origination desk gains a guardrail it can see while it is still negotiating the next contract."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Daily mark and limit checks",
+     "Unpriced bushels and hedge-to-arrive exposure are marked daily against per-counterparty limits. Breaches queue to owners with the arithmetic attached, instead of surfacing at settlement."
+    ],
+    [
+     "Offset coverage ratios",
+     "Hedge-to-arrive futures offsets reconcile to the CTRM and the FCM account continuously. Coverage is computed, versioned and auditable rather than remembered by the desk."
+    ],
+    [
+     "Margin-call projection",
+     "Exposure to the futures commission account is projected from positions and price moves. Funding conversations happen before the call, which changes them from scramble to planning."
+    ],
+    [
+     "Deferred-price as credit exposure",
+     "Deferred bushels are treated as unsecured counterparty exposure with loan discipline. Limits, marks and aging apply, and the book stops living outside the credit process."
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The hedge-to-arrive book is often the largest unhedged risk on an elevator's balance sheet and the least visible to its lender. Continuous offset reconciliation turns that footnote into a monitored position with an owner."
+  },
+  {
+   "t": "h2",
+   "x": "FCM reconciliation and CFTC recordkeeping"
+  },
+  {
+   "t": "p",
+   "x": "Back-office truth lives in the futures commission account. Positions, fills, margins and fees — the broker's statement is authoritative, and the CTRM's version of reality must reconcile to it or the difference must be explained. Reconciliation on the fabric runs daily: CTRM positions against FCM statements, fills matched to orders, fees and commissions tied to accounts, breaks queued with owners and aging visible. It is unglamorous, audit-facing work that prevents the expensive kind of surprise — the position the desk believed was covered and was not."
+  },
+  {
+   "t": "h3",
+   "x": "Recordkeeping as an engineering property"
+  },
+  {
+   "t": "p",
+   "x": "Recordkeeping obligations, CFTC requirements among them, make retention and retrievability a design constraint rather than an afterthought. Dataq Software treats this as an engineering property: orders, modifications, cancellations and the communications that constitute the trade record land in append-only storage with timestamps and provenance, so an examination becomes a query that returns a complete, ordered answer. Institutions that treat recordkeeping as theater pay for it during exams; institutions that treat it as a property of the data layer barely notice exams at all."
+  },
+  {
+   "t": "p",
+   "x": "Break management is where reconciliation earns or loses trust. A break is not closed when it is marked closed; it is closed when the explain matches both sides of the ledger — the fill, the order, the allocation and the fee — and the fabric keeps that linkage attached. Aging is visible by cause: exchange transfers, allocation errors, fee mismatches, each with its owner and its trend. A reconciliation function whose breaks age quietly becomes an audit finding; one whose breaks close with explanations becomes a control the auditor samples and passes."
+  },
+  {
+   "t": "p",
+   "x": "Across lending, insurance and merchandising, the architecture repeats: intake and sources at one end, a verification and reconciliation spine in the middle, decision services and surveillance above it, and existing systems of record untouched at every edge. The lanes below name the moving parts for both sides of the market in one stack, because lenders and merchandisers share more than a customer — they share the events that customer already produces, and the same identifiers can serve both. That shared spine is why this is one page and not two."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — agri-lending and merchandising decision stack",
+   "lanes": [
+    "Field and origin sources",
+    "Intake and verification",
+    "Counterparty and collateral core",
+    "Risk and surveillance",
+    "Market and hedge layer",
+    "Reporting and compliance"
+   ],
+   "nodes": [
+    {
+     "id": "fieldapp",
+     "lane": 0,
+     "label": "Field-agent app: photos with GPS"
+    },
+    {
+     "id": "sat",
+     "lane": 0,
+     "label": "Satellite imagery service"
+    },
+    {
+     "id": "tickets",
+     "lane": 0,
+     "label": "Elevator scale tickets"
+    },
+    {
+     "id": "docs",
+     "lane": 0,
+     "label": "Producer PDFs and email intake"
+    },
+    {
+     "id": "rma",
+     "lane": 0,
+     "label": "RMA and insurance records"
+    },
+    {
+     "id": "parse",
+     "lane": 1,
+     "label": "Document parsing and normalization"
+    },
+    {
+     "id": "acre",
+     "lane": 1,
+     "label": "Acreage verification engine"
+    },
+    {
+     "id": "recon",
+     "lane": 1,
+     "label": "Collateral reconciliation engine"
+    },
+    {
+     "id": "borrower",
+     "lane": 2,
+     "label": "Borrower and enterprise-budget store"
+    },
+    {
+     "id": "collat",
+     "lane": 2,
+     "label": "Collateral inventory ledger"
+    },
+    {
+     "id": "ctrm",
+     "lane": 2,
+     "label": "CTRM/ETRM position store"
+    },
+    {
+     "id": "par",
+     "lane": 3,
+     "label": "Portfolio-at-risk monitor"
+    },
+    {
+     "id": "stress",
+     "lane": 3,
+     "label": "Weather stress scenarios"
+    },
+    {
+     "id": "limits",
+     "lane": 3,
+     "label": "Counterparty limit and margin checks"
+    },
+    {
+     "id": "curve",
+     "lane": 4,
+     "label": "Futures and basis curves"
+    },
+    {
+     "id": "hta",
+     "lane": 4,
+     "label": "Hedge-to-arrive tracker"
+    },
+    {
+     "id": "fcm",
+     "lane": 4,
+     "label": "FCM statements"
+    },
+    {
+     "id": "fcrc",
+     "lane": 5,
+     "label": "FCM reconciliation"
+    },
+    {
+     "id": "cftr",
+     "lane": 5,
+     "label": "CFTC recordkeeping vault"
+    },
+    {
+     "id": "renewal",
+     "lane": 5,
+     "label": "Renewal-season workbench"
+    }
+   ],
+   "edges": [
+    {
+     "a": "fieldapp",
+     "b": "parse"
+    },
+    {
+     "a": "docs",
+     "b": "parse"
+    },
+    {
+     "a": "rma",
+     "b": "parse"
+    },
+    {
+     "a": "sat",
+     "b": "acre"
+    },
+    {
+     "a": "tickets",
+     "b": "recon"
+    },
+    {
+     "a": "parse",
+     "b": "borrower"
+    },
+    {
+     "a": "acre",
+     "b": "borrower"
+    },
+    {
+     "a": "parse",
+     "b": "collat"
+    },
+    {
+     "a": "collat",
+     "b": "recon"
+    },
+    {
+     "a": "recon",
+     "b": "collat"
+    },
+    {
+     "a": "parse",
+     "b": "ctrm"
+    },
+    {
+     "a": "fcm",
+     "b": "fcrc"
+    },
+    {
+     "a": "fcrc",
+     "b": "ctrm"
+    },
+    {
+     "a": "curve",
+     "b": "limits"
+    },
+    {
+     "a": "hta",
+     "b": "limits"
+    },
+    {
+     "a": "ctrm",
+     "b": "limits"
+    },
+    {
+     "a": "borrower",
+     "b": "stress"
+    },
+    {
+     "a": "stress",
+     "b": "par"
+    },
+    {
+     "a": "borrower",
+     "b": "par"
+    },
+    {
+     "a": "borrower",
+     "b": "renewal"
+    },
+    {
+     "a": "hta",
+     "b": "fcrc"
+    },
+    {
+     "a": "curve",
+     "b": "ctrm"
+    }
+   ]
+  },
+  {
+   "t": "table",
+   "caption": "The estate underneath: systems this work touches",
+   "headers": [
+    "Layer",
+    "Representative estate",
+    "What we integrate",
+    "Our stance"
+   ],
+   "rows": [
+    [
+     "Loan origination and servicing",
+     "Community bank LOS, ag lender servicing platforms, covenant modules",
+     "Borrower records, collateral positions, covenants",
+     "Read-first; never replaced"
+    ],
+    [
+     "Crop insurance administration",
+     "Agent and provider platforms, RMA reporting interfaces",
+     "APH histories, acreage reports, loss files with consent",
+     "Read via consented integrations"
+    ],
+    [
+     "Imagery and field data",
+     "Satellite imagery vendors, field boundary sources, weather feeds",
+     "Time series per field, planting windows, weather scenarios",
+     "Consumed as services"
+    ],
+    [
+     "Elevator systems",
+     "Scale and grain accounting software, drying and shrink schedules",
+     "Scale tickets, settlements, inventory, shrink",
+     "Read at the source; never replaced"
+    ],
+    [
+     "Merchandising and risk",
+     "CTRM/ETRM platforms, position and P&L reporting",
+     "Contracts, positions, basis, freight, tickets",
+     "Read-heavy; writes via existing interfaces"
+    ],
+    [
+     "Futures back office",
+     "FCM statements, broker portals, reconciliation tools",
+     "Positions, fills, margins, fees",
+     "Read daily; breaks queued with owners"
+    ],
+    [
+     "Documents and communications",
+     "Loan file PDFs, email threads, photo stores",
+     "Parsed and version-controlled intake with provenance",
+     "Indexed, normalized, retained"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software engages"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Two-week baseline on your own book",
+     "We take one renewal segment or one elevator relationship, parse the actual intake, run satellite verification against pledged acres or reconcile the collateral certificate against the elevator's books, and hand back a measured delta with the errors named. If the delta is not real, we say so and stop."
+    ],
+    [
+     "Verification before scoring",
+     "Acreage verification, stand checks and collateral reconciliation come before any model, because scores trained on unverified inputs inherit the fiction. We build the evidence layer first and the analytics second."
+    ],
+    [
+     "Your systems stay authoritative",
+     "The loan origination system, the CTRM/ETRM, the insurance platform and the elevator's grain accounting remain the systems of record. We add the joins they cannot make internally and write back only through interfaces they already expose."
+    ],
+    [
+     "Renewal-season automation as the first visible win",
+     "Document chasing, verification deltas and covenant status assembled per borrower show up in analyst hours within the first quarter. That is why we usually start there on the lending side."
+    ],
+    [
+     "Fixed-scope increments with named owners",
+     "Each increment improves a named decision with an owner on your side and a before and after number — caught bushel gaps, verified-acre deltas, reconciliation breaks closed. No platform commitment before the second renewal season proves the first."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions agri-lenders and merchandisers ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Will you replace our LOS or CTRM?",
+     "No. We read those systems, join them to field, elevator and futures data, and write back only through interfaces they already expose. Your systems of record stay authoritative and validated."
+    ],
+    [
+     "How accurate is satellite acreage verification?",
+     "It depends on crop, geography and imagery cadence, which is why we baseline it on your own portfolio first. We report per-field confidence and the residual we cannot resolve, and we never present a score where a site visit is still required."
+    ],
+    [
+     "Do you need borrower consent for insurance and field data?",
+     "Yes, and the fabric is designed around it. Consent scope is per borrower and per dataset with provenance retained, so consent is an engineering property here rather than a checkbox."
+    ],
+    [
+     "Our elevator borrowers run ten different grain accounting systems.",
+     "Expected. The reconciliation layer normalizes scale tickets, moisture adjustments and shrink schedules per operator, and per-operator variance profiles become part of the collateral picture."
+    ],
+    [
+     "Can this run during renewal season without a project?",
+     "That is the point of the two-week baseline and the first-quarter increments. They are sized to fit inside the season, and the renewal workbench ships with your analysts' workflow rather than against it."
+    ],
+    [
+     "Who owns the data model afterwards?",
+     "Your team does. Collectors, parsers and reconciliation rules are documented and built on standard tooling, and ownership transfer is an explicit phase rather than an afterthought."
+    ],
+    [
+     "What if the hedge book is already in the CTRM?",
+     "Then surveillance attaches faster. The fabric reconciles the CTRM's positions to the futures commission account daily and marks hedge-to-arrive and deferred-price exposure against limits you define."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Bring us one renewal-season segment and one elevator relationship for two weeks. We will parse the actual loan file collage, run satellite verification against pledged acres, and reconcile the collateral certificate against the elevator's own scale tickets and shrink schedules. You get a measured delta with the errors named, on your own data. If the delta is not real, we say so and stop. Dataq Software builds the verification and reconciliation layer on the systems you already run, and the fastest way to find out what it is worth is to measure one book."
+  }
+ ]
+}

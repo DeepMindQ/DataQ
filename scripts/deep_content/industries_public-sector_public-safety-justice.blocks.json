@@ -1,0 +1,745 @@
+{
+ "file": "industries_public-sector_public-safety-justice",
+ "meta_description": "How Dataq Software engineers public safety and justice: dispatch intelligence, digital evidence and chain of custody, disclosure packs, court scheduling, custody and probation casework, interagency sharing under legal gates — auditability as a design primitive, not a feature.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Public safety and justice runs on two clocks that never match: minutes at dispatch, months and years in the courtroom. Between them sits the record — the incident report, the body-worn video, the custody log, the disclosure pack — that has to arrive intact wherever the case goes next. Police, fire, EMS, prosecutors, courts and probation coordinate through systems that were rarely designed to hand over to each other, under accountability regimes that treat evidence integrity, proportionality and privacy as non-negotiable. This page is the engineering picture of that workflow: the systems the sector actually runs, the exact points where cases leak time and evidence, and the six deep builds Dataq Software ships to fix them — with auditability as a design primitive, not a feature."
+  },
+  {
+   "t": "h2",
+   "x": "From the first call to the final disposition"
+  },
+  {
+   "t": "p",
+   "x": "Take one incident from the first emergency call and the sector's operating picture assembles itself. Call handling triages the caller, the CAD system geolocates, recommends units and dispatches; responders roll through encrypted mission-critical networks while the incident record accumulates every event. At the scene, officers write narratives in the RMS, body-worn cameras capture video, ANPR reads plates, and the custody suite logs detention with its own checks and timelines. Days later the case file — report, video, forensic exhibits, witness statements — is referred to the prosecution service, which builds the disclosure pack, serves the court, and enters the scheduling lottery that decides when, and sometimes whether, the case is heard."
+  },
+  {
+   "t": "p",
+   "x": "The other agencies run parallel machines with their own clocks. Fire services manage availability, appliance readiness and risk inspection programmes. EMS work response-time standards against dynamic demand. Courts run listing against availability, custody time limits and witness attendance. Probation and pretrial services assess, supervise and report back into sentencing and remand decisions. Victim services track contact obligations that are legally owed, not courtesies. Each agency holds a fragment of the same incident, and every handover between them is a place where the record can thin."
+  },
+  {
+   "t": "p",
+   "x": "The quieter machinery decides whether any of it holds together. An evidence vault that hashes and anchors every artefact at ingest. A retention governor that deletes body-worn video on schedule and can prove deletion. A legal-gateway register that says which agency may query which data under which power. A disclosure tracker that counts the days an obligation has been running. None of it is dramatic; all of it is what a defence advocate, a coroner or a data protection authority will examine when something goes wrong — and the engineering has to survive that examination years after the incident."
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems public safety and justice touches"
+  },
+  {
+   "t": "p",
+   "x": "Programs in this sub-industry succeed or fail on how honestly the estate is mapped before anything is built — and here the estate includes systems owned by agencies you do not control. Dataq Software starts every engagement by naming the systems, their owners, their change cadences and the legal gates between them. The table below is the estate we most often find and integrate against — not a generic stack diagram."
+  },
+  {
+   "t": "table",
+   "caption": "The public safety and justice estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
+    [
+     "CAD and call handling",
+     "Emergency call triage, geolocation, unit recommendation, dispatch, incident timeline",
+     "Recommendation rules static; interoperability with neighbouring forces manual; incident timeline trapped in the CAD vendor's format"
+    ],
+    [
+     "RMS and incident reporting",
+     "Narrative capture, persons and vehicles records, crime recording and classification",
+     "Report writing consumes hours per shift; classification errors ripple into statistics and case routing"
+    ],
+    [
+     "Body-worn camera and video platforms",
+     "BWC ingest, CCTV import, redaction, evidence classification, retention execution",
+     "Volumes unreviewable without triage; redaction manual; retention schedules enforced unevenly"
+    ],
+    [
+     "Custody suite systems",
+     "Detention logging, rights and welfare checks, risk assessments, time-limit clocks",
+     "Clock breaches surface in scrutiny visits; records inconsistent with RMS entries for the same arrest"
+    ],
+    [
+     "Prosecution case management",
+     "Case referral, charging decisions, evidence assembly, disclosure tracking",
+     "Evidence arrives in fragments; disclosure obligations tracked by hand; packs assembled at deadline"
+    ],
+    [
+     "Court case management and e-filing",
+     "Listing, hearing records, orders, service of documents, outcomes",
+     "Scheduling combinatorial; adjournments unmeasured; e-filing standards vary per jurisdiction"
+    ],
+    [
+     "Probation, pretrial and victim services",
+     "Risk and needs assessment, supervision plans, victim contact obligations",
+     "Assessments disconnected from court decisions; victim contact tracked in spreadsheets"
+    ],
+    [
+     "Evidence vault and records estate",
+     "Hash-anchored artefact storage, retention execution, audit trails, archival transfer",
+     "Custody provenance procedural rather than cryptographic; deletion rarely provable"
+    ],
+    [
+     "Emergency notification and public warning",
+     "Cell broadcast and channel alerts, geo-targeting, drill and exercise management",
+     "Targeting precision limited by stale contact data; exercises rare and unmeasured"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where the justice workflow leaks"
+  },
+  {
+   "t": "p",
+   "x": "Ask officers, prosecutors and court managers where the workflow leaks and the answers converge on the same eight places. Dataq Software's diagnostic scores each of them in your estate before recommending a build, because the leak that dominates one force or court is often minor in the next."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Evidence assembled by hand",
+     "A charging decision pulls the incident report, BWC footage, forensic exhibits, witness statements and custody records from five systems. Case builders spend their hours collecting instead of evaluating, and the fragments that never make it into the pack are discovered by the defence at the worst possible moment. Pre-assembled, provenance-complete packs are an engineering problem, not a staffing one."
+    ],
+    [
+     "Video volumes nobody can review",
+     "Body-worn and CCTV footage outgrow review capacity every year. Triage by age and length ignores content, so the decisive clip sits in the same queue as an hour of nothing. Event detection and content-indexed retrieval — with human review gates and model outputs treated as leads, never as findings — is the only lever that reconciles the volume with the duty to disclose."
+    ],
+    [
+     "Chain of custody that is procedural, not proven",
+     "Custody documentation is a paper trail that a competent advocate can pick apart: who copied this file, when, with what tool, and why the hash changed. Hash-anchored ingest, access-logged vaults and export manifests turn chain of custody from testimony into evidence — the difference between an exhibit that survives challenge and one that collapses a case."
+    ],
+    [
+     "Disclosure obligations tracked by hand",
+     "Disclosure regimes give the defence everything relevant and do it on a clock. Investigators and prosecutors track the obligation in spreadsheets and inboxes; breaches surface as stayed proceedings, complaints and appeals. A disclosure ledger that counts every obligation day, per case, reported from the workflow, converts a legal risk nobody can see into an operations queue everybody can manage."
+    ],
+    [
+     "Court scheduling as combinatorial lottery",
+     "Listing balances courtroom availability, judges, advocates, custody time limits, witness attendance and interpreter supply — a constraint problem solved by intuition at volume. The result is adjournments that cost witnesses, victims and money. Scheduling optimisation with measured fit rates does not remove judgment from listing; it removes the arithmetic from the clerk."
+    ],
+    [
+     "Agency silos behind legal gates",
+     "Police, prosecution, courts and probation each hold fragments of the same person and the same incident, and the joins that would help decisions happen legally are manual, slow and unlogged. Legal gates are real and must stay; but a register of powers, purpose bindings and logged queries makes lawful sharing a routine act instead of a favour between chiefs."
+    ],
+    [
+     "Report writing that eats shifts",
+     "Officers spend a meaningful share of every shift writing narratives that duplicate what the incident timeline, CAD events and BWC already contain. Drafting assistants grounded in the incident record — with the officer as author of record and every sentence traceable to source — return hours to the street without touching the integrity of the account."
+    ],
+    [
+     "Continuity untested until the day",
+     "Ransomware that stops a dispatch centre is a public-safety event, not an IT incident. Failover for CAD and call handling exists on paper; the failover paths are exercised rarely, and the recovery evidence is thin. Segmenting mission networks, rehearsing degraded modes and generating exercise evidence are engineering work with lives attached."
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight leaks: the record thins at every handover, and thinning is a data engineering problem before it is a legal one. That is why the first build in a justice programme is almost always the evidence core — the vault, the provenance and the disclosure ledger — rather than a smarter triage model."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works public safety and justice"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate you already run, under the governance your accountability regimes already impose. We do not arrive with a replacement CAD, a procurement-heavy platform bet, or a strategy deck that ends where the hard part begins. The engagement model is engineering-first: a two-week diagnostic that baselines one workflow end to end — dispatch, evidence, disclosure or listing — then a scoped build that ships behind your change board, your security accreditation and your legal gates."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver. First, every artefact carries provenance: ingest hashes, access logs, export manifests and retention proofs are generated by the system, so chain of custody is evidence rather than recollection. Second, every model-assisted step is a lead, never a finding: triage, transcription and redaction proposals are leads with confidence scores, and a human owns every decision that touches a person's liberty or record. Third, every build lands with its evidence layer: the artifacts a scrutiny visit, a data protection authority or an appeal will ask for are generated continuously, not assembled the week before the inspection."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same logic: where the metric is clean — evidence pack assembly time, disclosure timeliness, report writing hours — we contract against the delta with the baseline locked during the diagnostic; where it is confounded, we say so in the feasibility read and scope fixed-fee instead. The published sector record to date sits in adjacent government operations — a metropolitan city government cut fault-to-fix 63% and street-light energy 22% on an urban asset platform under the same delivery discipline — while the justice-specific programmes behind this page run under the confidentiality the sector rightly demands."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for public safety and justice"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our public-safety and justice practice, named for the workflow it changes. Each build is sized in the diagnostic, shipped with the controls its regime expects, and integrated against the systems you already run. None of them require replacing a CAD or a court CMS; all of them require taking provenance and legal gates seriously."
+  },
+  {
+   "t": "h3",
+   "x": "1. Dispatch and incident command intelligence"
+  },
+  {
+   "t": "p",
+   "x": "The build sits beside your CAD, not in place of it. Call and sensor streams — emergency lines, telematics, ANPR, public reports — are normalised into one incident picture; unit recommendation models trained on historical response data are treated as advisory leads with confidence scores; and the incident timeline accumulates every event, call, update and decision into a record the RMS can consume directly. Dispatchers keep authority; the machine removes the swivel-chair work of correlating five feeds during the busiest minutes of the incident."
+  },
+  {
+   "t": "p",
+   "x": "Interoperability is engineered at the edges: neighbouring forces and fire and EMS partners exchange incident context through structured interfaces rather than phone calls, under access tiers that respect each agency's authority. Surge patterns are modelled from demand history so rostering can be tested against realistic evenings rather than averages. Every model output is logged with its inputs for after-action review, and the after-action process itself reports from the same timeline — so learning from incidents stops depending on who remembered to write the debrief."
+  },
+  {
+   "t": "h3",
+   "x": "2. Digital evidence and chain of custody"
+  },
+  {
+   "t": "p",
+   "x": "The evidence core is a vault with provenance as a primitive: every artefact — BWC clip, CCTV export, forensic image, interview recording — is hashed and anchored at ingest, access-logged on every read, and versioned so an export differs visibly from an original. Retention schedules attach to artefact classes at capture, legal holds override deletion, and deletion executes on schedule with proof. The custody narrative that used to be reconstructed from memories becomes a query the advocate can be shown."
+  },
+  {
+   "t": "p",
+   "x": "Video triage runs on the same core: event detection flags scenes likely to hold evidential content, content indexing makes the decisive minute searchable by time, location and transcript, and transcription with speaker marks accelerates review — all with human review gates, model outputs treated as leads, and redaction proposals generated automatically for a human to confirm. Alignment to digital-evidence handling practice (ISO 27037-class) is documented in the build, so the vault's own conduct withstands the scrutiny it exists to support."
+  },
+  {
+   "t": "h3",
+   "x": "3. Disclosure and prosecution evidence packs"
+  },
+  {
+   "t": "p",
+   "x": "Disclosure is a deadline business wearing a document costume, so the build is built around the clock. The pack assembler pulls report, video, exhibits, statements, custody and intelligence-releasable material from the evidence core; schedules material against the disclosure regime's obligations (CPIA-class and Brady-class duties alike); flags schedules and previous convictions as first-class items; and generates the redaction proposals that a human reviewer confirms before service. Every item carries its provenance link back to the vault."
+  },
+  {
+   "t": "p",
+   "x": "The disclosure ledger underneath tracks every obligation — what is owed, to whom, by when, served or not — and counts the days, per case, reported from the workflow rather than from a spreadsheet. Review sampling uses the same evidence store, so quality checks examine what was actually served. The measurable deltas are pack assembly time, disclosure timeliness and the breach count that defence advocates, inspectors and appeals all watch — each reported from the system rather than estimated under deadline."
+  },
+  {
+   "t": "h3",
+   "x": "4. Court case flow and scheduling"
+  },
+  {
+   "t": "p",
+   "x": "Listing is a constraint problem, and the build treats it as one: courtroom availability, judicial and advocate diaries, custody time limits, witness attendance, interpreter and security supply as constraints; case priority and progress metrics as objectives; and the optimiser proposing dockets that clerks and listing officers approve, adjust and own. Custody time-limit clocks count down in the same view, so the cases closest to collapsing get attention before they collapse rather than after."
+  },
+  {
+   "t": "p",
+   "x": "Case flow management extends around the hearing: e-filing validated against court standards before submission, orders and outcomes captured structurally and propagated back to police and probation systems through the legal gates, and adjournment reasons coded so the causes of ineffective trials become measurable instead of anecdotal. The fit rate — hearings that proceed as listed — becomes a managed metric with its own telemetry, because what gets measured gets scheduled differently."
+  },
+  {
+   "t": "h3",
+   "x": "5. Custody, pretrial and probation case management"
+  },
+  {
+   "t": "p",
+   "x": "The casework build serves the agencies whose decisions are about people over time rather than incidents in minutes. Custody suite records align with the RMS and evidence core so the same arrest is one coherent record; welfare and rights checks run on clocks with breach telemetry visible to inspectors. Pretrial services run risk assessment workflows with the assessment's inputs, versions and overrides recorded — because a remand recommendation is a decision a judge may ask to see reconstructed."
+  },
+  {
+   "t": "p",
+   "x": "Probation supervision plans integrate assessment, appointments, breach detection and court reporting into one case spine, with victim contact obligations tracked as statutory duties with their own clocks. Everything writes to the same evidence store the justice workflow uses, so a scrutiny board or a chief officer reviews actual system behaviour rather than a prepared sample. Capacity telemetry — caseloads per officer, contact completion rates — reports from the same store and gives workforce planning its first honest numbers."
+  },
+  {
+   "t": "h3",
+   "x": "6. Interagency justice data sharing under legal gates"
+  },
+  {
+   "t": "p",
+   "x": "The sharing build makes lawful exchange routine and visible. A legal-gateway register records the powers under which each agency may share each category — police, prosecution, courts, probation, prisons — with purpose bindings and minimisation rules attached to every interface. Queries are logged with who, what, under which power and for which case; sensitive categories (biometrics, location histories, children, health) carry stricter gates by configuration, aligned with law-enforcement data protection rules and the EU AI Act's restrictions on certain law-enforcement uses."
+  },
+  {
+   "t": "p",
+   "x": "The register turns sharing from a favour into governance: an auditor asks which agencies queried a person's record this year and receives the answer as a query. Data minimisation is enforced at the interface — a probation officer gets the sentence and risk-relevant fields, not the full file. Where a legacy system cannot join, its extracts are wrapped with the same contract and logging so nothing bypasses the register. The design goal is a justice system where the lawful path is also the easiest path."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — the incident-to-disposition stack",
+   "lanes": [
+    "Field and custody estates",
+    "Incident and evidence ingest",
+    "Justice data core",
+    "Decision services",
+    "Custody and disclosure controls",
+    "Operations surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "cad",
+     "lane": 0,
+     "label": "CAD and call handling"
+    },
+    {
+     "id": "rms",
+     "lane": 0,
+     "label": "RMS and incident reporting"
+    },
+    {
+     "id": "bwc",
+     "lane": 0,
+     "label": "Body-worn camera platform"
+    },
+    {
+     "id": "cust",
+     "lane": 0,
+     "label": "Custody suite records"
+    },
+    {
+     "id": "ing",
+     "lane": 1,
+     "label": "Evidence ingest and hashing",
+     "hot": true
+    },
+    {
+     "id": "cdc",
+     "lane": 1,
+     "label": "Incident event streams"
+    },
+    {
+     "id": "gate",
+     "lane": 1,
+     "label": "Legal gateway register",
+     "hot": true
+    },
+    {
+     "id": "core",
+     "lane": 2,
+     "label": "Justice data lakehouse"
+    },
+    {
+     "id": "vault",
+     "lane": 2,
+     "label": "Evidence vault with provenance"
+    },
+    {
+     "id": "tri",
+     "lane": 3,
+     "label": "Video triage service"
+    },
+    {
+     "id": "pack",
+     "lane": 3,
+     "label": "Disclosure pack assembler"
+    },
+    {
+     "id": "sched",
+     "lane": 3,
+     "label": "Listing optimiser"
+    },
+    {
+     "id": "sup",
+     "lane": 3,
+     "label": "Supervision risk workflows"
+    },
+    {
+     "id": "ledger",
+     "lane": 4,
+     "label": "Disclosure obligation ledger"
+    },
+    {
+     "id": "ret",
+     "lane": 4,
+     "label": "Retention governor"
+    },
+    {
+     "id": "audit",
+     "lane": 4,
+     "label": "Access and query audit store"
+    },
+    {
+     "id": "disp",
+     "lane": 5,
+     "label": "Dispatch console"
+    },
+    {
+     "id": "pros",
+     "lane": 5,
+     "label": "Prosecution case workbench"
+    },
+    {
+     "id": "court",
+     "lane": 5,
+     "label": "Court listing console"
+    }
+   ],
+   "edges": [
+    {
+     "a": "cad",
+     "b": "cdc"
+    },
+    {
+     "a": "rms",
+     "b": "ing"
+    },
+    {
+     "a": "bwc",
+     "b": "ing"
+    },
+    {
+     "a": "cust",
+     "b": "cdc"
+    },
+    {
+     "a": "ing",
+     "b": "vault"
+    },
+    {
+     "a": "cdc",
+     "b": "core"
+    },
+    {
+     "a": "vault",
+     "b": "core"
+    },
+    {
+     "a": "core",
+     "b": "tri"
+    },
+    {
+     "a": "core",
+     "b": "pack"
+    },
+    {
+     "a": "core",
+     "b": "sched"
+    },
+    {
+     "a": "core",
+     "b": "sup"
+    },
+    {
+     "a": "gate",
+     "b": "core"
+    },
+    {
+     "a": "pack",
+     "b": "ledger"
+    },
+    {
+     "a": "ret",
+     "b": "vault"
+    },
+    {
+     "a": "audit",
+     "b": "core"
+    },
+    {
+     "a": "ledger",
+     "b": "pros"
+    },
+    {
+     "a": "vault",
+     "b": "pros"
+    },
+    {
+     "a": "sched",
+     "b": "court"
+    },
+    {
+     "a": "cdc",
+     "b": "disp"
+    },
+    {
+     "a": "tri",
+     "b": "disp"
+    }
+   ],
+   "note": "Lanes and nodes are named for the systems a justice build actually touches — CAD, RMS, BWC platforms, custody records, prosecution and listing — not a generic reference stack. The hot nodes are where differentiation concentrates: hash-anchored evidence ingest and the legal gateway register that makes every join auditable. The retention governor and disclosure ledger sit beside the core deliberately; deletion, holds and obligations are part of the justice data plane, not paperwork at the end."
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: evidence flows with provenance attached"
+  },
+  {
+   "t": "p",
+   "x": "Justice estates move data in fragments: CAD events in the vendor's format, video in the BWC platform, records in the RMS, exhibits on shared drives nobody owns. The data plane build lands all of it in one governed core where provenance is part of the record. Incident events stream in near real time for dispatch and after-action surfaces; artefacts ingest through hashing services that anchor them before anyone views them; and the overnight batches that still exist feed reconciliation and statistical returns rather than decisions."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries a schema contract with a named owner, a freshness SLA and a reconciliation check against the source system's own controls. Sensitive categories are tagged at the field level so the legal gates can be enforced by configuration rather than by training. Retention executes as pipelines with deletion proofs, and every downstream consumer — triage, packs, listing, supervision — reads through the contract layer so a change fails loudly at the contract instead of silently inside a case file."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Hash-anchored evidence ingestion",
+     "every artefact hashed and anchored at ingest with access logging and versioned exports, so chain of custody is a query the advocate can be shown rather than testimony"
+    ],
+    [
+     "Sensitivity tags at the field level",
+     "biometric, location and special-category data tagged where it is captured, so legal gates and minimisation rules enforce by configuration rather than by guidance"
+    ],
+    [
+     "Incident event streaming",
+     "CAD and custody events into the justice core in near real time, keeping dispatch and after-action surfaces current without touching batch statistical returns"
+    ],
+    [
+     "Retention executed with proof",
+     "BWC and exhibit schedules attached at capture, legal holds overriding deletion, and deletion proofs generated on execution for scrutiny boards and archives"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: leads, not findings"
+  },
+  {
+   "t": "p",
+   "x": "Justice decisions carry the heaviest legal tails of any sector: a unit recommendation affects response times; a triage flag decides which video a human reviews; a risk assessment informs remand and sentencing; a listing proposal allocates courtrooms, judges and witnesses. The decision layer we build treats every model output as a lead with a confidence score, never as a finding — a human owns every decision that touches a person's liberty, record or safety, and the system records who, when and on what basis."
+  },
+  {
+   "t": "p",
+   "x": "Every decision writes its replay record — inputs, model versions, rule versions, overrides — into the same evidence store the case uses, so a scrutiny board, an appeal or a data protection authority asks a query rather than opens an investigation. Law-enforcement AI restrictions are enforced structurally: uses that the regime prohibits are blocked by configuration, human-review gates are positioned where the law requires them, and the AI oversight registry tracks every model's evaluation, drift and bias testing continuously. Champion/challenger governance runs through the same registry so improvements are adopted under gates, not smuggled in deployments."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: case builders with officer authority"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work in justice — evidence collation, pack assembly, redaction proposals, report drafting, records reconciliation — follows patterns an agentic workforce absorbs without touching judgment authority. Dataq Software's agent platform runs digital workers with explicit role scopes: the systems they may read, the tools they may call, the actions that require an officer checkpoint, and a budget of work per run. Every run logs its steps and outputs to the same evidence store the human workflow uses, so an agent's pack is auditable exactly like an officer's."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — drafting incident narratives from the timeline, summarizing case files, preparing disclosure indexes — the pattern is grounded generation with citation obligations and an officer as author of record. Agents never make charging decisions, never alter evidence, never communicate with victims or witnesses, and never change a custody or supervision decision; they move the work to the decision point and stop. Capacity is measured in cases built per officer per week, which is how operational leaders justify the programme upward."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: built for scrutiny"
+  },
+  {
+   "t": "p",
+   "x": "The accountability surface of public safety and justice is the strictest we serve: criminal procedure, data protection for the most sensitive categories, records retention with evidential duties, and AI regimes that restrict law-enforcement uses specifically. Dataq Software's answer is the evidence layer — the artifacts a scrutiny visit or an appeal will ask for are generated continuously by the systems themselves. The table maps the regimes we build against to the evidence our builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape justice builds — and the evidence layer each one gets",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What our build produces"
+   ],
+   "rows": [
+    [
+     "Criminal-procedure and disclosure duties (CPIA-class, Brady-class)",
+     "Relevant material revealed, schedules served, obligations met on time",
+     "Disclosure ledger counting obligation days per case; pack provenance linked to the vault; breach telemetry reported weekly"
+    ],
+    [
+     "GDPR and law-enforcement data rules",
+     "Lawful basis per power, minimisation, special-category protection",
+     "Legal gateway register with purpose bindings; field-level sensitivity tags; query audit store answering who queried what"
+    ],
+    [
+     "EU AI Act class restrictions",
+     "Prohibited uses blocked; human oversight where required; transparency",
+     "Prohibited-use blocks by configuration; oversight gate logs; AI oversight registry with evaluation and drift evidence"
+    ],
+    [
+     "Records retention and evidential duties",
+     "Retention schedules, deletion proof, archival integrity",
+     "Retention governor with deletion proofs, legal holds and transfer manifests for exhibits and video"
+    ],
+    [
+     "Victim rights regimes",
+     "Contact obligations met, information provided at statutory points",
+     "Victim contact duties tracked with clocks per case, completion telemetry and breach escalation to managers"
+    ],
+    [
+     "Security accreditation for justice systems",
+     "Authorisation, continuous monitoring, mission continuity",
+     "Segmented landing zones, recovery test evidence per release and accreditation package updates on change"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the estate stays, provenance arrives"
+  },
+  {
+   "t": "p",
+   "x": "Justice estates are layered over decades across agencies that answer to different chiefs, and the fastest way to fail a programme is to promise a unified platform. Our integration posture is contractual: schema contracts with each system owner, incident data landed through event streams, artefacts landed through hashing ingest, write-back through the RMS and case management interfaces your governance already controls, and every new component independently deployable behind feature flags. CAD and court CMS are not replaced; they are surrounded by a provenance fabric."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment. BWC platforms, redaction services, transcription providers and forensic tools sit behind an abstraction layer with contract tests, so a vendor swap is configuration with a migration runbook rather than a re-procurement. Where a system cannot join, its exports are wrapped with the same contracts and logging so nothing bypasses the evidence core. Continuity is part of integration too: mission networks segmented, degraded-mode dispatch rehearsed, and exercise evidence generated per release rather than once before an inspection."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Write-back through RMS interfaces",
+     "narratives, classifications and case statuses flow through the records and case management interfaces your governance already controls, with integrity checks intact"
+    ],
+    [
+     "Vendor abstraction with contract tests",
+     "BWC platforms, redaction, transcription and forensic services behind one interface, so a re-competition is configuration with a runbook rather than surgery"
+    ],
+    [
+     "Cross-agency interfaces under gates",
+     "fire, EMS, prosecution and probation exchange context through structured, logged interfaces bound to registered powers — not phone calls and emailed spreadsheets"
+    ],
+    [
+     "Continuity built into integration",
+     "mission-network segmentation, rehearsed degraded modes and recovery-test evidence generated per release, because dispatch downtime is a public-safety event"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement, and it fits inside the procurement and governance instruments your organisation already runs — framework call-offs, collaborative lots between forces and courts, or directly scoped studies where the rules allow. It starts with the two-week diagnostic: one workflow baselined end to end, the leak quantified in your own telemetry, the data contracts and legal gates inventoried, and a written feasibility read you can circulate, including the uncomfortable findings."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "workflow instrumentation, leak quantification, contract and legal-gate inventory, feasibility read with the delta estimate and the confounders named against your obligations"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane of the workflow live behind flags with provenance and evidence running from day one — for evidence that is one BWC cohort; for disclosure it is one case family"
+    ],
+    [
+     "Weeks 9-16: gates, evidence, expansion",
+     "AI oversight documentation landed, retention and disclosure telemetry live, remaining lanes added, capacity reporting to the operations review"
+    ],
+    [
+     "Quarterly: scrutiny reviews",
+     "challenger models evaluated in the registry, thresholds re-tuned, the baseline re-verified against controls, and the evidence pack refreshed for inspectors"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm, not a parallel one: our engineers work in your repositories or a shared workspace with the same CI, the same security review and the same vetting model your teams use. Knowledge transfer is a gate condition, not a closing slide — by the expansion phase your engineers ship changes to the builds, because the runbooks, contracts and evaluation suites are theirs from week one."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the operations line"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones justice programmes are managed on. The targets are the ranges we set in feasibility reads for programmes of this shape — commitments we let you hold us to where the metric is clean, hypotheses we test where it is confounded. The measurement column is the part most programmes skip and the part that makes the delta defensible to chief officers, inspectors and oversight boards."
+  },
+  {
+   "t": "table",
+   "caption": "Public safety and justice programme metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Evidence pack assembly time",
+     "40-60% reduction on the instrumented case family",
+     "Pack telemetry per case from the assembler, not reconstructed from tickets"
+    ],
+    [
+     "Disclosure timeliness",
+     "Obligation breaches at or near zero",
+     "Ledger counting obligation days per case, reported weekly to prosecution managers"
+    ],
+    [
+     "Report writing hours per shift",
+     "20-40% reduction with officer authorship preserved",
+     "RMS telemetry comparing draft sources and officer edit depth against baseline"
+    ],
+    [
+     "Chain-of-custody completeness",
+     "100% of artefacts with provenance records",
+     "Vault queries for missing hashes, access logs and export manifests"
+    ],
+    [
+     "Hearing fit rate",
+     "+5 to +10 points on listed hearings proceeding",
+     "Court CMS outcome telemetry coded for adjournment causes"
+    ],
+    [
+     "Dispatch recommendation latency",
+     "Sub-second advisory inside CAD timeouts",
+     "Decision-service telemetry logged per incident for after-action review"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A justice build team is small and senior: a lead engineer who has run decision and evidence systems in law-enforcement or court estates, data engineers who own the ingest and contract layer, ML engineers who own triage and evaluation, a controls engineer who owns the provenance and evidence layer, and a domain lead who has built disclosure packs and listed courtrooms in production. Security-accreditation engineers and legal-governance specialists join where the workflow demands them. The team works to your release calendar, your vetting model and your inspection cycle from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: weekly operations review on the workflow's own telemetry, fortnightly gate submissions to change and the AI oversight registry, quarterly challenger reviews, and an incident practice that treats the evidence core and the disclosure ledger as production-critical systems — because by the second quarter, the scrutiny boards will treat them that way too. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programmes like these fail in known ways, and most failure modes are organisational rather than mathematical. We name them in the feasibility read and design against them explicitly, because a programme that cannot survive its second quarter — or its first scrutiny visit — is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "a demo built on extracted data that never integrates — we prevent it by shipping the first vertical slice through your change process, flags and gates included, in the first two months"
+    ],
+    [
+     "Accreditation stall",
+     "the build stuck in security review because evidence was an afterthought — control mapping and package updates land with the build, not after it"
+    ],
+    [
+     "Trust erosion in triage",
+     "officers overriding every flag until the model is noise — override analytics, threshold reviews and street-level feedback loops are part of the build from day one"
+    ],
+    [
+     "Gateway creep",
+     "sharing expanding informally past the legal-gateway register — bypass detection and quarterly reconciliation against the register are enforced by telemetry, not memo"
+    ],
+    [
+     "Redaction debt",
+     "backlogs of unreviewed footage and half-redacted packs accumulating — the redaction queue is capacity-planned and its age reported like any operational backlog"
+    ],
+    [
+     "Evidence debt",
+     "scrutiny preparation consuming a team every quarter because artifacts were manual — the evidence layer generates them continuously or the build is not done"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions justice leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Does this replace our CAD or court CMS?",
+     "No. None of the builds require replacing a system of record. They sit beside the CAD, RMS and court CMS, consume their streams and write back through the interfaces your governance controls."
+    ],
+    [
+     "How do models stay leads, not findings?",
+     "Every model output carries a confidence score, routes to a human review gate, and logs its inputs and versions. Prohibited law-enforcement uses are blocked by configuration, and the AI oversight registry tracks evaluation, drift and bias evidence continuously."
+    ],
+    [
+     "Can chain of custody really survive challenge?",
+     "Hash-anchored ingest, access-logged storage and versioned exports mean the custody narrative is a query with machine-generated answers. Advocates can be shown the trail instead of hearing testimony about it."
+    ],
+    [
+     "What about victim and witness data?",
+     "Special categories carry stricter gates by configuration, minimisation applies at every interface, and victim contact duties run on clocks with breach telemetry. The data protection regime is a build requirement, not a policy document."
+    ],
+    [
+     "How do we measure success without gaming?",
+     "Baselines are locked during the diagnostic, controls or holdouts are used where experiments are legitimate, and every metric reports from system telemetry rather than a status deck. The feasibility read names the confounders before anyone commits to a target."
+    ],
+    [
+     "What is the smallest programme worth running?",
+     "One workflow, one baseline, one vertical slice — evidence and disclosure are the two most common starters because their clocks and volumes are already measurable. If the diagnostic cannot find the delta, we say so and stop."
+    ],
+    [
+     "Will officers accept drafting assistance?",
+     "The assistant drafts from the incident record and the officer remains author of record, editing every sentence they serve. Programs track officer edit depth precisely so we can prove authorship stayed human — and so quality is measured, not assumed."
+    ],
+    [
+     "Who owns the build after you leave?",
+     "Your teams, with the runbooks, contracts, evaluation suites and registry entries transferred as gate conditions during expansion — not as a closing deliverable. Several programmes run entirely in-house after the second quarter."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Bring one incident workflow — dispatch, evidence, disclosure or court listing — to a two-week diagnostic with Dataq Software: your own telemetry, a measured baseline, and a feasibility read that names the legal gates before anyone commits. If the delta is real, the build is scoped against it; if it is not, you keep the measurement design either way."
+  }
+ ]
+}

@@ -5,267 +5,749 @@
  "template": "subindustry_page",
  "breadcrumb": "Industries > Telecom, Media & Entertainment > Advertising & MarTech",
  "seo_title": "Advertising & MarTech | Dataq Software",
- "meta_description": "Ad and martech businesses trade on identity, measurement and trust: signal loss (cookie deprecation, ATT), clean-room measurement and consent architectu.",
+ "meta_description": "How Dataq Software engineers advertising and martech: consent-scoped identity graphs, clean-room activation, incrementality and MMM measurement, supply-path transparency and billing reconciliation, publisher yield management and IVT defense — built against your OpenRTB pipes and CDP estate.",
  "blocks": [
   {
    "t": "hero",
-   "x": "Ad and martech businesses trade on identity, measurement and trust: signal loss (cookie deprecation, ATT), clean-room measurement and consent architecture decide whether targeting survives the privacy era — and whether spend proves incrementality. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
+   "x": "In the advertising and martech estate, every dollar of spend is a decision executed in milliseconds inside pipes nobody owns end to end: a bid request crosses an SSP, an exchange and a DSP under OpenRTB, priced against an identity graph, bounded by a consent string, and settled weeks later through a reconciliation process that runs on spreadsheets. The business trades on identity, measurement and trust — and all three are under structural pressure: identifiers deprecate, consent regimes harden, signal loss grows, and the measurement that once came free from third-party cookies now has to be engineered. The margin lives in the decision machinery underneath: how precisely identity resolves, how honestly incrementality is tested, how completely billing reconciles. This page is the engineering picture of that machinery — the systems the estate actually runs, the eight places where money leaks, and the six deep builds Dataq Software ships to fix them."
   },
   {
    "t": "h2",
-   "x": "The ground truth of this sector"
+   "x": "How the trading and activation estate actually runs"
   },
   {
    "t": "p",
-   "x": "The work concentrates in identity resolution, audience activation, measurement/incrementality, with creative operations close behind. The paths are busy; the decisions are late. Closing that delay is worth more than any single tool purchase."
+   "x": "Follow one impression across the estate and the operating picture assembles itself. A publisher's page or app fires a header-bidding request to wrappers and SSP partners; bid requests travel under OpenRTB with consent strings attached — TCF in Europe, state-specific signals in California; DSPs evaluate against audience segments, frequency caps and pacing budgets in milliseconds; the exchange clears, the SSP takes its fee, and the creative serves through a verification wrapper that decides whether the impression was viewable, brand-safe and human. None of these hops is visible to the trader who bought it or the finance team that bills it. The supply path is a chain of intermediaries each taking a margin, and only some of them are contractually visible in the ads.txt and sellers.json records the publisher published."
+  },
+  {
+   "t": "p",
+   "x": "The identity and data layer decides what the pipes can price. First-party data — site behavior, CRM records, retail transactions, CTV app logs — flows into identity graphs and CDPs where it is resolved, consented and segmented; UID2-class tokens and publisher IDs stand in where third-party cookies and mobile identifiers have decayed; and clean rooms host the collaborations where two parties match audiences without either seeing the other's raw records. Consent state is captured at collection by the CMP and then travels — or fails to travel — with every downstream activation. The frequency capping that once worked across the open web now fragments per walled garden, and cross-device reach is an estimate nobody audits."
+  },
+  {
+   "t": "p",
+   "x": "Measurement is where the arguments live. Platform-reported attribution claims credit; media-mix models estimate contribution at channel level; incrementality tests — geo splits, holdouts, conversion lifts — are run occasionally and locally; and finance reconciles what was actually billed against what was actually planned, discovering makegoods, discrepancies and invalid traffic after the money has moved. Retail media networks add a second economy: retailer first-party data monetized against on-site and off-site inventory, with its own reconciliation and its own attribution debates. Every layer produces numbers; very few produce decisions, and that gap is where the estate leaks."
   },
   {
    "t": "h2",
-   "x": "Where the work piles up"
+   "x": "The estate underneath: systems this work touches"
   },
   {
    "t": "p",
-   "x": "Advertising & MarTech: named from the floor, not from a framework,"
+   "x": "Programs in this sub-industry succeed or fail on how honestly the estate is mapped before anything is built. Dataq Software starts every engagement by naming the systems, their owners, their change cadences and their data contracts — including the intermediary chain nobody has fully inventoried. The table below is the estate we most often find on the buy side, the sell side and the data layer, and where each layer strains."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "The advertising and martech estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
     [
-     "Identity resolution decaying",
-     "Third-party identifiers deprecate; first-party identity graphs inconsistent across systems."
+     "SSP, exchange and DSP pipes",
+     "OpenRTB bid streams, auction clearing, pacing, budget pacing and creative serving",
+     "Latency budgets compress decisions; bid landscapes shift with identity loss; fees opaque per hop"
     ],
     [
-     "Creative production slow",
-     "Ad-variant production manual; channel-localization bottlenecks."
+     "Header bidding and wrappers",
+     "Parallel demand evaluation for publishers, floor pricing, timeout management",
+     "Wrapper configurations accrete; timeout economics unmeasured; yield analytics fragmented"
     ],
     [
-     "Ad-fraud drains budgets",
-     "Invalid traffic and fraud schemes persist; measurement unverified."
+     "Identity graphs and UID2-class tokens",
+     "Deterministic and probabilistic identity resolution, identifier minting and rotation",
+     "Match rates decay with signal loss; graph splits per vendor; consent scope not joined to identity"
     ],
     [
-     "Supply-chain transparency thin",
-     "Ads.txt/supply-path verification partial; intermediaries opaque."
+     "Consent-management platform",
+     "TCF and regional consent capture, purpose management, signal propagation",
+     "Consent enforced at collection, not at activation; string drift and purpose mismatches surface in audits"
     ],
     [
-     "Data-activation costs balloon",
-     "CDP/activation stacks duplicate data; costs rise with fragmentation."
+     "CDP and first-party data stores",
+     "Customer data unification, segmentation, activation to channels",
+     "Duplicate pipelines per team; activation costs balloon; retention rules inconsistently enforced"
     ],
     [
-     "Measurement contested",
-     "Attribution wars persist; incrementality rarely tested."
+     "Clean-room environments",
+     "Privacy-safe audience matching, overlap analysis, measurement collaborations",
+     "Query patterns ad hoc; results unreproducible; collaboration contracts managed in email"
+    ],
+    [
+     "Measurement stack",
+     "Platform attribution, media-mix models, incrementality and lift testing, MMM calibration",
+     "Last-touch dominates decisions; experiments rare and local; MMM and attribution contradict without arbitration"
+    ],
+    [
+     "Campaign finance and reconciliation",
+     "Insertion orders, billing reconciliation, discrepancy management, makegoods",
+     "Reconciliation manual in spreadsheets; discrepancies discovered after payment; evidence thin"
+    ],
+    [
+     "Verification and brand safety",
+     "Viewability, invalid-traffic detection, brand-safety classification, supply-path verification",
+     "Vendor-scored and vendor-trusted; IVT definitions vary; supply-path records incomplete"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "What gets built first"
+   "x": "Where the margin leaks"
   },
   {
    "t": "p",
-   "x": "Capability in Advertising & MarTech is not abstract: each domain lands as a named build on a named workflow. The patterns below are what we deploy there."
+   "x": "Ask agency, publisher and brand-side leaders where the money leaks and eight answers recur, in the same vocabulary whether the speaker runs trading, yield or finance. Dataq Software's diagnostic scores each leak in your own bid, consent and billing telemetry before recommending a build, because the leak that dominates in one estate is often minor in the next."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "First-party identity spine",
-     "consent-scoped identity graphs with clean-room activation"
+     "Identity resolution decays quarter by quarter",
+     "Third-party identifiers deprecate and match rates fall, while first-party graphs fragment across CDP, ad server and clean room. The same person exists as three records with different consent scopes, frequency caps stop working across channels, and every point of match rate lost is reach lost at a higher effective CPM."
     ],
     [
-     "Creative automation",
-     "variant generation under brand guardrails with QC"
+     "Consent drifts between collection and activation",
+     "TCF strings captured at consent time go stale, purposes drift from what the user agreed, and downstream pipes spend against audiences whose lawful basis is contested. The gap is invisible until an audit, a regulator question or a partner contract review makes it expensive."
     ],
     [
-     "Fraud verification",
-     "IVT detection with independent verification"
+     "Billing reconciliation leaks by design",
+     "Campaign delivery is billed against log-level data nobody reconciles end to end: discrepancies between ad server, DSP and verification counts become makegoods and write-offs, and the finance team discovers leakage after payment rather than before. Supply-path opacity makes the true intermediary chain unqueryable."
     ],
     [
-     "Activation architecture",
-     "deduplicated data plane with cost telemetry"
+     "Invalid traffic taxes every budget",
+     "IVT schemes — bot farms, spoofed domains, CTV fraud, attribution abuse — adapt faster than static vendor filters. Verification is bought, trusted and never independently tested against your own logs, so a percentage of every budget evaporates as spend that was never seen by a human."
     ],
     [
-     "Supply-path registry",
-     "verified supply-chain records"
+     "Measurement is argued, not tested",
+     "Platform attribution claims credit against its own sales, MMM estimates channel contribution at aggregate level, and the two contradict without an arbitration design. Incrementality testing exists as an occasional exercise; budget decisions wobble between dashboards, and the truth is nobody has priced the difference."
+    ],
+    [
+     "Yield is managed on folklore",
+     "Publisher floor prices, wrapper timeouts and demand-mix decisions run on rules set in past quarters. Header bidding configurations accrete complexity, timeout economics are unmeasured, and the inventory that would clear at better prices is hidden inside configurations nobody has audited."
+    ],
+    [
+     "Data activation costs balloon",
+     "Every team stands up its own pipeline from the same first-party sources: duplicated storage, duplicated transformation, duplicated egress into channels. CDP and activation stacks multiply, and the cost per activated audience rises while the definitions of the audiences diverge."
+    ],
+    [
+     "Retail media economics are unaudited",
+     "Retail media networks monetize first-party data against on-site and off-site inventory with their own attribution claims, their own fees and their own reconciliation gaps. Brands cannot test incrementality cleanly inside the retailer's walls, and the margin debate between trade spend and true media performance never resolves."
     ]
    ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "Across all eight leaks the pattern holds: the estate already emits the evidence — bid streams, consent state, delivery logs, invoices — but the decisions never reach it at execution time. Context is a data engineering problem before it is a modeling problem, which is why the first build is the identity and consent spine, not a new bidder."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works with advertising and martech estates"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate you already run — the wrappers, the DSP seats, the CDP, the CMP and the clean rooms — rather than around them. We do not arrive with a replacement ad server, a proprietary identity walled garden, or a strategy deck that ends where the bid stream begins. The engagement model is engineering-first: a two-week diagnostic that baselines one decision surface end to end — identity, measurement, supply path, yield or activation — then a scoped build that ships behind your change process, your consent architecture and your partner contracts."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver in this sub-industry. First, every automated decision carries replay: which identity resolved, under which consent scope, into which bid, billed through which path — stored so a why-did-we-spend question is a query, not an email chain. Second, consent is enforced at execution time: activation checks the lawful basis when the decision executes, not when the audience was built, and the check is logged as evidence. Third, every build lands with its evidence layer: the artifacts a compliance review, a client audit or a DSA transparency request will ask for are generated continuously by the system."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same discipline. Where the metric is clean — verified-clean budget share, reconciliation leakage recovered, identity match rate, yield lift — we contract against the delta with the baseline locked during the diagnostic; where the metric is confounded, the feasibility read says so and the scope is fixed-fee instead. The published record in this sector sits in the operator estate that shares this infrastructure: the same decision engineering that cut churn 19% at a tier-1 European operator and care cost per contact 36% at a North American cable operator runs the builds below, with ad-specific deltas contracted per program."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for advertising and martech"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our advertising and martech practice. Each build is named for the workflow it changes, sized in the diagnostic, and shipped with the controls the estate's regulators and counterparties expect. None of them requires replacing your DSP seats or your ad server; all of them require taking the data contracts seriously."
+  },
+  {
+   "t": "h3",
+   "x": "1. The first-party identity spine and consent architecture"
+  },
+  {
+   "t": "p",
+   "x": "The build reconstructs identity on a lawful, engineered footing. First-party sources — site behavior, CRM, commerce, CTV app logs, retail transactions — land into one governed graph where deterministic joins run with survivorship rules your data owners sign; UID2-class tokens and publisher identifiers are minted and rotated under contract where partners require them; and consent state joins the graph as a first-class attribute, versioned per purpose per market. Every segment carries its lawful basis with it, so identity without consent is structurally unusable rather than discoverably non-compliant."
+  },
+  {
+   "t": "p",
+   "x": "The activation contracts are the engineering core: frequency capping and cross-device reach computed inside the lawful scope the consent layer defines; suppression lists propagated to every channel within refresh SLAs; and identity match rates reported per channel per identifier class, so signal loss is measured instead of discovered. The replay store logs which identity, under which consent version, fed which activation — which turns the DSA transparency duty and the audit question into exports. The measurable deltas are match rate per channel, frequency-cap accuracy and the suppression SLA the compliance team stops chasing."
+  },
+  {
+   "t": "h3",
+   "x": "2. Clean-room collaboration and the activation plane"
+  },
+  {
+   "t": "p",
+   "x": "The build makes partner collaboration reproducible instead of ad hoc. Query patterns for overlap analysis, audience matching and lift measurement are templated and versioned per partner contract; results land in the lakehouse with lineage from query to conclusion; and the collaboration register — who matched what, under which terms, with which retention — is a governed record rather than an email thread. Where a clean room is unavailable, the same templates run on hashed-join patterns inside your own perimeter under the contract's data rules."
+  },
+  {
+   "t": "p",
+   "x": "The activation plane beneath it deduplicates the estate's data work: one pipeline from first-party sources to every channel, with certified segment definitions instead of per-team forks, cost telemetry per activated audience, and retention rules enforced at the plane rather than per pipe. Retail media collaborations run through the same plane, so the retailer's audiences and your CRM audiences reconcile under contract terms rather than by export. The measurable deltas are activation cost per audience, time-to-launch per collaboration and the duplicate-pipeline spend finance stops funding."
+  },
+  {
+   "t": "h3",
+   "x": "3. The measurement rebuild: incrementality, MMM and attribution governance"
+  },
+  {
+   "t": "p",
+   "x": "The build replaces attribution wars with an arbitration design. Incrementality testing is engineered into campaign execution: geo splits, audience holdouts and conversion-lift designs are templated per channel with power analysis done before spend, so every major line item carries a test design rather than a post-hoc argument. Media-mix models run on the governed lakehouse — spend, delivery, outcomes and seasonality under one spine — and are calibrated against the test results instead of being refreshed in isolation."
+  },
+  {
+   "t": "p",
+   "x": "Attribution becomes governed rather than dominant: platform-reported numbers are still produced, but decisions cite the experiment evidence, and the decision log records which evidence won each budget call. Every measurement claim carries its lineage — inputs, model versions, test designs — so the finance review and the client review read the same store. The measurable deltas are the share of spend covered by valid experiments, the variance between MMM and tested increments, and the budget reallocation the arbitration design makes defensible."
+  },
+  {
+   "t": "h3",
+   "x": "4. Supply-path transparency and billing integrity"
+  },
+  {
+   "t": "p",
+   "x": "The build makes the intermediary chain queryable and the money reconcilable. Ads.txt, sellers.json and delivery logs are parsed into a supply-path registry keyed per publisher, per path, per fee layer; every campaign's actual path is reconstructed from bidstream and log-level data; and unauthorized resellers and fee-stacking hops are flagged as cases rather than as anomalies in a dashboard. The registry is a governed asset: refreshed on schedule, reconciled to contracts, and queryable by traders, finance and compliance alike."
+  },
+  {
+   "t": "p",
+   "x": "Billing integrity runs on the same records: log-level reconciliation between ad server, DSP and verification counts runs continuously rather than at invoicing cutoff, discrepancies are classified by cause — counted impressions, viewability disputes, IVT, currency and rounding — and evidence packs are generated per insertion order. Makegoods stop being negotiated from memory, and the write-off line shrinks because the discrepancies are resolved before payment, not after. The measurable deltas are reconciliation leakage recovered, unauthorized-path spend eliminated and dispute cycle time."
+  },
+  {
+   "t": "h3",
+   "x": "5. Publisher yield management"
+  },
+  {
+   "t": "p",
+   "x": "The build gives yield teams an evidence engine instead of folklore. Wrapper configurations — bidders, timeouts, floor prices — are inventoried and versioned; timeout economics are measured from bidstream data, so the latency each partner costs is priced against the demand it brings; and floor-price optimization runs as a governed policy against demand curves estimated from your own auctions, not against vendor defaults. Demand-mix decisions — open exchange versus deals versus direct — are evaluated per inventory class with margin after all fees, not before."
+  },
+  {
+   "t": "p",
+   "x": "Every yield decision carries replay: which configuration, which floors, which outcome, so the quarterly review reconstructs what changed and why. The evaluation harness includes auction-simulation checks before configuration changes ship, and challenger configurations run on traffic slices through the same gates. The measurable deltas are revenue per impression on managed inventory, latency-attributed demand recovered from timeout tuning, and the share of yield decisions made on measured demand curves rather than on intuition."
+  },
+  {
+   "t": "h3",
+   "x": "6. Ad verification and IVT defense"
+  },
+  {
+   "t": "p",
+   "x": "The build makes verification independent rather than vendor-trusted. Impression and event streams are scored against your own reference models: invalid-traffic detection over bot signatures, data-center patterns, device-consistency and behavioral signals; domain-spoofing detection against the supply-path registry; and CTV fraud screens over app legitimacy, session plausibility and server-side ad-insertion anomalies. Vendor verification remains, but it is reconciled against your own scoring, and the deltas between them are investigated as cases rather than accepted as truth."
+  },
+  {
+   "t": "p",
+   "x": "Brand-safety policy joins the same spine: classification runs against your own policy definitions, block lists are versioned with their evidence, and every enforcement action carries replay so a publisher wrongly excluded is answered from records rather than from apology. The measurable deltas are verified-clean budget share, independently detected IVT against vendor-reported IVT, and the false-positive rate on legitimate publishers — because over-blocking is a cost the current stack never prices."
   },
   {
    "t": "arch",
-   "title": "Reference architecture — Advertising & MarTech",
+   "title": "Reference architecture — identity, activation and measurement stack",
    "lanes": [
-    "Estates",
-    "Contracts",
-    "Lakehouse",
-    "Governance",
-    "Consumers",
-    "Actions"
+    "Trading and delivery estates",
+    "Consent and event streams",
+    "Identity and measurement spine",
+    "Decision services",
+    "Evidence and control",
+    "Business surfaces"
    ],
    "nodes": [
     {
-     "id": "es0",
+     "id": "dsp",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "DSP seats and bid streams"
     },
     {
-     "id": "es1",
+     "id": "ssp",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "SSP, exchange and wrappers"
     },
     {
-     "id": "ct2",
+     "id": "adserver",
+     "lane": 0,
+     "label": "Ad server and campaign logs"
+    },
+    {
+     "id": "cdp",
+     "lane": 0,
+     "label": "CDP and first-party sources"
+    },
+    {
+     "id": "cmp",
      "lane": 1,
-     "label": "Schema registry",
-     "hot": false
+     "label": "Consent platform and TCF strings"
     },
     {
-     "id": "ct3",
+     "id": "cdc",
      "lane": 1,
-     "label": "Quality gates",
-     "hot": false
-    },
-    {
-     "id": "lh4",
-     "lane": 2,
-     "label": "Medallion lakehouse",
+     "label": "Bid, delivery and event streams",
      "hot": true
     },
     {
-     "id": "lh5",
+     "id": "contracts",
+     "lane": 1,
+     "label": "Schema and partner contracts"
+    },
+    {
+     "id": "lake",
      "lane": 2,
-     "label": "Cost-aware storage",
-     "hot": false
+     "label": "Decision lakehouse",
+     "hot": true
     },
     {
-     "id": "gv6",
+     "id": "graph",
+     "lane": 2,
+     "label": "Consent-scoped identity graph"
+    },
+    {
+     "id": "clean",
+     "lane": 2,
+     "label": "Clean-room collaboration register"
+    },
+    {
+     "id": "measure",
      "lane": 3,
-     "label": "Lineage & catalog",
-     "hot": false
+     "label": "Incrementality and MMM service"
     },
     {
-     "id": "gv7",
+     "id": "activ",
      "lane": 3,
-     "label": "Access policies",
-     "hot": false
+     "label": "Consent-checked activation service"
     },
     {
-     "id": "cs8",
+     "id": "pathreg",
+     "lane": 3,
+     "label": "Supply-path and billing engine"
+    },
+    {
+     "id": "ivt",
+     "lane": 3,
+     "label": "IVT and brand-safety scoring"
+    },
+    {
+     "id": "replay",
      "lane": 4,
-     "label": "Origination & servicing",
-     "hot": false
+     "label": "Decision replay and reason codes"
     },
     {
-     "id": "cs9",
+     "id": "registry",
      "lane": 4,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Model-risk registry"
     },
     {
-     "id": "ac10",
-     "lane": 5,
-     "label": "Owned decisions",
-     "hot": false
+     "id": "eval",
+     "lane": 4,
+     "label": "Evaluation harness"
     },
     {
-     "id": "ac11",
+     "id": "trader",
      "lane": 5,
-     "label": "Metric disputes closed",
-     "hot": false
+     "label": "Trading and yield consoles"
+    },
+    {
+     "id": "finance",
+     "lane": 5,
+     "label": "Reconciliation and compliance desks"
     }
    ],
    "edges": [
     {
-     "a": "es0",
-     "b": "ct2"
+     "a": "dsp",
+     "b": "cdc"
     },
     {
-     "a": "es1",
-     "b": "ct3"
+     "a": "ssp",
+     "b": "cdc"
     },
     {
-     "a": "ct2",
-     "b": "lh4"
+     "a": "adserver",
+     "b": "cdc"
     },
     {
-     "a": "ct3",
-     "b": "lh5"
+     "a": "cdp",
+     "b": "cdc"
     },
     {
-     "a": "lh4",
-     "b": "gv6"
+     "a": "cmp",
+     "b": "cdc"
     },
     {
-     "a": "lh5",
-     "b": "gv7"
+     "a": "cdc",
+     "b": "contracts"
     },
     {
-     "a": "gv6",
-     "b": "cs8"
+     "a": "contracts",
+     "b": "lake"
     },
     {
-     "a": "gv7",
-     "b": "cs9"
+     "a": "lake",
+     "b": "graph"
     },
     {
-     "a": "cs8",
-     "b": "ac10"
+     "a": "graph",
+     "b": "activ"
     },
     {
-     "a": "cs9",
-     "b": "ac11"
+     "a": "cmp",
+     "b": "activ"
+    },
+    {
+     "a": "lake",
+     "b": "measure"
+    },
+    {
+     "a": "cdc",
+     "b": "pathreg"
+    },
+    {
+     "a": "cdc",
+     "b": "ivt"
+    },
+    {
+     "a": "activ",
+     "b": "replay"
+    },
+    {
+     "a": "measure",
+     "b": "replay"
+    },
+    {
+     "a": "pathreg",
+     "b": "replay"
+    },
+    {
+     "a": "ivt",
+     "b": "replay"
+    },
+    {
+     "a": "measure",
+     "b": "trader"
+    },
+    {
+     "a": "pathreg",
+     "b": "finance"
+    },
+    {
+     "a": "eval",
+     "b": "registry"
     }
    ],
-   "note": "Lanes and nodes are named for Advertising & MarTech systems and workflows — not a generic stack."
+   "note": "Lanes and nodes are named for the systems an ad-tech build actually touches — DSP seats, SSP pipes, wrappers, CDP, consent platform — not a generic reference stack. The hot nodes are where differentiation concentrates: bid and event ingestion and the decision lakehouse, because every downstream decision inherits their quality."
   },
   {
    "t": "h2",
-   "x": "Rules we build against"
+   "x": "The data plane: from log fragments to a governed decision spine"
   },
   {
    "t": "p",
-   "x": "The binding regimes in Advertising & MarTech: GDPR/ePrivacy/ATT-class, EU AI Act transparency. Designing against them early is what keeps later audits short."
+   "x": "Every decision gap in this estate traces back to a data gap, and most data gaps trace back to the same habit: bid streams, delivery logs and invoices live in separate silos owned by different vendors, and decisions run on whatever fragment the dashboard happened to load. The data plane build inverts the pattern where it matters. Bid events, delivery logs, consent state, identity joins and billing records land through governed interfaces into one lakehouse in near real time; the overnight reconciliation keeps running for finance, but the activation, measurement and verification services stop depending on it."
   },
   {
-   "t": "table",
-   "caption": "Regimes in scope for Advertising & MarTech",
-   "headers": [
-    "Regime",
-    "What it expects"
-   ],
-   "rows": [
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries a schema contract with a named owner, a freshness SLA and a reconciliation check against source controls — delivery counts against ad-server logs, billing against insertion orders, identity joins against consent state. Retention and minimization rules are enforced at the plane, because this estate's data is regulated on both sides of the pond; and every downstream consumer — the graph, the measurement service, the path registry — reads through the contract layer so a vendor API change fails loudly at the contract instead of silently inside a model or an invoice."
+  },
+  {
+   "t": "bullets",
+   "items": [
     [
-     "GDPR/ePrivacy/ATT-class",
-     "consent and tracking duties"
+     "Bidstream and log ingestion",
+     "OpenRTB events, delivery logs and verification feeds landed with exactly-once semantics into the lakehouse, keyed to join across pipes without PII leakage"
     ],
     [
-     "EU AI Act transparency",
-     "synthetic content disclosure"
+     "Consent as execution-time state",
+     "TCF strings and regional signals versioned and joined to identity, with expiry and revocation treated as events the activation layer reads before every spend"
     ],
     [
-     "Ad-transparency rules (DSA)",
-     "targeting disclosure duties"
+     "Contract-enforced freshness",
+     "per-feed SLAs with alerting and automated breach reports, so a late ad-server export pages an owner instead of silently skewing measurement"
     ],
     [
-     "Contract/brand-safety standards",
-     "verification duties"
+     "Minimization and retention by design",
+     "field-level policies enforced at the plane — this estate's data is regulated, and the lakehouse is engineered to prove it rather than assert it"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Starting without a leap of faith"
+   "x": "The decision layer: activation, arbitration and reconciliation with replay"
   },
   {
    "t": "p",
-   "x": "Engagements in Advertising & MarTech open smaller than you expect: one workflow, two weeks, a signed baseline on identity resolution decaying. Everything after that is scoped against the measured delta, never a wish list."
+   "x": "Advertising decisions carry legal and commercial tails: an activation spends against a lawful basis, a budget call cites measurement evidence, a reconciliation result commits money between counterparties, an IVT block excludes a publisher. The decision layer treats those tails as first-class requirements. Every decision records its inputs, feature values, model versions, policy rules and reason codes in a replay store that answers audit questions as queries — when a client, a partner or a regulator asks why, the answer is retrieved, not reconstructed."
+  },
+  {
+   "t": "p",
+   "x": "Champion and challenger governance is built in rather than bolted on: activation policies, measurement models and verification scorers run as challengers on shadow traffic with performance tracked in the registry your governance function owns, promotions pass through the gates your change process defines, and rollbacks are rehearsed, not improvised. The same service layer hosts activation, measurement, supply-path and IVT decisions so the governance surface is one registry, one replay store, one set of gates — instead of four vendors with four audit stories."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: digital workers in the reconciliation and compliance queues"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work in this estate — discrepancy investigation, supply-path case assembly, consent-audit preparation, campaign QA, creative compliance checks — follows patterns an agentic workforce can absorb without touching judgment authority. Dataq Software's agent platform runs digital workers with explicit role scopes: the tools they may call, the systems they may read, the actions that require a human checkpoint and the budget of work per run. Every run logs its steps, tool calls and outputs to the same evidence store the human workflow uses, so an agent's case file is auditable exactly like an analyst's."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — drafting discrepancy summaries, preparing audit evidence packs, assembling campaign QA reports — the pattern is grounded generation with citation obligations and human authorship of record. Agents never commit a budget, never move spend, never sign a settlement; they move the work to the decision point and stop. The capacity story is measured in cases cleared per analyst per day, which is how trading and finance leaders justify these programs upward."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: audit as a query"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory surface of advertising and martech is tightening in exactly the directions these builds touch: consent, tracking, platform transparency, synthetic content and children's protection. Dataq Software's answer is the evidence layer — the artifacts a reviewer will ask for are generated continuously by the systems themselves. The table maps the regimes we build against to the evidence our builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape ad and martech builds — and the evidence layer each one gets",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What our build produces"
+   ],
+   "rows": [
+    [
+     "GDPR, ePrivacy and TCF",
+     "Lawful basis for tracking and targeting; purpose consistency; consent withdrawal honored",
+     "Consent state enforced at activation; purpose-scope checks logged per spend; DSAR joins across graph entities"
+    ],
+    [
+     "CPRA and state privacy regimes",
+     "Opt-out signals honored end to end; sensitive-data handling; service-provider terms",
+     "Opt-out propagation telemetry per channel; sensitive-category policies enforced at the activation plane"
+    ],
+    [
+     "DSA ad-transparency duties",
+     "Disclosure of targeting parameters; repository obligations for large platforms",
+     "Targeting-parameter logs exported from the activation service; transparency reports generated on schedule"
+    ],
+    [
+     "EU AI Act transparency",
+     "Disclosure for synthetic and AI-generated content; risk-classified duties for profiling",
+     "Creative provenance records; model-risk registry entries with evaluation evidence for scoring and generation components"
+    ],
+    [
+     "Children's protection codes",
+     "Age-appropriate defaults, restricted profiling, COPPA-class consent duties",
+     "Age-gate and contextual-only policies encoded as hard rules; enforcement logged per impression class"
+    ],
+    [
+     "Contractual verification standards",
+     "MRC-class measurement definitions; supply-path and brand-safety obligations in IOs",
+     "Verification reconciled against independent scoring; supply-path evidence packs per campaign and counterparty"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the pipes stay, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Ad-tech estates are layered over DSP seats, SSP contracts, CDP licenses and agency relationships, and the fastest way to fail a program is to promise a rebuild. Our integration posture is contractual: we define schema contracts with each system owner, land data through log-level exports, bidstream taps and governed APIs, write back through the audience, pacing and suppression interfaces your platforms already expose, and keep every new component independently deployable behind feature flags. Trading infrastructure is not replaced; it is supplied with better context and drained of the decision work it was never good at."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment. DSPs, SSPs, verification vendors, identity providers and clean rooms sit behind abstraction layers with contract tests, so a vendor swap is a configuration change with a migration runbook rather than a re-platform. Where a partner integration must stay bespoke, the offload pattern applies: the bespoke bridge keeps serving, while decision surfaces read from the governed stream it feeds. This is unglamorous work and it is why the builds hold up in production instead of in a pilot campaign."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Log-level access negotiated once",
+     "bidstream and delivery-log access secured through partner contracts and feeds, with schema contracts so a vendor-side change pages an owner instead of corrupting measurement"
+    ],
+    [
+     "Suppression and pacing write-back",
+     "audience and suppression updates flow through the DSP, CDP and ad-server interfaces your team already governs, with contract tests on every dependency"
+    ],
+    [
+     "Identity provider abstraction",
+     "UID2-class tokens, publisher IDs and hashed joins behind one interface, so identifier strategy evolves with configuration rather than with re-platforming"
+    ],
+    [
+     "Feature-flagged, independently deployable",
+     "every build ships behind flags with rehearsed rollback, because the compliance review and the trading floor will both ask"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement. It starts with the two-week diagnostic: one decision surface baselined end to end, the leak quantified in your own bid, consent and billing telemetry, the data contracts inventoried, and a written feasibility read you can circulate — including the uncomfortable findings. If the delta is real, the build is scoped against the gates your change and governance processes define; if it is not, you keep the measurement design and the baseline either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "workflow instrumentation, leak quantification, contract inventory and a feasibility read with the delta estimate and the confounders named"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane live behind flags with replay and evidence running from day one — for identity it is one source system; for measurement it is one channel; for reconciliation it is one counterparty"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "governance documentation landed, QC sampling live, remaining lanes added, verification and reconciliation telemetry reporting to the operations review"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "activation, measurement and verification challengers evaluated in the registry, policies re-tuned, the baseline re-verified against controls"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm, not a parallel one: our engineers work in your repositories or a shared workspace with the same CI, the same security review and the same access model your teams use. Knowledge transfer is a gate condition, not a closing slide — by the expansion phase your engineers are shipping changes to the builds, because the runbooks, contracts and evaluation suites are theirs from week one."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones advertising and martech programs are managed on. The targets are the ranges we set in feasibility reads for programs of this shape — commitments you can hold us to where the metric is clean, hypotheses we test where it is confounded. The measurement column is the part most programs skip and the part that makes the delta defensible in a steering committee."
+  },
+  {
+   "t": "table",
+   "caption": "Advertising and martech program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Identity match rate per channel",
+     "+10 to +20 points on priority channels",
+     "Graph join telemetry per identifier class and channel, trended against the deprecation baseline"
+    ],
+    [
+     "Verified-clean budget share",
+     "90%+ of spend passing independent verification",
+     "IVT scoring reconciled against vendor reports, with deltas investigated as cases"
+    ],
+    [
+     "Reconciliation leakage recovered",
+     "0.5-2% of managed spend identified per year",
+     "Log-level reconciliation between ad server, DSP and billing, with recovered amounts tracked per counterparty"
+    ],
+    [
+     "Incrementality-tested budget share",
+     "50%+ of major line items under valid test designs",
+     "Experiment register coverage against plan, with power analysis archived per test"
+    ],
+    [
+     "Yield lift on managed inventory",
+     "5-15% revenue per impression on managed paths",
+     "Auction telemetry against held-out configuration slices, measured net of all fees"
+    ],
+    [
+     "Activation cost per audience",
+     "20-40% reduction through the deduplicated plane",
+     "Cost telemetry per activated audience across channels, reconciled to infrastructure and license spend"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "An advertising build team is small and senior: a lead engineer who has run decision and measurement systems at trading scale, data engineers who own the log and consent pipelines, ML engineers who own scoring and evaluation, a controls engineer who owns the evidence layer, and domain leads who have run trading desks, yield teams or measurement functions in production estates. Agentic-workflow specialists join for the reconciliation and audit builds. The team works to your release calendar and your gate vocabulary from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: weekly operations review on the workflow's own telemetry, fortnightly gate submissions to change and governance, quarterly challenger reviews, and an incident practice that treats the decision store and the evidence layer as production-critical systems — because by the second quarter, they are. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs in this estate fail in known ways, and most of the failure modes are organizational rather than mathematical. We name them in the feasibility read and design against them explicitly, because a program that cannot survive its second quarter is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Graph without consent",
+     "an identity graph that resolves brilliantly and cannot lawfully activate — consent state joins the graph as a hard dependency from the first ingest, not as a later remediation"
+    ],
+    [
+     "Measurement theater",
+     "dashboards multiply while budget calls still cite platform-reported numbers — the arbitration design decides which evidence wins, and the decision log enforces it"
+    ],
+    [
+     "Vendor trust without testing",
+     "verification accepted at face value until a client audit disagrees — independent scoring reconciles against vendor reports from day one, and deltas become cases"
+    ],
+    [
+     "Pilot purgatory",
+     "a demo built on exported logs that never reaches the trading floor — prevented by shipping the first vertical slice through your change process, flags and gates included"
+    ],
+    [
+     "Duplicate pipelines regrowing",
+     "the activation plane deduplicated once and left unguarded — certified segment definitions and cost telemetry are gates, so per-team forks fail the review instead of funding themselves"
+    ],
+    [
+     "Evidence debt",
+     "compliance and client audits answered from spreadsheets assembled under deadline — the evidence layer generates the artifacts continuously or the build is not done"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions trading and martech leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do we need to replace our DSP or ad server?",
+     "No. Every build consumes logs and streams from the pipes and writes back through audience, pacing and suppression interfaces. The seats and servers stay; they stop being the bottleneck for decisions."
+    ],
+    [
+     "Can you work without third-party cookies?",
+     "That is the design condition, not a constraint. The identity spine is built on first-party sources, UID2-class tokens and publisher IDs, with match rates measured per channel so decay is managed, not suffered."
+    ],
+    [
+     "How do you prove consent compliance?",
+     "Consent state is versioned, joined to identity and enforced at execution time, with purpose-scope checks logged per spend. The audit becomes an export from the replay store."
+    ],
+    [
+     "Will this fight our agency relationship?",
+     "The builds produce shared evidence — reconciliation, verification, measurement — that both sides read from the same store. Most disputes shrink because the evidence stops being bilateral."
+    ],
+    [
+     "What about retail media specifically?",
+     "Retail media collaborations run through the same clean-room and reconciliation machinery: contract-templated queries, audited attribution claims and billing integrity per counterparty."
+    ],
+    [
+     "How is success measured without gaming?",
+     "Baselines are locked during the diagnostic, holdouts are used where experiments are cheap, and every metric reports from system telemetry rather than a status deck. The feasibility read names the confounders first."
+    ],
+    [
+     "What is the smallest program worth running?",
+     "One decision surface, one baseline, one vertical slice — billing integrity and identity are the two most common starters because their logs are already flowing. If the diagnostic cannot find the delta, we say so and stop."
+    ],
+    [
+     "Who owns the build after you leave?",
+     "Your teams, with the runbooks, contracts, evaluation suites and registry entries transferred as gate conditions during expansion — not as a closing deliverable. Several programs run entirely in-house after the second quarter."
+    ]
+   ]
   },
   {
    "t": "cta",
-   "x": "Bring operations in Advertising & MarTech to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
+   "x": "Start with one decision surface — identity, measurement, supply path or yield — and we will baseline it in two weeks on your own bid and billing telemetry, then price the delta before any build begins. The feasibility read is yours to keep either way."
   }
  ],
- "words": 355,
+ "words": 5333,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Telecom, Media & Entertainment",

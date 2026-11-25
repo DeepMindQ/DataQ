@@ -1,0 +1,404 @@
+{
+ "file": "industries_healthcare-life-sciences_medtech-devices",
+ "meta_description": "How Dataq Software engineers medical devices and medtech: connected fleet platforms with secure OTA, post-market surveillance and vigilance pipelines, evidence generation for coverage dossiers, field inventory intelligence, service economics and quality system digitization under EU MDR and FDA QMSR.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "In medical device and medtech operations, one installed unit traces the whole business: it left the factory with a serial number and a firmware build, gets provisioned into a device cloud, receives signed over-the-air updates under cybersecurity rules, streams telemetry nobody systematically reads, calls for service when something drifts, and produces the procedure outcomes that decide whether the next hospital buys it. The device-to-evidence loop — telemetry into vigilance, complaints into CAPA, outcomes into coverage dossiers — is an engineering product in its own right, and EU MDR, FDA QMSR and the Cyber Resilience Act raise its bar every cycle. This page is the engineering picture of that loop as Dataq Software sees it from inside device estates, and the six builds that close it."
+  },
+  {
+   "t": "h2",
+   "x": "How the loop runs, factory to coverage dossier"
+  },
+  {
+   "t": "p",
+   "x": "The installed base starts as a fleet: every unit has a UDI, a firmware build, a configuration and a service history that live across ERP, the device cloud and the field inventory system. Connected devices provision into a cloud platform that receives telemetry — usage events, performance counters, fault codes, in some cases therapy data — and pushes firmware updates that must be signed, staged and reversible under FDA cybersecurity guidance and the EU CRA. Legacy fleets run alongside, unconnected, their status known only when a complaint or a service call arrives. The heterogeneity is the estate's defining feature, not an exception."
+  },
+  {
+   "t": "p",
+   "x": "The clinical world meets the fleet in procedure rooms and ward beds: consignment and loaner kits move through hospital basements with expiry dates and usage rights; reps log procedures; implants and their lots trace to patients through documentation that quality downstream depends on. Every anomaly becomes a complaint, every complaint enters the complaint-handling process with its regulatory clocks — MDR reporting where harm thresholds are met, vigilance timelines in Europe — and the aggregate feeds post-market surveillance reports that regulators expect to see assembled from real data rather than curated anecdotes."
+  },
+  {
+   "t": "p",
+   "x": "The commercial layer closes the loop: coverage and reimbursement decisions ride on evidence packs assembled from registries, clinical studies and increasingly real-world device performance; service contracts are priced against cost-per-device numbers nobody can currently state; and the rep-facing commercial stack — CRM, procedure logging, inventory reconciliation — runs on Salesforce-class platforms whose integration with the device estate is usually file exports. The systems that decide margin — service economics, field inventory, evidence for tenders — are exactly the systems with the weakest data plumbing."
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems this work touches"
+  },
+  {
+   "t": "p",
+   "x": "Medtech programs succeed or fail on how honestly the estate is mapped before anything is built. Dataq Software starts every engagement by naming the systems, their owners, their change cadences and their data contracts. The table below is the estate we most often find and integrate against in device-maker programs — not a generic stack diagram."
+  },
+  {
+   "t": "table",
+   "caption": "The medtech estate we build against — and where each layer strains",
+   "headers": ["System layer", "What it actually does", "Where it strains"],
+   "rows": [
+    ["Device cloud and fleet management", "Provisioning, authentication, telemetry collection, remote commands for connected devices", "Fleet heterogeneity; enrollment gaps on legacy units; telemetry collected but not systematically triaged"],
+    ["Firmware and OTA update pipeline", "Signed builds, staged rollout, rollback, vulnerability response for device software", "SBOMs unknown across generations; rollout risk handled by caution rather than engineering; update provenance thin"],
+    ["Telemetry ingestion and device twins", "Usage events, performance counters, fault codes into per-device state", "Signal buried in raw streams; fault prediction manual; per-device history reconstructed for every investigation"],
+    ["Complaint handling and vigilance systems", "Complaint intake, investigation, MDR/vigilance reporting, recapitalization of risk files", "Case assembly manual across telemetry, quality records and narratives; reporting clocks worked at the wire"],
+    ["eQMS: design controls, DHF/DMR/DHR", "Design history, device master and device history records, changes, CAPA under ISO 13485/QMSR", "Traceability between design changes, firmware builds and field units reconstructed by hand for audits"],
+    ["ERP, MES and production records", "Manufacturing execution, lot traceability, sterility and cleanroom records", "Production evidence siloed from field performance; lot-to-complaint traceability is a search, not a query"],
+    ["Field inventory and consignment", "Loaner kits, implant consignment, expiry tracking, replenishment at hospitals", "Stockouts and expiry write-offs drift; usage reconciliation against procedure logs is manual"],
+    ["Commercial stack: rep CRM and procedure logging", "Territory activity, procedure capture, sample and demo tracking on Salesforce-class platforms", "Procedure data trapped in rep-entered forms; integration to device and quality estates is file export"],
+    ["Evidence and reimbursement estate", "Registries, clinical studies, coverage dossiers, tender responses", "Evidence packs rebuilt per tender; real-world device performance data unused for coverage arguments"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where the loop leaks margin and compliance"
+  },
+  {
+   "t": "p",
+   "x": "Ask device-company leaders where the damage concentrates and the answers converge on the same eight places. Dataq Software's diagnostic scores each of them in your own estate before recommending a build, because the leak that dominates an imaging vendor is different from the one that dominates an implant maker — and the fix is engineering either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Installed base unconnected", "Fleet enrollment stops at whatever connectivity the launch generation shipped, so provisioning, OTA and telemetry cover a fraction of the installed base. Service runs on reactive dispatch and field guesswork; utilization is unknown per device; the upgrade decision for legacy fleets has no data underneath it. The gap is measurable in connected percentage per device class."],
+    ["Post-market surveillance assembled by spreadsheet", "Complaint files, telemetry and literature are reviewed manually, so signals surface late, MDR and vigilance clocks get worked at the deadline, and periodic PMS reports are assembled under pressure. The telemetry needed to see the signal already streams into the cloud; joining it to the complaint record never happens."],
+    ["Firmware fleets with unknown SBOMs", "Every firmware generation carries a software bill of materials that nobody can state with confidence, vulnerability disclosure obligations land on fleets whose composition is unknown, and update rollout risk is managed by caution rather than by staging and rollback engineering. CRA and FDA cybersecurity duties make this an audit question with a deadline."],
+    ["Clinical evidence generation slow", "Real-world device performance — procedure outcomes, utilization, durability — accumulates in the device cloud and in rep-entered logs, but evidence packs for coverage dossiers and tenders are rebuilt per request from curated studies. The payer conversation runs on the evidence that was cheapest to assemble, not the evidence the fleet generates daily."],
+    ["Consignment and loaner kits drifting", "Implant consignment, loaner sets and demo units move through hospital basements with expiry dates and usage rights that spreadsheets track imperfectly. Stockouts cost procedures, expiry write-offs cost margin, and reconciliation against procedure logs happens monthly by hand — late enough that the fix always trails the loss."],
+    ["Service economics opaque", "Cost per device, per contract and per field visit is unknown, so service contracts price on tradition and premium fleets subsidize problem ones. Fault prediction is tribal knowledge in senior engineers. The telemetry to instrument all of it already streams from the connected fraction of the fleet; the plumbing to cost it does not exist."],
+    ["Complaint-to-CAPA loop leaking", "Complaints enter the eQMS, investigations run, CAPAs open — but the loop closes on paper: recurrence tracking is manual, effectiveness checks read nothing, and the connection between a firmware change and the complaint trend it was supposed to fix is reconstructed for audits rather than queried."],
+    ["UDI and provenance trails manual", "Unit-level traceability from lot to patient to procedure is assembled by hand when regulators, recall planning or liability questions ask for it. Field-action scoping runs on spreadsheets; the affected-unit population takes days to state precisely, which is exactly wrong when the clock is a recall clock."]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "warning",
+   "x": "The pattern across all eight leaks: the device-to-evidence loop is broken at its joins, and the joins are where the regulators now look — vigilance timelines, cybersecurity disclosure, UDI traceability. Every week the loop stays manual is margin leaking and audit risk accumulating at the same seam."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works medical devices and medtech"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the product and quality estate you already run. We do not arrive with a platform replacement, a rebuild-your-cloud proposal, or a strategy deck that ends where the hard part begins. The engagement model is engineering-first: a two-week diagnostic that baselines one loop end to end — fleet connectivity, vigilance, evidence, field inventory, service — then a scoped build that ships behind your change process, behind your QMS, and behind the regulatory duties that attach to anything touching the device or its data."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver in this sub-industry. First, every automated decision carries replay: inputs, versions, criteria and outcomes are stored so an auditor, inspector or liability question twelve months later is a query, not an investigation. Second, every generative component is permission-aware and citation-bound — evidence packs cite their sources, case narratives trace to the record, and nothing generates free text into a regulated document without a human author of record. Third, every build lands with its quality-system evidence: the traceability, validation and audit artifacts the QMS expects are generated by the build process itself."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the measurement logic: where the metric is clean — fleet connectivity, case cycle time, inventory variance, service cost — we contract against the delta with the baseline locked during the diagnostic; where the metric is confounded, we say so in the feasibility read and scope fixed-fee instead. Device safety cases route to your quality system, never around it: the builds instrument and accelerate the compliant path, they do not create a parallel one."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for medtech"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our medtech practice. Each build is named for the workflow it changes, sized in the diagnostic, and shipped with the controls the workflow's regulator will expect. None of them require rebuilding the device cloud or replacing the QMS; all of them require taking the traceability and security duties seriously."
+  },
+  {
+   "t": "h3",
+   "x": "1. Device fleet platform: provisioning, OTA and telemetry"
+  },
+  {
+   "t": "p",
+   "x": "The build industrializes the connected layer for the fleet you have, not the fleet you wish you had: enrollment paths for legacy units through gateways and retrofit kits, provisioning with cryptographic identity per device, telemetry ingestion normalized to a common event schema, and firmware OTA with signed builds, staged rollout rings, automatic rollback and update provenance recorded per unit. Cybersecurity duties are engineered in: SBOM generation per firmware build, vulnerability watch against the component inventory, and coordinated disclosure workflows that route into your quality system."
+  },
+  {
+   "t": "p",
+   "x": "The device twin layer gives every unit a queryable state: configuration, firmware history, telemetry history, service events, complaints and procedure participation in one record. That twin is what every other build reads — vigilance correlation, service prediction, evidence generation, recall scoping — which is why the diagnostic usually prices this build first. The measurable deltas are connected percentage per device class, update rollout cycle time and the time to answer any question about a specific unit, from days of search to a query."
+  },
+  {
+   "t": "h3",
+   "x": "2. Post-market surveillance and vigilance pipeline"
+  },
+  {
+   "t": "p",
+   "x": "The build joins complaint intake to device telemetry so the investigation starts with the unit's actual history rather than with the complaint form: fault codes, usage patterns, configuration and firmware state attach to the case automatically, and the narrative pre-drafts from the structured record with the reviewer as author of record. Regulatory clocks — MDR reporting, European vigilance timelines — are tracked per case with escalation gates, so deadlines are managed by the system rather than worked at the wire."
+  },
+  {
+   "t": "p",
+   "x": "Signal detection runs on the joined record: complaint trends correlated against firmware releases, lots and usage cohorts, with periodicity and methods your PMS plan defines. Periodic surveillance reports assemble from the same store — the PMS report becomes a generated artifact with lineage rather than a quarterly writing project. The program is measured in case cycle time, reporting-clock breaches at or near zero, signal latency and the percentage of cases where telemetry answered the investigation question without a field visit."
+  },
+  {
+   "t": "h3",
+   "x": "3. Clinical and real-world evidence generation for coverage"
+  },
+  {
+   "t": "p",
+   "x": "The build turns the evidence the fleet generates daily into coverage-grade artifacts: procedure outcomes from device and rep-entered data joined to claims and registry feeds, cohort definitions as versioned reproducible artifacts, and evidence packs assembled per payer, tender or dossier with every claim traceable to its source. Real-world performance — durability, utilization, complication rates — becomes a standing asset rather than a per-request scramble, with privacy duties for patient-linked data enforced at the contract layer."
+  },
+  {
+   "t": "p",
+   "x": "The same evidence layer serves clinical affairs: post-market clinical follow-up studies draw their cohorts and outcomes from the governed store, study feasibility reads from real utilization data, and publication pipelines get reproducible analysis datasets instead of hand-assembled extracts. The measurable deltas are evidence-pack assembly time from months to weeks, tender response completeness, and the coverage conversations that now run on the fleet's actual performance rather than on the last pivotal trial alone."
+  },
+  {
+   "t": "h3",
+   "x": "4. Field inventory and consignment intelligence"
+  },
+  {
+   "t": "p",
+   "x": "The build gives consignment and loaner inventory a transactional spine: kit movements recorded at the event level, expiry and shelf-life tracked per unit with alerting before — not after — the write-off, replenishment driven by procedure logs rather than by rep memory, and reconciliation between inventory events, procedure records and billing running continuously instead of monthly by hand. Hospital-facing views let consignment managers see what is actually on their shelf and what is committed to scheduled cases."
+  },
+  {
+   "t": "p",
+   "x": "The optimization layer runs on top: stocking recommendations per facility from procedure forecasts, transfer suggestions that move idle stock to demand, and usage-right enforcement so the kit that arrives is the kit the procedure needs. Every inventory decision is logged with its inputs for the audit trail the QMS and hospital contracts expect. The measurable deltas are stockout rate, expiry write-off reduction, inventory-carrying cost and the staff hours returned from reconciliation — reported from the platform's own event telemetry."
+  },
+  {
+   "t": "h3",
+   "x": "5. Service economics and predictive maintenance"
+  },
+  {
+   "t": "p",
+   "x": "The build instruments service economics at the event level: every field visit, parts consumption, remote resolution and downtime hour attaches to a device twin, so cost per device, per contract and per customer computes continuously instead of being estimated at renewal. Fault prediction layers on top — telemetry patterns that precede service events trigger proactive interventions, parts get pre-staged, and dispatch decisions weigh travel, uptime risk and contract tier rather than the queue's age."
+  },
+  {
+   "t": "p",
+   "x": "Contract economics close the loop: uptime per contract tier, service cost against price, and the renewal conversations that run on the fleet's actual history rather than on the last negotiation. Every prediction and dispatch decision is logged with its inputs so a customer asking why a visit happened gets a query, not a dispute. The measurable deltas are service cost per device, unplanned downtime, first-time-fix rate and the premium-contract margin that stops subsidizing the problem fleet."
+  },
+  {
+   "t": "h3",
+   "x": "6. Quality system digitization: complaint-to-CAPA and supplier quality"
+  },
+  {
+   "t": "p",
+   "x": "The build joins the eQMS to the evidence it currently lacks: complaint investigations read the device twin automatically, CAPA effectiveness checks query the field performance they were supposed to change, design-change traceability connects firmware builds to field units to complaint trends, and supplier quality events link to incoming lots and their field consequences. The DHF, DMR and DHR relationships that audits reconstruct by hand become queryable links maintained continuously."
+  },
+  {
+   "t": "p",
+   "x": "Audit and inspection readiness runs on the same layer: management-review metrics, PMS summaries, complaint-handling quality checks and supplier scorecards generate from the store continuously, so the survey that used to take a quarter of preparation becomes a walkthrough of artifacts the system already produces. The measurable deltas are CAPA aging and recurrence, audit-preparation effort, and the traceability questions — lot to unit to patient to complaint — that answer in minutes instead of days."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — the medtech device-to-evidence stack",
+   "lanes": ["Device and production systems of record", "Connectivity and ingestion", "Telemetry and retrieval core", "Guarded scoring and generation", "Controls and evidence", "Quality, field and commercial surfaces"],
+   "nodes": [
+    {"id": "devcloud", "lane": 0, "label": "Device cloud and fleet management"},
+    {"id": "firmware", "lane": 0, "label": "Firmware builds and SBOM registry"},
+    {"id": "erp", "lane": 0, "label": "ERP, MES and lot traceability"},
+    {"id": "eqms", "lane": 0, "label": "eQMS: complaints, CAPA, design controls"},
+    {"id": "inventory", "lane": 0, "label": "Field inventory and consignment"},
+    {"id": "crm", "lane": 0, "label": "Rep CRM and procedure logging"},
+    {"id": "ingest", "lane": 1, "label": "Telemetry and event ingestion"},
+    {"id": "ota", "lane": 1, "label": "Signed OTA rollout rings", "hot": true},
+    {"id": "contracts", "lane": 1, "label": "Data contracts and integrity checks"},
+    {"id": "lake", "lane": 2, "label": "Device decision lakehouse"},
+    {"id": "twin", "lane": 2, "label": "Per-unit device twin", "hot": true},
+    {"id": "index", "lane": 2, "label": "Permission-aware retrieval index"},
+    {"id": "sigdet", "lane": 3, "label": "Signal detection and fault prediction"},
+    {"id": "evidence", "lane": 3, "label": "Evidence pack generator"},
+    {"id": "replay", "lane": 4, "label": "Decision replay and provenance"},
+    {"id": "registry", "lane": 4, "label": "Quality and model-risk registry"},
+    {"id": "eval", "lane": 4, "label": "Evaluation harness and golden sets"},
+    {"id": "vigilance", "lane": 5, "label": "Vigilance and PMS workbench"},
+    {"id": "fieldops", "lane": 5, "label": "Field ops and inventory console"},
+    {"id": "salesops", "lane": 5, "label": "Commercial and tender console"}
+   ],
+   "edges": [
+    {"a": "devcloud", "b": "ingest"},
+    {"a": "firmware", "b": "ota"},
+    {"a": "erp", "b": "ingest"},
+    {"a": "eqms", "b": "ingest"},
+    {"a": "inventory", "b": "ingest"},
+    {"a": "crm", "b": "ingest"},
+    {"a": "ota", "b": "devcloud"},
+    {"a": "ingest", "b": "contracts"},
+    {"a": "contracts", "b": "lake"},
+    {"a": "lake", "b": "twin"},
+    {"a": "lake", "b": "index"},
+    {"a": "twin", "b": "sigdet"},
+    {"a": "index", "b": "evidence"},
+    {"a": "sigdet", "b": "replay"},
+    {"a": "evidence", "b": "replay"},
+    {"a": "sigdet", "b": "eval"},
+    {"a": "eval", "b": "registry"},
+    {"a": "registry", "b": "eqms"},
+    {"a": "sigdet", "b": "vigilance"},
+    {"a": "twin", "b": "fieldops"},
+    {"a": "evidence", "b": "salesops"}
+   ],
+   "note": "Lanes and nodes are named for the systems a device maker actually runs — the device cloud, firmware and SBOM registry, ERP lot traceability, the eQMS, field inventory and the rep-facing commercial stack — not a generic reference stack. The hot nodes are where the program's differentiation concentrates: signed OTA rollout engineering and the per-unit device twin that every downstream decision reads. Every flow above the core carries integrity checks, so quality-system traceability holds by construction rather than by reconstruction."
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: from file exports to a device event fabric"
+  },
+  {
+   "t": "p",
+   "x": "Every decision gap in medtech traces back to a data gap, and most data gaps trace back to the same habit: the device cloud, the ERP, the eQMS and the commercial stack each hold a fragment of the truth, and the joins happen as file exports with no lineage. The data plane build inverts the pattern where it matters. Telemetry, inventory events, procedure logs, quality records and lot data land through ingestion pipelines into a governed lakehouse in near real time; the source systems keep running as validated, but the decisions above them stop depending on monthly reconciliation."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries a schema contract with a named owner, a freshness SLA and integrity checks against the source system's own controls. Unit-level identity — UDI, serial number, lot — binds every event to the device twin, so traceability questions are queries rather than searches. Patient-linked and hospital-identifiable data carry their privacy duties at the contract layer, and every derivation is a versioned artifact whose lineage a notified body, auditor or legal team can query."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Telemetry and business event joins", "device telemetry, inventory movements, procedure logs and quality records normalized to one contract layer, so vigilance, service and evidence decisions read one substrate"],
+    ["Unit-level identity binding", "UDI, serial and lot identity enforced on every event, so traceability from lot to unit to procedure is a query rather than a recall-week scramble"],
+    ["SBOM-grounded security data", "firmware composition, vulnerability advisories and update provenance tracked per build, so CRA and FDA cybersecurity questions answer from the registry, not from archaeology"],
+    ["Privacy duties carried with data", "patient-linked and hospital-identifiable data governed at query time with purpose binding visible in the replay store, so evidence projects start inside their rights"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: scores with regulatory tails"
+  },
+  {
+   "t": "p",
+   "x": "Device operations run on decisions with regulatory tails: a signal disposition shapes the vigilance narrative, a recall scope decision touches patients, a dispatch decision moves a field engineer, a stocking recommendation commits consignment capital. The decision layer treats those tails as first-class requirements. Every decision records its inputs, feature values, model versions, criteria and reason codes in a replay store that answers audit, inspection and liability questions as queries. When a reviewer asks why, the answer is retrieved, not reconstructed."
+  },
+  {
+   "t": "p",
+   "x": "Champion/challenger governance is built in rather than bolted on: challengers run on shadow traffic with performance tracked in the registry the quality function owns, promotions happen through the gates your QMS and design-control process already defines, and rollbacks are rehearsed rather than improvised — for firmware literally, for models procedurally. The same decision service layer hosts signal triage, fault prediction, stocking and dispatch optimization, so the governance surface is one registry, one replay store, one set of gates."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: file assembly without judgment authority"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work in medtech — complaint investigation collation, vigilance case assembly, evidence-pack preparation, inventory reconciliation, audit-response collation — follows patterns an agentic workforce can absorb without touching judgment authority. Dataq Software's agent platform runs digital workers with explicit role scopes: the tools they may call, the systems they may read, the actions that require a human checkpoint and the budget of work per run. Every run logs its steps and outputs to the same evidence store the human workflow uses, so an agent's file is auditable exactly like an analyst's."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — drafting complaint narratives from structured records, assembling evidence packs with citations, summarizing field service history, preparing PMS report sections — the pattern is grounded generation with citation obligations and human authorship of record. Agents never file regulatory reports, never sign quality decisions, never modify device records; they move the work to the decision point and stop. Capacity is measured in cleared cases per FTE, which is how quality and commercial leaders justify these programs upward."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: inspection as a query"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory surface of medtech is product engineering law, not enterprise paperwork, and it is growing in exactly the directions these builds touch: vigilance, cybersecurity, traceability and data protection. Dataq Software's answer is the evidence layer — the artifacts a notified body, inspector or auditor will ask for are generated continuously by the systems themselves. The table maps the regimes we build against to the evidence our builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape medtech builds — and the evidence layer each one gets",
+   "headers": ["Regime", "What it expects", "What the build produces"],
+   "rows": [
+    ["EU MDR and vigilance duties", "Post-market surveillance, vigilance reporting clocks, trend analysis, PMS/PMCF documentation", "Case trails with telemetry provenance; signal decisions logged with inputs; PMS reports generated from the evidence store"],
+    ["FDA QMSR and quality system duties", "Design controls, CAPA effectiveness, complaint handling, management review evidence", "Complaint-to-CAPA traceability maintained continuously; effectiveness checks querying field data; review metrics generated"],
+    ["IEC 62304 and SaMD lifecycle", "Software lifecycle documentation, risk management integration, verification evidence", "Lifecycle artifacts linked to firmware builds and SBOMs; verification evidence generated by the build pipeline"],
+    ["EU Cyber Resilience Act and FDA cybersecurity guidance", "SBOMs, vulnerability handling, secure update mechanisms, coordinated disclosure", "SBOM registry per firmware build; vulnerability watch records; signed OTA provenance per unit"],
+    ["UDI and traceability obligations", "Unit-level identification, lot traceability, field-action scoping", "Unit-identity-bound event fabric; field-action scoping as a query; recall drill evidence"],
+    ["GDPR and patient telemetry duties", "Lawful basis, minimization, patient rights for health-related device data", "Purpose binding at query time; minimization enforced in the contract layer; DSAR joins across device and clinical data"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the product estate stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Device estates are validated, certified and change-averse by design, and the fastest way to fail a program is to promise greenfield. Our integration posture is contractual: we define schema contracts with each system owner, land data through governed APIs and validated interfaces, write back through the integration paths your change control already governs, and keep every new component independently deployable behind feature flags. The device cloud, the ERP and the eQMS are not replaced; they are supplied with better context and drained of the decision work they were never good at."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment. Connectivity, telemetry, coding-assist and evidence vendors sit behind an abstraction layer with contract tests, so a vendor swap is a configuration change with a migration runbook rather than a re-validation project. Where a legacy interface must stay, the offload pattern applies: the validated interface keeps running while decision surfaces read from the governed stream the offload produces. This is unglamorous work and it is the reason the builds above hold up in production instead of in a pilot."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Write-back through validated interfaces", "case updates, disposition records and inventory adjustments flow through the integration paths your change control already governs, with no direct database writes anywhere"],
+    ["Vendor abstraction with contract tests", "connectivity, telemetry and evidence vendors behind one interface so a vendor swap is configuration with a runbook, not a re-validation project"],
+    ["QMS evidence as a build artifact", "traceability matrices, verification records and audit artifacts generated by the build pipeline, so every change arrives with its own quality-system justification"],
+    ["Feature-flagged, independently deployable", "every build ships behind flags with rehearsed rollback, because the change control board and the quality function will ask exactly that question"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement. It starts with the two-week diagnostic: one loop baselined end to end, the leak quantified in your own telemetry, the interfaces, firmware estate and contracts inventoried, and a written feasibility read you can circulate — including the uncomfortable findings. If the delta is real, the build is scoped against the gates your change control, QMS and product-security processes define; if it is not, you keep the measurement design and the baseline either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Weeks 1-2: diagnostic and baseline", "loop instrumentation, leak quantification, firmware and interface inventory, feasibility read with the delta estimate and the confounders named"],
+    ["Weeks 3-8: first vertical slice", "one lane live behind flags with replay and evidence running from day one — for vigilance that is one product family; for inventory, one region"],
+    ["Weeks 9-16: gates, controls, expansion", "QMS evidence pack landed, remaining lanes added, capacity telemetry reporting to the operations and quality reviews"],
+    ["Quarterly: challenger reviews", "model and threshold challengers evaluated in the registry, rollout rings and stocking policies re-tuned, the baseline re-verified against holdouts"]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm, not a parallel one: our engineers work in your repositories or a shared workspace with the same CI, the same security review and the same access model your teams use. Knowledge transfer is part of the gates, not a closing slide — by the expansion phase your engineers are shipping changes to the builds, because the runbooks, contracts, quality evidence and evaluation suites are theirs from week one."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones medtech programs are managed on. The targets are the ranges we set in feasibility reads for programs of this shape — commitments we let you hold us to where the metric is clean, hypotheses we test where it is confounded. The measurement column is the part most programs skip and the part that makes the delta defensible in a board review."
+  },
+  {
+   "t": "table",
+   "caption": "Medtech program metrics — targets and how they are measured",
+   "headers": ["Metric", "Typical program target", "How it is measured"],
+   "rows": [
+    ["Fleet connectivity coverage", "80-95% of the installed base connected per device class", "Provisioning and telemetry enrollment telemetry, by device class and generation"],
+    ["Vigilance case cycle time", "30-50% faster intake-to-reportable", "Case clock telemetry in the vigilance pipeline, by product and jurisdiction"],
+    ["Signal detection latency", "weeks earlier at a fixed precision budget", "Signal decision log with cumulative snapshots, reviewed quarterly against closed dispositions"],
+    ["Consignment variance", "20-40% reduction in stockouts and expiry write-offs", "Inventory event telemetry reconciled against procedure logs, by facility"],
+    ["Service cost per device", "15-30% reduction", "Unit-cost telemetry per device and contract tier from the service event fabric"],
+    ["Evidence pack assembly time", "months to weeks per tender or dossier", "Dossier completeness telemetry with claim-to-source traceability, per payer request"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A medtech build team is small and senior: a lead engineer who has run connected-product systems, data engineers who own the ingestion and contract layer, ML engineers who own scoring and evaluation, a controls engineer who owns the evidence and quality layer, and domain leads who have run vigilance files, field service organizations or commercial operations in device companies. A quality liaison joins for anything touching QMS scope, and agentic-workflow specialists join for the file-assembly builds. The team works to your release calendar and your change-control vocabulary from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: weekly operations review on the workflow's own telemetry, fortnightly gate submissions to change control and quality, quarterly challenger reviews, and an incident practice that treats the decision store, the device twin and the evidence layer as production-critical systems — because by the second quarter, they are. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Medtech programs fail in known ways, and most of the failure modes are organizational rather than mathematical. We name them in the feasibility read and design against them explicitly, because a program that cannot survive its second quarter — or its first notified-body audit — is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Pilot purgatory", "a demo built on extracted telemetry that never integrates with the QMS or the device cloud — we prevent it by shipping the first vertical slice through your change control, flags and gates included"],
+    ["QMS bypass", "an analytics lane that becomes a parallel quality record — the builds write through the eQMS paths your change control governs, or they do not ship"],
+    ["Update theater", "OTA rings declared but never rehearsed — staged rollout, rollback and update provenance are tested per release, because the first real update is not the place to learn"],
+    ["Signal fatigue", "telemetry screens tuned so broadly that every review meeting is noise — precision at fixed recall is the operating standard, reviewed against closed dispositions"],
+    ["Inventory drift", "stocking models running on stale procedure logs — event-level reconciliation is part of the fabric, so the models retrain on truth rather than on memory"],
+    ["Evidence debt", "audit and tender preparation consuming a team every quarter — the evidence layer generates artifacts continuously or the build is not done"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions medtech leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Our fleet is heterogeneous — can this still work?", "Yes. The design assumption is heterogeneity: gateway and retrofit paths for legacy units, per-class normalization in the contract layer, and connectivity coverage reported per device class so the upgrade case for the stragglers is argued from data."],
+    ["How does OTA fit our QMS obligations?", "As an engineering discipline inside them: signed builds, staged rollout rings, rollback and update provenance are generated per release with their verification evidence, so the software maintenance file and the field record stay synchronized by construction."],
+    ["Will payers and notified bodies accept generated evidence?", "They accept evidence with lineage. Every pack cites its sources, cohort definitions are versioned artifacts, and the analysis datasets are reproducible — which is a stronger posture than the hand-assembled extracts most dossiers currently carry."],
+    ["Can consignment accuracy actually improve without new hardware?", "Mostly yes: event-level capture through the rep workflow, reconciliation against procedure records and continuous alerting recover most of the variance before any scanning hardware enters the conversation; hardware becomes a targeted complement, not a prerequisite."],
+    ["What about complaint volume — can intake really scale?", "The intake pipeline normalizes and pre-assembles cases from telemetry and structured sources, so reviewers decide rather than collect. Volume scaling is measured in cleared cases per reviewer, with precision gates so the pre-assembly never outruns the investigation quality."],
+    ["Who signs the vigilance decisions?", "Your qualified personnel, always. The pipeline assembles evidence, pre-drafts narratives and tracks clocks; the safety decision and the regulatory filing remain human acts with their own accountability under your procedures."],
+    ["What is the smallest program worth running?", "One loop, one baseline, one vertical slice — the device twin plus vigilance for one product family is the most common starter, because every other build reads the twin. If the diagnostic cannot find the delta, we say so and stop."],
+    ["Who owns the build after you leave?", "Your teams, with the runbooks, contracts, quality evidence and evaluation suites transferred as gate conditions during expansion — not as a closing deliverable. Several programs run entirely in-house after the second quarter."]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Pick one loop — fleet connectivity, vigilance, field inventory or service economics — and we will instrument it, baseline the cycle times and costs in your own systems, and return a scoped feasibility read within two weeks. If the delta is not real, you keep the baseline and we say so on the day."
+  }
+ ]
+}

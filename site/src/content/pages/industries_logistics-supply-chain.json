@@ -5,134 +5,784 @@
  "template": "industry_hub",
  "breadcrumb": "Industries > Logistics & Supply Chain",
  "seo_title": "Logistics & Supply Chain | Industry | Dataq Software",
- "meta_description": "Dataq Software programs for Logistics & Supply Chain: priority use cases, regulatory posture and delivery model.",
+ "meta_description": "How Dataq Software engineers logistics and supply chain operations: one event spine across TMS, WMS and terminal estates, agentic exception management, freight-audit integrity, optimization services for routes, waves and berths, and compliance-grade evidence for customs, security and emissions duties.",
  "blocks": [
   {
    "t": "hero",
-   "x": "Logistics is where operations research was born, and it is where agentic AI pays fastest: routes, loads, docks, yards and exceptions are decision fields with measurable physics. The winners run control towers that see events as they happen, re-plan autonomously within policy, and treat every exception as data — compounding an execution advantage that price discounting cannot buy."
+   "x": "Across logistics and supply chain, the physical work is done by trucks, cranes, conveyors and people — but the margin is decided by information: which load gets tendered to which carrier, which wave gets released to which pick line, which vessel gets which berth, which exception gets escalated before it becomes a claim. The sector runs on an unglamorous systems estate — TMS, WMS, TOS and YMS platforms, EDI gateways speaking X12 and EDIFACT, telematics feeds, customs filing engines — that mostly talks in batches and portals. Dataq Software builds the decision machinery on top of that estate: one event spine, decision services with replay, agentic remediation for the recoverable majority of disruptions, and evidence generated as a by-product of running the operation. This page is the engineering picture of that machinery, and the catalog of builds behind it."
   },
   {
    "t": "h2",
-   "x": "Where the sector stands"
+   "x": "How the sector actually runs end to end"
   },
   {
    "t": "p",
-   "x": "The environment keeps raising stakes: e-commerce compresses promise windows, capacity markets swing, EUDR/CSRD-style provenance and emissions reporting reach freight, and labor scarcity meets aging infrastructure. Ports, 3PLs, parcel networks and shippers all face the same core gap — operating metrics exists but decisions still run on spreadsheets and veterans' instinct."
+   "x": "Across logistics and supply chain, a single international order crosses more systems than most banks touch in a product launch. A purchase order triggers an ASN from the supplier's WMS; a forwarder books space with a carrier through EDIFACT IFTMIN or an API, files export declarations through ACE or ICS2-class engines, and tenders the inland leg with an X12 204 that the carrier answers with a 990. Telematics and ELD feeds stream position and hours; the TMS posts status updates as 214 transactions that become the shipper's visibility portal. At the port, COPRAR orders drive the terminal operating system, VERMAS carries verified gross mass ahead of loading, and the container changes custody against demurrage clocks nobody reads until the invoice lands."
+  },
+  {
+   "t": "p",
+   "x": "Inside each node the pattern repeats at higher frequency. A distribution center receives against ASNs, puts away, slots, waves, picks, packs and manifests — the WMS dictating every touch while a labor management system scores each one against engineered standards. A parcel hub inducts, sorts and loads millions of units a week against a sort plan a solver produced overnight. A terminal plans berths and yards days ahead and re-plans hourly as vessels, tides and cranes slip. Every node keeps its own master data, its own event codes, its own definition of on time — which is why the control tower a shipper buys rarely survives contact with the carrier's actual milestone vocabulary."
+  },
+  {
+   "t": "p",
+   "x": "The standards layer is the sector's quiet achievement: EDIFACT and ANSI X12 message sets, GS1 identifiers and EPCIS visibility events, Incoterms allocating risk between counterparties, AEO and C-TPAT security accreditations, IMDG and ADR dangerous-goods rules, driver-hours law, and the GLEC framework pulling emissions reporting toward auditability. Most of it runs, but it runs in silos — each platform speaks its slice of the standard to its counterparties and nobody holds the whole journey. The programs described on this page and its four sub-industry pages exist to hold the whole journey: one event spine, decisions with replay, and evidence customs, customers and auditors accept."
   },
   {
    "t": "h2",
-   "x": "Pressures that will not wait"
+   "x": "Systems, standards and obligations that define the sector"
   },
   {
    "t": "p",
-   "x": "Logistics & Supply Chain: the recurring pressure points,"
+   "x": "Every program starts by mapping the estate honestly: the systems of record, the message standards they exchange, and the obligations that attach to the freight itself. The table below is the layer model Dataq Software most often finds across shippers, 3PLs, parcel networks and terminal operators — and where each layer strains under peak volume, audit or an exception-heavy week. It is a map of where decisions are made and where they stall."
+  },
+  {
+   "t": "table",
+   "caption": "The layer model we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
+    [
+     "Transportation management (TMS)",
+     "Load tendering, rating, execution, carrier settlement and the shipment record of truth",
+     "Batch EDI cycles and portal stitching leave ETAs stale; profitability per load is rebuilt monthly in spreadsheets"
+    ],
+    [
+     "Warehouse management (WMS)",
+     "Inventory, slotting, wave release, pick-pack-ship execution and the order record inside four walls",
+     "Wave logic freezes at release; slotting refreshes quarterly; labor plans diverge from actual volume within hours"
+    ],
+    [
+     "Terminal operating systems (TOS)",
+     "Berth planning, yard control, crane dispatch and gate orchestration for vessel calls",
+     "Vessel slippage forces manual re-plans; crane and yard-equipment health is reactive; gate congestion returns every peak"
+    ],
+    [
+     "EDI and API gateway",
+     "X12 and EDIFACT message exchange with carriers, customs, customers and ports",
+     "997 acknowledgements confirm receipt, not truth; failed translations surface first as customer complaints"
+    ],
+    [
+     "Visibility and telematics feeds",
+     "Vehicle positions, ELD hours, container events, reefer temperatures, EPCIS-style custody events",
+     "Every provider defines milestones differently, so the control tower reads an average rather than the network"
+    ],
+    [
+     "Customs and trade compliance",
+     "HS classification, export and import filings through ACE and ICS2-class engines, ISF and security data",
+     "Evidence assembled per shipment by hand; classification rationale undocumented until an audit asks for it"
+    ],
+    [
+     "Freight audit, payment and billing",
+     "Invoice matching against contracts, accessorial validation, customer billing and accruals",
+     "Detention and demurrage argued from memory; accessorial leakage priced after the freight has moved"
+    ],
+    [
+     "Labor, workforce and safety systems",
+     "Shift planning, engineered standards, MHE and driver safety telemetry, training records",
+     "Standards drift from real processes; overtime decisions run on yesterday's volume; safety data lives in silos"
+    ],
+    [
+     "Security and OT estate",
+     "AEO and C-TPAT controls, ISO 28000 management systems, warehouse and terminal OT networks",
+     "OT estates sit flat against corporate IT; segmentation and recovery are asserted, never tested"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where the sector leaks money"
+  },
+  {
+   "t": "p",
+   "x": "Ask operations leaders across modes where value leaks and the answers rhyme: decisions late, evidence missing, assets unsensed, exceptions manual. The eight leaks below recur in shippers, 3PLs, parcel networks and ports alike; the mix differs by estate, which is why the diagnostic scores them in your telemetry before any build is priced rather than assuming a sector average."
   },
   {
    "t": "bullets",
    "items": [
     [
      "Visibility stitched from portals",
-     "Carrier portals, EDI and telematics produce a patchwork; the control tower reads yesterday. Exceptions surface as customer complaints."
+     "Carrier portals, EDI acknowledgements and telematics produce a patchwork that reads yesterday. ETAs update by phone, exceptions surface as customer complaints, and the control tower every shipper bought reports the network's average instead of its truth. The fix is an event spine with counterparty milestone dictionaries, not another dashboard."
     ],
     [
-     "Dispatch and exception work manual",
-     "Planners re-plan routes and loads by hand when trucks break down or orders change; exception queues eat capacity that should improve the network."
+     "Exceptions handled by heroics",
+     "When trucks break down, orders change or vessels slip, planners re-plan loads, waves and berths by hand. The recoverable majority of disruptions is absorbed by overtime and vigilance, with no policy, no replay and no memory. Institutions pay for judgment twice: once in salaries, again in errors."
     ],
     [
-     "Fleet and yard telemetry gaps",
-     "Trailer/container/yard assets lack sensing; detention, dwell and theft are discovered in invoices. Cold-chain excursions surface at claim time."
+     "Accessorial and detention integrity",
+     "Detention, demurrage and accessorial charges are priced without telemetry evidence, so winnable disputes are lost and legitimate charges go unbilled. The clocks exist in gate scans, GPS traces and ELD records; nobody joins them at invoice time, so the leakage is discovered in margin, not in operations."
     ],
     [
-     "Demand and capacity planning stale",
-     "Volume forecasts lag promotion cycles and market shifts; capacity buys and network design inherit the error."
+     "Freight fraud and carrier identity",
+     "Double brokering and stolen carrier identities exploit the gap between annual onboarding checks and daily tendering. Authority, insurance and safety ratings drift after onboarding day, and verification at tender time is thin. Fraud analytics on the tender stream are now table stakes, not an optional extra."
     ],
     [
-     "Freight fraud and cyber exposure",
-     "Double-brokering fraud and carrier-identity theft rise alongside ransomware targeting 3PLs; the estate mixes corporate IT with driver-facing OT."
+     "Inventory truth drifting",
+     "Phantom stock breaks customer promises; cycle counts lag the physical estate; ASN accuracy is unknown until a retailer fines. The receiving, put-away and pick events that would expose drift already exist in WMS logs — they are simply never reconciled against each other in near time."
     ],
     [
-     "Compliance-grade provenance missing",
-     "EUDR-grade due diligence and custody evidence for high-value goods remain paper-based; customs and buyers escalate."
+     "Assets without sensing",
+     "Cranes, yard tractors, trailers, dollies and reefer plugs run unsensed, so failures arrive unscheduled and cold-chain excursions surface at claim time. The capital is instrumented poorly enough that maintenance waits for breakdowns and insurers price the ignorance into the premium."
+    ],
+    [
+     "Compliance evidence assembled by hand",
+     "Customs files, security attestations, emissions reports and cold-chain dossiers are built by teams reading systems every quarter. The underlying events exist; the assembly is manual. Audit season becomes a project, and the quality of the evidence depends on who assembled it."
+    ],
+    [
+     "Unit economics nobody can state",
+     "Cost per order, per load, per move and per stop exists in fragments across finance spreadsheets and operational logs. Pricing, procurement and network design run on averages, so unprofitable lanes and customers hide inside the blend until someone looks lane by lane."
     ]
    ]
   },
   {
-   "t": "h2",
-   "x": "Our response, in engineering terms"
-  },
-  {
-   "t": "p",
-   "x": "Dataq Software builds the flow stack: event-driven visibility across TMS/WMS/telematics, agentic dispatch and exception resolution, yard and dock orchestration, computer vision for damage and load verification, network twins for scenario planning, and provenance networks for compliance-grade chain-of-custody."
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight: the sector's physics are instrumented but its decisions are not. Events already exist in EDI, telematics, WMS and TOS logs; the decision layer still runs on spreadsheets and veterans' instinct. That is why every Dataq Software program here starts with the event spine, not with a smarter model."
   },
   {
    "t": "h2",
-   "x": "The sequence we recommend"
+   "x": "How Dataq Software works the sector"
   },
   {
    "t": "p",
-   "x": "Sequenced for Logistics & Supply Chain by where the measured delta lands first:"
+   "x": "Dataq Software builds inside the estate the operation already runs. We do not arrive with a replacement TMS, a rip-and-replace WMS story, or a strategy deck that ends where the dock door begins. The engagement model is engineering-first: a two-week diagnostic that baselines one workflow end to end — load tendering, wave release, berth planning, failed-delivery recovery — with the leak quantified in the operation's own telemetry, then a scoped build shipped behind the change process the operation already trusts."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver across logistics and supply chain. First, every automated decision carries replay: the inputs, solver versions, policy rules and outcomes are stored so a detention dispute or a service review twelve months later is a query, not an archaeology project. Second, autonomy is policy-gated — agents re-plan routes, waves and berth windows within hard constraints the operation defines, and every gate crossing is logged. Third, every build lands with its evidence layer: the artifacts customs, customers, insurers and auditors ask for are generated by the system as it runs."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same logic. Where the metric is clean — exception auto-resolution rate, failed-delivery rate, moves per hour, cost per order — we contract against the delta with the baseline locked during the diagnostic; where it is confounded, we say so in the feasibility read and scope fixed-fee instead. The published record includes a global 3PL across 40+ countries with exceptions auto-resolved at 74%, a container-terminal operator that lifted berth productivity 16%, and a parcel network moving 12 million parcels a week that cut failed deliveries 34%."
+  },
+  {
+   "t": "h2",
+   "x": "The deep engineering catalog for logistics and supply chain"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the spine of the practice across all four sub-industries. Each build is named for the workflow it changes, sized in the diagnostic against your systems, and shipped with the controls the workflow's regulators, customers and insurers expect. The sub-industry pages describe how each build specializes; the engineering posture — replay, policy gates, evidence as a by-product — does not change."
+  },
+  {
+   "t": "h3",
+   "x": "1. The event spine and control tower — one journey, one vocabulary"
+  },
+  {
+   "t": "p",
+   "x": "Every journey in this sector is described by messages: a 204 tender and its 990 answer, 214 status updates, a 210 invoice, COPRAR and COPARN orders at the terminal, VERMAS weights, IFTSAI itineraries, EPCIS-style custody events. The build normalizes all of them into one canonical journey model with per-counterparty milestone dictionaries, schema contracts with named owners, and freshness SLAs. Late, missing or contradictory milestones become first-class events instead of silent gaps."
+  },
+  {
+   "t": "p",
+   "x": "On top of the spine, the control tower stops being a map with dots. ETA ensembles blend telematics, schedules and historical dwell per lane and stop; exception detection runs continuously against customer commitments; and every status a customer sees on an OS/D portal is generated from the same events the operation plans against. The published program behind this pattern serves a global 3PL across 40+ countries from a single journey model — one vocabulary, one truth, every decision traceable to it."
+  },
+  {
+   "t": "h3",
+   "x": "2. Agentic exception management — remediation inside policy"
+  },
+  {
+   "t": "p",
+   "x": "Exception work is where logistics operations win or lose their week, so the build treats exceptions as a typed inventory: tender rejections, late pickups, missed delivery appointments, broken cold chain, customs holds, capacity shortfalls. Agents run with explicit role scopes — the systems they may read, the tools they may call, the actions that require a human checkpoint — and re-book, re-route, re-tender or re-document within the policy the operation defines."
+  },
+  {
+   "t": "p",
+   "x": "Every agent run logs its steps, tool calls and outcomes to the same evidence store the human workflow uses, and every escalation arrives with context — journey history, options already priced, customer commitments — instead of a bare alert. A root-cause loop feeds procurement, network design and carrier scorecards, so the exception queue shrinks quarter over quarter instead of being heroically cleared. In the published record, a global 3PL ran exceptions auto-resolved at 74% on this pattern."
+  },
+  {
+   "t": "h3",
+   "x": "3. The logistics decision lakehouse and unit economics"
+  },
+  {
+   "t": "p",
+   "x": "Underneath every routing, tendering and pricing decision sits the same missing asset: one governed record of what the operation actually did and what it actually cost. The build lands change-data-capture and batch feeds from TMS, WMS, TOS and finance into a lakehouse with conformed masters for shipments, orders, containers, SKUs and assets, survivorship rules the data owners sign, and reconciliation against each source system's own controls."
+  },
+  {
+   "t": "p",
+   "x": "The economics layer computes profitability per load, per lane, per customer and per order from event telemetry — accessorial outcomes, detention minutes, touch counts, fuel — rather than from monthly summaries. A shared feature store feeds the routing, wave, berth and promise models with one definition of dwell, one definition of a stop, one definition of on-time. Two teams computing the same feature differently is the failure mode this build exists to end."
+  },
+  {
+   "t": "h3",
+   "x": "4. Optimization services for routes, waves, berths and stowage"
+  },
+  {
+   "t": "p",
+   "x": "Route planning, wave release, berth assignment and stowage are combinatorial problems with operational constraints — driver hours, equipment types, union agreements, tidal windows, reefer capacity — that generic solvers treat as afterthoughts. The build maintains a formulation library per problem class and runs tournaments: exact, heuristic and metaheuristic approaches benchmarked on your actual instances against the incumbent tool, with the winner deployed behind a plan-versus-execute interface."
+  },
+  {
+   "t": "p",
+   "x": "Deployment matters more than the benchmark. Plans re-optimize on disruption within policy — a breakdown, a cancellation, a storm closure — with guardrails that enforce hours-of-service, equipment and customer commitments automatically. Deltas are measured on density per stop, throughput per wave, moves per berth-hour: the numbers operations already reports, now with a solver genealogy attached to every plan it ships."
+  },
+  {
+   "t": "h3",
+   "x": "5. Provenance, customs and emissions evidence"
+  },
+  {
+   "t": "p",
+   "x": "Trade compliance is an evidence business wearing a documentation costume. The build assembles custody events into GS1 EPCIS-style trails, generates classification work items with rationale logged per decision, prepares ISF, ENS and entry filings for broker review, and keeps every document versioned against the journey it describes. AEO and C-TPAT security evidence — seals, access, escort, storage — attaches to the same trail instead of living in a binder."
+  },
+  {
+   "t": "p",
+   "x": "Emissions reporting follows the same pattern on the GLEC framework: activity data from the event spine, emission factors under versioned methodology, per-shipment intensities that reconcile to the ledger, and a methodology registry auditors can read. The design goal is simple: the artifact a customs broker, a buyer or an auditor asks for is a query against the custody store, not a quarterly scramble through inboxes and PDFs."
+  },
+  {
+   "t": "h3",
+   "x": "6. OT, edge and resilience for warehouses, yards and terminals"
+  },
+  {
+   "t": "p",
+   "x": "The sector's operational technology — crane PLCs, sortation controls, MHE fleets, gate OCR, reefer plugs, yard radios — is where throughput lives and where cyber exposure concentrates. The build senses the OT estate through read-only gateways speaking OPC UA and MQTT, segments it from corporate IT along zero-trust lines, and streams health telemetry into the same lakehouse the decision services read."
+  },
+  {
+   "t": "p",
+   "x": "Resilience is engineered, not asserted: recovery runbooks for TOS and WMS continuity, degraded-mode operations rehearsed with the teams who would run them, tested restores, and incident drills timed against peak calendars. Ransomware at a port or a distribution center is a continuity event with a public face; the difference between a bad day and a bad quarter is whether the recovery has ever been practiced."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — the logistics decision stack",
+   "lanes": [
+    "Systems of record",
+    "Message and event spine",
+    "Decision services",
+    "Agentic layer",
+    "Evidence and controls",
+    "Business surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "tms",
+     "lane": 0,
+     "label": "TMS and load execution"
+    },
+    {
+     "id": "wms",
+     "lane": 0,
+     "label": "WMS and fulfillment estate"
+    },
+    {
+     "id": "tos",
+     "lane": 0,
+     "label": "Terminal operating systems"
+    },
+    {
+     "id": "telem",
+     "lane": 0,
+     "label": "Telematics and ELD feeds"
+    },
+    {
+     "id": "cust",
+     "lane": 0,
+     "label": "Customs filing engines"
+    },
+    {
+     "id": "edi",
+     "lane": 1,
+     "label": "EDI gateway: X12 and EDIFACT",
+     "hot": true
+    },
+    {
+     "id": "api",
+     "lane": 1,
+     "label": "Carrier, port and visibility APIs"
+    },
+    {
+     "id": "spine",
+     "lane": 1,
+     "label": "Canonical event spine",
+     "hot": true
+    },
+    {
+     "id": "lake",
+     "lane": 2,
+     "label": "Logistics decision lakehouse"
+    },
+    {
+     "id": "prof",
+     "lane": 2,
+     "label": "Profitability per load and order"
+    },
+    {
+     "id": "eta",
+     "lane": 2,
+     "label": "ETA and promise service"
+    },
+    {
+     "id": "opt",
+     "lane": 2,
+     "label": "Optimization: routes, waves, berths"
+    },
+    {
+     "id": "agt",
+     "lane": 3,
+     "label": "Exception agents",
+     "hot": true
+    },
+    {
+     "id": "wrk",
+     "lane": 3,
+     "label": "Ops workbenches"
+    },
+    {
+     "id": "replay",
+     "lane": 4,
+     "label": "Decision replay store"
+    },
+    {
+     "id": "evstore",
+     "lane": 4,
+     "label": "Compliance evidence store"
+    },
+    {
+     "id": "glc",
+     "lane": 4,
+     "label": "Emissions ledger (GLEC)"
+    },
+    {
+     "id": "tower",
+     "lane": 5,
+     "label": "Control tower"
+    },
+    {
+     "id": "osd",
+     "lane": 5,
+     "label": "OS/D customer portals"
+    },
+    {
+     "id": "fin",
+     "lane": 5,
+     "label": "Finance and settlement"
+    }
+   ],
+   "edges": [
+    {
+     "a": "tms",
+     "b": "edi"
+    },
+    {
+     "a": "wms",
+     "b": "edi"
+    },
+    {
+     "a": "tos",
+     "b": "api"
+    },
+    {
+     "a": "telem",
+     "b": "api"
+    },
+    {
+     "a": "cust",
+     "b": "edi"
+    },
+    {
+     "a": "edi",
+     "b": "spine"
+    },
+    {
+     "a": "api",
+     "b": "spine"
+    },
+    {
+     "a": "spine",
+     "b": "lake"
+    },
+    {
+     "a": "lake",
+     "b": "prof"
+    },
+    {
+     "a": "lake",
+     "b": "eta"
+    },
+    {
+     "a": "lake",
+     "b": "opt"
+    },
+    {
+     "a": "spine",
+     "b": "agt"
+    },
+    {
+     "a": "agt",
+     "b": "wrk"
+    },
+    {
+     "a": "agt",
+     "b": "replay"
+    },
+    {
+     "a": "eta",
+     "b": "tower"
+    },
+    {
+     "a": "opt",
+     "b": "tower"
+    },
+    {
+     "a": "prof",
+     "b": "fin"
+    },
+    {
+     "a": "spine",
+     "b": "osd"
+    },
+    {
+     "a": "glc",
+     "b": "fin"
+    },
+    {
+     "a": "replay",
+     "b": "evstore"
+    }
+   ],
+   "note": "Lanes and nodes are named for the systems and workflows a logistics build actually touches — TMS, WMS and TOS estates, the EDI and API spine, decision services, agents, evidence and business surfaces. The hot nodes are where differentiation concentrates: the EDI gateway and canonical event spine that make the journey legible, and the exception agents that act on it inside policy. Most estates already own everything else; the program's work is joining and governing it."
+  },
+  {
+   "t": "h2",
+   "x": "Sub-industry programs: what differs on the ground"
+  },
+  {
+   "t": "p",
+   "x": "The four sub-industry programs share the spine but differ in physics, systems and economics. What follows is the honest difference — where the workflows, the failure modes and the P&L levers sit on the ground — so a diagnostic in each can be scoped against reality rather than against a sector average that fits nobody."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "One event spine, many decisions",
-     "streaming visibility into dispatch, ETA, detention and claims decision hubs"
+     "3PL and freight forwarding",
+     "The workflow is tender-to-invoice across modes: rate, tender, track, clear, audit, settle. TMS and rating engines dominate the estate; EDI 204, 990, 214 and 210 carries the truth; margin lives in accessorial integrity and per-lane profitability. The leaks concentrate in quoting latency, exception heroics, freight-audit leakage and customs evidence. The economics are thin margins multiplied by volume, so small percentages per load compound into the year's profit or its absence."
     ],
     [
-     "Automate the exception, not just the plan",
-     "agentic remediation for the recoverable 80% of disruptions with human policy gates"
+     "Last-mile and urban logistics",
+     "The workflow is promise-to-doorstep: sortation, route planning, delivery attempt, proof, returns. Density per stop decides the economics, and the failed delivery is the most expensive event in the network. Driver apps, PUDO and locker networks, EV charging schedules and urban access rules shape what the plan may attempt. The economics are cost per drop against promise accuracy, with WISMO contacts as the invisible tax every missed promise adds."
     ],
     [
-     "Provenance as a product",
-     "compliance-grade chain-of-custody networks that customs and customers accept"
+     "Maritime, ports and shipping",
+     "The workflow is vessel-call-to-gate: berth windows, stowage, crane moves, yard stacks, gate turns. TOS systems dominate; EDIFACT COPRAR, BAPLIE and VERMAS carry the plan; productivity lives in moves per crane-hour and truck turn times. Equipment health and IT/OT resilience decide whether the same infrastructure earns more. The economics are billion-dollar assets where a few percentage points of berth productivity are the entire margin."
+    ],
+    [
+     "Warehousing and fulfillment",
+     "The workflow is order-to-truck: allocate, wave, pick, pack, manifest, load. WMS and labor management dominate; every touch is a cost and, for a 3PL, a billing event. Inventory truth, slotting, engineered labor standards and robotics orchestration decide throughput per shift. The economics are cost per order under peak scaling, with activity-based billing turning operational telemetry directly into revenue and disputes turning on which events the record supports."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Rules we build against"
+   "x": "The data plane: from EDI batches to governed streams"
+  },
+  {
+   "t": "p",
+   "x": "Most decision gaps in this sector trace to one architecture habit: systems of record speak EDI in batches, portals summarize the batches, and decisions run on whatever the last load knew. The data plane build inverts the pattern where it matters. Telematics, sensor and event streams land continuously into a governed lakehouse; the overnight EDI batch keeps running for finance and settlement, but dispatch, control tower and customer surfaces stop depending on it."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every counterparty feed carries a schema contract with a named owner, a milestone dictionary, a freshness SLA and reconciliation checks against source-system controls. Geocode quality, equipment identifiers and location masters get the same discipline, because a routing engine fed with ambiguous addresses will produce confident nonsense. The month-end reconciliation ritual becomes a monitored query with a breach alert to a named owner."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Counterparty contract registry",
+     "Every EDI map and API schema versioned with its owner, test fixtures and replayable history, so a counterparty changing a segment order fails loudly at the contract in test instead of silently in a live plan or an invoice run."
+    ],
+    [
+     "Streaming telematics ingestion",
+     "Position, ELD hours, reefer temperatures and yard-sensor events ingested with exactly-once semantics into the lakehouse, keeping dispatch and control-tower surfaces current while batch EDI continues to serve finance and settlement untouched."
+    ],
+    [
+     "Milestone reconciliation",
+     "214 events, telematics truth and POD scans joined continuously; mismatches queued with context to a data-quality desk instead of surfacing as customer complaints weeks later, when the trail has gone cold."
+    ],
+    [
+     "Master data discipline",
+     "Locations, equipment, lanes and customer calendars under named ownership with change review, because every routing, rating and berth decision inherits the quality of the reference data beneath it."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: scoring, solvers and replay"
+  },
+  {
+   "t": "p",
+   "x": "Logistics decisions carry tails: a declined tender sours a carrier relationship, a missed promise triggers a refund and a complaint, a berth assignment wasted at the wrong tide costs a day. The decision layer we build treats those tails as requirements. Every decision — tender, route, wave, berth, promise, detention determination — records its inputs, solver versions, policy rules and reason codes in a replay store that answers a dispute as a query."
+  },
+  {
+   "t": "p",
+   "x": "Champion/challenger governance covers models and solver configurations alike: challengers run on shadow instances, performance tracks in the same registry operations leadership owns, promotions happen through gates the change process defines, and rollbacks are rehearsed rather than improvised. One decision service layer hosts ETA, tendering, wave release and berth planning, so the governance surface is one registry and one replay store rather than four platforms with four audit stories."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: digital workers on the exception queues"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work in logistics — chasing tender responses, assembling customs files, rebooking appointments, collecting claim evidence, reconciling invoices — follows patterns an agentic workforce can absorb without touching judgment authority. Agents run with role scopes, tool allow-lists, per-run budgets and human checkpoints at the gate crossings that matter: anything that changes a customer commitment, a carrier contract or a customs declaration stops for a person."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — customer status narratives composed from event history, dispute letters drafted from the evidence store, exception summaries for the morning ops review — the pattern is grounded generation with citations and a human author of record. Capacity is measured in exceptions cleared per analyst per shift, which is how the operations leaders who sponsor these programs justify them upward to boards."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence across the sector"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory surface of logistics is broad, physical and unforgiving: customs regimes with advance-filing clocks, security accreditations that attach to the cargo, dangerous-goods rules that attach to the item, hours laws that attach to the driver, emissions duties that attach to the shipment. The evidence layer generates what each regime asks for as the operation runs; the table maps the regimes we build against to the artifacts our builds produce."
   },
   {
    "t": "table",
-   "caption": "Regimes that shape delivery here",
+   "caption": "Regimes that shape logistics builds — and the evidence layer each one gets",
    "headers": [
     "Regime",
-    "What it expects"
+    "What it expects",
+    "What our build produces"
    ],
    "rows": [
     [
-     "EUDR",
-     "deforestation due diligence for in-scope commodities with evidence duties"
+     "Customs regimes (ACE, ICS2, WCO frameworks)",
+     "Advance filings within clocks, accurate classification, document retention",
+     "Classification rationale logs, filing-ready evidence packs per shipment, clock telemetry per declaration"
     ],
     [
-     "CSRD/ISSB logistics emissions",
-     "scope 3 transport emissions with auditability"
+     "Supply-chain security (AEO, C-TPAT, ISO 28000)",
+     "Cargo security across the chain: seals, access, storage, personnel, estate controls",
+     "Custody event trails with seal and access evidence generated per movement; accreditation evidence as a query"
     ],
     [
-     "CMR/ADR/IMDG transport rules",
-     "dangerous-goods and carriage documentation duties"
+     "Dangerous goods (ADR, IMDG, IATA DGR)",
+     "Declarations, segregation, packaging and training evidence",
+     "DG declaration generation from the item master; segregation checks logged against the load or stow"
     ],
     [
-     "Customs/security regimes (AEO, C-TPAT)",
-     "chain-security compliance evidence"
+     "Driver hours and roadworthiness (ELD/HOS, EU tachograph)",
+     "Limits enforced in planning, records retained and reviewable",
+     "Scheduling guardrails reading ELD and tachograph state; breach alerts; retention aligned to inspection duties"
     ],
     [
-     "GDPR",
-     "driver and customer data duties across telematics"
+     "Emissions reporting (CSRD/ISSB, GLEC framework)",
+     "Scope 3 transport emissions with methodology and auditability",
+     "Per-shipment emissions ledger with versioned methodology registry that reconciles to the finance ledger"
     ],
     [
-     "Food safety (where cold chain)",
-     "temperature evidence and recall duties"
+     "Cold-chain duties (GDP, HACCP where in scope)",
+     "Temperature evidence, excursion response, recall readiness",
+     "Continuous reefer and sensor telemetry with excursion dossiers assembled as the excursion happens"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: keep the estate, change the contracts"
+  },
+  {
+   "t": "p",
+   "x": "Logistics estates are layered over decades of acquisitions and EDI relationships, and the fastest way to fail here is to promise greenfield. The integration posture is contractual: schema contracts with each system owner, ingestion through CDC, governed APIs and gateway feeds, write-back through the interfaces your change process already controls — tender responses into the TMS, status updates to customers, wave releases to the WMS — and no big-bang cutover anywhere."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment. Visibility providers, telematics vendors, rating engines and customs filing engines sit behind abstraction layers with contract tests, so a vendor swap is configuration with a migration runbook rather than a re-platform. Where a legacy TMS module must stay, the offload pattern applies: the batch keeps posting while decision surfaces read from the stream. Unglamorous work, and the reason the builds above survive production instead of a pilot."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Write-back through your interfaces",
+     "Tender responses, milestone updates, wave releases and appointment changes flow through TMS, WMS and customer-facing hooks your change process already governs, with no parallel change path for anyone to reconcile"
+    ],
+    [
+     "EDI map versioning with replay",
+     "Every translation replayable against its fixtures and history, so counterparty map drift is caught in test instead of in a live tender window or an invoice run"
+    ],
+    [
+     "OT through gateways, not taps",
+     "OPC UA and MQTT gateways with read-only paths keep crane, sorter and MHE control planes untouched while their telemetry reaches the lakehouse"
+    ],
+    [
+     "Feature-flagged, independently deployable",
+     "Per-lane, per-site and per-module rollouts with rehearsed rollback, because peak season and change freezes do not negotiate"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs, in stages"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement. It opens with the two-week diagnostic: one workflow baselined end to end, the leak quantified in your own telemetry, the data contracts and EDI maps inventoried, and a written feasibility read you can circulate — including the uncomfortable findings. If the delta is real, the build is scoped against the gates your change process defines; if it is not, you keep the measurement design and the baseline either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "Workflow instrumentation, leak quantification, contract and EDI inventory, feasibility read with the delta estimate and the confounders named before anyone commits to a target"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "One lane of the workflow live behind flags with replay and evidence running from day one — for tendering, one carrier lane; for waves, one pick module; for berth planning, one quay"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "Evidence layer live, remaining lanes added, capacity and quality telemetry reporting to the operations review, model-risk and security documentation landed with the build"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "Solver and model challengers evaluated in the registry, policies re-tuned against the root-cause loop, the baseline re-verified against a control group where one exists"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm, not a parallel one: our engineers work in your repositories or a shared workspace with the same CI, the same security review and the same access model your teams use. Knowledge transfer is a gate condition, not a closing slide — by expansion, your planners and engineers are changing policies and thresholds themselves, because the runbooks, dictionaries and evaluation suites have been theirs since week one."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the sector's P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones logistics programs are managed on. The targets are the ranges we set in feasibility reads for programs of this shape — commitments you can hold us to where the metric is clean, hypotheses we test honestly where it is confounded. The measurement column is the part most programs skip and the part that makes the delta defensible in a steering committee."
+  },
+  {
+   "t": "table",
+   "caption": "Logistics program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Exception auto-resolution rate",
+     "60-80% of recoverable exceptions without human touch",
+     "Agent run logs against exception intake; the published record shows 74% at a global 3PL across 40+ countries"
+    ],
+    [
+     "Failed-delivery rate",
+     "20-35% reduction at equal volume",
+     "Attempt and outcome telemetry per parcel; the published record shows 34% at a network moving 12M parcels a week"
+    ],
+    [
+     "Berth and terminal productivity",
+     "+10 to +20% moves per berth-hour",
+     "TOS move logs against tide and vessel baselines; the published record shows +16% at a container-terminal operator"
+    ],
+    [
+     "Detention and demurrage leakage",
+     "40-60% reduction in disputed or unbilled time",
+     "Telemetry-verified clocks joined to invoices, reported per shipper, facility and carrier"
+    ],
+    [
+     "Cost per order or per load",
+     "8-15% reduction at equal service",
+     "Activity telemetry from WMS and TMS against the finance baseline, segmented by lane, client and function"
+    ],
+    [
+     "Freight audit recovery",
+     "1-3% of audited spend recovered across payables and billings",
+     "Matched versus unmatched invoice value from the audit platform against the locked baseline"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and how it works"
+  },
+  {
+   "t": "p",
+   "x": "A logistics build team is small and senior: a lead engineer who has run decision systems against live operations, data engineers who own the spine and the contract layer, optimization engineers who own formulations and tournaments, an agentic-workflow specialist for the exception builds, and a domain lead who has run a tender desk, a wave plan or a berth window in production. The team works to your peak calendar from the first week, not to a delivery methodology that ignores it."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: a weekly operations review on the workflow's own telemetry, fortnightly gate submissions to change and data governance, quarterly challenger reviews, and an incident practice that treats the event spine and the replay store as production-critical systems — because by the second quarter, the operation plans through them. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "The failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs in this sector fail in known ways, and most of the failure is organizational rather than mathematical. We name the failure modes in the feasibility read and design against them explicitly, because a program that cannot survive its second quarter — or its peak season — is not worth starting, whatever the deck promised."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "A demo built on extracted data that never integrates — prevented by shipping the first vertical slice through your change process, flags and EDI maps included, in the first two months"
+    ],
+    [
+     "Dashboard theater",
+     "A control tower built before the event spine reads averages and loses the room — the spine, milestone dictionaries and reconciliation come first, the tower second"
+    ],
+    [
+     "Solver worship",
+     "An optimization engine that ignores hours law, union agreements and equipment reality produces plans nobody executes — constraints are engineered in from the first formulation"
+    ],
+    [
+     "Milestone chaos",
+     "A canonical journey model built without counterparty dictionaries encodes one provider's vocabulary as truth — dictionaries are governed artifacts with named owners"
+    ],
+    [
+     "Agent sprawl",
+     "Automation without role scopes and run logs becomes shadow operations — agents live in the governed platform with checkpoints, or they do not ship"
+    ],
+    [
+     "Evidence debt",
+     "Compliance artifacts assembled manually until the audit forces a project — the evidence layer generates them continuously, or the build is not done"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions logistics leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do we need to replace our TMS or WMS?",
+     "No. None of the builds require a platform replacement. They consume streams from the systems you run and write back through the interfaces your change process already governs. The estate stays; it stops being the bottleneck for decisions."
+    ],
+    [
+     "How do you handle our EDI counterparties?",
+     "Counterparty maps are versioned artifacts with owners, test fixtures and replay. Changes are caught at the contract in test, and every translation can be replayed against history, so a partner's silent segment change never becomes an operational surprise."
+    ],
+    [
+     "What happens to our planners and dispatchers?",
+     "The builds move evidence collection, rebooking and file assembly to agents and put judgment back with planners in better context. Capacity is redeployed to the exceptions that need skill; programs are justified in exceptions cleared per analyst, not headcount removed."
+    ],
+    [
+     "Can the agents act in our systems directly?",
+     "Only through governed APIs with scoped permissions, per-run budgets and human checkpoints on anything that changes a customer commitment, a carrier contract or a customs filing. Every run logs its steps to the same evidence store the human workflow uses."
+    ],
+    [
+     "How do you measure results without gaming?",
+     "Baselines are locked during the diagnostic, holdouts or controls are used where experiments are cheap, and every metric reports from system telemetry rather than a status deck. The feasibility read names the confounders before anyone commits to a target."
+    ],
+    [
+     "What is the smallest program worth running?",
+     "One workflow, one baseline, one vertical slice — tender-to-invoice, failed-delivery recovery, berth planning and wave release are the common starters because their clocks and funnels are already instrumented. If the diagnostic cannot find the delta, we say so and stop."
+    ],
+    [
+     "How does this survive peak season?",
+     "Vertical slices land before peak, capacity telemetry runs in the operations review, and degraded modes are rehearsed with the shifts who would use them. The builds are engineered for the week everything breaks, because that is the week they were bought for."
+    ],
+    [
+     "Who owns the build after you leave?",
+     "Your teams, with the runbooks, dictionaries, evaluation suites and registry entries transferred as gate conditions during expansion — not as a closing deliverable. Several programs run entirely in-house after the second quarter."
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "A value assessment prices the delta in your estate before anything is signed: programs in Logistics & Supply Chain, measured against your baseline, in two weeks."
+   "x": "Choose one workflow — a tender desk, a wave plan, a berth window, or a doorstep promise — and Dataq Software will baseline it in two weeks, price the delta in your own telemetry, and tell you honestly whether the build is worth your change budget. The feasibility read is yours to keep either way."
   }
  ],
- "words": 452,
+ "words": 5609,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Logistics & Supply Chain",

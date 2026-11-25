@@ -1,0 +1,753 @@
+{
+ "file": "industries_retail-consumer-goods_cpg-brands",
+ "meta_description": "How Dataq Software engineers CPG and brand operations: revenue growth management, trade promotion effectiveness, retail execution truth, demand planning on WMAPE and forecast value added, gross-to-net integrity and retail media clean rooms — built on your TPM, ERP and retailer feeds.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "In CPG and branded goods, the consumer relationship is rented, not owned: the brand wins or loses on shelf, on shelf-image and on the quality of the data retailers share back. Every day the machine plans volume, negotiates promotion calendars, ships to distribution centres, audits the shelf through field teams and image recognition, reconciles deductions against gross-to-net, and re-forecasts on sell-out signals that arrive late and in fragments. The margin lives or dies in the decision machinery underneath: how honestly promotion lift is measured, how fast a forecast reacts to a distribution change, how completely a deduction file defends itself. This page is the engineering picture of that machinery — the systems it runs on, the eight places it leaks, and the six deep builds Dataq Software ships to fix them."
+  },
+  {
+   "t": "h2",
+   "x": "How a CPG commercial machine actually runs"
+  },
+  {
+   "t": "p",
+   "x": "Follow one promotion from negotiation to settlement and the operating picture assembles itself. The key account team agrees an event with the retailer: mechanics, funding, volume commitments. The TPM system books the event and its funding; the demand planning team adjusts the forecast; the supply chain confirms production across owned plants and co-manufacturers; EDI purchase orders and advance ship notices move the product; the promotion runs; and then the paperwork begins — deductions arrive on invoices, scan data arrives through EDI 852 and retailer portals, and post-event evaluation decides whether the event earned its funding or quietly destroyed margin through cannibalization and forward buying."
+  },
+  {
+   "t": "p",
+   "x": "Between events, the field machine runs the shelf. Retail execution teams work store routes with audit checklists and photo capture; image-recognition vendors grade out-of-stocks, planogram compliance and share of shelf; and the findings feed joint business plan conversations and next year's assortment. Category management teams assemble the data story — category growth, brand share, space productivity — that justifies every term the brand pays for. Shopper marketing and retail media commitments ride the same negotiation, increasingly funded from the same pool that used to be pure trade spend."
+  },
+  {
+   "t": "p",
+   "x": "Underneath, the accounting machinery converts gross sales into net revenue: the GTN waterfall of discounts, rebates, coupons, cooperative advertising, listing fees and deductions, reconciled finance-side against the trade calendar. Quality and recall readiness run on batch and lot traceability. Sustainability teams chase packaging weights, recycled content and Scope 3 supplier data for EPR and CSRD-adjacent disclosure. And most estates grew by acquisition: two ERPs, three TPM configurations, five definitions of a promotion — which is why the first weeks of any serious program here are plumbing, not modeling."
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems this work touches"
+  },
+  {
+   "t": "p",
+   "x": "Programs in this sub-industry succeed or fail on how honestly the estate is mapped before anything is built. Dataq Software starts every engagement by naming the systems, their owners, their change cadences and their data contracts. The table below is the estate we most often find and integrate against — not a generic stack diagram."
+  },
+  {
+   "t": "table",
+   "caption": "The CPG estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
+    [
+     "TPM and trade spend system",
+     "Promotion event calendar, funding, terms and post-event evaluation",
+     "Lift evaluated on invoiced volume with naive baselines; cannibalization invisible"
+    ],
+    [
+     "ERP and GTN accounting",
+     "Gross-to-net waterfall, rebates, deductions, customer profitability",
+     "Deduction codes inconsistent across ERPs; unauthorized claims clear by inertia"
+    ],
+    [
+     "Demand planning (S&OP / IBP)",
+     "Statistical and consensus forecasts, supply planning, scenario runs",
+     "Promo causal models thin; forecast value added never computed; WMAPE unmanaged"
+    ],
+    [
+     "Retail execution and field mobility",
+     "Store routes, audit checklists, photo capture, task management",
+     "Findings graded by vendors in isolation; route priority ignores shelf truth"
+    ],
+    [
+     "Retailer data feeds (EDI 852, portals)",
+     "Sell-out by store and SKU, inventory, scorecards",
+     "Different grains, calendars and item codes per banner; weeks of lag"
+    ],
+    [
+     "Category management analytics",
+     "Category and brand share, space productivity, JBP storylines",
+     "Assembled by hand for each review; numbers contested in negotiation"
+    ],
+    [
+     "Syndicated market data",
+     "Panel and retail-tracking shares, household panels",
+     "Expensive, slow, and disconnected from your own shipment and scan data"
+    ],
+    [
+     "Quality, traceability and recall",
+     "Batch and lot records, supplier quality, recall procedures",
+     "Traceability stops at first-tier suppliers; recall assembly is manual"
+    ],
+    [
+     "ESG and packaging data",
+     "Packaging weights, recycled content, Scope 3 supplier inputs",
+     "Supplier data arrives as PDFs; figures estimated rather than measured"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where the margin leaks"
+  },
+  {
+   "t": "p",
+   "x": "Ask commercial directors where the money leaks and the answers converge on the same eight places, described in their own words. Dataq Software's diagnostic scores each of them in your estate before recommending a build, because the leak that dominates one brand is often minor in the next."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Trade spend measured on faith",
+     "Most events are evaluated against a naive pre-post baseline, so cannibalization, pantry loading and retailer forward buying stay invisible. Funding is committed on volume promises and evaluated on invoiced volume, and the brands that measure causal lift against matched controls routinely find a fifth of their calendar destroying value."
+    ],
+    [
+     "Forecasts that miss their own promotions",
+     "The consensus forecast treats the promotion calendar as noise because causal promo models are thin or absent. Forecast value added is never computed, so manual overrides feel productive, WMAPE compounds into expedites and obsolescence, and S&OP meetings argue about whose number was right instead of why."
+    ],
+    [
+     "Retail execution blind on the shelf",
+     "Field teams work route lists built weeks ago while out-of-stocks and planogram drift move weekly. Image recognition produces scores nobody routes to action, and the same store can be audited twice while a hero SKU sits unavailable for a month."
+    ],
+    [
+     "GTN leakage nobody contests",
+     "Deductions arrive on invoices with codes nobody reconciles to the promotion calendar; unauthorized claims clear by inertia because contesting them costs more analyst hours than the claim is worth. The leakage is measurable, and most programs recover several points of net revenue just by matching claims to authorized events."
+    ],
+    [
+     "Retail media spend without incrementality",
+     "Retailer media networks sell audiences with last-touch attribution; brands re-buy on instinct because no clean-room measurement exists. The fastest-growing cost line in the commercial plan runs on numbers neither the brand's analysts nor the retailer's can defend in a joint business review."
+    ],
+    [
+     "Sell-out signal quality too poor to plan on",
+     "EDI 852 files and portal extracts arrive on different grains, calendars and item codes. Demand planners exclude the mess; trade teams reconcile by spreadsheet; category stories are assembled by hand. The most valuable data in the industry is unusable without weeks of manual cleanup."
+    ],
+    [
+     "Supply commitments made blind to demand truth",
+     "Volume commitments to co-manufacturers and retailers are locked before the forecast earns trust, so the network expedites into demand that never materializes or warehouses stock the promotion will not move. The S&OP process has the meetings; it lacks a decision layer both supply and commercial trust."
+    ],
+    [
+     "Recall and provenance readiness assumed, not tested",
+     "Batch and lot traceability stops at first-tier suppliers; assembling a recall list takes days of calls. Provenance claims face EUDR-grade due diligence and digital product passport duties with evidence assembled manually, which turns a compliance question into a brand-risk event."
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight: the brand's decisions run on a sell-side signal it does not fully control, processed through systems that were never designed to agree. That is why the retail signal spine and GTN reconciliation come before any smarter model — context first, algorithms second."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works CPG and brands"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate the commercial organization already runs — the TPM system, the ERP waterfall, the planning platform, the retailer feeds — rather than proposing a replacement suite nobody can fund or implement before the next joint business plan cycle. The engagement opens with a two-week diagnostic that baselines one workflow end to end in your own data: a promotion family, one retailer account's deductions, one category's availability, or one planning cell's forecast quality."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver. First, every automated decision carries replay: inputs, model versions, policy rules and outcomes are stored, so a pricing, funding or claims question a year later is a query, not an archaeology project. Second, every generative component is permission-aware and citation-bound — analysis answers from your trade terms, item master and scan data, with sources shown. Third, every build lands with its evidence layer: the artifacts a customer business review, an audit or a finance control will ask for are generated by the system."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same logic: where the metric is clean — deduction recovery, forecast error, availability on tracked SKUs, measured lift on a promotion family — we contract against the delta with the baseline locked during the diagnostic; where it is confounded, the feasibility read says so and the scope is fixed-fee. The published record includes a national consumer-electronics chain whose retail media measurement, built in a clean room, was adopted by every major brand on its network — the standard of proof this sub-industry's commercial relationships increasingly demand."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for CPG and brands"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our CPG practice. Each build is named for the workflow it changes, sized in the diagnostic, and shipped with the controls the workflow's stakeholders — finance, retail customers, regulators — will expect. None of them require replacing the TPM suite or the ERP; all of them require taking the data contracts seriously."
+  },
+  {
+   "t": "h3",
+   "x": "1. Revenue growth management — price, pack and promotion on causal ground"
+  },
+  {
+   "t": "p",
+   "x": "The RGM build gives price, pack and promotion decisions a causal foundation. Elasticity is estimated by category, brand and pack architecture from your own scan data joined to shipment records; promotion mechanics are simulated before they are negotiated — projected lift, cannibalization into the portfolio, forward-buying effects, retailer margin — with guardrails that flag events whose projected economics fail the funding policy before they reach the buyer. Pack architecture becomes a managed portfolio: counts, multipacks and price-point ladders evaluated as a system rather than as inherited SKUs."
+  },
+  {
+   "t": "p",
+   "x": "The simulation layer runs the what-ifs the commercial calendar actually asks — a price increase on the hero pack, a smaller count at the same price point, a multipack that defends against private label — and every recommendation carries its assumptions and reason codes into a replay store, so the post-event review compares promise to outcome on the same basis it was sold. Where the retailer's data supports it, elasticity is estimated per banner; where it does not, the model says so rather than averaging the unknown."
+  },
+  {
+   "t": "h3",
+   "x": "2. Trade promotion management and effectiveness, engineered"
+  },
+  {
+   "t": "p",
+   "x": "The TPM build industrializes the event lifecycle from negotiation to settlement. Baselines are built causal-first — seasonality, trend, distribution and price effects separated before the mechanic is applied — so lift is measured against what would have happened rather than against last year's calendar. Post-event evaluation runs automatically on scan data reconciled to the GTN ledger, with cannibalization, pantry loading and halo quantified, and every event scored against its funding, its volume commitment and its margin contribution."
+  },
+  {
+   "t": "p",
+   "x": "The evaluation store becomes the negotiation asset: joint business plans are built on events that demonstrably earned their funding, and the trade calendar carries forward only mechanics with measured economics. Where the TPM platform resists modeling, the decision layer runs alongside it and writes back through its interfaces — funding proposals, event scores and post-audit findings land in the system of record without a platform migration. The measurable deltas are funded-event ROI, post-audit cycle time and the share of spend under causal measurement."
+  },
+  {
+   "t": "h3",
+   "x": "3. Retail execution intelligence — shelf truth routed to action"
+  },
+  {
+   "t": "p",
+   "x": "The execution build turns image recognition and audit data into routed work. Shelf images from field teams and fixed cameras are graded for out-of-stocks, planogram compliance, share of shelf and price execution; scores are joined to store-level sales so a detected OOS carries its estimated lost revenue; and the route engine reprioritizes field visits by expected recovery rather than by geography or habit. Secondary placements, coolers and displays get the same treatment as the main shelf, because that is where much of the category's volume actually sits."
+  },
+  {
+   "t": "p",
+   "x": "Execution events close the loop: the rep's action, the re-scan, the recovered sale — each recorded against the finding that triggered it. Where the retailer shares camera or sensor data through its own vendor programs, the same pipeline consumes it. The measurable deltas are out-of-stocks on tracked SKUs, audit coverage weighted by risk rather than by habit, and the share of execution findings that lead to a completed action within the week."
+  },
+  {
+   "t": "h3",
+   "x": "4. Demand planning and IBP on forecast value added"
+  },
+  {
+   "t": "p",
+   "x": "The planning build makes forecast quality a managed asset. Statistical baselines are rebuilt on harmonized sell-out data; causal promotion models consume the trade calendar instead of being surprised by it; and forecast value added is computed at every stage — statistical, consensus, planner-adjusted, customer-collaborated — so each manual touch earns or loses its place on evidence. WMAPE is tracked at SKU-customer grain and reported where the S&OP meeting actually happens, with the worst cells named rather than averaged away."
+  },
+  {
+   "t": "p",
+   "x": "The same decision hub serves supply: volume scenarios run against co-manufacturer capacity, material lead times and tooling constraints, and the commitments conversation moves from last cycle's guess to a distribution of outcomes with named confounders. Planner overrides are logged with their reasons and their measured value added, which turns the monthly argument about whose number was right into a quarterly improvement program. The measurable deltas are WMAPE, bias by cell, and expedite spend attributable to forecast misses."
+  },
+  {
+   "t": "h3",
+   "x": "5. Gross-to-net integrity and deduction recovery"
+  },
+  {
+   "t": "p",
+   "x": "The GTN build reconciles the waterfall. Deduction claims are matched automatically to authorized events — the promotion calendar, customer terms, listing agreements — with unmatched claims routed to an analyst workbench that shows the claim, the authorized terms and the scan evidence side by side. Unauthorized claims are contested with the evidence pack generated, recurring deduction abuses are surfaced to the account team before the next joint business plan, and the reserve is provisioned on measured claim behavior rather than a fixed percentage."
+  },
+  {
+   "t": "p",
+   "x": "Finance gets a ledger that ties: promotion accruals reconcile to booked events, post-audit findings reconcile to settlement, and customer profitability is computed on net revenue that reflects reality rather than a swamp of unapplied deductions. In most estates the matching automation alone recovers several points of net revenue — the diagnostic prices that recovery against your own deduction history before any build is scoped, and the recovered value funds the rest of the program."
+  },
+  {
+   "t": "h3",
+   "x": "6. Retail media monetization and shopper-data clean rooms"
+  },
+  {
+   "t": "p",
+   "x": "The retail media build makes shopper data a monetizable, defensible asset. Clean-room infrastructure joins retailer exposure logs to brand transaction data under privacy thresholds both parties audit; incrementality is measured against matched controls and holdouts; and every campaign carries a measurement plan agreed before spend, not an attribution story offered after it. Consent state is enforced at audience construction, so the media product is built on profiling the privacy office has actually signed."
+  },
+  {
+   "t": "p",
+   "x": "On the brand side of the same build, shopper marketing and media commitments are evaluated on the same causal standard as trade events, and the two funding pools stop competing blindly — the analytics distinguish audiences that convert from audiences that merely repeat. In the published record, a national consumer-electronics chain's clean-room measurement was adopted by every major brand on its network, because measurement both sides sign is what converts contested attribution into contracted spend."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — CPG commercial decision stack",
+   "lanes": [
+    "Systems of record",
+    "Sell-side ingestion",
+    "Commercial decision core",
+    "Guarded generation",
+    "Controls and evidence",
+    "Operating surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "tpm",
+     "lane": 0,
+     "label": "TPM and trade calendar"
+    },
+    {
+     "id": "erp",
+     "lane": 0,
+     "label": "ERP and GTN waterfall"
+    },
+    {
+     "id": "dp",
+     "lane": 0,
+     "label": "Demand planning and S&OP"
+    },
+    {
+     "id": "rex",
+     "lane": 0,
+     "label": "Field execution and mobility"
+    },
+    {
+     "id": "cdc",
+     "lane": 1,
+     "label": "EDI 852 and portal ingestion",
+     "hot": true
+    },
+    {
+     "id": "contracts",
+     "lane": 1,
+     "label": "Schema contracts and SLAs"
+    },
+    {
+     "id": "lake",
+     "lane": 2,
+     "label": "Commercial decision lakehouse"
+    },
+    {
+     "id": "fstore",
+     "lane": 2,
+     "label": "Shared feature store"
+    },
+    {
+     "id": "causal",
+     "lane": 2,
+     "label": "Causal lift and elasticity engine",
+     "hot": true
+    },
+    {
+     "id": "gtndb",
+     "lane": 2,
+     "label": "GTN reconciliation store"
+    },
+    {
+     "id": "rgmd",
+     "lane": 3,
+     "label": "RGM simulation service"
+    },
+    {
+     "id": "dpd",
+     "lane": 3,
+     "label": "Forecast and S&OP decision hub"
+    },
+    {
+     "id": "claimd",
+     "lane": 3,
+     "label": "Deduction matching service"
+    },
+    {
+     "id": "asst",
+     "lane": 3,
+     "label": "Grounded commercial assistant"
+    },
+    {
+     "id": "replay",
+     "lane": 4,
+     "label": "Decision replay and reason codes"
+    },
+    {
+     "id": "registry",
+     "lane": 4,
+     "label": "Model-risk and claims registry"
+    },
+    {
+     "id": "acct",
+     "lane": 5,
+     "label": "Key account and JBP console"
+    },
+    {
+     "id": "field",
+     "lane": 5,
+     "label": "Field route engine"
+    },
+    {
+     "id": "fin",
+     "lane": 5,
+     "label": "Finance reconciliation console"
+    }
+   ],
+   "edges": [
+    {
+     "a": "tpm",
+     "b": "cdc"
+    },
+    {
+     "a": "rex",
+     "b": "cdc"
+    },
+    {
+     "a": "cdc",
+     "b": "contracts"
+    },
+    {
+     "a": "contracts",
+     "b": "lake"
+    },
+    {
+     "a": "erp",
+     "b": "gtndb"
+    },
+    {
+     "a": "gtndb",
+     "b": "lake"
+    },
+    {
+     "a": "lake",
+     "b": "fstore"
+    },
+    {
+     "a": "fstore",
+     "b": "causal"
+    },
+    {
+     "a": "fstore",
+     "b": "claimd"
+    },
+    {
+     "a": "causal",
+     "b": "rgmd"
+    },
+    {
+     "a": "causal",
+     "b": "dpd"
+    },
+    {
+     "a": "claimd",
+     "b": "gtndb"
+    },
+    {
+     "a": "rgmd",
+     "b": "replay"
+    },
+    {
+     "a": "dpd",
+     "b": "replay"
+    },
+    {
+     "a": "lake",
+     "b": "asst"
+    },
+    {
+     "a": "asst",
+     "b": "registry"
+    },
+    {
+     "a": "replay",
+     "b": "registry"
+    },
+    {
+     "a": "causal",
+     "b": "acct"
+    },
+    {
+     "a": "claimd",
+     "b": "fin"
+    },
+    {
+     "a": "lake",
+     "b": "field"
+    },
+    {
+     "a": "rgmd",
+     "b": "tpm"
+    }
+   ],
+   "note": "Lanes and nodes are named for the systems a CPG commercial build actually touches — the TPM calendar, the GTN waterfall, field mobility, EDI 852 and portal feeds — not a generic stack. The hot nodes concentrate the differentiation: sell-side ingestion that finally harmonizes retailer data, and the causal engine that turns promotion and pricing questions from arguments into measurements."
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: sell-side signals under contract"
+  },
+  {
+   "t": "p",
+   "x": "Every decision gap in a CPG commercial organization traces back to a data gap, and most trace to the same habit: sell-side truth arrives as files from many retailers, lands in different grains, and is reconciled by hand. The data plane build normalizes that flow: EDI 852 and portal extracts, shipment and invoice records, syndicated feeds and field execution data land in one governed lakehouse at SKU-customer-week grain with pack-change joins and item crosswalks that survive retailer renumberings."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries a schema contract with a named owner, a freshness SLA and a reconciliation check against the retailer's own scorecard. The GTN ledger reconciles to booked events automatically, and every downstream consumer — causal models, demand planning, category analytics, finance — reads through the contract layer, so a retailer changing an export format fails loudly at the contract instead of silently in a margin bridge."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Portal and 852 harmonization",
+     "every retailer feed normalized to one grain with item crosswalks, so trade and demand teams stop reconciling by spreadsheet each month"
+    ],
+    [
+     "Shipment-to-scan joins",
+     "sell-in and sell-out on one calendar by SKU and customer, with distribution changes flagged where they distort baselines"
+    ],
+    [
+     "GTN ledger reconciliation",
+     "accruals, bookings and claims reconciled automatically, with the mismatch queue surfaced to finance rather than discovered at close"
+    ],
+    [
+     "Contract-enforced freshness",
+     "per-feed SLAs with breach alerting, so a late portal load pages an owner instead of silently skewing forecasts and vendor scorecards"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: causal lift, replay and reason codes"
+  },
+  {
+   "t": "p",
+   "x": "CPG runs on decisions with accounting tails: a funding proposal carries GTN consequences, a forecast adjustment carries supply commitments, a claims decision carries customer-relationship risk. The decision layer treats those tails as first-class requirements. Every decision records its inputs, feature values, model versions, policy rules and reason codes in a replay store that answers audit questions as queries — which baseline version, which elasticity estimate, which authorization produced this funding recommendation, this forecast, this claim disposition."
+  },
+  {
+   "t": "p",
+   "x": "Champion/challenger governance is built in: challengers run on shadow traffic against locked baselines, promotion and pricing models are tracked in one registry finance and commercial governance share, and rollbacks are rehearsed. The same decision service layer hosts RGM simulation, forecast adjustment and claim disposition, so the governance surface is one registry and one replay store instead of three platforms with three audit stories."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: digital workers for the paperwork economy"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work in CPG commercial — deduction matching, post-event audit assembly, JBP preparation packs, quality documentation, ESG data chasing — follows patterns an agentic workforce absorbs without touching judgment authority. Dataq Software's agents run with explicit role scopes: the systems they may read, the tools they may call, the actions that require a human checkpoint, and a budget of work per run. Every run logs its steps and outputs to the same evidence store the human workflow uses."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — drafting deduction dispute letters from the evidence pack, summarizing post-event audits, assembling customer business review decks from the governed data — the pattern is grounded generation with citation obligations and a human author of record. Agents never commit funding, never settle claims without approval, and never send account communications without review; they move the work to the decision point and stop."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: from claims to capital letters"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory and control surface of CPG is dense in exactly the directions these builds touch: claims and advertising, provenance, packaging, shopper privacy, product safety and financial control over trade spend. Dataq Software's answer is the evidence layer — the artifacts a customer business review, an auditor or a regulator will ask for are generated continuously. The table maps the regimes we build against to the evidence our builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape CPG builds — and the evidence layer each one gets",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What our build produces"
+   ],
+   "rows": [
+    [
+     "Advertising and claims standards",
+     "Substantiated claims, green-claims rules, comparative advertising duties",
+     "Claim substantiation attached to campaign and pack assets with lineage to the evidence"
+    ],
+    [
+     "Provenance and due diligence (EUDR class)",
+     "Chain-of-custody evidence for regulated commodities",
+     "Supplier traceability feeds with batch-level custody evidence attached to claim SKUs"
+    ],
+    [
+     "EPR, packaging and CSRD-adjacent reporting",
+     "Packaging weights, recycled content, Scope 3 with audit trail",
+     "Supplier pipelines replacing PDFs; measured figures with lineage instead of estimates"
+    ],
+    [
+     "Shopper and consumer privacy (GDPR class)",
+     "Lawful basis for profiling, consent enforcement, DSAR timelines",
+     "Consent state enforced at offer execution; shopper-data joins run in clean rooms under audited thresholds"
+    ],
+    [
+     "Product safety and recall readiness",
+     "Batch traceability, recall drills, notification evidence",
+     "Lot-level traceability fabric; recall lists assembled in minutes with drill artifacts generated"
+    ],
+    [
+     "Financial control over trade spend",
+     "Authorization, accrual accuracy, post-event audit, reserve integrity",
+     "Event-level authorization trail; accrual-to-settlement reconciliation; post-audit generated from the same store"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the estate stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "CPG estates are layered across acquired brands, regional ERPs and a decade of TPM configurations, and the fastest way to fail a program is to promise a suite replacement. Our integration posture is contractual: schema contracts with each system owner, data landed through governed ingestion, write-back through the TPM, ERP and planning interfaces your change process already controls, and every new component independently deployable behind feature flags. The TPM suite is not replaced; it is supplied with the baseline and the evaluation it never had."
+  },
+  {
+   "t": "p",
+   "x": "The retailer boundary gets the same discipline. Portal credentials, export formats and scorecard definitions sit behind an abstraction layer with contract tests, so a retailer changing its portal is a configuration change with a runbook rather than a pipeline outage. Syndicated data joins through the same crosswalk layer, so panel shares and your own scan data finally reconcile. This is unglamorous work and it is the reason the builds hold up in production instead of in a pilot."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Write-back through your interfaces",
+     "funding proposals, event scores and claim dispositions flow through the TPM and ERP interfaces your change process already governs"
+    ],
+    [
+     "Retailer abstraction with contract tests",
+     "portal exports and 852 feeds behind one interface, so a format change is configuration rather than an outage"
+    ],
+    [
+     "Planning platform offload pattern",
+     "the legacy planner keeps running, decisions fed from the governed spine, no migration negotiated to ship a better forecast"
+    ],
+    [
+     "Feature-flagged and independently deployable",
+     "every build ships behind flags with rehearsed rollback, because the change advisory board will ask"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement. It starts with the two-week diagnostic: one workflow baselined end to end — a promotion family, one account's deductions, one category's availability — the leak quantified in your own data, the contracts inventoried, and a written feasibility read you can circulate, including the uncomfortable findings. If the delta is real, the build is scoped against your commercial calendar and governance gates; if it is not, you keep the measurement design either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "workflow instrumentation, leak quantification, feed inventory, feasibility read with the delta estimate and confounders named"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane live behind flags with replay and evidence from day one — for deductions that is one account's claim stream; for planning one category"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "governance documentation landed, post-event audits automated, remaining lanes added, recovery and accuracy telemetry reporting to the commercial review"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "elasticity and forecast challengers evaluated against locked baselines, thresholds re-tuned, the JBP evidence pack regenerated from the live store"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your commercial rhythm, not a parallel one: our engineers work in your repositories or a shared workspace with the same CI, security review and access model your teams use. Knowledge transfer is part of the gates, not a closing slide — by expansion, your analysts and engineers are shipping changes to the builds, because the runbooks, contracts and evaluation suites are theirs from week one."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones CPG commercial programs are managed on. Targets are the ranges we set in feasibility reads for programs of this shape — commitments we let you hold us to where the metric is clean, hypotheses we test where it is confounded. The measurement column is the part most programs skip and the part that makes the delta defensible in a joint business review."
+  },
+  {
+   "t": "table",
+   "caption": "CPG program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Trade promotion ROI",
+     "10-25% more events earning their funding",
+     "Causal lift against matched non-promoted controls, reconciled to the GTN ledger"
+    ],
+    [
+     "GTN leakage recovered",
+     "Several points of net revenue from claim integrity",
+     "Deduction matching rates and recovered value against the prior-year claim history"
+    ],
+    [
+     "Forecast error (WMAPE)",
+     "15-30% reduction at SKU-customer grain",
+     "Back-testing against locked baselines; override value added reported per planner"
+    ],
+    [
+     "On-shelf availability (tracked SKUs)",
+     "Out-of-stocks down 15-30%",
+     "Execution telemetry reconciled to retail scan data, by account and category"
+    ],
+    [
+     "Retail media incremental ROAS",
+     "Measurement coverage on all funded campaigns",
+     "Clean-room incrementality against matched controls, reported per event"
+    ],
+    [
+     "Post-event audit cycle time",
+     "Days, not quarters, after event close",
+     "Evaluation store timestamps from scan reconciliation to scored event"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A CPG build team is small and senior: a lead engineer who has run commercial decision systems at scale, data engineers who own the sell-side spine and contract layer, ML engineers who own causal measurement and forecasting, a controls engineer who owns the evidence layer, and a domain lead who has run trade calendars, category reviews or demand planning in a real commercial organization. Agentic-workflow specialists join for the deduction and documentation builds. The team works to your joint business planning calendar from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: weekly operations review on the workflow's own telemetry, fortnightly gate submissions to change and finance governance, quarterly challenger reviews timed to the joint business planning cycle, and an incident practice that treats the evaluation store and evidence layer as production-critical systems — because by the second quarter they are. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs like these fail in known ways, and most failure modes are organizational rather than mathematical. We name them in the feasibility read and design against them explicitly, because a program that cannot survive its second quarter is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Baseline ambiguity",
+     "promotion lift argued after the fact because nobody locked the baseline — baselines are causal, locked in the diagnostic, and challenger-reviewed"
+    ],
+    [
+     "Measurement theater",
+     "dashboards adopted while decisions stay negotiated — every build ends at an action lane, not a report; if the buyer never sees the score, the build is not done"
+    ],
+    [
+     "Retailer feed fragility",
+     "one portal format change corrupting a quarter of history — contracts and crosswalks absorb the change, and the breach pages a named owner"
+    ],
+    [
+     "Claim contest escalation",
+     "recovered deductions straining a key account relationship — contest policy is agreed with the account team first, and the evidence pack leads with the reconciliation"
+    ],
+    [
+     "Forecast governance stall",
+     "value-added metrics resented as surveillance — overrides are logged with reasons and reported as coaching signals, not disciplinary ones"
+    ],
+    [
+     "Evidence debt",
+     "audit preparation consuming a team every quarter because artifacts were manual — the evidence layer generates them continuously or the build is not done"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "One pattern recurs across engagements: the fastest wins come from reconciling the plan nobody can defend with the deductions nobody can explain. When gross-to-net evidence, shipment truth and retail execution live in one reviewed model, the annual trade negotiation changes shape — the conversation moves from spend percentage to paid performance, and the funding decision follows shopper evidence rather than the largest historical number. Dataq Software does not replace the TPM suite; it gives the suite the baseline, audit and post-event spine it never had."
+  },
+  {
+   "t": "h2",
+   "x": "Questions CPG commercial leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do we need a new TPM suite first?",
+     "No. The builds run alongside your TPM and ERP, consuming their data and writing back through their interfaces. Platform replacement is a separate decision; the measurement and decision layer works against the estate as it is."
+    ],
+    [
+     "Will retailers share the data we need?",
+     "Most already do through 852 flows and portals; the work is harmonization, not acquisition. Where a retailer withholds data, the build scopes what the shipment record, syndicated data and field execution can carry."
+    ],
+    [
+     "How do you prove promotion lift?",
+     "Causal baselines separated from mechanics, matched controls where the calendar allows, and reconciliation to the GTN ledger. Every evaluation is reproducible from the replay store, so the JBP conversation runs on evidence rather than assertion."
+    ],
+    [
+     "What happens to our analysts and field reps?",
+     "The builds move matching, assembly and route prioritization to agents and put judgment back in human hands with better context. Capacity is redeployed to negotiation and exceptions; programs are justified in cleared claims per analyst and recovered visits per rep."
+    ],
+    [
+     "Can this respect our customer relationships?",
+     "Yes. Deduction contest policy is agreed with the account team before automation touches a claim, and the evidence packs lead with reconciliation rather than accusation. The goal is fewer disputes, not more aggressive ones."
+    ],
+    [
+     "How does this pass finance control review?",
+     "Event-level authorization trails, accrual-to-settlement reconciliation and post-audit artifacts are generated by the system. The control review becomes a walkthrough of evidence the build already produces."
+    ],
+    [
+     "What is the smallest program worth running?",
+     "One account's deduction stream or one promotion family — both have clean baselines and measurable deltas. If the diagnostic cannot find the recovery, we say so and stop."
+    ],
+    [
+     "Who owns the build after you leave?",
+     "Your teams, with runbooks, contracts, evaluation suites and governance artifacts transferred as gate conditions during expansion. Several programs run entirely in-house after the second quarter."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Start with one account or one category: we baseline your trade spend or retail execution in two weeks, measure the leak in your own data, and scope the build only if the delta survives the confounders. The diagnostic report is yours either way, whether or not we build."
+  }
+ ]
+}

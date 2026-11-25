@@ -5,277 +5,758 @@
  "template": "subindustry_page",
  "breadcrumb": "Industries > Banking & Financial Services > Corporate & Investment Banking",
  "seo_title": "Corporate & Investment Banking | Dataq Software",
- "meta_description": "CIB margins compress while deal complexity grows: origination research, credit memos, trade documentation and risk reporting all consume expensive analy.",
+ "meta_description": "How Dataq Software engineers corporate and investment banking: credit memo copilots, covenant and collateral monitoring, corporate KYC with UBO automation, trade finance exception handling, intraday exposure and limits, and the ECL data spine — built against loan servicing, SWIFT and risk estates.",
  "blocks": [
   {
    "t": "hero",
-   "x": "CIB margins compress while deal complexity grows: origination research, credit memos, trade documentation and risk reporting all consume expensive analyst hours that agentic systems can compress — with the control discipline investment banks cannot compromise. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
+   "x": "Corporate and investment banking is an information business that happens to hold credit risk. A deal moves through origination research, credit memos, committee approval, syndication, servicing and trade finance, and every step is a document workflow with an expensive analyst in the middle — spreading financials, tracing beneficial owners, checking letters of credit against UCP 600, chasing covenant certificates. The margin is analyst hours multiplied by spread; the control obligation is credit discipline, KYC, sanctions and trade reporting that supervisors read with growing impatience. This page is the engineering picture of that machinery: the systems it runs on, where analyst hours, breaches and control gaps quietly leak away the spread, and the six deep builds Dataq Software ships to fix them."
   },
   {
    "t": "h2",
-   "x": "How the operation actually works"
+   "x": "How the operation actually runs"
   },
   {
    "t": "p",
-   "x": "The work concentrates in credit memo production, trade document handling, intraday risk aggregation, with client onboarding (institutional) close behind. Each of these paths produces data faster than decisions, and the gap between the two is where cost and risk accumulate."
+   "x": "Corporate and investment banking runs on documents with money attached. Origination starts with coverage: bankers track targets, assemble pitch books and respond to RFPs, pulling financials and market data from terminals into decks by hand. Credit approval formalizes the judgment: financial statements are spread into a model, a memo assembles the borrower story, the risks, the structure and the covenants, the committee decides, and the approved limits and terms are keyed into the loan origination workflow and then the servicing platform. Between the committee decision and the facility master sit weeks of manual transfer, and the audit trail lives in decks, minutes and mailboxes."
+  },
+  {
+   "t": "p",
+   "x": "After close, the loan becomes a machine with moving parts. Agency roles administer the syndicate: drawdowns, rollovers, fee schedules, share allocations and covenant certificates arrive from borrowers and agents and must be checked, booked and chased. Trade finance runs a parallel documentary world: letters of credit issued and amended under UCP 600, guarantees issued and counted against limits, supply-chain finance programs funded against receivables — each document checked for discrepancies, each exception negotiated across time zones and offices. The corporate channel connects it all through SWIFT and ISO 20022 messaging, whose translation layers quietly absorb whatever formats the counterparties send."
+  },
+  {
+   "t": "p",
+   "x": "Underneath runs the risk machinery that makes it all bankable. Exposure aggregates by counterparty, sector and country; limits check against it, mostly overnight. Collateral — pledged assets, guarantees, margin — sits in its own platform with its own eligibility rules. KYC on corporates traces ultimate beneficial owners through registry chains, screens names against sanctions and PEP lists, and refreshes on a cycle the backlog ignores. IFRS 9 stages the book for expected credit loss, Basel weights it for capital, and EMIR/SFTR reports the derivatives and repo trades. Every one of those processes consumes the same scarce resource: an analyst reading documents the systems cannot yet read."
   },
   {
    "t": "h2",
-   "x": "Where the cost hides"
+   "x": "The estate underneath: systems this work touches"
   },
   {
    "t": "p",
-   "x": "the queues and waits that come up first, Corporate & Investment Banking edition:"
+   "x": "Programs in this sub-industry succeed or fail on how honestly the estate is mapped before anything is built. Dataq Software starts every engagement by naming the systems, their owners, their change cadences and their data contracts. The table below is the estate we most often find and integrate against in corporate and investment banking — not a generic stack diagram."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "The corporate and investment banking estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
     [
-     "Analyst hours on document assembly",
-     "Pitch books, credit memos and research notes re-type data from terminals and filings; quality varies by analyst stamina."
+     "Loan origination and credit workflow",
+     "Financial spreading, memo assembly, approvals, limit booking, facility setup",
+     "Memo production is analyst by analyst; approval trails live in decks and mailboxes"
     ],
     [
-     "Trade documentation exceptions",
-     "LCs, trade documents and settlement instructions fail on reference mismatches; exception queues run through time zones."
+     "Syndicated loan servicing and agency",
+     "Facility master, agent roles, drawdowns, fees, allocations, covenant records",
+     "Covenant tracking is manual; breaches surface after cure windows have closed"
     ],
     [
-     "Risk aggregation lag",
-     "Counterparty, market and collateral views assemble overnight; intraday exposures are estimates."
+     "Trade finance platform",
+     "LC issuance and amendment, guarantees, documentary checks, UCP 600 alignment",
+     "Discrepancy detection is manual; exception queues run through time zones"
     ],
     [
-     "Confidential-estate exposure",
-     "Deal rooms and research estates hold market-moving data; insider-risk and exfiltration controls are uneven."
+     "Corporate channel and SWIFT/ISO 20022 gateway",
+     "Client instructions, status messages, reporting, translation to internal formats",
+     "Translation layers absorb data-quality errors; format drift outpaces testing"
     ],
     [
-     "Risk-grid latency",
-     "Monte Carlo and VaR grids hit compute ceilings on stress days; desks fly blind exactly when it matters."
+     "KYC and screening case management",
+     "Corporate onboarding, UBO chains, sanctions and PEP screening, periodic refresh",
+     "UBO chains traced by hand across registries; refresh queues run on analyst availability"
     ],
     [
-     "Legacy front-office platforms",
-     "Booking and risk platforms resist change; product launch becomes a program."
+     "Collateral and limits monitoring",
+     "Eligibility, haircuts, margin calls, exposure against limits by counterparty",
+     "Intraday exposure is estimated; limit checks run after the trade, not before it"
+    ],
+    [
+     "Risk data warehouse",
+     "ECL staging, RWA, large exposures, regulatory and management reporting",
+     "Lineage thin; IFRS 9 inputs stitched from extracts that disagree with the ledger"
+    ],
+    [
+     "Treasury and funding",
+     "Balance-sheet funding, liquidity, funds-transfer pricing to the deal",
+     "Funding costs allocated by rules nobody can trace back to the transaction"
+    ],
+    [
+     "CRM and deal pipeline",
+     "Coverage targets, pitch history, RFP responses, cross-sell tracking",
+     "Deal intelligence trapped in inboxes; origination research re-typed for every memo"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "What goes live, and in what order"
+   "x": "Where the cost and control hide"
   },
   {
    "t": "p",
-   "x": "Capability in Corporate & Investment Banking is not abstract: each domain lands as a named build on a named workflow. The patterns below are what we deploy there."
+   "x": "Ask lending and coverage leaders where the hours and the risk hide and the answers converge on the same eight places, described in their own words. Dataq Software's diagnostic scores each of them in your estate before recommending a build, because the leak that dominates in one bank is often minor in the next."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Credit memo copilot",
-     "financials, covenants and policy assembled with citations into draft memos"
+     "Credit memo hours that outrun the committee calendar",
+     "A memo pulls financials from the spreading tool, history from the servicing platform, structure from the term sheet and the relationship story from the CRM. Analysts re-type data between systems and argue formats, not judgment. Committees wait for the memo, deals wait for committees, and the bank loses throughput where its judgment is supposed to be the product."
     ],
     [
-     "Trade-doc exception agent",
-     "reference mismatches detected and remediated with counterparty comms"
+     "Covenant tracking that misses the first breach",
+     "Covenants live in facility agreements; the servicing platform holds a date and a note. Certificates arrive as PDFs, compliance is checked by reading, and the first missed test is discovered when the cure period has nearly closed. By then the option to renegotiate is gone and the exposure is already migrating from performing to watch."
     ],
     [
-     "Intraday risk spine",
-     "streaming positions and collateral into one governed exposure view"
+     "Corporate KYC with UBO chains traced by hand",
+     "Layered holding structures, multiple registries with inconsistent data, name variants across scripts — the analyst assembles the ownership picture manually, screens every node, and documents it in a file that took weeks. Refresh cycles queue behind onboarding, and remediation programs consume exactly the analysts they were meant to free."
     ],
     [
-     "Risk-grid acceleration",
-     "HPC/quantum-inspired benchmarking on VaR grids"
+     "Trade-document exceptions crossing time zones",
+     "An LC presentation fails on a discrepancy — late shipment, quantity variance, a description that does not match — and the exception queue routes through offices and time zones with the document attached as a scan. Resolution quality depends on who picked it up; discrepancies that could be waived sit for days, and clients notice."
     ],
     [
-     "Front-office platform modernization",
-     "strangler decomposition with parallel-run equivalence"
+     "Intraday exposure nobody can state",
+     "The exposure store updates overnight, so limit checks run against yesterday's book while today's drawdowns, trades and collateral movements accumulate. Desks ask risk for a number and receive an estimate with caveats. The limit framework is sound; the data underneath it is a day behind the risk it measures."
+    ],
+    [
+     "ECL inputs stitched from extracts",
+     "IFRS 9 staging needs ratings, facility terms, collateral values and forward-looking scenarios from systems that each have their own truth. The staging run starts from extracts reconciled by hand, lineage questions from audit take expeditions, and the overlay process becomes the process. Model quality is fine; the data underneath is not defensible."
+    ],
+    [
+     "EMIR and SFTR reporting breaks",
+     "Trade reporting needs complete, accurate, timely submissions, and the reconciliation between booked trades, reported trades and counterparty reports runs on spreadsheets. Breaks age, resubmissions pile up, and every supervisory review of the reporting chain finds the same root cause: reference data that was never conformed."
+    ],
+    [
+     "Lending-committee MIS assembled manually",
+     "The committee pack aggregates pipeline, approvals, exposure, exceptions and portfolio quality from extracts each cycle. By the time the numbers reconcile, the meeting has moved on. Decisions get made on versions that cannot be reproduced a quarter later, which is exactly what a supervisory review asks for."
     ]
    ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight: the bank's judgment is locked inside documents and workflows the systems cannot read, so analysts do the reading and the evidence is produced by hand. That is why our first build here is the knowledge spine — documents, entities and exposure in one governed core — before any copilot or model."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works corporate and investment banking"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate you already run. We do not arrive with a replacement loan platform, a deal-room migration, or a strategy deck that ends where the hard part begins. The engagement model is engineering-first: a two-week diagnostic that baselines one workflow end to end — credit memos, covenant tracking, KYC refresh, trade documentation or exposure aggregation — then a scoped build that ships behind your change process, your model-risk framework and the third-party registers your resilience regime requires."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver in this sub-industry. First, every consequential decision — an approval, a limit check, a covenant call, a screening disposition — carries replay: inputs, model versions, policy rules and reason codes stored so a supervisory or audit question twelve months later is a query. Second, every generative component is permission-aware and citation-bound — the memo copilot drafts from the deal file, the spreading tool and your credit policy, never from the open internet, and every claim shows its source. Third, every build lands with its evidence layer: approval trails, screening rationale and reporting lineage generate continuously."
+  },
+  {
+   "t": "p",
+   "x": "The published record behind this posture is directly from this sub-industry: a multinational corporate bank cleared its KYC refresh backlog 70% faster with agentic file assembly — registries, screening and ownership graphs assembled by digital workers, decisions kept with analysts. The same evidence discipline shows in a tier-1 US bank that moved third-party and incident evidence to automated collection under a DORA-grade posture. Where the metric is clean we contract against the delta; where it is confounded the feasibility read says so and we scope fixed-fee."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for corporate and investment banking"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our corporate and investment banking practice. Each build is named for the workflow it changes, sized in the diagnostic, and shipped with the controls the workflow's regulator expects. None require replacing the loan platform or the trade system; all require taking document and data contracts seriously."
+  },
+  {
+   "t": "h3",
+   "x": "1. Credit memo copilot and committee MIS"
+  },
+  {
+   "t": "p",
+   "x": "The build attacks the memo at the assembly layer, not the judgment layer. A permission-aware document and case index ingests the spreading output, facility terms, servicing history, collateral position, prior memos and policy sections; the copilot drafts the memo structure — borrower, industry, structure, risks, covenants, recommendation — with every figure cited to its source and every policy reference linked. Analysts edit and decide; the system has already assembled, cross-checked the arithmetic and flagged the inconsistencies between term sheet and model."
+  },
+  {
+   "t": "p",
+   "x": "The committee pack assembles from the same spine: pipeline, pending approvals, exposure against limits, exceptions granted, portfolio quality — generated per cycle with lineage instead of stitched from extracts. Approval trails, versions and dissents record into the evidence store, so the pack a committee approved is the pack an auditor reads. The measurable deltas are memo cycle time from request to committee-ready, first-pass quality on credit-policy checklists, and the hours analysts spend assembling rather than judging."
+  },
+  {
+   "t": "h3",
+   "x": "2. Covenant and collateral monitoring spine"
+  },
+  {
+   "t": "p",
+   "x": "The build extracts covenants from facility agreements into a structured covenant store — financial ratios, reporting duties, negative pledges, information undertakings — with extraction confidence scores and a steward queue, because an extracted covenant nobody reviewed is a risk, not an asset. Compliance tests run against certified financial data on the agreed schedule; certificates arriving as PDFs are parsed, reconciled to the tested figures, and chased automatically when they do not arrive."
+  },
+  {
+   "t": "p",
+   "x": "Breach and near-miss detection routes to the account team before the cure window closes, with the covenant text, the test result and the prior waivers attached. Collateral sits in the same spine: eligibility and haircut rules applied per agreement, margin calls triggered by the same event stream, documentation status tracked per facility. The measurable deltas are time from first missed test to detection, certificate-chase coverage, and the share of facilities whose covenant position is current — reported from the engine, not from the account team's inbox."
+  },
+  {
+   "t": "h3",
+   "x": "3. Corporate KYC refresh automation"
+  },
+  {
+   "t": "p",
+   "x": "The build industrializes what the published record proves: agentic file assembly cleared a multinational corporate bank's refresh backlog 70% faster. Digital workers trace ownership through registries into an entity graph, screen every node against sanctions and PEP lists, pull the documents the file needs, and assemble the refresh file with the risk-rating inputs prepared. Low-risk completions route to approval with everything attached; high-risk or hit-bearing cases route to named analysts with the evidence already collated."
+  },
+  {
+   "t": "p",
+   "x": "The human gate is a design principle: analysts see the extracted ownership chains, screening rationale and source documents side by side, override anything, and every override trains the threshold review. Screening vendors and registries sit behind an abstraction layer with contract tests, so a vendor swap is configuration, not surgery. Refresh prioritization runs on risk delta since the last review, not calendar order, and the queue depth, cycle time and hit-quality metrics report from the platform — the numbers an examiner asks for, generated by the system that did the work."
+  },
+  {
+   "t": "h3",
+   "x": "4. Trade finance exception management"
+  },
+  {
+   "t": "p",
+   "x": "The build reads the documents. Presentations, amendments and guarantees are parsed into structured fields — parties, amounts, tenors, documents required, conditions — and checked against the credit's terms and the UCP 600 examination standard. Discrepancies are detected at intake with the specific clause cited, classified by type and severity, and routed with a recommended action: waive, query the presenter, reject. The exception console carries the document image, the extracted fields and the history of the credit side by side, so the checker decides instead of transcription-detecting."
+  },
+  {
+   "t": "p",
+   "x": "Client communication drafts from the structured record — query letters, rejection notices, waiver confirmations — with the relationship manager as author of record. Guarantee lifecycle tracking counts issued instruments against limits in near real time, and supply-chain finance programs reconcile funding against receivables from the same event stream. The measurable deltas are exception clearance time, discrepancy detection coverage at intake, and the share of presentations processed without manual re-keying — each reported from the console telemetry."
+  },
+  {
+   "t": "h3",
+   "x": "5. Exposure and limit decision service"
+  },
+  {
+   "t": "p",
+   "x": "The build makes the intraday number real. Drawdowns, trades, collateral movements and settlement events stream through change-data-capture into an exposure store keyed by counterparty, group, sector and country, reconciled continuously against the servicing and trading systems of record. The limit decision service evaluates pre-trade and pre-drawdown checks against that store — facility limits, counterparty groups, country and sector concentration — and returns approve, block or escalate with the arithmetic attached inside the workflow's latency budget."
+  },
+  {
+   "t": "p",
+   "x": "Escalations carry context: the exposure build-up, the collateral position, the pending approvals, so the discussion is about the decision, not about whose spreadsheet is right. Every check replays — inputs, limit versions, policy rules, reason codes — so a supervisory question about a breach that did not happen, or one that did, is answered from the store. The measurable deltas are exposure staleness from hours to minutes, limit checks moved before the fact, and the time from an exception request to a documented disposition."
+  },
+  {
+   "t": "h3",
+   "x": "6. ECL and regulatory reporting data spine"
+  },
+  {
+   "t": "p",
+   "x": "The build gives IFRS 9 staging inputs it can defend: ratings, facility terms, collateral values, payment behavior and macro scenarios conformed in one governed spine with lineage from source system to staging decision. Reconciliation to the ledger becomes a monitored query instead of a monthly ritual; overlay governance — who added what, against which evidence — records into the same store. The staging run starts from certified data, so the debate moves from whose extract is right to whether the assumptions are right."
+  },
+  {
+   "t": "p",
+   "x": "The same spine feeds EMIR/SFTR trade reporting and the capital data flows: reference data conformed once, break management with lineage to the source trade, resubmission workflows with audit trails. Regulatory extracts generate from certified datasets with the lineage the second line walks in review. The measurable deltas are ECL input lineage coverage, reporting-break aging, and the hours per reporting cycle that stop being reconciliation and start being analysis."
   },
   {
    "t": "arch",
-   "title": "Reference architecture — Corporate & Investment Banking",
+   "title": "Reference architecture — corporate and investment banking knowledge and exposure spine",
    "lanes": [
-    "Estate",
-    "Ingest",
-    "Knowledge spine",
-    "Task services",
-    "Governance",
-    "Users"
+    "Deal and credit estate",
+    "Streams and contracts",
+    "Knowledge and exposure spine",
+    "Decision services",
+    "Controls and evidence",
+    "Business surfaces"
    ],
    "nodes": [
     {
-     "id": "src0",
+     "id": "los",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Loan origination workflow"
     },
     {
-     "id": "src1",
+     "id": "loanserv",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "Loan servicing and agency"
     },
     {
-     "id": "src2",
+     "id": "tradefin",
      "lane": 0,
-     "label": "KYC / AML case manager",
-     "hot": false
+     "label": "Trade finance platform"
     },
     {
-     "id": "in3",
+     "id": "kyc",
+     "lane": 0,
+     "label": "KYC case manager"
+    },
+    {
+     "id": "collat",
+     "lane": 0,
+     "label": "Collateral platform"
+    },
+    {
+     "id": "swiftgw",
      "lane": 1,
-     "label": "Event & batch intake",
-     "hot": false
+     "label": "SWIFT/ISO 20022 gateway"
     },
     {
-     "id": "in4",
+     "id": "cdc",
      "lane": 1,
-     "label": "PII minimization",
-     "hot": false
+     "label": "Change-data-capture streams"
     },
     {
-     "id": "ks5",
+     "id": "docing",
+     "lane": 1,
+     "label": "Document ingestion pipeline"
+    },
+    {
+     "id": "contracts",
+     "lane": 1,
+     "label": "Schema contracts and freshness SLAs"
+    },
+    {
+     "id": "lake",
      "lane": 2,
-     "label": "Decision hub (policy + models)",
+     "label": "Credit decision lakehouse"
+    },
+    {
+     "id": "docindex",
+     "lane": 2,
+     "label": "Permission-aware document index",
      "hot": true
     },
     {
-     "id": "ks6",
+     "id": "egraph",
      "lane": 2,
-     "label": "Citations & provenance",
-     "hot": false
+     "label": "Entity and UBO graph"
     },
     {
-     "id": "ts7",
+     "id": "memo",
      "lane": 3,
-     "label": "Classify & extract",
-     "hot": false
+     "label": "Credit memo copilot",
+     "hot": true
     },
     {
-     "id": "ts8",
+     "id": "covsvc",
      "lane": 3,
-     "label": "Summarize & draft",
-     "hot": false
+     "label": "Covenant engine"
     },
     {
-     "id": "gv9",
+     "id": "limits",
+     "lane": 3,
+     "label": "Limit decision service"
+    },
+    {
+     "id": "replay",
      "lane": 4,
-     "label": "Eval gates",
-     "hot": false
+     "label": "Decision replay and reason codes"
     },
     {
-     "id": "gv10",
+     "id": "mrm",
      "lane": 4,
-     "label": "Model-risk registry",
-     "hot": false
+     "label": "Model-risk registry"
     },
     {
-     "id": "us11",
+     "id": "commis",
      "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "label": "Committee console and MIS"
     },
     {
-     "id": "us12",
+     "id": "tradeops",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Trade-doc exception console"
+    },
+    {
+     "id": "kycwork",
+     "lane": 5,
+     "label": "KYC workbench"
     }
    ],
    "edges": [
     {
-     "a": "src0",
-     "b": "in3"
+     "a": "los",
+     "b": "cdc"
     },
     {
-     "a": "src1",
-     "b": "in3"
+     "a": "loanserv",
+     "b": "cdc"
     },
     {
-     "a": "src2",
-     "b": "in4"
+     "a": "tradefin",
+     "b": "cdc"
     },
     {
-     "a": "in3",
-     "b": "ks5"
+     "a": "kyc",
+     "b": "cdc"
     },
     {
-     "a": "in4",
-     "b": "ks5"
+     "a": "collat",
+     "b": "cdc"
     },
     {
-     "a": "ks5",
-     "b": "ts7"
+     "a": "swiftgw",
+     "b": "cdc"
     },
     {
-     "a": "ks5",
-     "b": "ts8"
+     "a": "docing",
+     "b": "docindex"
     },
     {
-     "a": "ts7",
-     "b": "gv9"
+     "a": "cdc",
+     "b": "contracts"
     },
     {
-     "a": "gv9",
-     "b": "gv10"
+     "a": "contracts",
+     "b": "lake"
     },
     {
-     "a": "ts7",
-     "b": "us11"
+     "a": "lake",
+     "b": "docindex"
     },
     {
-     "a": "ts8",
-     "b": "us12"
+     "a": "lake",
+     "b": "egraph"
+    },
+    {
+     "a": "egraph",
+     "b": "kycwork"
+    },
+    {
+     "a": "docindex",
+     "b": "memo"
+    },
+    {
+     "a": "docindex",
+     "b": "tradeops"
+    },
+    {
+     "a": "lake",
+     "b": "covsvc"
+    },
+    {
+     "a": "lake",
+     "b": "limits"
+    },
+    {
+     "a": "memo",
+     "b": "commis"
+    },
+    {
+     "a": "memo",
+     "b": "replay"
+    },
+    {
+     "a": "covsvc",
+     "b": "replay"
+    },
+    {
+     "a": "limits",
+     "b": "replay"
+    },
+    {
+     "a": "replay",
+     "b": "mrm"
     }
    ],
-   "note": "Lanes and nodes are named for Corporate & Investment Banking systems and workflows — not a generic stack."
+   "note": "Lanes and nodes are named for the systems a corporate and investment banking build actually touches — origination, servicing and agency, trade finance, the KYC case manager, the SWIFT gateway — not a generic stack. The hot nodes are where differentiation concentrates: the permission-aware document index that lets a copilot draft with citations, and the memo service that turns it into committee throughput. Every decision service writes to the replay store the auditor reads."
   },
   {
    "t": "h2",
-   "x": "Staying inside the lines"
+   "x": "The data plane: from mailbox attachments to a governed spine"
   },
   {
    "t": "p",
-   "x": "Basel capital regimes — counterparty credit and market risk model quality. Programs here are designed against these duties from the first sprint; evidence is a by-product of running the system, not an audit-season project."
+   "x": "Every decision gap in this sub-industry traces to a data gap, and the data here is unusually stubborn: facility agreements, covenant certificates, financial statements, LC presentations and registry extracts arrive as documents, while the systems of record hold only the fields somebody keyed. The data plane build runs two ingestion paths in parallel: change-data-capture from origination, servicing, trade finance, collateral and the SWIFT gateway into a governed lakehouse, and a document ingestion pipeline that classifies, extracts and indexes the paper into a permission-aware document store with source lineage preserved."
   },
   {
-   "t": "table",
-   "caption": "Regimes in scope for Corporate & Investment Banking",
-   "headers": [
-    "Regime",
-    "What it expects"
-   ],
-   "rows": [
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries a schema contract with a named owner, a freshness SLA and a reconciliation check against the source's own controls. The counterparty and group master applies survivorship rules your data owners sign; the entity graph links borrowers, guarantors, ultimate beneficial owners and related parties so exposure, KYC and credit risk read the same relationships. Every downstream consumer — the copilot, the covenant engine, the limit service, the reporting extracts — reads through the contract layer, so a source change fails loudly at the contract instead of silently in a committee pack."
+  },
+  {
+   "t": "bullets",
+   "items": [
     [
-     "Basel capital regimes",
-     "counterparty credit and market risk model quality"
+     "Streaming facility and collateral ingestion",
+     "change-data-capture from origination, servicing, collateral and trade systems with exactly-once semantics, keeping the exposure store current without touching batch finance"
     ],
     [
-     "Trade-finance AML (Wolfsberg-class)",
-     "trade document scrutiny duties"
+     "Document ingestion with lineage",
+     "classification, extraction and indexing of agreements, certificates, statements and presentations, with confidence scores and a steward queue for every extracted field"
     ],
     [
-     "Mifid II recording",
-     "comms and transaction evidence"
+     "SWIFT and ISO 20022 gateway contracts",
+     "messages validated and audit-copied at the boundary, so corporate-channel data quality stops being absorbed silently by translation layers"
     ],
     [
-     "FRTB-style data duties",
-     "granular risk data with lineage"
+     "Reporting-grade lineage",
+     "certified datasets feeding ECL staging, capital and trade-reporting extracts, with lineage the second line walks query by query"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Starting without a leap of faith"
+   "x": "The decision layer: limits, covenants and replay"
   },
   {
    "t": "p",
-   "x": "For Corporate & Investment Banking, the first move costs little: a two-week diagnostic on analyst hours on document assembly, your data, one honest baseline. The scoped proposal only follows if the measured delta justifies it."
+   "x": "Corporate banking runs on decisions with supervisory tails: an approval commits capital, a limit check gates a drawdown, a covenant call changes a client relationship, a screening disposition must survive an examiner. The decision layer we build treats those tails as first-class requirements. Every decision records its inputs, feature and document versions, policy rules and reason codes into a replay store, so the questions a committee, an auditor or a supervisor asks months later — why was this approved, why was this waived, why was this not flagged — are queries with lineage rather than reconstructions from mailboxes."
+  },
+  {
+   "t": "p",
+   "x": "Champion/challenger governance is built in rather than bolted on: spreading models, risk parameter estimates and extraction models run as challengers on shadow traffic, performance tracked in the registry the model-risk function owns, promotions through the gates your SR 11-7-aligned framework already defines. The same decision service layer hosts limit checks, covenant compliance, screening dispositions and memo drafting support, so the governance surface is one registry, one replay store, one set of gates — instead of a risk engine, a workflow tool and a copilot each with their own audit story."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: digital workers on the deal file"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work here — file assembly, evidence collection, document checking, registry tracing — follows patterns an agentic workforce can absorb without touching judgment authority. Dataq Software's agent platform runs digital workers with explicit role scopes: the tools they may call, the systems they may read, the actions that require a human checkpoint and the budget of work per run. Agents trace ownership through registries, assemble KYC and refresh files, prepare covenant certificates for testing, pre-check LC presentations and collect the evidence a memo needs — then hand over at the decision point."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — memo drafting, refresh summaries, discrepancy explanations, committee-pack commentary — the pattern is grounded generation with citation obligations and human authorship of record. Agents never approve credit, never post to the servicing platform, never send counterparty communications without review, and never change a screening decision; they move the work to the decision point and stop. The capacity story is measured in cleared files and assembled memos per analyst per day — the published record shows a 70% faster KYC cycle on exactly this pattern."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: audit as a query"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory surface here is prudential and criminal-law adjacent at once: capital and provisioning discipline, AML and sanctions, trade and transaction reporting, operational resilience, and model governance. Dataq Software's answer is the evidence layer — the artifacts a reviewer will ask for are generated continuously by the systems themselves. The table maps the regimes we build against to the evidence our builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape corporate and investment banking builds — and the evidence layer each one gets",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What our build produces"
+   ],
+   "rows": [
+    [
+     "Basel III endgame and prudential capital",
+     "Model quality and data lineage priced directly into RWA and capital",
+     "Lineage-complete capital data flows; model registry wired to the decision layer"
+    ],
+    [
+     "IFRS 9 expected credit loss",
+     "Defensible staging classification, ECL inputs, overlays and governance",
+     "Certified ECL input spine with lineage; overlay governance recorded per change"
+    ],
+    [
+     "AMLR package, sanctions and UBO transparency",
+     "Risk-based corporate due diligence, UBO identification, screening coverage",
+     "Assembled KYC files with entity graphs, screening rationale and refresh prioritization by risk delta"
+    ],
+    [
+     "EMIR and SFTR trade reporting",
+     "Complete, accurate, timely reporting with reconciliation to books and records",
+     "Break management with lineage to source trades; resubmission workflows with audit trails"
+    ],
+    [
+     "DORA operational resilience",
+     "ICT third-party registers, incident playbooks, testing evidence, exit strategies",
+     "Register entries per integration; playbook and recovery-test evidence generated per release"
+    ],
+    [
+     "Model risk (SR 11-7 style)",
+     "Inventory, validation, monitoring and documentation for models and AI systems",
+     "Registry entries with evaluation results, drift monitoring and guardrail inventory shipped with each build"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the estate stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Corporate banking estates are layered over decades, and the fastest way to fail a program is to promise greenfield. Our integration posture is contractual: we define schema contracts with each system owner, land data through CDC, governed APIs and the document pipeline, write back through the servicing, origination and workflow interfaces your change process already controls, and keep every new component independently deployable behind feature flags. The loan platform and the trade system are not replaced; they are supplied with better context and drained of the assembly work they were never good at."
+  },
+  {
+   "t": "p",
+   "x": "The vendor and message chains get the same treatment. Registry, screening and bureau vendors sit behind an abstraction layer with contract tests, so a vendor swap is a configuration change with a migration runbook. The SWIFT and ISO 20022 corporate channel becomes a contract boundary rather than a translation patch, with audit copies preserved per message. Where a document-heavy legacy process must stay, the offload pattern applies: the system keeps producing, while the decision surfaces read from the indexed, extracted stream it feeds. This is unglamorous work and it is the reason the builds hold up in production."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Write-back through your interfaces",
+     "limit updates, covenant statuses, screening dispositions and memo routing flow through the origination, servicing and workflow interfaces your change process governs"
+    ],
+    [
+     "SWIFT and ISO 20022 gateway patterns",
+     "messages validated at the boundary with audit copies, turning the corporate channel into a contract rather than a liability"
+    ],
+    [
+     "Vendor abstraction with contract tests",
+     "registry, screening, bureau and market-data vendors behind one interface, so a swap is configuration, not surgery"
+    ],
+    [
+     "Feature-flagged, independently deployable",
+     "every build ships behind flags with rehearsed rollback, because the change advisory board will ask"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement. It starts with the two-week diagnostic: one workflow baselined end to end, the leak quantified in your own telemetry, the data contracts inventoried, and a written feasibility read you can circulate — including the uncomfortable findings. If the delta is real, the build is scoped against the gates your change and model-risk processes define; if it is not, you keep the measurement design and the baseline either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "workflow instrumentation, leak quantification, contract inventory, feasibility read with the delta estimate and the confounders named"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane live behind flags with replay and evidence from day one — for KYC that is one refresh cohort; for memos one product line"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "model-risk documentation landed, steward queues staffed, remaining cohorts and products added, capacity telemetry to the operations review"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "extraction and scoring challengers evaluated in the registry, covenant thresholds re-tested, the baseline re-verified against the control group"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm, not a parallel one: our engineers work in your repositories or a shared workspace with the same CI, the same security review and the same access model your teams use. Knowledge transfer is part of the gates, not a closing slide — by the expansion phase your engineers are shipping changes to the builds, because the runbooks, contracts and evaluation suites are theirs from week one, and the quarterly reviews are chaired from your side of the table."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones corporate and investment banking programs are managed on. The targets are the ranges we set in feasibility reads for programs of this shape — commitments you can hold us to where the metric is clean, hypotheses we test where it is confounded. The measurement column is the part most programs skip and the part that makes the delta defensible in a steering committee."
+  },
+  {
+   "t": "table",
+   "caption": "Corporate and investment banking program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Credit memo cycle time",
+     "40-60% faster from request to committee-ready",
+     "Memo telemetry from request through submission, by product and complexity band"
+    ],
+    [
+     "KYC refresh cycle time",
+     "60-75% faster file assembly and clearance",
+     "Queue analytics by risk rating; published record 70% at a multinational corporate bank"
+    ],
+    [
+     "Covenant breach detection latency",
+     "Days rather than quarters after the first missed test",
+     "Covenant-engine telemetry against servicing records and certificate dates"
+    ],
+    [
+     "Trade-doc exception clearance",
+     "40-60% faster median clearance",
+     "Exception-console telemetry by discrepancy type and office"
+    ],
+    [
+     "Intraday exposure staleness",
+     "Minutes rather than overnight",
+     "Exposure-store freshness SLAs with reconciliation checks against systems of record"
+    ],
+    [
+     "ECL input lineage coverage",
+     "At or near 100% of staging inputs",
+     "Lineage coverage reports from the data spine, per staging run"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A corporate and investment banking build team is small and senior: a lead engineer who has run decision and document systems in regulated finance, data engineers who own the CDC, gateway and contract layer, ML engineers who own extraction, scoring and evaluation, a controls engineer who owns the evidence layer, and a domain lead who has cleared KYC backlogs, covenant migrations or trade-doc queues in production estates. Agentic-workflow specialists join for the file-assembly builds. The team works to your release calendar and your gate vocabulary from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: a weekly operations review on the workflow's own telemetry — memo queues, covenant exceptions, refresh backlog, reporting breaks — fortnightly gate submissions to change and model-risk, quarterly challenger reviews, and an incident practice that treats the document index, the exposure store and the evidence layer as production-critical systems, because by the second quarter they are. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs like these fail in known ways, and most of the failure modes are organizational rather than mathematical. We name them in the feasibility read and design against them explicitly, because a program that cannot survive its second quarter is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "a demo built on extracted deal files that never integrates — prevented by shipping the first vertical slice through your change process, flags and gates included, within two months"
+    ],
+    [
+     "Model-risk stall",
+     "the copilot or the extraction service stuck in review because documentation was an afterthought — the registry, evaluation results and lineage land with the build, not after it"
+    ],
+    [
+     "Extraction overconfidence",
+     "covenants and UBO chains extracted without stewardship until a wrong field changes a decision — extraction confidence scores and a staffed steward queue are gates, not options"
+    ],
+    [
+     "Permission sprawl",
+     "the document index quietly widening its read scope until it becomes an insider-risk surface — role scopes and access reviews are part of the evidence layer from day one"
+    ],
+    [
+     "Backlog complacency",
+     "cycle times improving while the queue still grows because capacity was cut on a forecast — capacity telemetry stays in the operations review until the curve bends"
+    ],
+    [
+     "Evidence debt",
+     "audit preparation consuming a team every quarter because approval trails were manual — the evidence layer generates them continuously or the build is not done"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions lending and coverage leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do we need to replace our loan origination platform?",
+     "No. None of the six builds require replacement. They consume streams and documents from your systems of record and write back through the interfaces your change process governs. The platform stays; it stops being the bottleneck for decisions and evidence."
+    ],
+    [
+     "How does the memo copilot respect credit policy?",
+     "It drafts from the deal file, the spreading output and your policy library with citations on every claim, and it never recommends — it assembles and flags. Approval authority stays with the credit officer and the committee, and every draft and edit is versioned in the evidence store."
+    ],
+    [
+     "How do you handle UBO chains across registries?",
+     "A registry abstraction normalizes inconsistent sources, the entity graph links the ownership picture, and analysts confirm the chain at a named checkpoint before it enters the file. Every node carries its source, its confidence and its screening result."
+    ],
+    [
+     "What happens to our analysts?",
+     "The builds move assembly, checking and evidence collection to agents and put judgment back in human hands with better context. Capacity is redeployed to the complex files the backlog neglects; programs are justified in cleared files per analyst, not headcount removed."
+    ],
+    [
+     "How do you measure success without gaming?",
+     "Baselines are locked during the diagnostic, controls or holdouts are used where experiments are cheap, and every metric is reported from system telemetry rather than a status deck. The feasibility read names the confounders before anyone commits to a target."
+    ],
+    [
+     "What is the smallest program worth running?",
+     "One workflow, one baseline, one vertical slice. KYC refresh cohorts and one product line of credit memos are the most common starters because their queues and clocks are already measurable. If the diagnostic cannot find the delta, we say so and stop."
+    ],
+    [
+     "How do the agents avoid becoming shadow AI?",
+     "Agents run inside the governed platform with role scopes, tool allow-lists, human checkpoints and full run logs. The shadow-AI failure mode is what happens without those controls; the program's explicit goal is to eliminate the conditions that create it."
+    ],
+    [
+     "Who owns the build after you leave?",
+     "Your teams, with the runbooks, contracts, evaluation suites and registry entries transferred as gate conditions during expansion — not as a closing deliverable. Several programs run entirely in-house after the second quarter."
+    ]
+   ]
   },
   {
    "t": "cta",
-   "x": "Start with the diagnostic, not the contract: operations in Corporate & Investment Banking baselined in two weeks, and a scoped proposal only if the delta justifies it."
+   "x": "Bring one workflow — credit memos, covenant tracking, KYC refresh or trade documentation — and we will baseline it in two weeks against your own queues, price the delta, and tell you honestly whether the build is worth your change budget. The first conversation costs an hour; the feasibility read is yours to keep."
   }
  ],
- "words": 455,
+ "words": 5406,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Banking & Financial Services",

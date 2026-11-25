@@ -1,0 +1,405 @@
+{
+ "file": "industries_healthcare-life-sciences_hospitals-providers",
+ "meta_description": "How Dataq Software engineers hospitals and provider networks: ambient clinical documentation inside the EHR, prior-auth evidence assembly, CDI and coding intelligence, denials and appeals, patient-flow command centers and deterioration detection under HIPAA and CMS billing integrity.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "A hospital is a 24/7 clinical operation balanced on top of a revenue cycle, and both run through the same chart. The physician documents, the coder reads, the claim leaves, the payer responds — and every hour of delay, every missing sentence, every stale edit becomes either a boarding patient or a denial letter. The margin and the safety record are decided by the same decision machinery: how fast documentation gets captured, how completely authorization evidence assembles, how early a deteriorating patient gets seen, how predictably the floor turns over its beds. This page is the engineering picture of that machinery as Dataq Software sees it from inside provider estates — the systems it runs on, the exact points where it leaks, and the six deep builds that fix them."
+  },
+  {
+   "t": "h2",
+   "x": "How the operation runs, door to denial"
+  },
+  {
+   "t": "p",
+   "x": "Trace one admission from the ambulance bay. Registration and triage fire ADT messages through the interface engine into the EHR; the emergency physician orders under CPOE with clinical decision support checking doses and interactions; laboratory results stream back as ORU messages and imaging as DICOM studies coordinated by the RIS and PACS. The bed request hits a bed-management system that competes with the capacity command center's view of boarding, transport and environmental services queues. If the patient needs theatre, the case lands in the OR scheduling system where block ownership, first-case start times and turnover minutes decide how much surgery the hospital actually performs with the rooms it has."
+  },
+  {
+   "t": "p",
+   "x": "The clinical stay runs on nursing documentation, bedside monitoring and periodic deterioration alerts — sepsis screens and rapid-response triggers whose precision decides whether nurses trust them or silence them. Discharge planning starts days before the discharge order: case management lines up placement, equipment and follow-up while the chart keeps growing. The moment the patient leaves, the revenue cycle takes over: CDI queries chase missing specificity, coding assigns ICD-10 and CPT, the claims scrubber tests against payer edits, the 837 leaves through the clearinghouse, and the 835 comes back with payment — or with denials that route to appeals staff working a queue the original documentation problem created."
+  },
+  {
+   "t": "p",
+   "x": "Around all of it run the obligations: HIPAA privacy and security with BAAs across the vendor chain, price transparency and No Surprises Act duties at patient access, 340B integrity for covered entities, accreditation survey readiness, information-blocking duties that push records out through FHIR APIs, and value-based contracts that make readmission rates and quality measures balance-sheet items rather than aspirations. The estate is layered, vendor-heavy and change-averse — which is exactly why the leaks below persist: they live in the seams between systems nobody owns end to end."
+  },
+  {
+   "t": "h2",
+   "x": "The estate underneath: systems this work touches"
+  },
+  {
+   "t": "p",
+   "x": "Provider programs succeed or fail on how honestly the estate is mapped before anything is built. Dataq Software starts every engagement by naming the systems, their owners, their change cadences and their data contracts. The table below is the estate we most often find and integrate against in hospital and health-system programs — not a generic stack diagram."
+  },
+  {
+   "t": "table",
+   "caption": "The provider estate we build against — and where each layer strains",
+   "headers": ["System layer", "What it actually does", "Where it strains"],
+   "rows": [
+    ["EHR and clinical documentation (Epic, Cerner-class)", "Charting, orders, results, scheduling, patient lists; the clinical and administrative source of truth", "Documentation debt accumulates in the chart; batch-derived analytics lag decisions; vendor-native tooling resists extension"],
+    ["CPOE and clinical decision support", "Order capture with dose, interaction and duplicate-therapy checks", "Alert precision too low to trust; overrides unmeasured; decision support tied to the EHR vendor's release cycle"],
+    ["HL7 v2 interface engine", "Moves ADT, ORM, ORU, SIU and DFT messages between clinical, laboratory, pharmacy and radiology systems", "Point-to-point sprawl; semantic drift between senders; the message map lives in interfaces nobody fully owns"],
+    ["PACS, RIS and DICOM archives", "Imaging acquisition, worklists, storage and reporting", "Archives grow unmanaged and retrieval slows; imaging context rarely reaches decisions outside the reading room"],
+    ["Bed management and capacity command center", "Bed requests, transport, EVS dispatch, boarding dashboards, transfer logistics", "Status depends on manual updates; predictions absent; boarding decisions run on whiteboards and phone calls"],
+    ["OR scheduling and block management", "Theatre calendars, block allocation, case posting, start times, turnover", "Block utilization leaks through late releases, no-shows and turnover; performance reporting arrives after the month closes"],
+    ["CDI, coding and claims scrubbing", "Documentation review, ICD-10/CPT assignment, edit testing before the 837 leaves", "Queries chase the chart after discharge; edits encode stale payer policy; coder capacity is the queue's ceiling"],
+    ["Denials management and appeals", "Denial intake, root-cause classification, appeal assembly, payer follow-up", "Evidence assembled by hand from five systems; root causes never traced upstream; appeal deadlines worked at the wire"],
+    ["Patient access: scheduling, registration, prior auth", "Appointment booking, eligibility, authorization requests and follow-up", "Prior-auth requests pend on missing evidence; portals fragment the workflow; transparency duties add manual estimate work"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where the margin and the safety record leak"
+  },
+  {
+   "t": "p",
+   "x": "Ask hospital operations leaders where the damage concentrates and the answers converge on the same eight places. Dataq Software's diagnostic scores each of them in your own telemetry before recommending a build, because the leak that dominates a teaching hospital is often minor in a community network — and the fix is engineering either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Clinician documentation debt", "Notes, orders and inbox consume the hours clinicians used to spend with patients; the pajama-time tax drives burnout and attrition. Ambient tooling exists but stalls on EHR integration, compliance sign-off and governance review. The cost is measurable in EHR time-motion telemetry, and it compounds through every downstream workflow — coding, quality, claims — that reads the chart."],
+    ["Prior authorization ping-pong at access", "Requests bounce between provider and payer portals, each side re-keying data the other holds. Clinical evidence exists in the chart but assembling it against policy criteria is manual work measured in days for decisions that clinically need hours. Staff overtime, pended queues and delayed schedules are the visible symptoms; abandonment of profitable cases is the invisible one."],
+    ["Denials manufactured upstream", "Denials cite documentation that existed but was never surfaced, codes that did not match the note, or edits tuned to stale payer policy. Appeals re-assemble evidence by hand while the root cause persists in the authoring workflow. Initial-denial rate and appeal overturn rate expose the leak; the cost hides in rework nobody prices."],
+    ["OR blocks and first-case starts leaking", "Block time sits unused because releases are manual and incentives misaligned; first cases start late for reasons nobody instruments; turnover minutes drift upward. Utilization reporting arrives after the month closes, so the scheduling decisions that could recover theatre capacity never get made in time to matter."],
+    ["Boarding and discharge lag in patient flow", "Discharge orders land hours before the patient departs; transport, EVS and bed assignment run on radio calls; boarding inflates ED waits and elective cancellations. The command center sees the present but not the next four hours, so capacity decisions stay reactive while the metrics — boarding hours, discharge order-to-depart time — stay unmeasured per unit."],
+    ["Deterioration alerts that cry wolf", "Sepsis and rapid-response triggers tuned for sensitivity fire on half the floor, so nurses mute them and the sickest patients wait. Alarm fatigue is a precision problem: the alert that fires when it matters is worth more than the model with the best off-line AUC. Rollout without a precision gate is how trust gets burned."],
+    ["Readmissions under penalty contracts", "Value-based contracts and HRRP exposure make 30-day readmissions a balance-sheet item, but discharge planning runs on paper checklists. Follow-up appointments never get booked before departure, medication reconciliation gaps go unmeasured, and the patients most likely to bounce back are identified by intuition rather than by a stratification model with evidence."],
+    ["Price transparency and 340B integrity burden", "Good-faith estimates, shoppable-service disclosures and No Surprises Act workflows add manual estimate work at access; 340B integrity demands eligibility traceability across pharmacy claims. Both are evidence problems solved with spreadsheets today — and both surface as audit findings rather than as engineering backlogs."]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight leaks: documentation debt upstream becomes denials downstream, and clinical delay becomes capacity loss. Context is a data engineering problem before it is a modeling problem — which is why the first build in provider programs is almost always the chart-to-claims data plane, not another alert."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works hospitals and provider networks"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the provider estate you already run. We do not arrive with a replacement EHR, a rip-and-replace revenue-cycle platform, or a strategy deck that ends where the hard part begins. The engagement model is engineering-first: a two-week diagnostic that baselines one workflow end to end — documentation, prior authorization, denials, patient flow — then a scoped build that ships behind your change process, behind your clinical governance and safety committee, and behind the HIPAA duties that attach to everything touching patient data."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver in this sub-industry. First, every automated decision carries replay: inputs, versions, criteria and outcomes are stored so an audit, appeal or safety question twelve months later is a query, not an investigation. Second, every generative component is permission-aware and citation-bound — the documentation assistant drafts from the visit itself and your templates, the authorization rationale cites the chart evidence, and every output shows its sources. Third, every build lands with its evidence layer: the artifacts a surveyor, auditor or payer reviewer will ask for are generated continuously by the system."
+  },
+  {
+   "t": "p",
+   "x": "The published record behind this approach includes a 12-hospital US health system where clinicians got 90 minutes a day back from ambient documentation running inside the EHR — the same instrumentation this page describes. The commercial model follows the measurement logic: where the metric is clean, we contract against the delta with the baseline locked during the diagnostic; where it is confounded, we say so in the feasibility read and scope fixed-fee instead."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for providers"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our provider practice. Each build is named for the workflow it changes, sized in the diagnostic, and shipped with the controls the workflow's regulator will expect. None of them require replacing the EHR or the revenue-cycle platform; all of them require taking the interface contracts seriously."
+  },
+  {
+   "t": "h3",
+   "x": "1. Ambient clinical documentation inside the EHR"
+  },
+  {
+   "t": "p",
+   "x": "The build turns visit audio into a structured draft note in the specialty's own template, with coding hints carrying evidence pointers back to note text, order drafts staged for CPOE, and write-back through the FHIR and HL7 interfaces your change control already governs. The clinician reviews, edits and signs — authorship of record stays human by design, and every post-signature edit is captured as signal for the template review. Deployment runs inside the EHR workflow through CDS Hooks and SMART surfaces rather than a second monitor nobody watches."
+  },
+  {
+   "t": "p",
+   "x": "The evaluation harness is part of the deliverable: per-specialty golden sets reviewed by your clinical governance board, note-quality scoring against post-signature edits, charge-capture suggestions traceable to documented findings, and drift monitoring from day one. No autonomous orders; no coding changes without a human decision. The metric is minutes returned per clinician per day, measured in EHR time-motion telemetry — in the published program record, a 12-hospital US health system measured 90 minutes a day back per clinician with the same instrumentation this build ships."
+  },
+  {
+   "t": "h3",
+   "x": "2. Prior authorization evidence assembly at patient access"
+  },
+  {
+   "t": "p",
+   "x": "Authorization is a document-matching problem: policy criteria on one side, chart evidence on the other, staff bridging by swivel-chair effort. The build maintains a payer criteria library mapped to computable expressions, assembles the clinical evidence automatically from problems, medications, laboratories, imaging reports and notes, and produces a submission packet per payer portal or 278 transaction with the clinical rationale pre-drafted for clinician review. Administrative criteria resolve automatically; clinical criteria route to a reviewer with everything already collated."
+  },
+  {
+   "t": "p",
+   "x": "Clock telemetry reports turnaround per case, per payer and per service line, so the pended queue becomes a managed instrument rather than a mystery. Clinical review gates stay in place: auto-approval exists only for policy lanes your UM committee explicitly certifies, and everything else carries a signature. The measurable deltas are turnaround time, first-pass approval rate and the staff hours returned to access — with the denial rate downstream as the honest check that speed did not buy accuracy debt."
+  },
+  {
+   "t": "h3",
+   "x": "3. Clinical documentation integrity and coding intelligence"
+  },
+  {
+   "t": "p",
+   "x": "The build works the chart while the patient is still in the bed. A CDI workbench surfaces documentation gaps from chart evidence and generates queries with citations; coding suggestions arrive with evidence pointers to ICD-10 and CPT rather than as opaque scores; claims scrubbing is tuned against live payer edit libraries; and a pre-bill review lane samples high-risk claims before the 837 leaves. Each suggestion carries its evidence, and every override feeds the threshold review — so the workbench tightens instead of inflating query volume."
+  },
+  {
+   "t": "p",
+   "x": "The engineering substance is the evidence linkage: every query, code and edit test points at the chart location that justifies it, which is what turns coding from a throughput race into an audit-ready record. Query rate is monitored per specialty to protect physician goodwill, and the program is measured in query turnaround, coding completeness, clean-claim rate and days in AR — reported from the platform's own telemetry rather than reconstructed in a spreadsheet after the month closes."
+  },
+  {
+   "t": "h3",
+   "x": "4. Denials management, appeals and root-cause closure"
+  },
+  {
+   "t": "p",
+   "x": "Denials are handled as a data problem with a root-cause taxonomy attached at intake: authorization status, documentation gaps, coding conflicts, timely-filing breaches and payer-specific edit failures each get their own trail. The appeal evidence assembles automatically — chart extracts, policy citations, prior correspondence — and payer policy is versioned so the dispute cites what the plan actually published at the time of the claim. Win rates report by reason code, payer and service line."
+  },
+  {
+   "t": "p",
+   "x": "The upstream fix is the point: denial root causes route back to the authoring workflow, the edit library or the criteria mapping that manufactured them, and the routing is part of the build rather than a phase-two promise. The program is measured in initial-denial rate, appeal overturn rate, days in AR and the dollars that stop leaking — because the point was never to win more appeals; it was to have fewer denials worth appealing."
+  },
+  {
+   "t": "h3",
+   "x": "5. Patient flow and capacity command center intelligence"
+  },
+  {
+   "t": "p",
+   "x": "The build gives the command center a forward view instead of a live dashboard: discharge-readiness predictions per unit from ADT events, orders and case-management milestones; boarding forecasts for the ED; transport and EVS demand prediction; and bed-assignment recommendations that respect isolation, gender and cohorting constraints. ADT event streams feed the model through the interface engine without touching the EHR's own batch jobs, so the forecast refreshes by the minute while the whiteboards keep running as fallback."
+  },
+  {
+   "t": "p",
+   "x": "OR capacity gets the same treatment: block-release recommendations from utilization and case-posting patterns, first-case start delay analysis instrumented at the source, and turnover telemetry by room and service. Every recommendation carries its inputs so a surgeon asking why their block moved gets a query, not an argument. The program is measured in discharge order-to-depart time, boarding hours, first-case on-time starts and block utilization — the four numbers that decide how much capacity the hospital already owns."
+  },
+  {
+   "t": "h3",
+   "x": "6. Deterioration detection and readmission prevention"
+  },
+  {
+   "t": "p",
+   "x": "The deterioration build treats precision as the launch condition: sepsis and ward-deterioration models run behind a precision-at-fixed-recall gate your clinical governance board certifies before go-live, alert surfaces render inside the EHR with the evidence the model used, and every firing is logged with its inputs so a safety review reconstructs exactly why. Alert burden is measured per nurse per shift, and thresholds are re-tuned quarterly against outcomes — because the model that wins is the one the floor still trusts in month six."
+  },
+  {
+   "t": "p",
+   "x": "Readmission prevention runs on the same decision layer: a stratification model with evidence behind every flag, a discharge-planning workbench that books follow-up before departure, medication-reconciliation checks at the transition, and outreach tasks routed to care teams with the chart context attached. Value-based contract exposure — HRRP conditions, quality measures — is tracked against the same store, so the clinical story and the financial story read from one telemetry stream instead of two decks that disagree."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — the provider decision and evidence stack",
+   "lanes": ["Clinical systems of record", "Interfaces and ingestion", "Terminology and retrieval core", "Guarded scoring and generation", "Controls and evidence", "Care and revenue surfaces"],
+   "nodes": [
+    {"id": "ehr", "lane": 0, "label": "EHR and clinical documentation"},
+    {"id": "cpoecds", "lane": 0, "label": "CPOE and decision support"},
+    {"id": "orsched", "lane": 0, "label": "OR scheduling and block management"},
+    {"id": "bedmgmt", "lane": 0, "label": "Bed management and capacity command"},
+    {"id": "pacs", "lane": 0, "label": "PACS, RIS and DICOM"},
+    {"id": "iface", "lane": 1, "label": "HL7 v2 interface engine"},
+    {"id": "fhirapi", "lane": 1, "label": "FHIR R4 APIs and CDS Hooks", "hot": true},
+    {"id": "streams", "lane": 1, "label": "ADT and ORU event streams"},
+    {"id": "lake", "lane": 2, "label": "Provider decision lakehouse"},
+    {"id": "terms", "lane": 2, "label": "Terminology services (ICD-10, CPT, SNOMED, LOINC)", "hot": true},
+    {"id": "index", "lane": 2, "label": "Permission-aware chart index"},
+    {"id": "ambdoc", "lane": 3, "label": "Ambient documentation service", "hot": true},
+    {"id": "authsvc", "lane": 3, "label": "Prior-auth evidence assembly"},
+    {"id": "codesvc", "lane": 3, "label": "CDI and coding intelligence"},
+    {"id": "flowsvc", "lane": 3, "label": "Flow and deterioration models"},
+    {"id": "eval", "lane": 4, "label": "Evaluation harness and golden sets"},
+    {"id": "replay", "lane": 4, "label": "Decision replay and provenance"},
+    {"id": "registry", "lane": 4, "label": "Model-risk registry and safety board records"},
+    {"id": "workbench", "lane": 5, "label": "CDI, denials and UM workbenches"},
+    {"id": "command", "lane": 5, "label": "Capacity command center and OR board"}
+   ],
+   "edges": [
+    {"a": "ehr", "b": "iface"},
+    {"a": "cpoecds", "b": "iface"},
+    {"a": "orsched", "b": "streams"},
+    {"a": "bedmgmt", "b": "streams"},
+    {"a": "pacs", "b": "streams"},
+    {"a": "iface", "b": "fhirapi"},
+    {"a": "streams", "b": "lake"},
+    {"a": "fhirapi", "b": "lake"},
+    {"a": "lake", "b": "terms"},
+    {"a": "lake", "b": "index"},
+    {"a": "index", "b": "ambdoc"},
+    {"a": "lake", "b": "authsvc"},
+    {"a": "lake", "b": "codesvc"},
+    {"a": "lake", "b": "flowsvc"},
+    {"a": "ambdoc", "b": "eval"},
+    {"a": "authsvc", "b": "replay"},
+    {"a": "codesvc", "b": "replay"},
+    {"a": "flowsvc", "b": "eval"},
+    {"a": "eval", "b": "registry"},
+    {"a": "registry", "b": "command"},
+    {"a": "codesvc", "b": "workbench"},
+    {"a": "flowsvc", "b": "command"}
+   ],
+   "note": "Lanes and nodes are named for the systems a provider build actually touches — the EHR, CPOE, the interface engine, OR scheduling and the capacity command center — not a generic reference stack. The hot nodes are where the program's differentiation concentrates: FHIR-native interfaces, terminology binding and the ambient documentation service that writes back into the clinician's own workflow. Everything above the core reads through contracts, so a change in any lane surfaces at the contract instead of silently inside a model."
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: from overnight extracts to event streams"
+  },
+  {
+   "t": "p",
+   "x": "Every decision gap in a hospital traces back to a data gap, and most data gaps trace back to the same habit: the EHR writes messages, the warehouse loads overnight, and the command center, the CDI team and the denials analysts all work on yesterday. The data plane build inverts the pattern where it matters. ADT, ORM and ORU events land through change-data-capture into a governed lakehouse in near real time; claims and remittances join the same contract layer; DICOM metadata joins without moving pixels. The overnight batch keeps running for finance, but decision surfaces stop depending on it."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries a schema contract with a named owner, a freshness SLA and a reconciliation check against the source system's own controls. Terminology binding is enforced at the contract layer — ICD-10, CPT, SNOMED CT, LOINC — so a cohort means the same thing in the quality meeting and the billing meeting. Patient matching runs with the duplicate-suspect queue surfaced rather than hidden, and minimum-necessary access is enforced at retrieval so the analytics lane cannot become a privacy finding."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Event-first clinical ingestion", "ADT, ORM, ORU and SIU flows captured as streams into the lakehouse without touching the EHR's own batch jobs or release calendar, so flow and deterioration surfaces stay current by the minute"],
+    ["Claims and imaging joins", "837 and 835 transactions plus DICOM metadata normalized to the same contract layer as clinical events, so denial root causes and imaging utilization read from one substrate"],
+    ["Terminology-bound semantics", "every code column bound to ICD-10, CPT, SNOMED CT or LOINC so quality measures, cohorts and coding analytics mean the same thing across teams and quarters"],
+    ["Minimum-necessary enforced at retrieval", "PHI access governed at query time with purpose binding visible in the replay store, so an access audit is a report the system produces, not a project"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: scores with clinical and billing tails"
+  },
+  {
+   "t": "p",
+   "x": "Provider operations run on decisions with tails on both sides: a deterioration alert carries a safety duty, a coding suggestion carries billing-integrity duty, an authorization rationale carries medical-necessity duty, a discharge-readiness score moves a bed that another patient needs. The decision layer treats those tails as first-class requirements. Every decision records its inputs, feature values, model versions, policy criteria and reason codes in a replay store that answers safety, audit and appeal questions as queries. When a reviewer asks why, the answer is retrieved, not reconstructed."
+  },
+  {
+   "t": "p",
+   "x": "Champion/challenger governance is built in rather than bolted on: challengers run on shadow traffic with performance tracked in the registry the clinical governance board owns, promotions happen through the gates your safety committee already defines, and rollbacks are rehearsed rather than improvised. The same decision service layer hosts authorization scoring, coding suggestion, deterioration detection and flow prediction, so the governance surface is one registry, one replay store, one set of gates — instead of every algorithm carrying its own audit story."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: file assembly without judgment authority"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work in provider operations — authorization packets, appeal files, CDI query preparation, quality-measure abstraction, audit collation — follows patterns an agentic workforce can absorb without touching judgment authority. Dataq Software's agent platform runs digital workers with explicit role scopes: the tools they may call, the systems they may read, the actions that require a human checkpoint and the budget of work per run. Every run logs its steps and outputs to the same evidence store the human workflow uses, so an agent's file is auditable exactly like an analyst's."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — summarizing chart histories, drafting authorization rationales and appeal letters, pre-assembling quality-measure evidence — the pattern is grounded generation with citation obligations and human authorship of record. Agents never place orders, never sign notes, never change a coding decision, never send payer or patient communication without review; they move the work to the decision point and stop. Capacity is measured in cleared cases per FTE, which is how operations leaders justify these programs upward."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: audit as a query"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory surface of provider operations is dense and it grows in exactly the directions these builds touch: privacy, interoperability, billing integrity, transparency and AI governance. Dataq Software's answer is the evidence layer — the artifacts a surveyor, auditor or payer reviewer will ask for are generated continuously by the systems themselves. The table maps the regimes we build against to the evidence our builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape provider builds — and the evidence layer each one gets",
+   "headers": ["Regime", "What it expects", "What the build produces"],
+   "rows": [
+    ["HIPAA Privacy and Security Rules", "Safeguards, minimum necessary, audit trails, BAAs, breach notification duties", "Access logs joined to decision replay; minimum-necessary enforced at retrieval; breach impact answered from the evidence store"],
+    ["Information blocking and interoperability duties", "Data access and exchange without unreasonable friction, documented exceptions", "FHIR-native access paths with exception registers; exchange and latency telemetry produced as evidence"],
+    ["CMS billing integrity and audit programs", "Coding accuracy, documentation supporting billed services, response to audit requests", "Pre-bill review evidence; coding-to-note traceability; audit response files assembled from the evidence store"],
+    ["Price transparency and No Surprises Act", "Good-faith estimates, shoppable-service disclosure, billing accuracy", "Estimates generated from case data with the calculation trail stored; disclosure telemetry reported continuously"],
+    ["340B program integrity", "Eligibility traceability for covered-entity pharmacy claims", "Eligibility determination records with replay; split-billing reconciliation reported from the platform"],
+    ["FDA CDS guidance, EU AI Act and accreditation surveys", "Decision-support boundaries, human oversight, safety and quality evidence", "Model registry with intended use and evaluation results; oversight ladders; survey evidence generated continuously"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the EHR stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Provider estates are layered over decades, and the fastest way to fail a program is to promise greenfield. Our integration posture is contractual: we define schema contracts with each system owner, land data through the interface engine and governed APIs, write back through the HL7 v2 segments and FHIR resources your change control already governs, and keep every new component independently deployable behind feature flags. The EHR is not replaced; it is supplied with better context and drained of the decision work it was never good at."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment. Ambient scribing, NLP, coding-assist and capacity-forecasting vendors sit behind an abstraction layer with contract tests, so a vendor swap is a configuration change with a migration runbook rather than a re-platform. Where a legacy interface must stay, the offload pattern applies: the existing interface keeps running while decision surfaces read from the governed stream the offload produces. This is unglamorous work and it is the reason the builds above hold up in production instead of in a pilot."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Write-back through clinical interfaces", "notes, coding hints and status updates flow through the HL7 v2 segments and FHIR resources your change process already controls, with no direct database writes anywhere"],
+    ["In-workflow via CDS Hooks and SMART", "decision surfaces render inside the EHR workflow rather than on a second monitor nobody watches, which is the difference between adoption and shelfware"],
+    ["Vendor abstraction with contract tests", "scribing, NLP and coding vendors behind one interface so a vendor swap is configuration with a runbook, not surgery on the workflow"],
+    ["Feature-flagged, independently deployable", "every build ships behind flags with rehearsed rollback, because clinical change boards and safety committees will ask exactly that question"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement. It starts with the two-week diagnostic: one workflow baselined end to end, the leak quantified in your own telemetry, the interfaces and contracts inventoried, and a written feasibility read you can circulate — including the uncomfortable findings. If the delta is real, the build is scoped against the gates your change, safety and revenue-cycle governance processes define; if it is not, you keep the measurement design and the baseline either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Weeks 1-2: diagnostic and baseline", "workflow instrumentation, leak quantification, interface inventory, feasibility read with the delta estimate and the confounders named"],
+    ["Weeks 3-8: first vertical slice", "one lane live behind flags with replay and evidence running from day one — for documentation that is one specialty; for denials, one payer's reason codes"],
+    ["Weeks 9-16: gates, controls, expansion", "clinical governance review landed, remaining lanes added, capacity telemetry reporting to the operations review"],
+    ["Quarterly: challenger reviews", "model and threshold challengers evaluated in the registry, criteria libraries re-tuned, the baseline re-verified against holdouts"]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm, not a parallel one: our engineers work in your repositories or a shared workspace with the same CI, the same security review and the same access model your teams use. Knowledge transfer is part of the gates, not a closing slide — by the expansion phase your engineers are shipping changes to the builds, because the runbooks, contracts and evaluation suites are theirs from week one."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones provider programs are managed on. The targets are the ranges we set in feasibility reads for programs of this shape — commitments we let you hold us to where the metric is clean, hypotheses we test where it is confounded. The measurement column is the part most programs skip and the part that makes the delta defensible in a steering committee."
+  },
+  {
+   "t": "table",
+   "caption": "Provider program metrics — targets and how they are measured",
+   "headers": ["Metric", "Typical program target", "How it is measured"],
+   "rows": [
+    ["Clinician documentation time returned", "60-90 minutes per clinician per day", "EHR time-motion telemetry and post-signature edit rates, per specialty; the published record shows 90 minutes across a 12-hospital system"],
+    ["Prior authorization turnaround", "40-60% reduction, case by case", "Clock telemetry per case from request to decision, by payer and service line"],
+    ["Initial denial rate on targeted lines", "15-30% reduction", "Denial reason taxonomy reported from the revenue-cycle platform, not reconstructed from spreadsheets"],
+    ["First-case on-time starts", "8-15 point improvement", "OR scheduling telemetry instrumented at the source, by service and room"],
+    ["Discharge order-to-depart and boarding", "20-40% reduction in boarding hours", "ADT event telemetry from the command center plane, per unit and shift"],
+    ["30-day readmission rate (HRRP-exposed)", "1-3 point reduction", "Claims and ADT cohort tracking against a locked baseline, by condition and payer contract"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A provider build team is small and senior: a lead engineer who has run decision systems in clinical estates, data engineers who own the interface and contract layer, ML engineers who own scoring and evaluation, a controls engineer who owns the evidence layer, and domain leads who have worked CDI queues, denials desks and command centers in production hospitals. A clinical safety liaison joins for anything touching care delivery, and agentic-workflow specialists join for the file-assembly builds. The team works to your release calendar and your gate vocabulary from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: weekly operations review on the workflow's own telemetry, fortnightly gate submissions to change and safety governance, quarterly challenger reviews, and an incident practice that treats the decision store and the evidence layer as production-critical systems — because by the second quarter, they are. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Provider programs fail in known ways, and most of the failure modes are organizational rather than mathematical. We name them in the feasibility read and design against them explicitly, because a program that cannot survive its second quarter is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Pilot purgatory", "a demo built on extracted data that never integrates — we prevent it by shipping the first vertical slice through your change process, flags and gates included, within the first two months"],
+    ["Alert fatigue reintroduced", "deterioration alerts deployed without precision gates burn nurse trust in weeks — precision at fixed recall is a launch condition, not an optimization"],
+    ["Autonomy creep", "agents and models drifting beyond their certified scope after go-live — scope is enforced in the platform with checkpoints, not in a policy document"],
+    ["Denial whack-a-mole", "appeals won while the root cause persists upstream — root-cause routing to authoring workflows is part of the build, not a phase-two promise"],
+    ["Workflow bypass", "a good tool beside the EHR instead of inside it becomes a parallel chart nobody maintains — in-workflow deployment through CDS Hooks is a design constraint"],
+    ["Evidence debt", "survey and audit preparation consuming a team every quarter — the evidence layer generates artifacts continuously or the build is not done"]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions hospital operations leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    ["Do we have to wait for the EHR upgrade?", "No. The builds consume HL7 v2 streams and FHIR R4 APIs from your current EHR version and write back through interfaces your change process governs. If the upgrade later lands, the contract layer absorbs it as a version bump, not a re-platform."],
+    ["Will ambient documentation pass clinical governance?", "It ships with what governance needs to see: intended use, per-specialty evaluation against golden sets, authorship-of-record rules, post-signature edit telemetry and the replay store. The review becomes a walkthrough of artifacts the system already produces."],
+    ["Who signs the note and who carries the liability?", "The clinician signs, always. Generation proposes the draft from the visit audio and the chart; the human reviews, edits and signs; every override is captured and feeds the template review. The medico-legal record is the signed note, and the system never blurs that line."],
+    ["Can prior auth work without replacing our vendor?", "Yes. The criteria library and evidence assembly layer sit between your EHR and whatever portals or transaction paths you use today. Vendors stay; the manual evidence assembly they currently depend on is what changes."],
+    ["How do you avoid alert fatigue with deterioration models?", "Precision at fixed recall is certified by your governance board before go-live, alert burden is measured per nurse per shift, and thresholds are re-tuned quarterly against outcomes. The model that wins is the one the floor still trusts in month six."],
+    ["What about ransomware and clinical continuity?", "The builds ship with clinical-continuity evidence: manual fallback procedures per surface, recovery objectives tested per release, and segmentation assumptions documented with your security team. Decision surfaces are designed to degrade to the whiteboard, not to fail the floor."],
+    ["How do we measure the revenue-cycle delta credibly?", "Baselines are locked during the diagnostic, denial reason taxonomies are attached at intake rather than reconstructed later, and every metric reports from platform telemetry. The feasibility read names the confounders — payer mix, case-mix shifts — before anyone commits to a target."],
+    ["Who owns the build after you leave?", "Your teams, with the runbooks, contracts, evaluation suites and registry entries transferred as gate conditions during expansion — not as a closing deliverable. Several provider programs run entirely in-house after the second quarter."]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Start with one specialty and one clock: we will instrument it, baseline documentation minutes and denial reasons from your own systems, and return a scoped feasibility read within two weeks. If the delta is not real, you keep the baseline and we say so on the day."
+  }
+ ]
+}

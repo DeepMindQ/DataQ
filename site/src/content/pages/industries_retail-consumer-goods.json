@@ -5,134 +5,787 @@
  "template": "industry_hub",
  "breadcrumb": "Industries > Retail & Consumer Goods",
  "seo_title": "Retail & Consumer Goods | Industry | Dataq Software",
- "meta_description": "Dataq Software programs for Retail & Consumer Goods: priority use cases, regulatory posture and delivery model.",
+ "meta_description": "How Dataq Software engineers retail and consumer goods: the retail signal spine, demand and pricing decisions, privacy-architected personalization, store-edge sensing, traceability and agentic operations — built on GS1, EDI and the POS estate you already run.",
  "blocks": [
   {
    "t": "hero",
-   "x": "Retail margin is decided in thousands of small decisions a day: the price on the tag, the fill rate on the shelf, the offer in the app, the allocation behind the promotion. Winners industrialize those decisions on live data — demand sensing, price elasticity, availability telemetry — and losers discover the loss later in the margin bridge, unwritten."
+   "x": "Across retail and consumer goods, the margin battle is fought in thousands of small decisions a day: the price on the tag, the fill rate behind it, the offer in the loyalty app, the allocation behind the seasonal buy, the deduction a brand accepts or contests. Retailers sell availability and price truth; brands sell demand, shelf presence and provenance. Both sides run on the same sparse infrastructure — GS1 identity, EDI flows, POS scans, loyalty profiles — and both leak margin wherever that infrastructure turns batch, undocumented or contested. This page is the engineering picture of the sector: the systems and standards every program touches, the eight places value drains out, the six deep builds Dataq Software ships against them, and how the work changes once you drop into a specific sub-industry."
   },
   {
    "t": "h2",
-   "x": "The state of play"
+   "x": "How the sector runs day to day"
   },
   {
    "t": "p",
-   "x": "The operating environment keeps tightening: marketplace giants set fulfillment expectations, private label squeezes brand premium, retail media becomes a P&L line of its own, and sustainability regulation (packaging, provenance, CSRD-adjacent reporting) turns supply-chain data into a compliance asset. Store estates themselves become sensor networks — computer vision for shelf truth, footfall analytics, energy optimization."
-  },
-  {
-   "t": "h2",
-   "x": "Pressures that will not wait"
+   "x": "Trace one unit of product from factory gate to basket and the operating picture assembles itself. The brand assigns a GTIN, plans volume in its demand planning system and contracts production across its own plants and co-manufacturers. Purchase orders and advance ship notices travel by EDI into the retailer's distribution centres; the retailer's replenishment engine allocates cases to stores against planograms and space models. The scan at the till is the moment of truth: it is the only event both parties treat as fact. Every morning, EDI 852 files and retailer portals carry that sell-out data back upstream by store, SKU and week, and the invoicing and shipment flows — 810s and 857s — carry the sell-in record that finance settles against."
   },
   {
    "t": "p",
-   "x": "In Retail & Consumer Goods, where the friction concentrates:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Demand signals too slow",
-     "Batch demand models react to last week; promotions, weather and local events shift baskets daily. Markdown decisions and replenishment both inherit the lag."
-    ],
-    [
-     "Personalization without privacy architecture",
-     "Personalization programs stall between marketing ambition and privacy office veto; consent, preference and profiling rules are retrofitted after launch."
-    ],
-    [
-     "Replenishment and allocation by rules of thumb",
-     "Store allocation, DC replenishment and size-curve decisions run on legacy heuristics; phantom availability and overstock coexist across the network."
-    ],
-    [
-     "Shelf truth unknown",
-     "Out-of-stocks, planogram compliance and shrink are discovered at audit; store camera estates sit unanalyzed while OOS costs margin silently."
-    ],
-    [
-     "Retail media measurement contested",
-     "Vendors claim incrementality with last-touch logic; the retailer cannot arbitrate because clean-room measurement does not exist."
-    ],
-    [
-     "Peak-season elasticity unmanaged",
-     "Black Friday peaks break cost models; nobody can state cost per order at P95, and cloud spend spikes are discovered on invoices."
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "How we respond"
+   "x": "Around that spine, the commercial machinery runs twice a year and every day at once. Category reviews reset assortment, space and terms in long negotiations; joint business plans convert them into promotion calendars and retail media commitments. The promotions engine and price file push mechanics to every channel; store teams execute the shelf; field auditors photograph it; image-recognition vendors grade it. Loyalty programs collect basket-level history that personalization models convert into offers, and the retail media network packages the same audiences back to the brands that supply the shelf. The daily texture — order proposals, markdown decisions, availability exceptions, deduction claims — is where cost and revenue are actually decided."
   },
   {
    "t": "p",
-   "x": "Dataq Software builds the retail decision stack: demand and pricing intelligence on streaming data, agentic replenishment and allocation, personalization platforms with privacy architecture, store-edge vision for shelf and safety, supply-chain twins from supplier to shelf, and retail-media analytics that prove incrementality rather than correlation."
+   "x": "Underneath, the quiet machinery defines what is possible. POS streams, loyalty identities and consent state, marketplace feeds and clean-room pipes, EPCIS events for traceability, packaging data for extended producer responsibility, pricing-display rules under consumer protection law, PCI DSS across the payment estate — every build in this sector lands against obligations like these. And most estates grew by acquisition, so the same product can carry two GTINs and the same customer three profiles. The first weeks of any serious program here are plumbing: normalizing identity, contracting the feeds, and proving that one number means one thing to finance, to the buyer and to the model."
   },
   {
    "t": "h2",
-   "x": "Where programs pay first"
+   "x": "Systems, standards and obligations that define the sector"
   },
   {
    "t": "p",
-   "x": "For Retail & Consumer Goods, the order we recommend, priced by expected delta:"
-  },
-  {
-   "t": "bullets",
-   "items": [
-    [
-     "Decide at event speed",
-     "streaming demand sensing and decision hubs for pricing, replenishment and allocation"
-    ],
-    [
-     "Privacy-architected personalization",
-     "consent, clean rooms and profiling governance designed before the first campaign"
-    ],
-    [
-     "Instrument the store",
-     "shelf-truth vision, energy optimization and safety analytics on the existing camera estate"
-    ]
-   ]
-  },
-  {
-   "t": "h2",
-   "x": "The control posture"
+   "x": "Retail and consumer goods is unusual in how much of its integration surface is standardized — and in how much of the rest is not. GS1 identifiers and EDI transaction sets create a shared language; retailer portals and proprietary APIs immediately fragment it again. The table below is the sector estate we most often build against and the obligations that constrain it, named because programs succeed or fail on how honestly this layer is mapped before anything is built."
   },
   {
    "t": "table",
-   "caption": "Regimes that shape delivery here",
+   "caption": "The sector estate we build against — and where each layer strains",
    "headers": [
-    "Regime",
-    "What it expects"
+    "System layer",
+    "What it actually does",
+    "Where it strains"
    ],
    "rows": [
     [
-     "GDPR/CCPA and consent regimes",
-     "profiling, consent and preference management duties"
+     "GS1 identity (GTIN, GLN, GDSN)",
+     "Product and location identifiers, item master synchronization between brand and retailer",
+     "Legacy SKUs carry duplicate GTINs; pack changes break history joins mid-year"
     ],
     [
-     "EU AI Act transparency",
-     "personalization and pricing automation disclosure expectations"
+     "EDI commerce flows (852, 857, 810)",
+     "Sell-out by store and SKU, shipment detail, invoicing between brand and retailer",
+     "Portal downloads and flat files fragment the grain; weeks of lag decide decision quality"
     ],
     [
-     "CSRD/ISSB-adjacent reporting",
-     "scope 3 and packaging data with auditability"
+     "Retailer portals and data-sharing APIs",
+     "Vendor scorecards, item setup, demand and inventory extracts",
+     "Every banner exports differently; harmonization is a per-retailer project nobody owns"
     ],
     [
-     "EUDR (where applicable)",
-     "deforestation due diligence for relevant commodities"
+     "POS and unified commerce estate",
+     "Transaction capture across tills, apps and marketplaces; price and promo execution",
+     "Version sprawl across banners; promotions applied inconsistently between channels"
+    ],
+    [
+     "Loyalty, consent and customer data",
+     "Profiles, baskets, consent state, offer eligibility across channels",
+     "Consent split between systems; profiling rules retrofitted after campaigns launch"
+    ],
+    [
+     "Payments and gift cards (PCI DSS 4.0)",
+     "Card-present and CNP acceptance, stored value, tokenization",
+     "Store estates heterogeneous; compliance evidence assembled by hand each year"
+    ],
+    [
+     "Consumer protection and pricing display",
+     "Unit pricing, dual pricing, promo reference-price rules per jurisdiction",
+     "Dynamic pricing engines outpace policy; nobody can prove every displayed price was lawful"
+    ],
+    [
+     "Product safety, recall and traceability",
+     "EPCIS event chains, batch and lot traceability, recall drill evidence",
+     "Traceability stops at the DC; assembling a recall list takes days it should take minutes"
+    ],
+    [
+     "EPR, packaging and CSRD-adjacent reporting",
+     "Packaging weights, recycled content, Scope 3 supplier data with audit trail",
+     "Supplier data arrives as PDFs; numbers are estimated rather than measured"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where the margin leaks"
+  },
+  {
+   "t": "p",
+   "x": "Ask commercial and operations leaders across the sector where value drains and the answers converge on the same eight places, described in their own words. Dataq Software's diagnostic scores each of them in your own telemetry before recommending a build, because the dominant leak in one estate is often minor in the next."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Sell-out data nobody trusts",
+     "EDI 852 files, portal downloads and syndicated feeds arrive on different grains, calendars and product codes. Trade teams reconcile by spreadsheet, demand planners exclude the mess, and the most valuable signal in the sector — what actually sold, where — is unusable without weeks of manual cleanup every month."
+    ],
+    [
+     "Availability invisible until the review",
+     "Out-of-stocks, phantom inventory and planogram drift are discovered in vendor scorecards after the sales are lost. Store cameras, RFID reads and cycle counts sit unanalyzed while the replenishment engine orders against a stock figure nobody has verified in months."
+    ],
+    [
+     "Promotion economics guessed",
+     "Uplift is measured against naive baselines, so cannibalization, pantry loading and forward buying stay invisible. The promotion calendar is negotiated on volume promises and evaluated on invoiced volume, and nobody can say which events earned their funding."
+    ],
+    [
+     "Retail media measurement contested",
+     "Networks claim attribution with last-touch logic; brands dispute it and re-buy on instinct. Without clean-room measurement against matched controls and holdouts, the fastest-growing margin line in the sector runs on numbers neither side fully believes."
+    ],
+    [
+     "Personalization stalled at consent",
+     "Profiling programs launch on a legal basis defined after the campaign was designed, then stall between marketing ambition and privacy office veto. Consent state lives in one system, offers execute in another, and the evidence trail for a profiling question does not exist."
+    ],
+    [
+     "Forecast error nobody owns",
+     "Batch forecasts react to last month while promotions, weather and local events move baskets daily. Forecast value added is never computed, so every manual override feels productive and error compounds quietly into waste, markdowns and expedites."
+    ],
+    [
+     "Shrink evolving faster than controls",
+     "Self-checkout fraud, returns abuse and organized retail crime adapt weekly while loss prevention reviews quarterly. The controls that exist are static rules, and every tightening taxes honest customers more than it deters the professionals."
+    ],
+    [
+     "Peak economics unmanaged",
+     "Trading peaks break cost and reliability models: nobody can state cost per order at the ninety-fifth percentile, cloud spend spikes surface on invoices, and the fulfillment promises that made the peak possible were never load-tested."
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight leaks: the sector's decisions run on an identity layer — product, customer, location, consent — that was never engineered as one thing. That is why the signal spine is the first build here, and why every later build gets cheaper once it exists."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works the sector"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estates retailers and brands already run — the POS estate, the EDI flows, the portals, the planning systems — rather than proposing a greenfield replacement nobody can fund. The engagement opens with a two-week diagnostic that baselines one workflow end to end in your own telemetry: availability, trade spend, waste, fulfillment cost or personalization conversion. The leak is quantified, the data contracts are inventoried, and a written feasibility read names the confounders before anyone commits to a target."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments hold across every retail and consumer goods build. First, every automated decision carries replay: inputs, feature values, model versions, policy rules and outcomes are stored, so a pricing, allocation or offer question a year later is a query, not an investigation. Second, every generative component is permission-aware and citation-bound, answering from your item master, trade terms and knowledge base, never from the open internet. Third, every build lands with its evidence layer: the artifacts a category review, an audit or a regulator will ask for are generated continuously by the system."
+  },
+  {
+   "t": "p",
+   "x": "The published record behind this posture: a top-3 grocery retailer across 800-plus stores took fresh waste down 28% and out-of-stocks down 31% with day-part demand and ordering agents; a global fashion group lifted sell-through 8 points and hero-SKU availability 24% with assortment intelligence; a national consumer-electronics chain proved retail media incrementality in a clean room that every major brand then adopted for measurement. Where the metric is clean we contract against the delta; where it is confounded we say so in the feasibility read and scope fixed-fee instead."
+  },
+  {
+   "t": "h2",
+   "x": "The deep engineering catalog for retail and consumer goods"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the sector-wide core of the practice. Each build is named for the layer it changes, sized in the diagnostic, and shipped against the standards and obligations mapped above. Sub-industry pages extend this catalog with builds specific to their workflows; nothing here assumes a platform replacement."
+  },
+  {
+   "t": "h3",
+   "x": "1. The retail signal spine — one identity for product, customer and location"
+  },
+  {
+   "t": "p",
+   "x": "The build harmonizes the sector's fragmented commercial data surface into one governed spine. On the product side: GTIN normalization against GS1 and the global data synchronization network, pack-change history joins, and crosswalks between internal SKUs, retailer item numbers and supplier codes, so one product is one row everywhere from the trade console to the forecast. On the commercial side: EDI 852 and 857 ingestion, automated portal extraction, and shipment-to-scan joins that put sell-in and sell-out on one calendar at SKU-store-week grain — the grain every downstream decision actually consumes."
+  },
+  {
+   "t": "p",
+   "x": "Every feed lands under a schema contract with a named owner, a freshness SLA and a reconciliation check against the source's own controls, and the duplicate-suspect queue is surfaced rather than hidden. Downstream consumers — trade analytics, demand models, retail media measurement, finance — read through the contract layer, so a retailer changing an export format fails loudly at the contract instead of silently in a margin bridge. This is unglamorous plumbing, and it is the reason every other build in the catalog can trust its inputs; the diagnostic usually prices it first."
+  },
+  {
+   "t": "h3",
+   "x": "2. Demand, price and availability decisions on live signals"
+  },
+  {
+   "t": "p",
+   "x": "On top of the spine, the decision layer builds SKU-store-day demand sensing from POS, weather, local events and promotion calendars, with forecast value added computed at every stage so manual overrides earn or lose their privileges on evidence. Elasticity models price against pack architecture, channel and local competition; allocation and replenishment proposals respect shelf capacity, lead times and freshness constraints; and markdown ladders carry their simulated outcomes with them when they are published."
+  },
+  {
+   "t": "p",
+   "x": "Every decision is logged with its inputs and reason codes in a replay store: which forecast version, which elasticity estimate, which policy rule produced this order, this price, this markdown. Champion/challenger governance runs challengers on shadow traffic, promotion happens through the gates your commercial governance already defines, and rollbacks are rehearsed rather than improvised. The goal is not a smarter model in isolation; it is a decision surface that finance, buyers and store operations all recognize as theirs, because the numbers it acts on are the numbers they reconcile to."
+  },
+  {
+   "t": "h3",
+   "x": "3. Privacy-architected personalization and clean-room measurement"
+  },
+  {
+   "t": "p",
+   "x": "Personalization in this sector lives or dies on consent architecture, so the build starts there: a consent and preference service every channel reads at execution time, profiling rules documented per purpose, and offer eligibility computed only inside the lawful basis the privacy office signed. The customer data platform is engineered around data-subject rights rather than campaign velocity, so DSAR joins across loyalty, e-commerce and store identities are queries, and the personalization backlog stops being a negotiation between marketing ambition and legal veto."
+  },
+  {
+   "t": "p",
+   "x": "Measurement gets the same engineering. Retail media incrementality is measured in clean rooms against matched controls and holdouts, with exposure logs joined to transaction data under privacy thresholds both parties can audit, and every campaign carries a measurement plan agreed before spend rather than an attribution story offered after it. The output is a number both the retailer and the brand sign — which is what converts contested attribution into contracted spend, and personalization into a margin line rather than a cost center."
+  },
+  {
+   "t": "h3",
+   "x": "4. Store-edge sensing: shelf truth, cold chain and loss"
+  },
+  {
+   "t": "p",
+   "x": "The store estate is already a sensor network waiting to be used. The build runs computer vision on existing camera estates for out-of-stocks, planogram compliance and share of shelf; IoT telemetry on refrigeration for cold-chain breaches with compliance-grade evidence; and POS-correlated vision analytics for self-checkout fraud patterns that static rules never catch. Where the estate lacks sensors, the diagnostic prices the hardware against the loss history before recommending it, because sensing without a measured loss to recover is a cost, not a program."
+  },
+  {
+   "t": "p",
+   "x": "Inference runs at the edge where bandwidth and latency demand it, with model updates shipped like any other software release and detection events routed to the workflows that act: replenishment queues, store task lists, loss-prevention case queues. Detection without routing is a demo; the build ends at the action lane, and the recovery — an order placed, a task completed, a case cleared — is what the operations review reports."
+  },
+  {
+   "t": "h3",
+   "x": "5. Traceability, provenance and the supply network fabric"
+  },
+  {
+   "t": "p",
+   "x": "Recall readiness, provenance claims and CSRD-adjacent reporting all need the same fabric: EPCIS event chains from supplier through distribution centre to store, batch and lot traceability that assembles a recall list in minutes, and supplier data pipelines that turn packaging weights, recycled content and Scope 3 inputs from PDFs into audited feeds. The same fabric serves product safety drills, generating the drill evidence a safety regime expects as a by-product of operation rather than as a quarterly project."
+  },
+  {
+   "t": "p",
+   "x": "Supplier collaboration rides the same infrastructure: CPFR-style sharing of forecasts and inventory with key suppliers, exception-based scorecards instead of monthly slide decks, and provenance evidence attached to the claims marketing wants to make — substantiated before the advertising-standards question arrives, not after. The measurable deltas are recall assembly time, supplier data coverage on regulated commodities, and the share of sustainability figures that are measured rather than estimated."
+  },
+  {
+   "t": "h3",
+   "x": "6. Agentic operations for field, store and service workflows"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work of the sector — order proposal review, deduction matching, audit report assembly, recall list compilation, store task generation, service case preparation — follows patterns a governed agent workforce absorbs without touching judgment authority. Dataq Software's agents run with explicit role scopes: the systems they may read, the tools they may call, the actions that require a human checkpoint, and a budget of work per run. Every run logs its steps, tool calls and outputs to the same evidence store the human workflow uses, so an agent's file is auditable exactly like an analyst's."
+  },
+  {
+   "t": "p",
+   "x": "Grounded assistants extend the pattern to service teams and store associates: answers from the item master, trade terms and knowledge base with citations shown, transactional actions handed to governed APIs or to a human by policy. Capacity is measured in cleared cases per analyst and per store per day — the metric operations leaders can carry to their own boards — and the shadow-AI failure mode is eliminated by the platform's controls rather than by memo."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — the retail and consumer goods decision stack",
+   "lanes": [
+    "Systems of record",
+    "Identity and ingestion",
+    "Decision and retrieval core",
+    "Guarded generation",
+    "Controls and evidence",
+    "Operating surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "pos",
+     "lane": 0,
+     "label": "POS and unified commerce estate"
+    },
+    {
+     "id": "edi",
+     "lane": 0,
+     "label": "EDI and retailer portals"
+    },
+    {
+     "id": "erp",
+     "lane": 0,
+     "label": "ERP, trade spend and GTN ledger"
+    },
+    {
+     "id": "plm",
+     "lane": 0,
+     "label": "PLM and sourcing systems"
+    },
+    {
+     "id": "loy",
+     "lane": 0,
+     "label": "Loyalty and consent store"
+    },
+    {
+     "id": "spine",
+     "lane": 1,
+     "label": "Retail signal spine",
+     "hot": true
+    },
+    {
+     "id": "contracts",
+     "lane": 1,
+     "label": "Schema contracts and freshness SLAs"
+    },
+    {
+     "id": "lake",
+     "lane": 2,
+     "label": "Sector decision lakehouse"
+    },
+    {
+     "id": "fstore",
+     "lane": 2,
+     "label": "Shared feature store"
+    },
+    {
+     "id": "demand",
+     "lane": 2,
+     "label": "Demand and elasticity models"
+    },
+    {
+     "id": "cleanroom",
+     "lane": 2,
+     "label": "Retail media clean room",
+     "hot": true
+    },
+    {
+     "id": "pricing",
+     "lane": 3,
+     "label": "Pricing and promotions decision service"
+    },
+    {
+     "id": "nba",
+     "lane": 3,
+     "label": "Offer and next-best-action service"
+    },
+    {
+     "id": "asst",
+     "lane": 3,
+     "label": "Grounded assistant platform"
+    },
+    {
+     "id": "replay",
+     "lane": 4,
+     "label": "Decision replay and reason codes"
+    },
+    {
+     "id": "consent",
+     "lane": 4,
+     "label": "Consent policy engine"
+    },
+    {
+     "id": "registry",
+     "lane": 4,
+     "label": "Model-risk and AI registry"
+    },
+    {
+     "id": "repl",
+     "lane": 5,
+     "label": "Replenishment and allocation console"
+    },
+    {
+     "id": "trade",
+     "lane": 5,
+     "label": "Trade spend and deduction console"
+    },
+    {
+     "id": "storeapp",
+     "lane": 5,
+     "label": "Store and field associate app"
+    }
+   ],
+   "edges": [
+    {
+     "a": "pos",
+     "b": "spine"
+    },
+    {
+     "a": "edi",
+     "b": "spine"
+    },
+    {
+     "a": "erp",
+     "b": "spine"
+    },
+    {
+     "a": "plm",
+     "b": "spine"
+    },
+    {
+     "a": "loy",
+     "b": "spine"
+    },
+    {
+     "a": "spine",
+     "b": "contracts"
+    },
+    {
+     "a": "contracts",
+     "b": "lake"
+    },
+    {
+     "a": "lake",
+     "b": "fstore"
+    },
+    {
+     "a": "fstore",
+     "b": "demand"
+    },
+    {
+     "a": "demand",
+     "b": "pricing"
+    },
+    {
+     "a": "demand",
+     "b": "repl"
+    },
+    {
+     "a": "fstore",
+     "b": "nba"
+    },
+    {
+     "a": "consent",
+     "b": "nba"
+    },
+    {
+     "a": "nba",
+     "b": "storeapp"
+    },
+    {
+     "a": "lake",
+     "b": "cleanroom"
+    },
+    {
+     "a": "cleanroom",
+     "b": "trade"
+    },
+    {
+     "a": "pricing",
+     "b": "replay"
+    },
+    {
+     "a": "nba",
+     "b": "replay"
+    },
+    {
+     "a": "lake",
+     "b": "asst"
+    },
+    {
+     "a": "asst",
+     "b": "registry"
+    },
+    {
+     "a": "replay",
+     "b": "registry"
+    }
+   ],
+   "note": "Lanes and nodes are named for the systems a retail and consumer goods build actually touches — POS and unified commerce, EDI and retailer portals, the GTN ledger, PLM — not a generic reference stack. The hot nodes are where the program's differentiation concentrates: the retail signal spine that every downstream decision reads from, and the clean room that converts contested retail media attribution into contracted measurement both sides of the shelf accept."
+  },
+  {
+   "t": "h2",
+   "x": "Sub-industry programs: what differs on the ground"
+  },
+  {
+   "t": "p",
+   "x": "The sector spine is shared; the economics above it are not. Each sub-industry strains different layers of the same architecture, which is why we scope by sub-industry rather than by technology. Four short profiles of where the workflows, systems and economics actually differ."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "CPG and brands: the sell side is the business",
+     "A brand owns no shelf; it rents attention and data from retailers. Trade promotion management, gross-to-net integrity, retail execution truth (image recognition, audits, route prioritization) and sell-out signal quality are the economics — the builds concentrate on TPM and GTN systems, EDI 852 harmonization, demand planning measured on WMAPE and forecast value added, and category management analytics that survive joint business plan negotiation."
+    ],
+    [
+     "Fashion and luxury: the buy is the bet",
+     "Seasonal assortments commit capital months ahead of demand; the size-curve problem, fabric and trim lead times, minimum order quantities and the nearshoring-versus-offshore trade-off decide full-price sell-through before a garment exists. Programs concentrate on PLM grids, allocation by door, markdown optimization, RFID item-level truth, clienteling quality and the returns, resale and authentication economics that protect brand equity."
+    ],
+    [
+     "Grocery and convenience: freshness clocks and thin margins",
+     "The shortest decision cycles in the sector: fresh demand by day-part and weather, ordering agents within policy, cold-chain evidence, markdown ladders through to donation, self-checkout shrink and labor scheduling against footfall. Margin is so thin that a single percentage point of waste or availability swings the year — programs concentrate on store-level ordering, shrink analytics and store operations."
+    ],
+    [
+     "Omnichannel retail: promise-keeping at scale",
+     "Distributed order management, ship-from-store and BOPIS turn every store into a node with a delivery promise; inventory accuracy, sourcing logic, pricing consistency, returns disposition and peak-trading readiness decide whether promises are kept at a cost the P&L survives. Programs concentrate on the DOM, the fulfillment network, pricing and promotions engines, and P95 cost per order."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: from overnight files to governed signals"
+  },
+  {
+   "t": "p",
+   "x": "Every decision gap in this sector traces to a data gap, and most data gaps trace to the same habit: systems of record write files, files load into marts overnight, and decisions run on whatever the last load knew. The data plane inverts the pattern where it matters: POS events, EDI flows, loyalty events and store telemetry land through governed ingestion in near real time, while the overnight batch keeps running for finance and reconciliation. Decision surfaces stop depending on yesterday's load; finance keeps its calendar."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries a schema contract with a named owner, a freshness SLA and a reconciliation check against the source system's own controls. Identity is resolved once — product, customer, location, consent — and every downstream consumer reads through the contract layer, so a schema change fails loudly at the contract instead of silently in a model. The monthly reconciliation ritual becomes a monitored query with a named owner and a breach report that pages someone."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Streaming POS and store telemetry",
+     "transaction events, shelf sensors and fridge telemetry ingested with exactly-once semantics so demand sensing, shrink analytics and cold-chain alerts act on minutes-old truth instead of yesterday's load"
+    ],
+    [
+     "EDI and portal harmonization",
+     "852 and 857 flows and every retailer portal extract normalized to one SKU-store-week grain with pack-change joins, so trade and demand teams stop reconciling by spreadsheet"
+    ],
+    [
+     "The identity spine",
+     "product, customer, location and consent identities resolved once with survivorship rules data owners sign, and the duplicate-suspect queue surfaced rather than hidden"
+    ],
+    [
+     "Contract-enforced freshness",
+     "per-feed SLAs with alerting and breach reports, so a late portal load pages an owner instead of silently skewing forecasts and vendor scorecards"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: scoring, replay and commercial reason codes"
+  },
+  {
+   "t": "p",
+   "x": "Retail and consumer goods runs on decisions with commercial tails: a price change carries margin and consumer-protection obligations, an allocation carries availability promises, an offer carries consent and profiling duties. The decision layer treats those tails as first-class requirements. Every decision records its inputs, feature values, model versions, policy rules and reason codes in a replay store that answers audit questions as queries — which elasticity estimate, which forecast version, which consent state produced this price, this order, this offer."
+  },
+  {
+   "t": "p",
+   "x": "Champion/challenger governance is built in rather than bolted on: challengers run on shadow traffic, performance is tracked in the same registry your commercial and model governance owns, promotions happen through defined gates, and rollbacks are rehearsed rather than improvised. The same decision service layer hosts demand sensing, pricing, allocation and offers, so the governance surface is one registry and one replay store instead of four platforms with four audit stories."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: digital workers with run logs"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work of the sector — order proposal review, deduction matching, audit report assembly, recall list compilation, store task generation — follows patterns an agentic workforce absorbs without touching judgment authority. Agents run with explicit role scopes: the systems they may read, the tools they may call, the actions that require a human checkpoint, and a budget of work per run. Every run logs its steps and outputs to the same evidence store the human workflow uses, so an agent's file is auditable exactly like an analyst's."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — summarizing deduction disputes, drafting audit findings, assembling recall documentation — the pattern is grounded generation with citation obligations and a human author of record. Agents never post prices, never commit orders without approval lanes, and never send consumer communications without review; they move the work to the decision point and stop. Capacity is measured in cleared cases per analyst per day, which is how the operations leaders who sponsor these programs justify them upward."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: the obligations are the specification"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory and contractual surface of this sector is broad and growing in exactly the directions these builds touch: privacy, payments, pricing display, product safety, packaging and platform obligations. Dataq Software's answer is the evidence layer — the artifacts a reviewer, auditor or retailer compliance team will ask for are generated continuously by the systems themselves. The table maps the regimes we build against to the evidence our builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape retail and consumer goods builds — and the evidence layer each one gets",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What our build produces"
+   ],
+   "rows": [
+    [
+     "Privacy and profiling (GDPR class)",
+     "Lawful basis per purpose, consent enforcement, profiling transparency, DSAR timelines",
+     "Consent policy engine read at execution; decision replay for profiling questions; DSAR joins across identities as queries"
     ],
     [
      "PCI DSS 4.0",
-     "payment estate compliance across store and e-commerce"
+     "Payment estate compliance across store, CNP and stored value",
+     "Tokenization and segmentation patterns; compliance telemetry and evidence packs generated per assessment cycle"
     ],
     [
-     "Price-transparency/consumer-protection rules",
-     "dynamic pricing constraints by jurisdiction"
+     "Consumer protection and pricing display",
+     "Unit pricing, reference-price and dual-pricing rules per jurisdiction",
+     "Pricing decision replay with jurisdiction rules; displayed-price evidence generated for every automated change"
+    ],
+    [
+     "Product safety and recall regimes",
+     "Traceability to lot, recall list assembly, drill evidence",
+     "EPCIS-backed traceability fabric; recall lists assembled in minutes with drill artifacts generated per exercise"
+    ],
+    [
+     "EPR, packaging and CSRD-adjacent duties",
+     "Packaging data, recycled content, Scope 3 supplier evidence with auditability",
+     "Supplier data pipelines replacing PDFs; measured figures with lineage instead of estimated spreadsheets"
+    ],
+    [
+     "Marketplace VAT and advertising standards",
+     "Deemed-supplier VAT handling; substantiated claims before publication",
+     "Marketplace tax flags computed in the order flow; claim substantiation attached to campaign and listing assets"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the estate stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Retail estates are layered over decades of banners, acquisitions and vendor churn, and the fastest way to fail a program is to promise greenfield. Our integration posture is contractual: schema contracts with each system owner, data landed through CDC and governed APIs, write-back through the interfaces your change process already controls, and every new component independently deployable behind feature flags. POS platforms are not replaced; they are supplied with better context and drained of the decision work they were never good at."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment. Image recognition, demand planning, TPM, CDP and identity vendors sit behind abstraction layers with contract tests, so a vendor swap is a configuration change with a migration runbook rather than a re-platform. Where a legacy component must stay, the offload pattern applies: the old system keeps running, while the decision surfaces read from the stream the offload produces. This is unglamorous work and it is the reason the builds hold up in production instead of in a pilot."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Write-back through your interfaces",
+     "price changes, order proposals and task updates flow through the POS, planning and workflow interfaces your change process already governs"
+    ],
+    [
+     "Vendor abstraction with contract tests",
+     "image recognition, demand planning and identity vendors behind one interface, so a swap is configuration rather than surgery"
+    ],
+    [
+     "Legacy offload pattern",
+     "batch systems preserved, decisions fed from CDC streams, no change freeze negotiated to ship a model"
+    ],
+    [
+     "Feature-flagged and independently deployable",
+     "every build ships behind flags with rehearsed rollback, because the change advisory board will ask"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement. It starts with the two-week diagnostic: one workflow baselined end to end, the leak quantified in your own telemetry, the data contracts inventoried, and a written feasibility read you can circulate — including the uncomfortable findings. If the delta is real, the build is scoped against the gates your change and governance processes define; if it is not, you keep the measurement design and the baseline either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "workflow instrumentation, leak quantification, contract inventory, feasibility read with the delta estimate and the confounders named"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane of the workflow live behind flags with replay and evidence running from day one — for availability that is one category or banner; for trade spend one retailer account"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "governance documentation landed, measurement controls live, remaining lanes added, capacity telemetry reporting to the operations review"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "model and policy challengers evaluated in the registry, baselines re-verified against controls, targets reset against the measured curve"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm, not a parallel one: our engineers work in your repositories or in a shared workspace with the same CI, the same security review and the same access model your teams use. Knowledge transfer is part of the gates, not a closing slide — by the expansion phase your engineers are shipping changes to the builds, because the runbooks, contracts and evaluation suites are theirs from week one."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones retail and consumer goods programs are managed on. Targets are the ranges we set in feasibility reads for programs of this shape — commitments we let you hold us to where the metric is clean, hypotheses we test where it is confounded. The measurement column is the part most programs skip and the part that makes the delta defensible in a steering committee."
+  },
+  {
+   "t": "table",
+   "caption": "Sector program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "On-shelf availability",
+     "Out-of-stocks down 20-35% on tracked categories",
+     "Vision and cycle-count telemetry reconciled to POS; the published grocery record shows 31%"
+    ],
+    [
+     "Fresh waste",
+     "20-30% reduction on fresh categories",
+     "Waste ledgers against day-part demand baselines; the published record shows 28%"
+    ],
+    [
+     "Full-price sell-through",
+     "5-10 point lift on seasonal assortments",
+     "Sell-through by style and door against pre-season baselines; the fashion record shows 8 points"
+    ],
+    [
+     "Forecast error (WMAPE)",
+     "15-30% reduction with forecast value added tracked",
+     "Back-testing against locked baselines; override contribution reported per planner"
+    ],
+    [
+     "Trade promotion ROI",
+     "10-25% improvement in funded events earning their spend",
+     "Causal lift against matched non-promoted controls, reconciled to the GTN ledger"
+    ],
+    [
+     "Peak cost per order (P95)",
+     "20-40% reduction without promise-keeping decay",
+     "Unit-cost telemetry by order path across the peak window, reported weekly"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A sector build team is small and senior: a lead engineer who has run decision systems in high-volume retail, data engineers who own the signal spine and contract layer, ML engineers who own demand, pricing and evaluation, a controls engineer who owns the evidence layer, and a domain lead who has run trade calendars, category reviews or store operations in a real estate. Agentic-workflow specialists join for the backlog builds. The team works to your trading calendar and gate vocabulary from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: weekly operations review on the workflow's own telemetry, fortnightly gate submissions to change and governance, quarterly challenger reviews timed to your trading calendar, and an incident practice that treats the decision store and evidence layer as production-critical systems — because by the second quarter they are. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs like these fail in known ways, and most of the failure modes are organizational rather than mathematical. We name them in the feasibility read and design against them explicitly, because a program that cannot survive its second quarter is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "a demo built on extracted data that never integrates — prevented by shipping the first vertical slice through your change process, flags and gates included, in the first two months"
+    ],
+    [
+     "Baseline ambiguity",
+     "the delta argued after the fact because nobody locked the baseline — baselines are locked during the diagnostic, with controls or holdouts where experiments are cheap"
+    ],
+    [
+     "Identity debt",
+     "duplicate GTINs and customer profiles quietly corrupting every downstream metric — the signal spine is a gate, not an optimization"
+    ],
+    [
+     "Metric gaming",
+     "availability improving on paper while the shelf stays empty — metrics are reconciled across two independent sources before they are reported"
+    ],
+    [
+     "Consent retrofit",
+     "personalization shipped before the lawful basis was engineered — consent architecture is designed before the first campaign, not after the first complaint"
+    ],
+    [
+     "Evidence debt",
+     "audit preparation consuming a team every quarter because artifacts were manual — the evidence layer generates them continuously or the build is not done"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions retail and consumer goods leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do we need to replace our POS or planning platform first?",
+     "No. Every build consumes streams from the systems you run and writes back through your interfaces. Platform replacement is a separate decade-long decision; the decision layer works against the estate as it is."
+    ],
+    [
+     "Our retailer data arrives through portals. Is that good enough?",
+     "It can be engineered well enough. Portal extracts are automated, normalized to one grain and placed under freshness contracts, so portal lag stops deciding forecast and trade quality."
+    ],
+    [
+     "How do you prove retail media incrementality?",
+     "Clean-room measurement against matched controls and holdouts, with exposure-to-transaction joins under privacy thresholds both parties audit. The published record includes a chain whose measurement every major brand adopted."
+    ],
+    [
+     "What happens to our planners and field teams?",
+     "The builds move evidence assembly and proposal drafting to agents and put judgment back in human hands with better context. Capacity is redeployed to the exceptions; programs are justified in cleared cases per analyst, not headcount removed."
+    ],
+    [
+     "Can you work with our co-manufacturers and suppliers?",
+     "Yes. Supplier collaboration rides the same fabric — forecast and inventory sharing on exception-based scorecards, provenance data as audited feeds, and contracts that make recall assembly a minutes-long query."
+    ],
+    [
+     "How do you handle consent across loyalty, app and store?",
+     "One consent and preference service read at execution time by every channel, profiling rules documented per purpose, and decision replay so any profiling question is a query rather than an investigation."
+    ],
+    [
+     "What is the smallest program worth running?",
+     "One workflow, one baseline, one vertical slice — availability and trade spend are the two most common starters because their clocks and ledgers are already instrumented. If the diagnostic cannot find the delta, we say so and stop."
+    ],
+    [
+     "Who owns the build after you leave?",
+     "Your teams, with the runbooks, contracts, evaluation suites and governance artifacts transferred as gate conditions during expansion — not as a closing deliverable. Several programs run entirely in-house after the second quarter."
     ]
    ]
   },
   {
    "t": "cta",
-   "x": "Bring programs in Retail & Consumer Goods to a 45-minute briefing with the practice lead — your metric, our method, and an honest read on feasibility."
+   "x": "Put one workflow on the table — availability, trade spend, waste or fulfillment cost — and we will baseline it in two weeks, price the delta in your own telemetry, and give you a feasibility read that names the confounders. If the delta is not real, we say so and stop."
   }
  ],
- "words": 469,
+ "words": 5550,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Retail & Consumer Goods",

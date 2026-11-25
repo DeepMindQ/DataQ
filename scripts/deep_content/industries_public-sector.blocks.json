@@ -1,0 +1,769 @@
+{
+ "file": "industries_public-sector",
+ "meta_description": "How Dataq Software engineers the public sector: casework document intelligence, interagency data exchange, citizen identity and consent, records and FOI automation, accountable AI oversight and zero-trust estates — across benefits, tax, permitting, justice, cities and defense.",
+ "blocks": [
+  {
+   "t": "hero",
+   "x": "Across the public sector, value is decided in casework: the benefit claim determined in days instead of months, the permit that clears without three resubmissions, the fraud ring stopped before payments leave, the record released inside the statutory clock with nothing exempt missed. The machinery underneath is shared — identity, data exchange, notification, payment rails — and the accountability is total: procurement law, records obligations, accessibility mandates, privacy regimes and AI transparency duties bind at once, policed by audit offices that read evidence rather than intentions. This page is the engineering picture of that machinery: the systems agencies actually run, the exact points where service delivery leaks, and the deep builds Dataq Software ships across national government, public safety and justice, cities, and defense."
+  },
+  {
+   "t": "h2",
+   "x": "How government service delivery actually runs"
+  },
+  {
+   "t": "p",
+   "x": "Walk a single citizen claim through the machine and the sector's operating picture assembles itself. A resident files a benefit claim through the national portal; the identity layer checks the session against the eID scheme, the case management system opens a file, document intelligence classifies the payslips and tenancy proofs, and the eligibility engine applies the statutory rules with an adjudication officer signing the determination. Every step writes to the case record, every determination carries a replay trail, the payment instruction lands on the treasury gateway, and the notification service tells the citizen what was decided and what can be appealed."
+  },
+  {
+   "t": "p",
+   "x": "Around that spine sit the other casework machines. Permits and licensing run inspection scheduling against field workforce calendars. Tax administration scores self-assessments for fraud and error and routes cases to investigators with assembled evidence packs. Registries for land, vehicles and businesses answer exchange queries from other agencies under once-only rules. Local government mirrors the national patterns at different scale — environmental health, social care, planning — while 311-class contact centres, web forms and counters absorb the traffic the digital channels never quite capture."
+  },
+  {
+   "t": "p",
+   "x": "The quieter machinery decides whether any of it holds. A change-data-capture stream from a COBOL-era benefits core, a schema contract on a registry feed, a consent record that travels with the data, a retention rule that deletes on schedule and can prove it — none of it appears in a strategy deck, and all of it decides whether the next legislative change ships in weeks or quarters. Ministries run change calendars around budgets and parliamentary sessions, audit offices sample case files years after the decision, and information regimes demand disclosure inside statutory clocks. The engineering has to survive all three rhythms at once."
+  },
+  {
+   "t": "h2",
+   "x": "Systems, standards and obligations that define the sector"
+  },
+  {
+   "t": "p",
+   "x": "Programs here succeed or fail on how honestly the estate and the obligation set are mapped before anything is built. Dataq Software starts every engagement by naming the systems, their owners, their change cadences and the regimes that govern them. The table below is the sector landscape we most often build against — not a generic stack diagram."
+  },
+  {
+   "t": "table",
+   "caption": "The public-sector estate and obligation set we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
+    [
+     "Case and benefits management systems",
+     "Claim intake, evidence attachment, eligibility rules, adjudication and payment instructions",
+     "Rules buried in decades-old configuration; evidence handled as unstructured attachments nobody can query"
+    ],
+    [
+     "Tax and revenue administration platforms",
+     "Registration, return scoring, audit case selection, debt and collection workflows",
+     "Fraud and error models score narrow features; investigator capacity fixed while case queues grow"
+    ],
+    [
+     "Registries and master data (land, vehicles, business, persons)",
+     "Authoritative records other agencies query under once-only principles",
+     "Ownership fragmented; duplicate identities; exchange queries answered by overnight files that drift"
+    ],
+    [
+     "Identity and eID schemes",
+     "Citizen authentication, attribute attestation, legal-level assurance for transactions",
+     "Coverage gaps for vulnerable groups; attribute freshness unverifiable downstream; assisted-digital paths thin"
+    ],
+    [
+     "Interagency exchange layers (X-Road-class)",
+     "Signed, logged service calls between agencies with consent metadata and lineage",
+     "Adopted as middleware, not as governance; legacy agencies bypass it with file drops"
+    ],
+    [
+     "Permitting and licensing workflows",
+     "Application capture, statutory clocks, inspections, fees and licence issue",
+     "Paper-shaped evidence; inspection scheduling manual; resubmission loops unmeasured and unowned"
+    ],
+    [
+     "Records, FOI and disclosure regimes",
+     "Retention schedules, statutory release clocks, exemption handling, archival transfer",
+     "Redaction manual; clock breaches invisible until a complaint or tribunal surfaces them"
+    ],
+    [
+     "Accessibility and digital service standards",
+     "WCAG 2.2 AA conformance, service manuals, assisted-digital support duties",
+     "Conformance asserted at launch and never re-tested; channels drift apart release by release"
+    ],
+    [
+     "Legacy cores and datacentres",
+     "COBOL and mainframe posting engines for benefits, tax and licensing casework",
+     "Shrinking talent pools; annual change freezes; integration stuck on nightly files only"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Where public-sector value leaks"
+  },
+  {
+   "t": "p",
+   "x": "Ask delivery leaders where the service leaks and the answers converge on the same places, described in their own words. Dataq Software's diagnostic scores each of them in your estate before recommending a build, because the leak that dominates one ministry is often minor in the next."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Casework decided on incomplete files",
+     "Adjudicators determine eligibility on whatever evidence made it into the case record. Missing documents surface at review or appeal, weeks after the statutory clock started, and every appeal reopens the file. The fix is evidence assembly at intake — classification, extraction and completeness checks against the statutory evidence list — with officers deciding rather than collecting."
+    ],
+    [
+     "Fraud and error found after payment",
+     "Payment-first architectures recover through debt collection, which is slow, expensive and politically fraught. Cross-source scoring at claim time — registries, payroll records, previous claims, exchange queries — moves detection upstream. The published record in tax administration shows fraud and error capture up 26% when investigators receive assembled case packs instead of raw alert rows."
+    ],
+    [
+     "Citizens re-keying the same facts",
+     "Every agency without a working exchange layer re-asks what another agency already holds. The once-only principle fails in practice not because middleware is missing but because master data is fragmented: one citizen, three identifiers, conflicting addresses. The leak compounds as support calls, appeals and complaints — all of it measurable in channel telemetry."
+    ],
+    [
+     "Statutory clocks breached quietly",
+     "Permit, FOI, appeal and review clocks run against documents nobody can see end to end. Breaches surface as complaints, ombudsman cases or parliamentary questions, long after the fix would have been cheap. Clock telemetry per case, reported from the workflow rather than reconstructed from spreadsheets, is the difference between managing deadlines and explaining misses."
+    ],
+    [
+     "AI pilots without accountability rails",
+     "Assistive models enter casework through pilots that skip the transparency notices, human-oversight gates and conformity documentation the AI regimes now expect. When legal services or the audit office asks who decided and why, the pilot has no answer, and the programme stalls at exactly the moment it started working."
+    ],
+    [
+     "Legacy cores as single points of failure",
+     "Benefits and tax posting engines run on platforms with shrinking talent pools and annual change freezes. Failure risk compounds annually; integration stays pinned to nightly files. The engineering answer is an offload pattern — keep the core posting, stream its events, and move decision-making off the platform — not a bet-the-estate rewrite."
+    ],
+    [
+     "Records you cannot prove or release",
+     "Retention schedules exist on paper while the underlying stores grow unmanaged; FOI requests trigger manual hunts across case and email estates; redaction is hand-done in documents that then circulate untracked. When the archive cannot answer what was decided, when and under what authority, transparency and tribunal defence weaken together."
+    ],
+    [
+     "Channels that diverge from the case record",
+     "The portal says one thing, the 311 agent another, the counter a third, because each channel holds its own fragment of the case. Accessibility conformance drifts per channel too. A shared case view and a shared assistant grounded in the case record cost less than four channel-specific rebuilds that diverge again anyway."
+    ]
+   ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across the eight leaks: decisions are made without their context, and context is a data engineering problem before it is a policy problem. That is why the first build in most public-sector programmes is the citizen decision lakehouse and the exchange layer, not a smarter model."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works the public sector"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate you already run, under the procurement and governance instruments you already have. We do not arrive with a platform that replaces your casework core, or a strategy deck that ends where the hard part begins. The engagement model is engineering-first: a two-week diagnostic that baselines one workflow end to end against your own telemetry, then a scoped build that ships behind your change board, your security accreditation and your records schedules."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver. First, every automated decision carries replay: inputs, rule versions, model versions and outcomes are stored so that an appeal, a judicial review question or an audit office query twelve months later is a query, not an investigation. Second, every generative component is permission-aware and citation-bound — assistants answer from your policy library and the citizen's own records, never from the open internet, and every answer shows its sources. Third, every build lands with its evidence layer: the artifacts a transparency notice, a conformity assessment or an audit office will ask for are generated by the system, not assembled by a team the week before the review."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same logic. Where the metric is clean — case cycle time, fraud and error capture, fault-to-fix, cost per resolved case — we contract against the delta with the baseline locked during the diagnostic. Where the metric is political or confounded, we say so in the feasibility read and scope fixed-fee instead. The published record behind this approach includes a national digital-government agency that cut case processing time 52% with document intelligence under accountable-AI gates, a national tax administration that raised fraud and error capture 26% with cross-source analytics, and a metropolitan city government that brought fault-to-fix down 63% while cutting street-light energy 22%."
+  },
+  {
+   "t": "h2",
+   "x": "The deep engineering catalog for the public sector"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our public-sector practice, named for the workflows it changes. Each build is sized in the diagnostic, shipped with the controls its regime expects, and integrated against the estate you already run. None of them require replacing a core; all of them require taking data contracts and evidence obligations seriously."
+  },
+  {
+   "t": "h3",
+   "x": "1. The citizen decision lakehouse and master data"
+  },
+  {
+   "t": "p",
+   "x": "Underneath every eligibility, fraud and service decision sits the same missing asset: one governed view of the citizen and the case. The build is a lakehouse fed by change-data-capture from benefits, tax, registry and licensing systems, with schema contracts and freshness SLAs on every feed; a citizen master index that survives its known duplicates with survivorship rules your registration owners sign; and consent metadata that travels with the data so every consumer can answer what it may use and why."
+  },
+  {
+   "t": "p",
+   "x": "The same lakehouse powers the eligibility engine, the fraud scoring service and the caseworker console, which is why it is priced first in most diagnostics: every other build leans on it. Lineage is queryable — an auditor traces a determination back to source records, rule version and officer decision in one path. Where agencies share the platform, each keeps its own entitlement boundaries; the shared layer carries keys, relationships and lineage, not copies of each other's case files."
+  },
+  {
+   "t": "h3",
+   "x": "2. Document intelligence for casework with human gates"
+  },
+  {
+   "t": "p",
+   "x": "Casework is still a document business: payslips, tenancy agreements, inspection reports, medical certificates, company filings, customs declarations. The build replaces the manual choke with a document-intelligence pipeline: classification, field extraction with confidence scores, completeness checks against the statutory evidence list, and validation calls to registries where facts can be confirmed. Low-risk completions flow straight to adjudication; medium-risk cases land in a reviewed lane with everything pre-assembled; contested cases route to named officers with the evidence collated."
+  },
+  {
+   "t": "p",
+   "x": "The human gate is a design principle, not a concession. Officers see extracted fields, confidence scores and source images side by side, override anything, and every override feeds the threshold review. Transparency notices are generated per decision in citizen-readable language. The published record shows a national digital-government agency cutting case processing time 52% with this build under accountable-AI gates — the delta came from file assembly, not from automating the determination itself."
+  },
+  {
+   "t": "h3",
+   "x": "3. The interagency exchange layer and once-only reuse"
+  },
+  {
+   "t": "p",
+   "x": "The build is an X-Road-class exchange layer adopted as governance, not middleware: signed, logged service interfaces between agencies, with consent metadata, purpose bindings and lineage on every query. Data products are published with contracts — schema, freshness, owner, lawful basis — so a registry change fails loudly at the contract instead of silently in a downstream model. Exchange queries are answered from the authoritative source, never from copied extracts that drift between agencies."
+  },
+  {
+   "t": "p",
+   "x": "Once-only reuse then becomes measurable: the share of citizen facts reused rather than re-keyed, tracked per service and reported as a service-standard metric. The layer carries the security model too — mutual authentication between agencies, per-service authorisation, and a register of who queried what under which legal gateway, exportable as audit evidence. Where a legacy agency cannot join directly, its file drops are wrapped with the same contract and lineage so nothing bypasses governance."
+  },
+  {
+   "t": "h3",
+   "x": "4. Identity, consent and verifiable credentials"
+  },
+  {
+   "t": "p",
+   "x": "The identity build connects services to the national eID scheme where one exists and fills the gaps where it does not: assisted-digital identity proofing for citizens the scheme underserves, step-up authentication tied to transaction risk, and attribute attestation so downstream services receive verified facts — entitlements, addresses, statuses — rather than raw identifiers every consumer re-checks independently."
+  },
+  {
+   "t": "p",
+   "x": "Consent is engineered as data: purpose-bound grants, revocation that propagates to every consumer through the exchange layer, and a consent ledger that answers what was agreed, when and under which notice. Verifiable credentials extend the pattern to proofs that outlive the session — a licence, an entitlement, a discount status — issued signed, held by the citizen, verifiable offline by any relying service. The accessibility duty applies here as everywhere: identity journeys are tested with assistive technologies, not asserted in a conformance statement."
+  },
+  {
+   "t": "h3",
+   "x": "5. Records, FOI and disclosure automation"
+  },
+  {
+   "t": "p",
+   "x": "The build treats records as a governed plane rather than an archive afterthought: retention schedules attached to record classes at capture, legal holds that override deletion, and deletion that executes on schedule with proof. On top sits a disclosure workbench: request intake with statutory clocks, targeted retrieval across case and email estates, automated first-pass redaction with human review, and a release log that shows what went out, to whom and under which exemption."
+  },
+  {
+   "t": "p",
+   "x": "The compliance value compounds. Clock telemetry per request, exemption rationale captured at the moment of decision, and an archive that answers what was decided, when and under what authority years later. For casework-heavy agencies the same evidence store serves appeals, tribunal preparation and audit-office sampling, which is why records teams become the build's strongest allies rather than its bystanders."
+  },
+  {
+   "t": "h3",
+   "x": "6. Accountable AI oversight for public-sector models"
+  },
+  {
+   "t": "p",
+   "x": "Every agency now has models in or near casework; few have the oversight machinery the regimes expect. The build is an oversight platform: a model inventory covering eligibility scoring, fraud detection and assistants; transparency notices generated per automated decision in citizen-readable language; human-oversight gates positioned where the law requires them; and evaluation harnesses with golden case sets, drift monitoring and bias testing reported continuously rather than annually."
+  },
+  {
+   "t": "p",
+   "x": "Conformity evidence ships with the build: data lineage, evaluation results, guardrail inventories and the decision replay store, so a conformity assessment or an AI incident review is a walkthrough of artifacts the system already produces. The design goal is a sector where AI adoption survives scrutiny because the accountability is structural — decisions explainable, oversight real, evidence continuous — not because a document was written for the review."
+  },
+  {
+   "t": "arch",
+   "title": "Reference architecture — the cross-agency decision and service stack",
+   "lanes": [
+    "Agency estates",
+    "Exchange and ingest",
+    "Lakehouse and master data",
+    "Decision services",
+    "Oversight and evidence",
+    "Service surfaces"
+   ],
+   "nodes": [
+    {
+     "id": "ben",
+     "lane": 0,
+     "label": "Benefits case core"
+    },
+    {
+     "id": "tax",
+     "lane": 0,
+     "label": "Tax administration systems"
+    },
+    {
+     "id": "reg",
+     "lane": 0,
+     "label": "Registries and master data"
+    },
+    {
+     "id": "perm",
+     "lane": 0,
+     "label": "Permitting and licensing"
+    },
+    {
+     "id": "exg",
+     "lane": 1,
+     "label": "Exchange layer (X-Road-class)",
+     "hot": true
+    },
+    {
+     "id": "cdc",
+     "lane": 1,
+     "label": "Change-data-capture streams"
+    },
+    {
+     "id": "cons",
+     "lane": 1,
+     "label": "Consent and purpose ledger"
+    },
+    {
+     "id": "lake",
+     "lane": 2,
+     "label": "Citizen decision lakehouse",
+     "hot": true
+    },
+    {
+     "id": "cmi",
+     "lane": 2,
+     "label": "Citizen master index"
+    },
+    {
+     "id": "elig",
+     "lane": 3,
+     "label": "Eligibility engine"
+    },
+    {
+     "id": "frd",
+     "lane": 3,
+     "label": "Fraud and error scoring"
+    },
+    {
+     "id": "doc",
+     "lane": 3,
+     "label": "Document intelligence service"
+    },
+    {
+     "id": "asst",
+     "lane": 3,
+     "label": "Grounded citizen assistant"
+    },
+    {
+     "id": "replay",
+     "lane": 4,
+     "label": "Decision replay store"
+    },
+    {
+     "id": "ai",
+     "lane": 4,
+     "label": "AI oversight registry"
+    },
+    {
+     "id": "rec",
+     "lane": 4,
+     "label": "Records and retention governor"
+    },
+    {
+     "id": "port",
+     "lane": 5,
+     "label": "Citizen portal and 311 intake"
+    },
+    {
+     "id": "cw",
+     "lane": 5,
+     "label": "Caseworker console"
+    }
+   ],
+   "edges": [
+    {
+     "a": "ben",
+     "b": "cdc"
+    },
+    {
+     "a": "tax",
+     "b": "cdc"
+    },
+    {
+     "a": "reg",
+     "b": "exg"
+    },
+    {
+     "a": "perm",
+     "b": "exg"
+    },
+    {
+     "a": "exg",
+     "b": "lake"
+    },
+    {
+     "a": "cdc",
+     "b": "lake"
+    },
+    {
+     "a": "cons",
+     "b": "lake"
+    },
+    {
+     "a": "lake",
+     "b": "cmi"
+    },
+    {
+     "a": "lake",
+     "b": "elig"
+    },
+    {
+     "a": "lake",
+     "b": "frd"
+    },
+    {
+     "a": "lake",
+     "b": "doc"
+    },
+    {
+     "a": "lake",
+     "b": "asst"
+    },
+    {
+     "a": "elig",
+     "b": "replay"
+    },
+    {
+     "a": "frd",
+     "b": "replay"
+    },
+    {
+     "a": "doc",
+     "b": "replay"
+    },
+    {
+     "a": "replay",
+     "b": "ai"
+    },
+    {
+     "a": "rec",
+     "b": "lake"
+    },
+    {
+     "a": "lake",
+     "b": "port"
+    },
+    {
+     "a": "replay",
+     "b": "cw"
+    },
+    {
+     "a": "ai",
+     "b": "cw"
+    }
+   ],
+   "note": "Lanes and nodes are named for the systems a cross-agency public-sector build actually touches — case cores, registries, an exchange layer, an oversight plane — not a generic reference stack. The hot nodes are where differentiation concentrates: the exchange layer that makes once-only real, and the lakehouse that gives every decision surface one governed view. Records and retention sit beside the decision services deliberately; deletion, holds and disclosure are part of the data plane here, not an archive afterthought."
+  },
+  {
+   "t": "h2",
+   "x": "Sub-industry programs: what differs on the ground"
+  },
+  {
+   "t": "p",
+   "x": "The sector pattern is constant; the workflows are not. Four sub-industries carry most of the delivery load, and each changes what the builds look like in practice — different systems of record, different clocks, different oversight. The bullets below are the honest differences we plan for in the diagnostic."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "National government and digital services",
+     "Casework runs on benefits, permits, tax and licensing platforms with statutory clocks and legislative change calendars; the shared rails are identity, exchange and notification; the oversight is parliamentary, audit-office and AI-conformity scrutiny arriving together. Programs here optimise adjudication throughput, once-only reuse and fraud-and-error capture while keeping every determination replayable for appeals that land years later — and because legacy cores dominate, integration is streams and offload, never a rewrite promise."
+    ],
+    [
+     "Public safety and justice",
+     "Time compresses to minutes at dispatch and stretches to years in the courtroom, and the same incident must survive both without losing its record. CAD, records management, body-worn camera and court case management systems hand evidence over with chain of custody intact; disclosure duties and law-enforcement data rules gate every join between agencies. Programs optimise evidence assembly, scheduling and interagency handover under those gates — minutes matter operationally, but provenance matters legally, and the second decides whether the first survives review."
+    ],
+    [
+     "Smart cities and infrastructure",
+     "The estate is physical and vendor-fragmented: traffic signals, streetlights, air-quality nodes, waste sensors, fleet telematics and utility streetworks, each arriving with its own cloud and its own contract. Programs normalise telemetry into an open context layer, orchestrate condition-based maintenance across asset classes, and optimise corridors and energy — with public-space privacy governance as the gate no pilot may skip. Procurement is a design input here, not an afterthought: data contracts written into tenders decide whether the city owns its telemetry or rents it."
+    ],
+    [
+     "Defense and national security",
+     "Assurance is the workflow: accreditation evidence, POA&M discipline and continuous authorization gate every change before it ships; mission data fusion must respect sensitivity tiers and cross-domain rules; logistics readiness decides whether platforms deploy or sit in maintenance. Programs industrialise the evidence layer, the fusion pipeline and the DevSecOps path so change stops being the risk — and post-quantum migration becomes an inventory problem managed on a schedule rather than a threat discussed in briefings."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The data plane: from nightly files to governed streams"
+  },
+  {
+   "t": "p",
+   "x": "Most government estates still move data by nightly file: systems of record export, scheduled jobs load, decisions run on whatever the last load knew. The data plane build inverts the pattern where it matters. Case events, registry changes, exchange queries and payment postings land through change-data-capture into a governed lakehouse in near real time; the overnight batch keeps running for finance and statutory reporting, but decision surfaces stop depending on it. Where a core cannot stream, the offload pattern applies — the batch keeps posting while the decision surfaces read the stream the offload produces."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries a schema contract with a named owner, a freshness SLA and a reconciliation check against the source system's own controls. The citizen master index applies survivorship rules agreed with registration owners, consent metadata travels with every record, and every downstream consumer — eligibility features, fraud scoring, assistants, statutory extracts — reads through the contract layer so a schema change fails loudly at the contract instead of silently inside a determination. Retention sits in the same plane: schedules execute as pipelines with deletion proofs, not as policy documents."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Streaming ingestion from case cores",
+     "change-data-capture from benefits, tax and licensing systems into the lakehouse with exactly-once semantics, keeping decision surfaces current without touching batch finance or statutory reporting"
+    ],
+    [
+     "Contract-enforced exchange",
+     "X-Road-class interfaces with signed payloads, purpose bindings and lineage, so an agency query is auditable end to end and a schema change fails at the contract rather than downstream"
+    ],
+    [
+     "Consent carried as data",
+     "purpose-bound grants and revocations that propagate to every consumer, with the consent ledger queryable by DSAR tooling and by the transparency notices generated per decision"
+    ],
+    [
+     "Retention executed, not documented",
+     "schedules attached to record classes at capture, legal holds overriding deletion, and deletion proofs generated on execution so the archive answers for what no longer exists"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The decision layer: eligibility, scoring and reason codes"
+  },
+  {
+   "t": "p",
+   "x": "Public-sector decisions carry legal tails the private sector rarely sees: a benefit determination must be explainable to the citizen, the appeal tribunal and the audit office; a fraud referral must justify why this claim and not that one; an automated flag must name its human overseer. The decision layer we build treats those tails as first-class requirements. Every determination records inputs, rule versions, model versions, evidence references and reason codes in a replay store that answers an appeal as a query rather than an investigation."
+  },
+  {
+   "t": "p",
+   "x": "Reason codes are generated in citizen language as well as officer language, because the transparency notice is part of the decision, not an appendix. Champion/challenger governance runs through the AI oversight registry: challengers operate on shadow traffic, drift and bias metrics report continuously, and promotions pass the gates the accountable-AI framework defines. Eligibility, fraud and document services share the same decision infrastructure, so the audit story is one registry and one replay store rather than one per pilot."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: digital workers in casework"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work in government — evidence collation, FOI retrieval, file assembly, form re-keying, archive searches — follows patterns an agentic workforce absorbs without touching determination authority. Dataq Software's agent platform runs digital workers with explicit role scopes: the systems they may read, the tools they may call, the actions that require an officer checkpoint, and a budget of work per run. Every run logs its steps and outputs to the same evidence store the human workflow uses, so an agent's file is auditable exactly like an officer's."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — summarizing case histories, drafting FOI redaction proposals, assembling appeal bundles — the pattern is grounded generation with citation obligations and a human author of record. Agents never determine entitlement, never send citizen communications without review, and never alter a legal gateway decision; they move the work to the decision point and stop. Capacity is measured in cleared cases per officer per week, which is how operations leaders justify the programme upward."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: audit as a query"
+  },
+  {
+   "t": "p",
+   "x": "The accountability surface of the public sector is the densest of any sector we serve, and it is growing in exactly the directions these builds touch: AI transparency, data protection for sensitive categories, records integrity and accessibility. Dataq Software's answer is the evidence layer — the artifacts a reviewer will ask for are generated continuously by the systems themselves. The table maps the regimes we build against to the evidence our builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape public-sector builds — and the evidence layer each one gets",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What our build produces"
+   ],
+   "rows": [
+    [
+     "Records and archives law",
+     "Retention schedules, integrity, transfer to archival custody",
+     "Retention governor with scheduled deletion proofs, legal holds and transfer manifests the archive accepts"
+    ],
+    [
+     "FOI and transparency regimes",
+     "Statutory clocks, exemption discipline, publication duties",
+     "Clock telemetry per request, redaction audit trails and a release log showing what went out under which exemption"
+    ],
+    [
+     "GDPR and national privacy law",
+     "Lawful basis, minimisation, DSAR timelines, profiling transparency",
+     "Consent ledger, purpose bindings, DSAR joins across agency entities, decision replay for profiling questions"
+    ],
+    [
+     "EU AI Act class regimes",
+     "Transparency, human oversight, conformity for high-risk uses",
+     "Notices generated per automated decision, oversight gate logs and conformity evidence packs per model"
+    ],
+    [
+     "Accessibility (WCAG 2.2, EN 301 549, Section 508)",
+     "Conformance across channels and assisted digital",
+     "Assistive-technology suites in CI, conformance statements per release and defect telemetry per channel"
+    ],
+    [
+     "Security accreditation (FedRAMP-class and national schemes)",
+     "Authorisation, continuous monitoring, control inheritance",
+     "Landing zones with inherited controls, evidence generated per release and accreditation package updates on change"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the estate stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Government estates are layered over decades under procurement law, and the fastest way to fail a programme is to promise greenfield. Our integration posture is contractual: schema contracts with each system owner, data landed through CDC and the exchange layer, write-back through the case management interfaces your change board already controls, and every new component independently deployable behind feature flags. Cores are not replaced; they are supplied with better context and drained of the decision work they were never good at."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment. Document intelligence, identity proofing, notification and payment providers sit behind an abstraction layer with contract tests, so a vendor swap is configuration with a migration runbook rather than a re-procurement. Where a mainframe core must stay, the offload pattern applies. Accessibility is an integration requirement too: assisted-digital paths, channel parity and assistive-technology testing are built into the delivery pipeline rather than asserted in a conformance statement written once at launch."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Write-back through your case interfaces",
+     "determinations, statuses and notifications flow through the case management and workflow interfaces your change board already governs, with transactional integrity intact"
+    ],
+    [
+     "Vendor abstraction with contract tests",
+     "document, identity, notification and payment providers behind one interface, so a re-competition is configuration with a runbook rather than surgery"
+    ],
+    [
+     "Mainframe offload pattern",
+     "batch windows preserved, decisions fed from CDC streams, no change freeze negotiated to ship a model or a release"
+    ],
+    [
+     "Accessibility built into the pipeline",
+     "WCAG 2.2 AA checks in CI, assistive-technology test passes per release, and assisted-digital journeys treated as production surfaces rather than documentation"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement, and it fits inside the procurement instruments you already run — a competitive call-off, an existing framework lot, or a directly scoped study where the rules allow. It starts with the two-week diagnostic: one workflow baselined end to end, the leak quantified in your own telemetry, the data contracts inventoried, and a written feasibility read you can circulate, including the uncomfortable findings."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "workflow instrumentation, leak quantification, contract inventory, feasibility read with the delta estimate and the confounders named against your statutory clocks"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane of the workflow live behind flags with replay and evidence running from day one — for benefits that is the low-risk auto-completion lane; for FOI it is one request family"
+    ],
+    [
+     "Weeks 9-16: gates, evidence, expansion",
+     "accountable-AI documentation landed, accessibility conformance tested per release, remaining lanes added, capacity telemetry reporting to the operations review"
+    ],
+    [
+     "Quarterly: oversight reviews",
+     "challenger models evaluated in the registry, thresholds re-tuned, the baseline re-verified against controls, and the evidence pack refreshed for the audit office"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm, not a parallel one: our engineers work in your repositories or a shared workspace with the same CI, the same security review and the same access model your teams use. Knowledge transfer is a gate condition, not a closing slide — by the expansion phase your engineers ship changes to the builds, because the runbooks, contracts and evaluation suites are theirs from week one."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the budget line"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones public-sector programmes are managed on. The targets are the ranges we set in feasibility reads for programmes of this shape — commitments we let you hold us to where the metric is clean, hypotheses we test where it is confounded. The measurement column is the part most programmes skip and the part that makes the delta defensible in a steering committee and to an audit office."
+  },
+  {
+   "t": "table",
+   "caption": "Public-sector programme metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Case processing cycle time",
+     "40-60% reduction on the instrumented workflow",
+     "Clock telemetry per case; the published record shows 52% at a national digital-government agency"
+    ],
+    [
+     "Fraud and error capture",
+     "+15 to +30% at fixed investigator capacity",
+     "Detection against a locked baseline; the published record shows +26% in tax administration"
+    ],
+    [
+     "Once-only fact reuse",
+     "60-80% of verified facts reused at claim time",
+     "Exchange telemetry per service, tracked in the service-standard dashboard"
+    ],
+    [
+     "Statutory clock compliance",
+     "Permit and FOI breaches at or near zero",
+     "Clock tracking per case from the workflow, reported weekly to operations"
+    ],
+    [
+     "Fault-to-fix on urban assets",
+     "50-70% reduction across instrumented fleets",
+     "Asset platform telemetry; the published record shows 63%"
+    ],
+    [
+     "Cost per resolved case",
+     "15-30% reduction without service decay",
+     "Unit-cost telemetry across channels and casework lanes"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A public-sector build team is small and senior: a lead engineer who has run decision systems inside government estates, data engineers who own the CDC, exchange and contract layer, ML engineers who own scoring and evaluation, a controls engineer who owns the evidence layer, and a domain lead who has cleared casework backlogs and FOI queues in production. Accessibility specialists and security-accreditation engineers join where the workflow demands them. The team works to your release calendar, your change board vocabulary and your audit cycle from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: weekly operations review on the workflow's own telemetry, fortnightly gate submissions to the change board and the AI oversight registry, quarterly challenger reviews, and an incident practice that treats the decision store and the evidence layer as production-critical systems — because by the second quarter, the audit office and the ombudsman both will. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programmes like these fail in known ways, and most failure modes are organisational rather than mathematical. We name them in the feasibility read and design against them explicitly, because a programme that cannot survive its second quarter — or its first audit — is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "a demo built on extracted data that never integrates — we prevent it by shipping the first vertical slice through your change process, flags and gates included, in the first two months"
+    ],
+    [
+     "Accreditation stall",
+     "the build stuck in security review because evidence was an afterthought — control mapping and package updates land with the build, not after it"
+    ],
+    [
+     "Exchange theatre",
+     "an interagency layer adopted as middleware while agencies keep file-dropping around it — adoption metrics and bypass detection are part of the build, not a hope"
+    ],
+    [
+     "Deflection gaming",
+     "assistant containment rising while citizen satisfaction falls — containment is scored with post-contact outcomes, and escalation context quality is tracked as a first-class metric"
+    ],
+    [
+     "Legislative freeze collisions",
+     "release plans built without the change calendar — the diagnostic maps budget rounds and parliamentary sessions into the delivery plan before scoping"
+    ],
+    [
+     "Evidence debt",
+     "audit preparation consuming a team every quarter because artifacts were manual — the evidence layer generates them continuously or the build is not done"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions public-sector leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do we have to replace our casework core first?",
+     "No. None of the builds require a core replacement. They consume streams from the core and write back through your case interfaces. The core stays; it stops being the bottleneck for decisions."
+    ],
+    [
+     "How does accountable AI documentation get produced?",
+     "With the build, not after it: model inventory entries, evaluation results against golden case sets, transparency notice templates, oversight gate logs and the decision replay store ship together, so conformity review becomes a walkthrough of artifacts the system already produces."
+    ],
+    [
+     "What happens to our caseworkers?",
+     "The builds move evidence collection and file assembly to agents and put judgment back in officer hands with better context. Capacity is redeployed to the complex cases the backlog neglects; programmes are justified in cleared cases per officer, not headcount removed."
+    ],
+    [
+     "Can this run under our sovereignty rules?",
+     "Yes. The stack is cloud-agnostic and has been delivered under EU, UK and US regimes; residency, key management and accreditation inheritance are build requirements rather than assumptions, and the exchange layer keeps data at source by default."
+    ],
+    [
+     "How do you measure success without gaming?",
+     "Baselines are locked during the diagnostic, controls or holdouts are used where experiments are legitimate, and every metric reports from system telemetry rather than a status deck. The feasibility read names the confounders before anyone commits to a target."
+    ],
+    [
+     "What is the smallest programme worth running?",
+     "One workflow, one baseline, one vertical slice — benefits adjudication and FOI are the two most common starters because their clocks and queues are already instrumented. If the diagnostic cannot find the delta, we say so and stop."
+    ],
+    [
+     "How do we keep AI inside the legal gates?",
+     "Agents and models run inside the governed platform with role scopes, tool allow-lists, human checkpoints and full run logs; law-enforcement and sensitive-category uses carry stricter gates by configuration. The shadow-AI failure mode is what happens without those controls; the programme exists to remove the conditions that create it."
+    ],
+    [
+     "Who owns the build after you leave?",
+     "Your teams, with the runbooks, contracts, evaluation suites and registry entries transferred as gate conditions during expansion — not as a closing deliverable. Several programmes run entirely in-house after the second quarter."
+    ]
+   ]
+  },
+  {
+   "t": "cta",
+   "x": "Public-sector programmes at Dataq Software start with a two-week diagnostic: one casework line, your own telemetry, a measured baseline and an honest feasibility read — including the findings that argue against the build. If the delta is real, the scope follows your procurement instruments; if it is not, you keep the measurement design either way."
+  }
+ ]
+}

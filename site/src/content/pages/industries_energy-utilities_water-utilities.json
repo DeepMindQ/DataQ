@@ -5,267 +5,758 @@
  "template": "subindustry_page",
  "breadcrumb": "Industries > Energy & Utilities > Water, Waste & City Utilities",
  "seo_title": "Water, Waste & City Utilities | Dataq Software",
- "meta_description": "Water and waste utilities run essential services on aging assets and thin margins: leak detection, network telemetry, customer analytics and regulatory.",
+ "meta_description": "How Dataq Software engineers water and waste utilities: district metering and non-revenue water analytics, burst prediction and pressure management, water quality compliance evidence, pump-scheduling energy optimization, meter-to-bill integrity and capital renewal prioritization — built against your SCADA, GIS, LIMS and billing estate.",
  "blocks": [
   {
    "t": "hero",
-   "x": "Water and waste utilities run essential services on aging assets and thin margins: leak detection, network telemetry, customer analytics and regulatory evidence. Non-revenue water alone often pays for the entire instrumented program. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
+   "x": "A water utility sells one product and loses a measurable share of it before a customer ever sees it. Non-revenue water — leakage, metering error, unauthorized use — absorbs a fifth of production in many networks, and recovering part of that gap pays for the entire instrumented program. Around the loss sit the other duties: keep chlorine residual inside limits at the tap, keep overflow events inside permit, keep pumping inside an energy budget, keep the billing chain honest, and keep renewing a buried asset base whose condition nobody can see. This page is the engineering picture of that operation: the systems that run it, the exact points where water, energy and compliance leak, and the six deep builds Dataq Software ships to close them."
   },
   {
    "t": "h2",
-   "x": "The operating context"
+   "x": "How the network runs day to day"
   },
   {
    "t": "p",
-   "x": "The work concentrates in leak detection, network monitoring, field operations, with demand management close behind. Volume grows on every path; the decision layer has not kept up. That gap is measurable, and it is the work."
+   "x": "A water utility moves one product through a network it can only partly see. Treated water leaves the works under SCADA control — dosing, filtration, clear-water storage, high-lift pumping — and fans out through trunk mains, service reservoirs and district metered areas toward the tap. The utility's picture of that journey is deliberately sparse: flow and pressure at DMA inlets, a handful of quality probes, acoustic loggers that wake when a leak sounds, and smart meters wherever AMI has reached. Everything else is inferred from balances. When a district's minimum night flow rises, the water is going somewhere; the question that decides the margin is how quickly that somewhere gets a name, an estimate and a work order."
+  },
+  {
+   "t": "p",
+   "x": "The operating day is a sequence of balances and exceptions. Night teams review district flows against minimum-night-flow baselines and step-test zones by closing valves; day crews clear leak and repair work orders ranked by whatever evidence reached them; the control room answers alarms from treatment SCADA and reservoir telemetry. Water quality sampling runs to a regulatory calendar — residual chlorine at defined points, turbidity, pH, bacteriology — with laboratory results landing in LIMS days after the water has been drunk. Customer contacts cluster on billing surprises and supply interruptions, and each one is a chance to reconcile meter-to-bill chains that drift quietly. The sewer estate adds its own exceptions: level monitors rising toward surcharge, spill events against permits, jetting crews dispatched by complaint."
+  },
+  {
+   "t": "p",
+   "x": "Underneath, the machinery is an asset register wearing telemetry. GIS holds the mains, valves, hydrants and service connections; the CMMS holds repair histories that would tell a burst-prediction model everything it needs if anyone could parse them; hydraulic models of the EPANET class simulate zones the calibration data only roughly describes. Capital planning runs on a renewal cycle negotiated between pipe age, break anecdotes and tolerance for street disruption. Regulatory reporting assembles itself from sampling schedules and telemetry exports that nobody owns end to end. The result is a business with abundant measurements and few decisions connected to them — which is precisely the gap an engineering program can close."
   },
   {
    "t": "h2",
-   "x": "Where this capability earns its keep"
+   "x": "The estate underneath: systems this work touches"
   },
   {
    "t": "p",
-   "x": "Water, Waste & City Utilities: named from the floor, not from a framework,"
+   "x": "Programs here succeed or fail on how honestly the estate is described before anything is built. The layers below are the ones a water utility actually runs — named as the network team would name them — together with the point where each one strains under real throughput, real weather and real regulatory scrutiny."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "The water utility estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
     [
-     "Non-revenue water invisible",
-     "Leakage unlocated; district metering sparse."
+     "Treatment SCADA and works control",
+     "Filtration, dosing, clear-water storage and high-lift pumping at each works",
+     "Vendor-stovepiped point databases; alarm sets tuned decades ago; works data quarantined from the network view"
     ],
     [
-     "Network telemetry patchy",
-     "Pressure/quality points insufficient; events found by complaints."
+     "District metering and network sensors",
+     "DMA inlet flow, zone pressure, acoustic leak loggers, reservoir levels",
+     "Coverage sparse and uneven; logger batteries and comms fail silently; step-test results live in spreadsheets"
     ],
     [
-     "OT estates exposed",
-     "SCADA legacy with convergence; NIS2 duties arrive."
+     "AMI and metering estate",
+     "Smart meters, consumption intervals, read cycles, meter-swap work orders",
+     "Head-end data lands in billing silos; interval analytics disconnected from network decisions and revenue work"
     ],
     [
-     "Field operations reactive",
-     "Work orders by phone; routing inefficient."
+     "GIS and asset register",
+     "Mains, valves, hydrants, service connections, materials, install dates",
+     "Attribute quality uneven across merged utilities; the register is the model backbone and nobody owns its accuracy"
     ],
     [
-     "Customer analytics basic",
-     "Consumption/disaggregation crude; demand programs weak."
+     "CMMS and work management",
+     "Leak repairs, bursts, main breaks, flushing, valve exercising, sewer jetting",
+     "Free-text histories defeat analytics; crews leave the site before the repair is verified against flow"
     ],
     [
-     "Billing accuracy",
-     "Meter-to-bill chains error-prone; disputes cost."
+     "Water quality and LIMS",
+     "Sampling schedules, laboratory assays, residual chlorine, turbidity, bacteriology",
+     "Results arrive days later; online probes and lab data live in separate worlds; exceedance reporting is manual"
+    ],
+    [
+     "Hydraulic models",
+     "EPANET-class zone models for pressure, quality and contingency studies",
+     "Calibrated once for a study and stale since; model and telemetry never reconcile automatically"
+    ],
+    [
+     "Billing and customer systems",
+     "Meter-to-bill pipeline, tariffs, hardship schemes, contact center",
+     "Consumption anomalies surface only as complaints; estimated reads compound quietly across cycles"
+    ],
+    [
+     "Sewer and environmental telemetry",
+     "CSO and SSO level monitors, spill records, discharge permits, river sensors",
+     "Event classification is manual; permit evidence assembled by hand whenever the regulator asks"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "What gets built first"
+   "x": "Where the margin leaks"
   },
   {
    "t": "p",
-   "x": "Capability in Water, Waste & City Utilities is not abstract: each domain lands as a named build on a named workflow. The patterns below are what we deploy there."
+   "x": "Ask operations leaders where the money leaks in water and the answers converge on the same eight places, described in their own words. Dataq Software scores each of them in your estate during the diagnostic, because the leak that dominates one network is rarely the one that dominates the next."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "District metering fabric",
-     "flow/pressure/quality sensing with governance"
+     "Non-revenue water unbudgeted and unlocated",
+     "Leakage runs as a percentage nobody can decompose: district balances are stale, step tests are episodic, and acoustic surveys chase noise. Night-flow data exists but reaches analysts in spreadsheets days late. The result is reactive main-break response instead of targeted leak reduction, and a regulatory leakage number defended with assumptions rather than evidence. Recovering even part of the gap funds the whole program."
     ],
     [
-     "Network analytics",
-     "telemetry into leak/break prediction"
+     "Pressure zones managed by complaint",
+     "Pressure management is the cheapest leakage and main-break lever in the network, yet pressure-reducing valve setpoints are tuned by history rather than by live hydraulics. Transients go unrecorded; the zones that surge every night keep breaking quietly. Without pressure analytics the utility pays twice — in water lost through smaller fractures and in assets aged faster than the renewal plan assumes."
     ],
     [
-     "OT security",
-     "62443-aligned zones and monitoring"
+     "Burst prediction without break history",
+     "Every main break is a data point recorded as a free-text work order. Pipe material, install decade, soil, prior failures and pressure exposure never meet in one model, so renewal priorities are argued from age alone. The mains that will fail this winter are knowable; the register that would say so is buried in narratives nobody has time to parse."
     ],
     [
-     "Work-order orchestration",
-     "routing/scheduling with skills and assets"
+     "Quality caught by probe, proven by paper",
+     "Online chlorine and turbidity probes stream continuously while the regulatory case is built from laboratory samples that arrive days later. Excursions are caught, but the evidence chain — probe reading to corrective action to laboratory confirmation — is assembled by hand for every audit. Compliance becomes a quarterly scramble instead of a property of the operating system."
     ],
     [
-     "M2B integrity",
-     "meter-to-bill pipelines with anomaly detection"
+     "Energy burned by pumps on yesterday's schedule",
+     "Pumping is typically the largest controllable cost in the business, and pump schedules follow habits set years ago against tariffs that have changed since. Affinity curves, reservoir bands and time-of-use prices would let the optimizer shift megalitres into cheap hours; instead stations run flat and the energy line grows. The physics is known; the decision layer is missing."
+    ],
+    [
+     "Meter-to-bill chains that drift in silence",
+     "Stuck meters, mis-sized meters, estimated reads and tariff misclassifications surface only when customers complain. Consumption analytics that would flag the vacancy, the leak-through and the dead meter before the bill exists are absent. Revenue leakage here is individually small and collectively material, and every disputed bill costs more to resolve than to prevent."
+    ],
+    [
+     "Sewer spills discovered by the public",
+     "Overflow and sewer-level monitoring is sparse, so surcharge and spill events are discovered by residents or by the regulator rather than by telemetry. Event evidence for permits is reconstructed after the fact, from memory and rain charts. Each undocumented event is a compliance exposure, and each reactive callout is a crew spent on a problem telemetry could have ranked."
+    ],
+    [
+     "Capital renewal argued from pipe age",
+     "The capital program is negotiated between install dates, break anecdotes and disruption tolerance. Because the asset register and the repair history never meet, the true risk ranking — likelihood of failure multiplied by consequence — is computed nowhere. Money lands on the mains that shout loudest politically, and the quiet arterial main with the worst records waits."
     ]
    ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight leaks: the network is instrumented in fragments and the decisions are made from balances nobody trusts. Every leak is a data-contract problem before it is a modeling problem — which is why Dataq Software's first build in water is almost always the network data fabric, not a smarter leak model."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works water and waste utilities"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate you already run. We do not arrive with a re-platformed GIS, a replacement billing system or a smart-city storyboard; we arrive with connectors into your SCADA historian, your meter head-ends, your LIMS and your CMMS, and a respect for the change process that governs a network crews depend on. The first deliverable is a working slice against a real workflow — one district metered area, one pressure zone, one works — not a strategy deck about the utility of the future."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver in this sub-industry. First, hydraulics is respected: every model ships bounded by its calibrated envelope, validated against telemetry before anyone trusts it, with the district balance audit-ready at all times. Second, evidence is a by-product: quality exceedances, spill events, leakage returns and pump-schedule decisions are recorded by the build itself, so the regulator's questions become queries rather than projects. Third, field reality keeps its vote: recommendations land in the control room and the crew's schedule with context attached, and no algorithm closes a valve."
+  },
+  {
+   "t": "p",
+   "x": "The commercial model follows the same logic: where the metric is clean, we price against the delta measured in your own telemetry. The published record includes a national water utility whose non-revenue water fell twenty-one percent through the district-metering-to-decision-loop build described below. We would rather show that number in your own baseline than promise it in a slide — and if the diagnostic cannot find the delta in two weeks, we say so and stop, leaving you the measurement design either way."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for water and waste utilities"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our water practice. Each build is a named engineering service with defined data flows, decision services, guardrails and integration points — deployed against your estate in weeks, and designed so the evidence the regulator wants falls out of running the system."
+  },
+  {
+   "t": "h3",
+   "x": "1. Non-revenue water analytics — DMA balances to leak work orders"
+  },
+  {
+   "t": "p",
+   "x": "The build reconstructs the water balance district by district: DMA inlet metering validated at source, nightly minimum-night-flow baselines computed and maintained, step-test records structured, and supply-pipe leakage separated from meter under-registration and unauthorized use. Estimates carry confidence intervals so the leakage number can be defended to the regulator and to finance. Leak candidates are ranked by run rate multiplied by likely duration — the economics of water saved against cost to save — and pushed into the crew schedule with location hypotheses and pressure context, not as a dashboard the team must interpret."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: nightly district exception reports, leak-candidate worklists sequenced by economics, step-test plans that concentrate measurement where the balance is weakest, and repair verification that closes the loop when the flow comes down. Guardrails: no district enters scoring until its metering has passed a data-quality gate; every balance shows its inputs so an auditor can replay it. Integration points: DMA loggers, AMI intervals, billing consumption, CMMS repair records. The published record for this pattern shows non-revenue water down twenty-one percent at a national utility — measured, not modeled."
+  },
+  {
+   "t": "h3",
+   "x": "2. Pressure management and burst prediction"
+  },
+  {
+   "t": "p",
+   "x": "The build joins live zone pressure, pressure-reducing valve positions and telemetry to calibrated hydraulic models, so the network team sees surge events, night-time excess pressure and dead-end stagnation as they happen rather than as break statistics afterwards. PRV setpoints are optimized against the twin objectives of leakage and burst frequency, with transients flagged from high-frequency pressure logging where installed. Zones without adequate sensing are named as measurement gaps and sequenced into the instrumentation plan rather than quietly excluded from the program."
+  },
+  {
+   "t": "p",
+   "x": "The burst-prediction layer consumes what the estate already knows: main-break history parsed from CMMS free text, pipe material and vintage from GIS, soil and weather context, and live pressure exposure from the zones above. The output is a ranked failure forecast per main — likelihood times consequence — feeding both the renewal plan and the winter readiness plan. Guardrails: predictions never move a valve; crews and engineers approve; every forecast carries its evidence so a planner can interrogate it. Integration points: pressure sensors, PRV controllers, GIS, CMMS, the hydraulic model library."
+  },
+  {
+   "t": "h3",
+   "x": "3. Water quality and environmental compliance — probe to permit"
+  },
+  {
+   "t": "p",
+   "x": "The build fuses online probes — chlorine residual, turbidity, pH, conductivity — with the laboratory sampling calendar into one quality picture per zone. Exceedances trigger the corrective-action workflow automatically: flush orders, re-probing, laboratory confirmation and the notification evidence the regulator expects. Sampling schedules are tracked as deadlines rather than documents, so a missed sample is an alert, not a discovery. For the sewer estate, level telemetry classifies surcharge and spill events against permit conditions and assembles the event dossier — timestamps, volumes, rainfall context, actions taken — while the event is fresh."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: exceedance worklists with response steps attached, sample-schedule compliance telemetry, spill-event dossiers generated from telemetry and crew records, and trend screens that catch slow deterioration before it becomes an excursion. Guardrails: probe readings used for compliance always reconcile to laboratory truth on a defined cadence; customer notifications route through your communications team; no dossier leaves without its provenance chain. Integration points: treatment SCADA, LIMS, sewer level monitors, rainfall feeds, permit registers. The compliance story becomes a query — which is what makes audits short."
+  },
+  {
+   "t": "h3",
+   "x": "4. Pump scheduling and energy optimization"
+  },
+  {
+   "t": "p",
+   "x": "The build models each pump station from its own data: affinity curves fitted from telemetry, efficiency maps per duty point, wear signatures that shift the curves over time. The optimizer schedules high-lift and booster pumping against reservoir bands, demand forecasts, time-of-use tariffs and demand-response obligations, shifting megalitres into cheap hours without breaching level or pressure constraints. Works processes — backwash, dosing, filtration cycles — join the same energy account so the whole of the kilowatt-hours per megalitre is visible and owned."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: day-ahead pump schedules with tariff and reservoir context, real-time re-optimization when demand or availability moves, station efficiency reports that name the pumps drifting off their curves, and energy-per-megalitre baselined by zone and works. Guardrails: schedules are proposals until the control room accepts them; hard constraints — reservoir floors, pressure minima, standby duty — are architectural; every schedule stores the constraints active at the time for replay. Integration points: SCADA, tariff and settlement feeds, demand forecasts, works historians. The delta lands on the energy line and stays there."
+  },
+  {
+   "t": "h3",
+   "x": "5. Meter-to-bill integrity and AMI analytics"
+  },
+  {
+   "t": "p",
+   "x": "The build closes the gap between the meter and the invoice. AMI intervals, read cycles and billing events land in one pipeline with anomaly detection that flags the stuck meter, the reversal, the consumption collapse that means a leak-through or a vacancy, and the mis-sized meter running at the bottom of its range. Cases route to the right resolution path — swap order, bill adjustment, customer contact — with the evidence pre-assembled, so revenue leakage is found before the complaint rather than by it."
+  },
+  {
+   "t": "p",
+   "x": "The same intervals power the customer-facing work: consumption analytics for conservation and drought messaging, tariff simulation for affordability reviews, and vulnerability-aware treatment for hardship programs so enforcement never lands on the households least able to respond. Guardrails: meter data carries its privacy contract end to end; estimates are labelled as estimates in every downstream surface; billing corrections reconcile to the ledger before they post. Integration points: AMI head-end, billing, contact center, vulnerability registers. The measurable deltas are billing accuracy, dispute volume and revenue protected per year."
+  },
+  {
+   "t": "h3",
+   "x": "6. Asset renewal and capital prioritization"
+  },
+  {
+   "t": "p",
+   "x": "The build turns the asset register and the repair history into a renewal case that survives a finance committee. Mains, valves, hydrants and service connections are scored on likelihood of failure — from break history, material, vintage, soil and pressure exposure — and on consequence of failure, from criticality, customers affected and repair cost. The output is a ranked, risked renewal program with deferrable and non-deferrable classes, so capital lands where the network risk actually is, and every deferral decision carries its evidence."
+  },
+  {
+   "t": "p",
+   "x": "Decision services: renewal rankings by risked consequence, intervention-versus-replacement economics per main cohort, disruption-scheduled programs that cluster works by street, and post-renewal verification that shows the break curve bending. Guardrails: scoring weights are owned and signed by engineering; the register's data gaps are published rather than papered over; every ranking is replayable for the regulator who funds it. Integration points: GIS, CMMS, billing exposure, hydraulic criticality from the models. The delta is capital efficiency — the same budget, measurably lower network risk — reported from the system, not the slide deck."
   },
   {
    "t": "arch",
-   "title": "Reference architecture — Water, Waste & City Utilities",
+   "title": "Reference architecture — the water and waste decision stack",
    "lanes": [
-    "Robots & sensors",
-    "Real-time layer",
-    "Perception stack",
-    "Orchestration",
-    "Safety",
-    "Floor"
+    "Field and plant estate",
+    "Telemetry and historians",
+    "Network data fabric",
+    "Decision services",
+    "Compliance and evidence",
+    "Operations surfaces"
    ],
    "nodes": [
     {
-     "id": "rs0",
+     "id": "dmas",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "DMA meters and acoustic loggers"
     },
     {
-     "id": "rs1",
+     "id": "ami",
      "lane": 0,
-     "label": "AMR / robot fleets",
-     "hot": false
+     "label": "AMI meter head-end"
     },
     {
-     "id": "rtl2",
+     "id": "scada",
+     "lane": 0,
+     "label": "Treatment SCADA"
+    },
+    {
+     "id": "sewer",
+     "lane": 0,
+     "label": "Sewer level monitors"
+    },
+    {
+     "id": "hist",
      "lane": 1,
-     "label": "Sub-second control bus",
+     "label": "Telemetry historian",
      "hot": true
     },
     {
-     "id": "rtl3",
+     "id": "bus",
      "lane": 1,
-     "label": "Time sync",
-     "hot": false
+     "label": "Governed stream bus"
     },
     {
-     "id": "pst4",
+     "id": "contracts",
+     "lane": 1,
+     "label": "Schema contracts and freshness SLAs"
+    },
+    {
+     "id": "lake",
      "lane": 2,
-     "label": "Vision inspection",
-     "hot": false
-    },
-    {
-     "id": "pst5",
-     "lane": 2,
-     "label": "Localization",
-     "hot": false
-    },
-    {
-     "id": "orc6",
-     "lane": 3,
-     "label": "Task orchestration",
+     "label": "Network operations lakehouse",
      "hot": true
     },
     {
-     "id": "orc7",
+     "id": "spine",
+     "lane": 2,
+     "label": "GIS and asset-register spine"
+    },
+    {
+     "id": "qgates",
+     "lane": 2,
+     "label": "Data-quality gates"
+    },
+    {
+     "id": "nrw",
      "lane": 3,
-     "label": "Fleet scheduler",
-     "hot": false
+     "label": "DMA balance and leakage engine"
     },
     {
-     "id": "sf8",
+     "id": "burst",
+     "lane": 3,
+     "label": "Burst prediction and pressure optimizer"
+    },
+    {
+     "id": "wq",
+     "lane": 3,
+     "label": "Water quality compliance engine"
+    },
+    {
+     "id": "pump",
+     "lane": 3,
+     "label": "Pump-scheduling optimizer"
+    },
+    {
+     "id": "mtb",
+     "lane": 3,
+     "label": "Meter-to-bill pipeline"
+    },
+    {
+     "id": "replay",
      "lane": 4,
-     "label": "Human-in-the-loop stops",
-     "hot": false
+     "label": "Decision replay store"
     },
     {
-     "id": "sf9",
+     "id": "reg",
      "lane": 4,
-     "label": "Safety cases",
-     "hot": false
+     "label": "Regulatory evidence store"
     },
     {
-     "id": "fl10",
+     "id": "cr",
      "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "label": "Control-room console"
     },
     {
-     "id": "fl11",
+     "id": "field",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Field work orchestration"
+    },
+    {
+     "id": "cust",
+     "lane": 5,
+     "label": "Billing and customer interfaces"
     }
    ],
    "edges": [
     {
-     "a": "rs0",
-     "b": "rtl2"
+     "a": "dmas",
+     "b": "hist"
     },
     {
-     "a": "rs1",
-     "b": "rtl3"
+     "a": "ami",
+     "b": "bus"
     },
     {
-     "a": "rtl2",
-     "b": "pst4"
+     "a": "scada",
+     "b": "hist"
     },
     {
-     "a": "rtl3",
-     "b": "pst5"
+     "a": "sewer",
+     "b": "bus"
     },
     {
-     "a": "pst4",
-     "b": "orc6"
+     "a": "hist",
+     "b": "bus"
     },
     {
-     "a": "pst5",
-     "b": "orc7"
+     "a": "bus",
+     "b": "contracts"
     },
     {
-     "a": "orc6",
-     "b": "sf8"
+     "a": "contracts",
+     "b": "lake"
     },
     {
-     "a": "sf8",
-     "b": "sf9"
+     "a": "lake",
+     "b": "spine"
     },
     {
-     "a": "orc7",
-     "b": "fl10"
+     "a": "spine",
+     "b": "qgates"
     },
     {
-     "a": "sf9",
-     "b": "fl11"
+     "a": "qgates",
+     "b": "nrw"
+    },
+    {
+     "a": "lake",
+     "b": "burst"
+    },
+    {
+     "a": "lake",
+     "b": "wq"
+    },
+    {
+     "a": "lake",
+     "b": "pump"
+    },
+    {
+     "a": "lake",
+     "b": "mtb"
+    },
+    {
+     "a": "nrw",
+     "b": "replay"
+    },
+    {
+     "a": "burst",
+     "b": "replay"
+    },
+    {
+     "a": "pump",
+     "b": "replay"
+    },
+    {
+     "a": "mtb",
+     "b": "replay"
+    },
+    {
+     "a": "wq",
+     "b": "reg"
+    },
+    {
+     "a": "replay",
+     "b": "cr"
+    },
+    {
+     "a": "nrw",
+     "b": "field"
     }
    ],
-   "note": "Lanes and nodes are named for Water, Waste & City Utilities systems and workflows — not a generic stack."
+   "note": "Lanes and nodes are named for the systems a water utility build actually touches — DMA loggers, the AMI head-end, treatment SCADA, sewer monitors, the GIS register — not a generic reference stack. The hot nodes concentrate the differentiation: the historian supplying network truth at native cadence, and the lakehouse joining every reading, work order and bill to the asset that produced it, so each decision service reads context rather than bare values."
   },
   {
    "t": "h2",
-   "x": "The compliance map, in plain words"
+   "x": "The data plane: telemetry truth with the register attached"
   },
   {
    "t": "p",
-   "x": "Drinking-water directives — quality duties. Programs here are designed against these duties from the first sprint; evidence is a by-product of running the system, not an audit-season project."
+   "x": "Every decision gap in water traces back to a data gap, and most of those gaps are engineering choices rather than physics. Telemetry arrives at native cadence but without the district, zone or asset it belongs to; the GIS holds the network geometry with attributes of uneven trust; the CMMS holds the repair reality as free text; billing holds consumption that never meets the network view. The data plane's job is to make those four views queryable together at decision speed — schema contracts on every feed, the asset-register spine as the join, and quality gates that quarantine a stuck logger instead of letting it skew a district balance."
   },
   {
-   "t": "table",
-   "caption": "Regimes in scope for Water, Waste & City Utilities",
-   "headers": [
-    "Regime",
-    "What it expects"
-   ],
-   "rows": [
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every value in the lakehouse can name its source system, transformation chain and quality state at read time, which is what makes the evidence layer possible later. Logger batteries, comms dropouts and clock drift are detected at ingest with gap metadata attached, so a district balance degrades honestly instead of confidently. Laboratory results join online probes as first-class feeds with chain of custody, because the compliance decisions this industry makes are always conditional on measurements someone signed."
+  },
+  {
+   "t": "bullets",
+   "items": [
     [
-     "Drinking-water directives",
-     "quality duties"
+     "Native-cadence telemetry ingestion",
+     "DMA loggers, pressure sensors and treatment SCADA stream at their native rates with backfill handled explicitly and gap metadata attached; the control path is never touched and the historian keeps its role while the lakehouse adds the context it lacks"
     ],
     [
-     "NIS2",
-     "essential-entity duties"
+     "The asset-register spine",
+     "every flow, pressure, quality reading and work order tied to the main, valve, meter or zone that produced it, signed off by the engineers who own the register — context bound as an engineering contract, not a tribal convention"
     ],
     [
-     "Environmental permits",
-     "discharge evidence"
+     "Quality gates with named owners",
+     "flatlines, clock drift and stuck values detected at ingest; the affected feature set quarantined and the owner paged, so a dead logger pages a technician rather than quietly skewing a night-flow baseline"
     ],
     [
-     "Privacy",
-     "meter data duties"
+     "Billing-consumption reconciliation",
+     "AMI intervals reconciled to the billing view on a defined cadence, with estimated reads labelled and meter-to-bill exceptions surfaced as a worklist rather than as complaints weeks later"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "What happens before anything scales"
+   "x": "The decision layer: bounded hydraulics with full replay"
   },
   {
    "t": "p",
-   "x": "For Water, Waste & City Utilities, the first move costs little: a two-week diagnostic on non-revenue water invisible, your data, one honest baseline. The scoped proposal only follows if the measured delta justifies it."
+   "x": "Water runs on decisions with physical, financial and regulatory tails: a PRV setpoint moved, a district opened for step-testing, a spill event classified, a pump schedule committed, a renewal deferred. The decision layer treats every one as a first-class object — inputs, model version, calibrated envelope, constraints active, expected delta, human approval — stored in a replay service that can re-derive any decision months later for an auditor, a regulator or an engineer asking what the system knew at the time. Champion and challenger run permanently: every leakage model, burst forecast and pump schedule competes against the incumbent on locked baselines before it earns traffic."
+  },
+  {
+   "t": "p",
+   "x": "The guardrails are as engineered as the models. Recommendations are bounded by calibrated model envelopes and sensor coverage, and anything approaching a boundary escalates with its reasoning attached. Decision rights are explicit — what the optimizer may draft, what the control room must approve, what stays with the crew on the ground. Uncertainty travels forward rather than being averaged away: a night-flow anomaly without its meter-confidence caveat never reaches a leak analyst, and a spill classification without its rainfall context never reaches a permit return. The result is optimization the compliance team and the finance committee can both interrogate."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: governed digital workers for network paperwork"
+  },
+  {
+   "t": "p",
+   "x": "Most repeat work in a water utility is investigative paperwork: assembling leak-investigation packs, reconciling sampling schedules against returns, drafting spill-event dossiers, parsing free-text repair records into structured histories, preparing regulatory submissions. These are retrieval, assembly and cross-checking jobs with clear success criteria — ideal for governed agents that work inside the platform with role scopes, tool allow-lists and complete run logs. Each agent ships with an evaluation suite: golden cases where the right answer is known, adversarial cases where the tempting answer is wrong, and a human checkpoint at every boundary that matters."
+  },
+  {
+   "t": "p",
+   "x": "Where generative capability adds leverage — summarizing district histories, drafting narrative sections of regulatory returns, translating inspection PDFs into structured records — it operates with retrieval grounding against your estate and provenance stamps on every claim. No agent closes a valve, dispatches a crew or files a compliance return; those boundaries are architectural. The agentic layer's output is reviewed work moving faster, with the run log to show for it — and when the regulator asks who classified the event, the answer is a person, on the record."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: the permit return as a query"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory surface of water is dense and it grows in exactly the directions these builds touch: drinking-water quality, environmental permitting, OT security, data protection and the affordability duties that come with the billing relationship. Programs here succeed when evidence is a property of the running system rather than a seasonal project. The table maps the regimes that shape water builds to the artifacts each build produces continuously — every row falls out of operation, not out of an audit-season sprint."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape water utility builds — and the evidence layer each one gets",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What the build produces"
+   ],
+   "rows": [
+    [
+     "Drinking-water quality directives",
+     "Sampling schedules, residual disinfection, exceedance response and notification duties",
+     "Sample-schedule telemetry; exceedance workflows with corrective-action evidence; probe-to-laboratory reconciliation records"
+    ],
+    [
+     "Environmental permits (discharge and overflow)",
+     "Spill event reporting, monitoring evidence, corrective plans within deadlines",
+     "Event dossiers from level telemetry and crew records; permit returns generated with full lineage"
+    ],
+    [
+     "OT security (IEC 62443 and NIS2 class)",
+     "Zones and conduits, access control, monitoring for the OT estate",
+     "Enforced zone model, telemetry baselines with drift alerts, access reviews produced continuously"
+    ],
+    [
+     "Metering and billing regulation",
+     "Accurate bills, dispute handling, vulnerable-customer and affordability duties",
+     "Meter-to-bill exception ledger; dispute files assembled from consumption evidence; hardship treatment logs"
+    ],
+    [
+     "Leakage and performance reporting",
+     "Defensible water-balance figures and performance commitments against targets",
+     "DMA balances with confidence intervals; leakage returns computed from telemetry with replayable inputs"
+    ],
+    [
+     "Privacy and AMI data rules (GDPR class)",
+     "Lawful basis, minimization, data-subject rights over consumption data",
+     "Consumption lineage end to end; DSAR joins across meter, premises and contact entities; access enforced at read"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the network stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Water estates are layered over decades — SCADA from several vendors, loggers bought campaign by campaign, a GIS assembled from merged utilities, billing systems that predate AMI — and a program that demands greenfield first will never start. Dataq Software wraps the estate instead: adapters at native cadence, normalizers for logger and head-end formats, schema contracts that make each upstream system answerable for freshness and shape. Control systems are read-first by policy; nothing writes into a controlled system without your change process, and most builds never need to."
+  },
+  {
+   "t": "p",
+   "x": "The supply chain gets the same treatment. Logger vendors, meter head-ends, laboratory networks, demand-forecasting services and weather feeds all become contract parties to the data plane: formats specified, freshness SLAs enforced, test harnesses run per delivery. When a vendor changes a format, the contract test fails before the decision layer notices. The register gets its own program within the program: attribute repair, valve topology and free-text work orders structured to the point where analytics can consume them."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Read-first SCADA integration",
+     "every path into works and network control starts read-only at native cadence; the rare write path goes through your change process with your engineers owning the change from design to verification"
+    ],
+    [
+     "Logger and head-end normalizers",
+     "DMA logger exports, AMI head-end feeds and laboratory result files normalized at ingest with schema contracts and golden-file tests per vendor release"
+    ],
+    [
+     "Register and CMMS structure repair",
+     "asset attributes, valve topology and free-text repair histories rebuilt to analytics grade in the first quarter — data debt named as a gate condition with acceptance criteria, not discovered mid-program"
+    ],
+    [
+     "Model-library bridges",
+     "EPANET-class hydraulic models fed live telemetry through governed interfaces, so the calibrated model the studies use matches the network the operators actually see"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement opens with a two-week diagnostic on the workflow you nominate — one district, one zone or one works, never a maturity assessment of the whole utility. The product is a baseline in your own telemetry, a named delta with its confounders listed, and a scoped proposal only where the delta justifies the build. The measurement design stays with you either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "district balances instrumented, leakage and energy quantified, contract inventory, feasibility read with the delta estimate and the confounders named in writing"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane of the workflow live behind flags with replay and evidence running from day one — one district metered area, one pressure zone, one works"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "controls landed, quality gates live, remaining districts and zones added, decision telemetry reporting to the operations review"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "leakage models, burst forecasts and pump schedules re-evaluated in the registry, baselines re-verified, the roadmap re-priced against measured deltas"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs inside your operating rhythm, not a parallel program tower: our engineers sit with the network team, the control room and the capital planners, work through your change process for anything that touches a governed system, and hand over runbooks, evaluation suites and register entries as gate conditions during expansion — ownership is an exit criterion, not a closing slide."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones water programs are managed on. The targets are program design goals — operating ranges comparable estates have reached, stated as commitments only where the metric is clean — and each one is measured from system telemetry against a baseline locked during the diagnostic, not from a status deck."
+  },
+  {
+   "t": "table",
+   "caption": "Water utility program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Non-revenue water",
+     "10-25% reduction on instrumented districts; the published record shows 21% at a national utility",
+     "District water balance from DMA telemetry against a locked baseline, leakage separated from metering error"
+    ],
+    [
+     "Leak run time from detection to repair",
+     "40-60% shorter on DMA-ranked leaks",
+     "Logger-to-work-order-to-verification timestamps from the CMMS, not reconstructed from tickets"
+    ],
+    [
+     "Energy per megalitre pumped",
+     "8-15% reduction on optimized stations",
+     "Station metering against historian-normalized volumes, tariff-adjusted"
+    ],
+    [
+     "Water quality compliance",
+     "Sampling schedule adherence above 98%; exceedance responses inside policy windows",
+     "Sample-schedule telemetry and corrective-action closure times from the quality engine"
+    ],
+    [
+     "Billing accuracy and disputes",
+     "Meter-to-bill exceptions down 30-50%; dispute volume tracked per thousand bills",
+     "Exception ledger and contact-center codes reconciled to billing outcomes"
+    ],
+    [
+     "Capital efficiency on renewal",
+     "Same budget, risked consequence down 20-30% on ranked programs",
+     "Renewal rankings scored in the system; break-rate curves tracked after intervention"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A water build team is small and senior: a lead engineer who has carried network or works responsibility, data engineers fluent in telemetry and billing semantics, a hydraulic-modeling specialist who treats calibration as an empirical question, and a delivery lead who has answered a network pager in winter. Agentic-workflow specialists join for the evidence-assembly builds. The team sits with your network engineers, control room and capital planners — not in a program tower — because the context that makes the difference lives in the district balance, the step test and the conversation before a valve turns."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: a weekly operations review on the metric, a monthly delta review against the locked baseline with finance in the room, and quarterly challenger sessions where leakage models, burst forecasts and pump schedules defend their traffic. Runbooks, evaluation suites and the decision-replay store transfer to your teams as gate conditions during expansion — the program's dependency on us is scheduled to shrink, and the schedule is visible to everyone."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs in water fail in known ways, and most of the failure modes are organizational rather than hydraulic. We name them in the feasibility read and design against them explicitly, because a program that cannot survive its second summer is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "a leak model demoed on extracted data that never lands in the estate — prevented by shipping the first vertical slice through your change process within two months, flags and gates included"
+    ],
+    [
+     "Unvalidated metering at the core",
+     "district balances scored on meters nobody has proven — every district passes a data-quality gate before scoring, and the gaps are sequenced into the instrumentation plan"
+    ],
+    [
+     "Leakage figures defended by assumption",
+     "the reported number argued from factors rather than balances — figures are computed from telemetry with confidence intervals and published inputs, or they are not reported"
+    ],
+    [
+     "Instrumentation without decision loops",
+     "loggers installed while worklists still run by complaint — sensing is sequenced where the computed delta justifies it, and each district's decision loop goes live with its meters"
+    ],
+    [
+     "Register debt quietly compounding",
+     "renewal analytics starved by attribute errors and free-text histories — register repair is a first-quarter gate condition with acceptance criteria the engineers sign"
+    ],
+    [
+     "Evidence debt at audit time",
+     "regulator returns assembled by a team every cycle because artifacts are manual — the evidence layer generates them continuously, or the build ships unfinished"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions water operations leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do you touch the control systems?",
+     "We read. Write paths to pumps or valves go through your change process with your engineers in the loop, and most builds never need them. Recommendations land in control-room workflows; the SCADA keeps its authority."
+    ],
+    [
+     "Can this work with sparse instrumentation?",
+     "Yes — the fabric starts with what exists, and the diagnostic names the districts where metering investment pays. We sequence instrumentation like any other capital: where the computed delta justifies it."
+    ],
+    [
+     "How do you handle vendor-locked logger formats?",
+     "Adapters and normalizers are part of the build; every major logger and AMI head-end format we integrate is normalized at ingest. Your licenses stay; the export contract changes so decisions can consume the data."
+    ],
+    [
+     "What happens to our leak-detection crews?",
+     "Their judgment moves up a level: the build assembles the candidates and the evidence; crews confirm, excavate and own the physical decisions. Programs are justified in leaks found per crew-day, not headcount removed."
+    ],
+    [
+     "How does this survive a regulatory audit?",
+     "Every artifact ships with lineage, confidence intervals and approval gates. The balance, the quality record and the event dossiers are generated continuously, so the audit reads structured records instead of assembled files."
+    ],
+    [
+     "Can you price against the delta rather than the effort?",
+     "Yes, where the metric is clean. Non-revenue water, energy per megalitre and leak run time all baseline in your telemetry during the diagnostic; the feasibility read names the confounders first."
+    ],
+    [
+     "What is the smallest program worth running?",
+     "One district metered area, one pressure zone or one works — whichever has the cleanest baseline. If the diagnostic cannot measure the delta in two weeks, we say so and stop. You keep the measurement design either way."
+    ],
+    [
+     "Who owns the models after you leave?",
+     "Your teams, with runbooks, model documentation, evaluation suites and the decision-replay store transferred as gate conditions during expansion. Several programs run entirely in-house after the second quarter."
+    ]
+   ]
   },
   {
    "t": "cta",
-   "x": "Talk to the team that runs operations in Water, Waste & City Utilities in production — the briefing is technical by design, and the first one costs nothing but the hour."
+   "x": "Bring one district metered area, one pressure zone or one works — we will baseline the water balance against your own metering and billing data in two weeks, price water saved against the cost to save it, and hand you the feasibility read either way. If the delta is not real, we say so and stop."
   }
  ],
- "words": 356,
+ "words": 5634,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Energy & Utilities",

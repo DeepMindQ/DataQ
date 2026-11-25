@@ -5,267 +5,778 @@
  "template": "subindustry_page",
  "breadcrumb": "Industries > Retail & Consumer Goods > Grocery & Convenience",
  "seo_title": "Grocery & Convenience | Dataq Software",
- "meta_description": "Grocery runs on the thinnest margins and the shortest freshness clocks: ordering precision, waste reduction and store labor efficiency decide survival.",
+ "meta_description": "How Dataq Software engineers grocery and convenience retail: day-fresh ordering, perishables markdown timing, shrink forensics across POS exceptions and camera signals, fuel pricing and forecourt analytics — built on the POS, replenishment and space-planning estate you already run.",
  "blocks": [
   {
    "t": "hero",
-   "x": "Grocery runs on the thinnest margins and the shortest freshness clocks: ordering precision, waste reduction and store labor efficiency decide survival. Fresh-chain intelligence — demand by day-part, markdown automation, cold-chain truth — is the difference. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
+   "x": "A grocery P&L is a basis-point business. Gross margin runs in low single digits, fuel contributes volume at thin cents per gallon, and fresh categories carry the margin upside and the shrink downside at the same time. The levers that matter are store-level and hourly: what the produce department orders tonight for tomorrow morning, when the banana rack gets its second markdown, which self-checkout lane is leaking unsold weight, whether the fuel price loop has caught the competitor two blocks over. Most chains run those decisions on spreadsheets, habit and vendor defaults, because the data that would inform them sits unjoined across POS, replenishment, receiving and fuel systems. Dataq Software builds the decision services that join them — day-fresh ordering, markdown timing, shrink forensics and fuel pricing analytics — on the estate you already run."
   },
   {
    "t": "h2",
-   "x": "What this environment runs on"
+   "x": "How a grocery operation actually runs day to day"
   },
   {
    "t": "p",
-   "x": "The work concentrates in fresh ordering, markdown management, cold-chain monitoring, with store labor scheduling close behind. Volume grows on every path; the decision layer has not kept up. That gap is measurable, and it is the work."
+   "x": "Start at five in the morning, when the produce lead checks overnight deliveries against yesterday's sell-through and today's weather, and writes the day's order partly by hand. Above that store, a different world runs on a different clock: the replenishment engine computes DC allocation for ambient, chilled and frozen across hundreds of stores; the space-planning team pushes planogram resets out to clusters from JDA or Blue Yonder; the pricing desk works competitor checks — SCPP survey files, shelf audits, fuel rack moves — and adjusts thousands of price points a week; DSD vendors arrive with bread, chips and beer, reconcile scan-based trading claims, and argue exceptions at the back door. The store executes; the systems feed it. Between the two sits the gap where grocery margin evaporates."
+  },
+  {
+   "t": "p",
+   "x": "Three calendars govern the week. The reset calendar moves planograms by cluster on a rolling schedule, and every reset is a labor event: strip the fixture, set the new planogram, restock, reprint tags, retrain the aisle. The category review calendar convenes buyers, vendors and space planners every quarter or half-year, where assortment, trade funds and shelf footage get renegotiated over vendor scorecards. The promotions calendar — weekly ad cycles in supermarkets, standing EDLP postures in convenience — sets what sells at what price, and quietly determines what the fresh departments will be marking down by Thursday."
+  },
+  {
+   "t": "p",
+   "x": "Underneath everything runs the perpetual inventory record, and in grocery it is only loosely attached to the shelf. DSD receiving, scan-based trading, self-checkout, click-and-collect picking and pilferage each push the book away from reality; cycle counts and variance investigations catch a slice, and the rest surfaces as unknown shrink at physical inventory, months after the loss happened. Everything on this page — fresh ordering, markdown timing, shrink forensics, fuel pricing — depends on repairing that attachment between the book and the shelf, store by store, department by department."
   },
   {
    "t": "h2",
-   "x": "Where this bites first"
+   "x": "The estate underneath: systems this work touches"
   },
   {
    "t": "p",
-   "x": "The places value leaks — Grocery & Convenience edition:"
+   "x": "Grocery and convenience estates are long-lived and heterogeneous: an order-management core that may be a mainframe or a modern ERP, POS fleets from more than one vendor, self-checkout lanes in mixed generations, fuel heads with their own price controllers and wetstock systems, vendor portals for DSD and VMI, and a category estate of planograms and price files. Any decision service has to read this estate as it actually is, not as the vendor decks describe it."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "The grocery and convenience estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
     [
-     "Fresh demand guessing",
-     "Day-part and weather-driven demand unmodeled; waste and OOS coexist."
+     "POS and self-checkout fleet",
+     "Scans, tenders, age verification, SCO weight checks, price execution, exception flags",
+     "Exception vocabularies differ across SCO generations; loss signals sit unjoined to camera and audit data"
     ],
     [
-     "Ordering by habit",
-     "Store ordering anchored to history; seasonal and local shifts missed."
+     "Order management and replenishment core",
+     "Store orders, DC allocation, purchase orders across ambient, chilled and frozen",
+     "Forecast granularity stops at week and store-group level; fresh categories need day and daypart"
     ],
     [
-     "Cold-chain unverified",
-     "Fridge/warehouse telemetry missing; spoilage and compliance risk hidden."
+     "Space planning (JDA / Blue Yonder and peers)",
+     "Planograms, cluster assortments, reset calendars, footage decisions",
+     "Planogram compliance is assumed rather than measured; reset labor is planned outside the tool"
     ],
     [
-     "Markdown timing manual",
-     "Markdown decisions by manager instinct; waste too high, margin too low."
+     "Fuel price controller and wetstock systems",
+     "Site price changes, competitor feeds, rack pricing, pump reconciliation",
+     "Price loops run on rules and manual overrides; elasticity by grade and site cluster is unmodeled"
     ],
     [
-     "Payment and loyalty exposure",
-     "Store payment estates and loyalty points under fraud pressure."
+     "DSD, VMI and scan-based trading interfaces",
+     "Vendor deliveries, SBT claims, vendor-managed inventory fills",
+     "Receiving exceptions, claim disputes and late logging corrupt perpetual inventory quietly"
     ],
     [
-     "Store estate energy",
-     "Refrigeration and HVAC costs unoptimized across hundreds of sites."
+     "E-commerce and click-and-collect platform",
+     "Pick lists, substitution rules, collection slots, curbside scheduling",
+     "Pick curves per store are unknown; online instock diverges from shelf instock"
+    ],
+    [
+     "Food-safety and compliance logs",
+     "HACCP temperature logs, date-code checks, recall pulls, age-restricted sale records",
+     "Paper and siloed apps; recall execution at store level is a phone tree, not a tracked workflow"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "What we build, concretely"
+   "x": "Where the basis points leak"
   },
   {
    "t": "p",
-   "x": "Capability in Grocery & Convenience is not abstract: each domain lands as a named build on a named workflow. The patterns below are what we deploy there."
+   "x": "Ask a grocery CFO where margin goes and the answer is a shrug spread across shrink, markouts and labor. The honest decomposition is rare because the three biggest levers are measured in different systems that never get joined: fresh shrink lives in receiving and waste logs, self-checkout loss lives in POS exception tables, fuel margin lives in the price controller's change history and the pump reports. Here is the leak list we start every baseline from."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Fresh demand models",
-     "day-part/weather demand per SKU-store"
+     "Day-fresh ordering is judgment, not science",
+     "Produce, deli and bakery orders are placed on day-level demand with yield factors and prep labor in someone's head. One bad weekend order turns into shrink on Tuesday or a rack of holes that sends baskets to a competitor."
     ],
     [
-     "Ordering agents",
-     "proposed orders within policy for manager approval"
+     "Markdowns run on sell-by fear, not on curves",
+     "Perishables get discounted when a date code forces it, at whatever depth the department manager prefers. The markdown curve — how much, when, at what depth, by store and daypart — is unwritten, so every store improvises a different answer."
     ],
     [
-     "Cold-chain telemetry",
-     "fridge/warehouse monitoring with compliance evidence"
+     "Unknown shrink is an accounting event, not an investigation",
+     "Inventory counts produce a variance number by department. Nobody joins POS exception reports, SCO weight mismatches, camera availability and audit findings into a per-store loss picture, so root causes stay anonymous."
     ],
     [
-     "Markdown intelligence",
-     "elasticity-aware markdown timing"
+     "Fuel prices react, but do not optimize",
+     "Price surveys and competitor feeds trigger manual or rule-based changes per grade per site. The loop ignores visit frequency, carwash attachments and loyalty-at-the-pump economics, so cents per gallon get defended at the cost of trips."
     ],
     [
-     "Store payment security",
-     "tokenization and segmentation across estates"
+     "Perpetual inventory drifts silently",
+     "DSD deliveries logged late, scan-based trading claims out of sync, substitution picking at click-and-collect — each writes small errors into the book. By the physical count, drift reads as shrink and the real cause is unrecoverable."
+    ],
+    [
+     "Online grocery breaks its own instock",
+     "Pickers substitute out-of-stock items by feel, substitution rules are generic, and curbside dwell time is unmeasured. The result is canceled baskets, margin leakage on substitutions and a picking cost per order nobody can state per store."
+    ],
+    [
+     "Coupon and offer integrity is reactive",
+     "Offer targeting is broad, and redemption anomalies — repeat redemptions, mismatched baskets, employee-adjacent patterns — surface only in monthly loss reviews, after the margin is already gone."
+    ],
+    [
+     "Trade funds vanish into floor price",
+     "Vendor trade funds and scan-backs are negotiated at category level and spent somewhere in the stores. Whether the funded price actually landed on shelf, and for how long, is a reconciliation nobody runs end to end."
     ]
    ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight: the decision is local, the data to make it already exists somewhere in the estate, and no service joins the two. That joining — not a new ERP, not a new POS — is where the basis points are."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works with grocery and convenience operators"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the estate the chain already runs. We do not replace the POS, the replenishment core or the space-planning suite; we read them, model them, and put decision services in front of the people who place orders, print markdown labels, set fuel prices and investigate loss. Read-first applies doubly on control-adjacent surfaces: fuel price controllers and self-checkout fleets are production systems with safety and compliance duties, so we observe before we ever write."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape the work. First, every model is estimated on the chain's own transactions — scan data, receiving logs, waste sheets, pump histories — not on syndicated averages, because a banana in a Gulf Coast store and a banana in an upper-Midwest store are different demand objects. Second, every recommendation lands in an operational surface the store already uses: the replenishment approval lane, the label printer queue, the fuel desk console — adoption fails anywhere else. Third, feasibility gates are honest: if the shrink delta on a category is smaller than the cost of measuring and acting on it, we say so in the baseline document and stop."
+  },
+  {
+   "t": "p",
+   "x": "The record behind the posture includes a multi-hundred-store supermarket chain whose day-fresh ordering build cut produce shrink double digits while holding in-stock, a convenience network where fuel pricing analytics defended cents per gallon without giving up visit frequency, and a self-checkout loss program that turned exception reports into a ranked investigation queue with camera evidence attached. Those are the references standing behind the two-week baseline offer described in the engagement section."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for grocery and convenience"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of the grocery and convenience practice at Dataq Software. Each build is a decision service with named inputs from your estate, a named decision owner in your organization, and a measured delta against your own trailing-year baseline — nothing in the catalog is a slide that lacks a data contract."
+  },
+  {
+   "t": "h3",
+   "x": "1. Day-fresh ordering for produce, deli, bakery and foodservice"
+  },
+  {
+   "t": "p",
+   "x": "The fresh build models demand at day and daypart level per store per item: weather, local events, ad status, school calendars and holiday patterns become features; yield factors — case to sellable units after trim, culling and prep — become explicit parameters the department lead can correct. The output is a recommended case-and-unit order for tomorrow morning, priced against waste risk: ordering one more case of romaine when Wednesday's sell-through projection is soft costs the system nothing and the shrink ledger real money, so the recommendation carries the trade-off, not just a quantity."
+  },
+  {
+   "t": "p",
+   "x": "Prep labor is part of the same decision. A bakery order that requires six hours of proofing and oven time changes the night schedule; the service co-plans quantities and labor against the same demand curve, respecting union rules and department minimums on the scheduling side. Buyers keep an approval lane where overrides are captured and fed back as training signal, so the model learns local judgment instead of steamrolling it — the difference between adoption and shelfware."
+  },
+  {
+   "t": "h3",
+   "x": "2. Perishables markdown timing and sell-by dynamics"
+  },
+  {
+   "t": "p",
+   "x": "The markdown build replaces date-code panic with estimated curves. For each perishable family — cut fruit, packaged salads, dairy, meat, bakery seconds — we estimate sell-through probability by remaining shelf life, daypart and price depth, from your own scan and waste history. The service proposes when to cut, by how much, and when to pull instead, keeping the pull decision compliant with sell-by policy and HACCP discipline rather than leaving it to whichever clerk notices the date first."
+  },
+  {
+   "t": "p",
+   "x": "Mechanics respect the store. Markdown cadence aligns with the label printer queue and the clearance end-cap; dynamic prices stay inside the price-change batch window the POS can actually process; and loyalty offers substitute for sticker cuts where basket-level control works better, because a targeted offer moves surplus without teaching the whole trade area to wait for the discount. Depth guards and cadence caps are built in from day one, so markdown automation never trains customers to hold for the cut."
+  },
+  {
+   "t": "h3",
+   "x": "3. Shrink forensics: known and unknown loss, decomposed"
+  },
+  {
+   "t": "p",
+   "x": "The shrink build starts with decomposition. Known loss — markdowns, waste logs, donations, damaged-goods write-offs — is reconciled into a clean item-level ledger by department and cause. Unknown loss is then attacked with the signals nobody joins: POS exception reports, self-checkout weight-check mismatches and void patterns, refund anomalies, receipt mismatches at the service desk, camera availability windows from the store's own video system, and count variance history. The output is a ranked, per-store investigation queue with the evidence attached to each case."
+  },
+  {
+   "t": "p",
+   "x": "Self-checkout gets dedicated treatment, because SCO loss patterns are specific: mis-scans on produce lookups, weight-entry gaming, stacked-trolley walk-throughs, receipt suppression at the exit. We build the mitigations alongside the detection — item-profile changes that move the lossiest lookups off SCO, weight tolerance tuning, intervention triggers pushed to the attendant tablet — and measure each mitigation against the exception baseline, so the store keeps the convenience and loses the leak. Loss-prevention leadership sets the policy for how evidence is used before any queue goes live."
+  },
+  {
+   "t": "h3",
+   "x": "4. Fuel pricing and forecourt economics"
+  },
+  {
+   "t": "p",
+   "x": "The fuel build treats the forecourt as a pricing system with two objectives: cents-per-gallon margin and visit frequency that the kiosk and c-store monetize. We estimate elasticity by grade, site cluster and daypart from your own pump transactions and price-change history; competitor feeds and rack movements enter as triggers, not as dictators. The service recommends grade-level price moves with expected volume effects, and learns from the fuel desk's overrides instead of ignoring them — desk judgment is signal, and the model improves on it."
+  },
+  {
+   "t": "p",
+   "x": "Forecourt economics extend the loop. Loyalty at the pump — cents-off per gallon tied to the loyalty account — is priced against redemption cost and the basket lift it pulls inside the store; carwash attachments are modeled as the margin-dense add-on they are, with wash bundles and weather-adjusted demand; fuel-only trips are separated from fill-up-while-shopping trips, because the two justify different pricing behavior. Every recommendation carries a projection the fuel desk can audit against actual pump reports the following week."
+  },
+  {
+   "t": "h3",
+   "x": "5. Store replenishment and DC allocation for ambient, chilled and frozen"
+  },
+  {
+   "t": "p",
+   "x": "The replenishment build upgrades forecast granularity to where grocery actually loses money: day-level, store-level, temperature-zone-aware. Ambient categories get promotion- and cannibalization-aware forecasts; chilled and frozen get shelf-life-constrained order quantities where the DC pick calendar and the truck schedule bound what can arrive when. Allocation respects the mixed multi-temperature DC reality — one truck, three zones, different clock speeds — instead of treating replenishment as one number per store per week."
+  },
+  {
+   "t": "p",
+   "x": "The service reads the existing replenishment core's constraints — minimum shelf quantities, case packs, slotting, delivery windows — and writes recommendations back into the same order stream the buyers already approve, so there is no parallel process to run. Where vendor-managed inventory and DSD take over replenishment, the same forecast feeds the VMI conversation: the chain stops accepting a vendor's fill logic blind, because it can see the demand curve the vendor is filling against and the exceptions it is creating."
+  },
+  {
+   "t": "h3",
+   "x": "6. Grocery e-commerce pick, substitution and curbside economics"
+  },
+  {
+   "t": "p",
+   "x": "The e-comm build prices the pick. Per-store pick curves — minutes per order by basket size, department and batch-picking tote strategy — are measured from picker timestamps and order logs, then fed into a capacity model that decides when click-and-collect slots should close and when curbside dwell needs a second picker. Substitution rules move from generic defaults to category-specific policies: what may substitute for what, at what price ceiling, flagged for customer approval instead of surprising the basket at pickup."
+  },
+  {
+   "t": "p",
+   "x": "Instock for the online assortment is measured separately from shelf instock, because a picker who cannot find an item writes a different truth than a scanner that cannot see it. Pick-failure signals flow back into the store's variance investigations, tying the online and physical loss pictures together. The delta lands in three numbers the e-commerce and store operations teams finally share: canceled-order rate, substitution margin, and pick labor minutes per order."
   },
   {
    "t": "arch",
-   "title": "Reference architecture — Grocery & Convenience",
+   "title": "Reference architecture — grocery store-level decision stack",
    "lanes": [
-    "Estates",
-    "Contracts",
-    "Lakehouse",
-    "Governance",
-    "Consumers",
-    "Actions"
+    "Systems of record",
+    "Store signal capture",
+    "Fresh and loss intelligence",
+    "Fuel and forecourt analytics",
+    "Decision surfaces",
+    "Controls and evidence"
    ],
    "nodes": [
     {
-     "id": "es0",
+     "id": "pos",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "POS and SCO fleet"
     },
     {
-     "id": "es1",
+     "id": "om",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "Replenishment and order core"
     },
     {
-     "id": "ct2",
+     "id": "space",
+     "lane": 0,
+     "label": "JDA / Blue Yonder space planning"
+    },
+    {
+     "id": "fuel",
+     "lane": 0,
+     "label": "Fuel price controller"
+    },
+    {
+     "id": "scan",
      "lane": 1,
-     "label": "Schema registry",
-     "hot": false
+     "label": "Scan and basket streams"
     },
     {
-     "id": "ct3",
+     "id": "exc",
      "lane": 1,
-     "label": "Quality gates",
-     "hot": false
+     "label": "POS exception reports"
     },
     {
-     "id": "lh4",
+     "id": "recv",
+     "lane": 1,
+     "label": "DSD receiving and SBT claims"
+    },
+    {
+     "id": "waste",
+     "lane": 1,
+     "label": "Waste and markdown logs"
+    },
+    {
+     "id": "pump",
+     "lane": 1,
+     "label": "Pump, rack and competitor feeds"
+    },
+    {
+     "id": "fcst",
      "lane": 2,
-     "label": "Medallion lakehouse",
-     "hot": true
+     "label": "Day-fresh demand models"
     },
     {
-     "id": "lh5",
+     "id": "md",
      "lane": 2,
-     "label": "Cost-aware storage",
-     "hot": false
+     "label": "Markdown curve engine"
     },
     {
-     "id": "gv6",
+     "id": "shrink",
+     "lane": 2,
+     "label": "Shrink forensics graph"
+    },
+    {
+     "id": "inv",
+     "lane": 2,
+     "label": "Perpetual inventory reconciliation"
+    },
+    {
+     "id": "felt",
      "lane": 3,
-     "label": "Lineage & catalog",
-     "hot": false
+     "label": "Grade-daypart elasticity"
     },
     {
-     "id": "gv7",
+     "id": "fpr",
      "lane": 3,
-     "label": "Access policies",
-     "hot": false
+     "label": "Fuel price recommendations"
     },
     {
-     "id": "cs8",
+     "id": "repl",
      "lane": 4,
-     "label": "Origination & servicing",
-     "hot": false
+     "label": "Replenishment approval lane"
     },
     {
-     "id": "cs9",
+     "id": "lbl",
      "lane": 4,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Label and price-change queue"
     },
     {
-     "id": "ac10",
-     "lane": 5,
-     "label": "Owned decisions",
-     "hot": false
+     "id": "fdesk",
+     "lane": 4,
+     "label": "Fuel desk console"
     },
     {
-     "id": "ac11",
+     "id": "haccp",
      "lane": 5,
-     "label": "Metric disputes closed",
-     "hot": false
+     "label": "HACCP and date-code logs"
+    },
+    {
+     "id": "audit",
+     "lane": 5,
+     "label": "Model registry and audit trail"
     }
    ],
    "edges": [
     {
-     "a": "es0",
-     "b": "ct2"
+     "a": "pos",
+     "b": "scan"
     },
     {
-     "a": "es1",
-     "b": "ct3"
+     "a": "pos",
+     "b": "exc"
     },
     {
-     "a": "ct2",
-     "b": "lh4"
+     "a": "pos",
+     "b": "lbl"
     },
     {
-     "a": "ct3",
-     "b": "lh5"
+     "a": "om",
+     "b": "repl"
     },
     {
-     "a": "lh4",
-     "b": "gv6"
+     "a": "space",
+     "b": "lbl"
     },
     {
-     "a": "lh5",
-     "b": "gv7"
+     "a": "recv",
+     "b": "inv"
     },
     {
-     "a": "gv6",
-     "b": "cs8"
+     "a": "waste",
+     "b": "inv"
     },
     {
-     "a": "gv7",
-     "b": "cs9"
+     "a": "waste",
+     "b": "md"
     },
     {
-     "a": "cs8",
-     "b": "ac10"
+     "a": "waste",
+     "b": "shrink"
     },
     {
-     "a": "cs9",
-     "b": "ac11"
+     "a": "scan",
+     "b": "fcst"
+    },
+    {
+     "a": "exc",
+     "b": "shrink"
+    },
+    {
+     "a": "recv",
+     "b": "shrink"
+    },
+    {
+     "a": "inv",
+     "b": "shrink"
+    },
+    {
+     "a": "inv",
+     "b": "repl"
+    },
+    {
+     "a": "fcst",
+     "b": "repl"
+    },
+    {
+     "a": "md",
+     "b": "lbl"
+    },
+    {
+     "a": "shrink",
+     "b": "audit"
+    },
+    {
+     "a": "pump",
+     "b": "felt"
+    },
+    {
+     "a": "felt",
+     "b": "fpr"
+    },
+    {
+     "a": "fpr",
+     "b": "fdesk"
+    },
+    {
+     "a": "haccp",
+     "b": "md"
+    },
+    {
+     "a": "haccp",
+     "b": "lbl"
+    },
+    {
+     "a": "inv",
+     "b": "audit"
+    },
+    {
+     "a": "fdesk",
+     "b": "audit"
     }
-   ],
-   "note": "Lanes and nodes are named for Grocery & Convenience systems and workflows — not a generic stack."
+   ]
   },
   {
    "t": "h2",
-   "x": "The compliance map, in plain words"
+   "x": "The data plane: scan-level truth from the store floor"
   },
   {
    "t": "p",
-   "x": "The binding regimes in Grocery & Convenience: Food-safety (HACCP), GDPR. Designing against them early is what keeps later audits short."
+   "x": "Every decision gap in grocery traces to a data gap: waste recorded on paper totals instead of items, DSD deliveries logged as invoices instead of scans, self-checkout exceptions sitting in a table nobody queries, camera systems that record everything and testify to nothing. The data-plane work wires these sources into one item-level store-day fabric — identity resolved to item and store, events time-aligned, feed quality measured and published — so the models above argue from evidence instead of guesswork."
   },
   {
-   "t": "table",
-   "caption": "Regimes in scope for Grocery & Convenience",
-   "headers": [
-    "Regime",
-    "What it expects"
-   ],
-   "rows": [
+   "t": "p",
+   "x": "Perpetual inventory accuracy is treated as a data-plane outcome, not a store virtue. Receiving fixes, pick-failure corrections and count adjustments write back to the source of record through governed paths, each carrying lineage: what changed, from which signal, approved by whom. A correction that exists only in a model's feature store is a lie with extra steps, so the write-back contract is part of the build, and variance investigations get a starting hypothesis instead of a blank form."
+  },
+  {
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries a freshness SLA — a fuel feed two hours stale is flagged before a price recommendation ships on it — and loyalty-derived data is consent-scoped and minimized at ingestion: the fresh and shrink models need baskets and items, not identities. Feed quality scores publish alongside the decisions they feed, so a bad week in a feed is visible before it becomes a bad month in a category."
+  },
+  {
+   "t": "bullets",
+   "items": [
     [
-     "Food-safety (HACCP)",
-     "temperature evidence duties"
+     "Scan and basket spine",
+     "Item-level transactions from every lane type — manned, self-checkout, kiosk, online pick — normalized into one schema, with tender, loyalty and promotion context attached, and anomalies like zero-scan events preserved for the forensics queue."
     ],
     [
-     "GDPR",
-     "loyalty profiling duties"
+     "Receiving and DSD truth",
+     "ASN, invoice and scan-based trading claim flows reconciled against actual door events, so late logging and vendor disputes stop corrupting perpetual inventory in silence."
     ],
     [
-     "Waste reporting",
-     "where mandated"
+     "Waste and markdown ledger",
+     "Item-level waste from handhelds, markdown events from the label queue and donation logs unified into the known-loss ledger the shrink build reconciles against."
     ],
     [
-     "PCI DSS",
-     "payment duties"
+     "Fuel and forecourt telemetry",
+     "Per-pump volumes and grades, price-change history, carwash cycle counts and weather feeds aligned to the same store-day grain, so fuel recommendations can be audited line by line."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "Where a program starts"
+   "x": "The decision layer: guardrails buyers and stores actually use"
   },
   {
    "t": "p",
-   "x": "Start with the diagnostic, not the contract: fresh demand guessing gets baselined in two weeks; if the delta is real, the build gets scoped; if it is not, you keep the measurement design either way."
+   "x": "Grocery decisions are made by people with authority and habit: a produce lead who has ordered Monday mornings for fifteen years, a fuel desk that trusts its competitor across the street more than any model, a loss-prevention team with a feel for which stores leak. The decision layer is built for that reality: every recommendation ships with its drivers exposed — the weather feature, the sell-through probability, the comparable store — and every override is captured as signal, not treated as noise."
+  },
+  {
+   "t": "p",
+   "x": "Champion/challenger governance runs the way grocery already runs ad tests: a challenger ordering or markdown policy runs on a store cluster for two weeks, deltas are measured against the champion on identical categories, and promotion to the network requires category, operations and loss-prevention owners to sign the same runbook. Nothing writes to the replenishment core, the price controller or the SCO fleet without the client's own change process — our services propose; your systems of record decide."
+  },
+  {
+   "t": "h2",
+   "x": "Loyalty, personalization and coupon integrity"
+  },
+  {
+   "t": "p",
+   "x": "Loyalty is the one asset grocery owns that marketplaces cannot replicate, and it is chronically under-modeled. The offer build targets at basket level — which households respond to cents-off in which categories, at what margin cost, in which daypart — using your own redemption history rather than vendor audience packages. Offer economics are measured against a holdout, so lift claims survive finance review, and redemption integrity is treated as the same money the shrink program protects."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Offer targeting and basket analysis",
+     "Category-aware targeting from your own redemption data, with margin-aware frequency caps, holdout-measured lift and daypart controls that keep discounts off baskets that would have bought anyway."
+    ],
+    [
+     "Coupon redemption fraud detection",
+     "Repeat redemptions, mismatched basket patterns, employee-adjacent redemption clusters and digital coupon abuse are scored continuously and routed to the same investigation queue as shrink, because they drain the same margin."
+    ],
+    [
+     "Loyalty at the pump",
+     "Fuel discounts tied to loyalty accounts are priced as acquisition spend with measured in-store basket lift, coordinated with the fuel pricing build so cents-off and cents-per-gallon never fight each other."
+    ],
+    [
+     "Personalization without identity creep",
+     "Profiling runs on consent-scoped, minimized data; recommendations live in the app and at the kiosk, not in a surveillance posture that store teams and regulators both have to answer for."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Labor scheduling against demand curves"
+  },
+  {
+   "t": "p",
+   "x": "Store labor is the second-largest controllable line after cost of goods, and it is scheduled against last year's template more often than against demand. The labor build publishes the demand curve each department actually faces — daypart-level transactions, fresh prep load derived from the ordering build, e-commerce pick load, fuel kiosk traffic — and lets the scheduler lay shifts against it inside the existing workforce system, with union rules, minimum hours and availability constraints enforced as hard constraints, not suggestions."
+  },
+  {
+   "t": "p",
+   "x": "The payoff shows up in service and shrink at once: a deli staffed to the curve cuts queue time at the peak and cuts the end-of-day waste that comes from prepping against a forecast nobody checked. Because prep labor and fresh orders are planned from the same demand model, the bakery lead stops discovering at four in the afternoon that tonight's proofing load was doubled by an order decision made at nine in the morning."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: food safety, recall and age-restricted duty"
+  },
+  {
+   "t": "p",
+   "x": "The obligation surface in grocery is dense: HACCP temperature and rotation logs, date-code checks, recall execution at store level within hours, age-verified sales at self-checkout, fuel metering audits, and consumer-facing pricing accuracy. Decision services in this domain inherit those duties rather than routing around them — a markdown recommendation that ignores a date code is not optimization, it is a violation."
+  },
+  {
+   "t": "table",
+   "caption": "Duties the grocery build inherits — and the evidence it produces",
+   "headers": [
+    "Duty",
+    "What the regulator or auditor expects",
+    "What our build produces"
+   ],
+   "rows": [
+    [
+     "Recall execution",
+     "Affected lots pulled from shelves fast and provably, per store",
+     "Recall workflow with item-lot-scoped pull lists, completion timestamps and photo evidence per store, fed from the item spine"
+    ],
+    [
+     "HACCP and date codes",
+     "Continuous temperature and rotation logs per department",
+     "Digital HACCP feeds joined to the waste ledger, so markdowns and pulls cite live date-code state"
+    ],
+    [
+     "Age-restricted SCO sales",
+     "Intervention on every restricted item, with attendant sign-off",
+     "Exception joins between SCO intervention events and attendant actions, with per-store compliance scoring"
+    ],
+    [
+     "Fuel metering and pricing",
+     "Meter accuracy and price-change auditability",
+     "Price-change ledger from the controller reconciled to shelf and pump state, with override history attached"
+    ],
+    [
+     "Loyalty data handling",
+     "Consent-scoped use of customer profiles",
+     "Consent flags enforced at ingestion; offer targeting runs on minimized profiles with access logged"
+    ],
+    [
+     "Model governance",
+     "Explainable, monitored decision models",
+     "Model registry with versioned features, drift monitors and rollback notes per category model"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the estate stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Grocery integrations fail on semantics, not plumbing. A case is not a unit; a receipt is not a delivery until the door scan matches it; a markdown is not a price change until the label prints; a fuel price is not margin until the pump report lands. Our integration work writes those contracts down and enforces them in flight: event schemas at store-day grain, per-feed reconciliation reports, dead-letter queues with named owners, so a silent interface failure never reads as shrink at the next count."
+  },
+  {
+   "t": "p",
+   "x": "The vendor boundary gets the same discipline. DSD and scan-based trading partners, VMI vendors, competitor-feed providers and e-commerce platforms each get explicit data contracts — arrival windows, claim formats, dispute SLAs — because most grocery data corruption is contractual before it is technical. Where a legacy interface can only be batch, we build the batch properly: idempotent loads, sequence checks, late-arrival handling, instead of pretending real-time and hoping."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "POS and SCO change management",
+     "Price and item changes are batched to the change window the store can absorb; SCO item-profile changes ship as staged rollouts with exception monitoring per lane generation."
+    ],
+    [
+     "Replenishment core write-back",
+     "Recommendations enter the buyer's existing approval stream through the core's own interfaces, with idempotent keys so a replayed file never double-orders a truck."
+    ],
+    [
+     "Fuel controller safety",
+     "Price recommendations pass a guardrail layer — rate-of-change caps, grade floors, price-change volume limits — before the desk executes anything on production controllers."
+    ],
+    [
+     "Legacy tolerance",
+     "Mainframe and AS/400 cores are read through their native interfaces; we build the modern fabric around them, not a replacement program in front of them."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "We start with a two-week baseline against your own data: one region, three to five categories chosen with your category and loss teams, and the actual scan, waste, receiving, fuel and exception history for the trailing year. The baseline states the delta we believe is real — shrink basis points by department, markdown recovery points, fuel cents per gallon — and prices the build that captures it against that delta. If the delta does not clear the cost, the same document says so and the engagement stops there."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: baseline and feasibility",
+     "Data pull from POS, replenishment, waste, receiving and fuel systems; decomposition of known and unknown loss on the chosen categories; a written delta statement with a build price next to it."
+    ],
+    [
+     "Weeks 3-8: first decision service",
+     "One build — usually day-fresh ordering or markdown timing — in champion/challenger on a store cluster, with the buyer or department leads holding the approval lane."
+    ],
+    [
+     "Weeks 9-16: measured rollout",
+     "Cluster-by-cluster expansion with per-store deltas published weekly; integration contracts hardened; the investigation queue or fuel desk console moves from pilot to daily use."
+    ],
+    [
+     "Steady state: services, not tickets",
+     "The models, monitors and override loops transfer to your analytics and store operations teams under a joint runbook, or we run them as a managed service with quarterly re-baselines."
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Pricing is saved against the cost it replaces: a fresh build is quoted against the shrink and prep labor it measurably recovers, a fuel build against the margin cents it defends, a shrink program against the loss it converts from anonymous to actioned. The team that runs the baseline stays on the build: a lead engineer who has worked POS and replenishment estates, a demand scientist who treats a banana as a demand object, an integration engineer who respects a mainframe, and an operations lead who has run stores or DCs. Weekly operating reviews track the published delta; monthly model councils turn overrides into features; holiday and reset peaks are planned as capacity events. Everything ships documented in the client's runbook format, because a service only the vendor can operate is a dependency, not a capability."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones grocery and convenience programs are measured on, each stated against the client's own trailing-year baseline and tracked in the weekly operating review rather than in a slide deck."
+  },
+  {
+   "t": "table",
+   "caption": "Metrics the program is held to — against your own baseline",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Fresh shrink, produce / deli / bakery",
+     "8-15% reduction on treated categories in the first two quarters",
+     "Item-level waste and markdown ledger against trailing-year baseline, per store per week"
+    ],
+    [
+     "Markdown recovery on perishables",
+     "5-10 points more of potential value captured before pull",
+     "Units sold on markdown at depth versus the estimated sell-through curve, by category"
+    ],
+    [
+     "Unknown shrink decomposition",
+     "Most variance assigned a cause within one count cycle",
+     "Exception-joined investigation queue outcomes reconciled to count variance"
+    ],
+    [
+     "Fuel margin per gallon",
+     "Cents defended without visit-frequency loss",
+     "Grade-level margin versus pump volume and trip frequency, audited weekly against the price-change ledger"
+    ],
+    [
+     "E-comm pick cost and cancellations",
+     "Canceled orders down double digits; minutes per order published",
+     "Picker timestamps and order logs per store, substitution margin tracked by policy version"
+    ],
+    [
+     "Perpetual inventory accuracy",
+     "Measurable drop in count variance in treated departments",
+     "Cycle count variance history before and after reconciliation write-backs"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Programs like these fail in known ways, and most failure modes are organizational before they are technical. Each answer below is a design commitment, not a hope."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "The model overrides the merchant",
+     "If the produce lead's judgment is treated as noise instead of signal, overrides stop being logged, the model stops learning, and the program quietly reverts to paper. Override capture is a first-class feature, not a courtesy."
+    ],
+    [
+     "The shrink program becomes surveillance",
+     "Joined exception and camera signals aimed at staff without governance poison the store floor. Our build scopes evidence to transactions and processes, publishes the policy, and involves the client's HR and loss-prevention leadership before any queue goes live."
+    ],
+    [
+     "Fuel optimization sells trips",
+     "Pushing cents per gallon hard enough to lose fill-up visits starves the forecourt's real economics. Visit frequency and in-store basket lift sit inside the objective, not as an afterthought."
+    ],
+    [
+     "Markdown automation teaches waiting",
+     "Blanket dynamic discounts train a trade area to hold for the cut. Targeted offers, cadence caps and depth guards are part of the curve engine from day one."
+    ],
+    [
+     "E-comm scales past the pick line",
+     "Slots sold without a pick-capacity model convert marketing wins into curbside dwell and canceled baskets. Capacity closes slots before quality slips."
+    ],
+    [
+     "Baseline softening",
+     "A vendor that grades its own homework against a moved baseline earns removal. Baselines are frozen, signed and re-verified against the client's own systems each quarter."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions grocery and convenience leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Will this replace our replenishment or space-planning suite?",
+     "No. The estate stays. We read your replenishment core, JDA or Blue Yonder space planning, POS and fuel controller, and put decision services in the approval lanes your people already use. A replacement program is a five-year commitment nobody in the room has budget appetite for."
+    ],
+    [
+     "What if our data is too messy for fresh forecasting?",
+     "Messy is the normal starting state. The two-week baseline includes a data-feasibility read: which feeds can carry a model today, which need repair, and the repair cost. Roughly half the value in month one is fixing feeds that were corrupting orders anyway."
+    ],
+    [
+     "How do you measure shrink without pointing at people?",
+     "Decomposition first: known loss reconciled to item and cause, unknown loss ranked by signal pattern and store. The investigation queue names processes and stores, not individuals; camera evidence is pulled under the client's own loss-prevention policy."
+    ],
+    [
+     "Does fuel pricing really belong in a data build?",
+     "Fuel is the most instrumented part of a convenience estate — every gallon, grade and price change is logged — and it is still priced by rules. Elasticity, competitor dynamics and forecourt basket effects are exactly the decisions a measured model does better than a rules table."
+    ],
+    [
+     "Can you work with our SCO vendor's exception data?",
+     "Yes, across the major self-checkout generations and their different exception vocabularies. Part of the forensics build is a normalization layer per fleet, so a weight mismatch means the same thing on a lane installed five years ago as on this year's."
+    ],
+    [
+     "How fast is a two-week baseline really?",
+     "Two working weeks from data access to a signed delta statement, provided the extract windows are opened in week one. If a system's export takes longer, we scope around it and say so in the baseline document."
+    ],
+    [
+     "Who owns the models after go-live?",
+     "You do. Models, feature stores, contracts and runbooks transfer to your analytics team, or Dataq Software runs them as a managed service with quarterly re-baselines. There is no per-decision toll in either arrangement."
+    ],
+    [
+     "What is the honest stop condition?",
+     "If the measured delta on a category, site cluster or fuel network does not clear the cost of capturing it, the baseline says so and we stop. We would rather deliver a smaller build than an expensive pilot that proves nothing."
+    ]
+   ]
   },
   {
    "t": "cta",
-   "x": "The next step is small and real: one working session on operations in Grocery & Convenience, your data, and a written feasibility read you can circulate."
+   "x": "Bring one region and one loss problem: we baseline day-fresh ordering, markdown timing and shrink decomposition on your own scan, waste and receiving history in two weeks, price the build against the basis points it recovers, and put the fuel desk's question in the same document. If the delta is not real on your data, the baseline says so and we stop — that clause is in every engagement we sign."
   }
  ],
- "words": 366,
+ "words": 5404,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Retail & Consumer Goods",

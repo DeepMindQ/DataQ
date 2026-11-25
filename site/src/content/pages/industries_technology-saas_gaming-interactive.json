@@ -5,277 +5,693 @@
  "template": "subindustry_page",
  "breadcrumb": "Industries > Technology & SaaS > Gaming & Interactive Media",
  "seo_title": "Gaming & Interactive Media | Dataq Software",
- "meta_description": "Gaming economics run on retention, live-ops velocity and trust: player analytics into content decisions, live-ops automation, fraud/cheating defense and.",
+ "meta_description": "Dataq Software builds telemetry spines, economy-integrity monitoring, post-ATT UA measurement, and cost-per-CCU reporting for game studios and live-service publishers — read-first against your existing stack, baselined in two weeks, with honest feasibility gates.",
  "blocks": [
   {
    "t": "hero",
-   "x": "Gaming economics run on retention, live-ops velocity and trust: player analytics into content decisions, live-ops automation, fraud/cheating defense and community safety. Live-service titles are decision engines running at player scale. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
-  },
-  {
-   "t": "h2",
-   "x": "How the operation actually works"
+   "x": "A live-service title with two million daily players emits more event records than most banks run through their core transaction logs, yet store prices, battle pass pacing, and UA budgets still get set on dashboards built from whichever events survived the pipeline. Sessions break at the gateway, schemas drift with every patch, and the economy ledger disagrees with the store backend. Dataq Software builds the telemetry spine, the economy-integrity monitors, and the post-ATT measurement layer that turn that firehose into numbers a live-ops team can defend in a Monday review."
   },
   {
    "t": "p",
-   "x": "The work concentrates in player analytics, live-ops, trust & safety, with economy monitoring close behind. The paths are busy; the decisions are late. Closing that delay is worth more than any single tool purchase."
-  },
-  {
-   "t": "h2",
-   "x": "Where this bites first"
+   "x": "The scale is not the problem. A mid-core mobile title pushes two to four billion client events a day — session_start, level_complete, store_page_view, iap_prompt_shown, ad_impression — each schema drifting a little with every patch, while a PC shooter adds a hundred-plus fields per match from its dedicated backend services. The problem sits between the client SDK and the analyst's notebook: an ingestion path with no contract. A renamed field silently splits a metric in half, a dropped partition quietly shaves two points off D7 retention, and nobody notices until finance asks why the LTV model and the MMP disagree by thirty percent."
   },
   {
    "t": "p",
-   "x": "The recurring pressure points — Gaming & Interactive Media edition:"
+   "x": "Dataq Software works the way a live-ops organization actually runs. We read the event schemas your clients already ship, the store and IAP ledgers your economy already writes, the MMP postbacks your UA team already pays for, and the session-host metrics your infrastructure team already collects. On top of that estate we build sessionized fact tables in ClickHouse or your lakehouse, faucet-and-sink economy ledgers, churn and LTV models wired into your CRM, and cost-per-concurrent-user reporting by region. We do not propose replacing your game backend, your matchmaking service, or your console integrations; the decision layer sits beside them and reads from them."
+  },
+  {
+   "t": "p",
+   "x": "Every engagement starts with a two-week baseline: we reconstruct your D1, D7, and D30 funnels, reconcile them against MMP-reported installs and store billing, audit event loss at every hop, and produce an economy flow statement — currency minted, currency sunk, inflation rate per cohort. If the gap between your dashboards and your raw events turns out to be small, we say so and stop. If it is not, you keep the query definitions, the loss audit, and a prioritized fix list to carry into your next live-ops review."
+  },
+  {
+   "t": "h2",
+   "x": "Telemetry pipelines: from client event to queryable fact"
+  },
+  {
+   "t": "p",
+   "x": "Sessionization is where most studios quietly lose the plot. A session is not a row in a table; it is a set of decisions about what the client sent: which event opened it, what timeout closes it, how a crashed client's dangling session gets stitched, how a player who backgrounds the app between subway stops gets counted. Define it one way and D1 retention reads ten points higher than the same events under a stricter definition. We make those decisions explicit, versioned, and testable, so the funnel your CFO sees and the funnel your designers see come from one definition with one owner."
+  },
+  {
+   "t": "p",
+   "x": "The storage choice is a serving problem, not a fashion decision. Sessionized facts queried by dashboards dozens of times an hour want ClickHouse or Druid-class column stores; exploration, model training, and multi-year backfills want the lakehouse you already run — BigQuery, Snowflake, or Delta, whatever the platform team maintains. We build the contracts in between: a schema registry where every event field is declared, typed, and versioned; dead-letter queues for malformed payloads with per-event-type loss counters; and replay jobs that rebuild a week of facts after a bad deploy without resampling the client fleet."
+  },
+  {
+   "t": "h3",
+   "x": "What the spine has to guarantee"
+  },
+  {
+   "t": "p",
+   "x": "The guarantees are boring and they are the whole product. Every event type is declared with field-level types and versions, so a client build that ships an undeclared field fails in staging instead of splitting a production metric three weeks later. Every hop — gateway, queue, transformer, sink — reports per-event-type drop rates next to the dashboards built on it, because a number without its loss budget is an opinion. Consent states from your COPPA and GDPR flows filter events before storage rather than after, with an audit trail recording what was excluded and under which basis. And history stays rebuildable: backfill jobs re-derive sessionized facts from raw landings, so analysts stop defending numbers they cannot reproduce."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Player analytics shallow",
-     "Telemetry rich but decision loops slow; content bets anecdotal."
+     "Schema contracts, not conventions",
+     "Every event type is declared with typed, versioned fields. A client build shipping an undeclared field fails in staging, not in a production dashboard three weeks later."
     ],
     [
-     "Live-ops manual",
-     "Events, balancing and comms by hand; teams firefight."
+     "Loss accounting at every hop",
+     "Gateway, queue, transformer, and sink each report per-event-type drop rates. A dashboard number is only trusted once the loss budget behind it is published beside it."
     ],
     [
-     "Cheat economies",
-     "Cheating/economy exploits drain trust; detection reactive."
+     "Consent filtering by design",
+     "COPPA and GDPR parental-consent states filter events before storage, not after. The audit trail records what was excluded and under which consent basis."
     ],
     [
-     "Moderation overwhelming",
-     "UGC volumes exceed human review; safety incidents slip."
-    ],
-    [
-     "Launch spikes break cost",
-     "Launch/patch peaks crash and cost."
-    ],
-    [
-     "Digital-asset economies contested",
-     "Scams in asset trading; trust low."
+     "Rebuildable history",
+     "Backfill jobs re-derive sessionized facts from raw landings after schema fixes. Analysts stop defending numbers they cannot reproduce from first principles."
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "What we put in place"
+   "x": "Funnels and retention that finance and design both trust"
   },
   {
    "t": "p",
-   "x": "Capability in Gaming & Interactive Media is not abstract: each domain lands as a named build on a named workflow. The patterns below are what we deploy there."
+   "x": "D1, D7, and D30 are the three numbers every publisher quotes and few define identically. Is a cohort keyed by install date or first-session date? Is a player retained if the client opened at all, or only after the tutorial checkpoint? Do reinstalled players count once or twice? Each choice moves the number five to fifteen points, which is precisely why UA teams bidding on blended ROAS and designers reading tutorial funnels stop trusting each other's dashboards. We write the definitions as versioned SQL with one owner per metric, and every downstream report reconciles against them."
+  },
+  {
+   "t": "p",
+   "x": "Reconciliation is the deliverable, not the dashboard. We join MMP-reported installs against store-attributed first opens and quantify the gap: delayed SKAN postbacks, organic re-attribution windows, fraud in claimed installs. A funnel that disagrees with billing by more than a couple of percent gets traced to its hop — usually consent filtering applied inconsistently, or a sessionizer that drops the last event before a crash. In one recent baseline, twenty-two percent of day-seven sessions were missing from the serving tables because a transformer skipped payloads over a size limit; the fix was one config change, but the funnels rebuilt on the clean table reallocated a seven-figure UA budget."
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "Retention numbers are contracts before they are metrics. The two-week baseline exists to find where the contract is broken, because no model, bid rule, or board slide survives on top of a funnel that drifts."
+  },
+  {
+   "t": "h2",
+   "x": "Live-ops cadence: events, battle passes, and store rotations"
+  },
+  {
+   "t": "p",
+   "x": "A live-service calendar is a stream of interventions: featured events every week, battle pass seasons every six to eight weeks, store rotations every twenty-four to seventy-two hours, CRM pushes tied to patch notes, sales timed to weekend play peaks. Every one of those interventions is a data event, yet almost no studio keeps a machine-readable record of what changed when. The result is that every KPI move becomes an argument: did conversion dip because of the offer redesign, the economy patch, the competitor launch, or the ad channel mix? Without a change log, that argument gets settled by seniority."
+  },
+  {
+   "t": "p",
+   "x": "We build the change ledger first. Live-ops config — store rotations, event parameters, battle pass tiers, matchmaking weights — already flows through some CMS; we read it, version it, and join it to KPI time series so every dashboard can answer what changed on a given date. Patch notes and CRM campaigns get the same treatment, with send timestamps aligned against store resets so a discount announcement never lands six hours after the sale ended. It is unglamorous plumbing, and it is the difference between a live-ops review that argues about whose data is right and one that argues about what to do next."
+  },
+  {
+   "t": "p",
+   "x": "The coordination surface is small but unforgiving. A battle pass season touches store config, economy rates, CRM sends, matchmaking playlists, and the patch notes page — five surfaces often owned by four teams. When the data layer versions all five as one change set, the post-mortem question of what actually shipped on the fourteenth gets an answer in seconds, and the pre-mortem question of what the change will move gets asked before deploy instead of after the community team reads the forums."
+  },
+  {
+   "t": "h2",
+   "x": "Virtual economy balancing: faucets, sinks, and inflation"
+  },
+  {
+   "t": "p",
+   "x": "Every currency in a game has faucets — quest rewards, ad-reward grants, login streaks, IAP bundles — and sinks — crafting, gacha pulls, cosmetics, energy refills. When faucets outpace sinks, soft currency inflates, store offers priced in that currency lose meaning, and high spenders stop buying because the grind no longer binds. Most studios can answer how much currency players earned last week only by hand-querying client events that may never have arrived. We build the faucet-and-sink ledger from server-authoritative grant and consumption records first and client telemetry second, then publish a weekly economy statement per currency per cohort: minted, sunk, net accumulation, velocity."
+  },
+  {
+   "t": "table",
+   "caption": "A weekly economy statement: the rows that drive store pricing",
+   "headers": [
+    "Currency",
+    "Primary faucets",
+    "Primary sinks",
+    "Signal that forces action"
+   ],
+   "rows": [
+    [
+     "Soft currency",
+     "Quest rewards, ad grants, login streaks",
+     "Crafting, rerolls, consumables",
+     "Net accumulation per active player rises three weeks running"
+    ],
+    [
+     "Premium currency",
+     "IAP bundles, event payouts",
+     "Gacha pulls, store purchases",
+     "Discounted bundles start cannibalizing full-price conversion"
+    ],
+    [
+     "Event token",
+     "Event completions, milestone rewards",
+     "Event shop rotation",
+     "Unspent end-of-event balances exceed a set share of minted supply"
+    ],
+    [
+     "Energy or stamina",
+     "Time refill, IAP refill, friend gifts",
+     "Level attempts, retries",
+     "Refill purchase rate decays while idle-refill caps bind"
+    ],
+    [
+     "Cosmetic shard",
+     "Battle pass tiers, duplicate protection",
+     "Skin crafting, transmutation",
+     "Sink throughput falls as completion rates saturate"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Drop rates deserve their own audit. Published odds for loot boxes are now a compliance surface in multiple jurisdictions, and the honest check compares shipped configuration against what players actually experienced: pull records versus configured weights, per banner, per cohort. Divergence is usually innocent — a pity counter that resets on a mode nobody documented, a duplicate-protection rule applied client-side — but it is exactly the kind of finding you want in writing before a platform review or a regulator asks the same question with less patience."
+  },
+  {
+   "t": "h2",
+   "x": "Economy integrity: duping, gold farming, and real-money trading"
+  },
+  {
+   "t": "p",
+   "x": "Player-driven economies attract three classes of abuse that telemetry can catch: duplication exploits, gold farming, and real-money trading. Dupes announce themselves as currency or item counts that violate conservation — minted supply minus sinks going negative in a system that should balance. Farming shows up as play-pattern regularity: session intervals with robot variance, input timing entropy near zero, loot routes repeated to the minute across hundreds of accounts. RMT lives in the trade graph: currency flowing from thousands of farm accounts through layers of mules into a small set of cash-out accounts, at velocities no legitimate guild produces."
+  },
+  {
+   "t": "p",
+   "x": "Detection is server-authoritative first. Movement plausibility, fire-rate caps, and economy grants get re-validated on the server, because client telemetry alone says whatever the cheat wants it to say. Statistical detection is the second layer — patient, tuned for precision over recall, because a false ban on a legitimate high-value player costs more than a week of undetected farming. We build the evidence pipeline: account graphs, transaction provenance, and a review console support teams can actually use for appeals, with every ban storing the chain of evidence that justified it."
+  },
+  {
+   "t": "p",
+   "x": "Rollouts need the same discipline as detection. Ban waves deploy together and stay quiet until the signature set is broad enough that one wave does not teach cheat developers which signal tripped. Economy rollbacks record their netting logic explicitly, because support will spend the following month answering tickets about corrected balances. Studios that handle economy incidents well are the ones whose incident data was already structured — the dupe still happens, but the forensics take hours instead of weeks, and the affected trade graph is reconstructable after the fact."
+  },
+  {
+   "t": "h2",
+   "x": "Offer optimization and player segmentation"
+  },
+  {
+   "t": "p",
+   "x": "Offer ladders — the starter pack, the first escalation, the seasonal bundle — are sequences, not one-off decisions, and they interact: a generous day-three offer suppresses the day-seven full-price conversion it was supposed to feed. We model the ladder as a state machine over spend tier, progression stage, and session cadence, then test discount depth against holdouts rather than against last week. The features that matter are boring and reliable: currency balances at decision points, content walls hit, days since last purchase, battle pass completion pace, and the offer history a player has already declined."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Player intelligence",
-     "telemetry into feature/economy decisions with lineage"
+     "Elasticity by segment, not globally",
+     "A thirty percent discount that lifts ARPPU for lapsed spenders can teach full-price buyers to wait for sales. Segment-level tests with holdouts keep both effects visible."
     ],
     [
-     "Content balancing",
-     "simulation-driven balancing with human signoff"
+     "Fatigue and cannibalization controls",
+     "Offer frequency caps per player and cohort, with suppression windows after a declined offer. Conversion lifts that depend on interrupting players more often are not lifts."
     ],
     [
-     "Integrity defense",
-     "cheat/exploit detection with forensics"
+     "Fairness constraints on targeting",
+     "Eligibility rules reviewed against spend-capacity signals, so escalation ladders do not chase players showing problem-spend patterns. That is a design decision made explicit, not a compliance afterthought."
     ],
     [
-     "Launch engineering",
-     "load/chaos readiness for peaks"
-    ],
-    [
-     "Moderation fleet",
-     "policy-bounded review agents + human escalation"
+     "Cert-safe deployment",
+     "Offers live in server-side configuration, so tests ship without touching the submitted binary. Console certification never sees an experiment it did not approve."
     ]
    ]
+  },
+  {
+   "t": "h2",
+   "x": "Whale analytics and the ethics of spend prediction"
+  },
+  {
+   "t": "p",
+   "x": "In most live-service titles the top spending percentile funds the majority of the P&L, which makes whale analytics simultaneously the highest-value work in the building and the easiest place to do something a compliance reviewer will later call predatory. The engineering is straightforward: spend-capacity features — purchase velocity, balances at decision points, session cadence shifts — fed to models that predict near-term spend. What matters is which decisions the model feeds. We draw that line explicitly with the design team before any model ships: spend prediction may gate content pacing, service quality, and support priority; it may not drive escalating offers at players whose behavior signals loss of control."
+  },
+  {
+   "t": "p",
+   "x": "The defensible version of this work includes controls players can see: self-set spend limits surfaced in the store, cooling-off windows after unusually fast purchase sequences, and parental-consent flows that actually gate spending for COPPA and GDPR-K cohorts rather than existing as a checkbox in the terms. Studios that adopted these report a commercial benefit nobody markets: spend-capacity-aware ladders retain high-value players longer because the escalation stops before resentment starts. If a requested targeting rule falls on the wrong side of the line, we say so in the design review and document the reasoning, because that decision will be read again someday by someone outside the company."
+  },
+  {
+   "t": "h2",
+   "x": "Churn prediction and win-back campaigns"
+  },
+  {
+   "t": "p",
+   "x": "Churn means different things by genre: a hyper-casual player going quiet after four days is normal, a guild officer going silent mid-season is an emergency. We define churn per title from session-interval distributions, then build features a designer can read: progression stall points, economy dead-ends where a player's balances cannot buy progress, social graph abandonment when a friend list empties, crash exposure on the player's device class, and difficulty spikes inferred from retry rates. Scores land in the CRM — Braze, Iterable, or whatever the team runs — with suppression rules, so a player three pushes deep into a win-back sequence is not simultaneously receiving a full-price offer."
+  },
+  {
+   "t": "p",
+   "x": "Win-back measurement is where honesty pays for itself. Most win-back programs claim lifts that are really offer-shopping: the player who would have returned anyway claims the discount. We run every win-back cohort against a holdout and report incremental reactivation, then track day-thirty retention after return, because a campaign that buys one log-in and no second session is a cost, not a save. If the incremental lift does not clear the offer cost, the numbers say so, and the budget moves to the channels that earn it. That discipline usually shortens the argument with the agency rather than starting one."
+  },
+  {
+   "t": "h2",
+   "x": "UA measurement after SKAdNetwork 4 and Privacy Sandbox"
+  },
+  {
+   "t": "p",
+   "x": "iOS attribution went coarse with ATT: IDFA availability collapsed to the minority who opt in, and SKAdNetwork took over with delayed, throttled postbacks. SKAN 4 added three postback windows, crowd-anonymity tiers that hide conversions below volume thresholds, and lock windows that force a choice about when to encode. On Android, Privacy Sandbox attribution APIs replace last-click identifiers with coarse, delayed reporting. Every UA manager now bids on partial signals, and the MMPs — Adjust, AppsFlyer — decode, model, and fill gaps as best they can. The measurement layer has to be designed for that reality instead of pretending last-click still exists."
+  },
+  {
+   "t": "p",
+   "x": "The engineering answer is reconciliation with confidence bands. SKAN postbacks get decoded against a conversion-value schema you control; MMP-reported ROAS is reconciled against SKAN counts, store billing, and periodic geo-holdout incrementality tests that measure what modeled attribution only estimates. Channel decisions then run on ranges: a channel that wins at the pessimistic bound gets budget, one that only wins on the modeled optimistic case gets a test cap until it earns more. It is slower than the old dashboards, and it is the only version that survives a finance review, because every number carries its provenance and its error bar."
+  },
+  {
+   "t": "table",
+   "caption": "Attribution signal reality by channel class",
+   "headers": [
+    "Channel decision",
+    "Signal still measurable",
+    "What degraded",
+    "What we add"
+   ],
+   "rows": [
+    [
+     "iOS paid social scaling",
+     "SKAN 4 postbacks, modeled MMP ROAS",
+     "Install-level granularity and post-install behavior",
+     "Conversion-value schema design plus geo-holdout calibration"
+    ],
+    [
+     "iOS search ads",
+     "Ad-platform attribution with declared limitations",
+     "Cross-network overlap and view-through claims",
+     "Reconciliation against store billing cohorts"
+    ],
+    [
+     "Android paid UA",
+     "Privacy Sandbox APIs, device-level where consented",
+     "Last-click path visibility",
+     "Modeled ROAS with confidence bands per channel"
+    ],
+    [
+     "Web-to-app funnels",
+     "First-party click and purchase logs",
+     "Cross-app attribution",
+     "Server-side funnel stitching from owned web properties"
+    ],
+    [
+     "Re-engagement pushes",
+     "CRM send and open data, deep-link attribution",
+     "Identity resolution across devices",
+     "Cohort-level incrementality with holdouts"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Conversion-value engineering is the quiet differentiator. SKAN grants six bits per postback; what those bits encode — predicted LTV band, a day-two action proxy, a revenue bucket — decides whether bid algorithms see signal or noise. We design the mapping with the UA team against actual outcome distributions, then retune it per geography and campaign class as volumes shift. Alongside it sits fraud hygiene: claimed-install detection, click-flooding screens, and postback plausibility checks, because attribution loss quietly makes cheap fake volume look better every quarter, and budgets follow the flattery."
+  },
+  {
+   "t": "h2",
+   "x": "LTV prediction under attribution constraints"
+  },
+  {
+   "t": "p",
+   "x": "LTV models live or die on calibration, not architecture. Early-behavior features — day-zero to day-three sessions, progression checkpoints, first-purchase latency — predict day-one-eighty value well enough to steer bids, but only when the target is net revenue after platform cuts and refunds, computed per geography rather than MMP-reported gross. Logged-in players supply deterministic anchors that stabilize the whole distribution; SKAN conversion values carry the coarse shape for the anonymous majority; periodic geo-holdouts correct the drift every attribution regime introduces. We publish calibration error per cohort next to every prediction, because a bid layer that cannot see its own bias will spend confidently in exactly the geographies where it is wrong."
+  },
+  {
+   "t": "p",
+   "x": "The honest gate applies here more than anywhere. If the modeled LTV spread across two channels sits inside the calibration error, the correct decision is a flat budget and a bigger test, and the model should say so in its output rather than hedging with a decimal point. Studios that adopt this discipline report fewer arguments with agencies, because the conversation moves from whose attribution dashboard is right to what the holdout actually measured. That conversation is winnable; the dashboard argument never was."
+  },
+  {
+   "t": "h2",
+   "x": "Matchmaking: the queue-time versus match-quality tradeoff"
+  },
+  {
+   "t": "p",
+   "x": "Matchmaking is a running negotiation between two metrics that fight each other: queue time and match quality. MMR or ELO windows held tight produce fair matches and empty queues at off-peak hours; windows widened to fill lobbies poison the experience for the rank percentiles that care most. The tradeoff is tunable, but only with instrumentation most studios lack: per-match records carrying MMR deltas, queue wait, party composition, connection quality, and outcome, joined to post-match behavior such as lobby stays, rematches, and report rates."
+  },
+  {
+   "t": "p",
+   "x": "We build that instrumentation against your existing matcher rather than replacing it. Parameter changes — window expansion by hour, confidence decay for returning players, smurf handling — run as experiments on server-side configuration, with quality metrics watched as closely as queue times. Smurf detection deserves its own loop, because every undetected smurf corrupts the MMR of a lobby's worth of honest players and pollutes the very history the matcher learns from. Where a title ships on console platforms, matcher changes stay in server configuration so certification never becomes the reason a balance fix waits for the next content patch."
+  },
+  {
+   "t": "h2",
+   "x": "Session hosts, autoscaling, and cost per concurrent user"
+  },
+  {
+   "t": "p",
+   "x": "Compute is the cost line that grows with success. Session hosts per region, matchmaker-driven allocation, and autoscaling policies tuned for last year's traffic all show up in cost per concurrent user, and most teams can quote a blended figure but not a per-region, per-mode one. A hundred-player battle-royale mode and a four-on-four mode have completely different host economics, and a region overprovisioned for a launch spike can quietly burn budget for months afterward. The mart we build joins cloud billing exports — by region, instance family, and service — with concurrent-player time series and match metadata, so the finance review sees cost per CCU by region, mode, and release."
+  },
+  {
+   "t": "p",
+   "x": "Utilization is the second half of the story. Host fleets idle at twenty to forty percent outside peak windows in most fleets we audit, because autoscaling reacts to concurrency with lag and scale-down is always scarier than scale-up. We quantify actual allocation efficiency — hosts holding matches versus hosts holding nothing — and propose policy changes: predictive pre-warm ahead of scheduled events, faster scale-down for low-population regions, spot capacity for matchmakers where the reliability bar allows. If your hosts already run hot, the analysis says so and points at the next cost lever instead of manufacturing a savings story."
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "Cost per CCU is the number that survives a CFO review; blended cost per host is the number that gets argued about. Build the mart so the finance question and the infrastructure question read from the same table."
+  },
+  {
+   "t": "h2",
+   "x": "Certification-safe experimentation and crash triage"
+  },
+  {
+   "t": "p",
+   "x": "Console certification is the constraint that shapes everything a live team ships. A submitted binary passes Sony TRC, Microsoft XR, or Nintendo Lotcheck once, and any change that alters cert-relevant behavior risks a resubmission cycle measured in weeks. Many studios respond by freezing experimentation between patches, so gameplay tuning, economy balancing, and matchmaking changes queue behind content drops. That tradeoff is unnecessary when the experiment surface lives in server-side configuration and the certified surface stays frozen — which is the architecture this section describes."
+  },
+  {
+   "t": "h3",
+   "x": "A/B testing gameplay without breaking cert"
+  },
+  {
+   "t": "p",
+   "x": "The architecture is boring and it works. The cert-checked binary contains no experiment logic beyond config fetch; every experiment — economy rates, matchmaking weights, tutorial pacing, UI copy — is a server-side flag with its own rollout plan, exposure logging, and kill switch. We maintain the audit trail that maps each flag to the cert surfaces it could touch, so the submission team answers what changed since cert in an hour instead of a sprint. The same flags give live-ops a safety net: a bad experiment rolls back in minutes without touching the binary, and the exposure log becomes the experiment report."
+  },
+  {
+   "t": "h3",
+   "x": "Crash triage by device and driver"
+  },
+  {
+   "t": "p",
+   "x": "Crash triage per device is where engineering credibility with the community is won. We symbolicate and cluster crashes across platforms, then join cluster membership to the client device mix — OS version, GPU driver, memory class — and to exposure, so the board ranks by daily-active-player impact rather than raw counts. A crash hitting three-tenths of a percent of sessions on one driver family outranks a louder but diffuse cluster every time. The same pipeline correlates client crashes with session-host errors, which is how the bugs that only appear at region-peak load finally get an owner."
+  },
+  {
+   "t": "h2",
+   "x": "UGC moderation and anti-cheat telemetry"
+  },
+  {
+   "t": "p",
+   "x": "Chat and user-generated content moderation runs on classifiers whose errors are public: a false positive silences a legitimate player, and a miss becomes a clip on social media within hours. We tune toxicity classifiers per language and per community against your own adjudicated history, route uncertain cases to human review queues with the context a moderator needs, and keep appeal workflows that actually reverse wrong calls — with every decision logged for the timelines that minor-safety rules now impose. Moderation telemetry also feeds design: report-dense lobbies and fragmented guilds are signals about matchmaking and social systems, not just safety metrics."
+  },
+  {
+   "t": "p",
+   "x": "Anti-cheat shares the evidence pipeline. Server-authoritative validation remains the foundation — movement plausibility, fire-rate caps, economy grant verification — with telemetry-based detection layered on top: aim-distribution outliers, input-timing entropy, impossible progression velocity. Detection feeds a review console where an analyst traces an account's full history before a ban lands, and ban waves deploy together so signatures stay dark until the wave hits. The metric that keeps the program honest is the appeal reversal rate; a program that never reverses a ban is not precise, it is unreviewed, and it will eventually ban the wrong whale in public."
+  },
+  {
+   "t": "h2",
+   "x": "Reference architecture: the live-ops decision stack"
+  },
+  {
+   "t": "p",
+   "x": "The diagram below is how we assemble the decision layer for a live-service title at scale. Lanes run from raw signals to finance and compliance surfaces. Everything in the first three lanes reads from systems you already operate — the client SDK, the store, the MMP, the session fleet. The build concentrates in the last three lanes: sessionized facts, decision services, and the live-ops surfaces that act on them. Dataq Software implements the stack incrementally, telemetry spine first, then the decision services that pay for it, so value lands before the architecture debate finishes."
   },
   {
    "t": "arch",
-   "title": "Reference architecture — Gaming & Interactive Media",
+   "title": "Reference architecture — game live-ops decision stack",
    "lanes": [
-    "Source estates",
-    "Streaming ingest",
-    "Lakehouse core",
-    "Certified products",
-    "Serving",
-    "Decisions"
+    "Client and platform signals",
+    "Ingestion and contracts",
+    "Sessionized facts and serving",
+    "Decision services",
+    "Live-ops surfaces",
+    "Finance and compliance"
    ],
    "nodes": [
     {
-     "id": "se0",
+     "id": "client-sdk",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Client telemetry SDK"
     },
     {
-     "id": "se1",
+     "id": "store-iap",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "Store and IAP ledger"
     },
     {
-     "id": "se2",
+     "id": "mmp-postbacks",
      "lane": 0,
-     "label": "KYC / AML case manager",
-     "hot": false
+     "label": "MMP postbacks (Adjust, AppsFlyer)"
     },
     {
-     "id": "si3",
+     "id": "ad-network",
+     "lane": 0,
+     "label": "Ad network and SKAN reporting"
+    },
+    {
+     "id": "console-crash",
+     "lane": 0,
+     "label": "Console crash and device telemetry"
+    },
+    {
+     "id": "event-gateway",
      "lane": 1,
-     "label": "CDC & event streams",
-     "hot": true
+     "label": "Event gateway"
     },
     {
-     "id": "si4",
+     "id": "schema-registry",
      "lane": 1,
-     "label": "Batch pipelines",
-     "hot": false
+     "label": "Schema registry and contracts"
     },
     {
-     "id": "lc5",
+     "id": "sessionizer",
+     "lane": 1,
+     "label": "Sessionizer and consent filter"
+    },
+    {
+     "id": "fact-session",
      "lane": 2,
-     "label": "Bronze → silver → gold",
-     "hot": true
+     "label": "Session and funnel facts"
     },
     {
-     "id": "lc6",
+     "id": "fact-economy",
      "lane": 2,
-     "label": "Data contracts",
-     "hot": false
+     "label": "Economy faucet-sink ledger"
     },
     {
-     "id": "cp7",
+     "id": "fact-ua",
+     "lane": 2,
+     "label": "UA and LTV facts"
+    },
+    {
+     "id": "ch-serving",
+     "lane": 2,
+     "label": "ClickHouse serving layer"
+    },
+    {
+     "id": "economy-integrity",
      "lane": 3,
-     "label": "Metric definitions",
-     "hot": false
+     "label": "Economy integrity monitors"
     },
     {
-     "id": "cp8",
+     "id": "churn-ltv",
      "lane": 3,
-     "label": "Data products",
-     "hot": false
+     "label": "Churn and LTV models"
     },
     {
-     "id": "sv9",
+     "id": "ab-platform",
+     "lane": 3,
+     "label": "Experimentation platform"
+    },
+    {
+     "id": "offer-engine",
      "lane": 4,
-     "label": "BI & semantic layer",
-     "hot": false
+     "label": "Offer engine"
     },
     {
-     "id": "sv10",
+     "id": "crm-campaigns",
      "lane": 4,
-     "label": "Feature serving",
-     "hot": false
+     "label": "CRM campaigns"
     },
     {
-     "id": "de11",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "liveops-cms",
+     "lane": 4,
+     "label": "Live-ops config and store CMS"
     },
     {
-     "id": "de12",
+     "id": "finance-mart",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "Finance and cert audit marts"
     }
    ],
    "edges": [
     {
-     "a": "se0",
-     "b": "si3"
+     "a": "client-sdk",
+     "b": "event-gateway"
     },
     {
-     "a": "se1",
-     "b": "si3"
+     "a": "store-iap",
+     "b": "event-gateway"
     },
     {
-     "a": "se2",
-     "b": "si4"
+     "a": "mmp-postbacks",
+     "b": "event-gateway"
     },
     {
-     "a": "si3",
-     "b": "lc5"
+     "a": "ad-network",
+     "b": "event-gateway"
     },
     {
-     "a": "si4",
-     "b": "lc5"
+     "a": "console-crash",
+     "b": "event-gateway"
     },
     {
-     "a": "lc5",
-     "b": "cp7"
+     "a": "event-gateway",
+     "b": "schema-registry"
     },
     {
-     "a": "lc6",
-     "b": "cp8"
+     "a": "schema-registry",
+     "b": "sessionizer"
     },
     {
-     "a": "cp7",
-     "b": "sv9"
+     "a": "sessionizer",
+     "b": "fact-session"
     },
     {
-     "a": "cp8",
-     "b": "sv10"
+     "a": "sessionizer",
+     "b": "fact-economy"
     },
     {
-     "a": "sv9",
-     "b": "de11"
+     "a": "sessionizer",
+     "b": "fact-ua"
     },
     {
-     "a": "sv10",
-     "b": "de12"
+     "a": "fact-session",
+     "b": "ch-serving"
+    },
+    {
+     "a": "fact-economy",
+     "b": "ch-serving"
+    },
+    {
+     "a": "fact-ua",
+     "b": "ch-serving"
+    },
+    {
+     "a": "fact-economy",
+     "b": "economy-integrity"
+    },
+    {
+     "a": "fact-session",
+     "b": "churn-ltv"
+    },
+    {
+     "a": "fact-ua",
+     "b": "churn-ltv"
+    },
+    {
+     "a": "fact-session",
+     "b": "ab-platform"
+    },
+    {
+     "a": "churn-ltv",
+     "b": "crm-campaigns"
+    },
+    {
+     "a": "churn-ltv",
+     "b": "offer-engine"
+    },
+    {
+     "a": "economy-integrity",
+     "b": "liveops-cms"
+    },
+    {
+     "a": "ab-platform",
+     "b": "offer-engine"
+    },
+    {
+     "a": "fact-ua",
+     "b": "finance-mart"
+    },
+    {
+     "a": "ch-serving",
+     "b": "finance-mart"
     }
-   ],
-   "note": "Lanes and nodes are named for Gaming & Interactive Media systems and workflows — not a generic stack."
+   ]
   },
   {
    "t": "h2",
-   "x": "Guardrails that matter here"
+   "x": "The estate underneath: systems this work touches"
   },
   {
    "t": "p",
-   "x": "The binding regimes in Gaming & Interactive Media: Privacy (minors), Consumer/loot-box rules. Designing against them early is what keeps later audits short."
+   "x": "None of this starts from a blank page. Every studio already runs an estate of game backends, commerce systems, attribution vendors, and warehouses, and the work is to read that estate accurately and build the decision layer beside it. The table below names the systems a typical engagement touches, what each one holds today, and how the decision layer uses it — with nothing replaced and every integration running read-first until it has earned trust."
   },
   {
    "t": "table",
-   "caption": "Regimes in scope for Gaming & Interactive Media",
+   "caption": "The estate under a live-service title — and how the decision layer reads it",
    "headers": [
-    "Regime",
-    "What it expects"
+    "System",
+    "What it holds",
+    "How this work uses it"
    ],
    "rows": [
     [
-     "Privacy (minors)",
-     "player data duties"
+     "Client telemetry SDK",
+     "Event payloads shipped in mobile, PC, and console builds",
+     "Primary signal source; schemas documented and versioned, never rewritten by default"
     ],
     [
-     "Consumer/loot-box rules",
-     "monetization duties"
+     "Store and IAP backend",
+     "Transaction ledger, entitlements, offer metadata, refund records",
+     "Joined to telemetry to reconcile revenue facts and economy grants"
     ],
     [
-     "Platform policies",
-     "safety duties"
+     "MMP (Adjust, AppsFlyer)",
+     "Install attribution, postbacks, SKAN decoding, channel costs",
+     "Read for UA measurement; modeled LTV reconciled against reported ROAS"
     ],
     [
-     "Accessibility",
-     "UI duties"
+     "Live-ops config and store CMS",
+     "Feature flags, store rotations, event schedules, battle pass definitions",
+     "Consumed as the change log that explains KPI deltas"
+    ],
+    [
+     "CRM platform (Braze, Iterable)",
+     "Campaign sends, segments, push and email tokens",
+     "Receives churn, win-back, and offer audiences from the decision layer"
+    ],
+    [
+     "Lakehouse or warehouse (BigQuery, Snowflake)",
+     "Raw event landings and legacy dashboards",
+     "Kept as the system of record; serving marts built beside it"
+    ],
+    [
+     "Session hosts and orchestration",
+     "Region capacity, match allocation logs, host utilization",
+     "Joined with cloud billing exports for cost-per-CCU reporting"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "The opening move"
+   "x": "How Dataq Software engages with studios and publishers"
   },
   {
-   "t": "p",
-   "x": "For Gaming & Interactive Media, the first move costs little: a two-week diagnostic on player analytics shallow, your data, one honest baseline. The scoped proposal only follows if the measured delta justifies it."
+   "t": "bullets",
+   "items": [
+    [
+     "Two-week telemetry baseline",
+     "We reconstruct D1, D7, and D30 funnels, reconcile them against MMP and billing data, audit event loss at every hop, and produce an economy flow statement — on your data, with query definitions you keep regardless of what happens next."
+    ],
+    [
+     "Read-first integration",
+     "We connect through read APIs, CDC feeds, and warehouse landings against your existing backend, MMP, CRM, and cloud billing. No client SDK rewrite is required unless a specific decision needs one."
+    ],
+    [
+     "Feasibility gates before builds",
+     "Every proposal names the signal it needs to pay off. If your hosts already run hot or your funnels already reconcile, we say so and stop before the contract grows."
+    ],
+    [
+     "A squad that speaks live-ops",
+     "Data engineers, an analytics engineer, and a lead who has run live-service economies. We join your live-ops review, not just your standup."
+    ],
+    [
+     "Handover as the goal",
+     "Query definitions, model cards, and runbooks land in your repositories with your engineers as owners. The steady state is your team running the stack, with us on call for the next schema storm."
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions gaming leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Our dashboards already come from the MMP and the warehouse. Why rebuild anything?",
+     "Because reconciliation is the missing layer. When MMP-reported ROAS, store billing, and warehouse funnels disagree — and somewhere they always do — you need one versioned definition per metric and a documented gap analysis, not a fourth dashboard."
+    ],
+    [
+     "Can you work without touching the game client?",
+     "Yes, for most of the decision layer: server records, store ledgers, and MMP postbacks carry most of the signal. Client SDK changes are proposed only when a specific decision — sessionization precision, conversion-value encoding — requires them, and then they ride a normal patch."
+    ],
+    [
+     "We run a proprietary backend on a AAA engine. Does that block you?",
+     "No. We integrate against whatever emits logs and events today. Engine choice — Unity, Unreal, or proprietary — affects client telemetry schemas, not the server-side decision layer."
+    ],
+    [
+     "How do you handle SKAdNetwork postback delays and crowd anonymity?",
+     "By designing for them: conversion-value schemas tuned to your outcome distributions, reconciliation windows that expect delayed and missing postbacks, and geo-holdouts that measure what SKAN cannot. The UA team gets ranges with stated confidence, not false precision."
+    ],
+    [
+     "Who owns the models and pipelines after the engagement?",
+     "Your team, from day one. Code lands in your repositories under your review, model cards document inputs and calibration error, and runbooks are written for your on-call rotation."
+    ],
+    [
+     "Do you need player-level personal data?",
+     "Less than most teams expect. Cohort-level decisions run on pseudonymous identifiers and aggregates; where player-level features are needed — churn scores, offer eligibility — consent states from your existing consent management carry through the pipeline by design."
+    ],
+    [
+     "What does a two-week baseline cost against a full build?",
+     "The baseline is fixed-scope and priced as an engagement, not a pilot that silently grows. It exists because the full build should be scoped against measured gaps, and because a studio that learns its funnels already reconcile should not buy one."
+    ]
+   ]
   },
   {
    "t": "cta",
-   "x": "If operations in Gaming & Interactive Media is on your agenda this year, a briefing will tell you in 45 minutes whether this pattern fits your estate."
+   "x": "Bring one live title and thirty days of raw events to a first call. Dataq Software will baseline your D1, D7, and D30 funnels, your event-loss rate at every pipeline hop, and your economy flow statement in two weeks, against your own data — no vendor demo numbers, no proxy metrics. You keep the query definitions and the fix list whether or not the engagement continues. If the gap between your dashboards and your raw events is not material, we will tell you the current stack is fine and stop there, at a price that is a fraction of one month's UA channel test spend."
   }
  ],
- "words": 342,
+ "words": 5280,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Technology & SaaS",

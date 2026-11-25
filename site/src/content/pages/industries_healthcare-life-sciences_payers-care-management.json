@@ -5,277 +5,762 @@
  "template": "subindustry_page",
  "breadcrumb": "Industries > Healthcare & Life Sciences > Care Management & Population Health",
  "seo_title": "Care Management & Population Health | Dataq Software",
- "meta_description": "Care management succeeds on precision targeting and timely intervention: identifying rising-risk members, coordinating across providers, and proving qua.",
+ "meta_description": "How Dataq Software engineers payers and care management: prior authorization and UM automation, claims and payment integrity screening, HCC coding integrity with RADV evidence, HEDIS and star measure engines, care outreach orchestration and member operations under CMS program audit duty.",
  "blocks": [
   {
    "t": "hero",
-   "x": "Care management succeeds on precision targeting and timely intervention: identifying rising-risk members, coordinating across providers, and proving quality outcomes. It is a data-discipline business — and the data discipline is usually the missing part. This page is the operating picture: what runs, what strains, and which capabilities move the numbers that decide the margin."
+   "x": "Inside a health plan, one member month crosses every machine: an eligibility file sets the coverage, a claim arrives as an 837 and meets the adjudication edits, an authorization request pends behind missing clinical evidence, a care manager dials a call list, a quality engine computes a gap, a risk-adjustment coder reviews a chart, and a member waits. The plan's margin and its star rating are decided in the same decision machinery — how precisely risk is stratified, how completely authorization evidence assembles, how accurately codes reflect charts, how reliably outreach reaches the member who needs it. This page is the engineering picture of that machinery as Dataq Software sees it from inside payer estates — where it leaks, and the six deep builds that close it."
   },
   {
    "t": "h2",
-   "x": "The setting, described honestly"
+   "x": "How the plan runs, eligibility to star rating"
   },
   {
    "t": "p",
-   "x": "The work concentrates in risk stratification, care outreach and scheduling, program matching, with quality measure reporting close behind. Volume grows on every path; the decision layer has not kept up. That gap is measurable, and it is the work."
+   "x": "The transaction spine starts at enrollment: an 834 sets the member's coverage, the eligibility files flow to providers, and the claims arrive as 837s through the EDI gateway. Adjudication engines run the edits — benefit design, coding conflicts, coordination of benefits, network status — and release the 835 remittances that providers reconcile. Payment integrity screens around the core: pre-pay edits, clinical validation for high-cost claims, post-pay recovery and FWA screening feeding an SIU queue. Every transaction has a clock and an exception path, and the exception paths are where plans actually spend their staffing."
+  },
+  {
+   "t": "p",
+   "x": "The clinical layer runs across the same spine. Utilization management and prior authorization review requests against criteria — InterQual- and MCG-class policy sets — with clinical evidence assembled by hand from faxes, portals and chart requests. Care management platforms stratify members, mostly on claims history, and run outreach programs whose engagement economics go unmeasured. Quality engines compute HEDIS measures on the schedule NCQA defines; star ratings turn those measures into bonus economics; and risk adjustment extracts HCCs from medical records through coder review, with RADV audits looming over every unreconciled code."
+  },
+  {
+   "t": "p",
+   "x": "Around all of it run the obligations: CMS program audits, state Medicaid rules, NCQA measurement standards, HIPAA privacy, and the interoperability duties CMS-0057-F added — payer-to-payer exchange, provider access, prior-authorization API timelines. Medicaid redeterminations add an eligibility churn problem that moves members in and out of coverage on state schedules. The estate is transactional, deadline-driven and siloed — which is exactly why the leaks below persist: they live in the seams between the adjudication engine, the care platforms and the quality estate nobody owns end to end."
   },
   {
    "t": "h2",
-   "x": "The workflows that feel it"
+   "x": "The estate underneath: systems this work touches"
   },
   {
    "t": "p",
-   "x": "Care Management & Population Health: the recurring pressure points,"
+   "x": "Payer programs succeed or fail on how honestly the estate is mapped before anything is built. Dataq Software starts every engagement by naming the systems, their owners, their change cadences and their data contracts. The table below is the estate we most often find and integrate against in plan and care-management programs — not a generic stack diagram."
   },
   {
-   "t": "bullets",
-   "items": [
+   "t": "table",
+   "caption": "The payer estate we build against — and where each layer strains",
+   "headers": [
+    "System layer",
+    "What it actually does",
+    "Where it strains"
+   ],
+   "rows": [
     [
-     "Member risk signals scattered",
-     "Claims, clinical, SDOH and engagement data siloed; risk stratification runs on claims only."
+     "Claims adjudication platform",
+     "Benefit logic, edits, pricing, payment and 835 release for incoming claims",
+     "Edit libraries encode stale policy; exception queues grow; adjudication logic opaque to the analytics that could tune it"
     ],
     [
-     "Outreach operations manual",
-     "Care outreach, scheduling and follow-up run on call lists; gaps between contacts lose members."
+     "EDI gateway (837, 835, 834, 278)",
+     "Transaction exchange with providers, clearinghouses and state systems",
+     "Rejects bounce back in batch; transaction telemetry unused; 278 authorization status visible to nobody in real time"
     ],
     [
-     "Program matching crude",
-     "Members matched to programs by blunt rules; engagement economics unmeasured."
+     "UM and prior authorization systems",
+     "Request intake, criteria review, determination letters, appeal routing",
+     "Clinical evidence assembled by hand from faxes and portals; pended queues age; determinations lack the evidence trail regulators ask for"
     ],
     [
-     "Sensitive coordination data",
-     "Care teams share sensitive data across vendors; controls lag."
+     "Care management platforms",
+     "Member stratification, care plans, outreach tasks, program tracking",
+     "Stratification runs on claims lag; outreach runs on call lists; program outcomes disconnected from targeting"
     ],
     [
-     "Quality reporting burden",
-     "HEDIS-class measures assembled manually per cycle; evidence assembled under deadline."
+     "Quality measure engines (HEDIS, stars)",
+     "Measure computation, gap lists, star-rating submissions on the NCQA calendar",
+     "Measure runs assembled manually near deadlines; evidence for gaps thin; provider-facing reporting lags the year"
     ],
     [
-     "Care-platform integration drag",
-     "Care platforms integrate by file export; workflows break at handoffs."
+     "Risk adjustment platforms",
+     "Medical record review, HCC coding, RAF tracking, RADV audit response",
+     "Coder review sampling untargeted; chart retrieval slow; unsupported codes discovered at audit, not at review"
+    ],
+    [
+     "Payment integrity and SIU tooling",
+     "Pre-pay edits, clinical validation, post-pay recovery, FWA investigation",
+     "Screens false-positive heavily; investigations assembled manually; recovery economics unmeasured per program"
+    ],
+    [
+     "Provider network and contracting",
+     "Network files, fee schedules, value-based contract terms",
+     "Contract terms not encoded computably; performance reconciliation with providers is a quarterly dispute"
+    ],
+    [
+     "Member engagement: portal, app, call center",
+     "Member communication, authorization status, care program enrollment",
+     "Communication ungrounded in member history; authorization status opaque; churn signals unread"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "What we put in place"
+   "x": "Where the plan leaks margin and stars"
   },
   {
    "t": "p",
-   "x": "The proof in Care Management & Population Health is a working system on a real workflow. These are the builds that go live:"
+   "x": "Ask plan operations leaders where the damage concentrates and the answers converge on the same eight places. Dataq Software's diagnostic scores each of them in your own telemetry before recommending a build, because the leak that dominates a Medicare Advantage plan is different from the one that dominates a Medicaid managed-care contract — and the fix is engineering either way."
   },
   {
    "t": "bullets",
    "items": [
     [
-     "Member risk platform",
-     "claims/clinical/SDOH unified with certified risk features"
+     "Risk stratification on claims lag",
+     "Claims arrive with a 30-to-90-day lag, so the member the care program sees is the member of last quarter. Social-determinants signals, engagement data and clinical context sit in separate estates; rising-risk members are found by the hospital instead of by the plan. The targeting gap is measurable in program engagement rates against matched controls."
     ],
     [
-     "Outreach orchestration",
-     "contact plans executed across channels with follow-up policy"
+     "Prior auth queues that pend on missing evidence",
+     "Requests pend because the clinical evidence exists in a chart nobody has assembled, criteria are applied inconsistently across reviewers, and the 278 status is invisible to the provider who is waiting. Turnaround is measured in days for determinations that need hours; provider abrasion compounds with every re-keyed fax."
     ],
     [
-     "Program matching models",
-     "engagement likelihood + clinical need into assignment"
+     "Payment integrity screening blind",
+     "Pre-pay edits false-positive heavily, so provider abrasion eats the savings; post-pay recovery chases claims that were recoverable pre-pay; FWA screening runs on rules tuned years ago. The economics per program — false-positive rate, recovery yield, provider complaint volume — are unknown because the screens and the outcomes live in different systems."
     ],
     [
-     "Care-data protection",
-     "vendor access governed with monitoring"
+     "HEDIS and stars assembled under deadline",
+     "Measure runs happen near the NCQA calendar with manual evidence assembly, so the gap-closure interventions that would have moved stars never ran. Provider-facing quality reporting lags the measurement year by enough that the providers it could coach have already re-signed. Star economics make this the most expensive reporting ritual in the plan."
     ],
     [
-     "Integration spine",
-     "event-driven care workflows replacing file exports"
+     "Risk adjustment evidence thin for RADV",
+     "Coder review samples untargeted, chart retrieval slow, and the connection between a coded HCC and its supporting documentation reconstructed only when the audit arrives. Unsupported codes are discovered by the auditor rather than by the plan's own validation — the most expensive possible way to learn them."
+    ],
+    [
+     "Outreach operations on call lists",
+     "Care outreach, scheduling and follow-up run on exported lists with no feedback loop: attempts, connections, outcomes and program enrollment live in different systems. Members fall through the gaps between contact attempts, and the engagement economics — lift per outreach dollar — go unmeasured because the targeting and the outcomes never meet."
+    ],
+    [
+     "Appeals and grievance clocks at risk",
+     "Denials generate appeals with strict clocks; evidence assembly is manual; determination letters are drafted by hand; and the root causes that generated the appeal — an edit, a criteria misread, a coding conflict — persist upstream. Overturn rates by reason code are the diagnostic nobody assembles routinely."
+    ],
+    [
+     "Redetermination churn unmanaged",
+     "Medicaid redeterminations move members on state schedules, and the plan discovers the churn in the 834 file after it happens. Proactive renewal support, coverage-gap tracking and the transition of care-management programs across eligibility changes run on manual lists. Every silent loss is a member whose care the plan was coordinating yesterday."
     ]
    ]
+  },
+  {
+   "t": "note",
+   "variant": "insight",
+   "x": "The pattern across all eight leaks: the plan makes its decisions on yesterday's data with today's staff, and the regulators now audit the evidence trail as closely as the outcomes. Context is a data engineering problem before it is a modeling problem — which is why the first build is almost always the member decision lakehouse."
+  },
+  {
+   "t": "h2",
+   "x": "How Dataq Software works payers and care management"
+  },
+  {
+   "t": "p",
+   "x": "Dataq Software builds inside the payer estate you already run. We do not arrive with a platform replacement, a rip-and-replace core-administration story, or a strategy deck that ends where the hard part begins. The engagement model is engineering-first: a two-week diagnostic that baselines one workflow end to end — authorization, payment integrity, quality, risk adjustment, outreach — then a scoped build that ships behind your change process, behind your model governance, and behind the HIPAA and CMS duties that attach to everything touching member data."
+  },
+  {
+   "t": "p",
+   "x": "Three engineering commitments shape everything we deliver in this sub-industry. First, every automated decision carries replay: inputs, versions, criteria and outcomes are stored so an audit, appeal or RADV question twelve months later is a query, not an investigation. Second, every generative component is permission-aware and citation-bound — determination rationales cite the criteria and the evidence, member communication grounds in the member's own records, and every output shows its sources. Third, every build lands with its evidence layer: the artifacts a CMS program auditor or NCQA reviewer will ask for are generated continuously by the system."
+  },
+  {
+   "t": "p",
+   "x": "The published record behind this approach includes a national health insurer that cut prior-authorization turnaround 62% with clinical evidence assembled automatically. The commercial model follows the measurement logic: where the metric is clean — turnaround time, edit precision, gap closure — we contract against the delta with the baseline locked during the diagnostic; where it is confounded, we say so in the feasibility read and scope fixed-fee instead."
+  },
+  {
+   "t": "h2",
+   "x": "The builds: six deep engineering services for payers"
+  },
+  {
+   "t": "p",
+   "x": "The catalog below is the whole of our payer and care-management practice. Each build is named for the workflow it changes, sized in the diagnostic, and shipped with the controls the workflow's regulator will expect. None of them require replacing the adjudication platform or the care-management system; all of them require taking the data contracts and the audit trails seriously."
+  },
+  {
+   "t": "h3",
+   "x": "1. Prior authorization and UM automation"
+  },
+  {
+   "t": "p",
+   "x": "The build maintains a criteria library mapped to computable expressions, ingests requests through portals, EDI 278 and provider APIs, and assembles the clinical evidence automatically from claims, care records and chart requests. Administrative criteria resolve automatically with their decision trail; clinical criteria route to a nurse reviewer with the evidence pre-collated and the rationale pre-drafted for confirmation. Determination letters generate from the record with the required content, and 278 status flows back to the requesting provider in real time instead of by phone."
+  },
+  {
+   "t": "p",
+   "x": "Clock telemetry reports turnaround per case, per service line and per provider contract, and the pended queue becomes a managed instrument rather than a mystery. Auto-approval exists only for lanes your UM committee explicitly certifies; everything else carries a clinical signature. The measurable deltas are turnaround time, first-pass determination rate and provider abrasion — in the published record, a national health insurer cut prior-authorization turnaround 62% with clinical evidence assembled automatically, and the same instrumentation measures your baseline before anyone touches the queue."
+  },
+  {
+   "t": "h3",
+   "x": "2. Claims intelligence and payment integrity screening"
+  },
+  {
+   "t": "p",
+   "x": "The build attacks the false-positive problem first: edit libraries tuned against paid-after-review outcomes, duplicate and COB detection on the transaction stream, clinical validation targeted to the claim patterns that historically yield recovery, and an SIU workbench that pre-assembles investigation files from claims history, provider behavior and network data. Every screen outcome feeds back into threshold review, so the screens tighten instead of flooding providers with rework."
+  },
+  {
+   "t": "p",
+   "x": "The economics are tracked per program: false-positive rate, recovery yield, provider complaint volume and downstream dispute rate — reported from the same store, so the integrity portfolio is managed on yield rather than on caught-claim counts. FWA screening adds the graph layer: provider behavior networks, billing-pattern anomalies and referral loops scored with human-in-the-loop case assembly. The measurable deltas are pre-pay savings at a lower abrasion rate, recovery cycle time and the SIU queue's cleared-cases-per-analyst."
+  },
+  {
+   "t": "h3",
+   "x": "3. Risk adjustment coding integrity and RADV evidence"
+  },
+  {
+   "t": "p",
+   "x": "The build targets coder review where it matters: a chart-review prioritization model over member-year candidates that weights audit exposure, coding-pattern anomalies and documentation availability, so the sample follows risk rather than rotation. Reviewers receive pre-assembled evidence — the chart excerpts, problem lists, claims history and prior coding — with suggested HCCs traceable to their source text, and every coder decision logs its evidence for the audit trail RADV validation demands."
+  },
+  {
+   "t": "p",
+   "x": "The evidence layer is the point: every HCC on the submission carries its documentation trail continuously, unsupported-code rates surface through the plan's own validation samples rather than through the auditor's, and RADV audit responses assemble from the store instead of from a retrieval scramble. Provider education closes the loop: coding-gap patterns route back to the practices that generate them. The measurable deltas are validation-sample throughput, unsupported-code rate at the plan's own checkpoints and audit-response effort."
+  },
+  {
+   "t": "h3",
+   "x": "4. Quality measure engine: HEDIS and star economics"
+  },
+  {
+   "t": "p",
+   "x": "The build turns the measure calendar into an always-on pipeline: HEDIS-class measures computed continuously on the event fabric — claims, pharmacy, laboratory and chart-review data — with hybrid measures' chart retrieval orchestrated ahead of the deadline instead of inside it. Gap lists generate for care managers and provider practices with the evidence attached, and closure interventions route to the outreach orchestration build with their outcomes feeding back into the same store."
+  },
+  {
+   "t": "p",
+   "x": "The economics layer makes stars a managed instrument: measure-by-measure trajectory against the rating bands, the value of a point on the specific measures the plan can move, and the provider-facing reporting that shows a practice its own gaps in time to act. Every measure computation is versioned and replayable, so the NCQA submission and the internal dashboard cannot disagree. The measurable deltas are gap-closure rate on targeted measures, chart-retrieval cycle time and the star trajectory reported from the pipeline rather than projected after the fact."
+  },
+  {
+   "t": "h3",
+   "x": "5. Care management targeting and outreach orchestration"
+  },
+  {
+   "t": "p",
+   "x": "The build replaces claims-lag stratification with a member state model: claims, clinical data, pharmacy utilization, social-determinants signals and engagement history joined into one governed substrate, refreshed as events land. Rising-risk identification runs against that state with evidence behind every flag; program matching scores clinical need and engagement likelihood together instead of assigning members by blunt rules; and the care-management platform receives its targeting as an API rather than as a monthly file."
+  },
+  {
+   "t": "p",
+   "x": "Outreach orchestration executes the contact plan across channels with follow-up policy: attempts, connections, outcomes and program enrollment tracked per member, so the engagement economics — lift per outreach dollar, contact-channel effectiveness, program completion rates — report from the same store as the targeting. Holdout groups measure the programs honestly. The measurable deltas are engagement lift on contacted cohorts, program enrollment throughput and the rising-risk members the plan now reaches before the admission rather than after it."
+  },
+  {
+   "t": "h3",
+   "x": "6. Member, appeals and grievance operations"
+  },
+  {
+   "t": "p",
+   "x": "The build industrializes the member-facing clocks: appeals and grievances intake with structured reason capture, evidence assembly from the same member substrate the other builds read, determination letters generated from the record with the required content, and deadline tracking with escalation gates so no clock is discovered late. Root-cause routing sends the patterns that generate appeals — an edit, a criteria misread, a coverage miscommunication — back to the workflow that created them."
+  },
+  {
+   "t": "p",
+   "x": "Member communication grounds in the member's own records: authorization status, benefit questions and program enrollment answered from the governed substrate with citations, so the call center and the portal stop contradicting each other. Redetermination support rides the same layer — proactive renewal outreach, coverage-gap tracking and care-program continuity across eligibility changes. The measurable deltas are appeal cycle time, overturn rates by reason code, member-experience scores on communication and the churn the plan now sees coming."
   },
   {
    "t": "arch",
-   "title": "Reference architecture — Care Management & Population Health",
+   "title": "Reference architecture — the payer decision and evidence stack",
    "lanes": [
-    "Source estates",
-    "Streaming ingest",
-    "Lakehouse core",
-    "Certified products",
-    "Serving",
-    "Decisions"
+    "Plan systems of record",
+    "EDI and ingestion",
+    "Lakehouse and terminology core",
+    "Guarded scoring and generation",
+    "Controls and evidence",
+    "Member, provider and operations surfaces"
    ],
    "nodes": [
     {
-     "id": "se0",
+     "id": "claims",
      "lane": 0,
-     "label": "Core banking ledger",
-     "hot": false
+     "label": "Claims adjudication platform"
     },
     {
-     "id": "se1",
+     "id": "edigw",
      "lane": 0,
-     "label": "Card switch & fraud stores",
-     "hot": false
+     "label": "EDI gateway (837, 835, 834, 278)"
     },
     {
-     "id": "se2",
+     "id": "umsys",
      "lane": 0,
-     "label": "KYC / AML case manager",
-     "hot": false
+     "label": "UM and prior authorization system"
     },
     {
-     "id": "si3",
+     "id": "caremgmt",
+     "lane": 0,
+     "label": "Care management platform"
+    },
+    {
+     "id": "qualitysys",
+     "lane": 0,
+     "label": "HEDIS and star measure engine"
+    },
+    {
+     "id": "riskadj",
+     "lane": 0,
+     "label": "Risk adjustment coding platform"
+    },
+    {
+     "id": "payint",
+     "lane": 0,
+     "label": "Payment integrity and SIU tooling"
+    },
+    {
+     "id": "ingest",
      "lane": 1,
-     "label": "CDC & event streams",
+     "label": "CDC streams and transaction ingest"
+    },
+    {
+     "id": "contracts",
+     "lane": 1,
+     "label": "Data contracts and consent state"
+    },
+    {
+     "id": "lake",
+     "lane": 2,
+     "label": "Member decision lakehouse"
+    },
+    {
+     "id": "terms",
+     "lane": 2,
+     "label": "Terminology services (ICD-10, CPT, HCC)",
      "hot": true
     },
     {
-     "id": "si4",
-     "lane": 1,
-     "label": "Batch pipelines",
-     "hot": false
+     "id": "index",
+     "lane": 2,
+     "label": "Permission-aware retrieval index"
     },
     {
-     "id": "lc5",
-     "lane": 2,
-     "label": "Bronze → silver → gold",
+     "id": "authsvc",
+     "lane": 3,
+     "label": "Prior-auth evidence assembly",
      "hot": true
     },
     {
-     "id": "lc6",
-     "lane": 2,
-     "label": "Data contracts",
-     "hot": false
-    },
-    {
-     "id": "cp7",
+     "id": "stratify",
      "lane": 3,
-     "label": "Metric definitions",
-     "hot": false
+     "label": "Member state and risk models"
     },
     {
-     "id": "cp8",
+     "id": "meastrun",
      "lane": 3,
-     "label": "Data products",
-     "hot": false
+     "label": "Continuous measure computation"
     },
     {
-     "id": "sv9",
+     "id": "editsvc",
+     "lane": 3,
+     "label": "Claim edit and FWA scoring"
+    },
+    {
+     "id": "eval",
      "lane": 4,
-     "label": "BI & semantic layer",
-     "hot": false
+     "label": "Evaluation harness and golden sets"
     },
     {
-     "id": "sv10",
+     "id": "replay",
      "lane": 4,
-     "label": "Feature serving",
-     "hot": false
+     "label": "Decision replay and provenance"
     },
     {
-     "id": "de11",
-     "lane": 5,
-     "label": "Origination & servicing",
-     "hot": false
+     "id": "registry",
+     "lane": 4,
+     "label": "Model-risk registry and audit records"
     },
     {
-     "id": "de12",
+     "id": "workbench",
      "lane": 5,
-     "label": "Fraud ops workbench",
-     "hot": false
+     "label": "UM, SIU and appeals workbenches"
     }
    ],
    "edges": [
     {
-     "a": "se0",
-     "b": "si3"
+     "a": "claims",
+     "b": "ingest"
     },
     {
-     "a": "se1",
-     "b": "si3"
+     "a": "edigw",
+     "b": "ingest"
     },
     {
-     "a": "se2",
-     "b": "si4"
+     "a": "umsys",
+     "b": "ingest"
     },
     {
-     "a": "si3",
-     "b": "lc5"
+     "a": "caremgmt",
+     "b": "ingest"
     },
     {
-     "a": "si4",
-     "b": "lc5"
+     "a": "qualitysys",
+     "b": "ingest"
     },
     {
-     "a": "lc5",
-     "b": "cp7"
+     "a": "riskadj",
+     "b": "ingest"
     },
     {
-     "a": "lc6",
-     "b": "cp8"
+     "a": "payint",
+     "b": "ingest"
     },
     {
-     "a": "cp7",
-     "b": "sv9"
+     "a": "ingest",
+     "b": "contracts"
     },
     {
-     "a": "cp8",
-     "b": "sv10"
+     "a": "contracts",
+     "b": "lake"
     },
     {
-     "a": "sv9",
-     "b": "de11"
+     "a": "lake",
+     "b": "terms"
     },
     {
-     "a": "sv10",
-     "b": "de12"
+     "a": "lake",
+     "b": "index"
+    },
+    {
+     "a": "lake",
+     "b": "authsvc"
+    },
+    {
+     "a": "lake",
+     "b": "stratify"
+    },
+    {
+     "a": "lake",
+     "b": "meastrun"
+    },
+    {
+     "a": "lake",
+     "b": "editsvc"
+    },
+    {
+     "a": "index",
+     "b": "authsvc"
+    },
+    {
+     "a": "authsvc",
+     "b": "replay"
+    },
+    {
+     "a": "editsvc",
+     "b": "replay"
+    },
+    {
+     "a": "stratify",
+     "b": "eval"
+    },
+    {
+     "a": "meastrun",
+     "b": "eval"
+    },
+    {
+     "a": "eval",
+     "b": "registry"
+    },
+    {
+     "a": "authsvc",
+     "b": "workbench"
     }
    ],
-   "note": "Lanes and nodes are named for Care Management & Population Health systems and workflows — not a generic stack."
+   "note": "Lanes and nodes are named for the systems a payer actually runs — the adjudication platform, the EDI gateway, UM and care platforms, the measure engine, risk adjustment and payment integrity tooling — not a generic reference stack. The hot nodes are where the program's differentiation concentrates: terminology binding for coding and measures, and the prior-auth evidence assembly that turns the pended queue into a managed clock. Everything above the core reads through contracts, so a change in any lane surfaces at the contract instead of silently inside a model."
   },
   {
    "t": "h2",
-   "x": "Guardrails that matter here"
+   "x": "The data plane: from batch feeds to a member event fabric"
   },
   {
    "t": "p",
-   "x": "Hipaa sets the floor for Care Management & Population Health: care data safeguards. The build adds the evidence layer so compliance is a query, not a project."
+   "x": "Every decision gap in a plan traces back to a data gap, and most data gaps trace back to the same habit: the adjudication engine, the care platforms and the quality estate each hold a fragment of the member, and the joins happen in monthly files with no lineage. The data plane build inverts the pattern where it matters. Claims, eligibility, authorization status, care events and pharmacy data land through change-data-capture into a governed lakehouse in near real time; the core administration keeps its validated rhythm, but the decisions above it stop depending on last month's extract."
   },
   {
-   "t": "table",
-   "caption": "Regimes in scope for Care Management & Population Health",
-   "headers": [
-    "Regime",
-    "What it expects"
-   ],
-   "rows": [
+   "t": "p",
+   "x": "Governance is engineered, not asserted. Every feed carries a schema contract with a named owner, a freshness SLA and a reconciliation check against the source system's own controls. Terminology binding is enforced at the contract layer — ICD-10, CPT, HCC categories, NDC — so a measure, a code and a cohort mean the same thing in the quality meeting and the audit. Member identity is conformed with survivorship rules across enrollment changes, consent and communication preferences travel with the record, and minimum-necessary access is enforced at retrieval."
+  },
+  {
+   "t": "bullets",
+   "items": [
     [
-     "HIPAA",
-     "care data safeguards"
+     "Transaction-first ingestion",
+     "claims, eligibility and authorization status captured as streams into the lakehouse without touching the adjudication platform's batch jobs, so UM, integrity and quality decisions run on current state"
     ],
     [
-     "Quality program rules",
-     "measure reporting duties"
+     "Clinical and SDOH joins",
+     "care records, pharmacy events and social-determinants signals normalized to the same contract layer as claims, so stratification reads the member rather than the claim history"
     ],
     [
-     "State Medicaid rules",
-     "program compliance where applicable"
+     "Terminology-bound semantics",
+     "ICD-10, CPT, HCC and NDC bindings enforced at the contract layer, so measures, coding and integrity screens stay consistent across teams and audit cycles"
     ],
     [
-     "GDPR-class",
-     "member rights"
+     "Minimum-necessary enforced at retrieval",
+     "PHI access governed at query time with purpose binding visible in the replay store, so an access audit is a report the system produces, not a project"
     ]
    ]
   },
   {
    "t": "h2",
-   "x": "How engagements open"
+   "x": "The decision layer: scores with audit and member tails"
   },
   {
    "t": "p",
-   "x": "For Care Management & Population Health, the first move costs little: a two-week diagnostic on member risk signals scattered, your data, one honest baseline. The scoped proposal only follows if the measured delta justifies it."
+   "x": "Payer operations run on decisions with tails on both sides: a determination letter carries timeliness and medical-necessity duty, an edit rejection carries provider-abrasion consequences, a risk-adjustment code carries RADV exposure, a stratification flag decides who gets a care manager. The decision layer treats those tails as first-class requirements. Every decision records its inputs, feature values, model versions, criteria and reason codes in a replay store that answers audit, appeal and RADV questions as queries. When a reviewer asks why, the answer is retrieved, not reconstructed."
+  },
+  {
+   "t": "p",
+   "x": "Champion/challenger governance is built in rather than bolted on: challengers run on shadow traffic with performance tracked in the registry the model-governance function owns, promotions happen through the gates your governance process already defines, and rollbacks are rehearsed rather than improvised. The same decision service layer hosts authorization scoring, edit tuning, stratification and program matching, so the governance surface is one registry, one replay store, one set of gates — instead of every algorithm carrying its own audit story."
+  },
+  {
+   "t": "h2",
+   "x": "The agentic layer: file assembly without judgment authority"
+  },
+  {
+   "t": "p",
+   "x": "The backlog work in payer operations — authorization packets, appeal files, chart retrieval for coders, measure evidence collection, investigation preparation — follows patterns an agentic workforce can absorb without touching judgment authority. Dataq Software's agent platform runs digital workers with explicit role scopes: the tools they may call, the systems they may read, the actions that require a human checkpoint and the budget of work per run. Every run logs its steps and outputs to the same evidence store the human workflow uses, so an agent's file is auditable exactly like an analyst's."
+  },
+  {
+   "t": "p",
+   "x": "Where generative agents add leverage — summarizing case files, drafting determination rationales and appeal responses, pre-coding chart excerpts for coder review — the pattern is grounded generation with citation obligations and human authorship of record. Agents never issue determinations, never change a code, never send member or provider communication without review; they move the work to the decision point and stop. Capacity is measured in cleared cases per FTE, which is how the operations leaders who sponsor these programs justify them upward."
+  },
+  {
+   "t": "h2",
+   "x": "Controls and evidence: audit as a query"
+  },
+  {
+   "t": "p",
+   "x": "The regulatory surface of a plan is deadline-dense and evidence-dense: CMS program audits, RADV validation, NCQA measurement standards, privacy and the new interoperability duties. Dataq Software's answer is the evidence layer — the artifacts an auditor or reviewer will ask for are generated continuously by the systems themselves. The table maps the regimes we build against to the evidence our builds produce."
+  },
+  {
+   "t": "table",
+   "caption": "Regimes that shape payer builds — and the evidence layer each one gets",
+   "headers": [
+    "Regime",
+    "What it expects",
+    "What the build produces"
+   ],
+   "rows": [
+    [
+     "HIPAA and member privacy",
+     "Safeguards, minimum necessary, audit trails, BAAs, breach duties",
+     "Access logs joined to decision replay; minimum-necessary enforced at retrieval; breach impact answered from the evidence store"
+    ],
+    [
+     "CMS program audits and RADV",
+     "UM documentation, coding validation, response within audit timelines",
+     "Per-code evidence trails maintained continuously; audit response packs assembled from the store; validation-sample telemetry"
+    ],
+    [
+     "NCQA HEDIS and star rating rules",
+     "Measure specifications, auditable computation, timely submission",
+     "Versioned, replayable measure computations; gap evidence with lineage; submission readiness reported from the pipeline"
+    ],
+    [
+     "Interoperability: CMS-0057-F duties",
+     "Payer-to-payer exchange, provider access APIs, prior-auth API timelines",
+     "FHIR-native exchange paths with exception registers; API performance telemetry produced as evidence"
+    ],
+    [
+     "State Medicaid and redetermination rules",
+     "Eligibility accuracy, program compliance, timely member communication",
+     "Eligibility event trails; renewal outreach records; care-program continuity evidence across coverage changes"
+    ],
+    [
+     "Model governance and EU AI Act (member-affecting AI)",
+     "Documentation, human oversight, monitoring for consequential automated decisions",
+     "Model registry with intended use and evaluation results; oversight ladders; drift monitoring generated continuously"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Integration engineering: the core administration stays, the contracts change"
+  },
+  {
+   "t": "p",
+   "x": "Payer estates are transactional, deadline-bound and change-averse by design, and the fastest way to fail a program is to promise greenfield. Our integration posture is contractual: we define schema contracts with each system owner, land data through the EDI gateway and governed APIs, write back through the interfaces your change control already governs, and keep every new component independently deployable behind feature flags. The adjudication platform and the care-management system are not replaced; they are supplied with better context and drained of the decision work they were never good at."
+  },
+  {
+   "t": "p",
+   "x": "The vendor chain gets the same treatment. Criteria libraries, edit vendors, SDOH data providers and engagement platforms sit behind an abstraction layer with contract tests, so a vendor swap is a configuration change with a migration runbook rather than a re-platform. Where a legacy interface must stay, the offload pattern applies: the existing interface keeps running while decision surfaces read from the governed stream the offload produces. This is unglamorous work and it is the reason the builds above hold up in production instead of in a pilot."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Write-back through transaction interfaces",
+     "determination records, edit outcomes and outreach updates flow through the interfaces your change control already governs, with no direct database writes anywhere"
+    ],
+    [
+     "Vendor abstraction with contract tests",
+     "criteria, edit, SDOH and engagement vendors behind one interface so a vendor swap is configuration with a runbook, not surgery on the workflow"
+    ],
+    [
+     "CMS-0057-F exchange as an engineering lane",
+     "payer-to-payer and provider-access APIs built on the same contract layer, so the interoperability duty and the decision substrate reinforce each other"
+    ],
+    [
+     "Feature-flagged, independently deployable",
+     "every build ships behind flags with rehearsed rollback, because the change advisory board and the compliance function will ask exactly that question"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "How an engagement runs"
+  },
+  {
+   "t": "p",
+   "x": "The engagement shape is deliberately short on ceremony and long on measurement. It starts with the two-week diagnostic: one workflow baselined end to end, the leak quantified in your own telemetry, the interfaces and contracts inventoried, and a written feasibility read you can circulate — including the uncomfortable findings. If the delta is real, the build is scoped against the gates your change, compliance and model-governance processes define; if it is not, you keep the measurement design and the baseline either way."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Weeks 1-2: diagnostic and baseline",
+     "workflow instrumentation, leak quantification, interface inventory, feasibility read with the delta estimate and the confounders named"
+    ],
+    [
+     "Weeks 3-8: first vertical slice",
+     "one lane live behind flags with replay and evidence running from day one — for authorization that is one service line; for integrity, one edit family"
+    ],
+    [
+     "Weeks 9-16: gates, controls, expansion",
+     "governance review landed, remaining lanes added, capacity telemetry reporting to the operations and compliance reviews"
+    ],
+    [
+     "Quarterly: challenger reviews",
+     "model and threshold challengers evaluated in the registry, criteria and edit libraries re-tuned, the baseline re-verified against holdouts"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": "Delivery runs in your delivery rhythm, not a parallel one: our engineers work in your repositories or a shared workspace with the same CI, the same security review and the same access model your teams use. Knowledge transfer is part of the gates, not a closing slide — by the expansion phase your engineers are shipping changes to the builds, because the runbooks, contracts and evaluation suites are theirs from week one."
+  },
+  {
+   "t": "h2",
+   "x": "What moves on the P&L"
+  },
+  {
+   "t": "p",
+   "x": "The metrics below are the ones payer programs are managed on. The targets are the ranges we set in feasibility reads for programs of this shape — commitments we let you hold us to where the metric is clean, hypotheses we test where it is confounded. The measurement column is the part most programs skip and the part that makes the delta defensible in a steering committee."
+  },
+  {
+   "t": "table",
+   "caption": "Payer program metrics — targets and how they are measured",
+   "headers": [
+    "Metric",
+    "Typical program target",
+    "How it is measured"
+   ],
+   "rows": [
+    [
+     "Prior authorization turnaround",
+     "40-65% reduction, case by case",
+     "Clock telemetry per case from request to determination; the published record shows 62% at a national health insurer"
+    ],
+    [
+     "Claim edit precision",
+     "30-50% fewer false-positive rejections at equal recovery",
+     "Edit outcomes compared against paid-after-review and dispute rates, per edit family"
+    ],
+    [
+     "Risk adjustment validation accuracy",
+     "5-15 point gap closure on validated charts",
+     "RADV-style validation samples run continuously from the evidence store, by contract year"
+    ],
+    [
+     "Care gap closure rate",
+     "10-25 points on targeted measures",
+     "Measure engine telemetry comparing outreach cohorts against matched holdouts"
+    ],
+    [
+     "Outreach engagement lift",
+     "15-30% lift on contacted cohorts",
+     "Contact-plan telemetry with holdout groups, by channel and program"
+    ],
+    [
+     "Appeals cycle time",
+     "30-50% faster with overturn tracked",
+     "Grievance and appeal clock telemetry from the case platform, by reason code"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "The team and the operating rhythm"
+  },
+  {
+   "t": "p",
+   "x": "A payer build team is small and senior: a lead engineer who has run decision systems in health plans, data engineers who own the transaction and contract layer, ML engineers who own scoring and evaluation, a controls engineer who owns the evidence layer, and domain leads who have run UM review, payment integrity, quality measurement or care operations in production plans. A compliance liaison joins for anything touching CMS or NCQA scope, and agentic-workflow specialists join for the file-assembly builds. The team works to your release calendar and your gate vocabulary from the first week."
+  },
+  {
+   "t": "p",
+   "x": "The rhythm is the same at every client: weekly operations review on the workflow's own telemetry, fortnightly gate submissions to change and compliance governance, quarterly challenger reviews, and an incident practice that treats the decision store and the evidence layer as production-critical systems — because by the second quarter, they are. Escalations go to named engineers, not to a queue."
+  },
+  {
+   "t": "h2",
+   "x": "Failure modes we design against"
+  },
+  {
+   "t": "p",
+   "x": "Payer programs fail in known ways, and most of the failure modes are organizational rather than mathematical. We name them in the feasibility read and design against them explicitly, because a program that cannot survive its second quarter — or its first program audit — is not worth starting."
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Pilot purgatory",
+     "a demo built on extracted data that never integrates with the adjudication platform — we prevent it by shipping the first vertical slice through your change process, flags and gates included"
+    ],
+    [
+     "Model-risk stall",
+     "the scoring service stuck in review because documentation was an afterthought — the registry, evaluation results and lineage land with the build, not after it"
+    ],
+    [
+     "Abrasion blowback",
+     "integrity screens that trade savings for provider revolt — false-positive rate and dispute volume are first-class metrics, and threshold review runs on paid-after-review truth"
+    ],
+    [
+     "Gap-closure gaming",
+     "measure rates moving while member outcomes stand still — closure actions are audited against the underlying services actually delivered, with holdouts as the honest check"
+    ],
+    [
+     "Stratification staleness",
+     "care targeting running on last quarter's claims because the clinical feeds never landed — contract-enforced freshness is a launch condition, not an optimization"
+    ],
+    [
+     "Evidence debt",
+     "program audit preparation consuming a team every cycle — the evidence layer generates artifacts continuously or the build is not done"
+    ]
+   ]
+  },
+  {
+   "t": "h2",
+   "x": "Questions payer leaders ask us"
+  },
+  {
+   "t": "bullets",
+   "items": [
+    [
+     "Do we have to replace the core administration platform?",
+     "No. The builds consume transaction streams from your adjudication platform, EDI gateway and care systems, and write back through the interfaces your change process governs. The core stays; it stops being the bottleneck for decisions and evidence."
+    ],
+    [
+     "How does this survive a CMS program audit?",
+     "The audit artifacts are generated continuously: UM determination trails, coding evidence, measure computation lineage and API performance records. The response pack assembles from the store, and the plan's own validation finds unsupported codes before the auditor does."
+    ],
+    [
+     "Will providers accept tighter automation?",
+     "Providers feel the difference as speed and consistency: evidence assembled before the reviewer sees the case, status visible in real time, fewer false-positive rejections. Abrasion metrics are first-class, and threshold review runs on paid-after-review truth."
+    ],
+    [
+     "Who signs determinations and codes?",
+     "Qualified humans, always. Evidence assembly and rationale drafting are automated; the clinical determination and the coding decision remain human acts with their own accountability, and every override feeds the threshold review."
+    ],
+    [
+     "Can this respect HIPAA and state privacy law?",
+     "Yes. Minimum-necessary access is enforced at retrieval, consent and communication preferences travel with the record, and the stack has been delivered under US regulatory regimes. Privacy duties are build requirements with their own evidence, not assumptions."
+    ],
+    [
+     "How do you measure success without gaming?",
+     "Baselines are locked during the diagnostic, holdouts are used where experiments are cheap — care outreach is one of the few places in a plan where a clean experiment is routine — and every metric reports from system telemetry rather than a status deck."
+    ],
+    [
+     "What is the smallest program worth running?",
+     "One workflow, one baseline, one vertical slice — prior authorization and payment integrity are the common starters because their clocks and outcome data are already instrumented. If the diagnostic cannot find the delta, we say so and stop."
+    ],
+    [
+     "Who owns the build after you leave?",
+     "Your teams, with the runbooks, contracts, evaluation suites and registry entries transferred as gate conditions during expansion — not as a closing deliverable. Several programs run entirely in-house after the second quarter."
+    ]
+   ]
   },
   {
    "t": "cta",
-   "x": "Talk to the team that runs operations in Care Management & Population Health in production — the briefing is technical by design, and the first one costs nothing but the hour."
+   "x": "Bring one workflow — authorization, payment integrity, quality measures, risk adjustment or care outreach — and we will baseline it in your own telemetry within two weeks, then tell you plainly whether the delta justifies the build. The opening call costs an hour; the feasibility read stays with you either way."
   }
  ],
- "words": 397,
+ "words": 5308,
  "section": "Industries",
  "l1": "Industries",
  "l2": "Healthcare & Life Sciences",
